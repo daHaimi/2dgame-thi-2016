@@ -72,7 +72,8 @@ for platform in {i386,amd64}; do
     rm bin/tmp/DEBIAN/control && mv bin/tmp/DEBIAN/control.new bin/tmp/DEBIAN/control
     mv bin/tmp/usr/share/applications/love.desktop bin/tmp/usr/share/applications/${GAME_NAME}.desktop
     sed -i "s/love/${GAME_NAME}/g" bin/tmp/usr/share/applications/${GAME_NAME}.desktop
-    cp src/assets/icon.svg /usr/share/pixmaps/${GAME_NAME}.svg
+    cp src/assets/icon.svg bin/tmp/usr/share/pixmaps/${GAME_NAME}.svg
+    rm bin/tmp/usr/share/pixmaps/love.svg
     cat bin/tmp/usr/bin/love bin/game.love > bin/tmp/usr/bin/${GAME_NAME}
     rm bin/tmp/usr/bin/love
     chmod +x bin/tmp/usr/bin/${GAME_NAME}
