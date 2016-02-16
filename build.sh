@@ -52,7 +52,7 @@ rm -r bin/${GAME_NAME}.app
 
 # Windows EXE erstellen und packen
 for platform in win{64,32}; do
-    unzip ${STUB_DIR}/love-${LOVE_VERSION}-${platform}.zip bin/
+    unzip ${STUB_DIR}/love-${LOVE_VERSION}-${platform}.zip -d bin/
     cat bin/game.love >> bin/love-${LOVE_VERSION}-${platform}/love.exe
     ( cd bin && zip -r ${GAME_NAME}-${BUILD_NR}-${platform}.zip love-${LOVE_VERSION}-${platform} )
     rm -r bin/love-${LOVE_VERSION}-${platform}
