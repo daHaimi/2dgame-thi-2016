@@ -62,8 +62,7 @@ done
 for platform in {i386,amd64}; do
     mkdir bin/tmp
     cp ${STUB_DIR}/love_${LOVE_VERSION}ppa1_${platform}.deb bin/tmp
-    ( cd bin/tmp && ar -x love_${LOVE_VERSION}ppa1_${platform}.deb && unxz data.tar.xz && tar xf data.tar \\
-        && mkdir DEBIAN && mv control.tar.gz DEBIAN && cd DEBIAN && tar xfz control.tar.gz )
+    ( cd bin/tmp && ar -x love_${LOVE_VERSION}ppa1_${platform}.deb && unxz data.tar.xz && tar xf data.tar && mkdir DEBIAN && mv control.tar.gz DEBIAN && cd DEBIAN && tar xfz control.tar.gz )
     rm bin/love_${LOVE_VERSION}ppa1_${platform}.deb
     cat bin/tmp/usr/bin/love bin/game.love > bin/tmp/usr/bin/${GAME_NAME}
     chmod +x bin/tmp/usr/bin/${GAME_NAME}
