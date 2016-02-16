@@ -64,9 +64,9 @@ for platform in {i386,amd64}; do
     cp ${STUB_DIR}/love_${LOVE_VERSION}ppa1_${platform}.deb bin/tmp/
     ( cd bin/tmp && ar -x love_${LOVE_VERSION}ppa1_${platform}.deb && unxz data.tar.xz && tar xf data.tar && rm data.tar && mkdir DEBIAN && mv control.tar.gz DEBIAN && cd DEBIAN && tar xfz control.tar.gz && rm control.tar.gz )
     rm bin/tmp/love_${LOVE_VERSION}ppa1_${platform}.deb
-    sed -i 's/Package: love/Package: ${GAME_NAME}/g' bin/tmp/DEBIAN/control
-    sed -i 's/Version: ${LOVE_VERSION}ppa1/Version: ${BUILD_NR}/g' bin/tmp/DEBIAN/control
-    sed -i 's/Homepage: http:\/\/love2d\.org/Homepage: http:\/\/www.thi.de/g' bin/tmp/DEBIAN/control
+    sed -i "s/Package: love/Package: ${GAME_NAME}/g" bin/tmp/DEBIAN/control
+    sed -i "s/Version: ${LOVE_VERSION}ppa1/Version: ${BUILD_NR}/g" bin/tmp/DEBIAN/control
+    sed -i "s/Homepage: http:\/\/love2d\.org/Homepage: http:\/\/www.thi.de/g" bin/tmp/DEBIAN/control
     head -n -2 bin/tmp/DEBIAN/control > bin/tmp/DEBIAN/control.new
     echo "Description: Projekt INF/FFI SS 2016 - Based on LOVE 2D" >> bin/tmp/DEBIAN/control.new
     rm bin/tmp/DEBIAN/control && mv bin/tmp/DEBIAN/control.new bin/tmp/DEBIAN/control
