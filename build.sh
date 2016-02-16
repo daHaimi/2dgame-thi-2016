@@ -70,6 +70,8 @@ for platform in {i386,amd64}; do
     head -n -2 bin/tmp/DEBIAN/control > bin/tmp/DEBIAN/control.new
     echo "Description: Projekt INF/FFI SS 2016 - Based on LOVE 2D" >> bin/tmp/DEBIAN/control.new
     rm bin/tmp/DEBIAN/control && mv bin/tmp/DEBIAN/control.new bin/tmp/DEBIAN/control
+    mv bin/tmp/usr/share/applications/love.desktop bin/tmp/usr/share/applications/${GAME_NAME}.desktop
+    sed -i "s/love/${GAME_NAME}/g" bin/tmp/usr/share/applications/${GAME_NAME}.desktop
     cat bin/tmp/usr/bin/love bin/game.love > bin/tmp/usr/bin/${GAME_NAME}
     rm bin/tmp/usr/bin/love
     chmod +x bin/tmp/usr/bin/${GAME_NAME}
