@@ -4,6 +4,8 @@ export LUA_PATH="/usr/local/lib/lua/5.1/luacov-cobertura/src/?.lua;/usr/local/sh
 export LUA_CPATH="/usr/local/lib/lua/5.1/?.so;/root/.luarocks/lib/lua/5.1/?.so;./?.so;/usr/local/lib/lua/5.1/?.so;/usr/lib/x86_64-linux-gnu/lua/5.1/?.so;/usr/lib/lua/5.1/?.so;/usr/local/lib/lua/5.1/loadall.so;$LUA_CPATH"
 
 GAME_NAME="$1"
+BUILD_NR="$2"
+STUB_DIR=/var/lib/love/stubs
 
 # Dokumentation
 mkdir -p doc/
@@ -32,37 +34,42 @@ echo "</body></html>" >> documents/index.html
 rm -rf bin 2> /dev/null
 mkdir bin
 
+# Stubs downloaden
+/usr/local/bin/update-stubs
+
+# Aktuelle love-Version feststellen
+LOVE_VERSION=`${STUB_DIR}/fetch-current-version`
+
 # Love datei erstellen
 ( cd src && zip -r ../bin/game.love . )
 
-# Mac OS X APP erstellen
-cp bin/game.love stubs/macosx/${GAME_NAME}.app/Contents/Resources/${GAME_NAME}.love
-( cd stubs/macosx && zip -r ../../bin/macosx.zip . )
-rm stubs/macosx/${GAME_NAME}.app/Contents/Resources/${GAME_NAME}.love
+# Mac OS X APP erstellen und packen
+unzip ${STUB_DIR}/love-${LOVE_VERSION}-macosx-x64.zip -d bin/
+mv bin/love.app bin/${GAME_NAME}.app
+cp bin/game.love bin/${GAME_NAME}.app/Contents/Resources/${GAME_NAME}.love
+( cd bin && zip -r ${GAME_NAME}-${BUILD_NR}-macosx.zip ${GAME_NAME}.app )
+rm -r bin/${GAME_NAME}.app
 
 # Windows EXE erstellen und packen
-# amd64
-cp stubs/windows/amd64/${GAME_NAME}/${GAME_NAME}.exe tmp
-cat bin/game.love >> stubs/windows/amd64/${GAME_NAME}/${GAME_NAME}.exe
-( cd stubs/windows/amd64 && zip -r ../../../bin/win64.zip . )
-mv tmp stubs/windows/amd64/${GAME_NAME}/${GAME_NAME}.exe
-# i386
-cp stubs/windows/i386/${GAME_NAME}/${GAME_NAME}.exe tmp
-cat bin/game.love >> stubs/windows/i386/${GAME_NAME}/${GAME_NAME}.exe
-( cd stubs/windows/i386 && zip -r ../../../bin/win32.zip . )
-mv tmp stubs/windows/i386/${GAME_NAME}/${GAME_NAME}.exe
+for platform in win{64,32}; do
+    unzip ${STUB_DIR}/love-${LOVE_VERSION}-${platform}.zip bin/
+    cat bin/game.love >> bin/love-${LOVE_VERSION}-${platform}/love.exe
+    ( cd bin && zip -r ${GAME_NAME}-${BUILD_NR}-${platform}.zip love-${LOVE_VERSION}-${platform} )
+    rm -r bin/love-${LOVE_VERSION}-${platform}
+done
 
 # Ubuntu DEB packete erstellen.
-# amd64
-cat stubs/ubuntu/amd64/usr/bin/love bin/game.love > stubs/ubuntu/amd64/usr/bin/${GAME_NAME}
-chmod +x stubs/ubuntu/amd64/usr/bin/${GAME_NAME}
-dpkg-deb --build stubs/ubuntu/amd64
-mv stubs/ubuntu/amd64.deb bin/${GAME_NAME}-amd64.deb
-# i386
-cat stubs/ubuntu/i386/usr/bin/love bin/game.love > stubs/ubuntu/i386/usr/bin/${GAME_NAME}
-chmod +x stubs/ubuntu/i386/usr/bin/${GAME_NAME}
-dpkg-deb --build stubs/ubuntu/i386
-mv stubs/ubuntu/i386.deb bin/${GAME_NAME}-i386.deb
+for platform in {i386,amd64}; do
+    mkdir bin/tmp
+    cp ${STUB_DIR}/love_${LOVE_VERSION}ppa1_${platform}.deb bin/tmp
+    ( cd bin/tmp && ar -x love_${LOVE_VERSION}ppa1_${platform}.deb && unxz data.tar.xz && tar xf data.tar \\
+        && mkdir DEBIAN && mv control.tar.gz DEBIAN && cd DEBIAN && tar xfz control.tar.gz )
+    rm bin/love_${LOVE_VERSION}ppa1_${platform}.deb
+    cat bin/tmp/usr/bin/love bin/game.love > bin/tmp/usr/bin/${GAME_NAME}
+    chmod +x bin/tmp/usr/bin/${GAME_NAME}
+    dpkg-deb --build bin/tmp
+    mv bin/tmp.deb bin/${GAME_NAME}-${platform}.deb
+done
 
 # Android APK erstellen
 #rm -rf tmp 2> /dev/null
