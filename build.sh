@@ -74,6 +74,7 @@ for platform in {i386,amd64}; do
     chmod +x bin/tmp/usr/bin/${GAME_NAME}
     dpkg-deb --build bin/tmp
     mv bin/tmp.deb bin/${GAME_NAME}-${BUILD_NR}-${platform}.deb
+    rm -rf bin/tmp
 done
 
 # Android APK erstellen
