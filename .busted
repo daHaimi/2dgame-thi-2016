@@ -1,0 +1,7 @@
+return {
+  default = {
+    ROOT = "Tests",
+    pattern = "test_",
+    lang = "de"
+  }
+}

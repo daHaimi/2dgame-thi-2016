@@ -1,0 +1,10 @@
+/documents/*lock.*.fodt#
+.DS_Store
+/doc/
+!/documents/*.fodt
+/documents/*.html
+*.sublime-workspace
+luacov.*.out
+/bin/
+*.tap
+**/*.swp
