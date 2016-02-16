@@ -71,6 +71,7 @@ for platform in {i386,amd64}; do
     echo "Description: Projekt INF/FFI SS 2016 - Based on LOVE 2D" >> bin/tmp/DEBIAN/control.new
     rm bin/tmp/DEBIAN/control && mv bin/tmp/DEBIAN/control.new bin/tmp/DEBIAN/control
     cat bin/tmp/usr/bin/love bin/game.love > bin/tmp/usr/bin/${GAME_NAME}
+    rm bin/tmp/usr/bin/love
     chmod +x bin/tmp/usr/bin/${GAME_NAME}
     dpkg-deb --build bin/tmp
     mv bin/tmp.deb bin/${GAME_NAME}-${BUILD_NR}-${platform}.deb
