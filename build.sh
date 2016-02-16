@@ -63,11 +63,16 @@ for platform in {i386,amd64}; do
     mkdir bin/tmp
     cp ${STUB_DIR}/love_${LOVE_VERSION}ppa1_${platform}.deb bin/tmp
     ( cd bin/tmp && ar -x love_${LOVE_VERSION}ppa1_${platform}.deb && unxz data.tar.xz && tar xf data.tar && mkdir DEBIAN && mv control.tar.gz DEBIAN && cd DEBIAN && tar xfz control.tar.gz )
-    rm bin/love_${LOVE_VERSION}ppa1_${platform}.deb
+    rm bin/tmp/love_${LOVE_VERSION}ppa1_${platform}.deb
+    sed -i s/Package: love/Package: ${GAME_NAME}/g bin/tmp/DEBIAN/control
+    sed -i s/Version: ${LOVE_VERSION}ppa1/Version: ${BUILD_NR}/g bin/tmp/DEBIAN/control
+    sed -i s/Homepage: http:\/\/love2d\.org/Homepage: http:\/\/www.thi.de/g bin/tmp/DEBIAN/control
+    head -n8 bin/tmp/DEBIAN/control > bin/tmp/DEBIAN/control
+    echo "Description: Projekt INF/FFI SS 2016 - Based on LOVE 2D" >> bin/tmp/DEBIAN/control
     cat bin/tmp/usr/bin/love bin/game.love > bin/tmp/usr/bin/${GAME_NAME}
     chmod +x bin/tmp/usr/bin/${GAME_NAME}
     dpkg-deb --build bin/tmp
-    mv bin/tmp.deb bin/${GAME_NAME}-${platform}.deb
+    mv bin/tmp.deb bin/${GAME_NAME}-${BUILD_NR}-${platform}.deb
 done
 
 # Android APK erstellen
