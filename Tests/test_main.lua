@@ -1,0 +1,5 @@
+describe("Unit test for main.lua", function()
+    it("Example unit test", function()
+      assert.truthy("Yup.")
+    end)
+end)
