@@ -8,3 +8,4 @@ luacov.*.out
 /bin/
 *.tap
 **/*.swp
+.idea/
