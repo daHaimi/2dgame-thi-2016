@@ -1,11 +1,14 @@
 # Brainstorming
 
 ## Maps
+
 ### Kanalisation
+
 - Krokodil
 - Ratte
 - Tote Goldfische
-- Ninja Turtle
+- Ninja Turtle / Schildkröten
+- Anglerfisch
 - Ehering
 - Schuhe
 - "Hanky"
@@ -19,124 +22,106 @@
 - Luftblasen
 - Athemmaske
 - Handy
+
+
 ### Canyon
+
+- Eichhörnchen
+- Bären
 - Vögel
-- Ruksacktouristen
+- (Ruksack)touristen
 - Äste
 - Eier
 - Fledermäuse
+
+
 ### Space
+
+ColaRakete (er hat einen Luftballon verloren)
+
 - ISS
 - Vögel
 - Flugzeuge
 - Heli
-- Baumgartner
+- (Falschirmspringer) Baumgartner
 - Asteroiden
-- Marsianer
 - Weltraumnazis
+- Helikopter
+- Satteliten
+- Weltraumnazis
+- Marsmännchen
+
 
 ## Achievments
+
 - Für Boss
 - für die freigespielten Stages
 - Anzahl gefangener Fische
 - "Found Nemo"
+
+
 ## Lexikon
+
 ## Shop
-### Nicht Funktional
-- Skins
-  - Hochzeitskleid (schlatet Ehering frei)
+
+### Nicht Funktional - Skins
+
+- Hochzeitskleid (schlatet Ehering frei)
+
+
 ### Global
+
 - Leinenlänge
 - Rüstung
 - Waffe
+
+
 ### Kanalisation
+
 - Athemmaske
 - Munition
 - Sauerstoff
 
+
 ### Bungee Jump
-- 
 
 ### Rakete
-ColaRakete (er hat einen Luftballon verloren)
 
 ## Spieldynamik
 - Tag/Nacht Zyklus
 - abbruchfunktion beim einholen
 - schneller werdendes Einholen
 - Phase 3 optionales Minigame
-- 
+
 
 #### Entity
+
 - Geschwindigkeit
 - Spawnhöhe
 - HP
 - Hitbox(en)
 - Geld
-- 
-
-=======
-**Brainstorming**
 
 
-**Charakter**
+## Fanggerät
 
-Hamster
-
-
-**Level**
-
-Kanalisation
-
- - Ratten
- - Schildkröten
- - Krokodil
- - Eheringe
- - Schuhe
- - "Hanky"
- - Anglerfish
- - "Nemo"
- - Müll
-
-Canyon
-
- - Touristen
- - Vögel
- - Eichhörnchen
- - Bären
- - Äste
- - Fledermäuse
-
-Space
-
- - ISS
- - Vögel
- - Flugzeuge
- - Falschirmspringer
- - Helikopter
- - Asteroiden
- - Satteliten
- - Weltraumnazis
- - Marsmännchen
-
-
-**Fanggerät**
-
-Kanalisation
+### Kanalisation
 
  - Hamster an der Leine
  - Hamster mit Sauerstoffflasche
+ 
 
-Canyon
+### Canyon
 
  - Bungee
+ 
 
-Space
+### Space
 
  - Rakete
 
 
-**Eigenschaften von fangbaren Objekten**
+##  Eigenschaften von fangbaren Objekten
 
 - Geschwindigkeit
 - Anzahl
@@ -144,7 +129,7 @@ Space
 - Position
 
 
-**Diverses**
+## Diverses
 
 - Achievements
 - Tag/Nacht Zyklus
