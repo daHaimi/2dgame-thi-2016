@@ -6,8 +6,8 @@ Hintergrund
 ja
 
 ## Steuerung
-maus - pc
-love.joystick - android, ios
-? - windows phone
+ - maus - pc
+ - love.joystick - android, ios
+ - ? - windows phone
 
 ## sind alle Leben un joker verbraucht beginnt phase 2 
