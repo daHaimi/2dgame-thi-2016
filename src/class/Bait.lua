@@ -15,16 +15,15 @@ local Bait = Class{
     upgradeMoney = 1;
     upgradeMoreLife = 0;
     upgradeGodMode = 0;
-    
-    
-
+   
 };
 
 function Bait:checkUpgrades()
     self.money = self.money * 1 + 0.2 + self.upgradeMoney;
     self.life = self.life + self.upgradeMoreLife;
-    self.speed = self.speed + 100 * self.upgradeSpeed;
+    self.speed = self.speed + 100 * _G._persTable.upgrades.speedUp;
 end
+
 function Bait:draw()
     love.graphics.setColor(127, 0, 255);
     love.graphics.rectangle("fill", self.posX, (self.winDim[2] / 2) - (self.size / 2) , self.size, self.size);

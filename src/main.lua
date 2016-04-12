@@ -7,6 +7,24 @@ local winDim = {};
 local curLevel = nil;
 local player = nil;
 
+--- globale persistance table
+_G._persTable = {
+    statistic = {};
+    achivments = {};
+    config = {};
+    fishCaught = {};
+    money = 0;
+    lastLevel = 1;
+};
+--- upgrades list in persTable
+_G._persTable.upgrades = {
+    speedUp = 1;
+    moneyMult = 1;
+    moreLife = 0;
+    godMode = 0;
+  
+  }
+
 -- Bootstrap
 function love.load()
     local _, _, flags = love.window.getMode()
