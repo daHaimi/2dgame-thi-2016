@@ -3,10 +3,27 @@ Class = require "lib.hump.class";
 Bait = require "class.Bait"
 Level = require "class.Level"
 
-
 local winDim = {};
 local curLevel = nil;
 local player = nil;
+
+--- globale persistance table
+_G._persTable = {
+    statistic = {};
+    achivments = {};
+    config = {};
+    fishCaught = {};
+    money = 0;
+    lastLevel = 1;
+};
+--- upgrades list in persTable
+_G._persTable.upgrades = {
+    speedUp = 1;
+    moneyMult = 1;
+    moreLife = 0;
+    godMode = 0;
+  
+  }
 
 -- Bootstrap
 function love.load()
@@ -17,6 +34,7 @@ function love.load()
     love.window.setMode(winDim[1], winDim[2], flags);
     curLevel = Level(love.graphics.newImage("assets/testbg.png"), winDim);
     player = Bait(winDim);
+    player:checkUpgrades();
 end
 
 
@@ -46,3 +64,4 @@ function love.mousemoved(x, y)
         end  
     end
 end
+
