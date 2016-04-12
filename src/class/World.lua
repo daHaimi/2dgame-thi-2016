@@ -5,18 +5,24 @@ local World = Class{
     init = function(self, backgroundPath, windowDimensions)
         self.background = backgroundPath;
         self.windowDimensions = windowDimensions;
-        curLevel = Level(love.graphics.newImage("backgroundPath"), windowDimensions);
+        self.curLevel = Level(love.graphics.newImage("backgroundPath"), windowDimensions);
     end;
-    curLevel = Level(love.graphics.setBackgroundColor(255, 255, 255));
+    curLevel = Level(love.graphics.setBackgroundColor(255, 255, 255), windowDimensions);
     windowDimensions = {};
-    lowerBoarder = Math.inf; -- only for the beginning! Change this to a balanced value.
+    lowerBoarder = 99999 -- Math.inf; -- only for the beginning! Change this to a balanced value.
     upperBoarder = 0;
 };
 
 -- Set a new background image for the world
 -- @param backgroundPath The relative path to the picture
 function World:changeImage(backgroundPath)
-    curLevel = Level(love.graphics.newImage("backgroundPath"), windowDimensions);
+    self.curLevel = Level(love.graphics.newImage("backgroundPath"), windowDimensions);
+end;
+
+-- Returns the love level object.
+-- @return Returns the love level object.
+function World:getCurLevel()
+    return self.curLevel;
 end;
 
 -- Set the value for the lower boarder
