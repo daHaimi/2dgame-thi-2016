@@ -17,7 +17,8 @@ local Bait = Class{
     upgradeGodMode = 0;
    
 };
-
+--- TODO need balancing
+--- a function to check wich upgrades are active for the bait 
 function Bait:checkUpgrades()
     self.money = self.money * 1 + 0.2 + self.upgradeMoney;
     self.life = self.life + self.upgradeMoreLife;
@@ -29,12 +30,5 @@ function Bait:draw()
     love.graphics.rectangle("fill", self.posX, (self.winDim[2] / 2) - (self.size / 2) , self.size, self.size);
 end
 
-function Bait:setSpeed(x)
-    self.speed = x;
-end
-
-function Bait:addLife(x)
-    self.life = self.life + x;
-end
 
 return Bait;
