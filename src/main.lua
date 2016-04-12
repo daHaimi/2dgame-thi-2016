@@ -3,7 +3,6 @@ Class = require "lib.hump.class";
 Bait = require "class.Bait"
 Level = require "class.Level"
 
-
 local winDim = {};
 local curLevel = nil;
 local player = nil;
@@ -17,6 +16,7 @@ function love.load()
     love.window.setMode(winDim[1], winDim[2], flags);
     curLevel = Level(love.graphics.newImage("assets/testbg.png"), winDim);
     player = Bait(winDim);
+    player:checkUpgrades();
 end
 
 
@@ -46,3 +46,4 @@ function love.mousemoved(x, y)
         end  
     end
 end
+
