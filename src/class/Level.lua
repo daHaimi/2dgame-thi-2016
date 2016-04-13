@@ -3,22 +3,22 @@
 -- @param winDim The dimensions of the window
 local Level = Class{
     init = function(self, backgroundPath, winDim, direction)
-        bgimg = love.graphics.newImage(backgroundPath)
+        self.bg = love.graphics.newImage(backgroundPath);
+        self.bg:setWrap("repeat", "repeat");
         self.backgroundPath = backgroundPath;
         self.winDim = winDim;
-        self.posY = winDim[2] / 2;
+        self.posY = (winDim[2] / 2);  --startpos
         self.direction = direction;
-        bgimg:setWrap("repeat", "repeat");
-        self.bg = bgimg
-        self.bgq = love.graphics.newQuad(0, 0, winDim[1], 20000, bgimg:getWidth(), bgimg:getHeight());
+        self.bgq = love.graphics.newQuad(0, 0, winDim[1], 20000, 
+            self.bg:getWidth(), self.bg:getHeight());
     end,
     posY = 0;
     direction = 1; -- -1 means up and 1 means down
     bg = nil;
     bgq = nil;
     winDim = {};
-    lowerBoarder = 2500; -- Math.inf; -- only for the beginning! Change this to a balanced value.
-    upperBoarder = 0;
+    lowerBoarder = -1000;   -- if you want deeper you should decrease this value!
+    upperBoarder = 1000;    -- if you want higher you should increase this value!
 };
 
 -- Update the game state. Called every frame.
@@ -26,7 +26,8 @@ local Level = Class{
 -- last time this function was called.
 -- @param bait The bait object, which stands for the user.
 function Level:update(dt, bait)
-    if self.direction == 1 and self.posY <= self.lowerBoarder and self.posY >= self.upperBoarder then
+    if self.direction == 1 and self.posY > self.lowerBoarder 
+    and self.posY < self.upperBoarder then
         self.sizeY = self.winDim[2] + math.ceil(dt * bait.speed);
         self.posY = self.posY - math.ceil(dt * bait.speed);
     end
