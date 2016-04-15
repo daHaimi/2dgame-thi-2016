@@ -1,6 +1,7 @@
 -- The class Level contains all informations about the world/level
 -- @param backgroundPath The relative path to the picture
 -- @param winDim The dimensions of the window
+-- @param direction The y direction (-1 means up and 1 means down)
 local Level = Class{
     init = function(self, backgroundPath, winDim, direction)
         self.bg = love.graphics.newImage(backgroundPath);
@@ -77,6 +78,12 @@ end;
 -- other values stands for an error.
 function Level:getDirection()
     return self.direction;
+end;
+
+-- Returns the current y position.
+-- @return Returns the current y position.
+function Level:getYPos()
+    return self.posY;
 end;
 
 return Level;
