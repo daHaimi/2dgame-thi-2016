@@ -17,12 +17,12 @@ local Level = Class{
     bg = nil;
     bgq = nil;
     winDim = {};
-    lowerBoarder = -1000;   -- if you want deeper you should decrease this value!
+    lowerBoarder = -2000;   -- if you want deeper you should decrease this value!
     upperBoarder = 1000;    -- if you want higher you should increase this value!
 };
 
 -- Update the game state. Called every frame.
--- @param dt Delta time  is the amount of seconds since the 
+-- @param dt Delta time is the amount of seconds since the 
 -- last time this function was called.
 -- @param bait The bait object, which stands for the user.
 function Level:update(dt, bait)
@@ -34,6 +34,7 @@ function Level:update(dt, bait)
 end
 
 -- Draw on the screen. Called every frame.
+-- Draws the background and the bait on the screen.
 -- @param bait The bait object, which stands for the user.
 function Level:draw(bait)
     love.graphics.setColor(255, 255, 255);
@@ -41,23 +42,28 @@ function Level:draw(bait)
     bait:draw();
 end
 
--- Set a new background image for the world
--- @param backgroundPath The relative path to the picture
-function Level:changeImage(backgroundPath)
-    self.backgroundPath = backgroundPath;
-    self.background = love.graphics.newImage(backgroundPath);
-end;
-
--- Set the value for the lower boarder
--- @param newBoarderVal The new lower boarder value
+-- Set the value for the lower boarder.
+-- @param newBoarderVal The new lower boarder value.
 function Level:setLowerBoarder(newBoarderVal)
     self.lowerBoarder = newBoarderVal;
 end;
 
--- Returns the value of the actual lower boarder
--- @return Returns the value of the actual lower boarder
+-- Returns the value of the actual lower boarder.
+-- @return Returns the value of the actual lower boarder.
 function Level:getLowerBoarder()
     return self.lowerBoarder;
+end;
+
+-- Set the value for the upper boarder.
+-- @param newBoarderVal The new upper boarder value.
+function Level:setUpperBoarder(newBoarderVal)
+    self.upperBoarder = newBoarderVal;
+end;
+
+-- Returns the value of the actual upper boarder.
+-- @return Returns the value of the actual upper boarder.
+function Level:getUpperBoarder()
+    return self.upperBoarder;
 end;
 
 -- Set the direction of the current Level.
