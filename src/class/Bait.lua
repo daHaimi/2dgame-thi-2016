@@ -25,7 +25,7 @@ end
 
 function Bait:draw()
     love.graphics.setColor(127, 0, 255);
-    yPos = (self.winDim[2] / 2) - (self.size / 2)
+    local yPos = (self.winDim[2] / 2) - (self.size / 2)
     love.graphics.rectangle("fill", self.posX, yPos, self.size, self.size);
 end
 
