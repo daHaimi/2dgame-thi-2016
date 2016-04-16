@@ -1,4 +1,4 @@
--- The class Level contains all informations about the world/level
+--- The class Level contains all informations about the world/level
 -- @param backgroundPath The relative path to the picture
 -- @param winDim The dimensions of the window
 -- @param direction The y direction (-1 means up and 1 means down)
@@ -22,7 +22,7 @@ local Level = Class{
     upperBoarder = 1000;    -- if you want higher you should increase this value!
 };
 
--- Update the game state. Called every frame.
+--- Update the game state. Called every frame.
 -- @param dt Delta time is the amount of seconds since the 
 -- last time this function was called.
 -- @param bait The bait object, which stands for the user.
@@ -34,7 +34,7 @@ function Level:update(dt, bait)
     end
 end
 
--- Draw on the screen. Called every frame.
+--- Draw on the screen. Called every frame.
 -- Draws the background and the bait on the screen.
 -- @param bait The bait object, which stands for the user.
 function Level:draw(bait)
@@ -43,44 +43,44 @@ function Level:draw(bait)
     bait:draw();
 end
 
--- Set the value for the lower boarder.
+--- Set the value for the lower boarder.
 -- @param newBoarderVal The new lower boarder value.
 function Level:setLowerBoarder(newBoarderVal)
     self.lowerBoarder = newBoarderVal;
 end;
 
--- Returns the value of the actual lower boarder.
+--- Returns the value of the actual lower boarder.
 -- @return Returns the value of the actual lower boarder.
 function Level:getLowerBoarder()
     return self.lowerBoarder;
 end;
 
--- Set the value for the upper boarder.
+--- Set the value for the upper boarder.
 -- @param newBoarderVal The new upper boarder value.
 function Level:setUpperBoarder(newBoarderVal)
     self.upperBoarder = newBoarderVal;
 end;
 
--- Returns the value of the actual upper boarder.
+--- Returns the value of the actual upper boarder.
 -- @return Returns the value of the actual upper boarder.
 function Level:getUpperBoarder()
     return self.upperBoarder;
 end;
 
--- Set the direction of the current Level.
+--- Set the direction of the current Level.
 -- @param direction Stands for the direction. 1 means down and -1 means up
 function Level:setDirection(direction)
     self.direction = direction;
 end;
 
--- Returns the direction of the current map.
+--- Returns the direction of the current map.
 -- @return 1 means down and -1 means up all and 
 -- other values stands for an error.
 function Level:getDirection()
     return self.direction;
 end;
 
--- Returns the current y position.
+--- Returns the current y position.
 -- @return Returns the current y position.
 function Level:getYPos()
     return self.posY;
