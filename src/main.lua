@@ -62,8 +62,9 @@ end
 -- Callback function triggered when the mouse is moved. 
 -- @param x The mouse position on the x-axis.
 -- @param y The mouse position on the y-axis.
-function love.mousemoved(x, y)
+function love.mousemoved(x, y, dx, dy)
     if player then
+      player.posXdt = dx;
         if x < (player.size / 2) then
             player.posX = 0;
         else 
