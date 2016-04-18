@@ -1,15 +1,15 @@
 local Bait = Class {
     init = function(self, winDim)
         self.winDim = winDim;
-        self.posX = (winDim[1] / 2) - (self.size / 2);
-        self.posXact = self.posX;
+        self.posXBait = (winDim[1] / 2) - (self.size / 2);
+        local yPos = (self.winDim[2] / 2) - (self.size / 2)
+        love.mouse.setPosition(self.posXBait, yPos);
     end;
     size = 10;
     speed = 100;
-    posX = 0;
-    posXact = 0;
-    posXdt = 0;
-    maxSpeedX = 8;
+    posXMouse = 0;
+    posXBait = 0;
+    maxSpeedX = 5;
     winDim = {};
     life = 1;
     money = 0;
@@ -29,39 +29,23 @@ end
 
 function Bait:draw()
     love.graphics.setColor(127, 0, 255);
-    local yPos = (self.winDim[2] / 2) - (self.size / 2)
-    local xPos = self:identLimitedPosX()
+    local yPos = (self.winDim[2] / 2) - (self.size / 2);
+    local xPos = self:getCappedPosX();
     love.graphics.rectangle("fill", xPos, yPos, self.size, self.size);
 end
 
-function Bait:identLimitedPosX()
-  if (self.posXdt >= 0) then 
-    if (self.posXdt > self.maxSpeedX) then 
-      posX = self.posXact + self.maxSpeedX;
-    else
-      if self.posX > self.posXact*1.08 then
-        posX = self.posXact + self.maxSpeedX;
-      else
-        posX = self.posX;
-      end
-    end
-  else 
-    if self.posXdt < ((self.maxSpeedX)*(-1)) then 
-      posX = self.posXact - self.maxSpeedX;
-    else
-      if self.posX < self.posXact*0.92 then
-        posX = self.posXact - self.maxSpeedX;
-      else
-        posX = self.posX; 
-      end
-    end
+--- Determines the capped X position of the Bait (SpeedLimit)
+-- @return The actual X position of the Bait
+function Bait:getCappedPosX()
+  local delta = self.posXMouse - self.posXBait
+  if delta > self.maxSpeedX  then
+    posX = self.posXBait + self.maxSpeedX;
+  elseif delta < self.maxSpeedX*(-1) then
+    posX = self.posXBait - self.maxSpeedX;
+  else
+    posX = self.posXMouse;
   end
-  if posX >= self.winDim[1] then
-    posX = self.winDim[1] - self.size;
-  elseif posX < 0 then
-    posX = 0;
-  end
-  self.posXact = posX;
+  self.posXBait = posX;
   return posX;
 end
 
