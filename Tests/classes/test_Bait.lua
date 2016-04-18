@@ -1,7 +1,7 @@
 -- Lua 5.1 Hack
 _G.math.inf = 1 / 0
 
-testClass = require "main"
+testClass = require "src.main"
 
 describe("Test unit test suite", function()
     local locInstance;
