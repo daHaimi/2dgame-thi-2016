@@ -21,7 +21,8 @@ _G._persTable.upgrades = {
     moneyMult = 0; --- "0" means no additional money
     moreLife = 0; --- amount of additional lifes
     godMode = 0; --- 
-  
+    mapBreakthrough1 = 0; --- can you access the first map limit? 0 = no, 1 = yes
+    mapBreakthrough2 = 0; --- can you access the second map limit? 0 = no, 1 = yes
   }
 
 -- Local variables
