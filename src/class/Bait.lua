@@ -1,3 +1,6 @@
+--- Class for the Bait swimming for Phase 1 and 2
+-- @param winDim window Size
+--
 local Bait = Class {
     init = function(self, winDim)
         self.winDim = winDim;
@@ -13,20 +16,22 @@ local Bait = Class {
     winDim = {};
     life = 1;
     money = 0;
-    --- persistens ersatz
-    upgradeSpeed = 10;
-    upgradeMoney = 1;
-    upgradeMoreLife = 0;
-    upgradeGodMode = 0;
 };
+
 --- TODO need balancing
 -- a function to check wich upgrades are active for the bait
 function Bait:checkUpgrades()
-    self.money = self.money * 1 + 0.2 + self.upgradeMoney;
-    self.life = self.life + self.upgradeMoreLife;
-    self.speed = self.speed + 100 * _G._persTable.upgrades.speedUp;
+    if _G._persTable.upgrades.moreLife > 0 then
+        self.life = self.life + _G._persTable.upgrades.moreLife;
+    end
+    --- speed up while phase 1 and 2
+    if _G._persTable.upgrades.speedUp > 0 then
+        self.speed = self.speed * (1 + _G._persTable.upgrades.speedUp);
+    end
 end
 
+--- implements drawing interface
+--
 function Bait:draw()
     love.graphics.setColor(127, 0, 255);
     local yPos = (self.winDim[2] / 2) - (self.size / 2);
