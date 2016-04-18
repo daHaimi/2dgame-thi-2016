@@ -1,14 +1,14 @@
 -- Lua 5.1 Hack
 _G.math.inf = 1 / 0
 
-testClass = require "main"
+testClass = require "class.Bait"
 
 describe("Test unit test suite", function()
     local locInstance;
     local defaultDim;
 
     before_each(function()
-        defaultDim = { 160, 90 }
+        defaultDim = { 160, 90 };
         locInstance = testClass(defaultDim);
     end)
 
