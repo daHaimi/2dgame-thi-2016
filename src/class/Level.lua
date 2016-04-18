@@ -23,6 +23,8 @@ local Level = Class{
     winDim = {};
     lowerBoarder = -2000;   -- if you want deeper you should decrease this value!
     upperBoarder = 1000;    -- if you want higher you should increase this value!
+    mapBreakthroughBonus1 = -1000;
+    mapBreakthroughBonus2 = -1000;
 };
 
 --- Update the game state. Called every frame.
@@ -34,6 +36,15 @@ function Level:update(dt, bait)
     and self.posY < self.upperBoarder then
         self.sizeY = self.winDim[2] + math.ceil(dt * bait.speed);
         self.posY = self.posY - math.ceil(dt * bait.speed);
+    elseif self.posY < self.upperBoarder 
+    and _persTable.upgrades.mapBreakthrough1 == 1 then
+        self.lowerBoarder = self.lowerBoarder + self.mapBreakthroughBonus1;
+        _persTable.upgrades.mapBreakthrough1 = 0;
+    elseif self.posY < self.upperBoarder 
+    and _persTable.upgrades.mapBreakthrough1 == 0 
+    and _persTable.upgrades.mapBreakthrough2 == 1 then
+        self.lowerBoarder = self.lowerBoarder + self.mapBreakthroughBonus2;
+        _persTable.upgrades.mapBreakthrough2 = 0;
     end
 end
 
