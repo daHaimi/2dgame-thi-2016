@@ -2,6 +2,9 @@
 -- @param backgroundPath The relative path to the picture
 -- @param winDim The dimensions of the window
 -- @param direction The y direction (-1 means up and 1 means down)
+
+Class = require "lib.hump.class";
+
 local Level = Class{
     init = function(self, backgroundPath, winDim, direction)
         self.bg = love.graphics.newImage(backgroundPath);

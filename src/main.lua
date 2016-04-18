@@ -15,12 +15,12 @@ _G._persTable = {
     money = 0;
     lastLevel = 1;
 };
---- upgrades list in persTable
+--- upgrades list in persTable, "0" means unbought
 _G._persTable.upgrades = {
-    speedUp = 1;
-    moneyMult = 1;
-    moreLife = 0;
-    godMode = 0;
+    speedUp = 0; --- "0" no Speedup
+    moneyMult = 0; --- "0" means no additional money
+    moreLife = 0; --- amount of additional lifes
+    godMode = 0; --- 
   
   }
 
