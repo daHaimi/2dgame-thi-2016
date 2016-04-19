@@ -15,14 +15,16 @@ _G._persTable = {
     money = 0;
     lastLevel = 1;
 };
+
 --- upgrades list in persTable, "0" means unbought
 _G._persTable.upgrades = {
     speedUp = 0; --- "0" no Speedup
     moneyMult = 0; --- "0" means no additional money
     moreLife = 0; --- amount of additional lifes
     godMode = 0; --- 
-  
-};
+    mapBreakthrough1 = 0; --- can you access the first map limit? 0 = no, 1 = yes
+    mapBreakthrough2 = 0; --- can you access the second map limit? 0 = no, 1 = yes
+  };
 
 -- Local variables
 local winDim = {};
