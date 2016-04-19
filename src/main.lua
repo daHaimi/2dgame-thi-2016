@@ -22,7 +22,7 @@ _G._persTable.upgrades = {
     moreLife = 0; --- amount of additional lifes
     godMode = 0; --- 
   
-  }
+};
 
 -- Local variables
 local winDim = {};
