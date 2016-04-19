@@ -10,6 +10,12 @@ describe("Unit test for Bait.lua", function()
     
     
     before_each(function()
+        _G.love = {
+            mouse = {
+                setPosition = function(...)  end
+            }
+        }
+            
         locInstance = testClass(locWinDim);
     end)
 
