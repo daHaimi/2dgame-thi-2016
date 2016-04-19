@@ -8,13 +8,16 @@ Class = require "lib.hump.class";
 local Level = Class{
     init = function(self, backgroundPath, winDim, direction)
         self.bg = love.graphics.newImage(backgroundPath);
-        self.bg:setWrap("repeat", "repeat");
+        if self.bg ~= nil then      -- do not remove this if statement or busted will crash
+            self.bg:setWrap("repeat", "repeat");
+        end;
         self.backgroundPath = backgroundPath;
         self.winDim = winDim;
         self.posY = (winDim[2] / 2);  --startpos
         self.direction = direction;
-        self.bgq = love.graphics.newQuad(0, 0, winDim[1], 20000, 
-            self.bg:getWidth(), self.bg:getHeight());
+        if self.bg ~= nil then      -- do not remove this if statement or busted will crash
+            self.bgq = love.graphics.newQuad(0, 0, winDim[1], 20000, self.bg:getWidth(), self.bg:getHeight());
+        end;
     end,
     posY = 0;
     direction = 1;          -- (-1) means up and 1 means down
@@ -23,6 +26,8 @@ local Level = Class{
     winDim = {};
     lowerBoarder = -2000;   -- if you want deeper you should decrease this value!
     upperBoarder = 1000;    -- if you want higher you should increase this value!
+    mapBreakthroughBonus1 = -1000;
+    mapBreakthroughBonus2 = -1000;
 };
 
 --- Update the game state. Called every frame.
@@ -34,6 +39,15 @@ function Level:update(dt, bait)
     and self.posY < self.upperBoarder then
         self.sizeY = self.winDim[2] + math.ceil(dt * bait.speed);
         self.posY = self.posY - math.ceil(dt * bait.speed);
+    elseif self.posY < self.upperBoarder 
+    and _persTable.upgrades.mapBreakthrough1 == 1 then
+        self.lowerBoarder = self.lowerBoarder + self.mapBreakthroughBonus1;
+        _persTable.upgrades.mapBreakthrough1 = 0;
+    elseif self.posY < self.upperBoarder 
+    and _persTable.upgrades.mapBreakthrough1 == 0 
+    and _persTable.upgrades.mapBreakthrough2 == 1 then
+        self.lowerBoarder = self.lowerBoarder + self.mapBreakthroughBonus2;
+        _persTable.upgrades.mapBreakthrough2 = 0;
     end
 end
 
