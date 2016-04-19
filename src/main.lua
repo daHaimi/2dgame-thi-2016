@@ -17,7 +17,7 @@ _G._persTable = {
 };
 --- upgrades list in persTable, "0" means unbought
 _G._persTable.upgrades = {
-    speedUp = 0; --- "0" no Speedup
+    speedUp = 0; --- "0" no Speedup for more looke bait.lua
     moneyMult = 0; --- "0" means no additional money
     moreLife = 0; --- amount of additional lifes
     godMode = 0; --- 
