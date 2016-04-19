@@ -8,13 +8,17 @@ Class = require "lib.hump.class";
 local Level = Class{
     init = function(self, backgroundPath, winDim, direction)
         self.bg = love.graphics.newImage(backgroundPath);
-        self.bg:setWrap("repeat", "repeat");
+        if self.bg ~= nil then
+            self.bg:setWrap("repeat", "repeat");
+        end;
         self.backgroundPath = backgroundPath;
         self.winDim = winDim;
         self.posY = (winDim[2] / 2);  --startpos
         self.direction = direction;
-        self.bgq = love.graphics.newQuad(0, 0, winDim[1], 20000, 
-            self.bg:getWidth(), self.bg:getHeight());
+        if self.bgq ~= nil then 
+            self.bgq = love.graphics.newQuad(0, 0, winDim[1], 20000, 
+                self.bg:getWidth(), self.bg:getHeight());
+        end;
     end,
     posY = 0;
     direction = 1;          -- (-1) means up and 1 means down
