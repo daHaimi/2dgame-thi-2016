@@ -8,16 +8,15 @@ Class = require "lib.hump.class";
 local Level = Class{
     init = function(self, backgroundPath, winDim, direction)
         self.bg = love.graphics.newImage(backgroundPath);
-        if self.bg ~= nil then
+        if self.bg ~= nil then      -- do not remove this if statement or busted will crash
             self.bg:setWrap("repeat", "repeat");
         end;
         self.backgroundPath = backgroundPath;
         self.winDim = winDim;
         self.posY = (winDim[2] / 2);  --startpos
         self.direction = direction;
-        if self.bgq ~= nil then 
-            self.bgq = love.graphics.newQuad(0, 0, winDim[1], 20000, 
-                self.bg:getWidth(), self.bg:getHeight());
+        if self.bg ~= nil then      -- do not remove this if statement or busted will crash
+            self.bgq = love.graphics.newQuad(0, 0, winDim[1], 20000, self.bg:getWidth(), self.bg:getHeight());
         end;
     end,
     posY = 0;
