@@ -1,4 +1,5 @@
 --- The class FishableObjectFactory creates the fishable objects
+
 local FishableObjectFactory = Class {
     init = function(self)
     end;
