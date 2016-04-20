@@ -3,9 +3,12 @@
 FishableObject = require "class.FishableObject";
 
 local fishableObjects = {};
+local swarmsSewer = {};
+
+local currentSwarm = 0;
 
 local SwarmFactory = Class {
-    --- Initializes the SwarmFactory class
+    --- Initializes the swarm factory
     -- @param level The current level
     -- @param player The player object
     init = function(self, level, player)
@@ -14,6 +17,10 @@ local SwarmFactory = Class {
 
         function fishableObject(fishable) 
             fishableObjects[fishable.name] = fishable;
+        end
+        
+        function sewer(swarms) 
+            swarmsSewer = swarms;
         end
         
         dofile("data.lua");
