@@ -24,6 +24,14 @@ _G._persTable.upgrades = {
     moreLife = 0;
     godMode = 0;
   }
+  
+--config options
+_G._persTable.config = {
+    slider1 = 30;--these values are only examples. Options have to be reviewed later
+    slider2 = 80;
+    option1 = true;
+    option2 = false;
+}
 
 -- Local variables
 local winDim = {};
@@ -42,27 +50,25 @@ function love.load()
     curLevel = Level("assets/testbg.png", winDim, 1);
     player = Bait(winDim);
     player:checkUpgrades();
-    Gui:loadValues();--loads option and upgrade values 
-    Gui:clearAll();--set visible of all elements to false
-    Gui:mainMenu();--prints all elements for the main menu
+    Gui:loadValues();--loads option and upgrade values into the gui elements
+    Gui.draw("MainMenu");--draw the Main Menu
 end
 
 -- The love main draw call, which draws every frame on the screen.
 -- This function is called continuously by the love.run().
 function love.draw()
-    Gui:tempDrawText()--[[prints the State name and output values.
-    This function will be replaced in a later version]]--
-    Loveframes.draw()
     if Gui.drawGame() then
         curLevel:draw(player);
     end
+    Loveframes.draw()
+    Gui:tempDrawText()--[[prints the State name and output values.
+    This function will be replaced in a later version]]--
 end
 
 -- This function is called continuously by the love.run().
 -- @param dt Delta time  is the amount of seconds since the 
 -- last time this function was called.
 function love.update(dt)
-    Gui:checkValues();--updates the upgrade and option values
     Gui:tempTextOutput();--[[updates the text output.
     This function will be replaced in a later version]]--
     Loveframes.update(dt);

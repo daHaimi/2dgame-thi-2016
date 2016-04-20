@@ -4,14 +4,7 @@ local Gui = {}
 local guiName = "";--Text in the left upper corner
 local tempOutput = "";--Output values. Will be replaced later
 local state = {"", ""};--The current and last gui state
---All Values you can chance over the gui
---This values need a interface to persTable!!!
-local outputValues = {
-    options = {slider1 = 50, slider2 = 0, option1 = true, option2 = false},
-    upgrades = {upgrade1 = false, upgrade2 = true, upgrade3 = false, 
-        upgrade4 = false, upgrade5 = false},
-    tutorial = false
-};
+
 --Tabel contains all sliders
 local slider = { 
     slider1 = Loveframes.Create("slider"):SetText("slider1")
@@ -41,11 +34,11 @@ local button = {
 --Table contains all checkboxes
 local checkBox = {
     tutorial = Loveframes.Create("checkbox"):SetText("enter tutorial?"),
-    upgrade1 = Loveframes.Create("checkbox"):SetText("upgrade 1"),
-    upgrade2 = Loveframes.Create("checkbox"):SetText("upgrade 2"),
-    upgrade3 = Loveframes.Create("checkbox"):SetText("upgrade 3"),
-    upgrade4 = Loveframes.Create("checkbox"):SetText("upgrade 4"),
-    upgrade5 = Loveframes.Create("checkbox"):SetText("upgrade 5"),
+    upgrade1 = Loveframes.Create("checkbox"):SetText("Speed Up"),
+    upgrade2 = Loveframes.Create("checkbox"):SetText("Money Mult"),
+    upgrade3 = Loveframes.Create("checkbox"):SetText("More Life"),
+    upgrade4 = Loveframes.Create("checkbox"):SetText("God Mode"),
+    upgrade5 = Loveframes.Create("checkbox"):SetText("Upgrade 5"),
     option1 = Loveframes.Create("checkbox"):SetText("Option1"),
     option2 = Loveframes.Create("checkbox"):SetText("Option2"),
 };
@@ -70,7 +63,7 @@ local elementsOnGui = {
 
 --logging the current state in a table
 -- @param actGui The currenet gui state
-function Gui.logMe(actGui)
+function Gui.logState(actGui)
     state[2] = state[1];
     state[1] = actGui;
 end
@@ -104,40 +97,53 @@ function Gui.drawElements(elements, xStart, yStart, dx, dy)
 end
 
 --updates all values which can be chanced by gui elements
---this function is called continuously by the love.update function
-function Gui.checkValues()
-    outputValues.options.option1 = checkBox.option1:GetChecked();
-    outputValues.options.option2 = checkBox.option2:GetChecked();
-    outputValues.options.slider1 = slider.slider1:GetValue();
-    outputValues.options.slider2 = slider.slider2:GetValue();
+--this function is called on every Back-Button clickevent
+function Gui.updateValues()
+    _persTable.config.option1 = checkBox.option1:GetChecked();
+    _persTable.config.option2 = checkBox.option2:GetChecked();
+    _persTable.config.slider1 = slider.slider1:GetValue();
+    _persTable.config.slider2 = slider.slider2:GetValue();
     
-    outputValues.upgrades.upgrade1 = checkBox.upgrade1:GetChecked();
-    outputValues.upgrades.upgrade2 = checkBox.upgrade2:GetChecked();
-    outputValues.upgrades.upgrade3 = checkBox.upgrade3:GetChecked();
-    outputValues.upgrades.upgrade4 = checkBox.upgrade4:GetChecked();
-    outputValues.upgrades.upgrade5 = checkBox.upgrade5:GetChecked();
+    --transform the boolean to 0, 1 or more
+    if checkBox.upgrade1:GetChecked() then
+        _persTable.upgrades.speedUp = 1;
+    else
+        _persTable.upgrades.speedUp = 0;
+    end
+    if checkBox.upgrade2:GetChecked() then
+        _persTable.upgrades.moneyMult = 1;
+    else
+        _persTable.upgrades.moneyMult = 0;
+    end
+    if checkBox.upgrade3:GetChecked() then
+        _persTable.upgrades.moreLife = 1;
+    else
+        _persTable.upgrades.moreLife = 0;
+    end
+    if checkBox.upgrade4:GetChecked() then
+        _persTable.upgrades.godMode = 1;
+    else
+        _persTable.upgrades.godMode = 0;
+    end
 end
 
---convert all values on a specific state into drawable text
+--convert all values into drawable text
 --this function is called continuously by the love.draw function
 --will be replaced in a later version
 function Gui.tempTextOutput()
-    if state[1] == "upgradeMenu" then
+    if state[1] == "MainMenu" then
         tempOutput = 
-        "C1 =" .. tostring(outputValues.upgrades.upgrade1).. "\n" .. 
-        "C2 =" .. tostring(outputValues.upgrades.upgrade2).. "\n" .. 
-        "C3 =" .. tostring(outputValues.upgrades.upgrade3).. "\n" .. 
-        "C4 =" .. tostring(outputValues.upgrades.upgrade4).. "\n" .. 
-        "C5 =" .. tostring(outputValues.upgrades.upgrade5);
-    elseif state[1] == "Options" then
-        tempOutput =
-        "S1 =" .. tostring(outputValues.options.slider1).. "\n" ..
-        "S2 =" .. tostring(outputValues.options.slider2).. "\n" ..
-        "O1 =" .. tostring(outputValues.options.option1).. "\n" .. 
-        "O2 =" .. tostring(outputValues.options.option2).. "\n";
-    elseif state[1] == "MainMenu" then
-        outputValues.tutorial = checkBox.tutorial:GetChecked();
-        tempOutput = "Tutorial =" .. tostring(checkBox.tutorial:GetChecked());
+        "Upgrades:" .. "\n" ..
+        "Speed UP = " .. tostring(_persTable.upgrades.speedUp).. "\n" .. 
+        "Money Mult = " .. tostring(_persTable.upgrades.moneyMult).. "\n" .. 
+        "More Life = " .. tostring(_persTable.upgrades.moreLife).. "\n" .. 
+        "GodMode = " .. tostring(_persTable.upgrades.godMode) .. "\n" .. 
+        "\n" ..
+        "Options:" .. "\n" .. 
+        "S1 =" .. tostring(_persTable.config.slider1).. "\n" ..
+        "S2 =" .. tostring(_persTable.config.slider2).. "\n" ..
+        "O1 =" .. tostring(_persTable.config.option1).. "\n" .. 
+        "O2 =" .. tostring(_persTable.config.option2).. "\n";
     else
         tempOutput = "";
     end
@@ -158,17 +164,57 @@ end
 --set the state of the gui elements on the defined status
 --this function is called exactly once at the beginning of the game
 function Gui.loadValues()
-    checkBox.option1:SetChecked(outputValues.options.option1);
-    checkBox.option2:SetChecked(outputValues.options.option2);
-    slider.slider1:SetValue(outputValues.options.slider1);
-    slider.slider2:SetValue(outputValues.options.slider2);
+    --convert 0, 1 or more in to boolean. A 2 equals multiply checkboxes
+    if _persTable.upgrades.speedUp == 1 then
+        checkBox.upgrade1:SetChecked(true);
+    end
+    if _persTable.upgrades.moneyMult == 1 then
+        checkBox.upgrade2:SetChecked(true);
+    end
+    if _persTable.upgrades.moreLife == 1 then
+        checkBox.upgrade3:SetChecked(true);
+    end
+    if _persTable.upgrades.godMode == 1 then
+        checkBox.upgrade4:SetChecked(true);
+    end
     
-    checkBox.upgrade1:SetChecked(outputValues.upgrades.upgrade1);
-    checkBox.upgrade2:SetChecked(outputValues.upgrades.upgrade2);
-    checkBox.upgrade3:SetChecked(outputValues.upgrades.upgrade3);
-    checkBox.upgrade4:SetChecked(outputValues.upgrades.upgrade4);
-    checkBox.upgrade5:SetChecked(outputValues.upgrades.upgrade5);
+    checkBox.option1:SetChecked(_persTable.config.option1);
+    checkBox.option2:SetChecked(_persTable.config.option2);
+    slider.slider1:SetValue(_persTable.config.slider1);
+    slider.slider2:SetValue(_persTable.config.slider2);
+
 end
+
+--This function draws the gui state
+function Gui.draw(state)
+    Gui.logState(state);--logging the new state
+    Gui.clearAll();--clears all elements of the old state
+    Gui.drawBackground(state);
+    if state == "MainMenu" then
+        Gui.drawElements(elementsOnGui.MainMenu, 10, 10, 0, 30);
+    elseif state == "UpgradeMenu" then
+        Gui.drawElements(elementsOnGui.upgradeMenu, 10, 10, 0, 30);
+    elseif state == "Credits" then
+        Gui.drawElements(elementsOnGui.credits, 10, 10, 0, 30);
+    elseif state == "Wiki" then
+        Gui.drawElements(elementsOnGui.wiki, 10, 10, 0, 30);
+    elseif state == "Achievements" then
+        Gui.drawElements(elementsOnGui.achievements, 10, 10, 0, 30);
+    elseif state == "Options" then
+        Gui.drawElements(elementsOnGui.options, 10, 10, 0, 30);
+    elseif state == "Pause" then
+        Gui.drawElements(elementsOnGui.Pause, 10, 10, 0, 30);
+    elseif state == "InGame" then
+        Gui.drawElements(elementsOnGui.InGame, 10, 10, 0, 30);
+    elseif state == "Level" then
+        Gui.drawElements(elementsOnGui.level, 10, 10, 0, 30);
+    elseif state == "Score" then
+        Gui.drawElements(elementsOnGui.Score, 10, 10, 0, 30);
+    elseif state == "Tutorial" then
+        Gui.drawElements(elementsOnGui.tutorial, 10, 10, 0, 30);
+    end
+end
+
 
 --checking the gui state and return a boolean
 function Gui.drawGame()
@@ -179,103 +225,17 @@ function Gui.drawGame()
         return false;
     end
 end
---build the main menu screen
-function Gui.mainMenu ()
-    Gui.logMe("MainMenu");
-    Gui.clearAll();
-    Gui.drawBackground("MainMenu");
-    Gui.drawElements(elementsOnGui.MainMenu, 10, 10, 0, 30);
-end
 
---build the upgrade menu screen
-function Gui.upgradeMenu ()
-    Gui.logMe("upgradeMenu");
-    Gui.clearAll();
-    Gui.drawBackground("upgradeMenu");
-    Gui.drawElements(elementsOnGui.upgradeMenu, 10, 10, 0, 30);
-end
-
---build the credits screen
-function Gui.credits ()
-    Gui.logMe("Credits");
-    Gui.clearAll();
-    Gui.drawBackground("Credits");
-    Gui.drawElements(elementsOnGui.credits, 10, 10, 0, 30);
-end
-
---build the wiki screen
-function Gui.wiki ()
-    Gui.logMe("Wiki");
-    Gui.clearAll();
-    Gui.drawBackground("Wiki");
-    Gui.drawElements(elementsOnGui.wiki, 10, 10, 0, 30);
-end
-
---build the achievements screen
-function Gui.achievements ()
-    Gui.logMe("Achievements");
-    Gui.clearAll();
-    Gui.drawBackground("Achievements");
-    Gui.drawElements(elementsOnGui.achievements, 10, 10, 0, 30);
-end
-
---build the options screen
-function Gui.options ()
-    Gui.logMe("Options");
-    Gui.clearAll();
-    Gui.drawBackground("Options");
-    Gui.drawElements(elementsOnGui.options, 10, 10, 0, 30);
-end
-
---build the pause screen
-function Gui.Pause ()
-    Gui.logMe("Pause");
-    Gui.clearAll();
-    Gui.drawBackground("Pause");
-    Gui.drawElements(elementsOnGui.Pause, 10, 10, 0, 30);
-end
-
---build the InGame screen (only the name and buttons)
-function Gui.InGame ()
-    Gui.logMe("InGame");
-    Gui.clearAll();
-    Gui.drawBackground("InGame");
-    Gui.drawElements(elementsOnGui.InGame, 10, 10, 0, 30);
-end
-
---build the change level screen
-function Gui.level ()
-    Gui.logMe("Level");
-    Gui.clearAll();
-    Gui.drawBackground("Level");
-    Gui.drawElements(elementsOnGui.level, 10, 10, 0, 30);
-end
-
---build the score screen
-function Gui.Score ()
-    Gui.logMe("Score");
-    Gui.clearAll();
-    Gui.drawBackground("Score");
-    Gui.drawElements(elementsOnGui.Score, 10, 10, 0, 30);
-end
-
---build the tutorial screen
-function Gui.tutorial()
-    Gui.logMe("Tutorial");
-    Gui.clearAll();
-    Gui.drawBackground("Tutorial");
-    Gui.drawElements(elementsOnGui.tutorial, 10, 10, 0, 30);
-end
 
 --Onclick event of the start button
 -- @param obj The clicked button object
 -- @param x The mouse position on the x axis
 -- @param y The mouse position on the y axis
 button.start.OnClick = function(obj, x, y)
-    if outputValues.tutorial == true then
-        Gui.tutorial();
+    if checkBox.tutorial:GetChecked() then
+        Gui.draw("Tutorial");
     else
-        Gui.level();
+        Gui.draw("Level");
     end
 end
 
@@ -284,7 +244,7 @@ end
 -- @param x The mouse position on the x axis
 -- @param y The mouse position on the y axis
 button.upgradeMenu.OnClick = function(obj, x, y)
-    Gui.upgradeMenu();
+    Gui.draw("UpgradeMenu");
 end
 
 --Onclick event of the credits button
@@ -292,7 +252,7 @@ end
 -- @param x The mouse position on the x axis
 -- @param y The mouse position on the y axis
 button.credits.OnClick = function(obj, x, y)
-    Gui.credits();
+    Gui.draw("Credits");
 end
 
 --Onclick event of the wiki button
@@ -300,7 +260,7 @@ end
 -- @param x The mouse position on the x axis
 -- @param y The mouse position on the y axis
 button.wiki.OnClick = function(obj, x, y)
-    Gui.wiki();
+    Gui.draw("Wiki");
 end
 
 --Onclick event of the achievements button
@@ -308,7 +268,7 @@ end
 -- @param x The mouse position on the x axis
 -- @param y The mouse position on the y axis
 button.achievements.OnClick = function(obj, x, y)
-    Gui.achievements();
+    Gui.draw("Achievements");
 end
 
 --Onclick event of the options button
@@ -316,7 +276,7 @@ end
 -- @param x The mouse position on the x axis
 -- @param y The mouse position on the y axis
 button.options.OnClick = function(obj, x, y)
-    Gui.options();
+    Gui.draw("Options");
 end
 
 --Onclick event of the level 1 button
@@ -324,7 +284,7 @@ end
 -- @param x The mouse position on the x axis
 -- @param y The mouse position on the y axis
 button.level1.OnClick = function(obj, x, y)
-    Gui.InGame();
+    Gui.draw("InGame");
 end
 
 --Onclick event of the level 2 button
@@ -332,7 +292,7 @@ end
 -- @param x The mouse position on the x axis
 -- @param y The mouse position on the y axis
 button.level2.OnClick = function(obj, x, y)
-    Gui.InGame();
+    Gui.draw("InGame");
 end
 
 --Onclick event of the level 3 button
@@ -340,7 +300,7 @@ end
 -- @param x The mouse position on the x axis
 -- @param y The mouse position on the y axis
 button.level3.OnClick = function(obj, x, y)
-    Gui.InGame();
+    Gui.draw("InGame");
 end
 
 --Onclick event of the retry button
@@ -348,7 +308,7 @@ end
 -- @param x The mouse position on the x axis
 -- @param y The mouse position on the y axis
 button.retry.OnClick = function(obj, x, y)
-    Gui.InGame();
+    Gui.draw("InGame");
 end
 
 --Onclick event of the end turn button
@@ -357,7 +317,7 @@ end
 -- @param y The mouse position on the y axis
 --this function will be replaced in a later version
 button.tempEndTurn.OnClick = function(obj, x, y)
-    Gui.Score();
+    Gui.draw("Score");
 end
 
 --Onclick event of the pause button
@@ -365,7 +325,7 @@ end
 -- @param x The mouse position on the x axis
 -- @param y The mouse position on the y axis
 button.Pause.OnClick = function(obj, x, y)
-    Gui.Pause();
+    Gui.draw("Pause");
 end
 
 --Onclick event of the skip tutorial button
@@ -374,7 +334,7 @@ end
 -- @param y The mouse position on the y axis
 --this function will be replaced in a later version
 button.tempGo.OnClick = function(obj, x, y)
-    Gui.InGame();
+    Gui.draw("InGame");
 end
 
 --Onclick event of the back to menu button
@@ -382,7 +342,7 @@ end
 -- @param x The mouse position on the x axis
 -- @param y The mouse position on the y axis
 button.backToMenu.OnClick = function(obj, x, y)
-    Gui.mainMenu();
+    Gui.draw("MainMenu");
 end
 
 --Onclick event of the back to game button
@@ -390,7 +350,7 @@ end
 -- @param x The mouse position on the x axis
 -- @param y The mouse position on the y axis
 button.backToGame.OnClick = function(obj, x, y)
-    Gui.InGame();
+    Gui.draw("InGame");
 end
 
 --Onclick event of the back button
@@ -398,17 +358,21 @@ end
 -- @param x The mouse position on the x axis
 -- @param y The mouse position on the y axis
 button.back.OnClick = function(obj, x, y)
+    if state[1] == "Options" or state [1] == "UpgradeMenu" then
+        Gui.updateValues();
+    end
+     
     --go back to the last gui state
-    if state[2] == "MainMenu" then Gui.mainMenu();
-    elseif state[2] == "upgradeMenu" then Gui.upgradeMenu();
-    elseif state[2] == "Credits" then Gui.credits();
-    elseif state[2] == "Achievements" then Gui.achievements();
-    elseif state[2] == "Wiki" then Gui.wiki();
-    elseif state[2] == "Options" then Gui.options();
-    elseif state[2] == "InGame" then Gui.InGame();
-    elseif state[2] == "Pause" then Gui.Pause();
-    elseif state[2] == "Score" then Gui.Score();
-    elseif state[2] == "Tutorial" then Gui.tutorial();
+    if state[2] == "MainMenu" then Gui.draw("MainMenu");
+    elseif state[2] == "upgradeMenu" then Gui.draw("UpgradeMenu");
+    elseif state[2] == "Credits" then Gui.draw("Credits");
+    elseif state[2] == "Achievements" then Gui.draw("Achievements");
+    elseif state[2] == "Wiki" then Gui.draw("Wiki");
+    elseif state[2] == "Options" then Gui.draw("Options");
+    elseif state[2] == "InGame" then Gui.draw("InGame");
+    elseif state[2] == "Pause" then Gui.draw("Pause");
+    elseif state[2] == "Score" then Gui.draw("Score");
+    elseif state[2] == "Tutorial" then Gui.draw("Tutorial");
     end
 end
 
