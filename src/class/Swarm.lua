@@ -1,6 +1,6 @@
 --- The class Swarm creates the swarms of fishable objects
 
-Factory = require "FishableObjectFactory";
+FishableObjectFactory = require "FishableObjectFactory";
 
 local Swarm = Class {
     --- Initializes the swarm class
@@ -17,7 +17,7 @@ local Swarm = Class {
 -- @param density density of the fishable objects
 function Swarm:createSwarm(amount, density)
     for i = 0, amount, 1 do
-        Factory.create();
+        FishableObjectFactory.create();
     end
 end
 

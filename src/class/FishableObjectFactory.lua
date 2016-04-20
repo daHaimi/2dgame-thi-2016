@@ -1,23 +1,22 @@
 --- The class FishableObjectFactory creates the fishable objects
 
+FishableObject = require "FishableObject";
+
 local FishableObjectFactory = Class {
     init = function(self)
     end;
 };
 
---- Creates a new fishable object
--- @param entityType The type of the entity to create
--- @param speed The speed of the entity
--- @param spawnX The x coordinate of the spawn point
--- @param spawnY The y coordinate of the spawn point
--- @param direction The moving direction of the entity
--- @param healthPoints The health points of the entity
--- @param money The value of the entity
-function FishableObjectFactory:create(entityType, speed, spawnX, spawnY, direction, healthPoints, money)
-    if     entityType == "angler"    then print("creating angler fish");
-    elseif entityType == "crocodile" then print("creating crocodile");
-    else                                  error("Unknown entity type");
-    end
+-- Creates a new FishableObject
+-- @param yPosition height of the object in the level
+-- @param minSpeed lowest amount of speed possible
+-- @param maxSpeed highest amount of speed possible
+-- @param xHitbox width of the hitbox
+-- @param yHitbox height of the hitbox
+-- @param value amount of money earned by fishing this object
+-- @param hitpoints amount of the hitpoints of the object
+function FishableObjectFactory:create(yPosition, minSpeed, maxSpeed, xHitbox, yHitbox, value, hitpoints)
+    FishableObject(yPosition, minSpeed, maxSpeed, xHitbox, yHitbox, value, hitpoints);
 end
 
 return FishableObjectFactory;
