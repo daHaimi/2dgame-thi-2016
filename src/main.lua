@@ -2,6 +2,7 @@
 Class = require "lib.hump.class";
 Bait = require "class.Bait"
 Level = require "class.Level"
+SwarmFactory = require "class.SwarmFactory"
 
 -- Global variables
 
@@ -28,6 +29,7 @@ _G._persTable.upgrades = {
 local winDim = {};
 local curLevel = nil;
 local player = nil;
+local swarmFactory = nil;
 
 -- The bootstrap of the game. 
 -- This function is called exactly once at the beginning of the game.
@@ -40,6 +42,7 @@ function love.load()
     curLevel = Level("assets/testbg.png", winDim, 1);
     player = Bait(winDim);
     player:checkUpgrades();
+    swarmFactory = SwarmFactory(curLevel, player);
 end
 
 -- The love main draw call, which draws every frame on the screen.

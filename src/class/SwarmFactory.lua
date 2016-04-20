@@ -1,24 +1,43 @@
---- The class Swarm creates the swarms of fishable objects
+--- The class SwarmFactory creates swarms of fishable objects
 
-FishableObjectFactory = require "FishableObjectFactory";
+FishableObject = require "class.FishableObject";
 
-local Swarm = Class {
-    --- Initializes the swarm class
+local fishableObjects = {};
+
+local SwarmFactory = Class {
+    --- Initializes the SwarmFactory class
     -- @param level The current level
     -- @param player The player object
     init = function(self, level, player)
-        levelDirection = level.getDirection();
-        playerSpeed = player.getSpeed();
+        self.level = level;
+        self.player = player;
+
+        function fishableObject(fishable) 
+            fishableObjects[fishable.name] = fishable;
+        end
+        
+        dofile("data.lua");
     end;
 };
 
 --- Creates a new swarm
 -- @param amount amount of fishable objects in the swarm
--- @param density density of the fishable objects
-function Swarm:createSwarm(amount, density)
+function SwarmFactory:createSwarm(amount)
     for i = 0, amount, 1 do
         FishableObjectFactory.create();
     end
 end
 
-return Swarm;
+-- Creates a new FishableObject
+-- @param yPosition height of the object in the level
+-- @param minSpeed lowest amount of speed possible
+-- @param maxSpeed highest amount of speed possible
+-- @param xHitbox width of the hitbox
+-- @param yHitbox height of the hitbox
+-- @param value amount of money earned by fishing this object
+-- @param hitpoints amount of the hitpoints of the object
+function SwarmFactory:create(yPosition, minSpeed, maxSpeed, xHitbox, yHitbox, value, hitpoints)
+    FishableObject(yPosition, minSpeed, maxSpeed, xHitbox, yHitbox, value, hitpoints);
+end
+
+return SwarmFactory;
