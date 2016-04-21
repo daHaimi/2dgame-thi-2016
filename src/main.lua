@@ -2,6 +2,7 @@
 Class = require "lib.hump.class";
 Bait = require "class.Bait"
 Level = require "class.Level"
+SwarmFactory = require "class.SwarmFactory"
 
 -- Global variables
 
@@ -14,6 +15,7 @@ _G._persTable = {
     fishCaught = {};
     money = 0;
     lastLevel = 1;
+    winDim = {};
 };
 
 --- upgrades list in persTable, "0" means unbought
@@ -27,21 +29,22 @@ _G._persTable.upgrades = {
   };
 
 -- Local variables
-local winDim = {};
 local curLevel = nil;
 local player = nil;
+local swarmFactory = nil;
 
 -- The bootstrap of the game. 
 -- This function is called exactly once at the beginning of the game.
 function love.load()
     local _, _, flags = love.window.getMode()
-    winDim = {love.window.getDesktopDimensions(flags.display)};
-    winDim[2] = winDim[2] - 50; -- Sub 50px for taskbar and window header
-    winDim[1] = (winDim[2] / 16) * 9; -- Example: 16:9
-    love.window.setMode(winDim[1], winDim[2], flags);
-    curLevel = Level("assets/testbg.png", winDim, 1);
-    player = Bait(winDim);
+    _G._persTable.winDim = {love.window.getDesktopDimensions(flags.display)};
+    _G._persTable.winDim[2] = _G._persTable.winDim[2] - 50; -- Sub 50px for taskbar and window header
+    _G._persTable.winDim[1] = (_G._persTable.winDim[2] / 16) * 9; -- Example: 16:9
+    love.window.setMode(_G._persTable.winDim[1], _G._persTable.winDim[2], flags);
+    curLevel = Level("assets/testbg.png", _G._persTable.winDim, 1);
+    player = Bait(_G._persTable.winDim);
     player:checkUpgrades();
+    swarmFactory = SwarmFactory(curLevel, player);
 end
 
 -- The love main draw call, which draws every frame on the screen.
@@ -49,6 +52,10 @@ end
 function love.draw()
     if curLevel then
         curLevel:draw(player);
+    end
+    
+    if swarmFactory then
+        swarmFactory:draw();
     end
 end
 
@@ -58,6 +65,10 @@ end
 function love.update(dt)
     if curLevel then
         curLevel:update(dt, player);
+    end
+    
+    if swarmFactory then
+        swarmFactory:update();
     end
 end
   
@@ -69,8 +80,8 @@ function love.mousemoved(x, y)
         if x < (player.size / 2) then
             player.posXMouse = 0;
         else 
-          if x > winDim[1] - player.size then
-              player.posXMouse = winDim[1] - player.size;
+          if x > _G._persTable.winDim[1] - player.size then
+              player.posXMouse = _G._persTable.winDim[1] - player.size;
           else 
               player.posXMouse = x - (player.size / 2);
           end
