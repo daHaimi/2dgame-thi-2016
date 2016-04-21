@@ -51,6 +51,10 @@ function love.draw()
     if curLevel then
         curLevel:draw(player);
     end
+    
+    if swarmFactory then
+        swarmFactory:draw();
+    end
 end
 
 -- This function is called continuously by the love.run().
@@ -59,6 +63,10 @@ end
 function love.update(dt)
     if curLevel then
         curLevel:update(dt, player);
+    end
+    
+    if swarmFactory then
+        swarmFactory:update();
     end
 end
   

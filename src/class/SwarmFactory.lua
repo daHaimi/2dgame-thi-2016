@@ -3,9 +3,11 @@
 FishableObject = require "class.FishableObject";
 
 local fishableObjects = {};
+local currentSwarm = 0;
+
 local swarmsSewer = {};
 
-local currentSwarm = 0;
+local createdFishables = {};
 
 local SwarmFactory = Class {
     --- Initializes the swarm factory
@@ -24,27 +26,47 @@ local SwarmFactory = Class {
         end
         
         dofile("data.lua");
+        self:createNextSwarm();
     end;
 };
 
---- Creates a new swarm
--- @param amount amount of fishable objects in the swarm
-function SwarmFactory:createSwarm(amount)
-    for i = 0, amount, 1 do
-        FishableObjectFactory.create();
+function SwarmFactory:draw()
+    for i = 1, #createdFishables, 1 do
+        createdFishables[i]:draw();
     end
 end
 
--- Creates a new FishableObject
--- @param yPosition height of the object in the level
--- @param minSpeed lowest amount of speed possible
--- @param maxSpeed highest amount of speed possible
--- @param xHitbox width of the hitbox
--- @param yHitbox height of the hitbox
--- @param value amount of money earned by fishing this object
--- @param hitpoints amount of the hitpoints of the object
-function SwarmFactory:create(yPosition, minSpeed, maxSpeed, xHitbox, yHitbox, value, hitpoints)
-    FishableObject(yPosition, minSpeed, maxSpeed, xHitbox, yHitbox, value, hitpoints);
+function SwarmFactory:update()
+    for i = 1, #createdFishables, 1 do
+        createdFishables[i]:update();
+    end
+end
+
+--- Creates the next swarm
+function SwarmFactory:createNextSwarm()
+    currentSwarm = currentSwarm + 1;
+    newSwarm = swarmsSewer[currentSwarm];
+    amount = math.random(newSwarm.minFishables, newSwarm.maxFishables);
+    allowedFishables = newSwarm.allowedFishables;
+    fishablesProbability = newSwarm.fishablesProbability;
+    swarmHeight = newSwarm.swarmHeight;
+    for i = 0, amount, 1 do
+        chosenFishable = self:determineFishable(allowedFishables, fishablesProbability);
+        createdFishables[#createdFishables+1] = FishableObject(2, 
+            chosenFishable.minSpeed, chosenFishable.maxSpeed, chosenFishable.xHitbox, chosenFishable.yHitbox,
+            chosenFishable.value, chosenFishable.hitpoints);
+    end
+end
+
+function SwarmFactory:determineFishable(allowedFishables, fishablesProbability)
+    chosenProbability = math.random(100);
+    addedProbability = 0;
+    for j = 1, #fishablesProbability, 1 do
+        addedProbability = addedProbability + fishablesProbability[j];
+        if addedProbability > chosenProbability then
+            return fishableObjects[allowedFishables[j]];
+        end
+    end
 end
 
 return SwarmFactory;
