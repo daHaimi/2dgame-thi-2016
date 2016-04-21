@@ -10,6 +10,7 @@ Class = require "lib.hump.class";
     --@param hitpoints: amoung of the hitpoints of the object
 local FishableObject = Class {
     --create new FishableObject
+    --@param imageSrc: The image of the object
     --@param yPosition: height of the object in the level
     --@param minSpeed: lowerst amount of speed possible
     --@param maxSpeed: highest amount of speed possible
@@ -17,7 +18,8 @@ local FishableObject = Class {
     --@param yHitbox: height of the hitbox
     --@param value: amount of money earned by fishing this object
     --@param hitpoints: amoung of the hitpoints of the object
-    init = function (self, yPosition, minSpeed, maxSpeed, xHitbox, yHitbox, value, hitpoints)
+    init = function (self, imageSrc, yPosition, minSpeed, maxSpeed, xHitbox, yHitbox, value, hitpoints)
+        self.image = love.graphics.newImage("assets/"..imageSrc);
         self.xPosition = math.random(_G._persTable.winDim[1]);
         self.yPosition = yPosition;
         self.speed = math.random(minSpeed, maxSpeed);
@@ -39,7 +41,7 @@ local FishableObject = Class {
 --draw the object, still no sprite implementet
 function FishableObject:draw()
     love.graphics.setColor(255, 255, 255);
-    love.graphics.rectangle("fill", self.xPosition, self.yPosition , self.xHitbox, self.yHitbox);
+    love.graphics.draw(self.image, self.xPosition, self.yPosition);
 end
 
 --Updates the position of the object depending on its speed

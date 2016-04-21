@@ -50,7 +50,7 @@ sewer {
         fishablesProbability = { 20, 80 },      -- The odds of allowedFishables (Must be 100)
         minFishables = 50,                      -- The minimum amount of fishables in this swarm
         maxFishables = 100,                     -- The maximum amount of fishables in this swarm
-        swarmHeight = 100                       -- The height of this swarm
+        swarmHeight = 300                       -- The height of this swarm
     },
     
     {
@@ -58,6 +58,6 @@ sewer {
         fishablesProbability = { 30, 60, 10 },
         minFishables = 80,
         maxFishables = 120,
-        swarmHeight = 200
+        swarmHeight = 400
     }
 }

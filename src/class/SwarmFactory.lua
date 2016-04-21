@@ -49,12 +49,16 @@ function SwarmFactory:createNextSwarm()
     amount = math.random(newSwarm.minFishables, newSwarm.maxFishables);
     allowedFishables = newSwarm.allowedFishables;
     fishablesProbability = newSwarm.fishablesProbability;
-    swarmHeight = newSwarm.swarmHeight;
+    sHeight = newSwarm.swarmHeight;
+
     for i = 0, amount, 1 do
+        ypos = math.random(sHeight);
         chosenFishable = self:determineFishable(allowedFishables, fishablesProbability);
-        createdFishables[#createdFishables+1] = FishableObject(2, 
+        if chosenFishable ~= nil then
+        createdFishables[#createdFishables+1] = FishableObject(chosenFishable.image, ypos,
             chosenFishable.minSpeed, chosenFishable.maxSpeed, chosenFishable.xHitbox, chosenFishable.yHitbox,
             chosenFishable.value, chosenFishable.hitpoints);
+        end
     end
 end
 
