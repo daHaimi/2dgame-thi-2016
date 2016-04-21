@@ -14,6 +14,7 @@ _G._persTable = {
     fishCaught = {};
     money = 0;
     lastLevel = 1;
+    winDim = {};
 };
 --- upgrades list in persTable, "0" means unbought
 _G._persTable.upgrades = {
@@ -25,7 +26,6 @@ _G._persTable.upgrades = {
   }
 
 -- Local variables
-local winDim = {};
 local curLevel = nil;
 local player = nil;
 
