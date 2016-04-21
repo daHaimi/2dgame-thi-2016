@@ -13,7 +13,7 @@ describe("Unit test for FishableObject.lua", function()
             }
         }
         
-        _G.persTable ={ 
+        _G._persTable ={ 
             winDim = {500; 500}
         }
         

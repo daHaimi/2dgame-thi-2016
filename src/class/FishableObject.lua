@@ -18,7 +18,7 @@ local FishableObject = Class {
     --@param value: amount of money earned by fishing this object
     --@param hitpoints: amoung of the hitpoints of the object
     init = function (self, yPosition, minSpeed, maxSpeed, xHitbox, yHitbox, value, hitpoints)
-        self.xPosition = math.random(_G.persTable.winDim[1]);
+        self.xPosition = math.random(_G._persTable.winDim[1]);
         self.yPosition = yPosition;
         self.speed = math.random(minSpeed, maxSpeed);
         self.xHitbox = xHitbox;
@@ -45,9 +45,9 @@ end
 --Updates the position of the object depending on its speed
 function FishableObject:update()
     
-    if ((self.xPosition + self.xHitbox + self.speed) > _G.persTable.winDim[1]) then
+    if ((self.xPosition + self.xHitbox + self.speed) > _G._persTable.winDim[1]) then
         
-        self.xPosition = 2 * _G.persTable.winDim[1] - self.speed - self.xPosition - self.xHitbox;
+        self.xPosition = 2 * _G._persTable.winDim[1] - self.speed - self.xPosition - self.xHitbox;
         self.speed = self.speed * (-1); 
         
     elseif self.xPosition + self.speed < 0 then
