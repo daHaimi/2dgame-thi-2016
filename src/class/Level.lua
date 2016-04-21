@@ -35,6 +35,7 @@ local Level = Class{
 -- last time this function was called.
 -- @param bait The bait object, which stands for the user.
 function Level:update(dt, bait)
+    _G._persTable.moved = math.ceil(dt * bait.speed);
     if self.direction == 1 and self.posY > self.lowerBoarder 
     and self.posY < self.upperBoarder then
         self.sizeY = self.winDim[2] + math.ceil(dt * bait.speed);

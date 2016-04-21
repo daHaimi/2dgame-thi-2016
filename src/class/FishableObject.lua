@@ -63,6 +63,8 @@ function FishableObject:update()
         
     end
     
+    self.yPosition = self.yPosition - _G._persTable.moved;
+    
 end
 
 --sets the xPosition
