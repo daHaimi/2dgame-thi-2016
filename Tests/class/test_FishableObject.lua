@@ -2,26 +2,30 @@
 _G.math.inf = 1/0
 
 testClass = require "src.class.FishableObject"
---self, yPosition, minSpeed, maxSpeed, xHitbox, yHitbox, value, hitpoints
+--self, imageSrc, yPosition, minSpeed, maxSpeed, xHitbox, yHitbox, value, hitpoints
 describe("Unit test for FishableObject.lua", function()
         
     before_each(function()
         _G.love = {
             graphics = {
                 setColor = function(...) end;
-                rectangle = function(...) end;
+                newImage = function(...) return "assets/deadFish.png" end;
+                draw = function(...) end;
             }
         }
         
+        
+        
         _G._persTable ={ 
-            winDim = {500; 500}
+            winDim = {500; 500};
+            moved = 0;
         }
         
-        locInstance = testClass(50, 30, 35, 100, 75, 50, 5);
+        locInstance = testClass("assets/deadFish.png", 50, 30, 35, 100, 75, 50, 5);
     end)
 
     it("Testing Constructor", function()
-        local myInstance = testClass(50, 30, 35, 100, 75, 50, 5);
+        local myInstance = testClass("assets/deadFish.png", 50, 30, 35, 100, 75, 50, 5);
         assert.are.equal(locInstance.yPosition, myInstance.yPosition);
         assert.are.equal(locInstance.xHitbox, myInstance.xHitbox);
         assert.are.equal(locInstance.yHitbox, myInstance.yHitbox);
@@ -41,11 +45,11 @@ describe("Unit test for FishableObject.lua", function()
         locInstance:setXPosition(150);
         locInstance:draw();
         
-        assert.spy(loveMock.graphics.rectangle).was_called_with("fill", 150, 50, 100, 75);    
+        assert.spy(loveMock.graphics.draw).was_called_with("assets/deadFish.png", 150, 50);    
     end)
 
     it("Testing Update Function", function()
-        myInstance1= testClass(50, 300, 300, 100, 75, 50, 5);
+        myInstance1= testClass("assets/deadFish.png", 50, 300, 300, 100, 75, 50, 5);
         myInstance1:setXPosition(250);
         myInstance1:update();
         assert.are.equal(350, myInstance1.xPosition);
