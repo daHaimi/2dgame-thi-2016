@@ -1,3 +1,5 @@
+Class = require "lib.hump.class";
+
 --- Class for the Bait swimming for Phase 1 and 2
 -- @param winDim window Size
 --
@@ -5,7 +7,7 @@ local Bait = Class {
     init = function(self, winDim)
         self.winDim = winDim;
         self.posXBait = (winDim[1] / 2) - (self.size / 2);
-        local yPos = (self.winDim[2] / 2) - (self.size / 2)
+        local yPos = (self.winDim[2] / 2) - (self.size / 2);
         love.mouse.setPosition(self.posXBait, yPos);
     end;
     size = 10;
@@ -42,16 +44,17 @@ end
 --- Determines the capped X position of the Bait (SpeedLimit)
 -- @return The actual X position of the Bait
 function Bait:getCappedPosX()
-  local delta = self.posXMouse - self.posXBait
-  if delta > self.maxSpeedX  then
-    posX = self.posXBait + self.maxSpeedX;
-  elseif delta < self.maxSpeedX*(-1) then
-    posX = self.posXBait - self.maxSpeedX;
-  else
-    posX = self.posXMouse;
-  end
-  self.posXBait = posX;
-  return posX;
+    local delta = self.posXMouse - self.posXBait;
+    local posX;
+    if delta > self.maxSpeedX then
+        posX = self.posXBait + self.maxSpeedX;
+    elseif delta < self.maxSpeedX * (-1) then
+        posX = self.posXBait - self.maxSpeedX;
+    else
+        posX = self.posXMouse;
+    end
+    self.posXBait = posX;
+    return posX;
 end
 
 return Bait;
