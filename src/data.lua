@@ -28,7 +28,7 @@ fishableObject {
     maxSpeed = 10,
     xHitbox = 3,
     yHitbox = 2,
-    value = 15,
+    value = 20,
     hitpoints = 5
 }
 
@@ -39,7 +39,7 @@ fishableObject {
     maxSpeed = 5,
     xHitbox = 4,
     yHitbox = 2,
-    value = 5,
+    value = -10,
     hitpoints = 1
 }
 
