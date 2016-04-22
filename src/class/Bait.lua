@@ -18,6 +18,8 @@ local Bait = Class {
     winDim = {};
     life = 1;
     money = 0;
+    godModeFuel = 500;
+    godModeActive = 0; ---
 };
 
 --- TODO need balancing
@@ -56,5 +58,22 @@ function Bait:getCappedPosX()
     self.posXBait = posX;
     return posX;
 end
+
+--- Try to activate the god Mode.
+--- @return When the god mode was successfully activated it returns 1 otherwise 0;
+function Bait:activateGodMode()
+    if _G.godMode == 1 and self.godModeFuel > 0 then
+        self.godModeActive = 1;
+        return 1;
+    else
+        return 0;
+    end
+end
+
+--- Returns the amount of the fuel for the god mode
+--- @return Returns the amount of the fuel for the god mode
+function Bait:getGodModeFuel()
+    return self.godModeFuel;
+end;
 
 return Bait;
