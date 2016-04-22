@@ -40,8 +40,16 @@ local FishableObject = Class {
 
 --draw the object, still no sprite implementet
 function FishableObject:draw()
-    love.graphics.setColor(255, 255, 255);
-    love.graphics.draw(self.image, self.xPosition, self.yPosition);
+    
+    love.graphics.setColor(255,255,255);
+    if self.speed < 0 then
+        love.graphics.draw(self.image, self.xPosition, self.yPosition);
+    else 
+        love.graphics.scale(-1,1);
+        love.graphics.draw(self.image, -self.xPosition, self.yPosition);
+        love.graphics.scale(-1,1);
+    end
+    
 end
 
 --Updates the position of the object depending on its speed
@@ -49,7 +57,7 @@ function FishableObject:update()
     
     if ((self.xPosition + self.xHitbox + self.speed) > _G._persTable.winDim[1]) then
         
-        self.xPosition = 2 * _G._persTable.winDim[1] - self.speed - self.xPosition - self.xHitbox;
+        self.xPosition = _G._persTable.winDim[1] - self.xHitbox;
         self.speed = self.speed * (-1); 
         
     elseif self.xPosition + self.speed < 0 then

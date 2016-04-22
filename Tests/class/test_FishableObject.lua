@@ -11,10 +11,9 @@ describe("Unit test for FishableObject.lua", function()
                 setColor = function(...) end;
                 newImage = function(...) return "assets/deadFish.png" end;
                 draw = function(...) end;
+                scale = function(...) end;
             }
         }
-        
-        
         
         _G._persTable ={ 
             winDim = {500; 500};
@@ -22,6 +21,7 @@ describe("Unit test for FishableObject.lua", function()
         }
         
         locInstance = testClass("assets/deadFish.png", 50, 30, 35, 100, 75, 50, 5);
+        
     end)
 
     it("Testing Constructor", function()
@@ -40,23 +40,30 @@ describe("Unit test for FishableObject.lua", function()
         assert.are.equal(50, locInstance.xPosition);
     end)
 
-    it("Testing draw Function", function()
+    it("Testing draw Function 1", function()
         local loveMock = mock(_G.love, true);
         locInstance:setXPosition(150);
         locInstance:draw();
-        
-        assert.spy(loveMock.graphics.draw).was_called_with("assets/deadFish.png", 150, 50);    
+        assert.spy(loveMock.graphics.draw).was_called_with("assets/deadFish.png", -150, 50);  
+    end)
+
+    it("Testing draw Function 2", function()
+          local loveMock = mock(_G.love, true);    
+        locInstance:setXPosition(400);
+        locInstance.speed = -300;
+        locInstance:draw();
+        assert.spy(loveMock.graphics.draw).was_called_with("assets/deadFish.png", 400, 50);  
     end)
 
     it("Testing Update Function", function()
         myInstance1= testClass("assets/deadFish.png", 50, 300, 300, 100, 75, 50, 5);
         myInstance1:setXPosition(250);
         myInstance1:update();
-        assert.are.equal(350, myInstance1.xPosition);
+        assert.are.equal(400, myInstance1.xPosition);
         myInstance1:update();
-        assert.are.equal(50, myInstance1.xPosition);
+        assert.are.equal(100, myInstance1.xPosition);
         myInstance1:update();
-        assert.are.equal(250, myInstance1.xPosition);
+        assert.are.equal(200, myInstance1.xPosition);
     end)
 
     it("Testing getValue Function", function()
@@ -72,10 +79,11 @@ describe("Unit test for FishableObject.lua", function()
         assert.are.equal(75, yHitbox);
     end)
     
-    it("Testing getPosition Function", function()
+    it("Testing getPosition Function 1", function()
         locInstance:setXPosition(200);
         xPosition, yPosition = locInstance:getPosition();
         assert.are.equal(200, xPosition);
         assert.are.equal(50, yPosition);
     end)
+
 end)

@@ -4,8 +4,8 @@ fishableObject {
     image = "nemo.png", -- The image file
     minSpeed = 4,       -- Min movement speed
     maxSpeed = 7,       -- Max movement speed
-    xHitbox = 4,        -- Hitbox width
-    yHitbox = 2,        -- Hitbox height
+    xHitbox = 30,        -- Hitbox width
+    yHitbox = 30,        -- Hitbox height
     value = 10,         -- The worth of the object
     hitpoints = 10      -- The HP of the object
 }
@@ -15,8 +15,8 @@ fishableObject {
     image = "turtle.png",
     minSpeed = 1,
     maxSpeed = 2,
-    xHitbox = 4,
-    yHitbox = 3,
+    xHitbox = 50,
+    yHitbox = 30,
     value = 10,
     hitpoints = 20
 }
@@ -26,8 +26,8 @@ fishableObject {
     image = "ratte.png",
     minSpeed = 5,
     maxSpeed = 8,
-    xHitbox = 4,
-    yHitbox = 2,
+    xHitbox = 60,
+    yHitbox = 20,
     value = 20,
     hitpoints = 5
 }
@@ -37,8 +37,8 @@ fishableObject {
     image = "deadFish.png",
     minSpeed = 0,
     maxSpeed = 2,
-    xHitbox = 4,
-    yHitbox = 2,
+    xHitbox = 60,
+    yHitbox = 20,
     value = -10,
     hitpoints = 1
 }
@@ -48,8 +48,8 @@ fishableObject {
     image = "anglerfisch.png",
     minSpeed = 3,
     maxSpeed = 8,
-    xHitbox = 4,
-    yHitbox = 4,
+    xHitbox = 30,
+    yHitbox = 30,
     value = 20,
     hitpoints = 20
 }
@@ -70,8 +70,8 @@ fishableObject {
     image = "ring.png",
     minSpeed = 0,
     maxSpeed = 5,
-    xHitbox = 4,
-    yHitbox = 4,
+    xHitbox = 15,
+    yHitbox = 15,
     value = 40,
     hitpoints = 10
 }
@@ -81,8 +81,8 @@ fishableObject {
     image = "shoe.png",
     minSpeed = 0,
     maxSpeed = 2,
-    xHitbox = 3,
-    yHitbox = 4,
+    xHitbox = 30,
+    yHitbox = 40,
     value = -20,
     hitpoints = 20
 }
