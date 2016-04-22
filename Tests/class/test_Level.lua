@@ -24,6 +24,8 @@ describe("Test unit test suite", function()
         }
         loveMock = mock(_G.love, true);
         locInstance = testClass("assets/testbg.png", {512, 256}, 1);
+        
+        testClass.caughtThisRound = {};
     end)
         
     it("Testing Constructor", function()
@@ -51,4 +53,26 @@ describe("Test unit test suite", function()
         assert.are.same(testClass:getYPos(), 0);
     end)
     
+    it("Testing addToCaught", function()
+        local name = "nemo";
+        testClass:addToCaught(name);
+        assert.are.same(testClass.caughtThisRound.nemo, 1);
+    end)
+    
+    it("Testing addToCaught twice to test IF", function()
+        local name = "nemo";
+        testClass:addToCaught(name);
+        testClass:addToCaught(name); --- now it is not nil
+        assert.are.same(testClass.caughtThisRound.nemo, 2);
+    end)
+    
+    it("Testing addToCaught for two diffrent ", function()
+        local name1 = "nemo";
+        local name2 = "hans";
+        testClass:addToCaught(name1);
+        testClass:addToCaught(name2);
+        assert.are.same(testClass.caughtThisRound.nemo, 1);
+        assert.are.same(testClass.caughtThisRound.hans, 1);
+    end)
+        
 end)
