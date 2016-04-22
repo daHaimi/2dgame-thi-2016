@@ -9,15 +9,6 @@ Class = require "lib.hump.class";
     --@param value: value of the object
     --@param hitpoints: amoung of the hitpoints of the object
 local FishableObject = Class {
-    --create new FishableObject
-    --@param imageSrc: The image of the object
-    --@param yPosition: height of the object in the level
-    --@param minSpeed: lowerst amount of speed possible
-    --@param maxSpeed: highest amount of speed possible
-    --@param xHitbox: width of the hitbox
-    --@param yHitbox: height of the hitbox
-    --@param value: amount of money earned by fishing this object
-    --@param hitpoints: amoung of the hitpoints of the object
     init = function (self, imageSrc, yPosition, minSpeed, maxSpeed, xHitbox, yHitbox, value, hitpoints)
         self.image = love.graphics.newImage("assets/"..imageSrc);
         self.xPosition = math.random(_G._persTable.winDim[1]);
