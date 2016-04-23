@@ -21,7 +21,7 @@ _G._persTable.upgrades = {
     speedUp = 0; --- "0" no Speedup for more looke bait.lua
     moneyMult = 0; --- "0" means no additional money
     moreLife = 0; --- amount of additional lifes
-    godMode = 0; --- indicates if the god mode is available or not
+    godMode = 1; --- indicates if the god mode is available or not
     mapBreakthrough1 = 0; --- can you access the first map limit? 0 = no, 1 = yes
     mapBreakthrough2 = 0; --- can you access the second map limit? 0 = no, 1 = yes
   };
@@ -78,3 +78,14 @@ function love.mousemoved(x, y)
     end
 end
 
+function love.mousepressed(x, y, isTouch)
+    curLevel:activateGodMode();
+    print("Mouse klicked");
+end;
+    
+    
+function love.mousereleased(x, y, isTouch)
+    print("Mouse released");
+    curLevel:deactivateGodMode();
+    curLevel:resetGodModeDistance();
+end;

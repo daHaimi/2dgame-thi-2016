@@ -28,6 +28,9 @@ local Level = Class{
     upperBoarder = 1000;    -- if you want higher you should increase this value!
     mapBreakthroughBonus1 = -1000;
     mapBreakthroughBonus2 = -1000;
+    godModeDistance = -1;
+    godModeFuel = 1500;  
+    godModeActive = 0;
 };
 
 --- Update the game state. Called every frame.
@@ -49,7 +52,9 @@ function Level:update(dt, bait)
         self.lowerBoarder = self.lowerBoarder + self.mapBreakthroughBonus2;
         _persTable.upgrades.mapBreakthrough2 = 0;
     end
-end
+    
+    self:checkGodMode();
+end;
 
 --- Draw on the screen. Called every frame.
 -- Draws the background and the bait on the screen.
@@ -58,7 +63,66 @@ function Level:draw(bait)
     love.graphics.setColor(255, 255, 255);
     love.graphics.draw(self.bg, self.bgq, 0, self.posY);
     bait:draw();
+end;
+
+--- Check the state of the god mode and updates the god mode fuel value
+function Level:checkGodMode()
+    print(self.posY);
+    if self.godModeActive == 1 then
+        if self.godModeDistance == -1 then
+            self.godModeDistance = self.posY;
+            print("godModeDistance = self.posY", self.godModeDistance, self.posY)
+        else
+            self.godModeDistance = self.posY - self.godModeDistance;
+            print("godModeDistance = ", self.godModeDistance);
+            self:setGodModeFuel((self:getGodModeFuel() - math.abs(self.godModeDistance)));            
+            print("fuel = ", self.godModeFuel);
+        end
+    end
+    print("fuel = ", self.godModeFuel);
+end;
+
+--- Try to activate the god Mode.
+--- @return When the god mode was successfully activated it returns 1 otherwise 0;
+function Level:activateGodMode()
+    print("godMode = ", _G._persTable.upgrades.godMode);
+    print("godModeFuel = ", self.godModeFuel);
+    if _G._persTable.upgrades.godMode == 1 and self.godModeFuel > 0 then
+        self.godModeActive = 1;
+        print("god mode activated!");
+        return 1;
+    else
+        return 0;
+    end
 end
+
+--- Deactivates the god mode.
+function Level:deactivateGodMode()
+    self.godModeActive = 0;
+    print("God mode deactivated");
+end;
+
+--- Returns the amount of the fuel for the god mode
+--- @return Returns the amount of the fuel for the god mode
+function Level:getGodModeFuel()
+    return self.godModeFuel;
+end;
+
+--- Set the fuel for the god mode to the new value. 
+--- Is newFuel <= 0, the god mode will be deactivated.
+function Level:setGodModeFuel(newFuel)
+    self.godModeFuel = newFuel;
+    if self.godModeFuel <= 0 then
+        self.godModeActive = 0;
+        print("god mode deactivated");
+    end
+end;
+
+--- Returns the state of the god mode.
+--- @return Returns 1 when the god mode was activated. Otherwise 0.
+function Level:getGodModeStat()
+    return self.godModeActive;
+end;
 
 --- Set the value for the lower boarder.
 -- @param newBoarderVal The new lower boarder value.
@@ -101,6 +165,11 @@ end;
 -- @return Returns the current y position.
 function Level:getYPos()
     return self.posY;
+end;
+
+--- Call this function to make known that the player has stopped the god mode
+function Level:resetGodModeDistance()
+    self.godModeDistance = -1;
 end;
 
 return Level;

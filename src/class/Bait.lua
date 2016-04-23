@@ -18,8 +18,6 @@ local Bait = Class {
     winDim = {};
     life = 1;
     money = 0;
-    godModeFuel = 500;
-    godModeActive = 0; ---
 };
 
 --- TODO need balancing
@@ -32,7 +30,7 @@ function Bait:checkUpgrades()
     if _G._persTable.upgrades.speedUp > 0 then
         self.speed = self.speed * (1 + _G._persTable.upgrades.speedUp);
     end
-end
+end;
 
 --- implements drawing interface
 --
@@ -41,7 +39,7 @@ function Bait:draw()
     local yPos = (self.winDim[2] / 2) - (self.size / 2);
     local xPos = self:getCappedPosX();
     love.graphics.rectangle("fill", xPos, yPos, self.size, self.size);
-end
+end;
 
 --- Determines the capped X position of the Bait (SpeedLimit)
 -- @return The actual X position of the Bait
@@ -58,22 +56,5 @@ function Bait:getCappedPosX()
     self.posXBait = posX;
     return posX;
 end
-
---- Try to activate the god Mode.
---- @return When the god mode was successfully activated it returns 1 otherwise 0;
-function Bait:activateGodMode()
-    if _G.godMode == 1 and self.godModeFuel > 0 then
-        self.godModeActive = 1;
-        return 1;
-    else
-        return 0;
-    end
-end
-
---- Returns the amount of the fuel for the god mode
---- @return Returns the amount of the fuel for the god mode
-function Bait:getGodModeFuel()
-    return self.godModeFuel;
-end;
 
 return Bait;
