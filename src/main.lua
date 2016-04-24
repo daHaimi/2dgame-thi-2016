@@ -37,12 +37,13 @@ _G._persTable.config = {
 local winDim = {};
 local curLevel = nil;
 local player = nil;
+local gui = nil;
 
 -- The bootstrap of the game. 
 -- This function is called exactly once at the beginning of the game.
 function love.load()
     local _, _, flags = love.window.getMode()
-    love.graphics.setBackgroundColor( 30, 180, 240)
+    love.graphics.setBackgroundColor(30, 180, 240)
     winDim = {love.window.getDesktopDimensions(flags.display)};
     winDim[2] = winDim[2] - 50; -- Sub 50px for taskbar and window header
     winDim[1] = (winDim[2] / 16) * 9; -- Example: 16:9
@@ -50,29 +51,29 @@ function love.load()
     curLevel = Level("assets/testbg.png", winDim, 1);
     player = Bait(winDim);
     player:checkUpgrades();
-    Gui:loadValues();--loads option and upgrade values into the gui elements
-    Gui.draw("MainMenu");--draw the Main Menu
+    gui = Gui();
 end
 
 -- The love main draw call, which draws every frame on the screen.
 -- This function is called continuously by the love.run().
 function love.draw()
-    if Gui.drawGame() then
+    if gui.drawGame() then
         curLevel:draw(player);
     end
     Loveframes.draw()
-    Gui:tempDrawText()--[[prints the State name and output values.
+    --[[prints the State name and output values.
     This function will be replaced in a later version]]--
+    gui:tempDrawText()
 end
 
 -- This function is called continuously by the love.run().
 -- @param dt Delta time  is the amount of seconds since the 
 -- last time this function was called.
 function love.update(dt)
-    Gui:tempTextOutput();--[[updates the text output.
+    gui:tempTextOutput();--[[updates the text output.
     This function will be replaced in a later version]]--
     Loveframes.update(dt);
-    if Gui.drawGame() then--updates the curLevel only in the InGame GUI
+    if gui.drawGame() then--updates the curLevel only in the InGame GUI
         curLevel:update(dt, player);
     end
 end
