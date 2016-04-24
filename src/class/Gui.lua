@@ -36,11 +36,12 @@ local Gui = Class {
     --Table contains all checkboxes
     checkBox = {
         tutorial = Loveframes.Create("checkbox"):SetText("enter tutorial?"),
-        upgrade1 = Loveframes.Create("checkbox"):SetText("Speed Up"),
-        upgrade2 = Loveframes.Create("checkbox"):SetText("Money Mult"),
-        upgrade3 = Loveframes.Create("checkbox"):SetText("More Life"),
-        upgrade4 = Loveframes.Create("checkbox"):SetText("God Mode"),
-        upgrade5 = Loveframes.Create("checkbox"):SetText("Upgrade 5"),
+        upgrade1 = Loveframes.Create("checkbox"):SetText("Speed Up"),--speed Up Upgrade
+        upgrade2 = Loveframes.Create("checkbox"):SetText("Money Mult"),--Money multiplier upgrade
+        upgrade3 = Loveframes.Create("checkbox"):SetText("More Life"),--One life added upgrade
+        upgrade4 = Loveframes.Create("checkbox"):SetText("God Mode"),--God mode upgrade
+        upgrade5 = Loveframes.Create("checkbox"):SetText("Breakthrough 1"),--Map breakthrough 1 upgrade
+        upgrade6 = Loveframes.Create("checkbox"):SetText("Breakthrough 2"),--Map breakthrough 2 upgrade
         option1 = Loveframes.Create("checkbox"):SetText("Option1"),
         option2 = Loveframes.Create("checkbox"):SetText("Option2"),
     };
@@ -98,7 +99,9 @@ function Gui:tempTextOutput()
         "Speed UP = " .. tostring(_persTable.upgrades.speedUp).. "\n" .. 
         "Money Mult = " .. tostring(_persTable.upgrades.moneyMult).. "\n" .. 
         "More Life = " .. tostring(_persTable.upgrades.moreLife).. "\n" .. 
-        "GodMode = " .. tostring(_persTable.upgrades.godMode) .. "\n" .. 
+        "GodMode = " .. tostring(_persTable.upgrades.godMode) .. "\n" ..
+        "Breakthrough 1 = " .. tostring(_persTable.upgrades.mapBreakthrough1) .. "\n" ..
+        "Breakthrough 2 = " .. tostring(_persTable.upgrades.mapBreakthrough2) .. "\n" ..
         "\n" ..
         "_persTable.config" .. "\n" .. 
         "S1 =" .. tostring(_persTable.config.slider1).. "\n" ..
@@ -127,6 +130,7 @@ function Gui:draw(state)
             Gui.checkBox.upgrade3, 
             Gui.checkBox.upgrade4,
             Gui.checkBox.upgrade5,
+            Gui.checkBox.upgrade6,
             Gui.button.back}
     elseif state == "Credits" then
         elements ={Gui.button.back}
@@ -196,6 +200,12 @@ function Gui:loadValues()
     if _persTable.upgrades.godMode == 1 then
         Gui.checkBox.upgrade4:SetChecked(true);
     end
+    if _persTable.upgrades.mapBreakthrough1 == 1 then
+        Gui.checkBox.upgrade4:SetChecked(true);
+        if _persTable.upgrades.mapBreakthrough2 == 1 then
+            Gui.checkBox.upgrade4:SetChecked(true);
+        end
+    end
     
     Gui.checkBox.option1:SetChecked(_persTable.config.option1);
     Gui.checkBox.option2:SetChecked(_persTable.config.option2);
@@ -232,6 +242,16 @@ function Gui:updateValues()
         _persTable.upgrades.godMode = 1;
     else
         _persTable.upgrades.godMode = 0;
+    end
+    if Gui.checkBox.upgrade5:GetChecked() then
+        _persTable.upgrades.mapBreakthrough1 = 1;
+    else
+        _persTable.upgrades.mapBreakthrough1 = 0;
+    end
+    if Gui.checkBox.upgrade6:GetChecked() then
+        _persTable.upgrades.mapBreakthrough2 = 1;
+    else
+        _persTable.upgrades.mapBreakthrough2 = 0;
     end
     Gui:tempTextOutput();
 end
