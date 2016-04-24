@@ -2,7 +2,7 @@
 Class = require "lib.hump.class";
 Bait = require "class.Bait"
 Level = require "class.Level"
-Loveframes = require "lib.Loveframes"
+Loveframes = require "lib.LoveFrames"
 Gui = require "class.Gui"
 
 -- Global variables
