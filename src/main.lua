@@ -70,8 +70,6 @@ end
 -- @param dt Delta time  is the amount of seconds since the 
 -- last time this function was called.
 function love.update(dt)
-    gui:tempTextOutput();--[[updates the text output.
-    This function will be replaced in a later version]]--
     Loveframes.update(dt);
     if gui.drawGame() then--updates the curLevel only in the InGame GUI
         curLevel:update(dt, player);

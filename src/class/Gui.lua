@@ -77,7 +77,9 @@ end
 --print the state-name and values
 function Gui:tempDrawText()
     love.graphics.print(Gui.guiName, 10, 10);
-    love.graphics.print(Gui.tempOutput, 10, 300);
+    if Gui.state[1] == "MainMenu" then
+        love.graphics.print(Gui.tempOutput, 10, 300);
+    end
 end
 
 --logging the current state in a table
@@ -91,22 +93,18 @@ end
 --this function is called continuously by the love.draw function
 --will be replaced in a later version
 function Gui:tempTextOutput()
-    if Gui.state[1] == "MainMenu" then
-        Gui.tempOutput = 
-            "_persTable.upgrades:" .. "\n" ..
-            "Speed UP = " .. tostring(_persTable.upgrades.speedUp).. "\n" .. 
-            "Money Mult = " .. tostring(_persTable.upgrades.moneyMult).. "\n" .. 
-            "More Life = " .. tostring(_persTable.upgrades.moreLife).. "\n" .. 
-            "GodMode = " .. tostring(_persTable.upgrades.godMode) .. "\n" .. 
-            "\n" ..
-            "_persTable.config" .. "\n" .. 
-            "S1 =" .. tostring(_persTable.config.slider1).. "\n" ..
-            "S2 =" .. tostring(_persTable.config.slider2).. "\n" ..
-            "O1 =" .. tostring(_persTable.config.option1).. "\n" .. 
-            "O2 =" .. tostring(_persTable.config.option2).. "\n";
-    else
-        Gui.tempOutput = "";
-    end
+    Gui.tempOutput = 
+        "_persTable.upgrades:" .. "\n" ..
+        "Speed UP = " .. tostring(_persTable.upgrades.speedUp).. "\n" .. 
+        "Money Mult = " .. tostring(_persTable.upgrades.moneyMult).. "\n" .. 
+        "More Life = " .. tostring(_persTable.upgrades.moreLife).. "\n" .. 
+        "GodMode = " .. tostring(_persTable.upgrades.godMode) .. "\n" .. 
+        "\n" ..
+        "_persTable.config" .. "\n" .. 
+        "S1 =" .. tostring(_persTable.config.slider1).. "\n" ..
+        "S2 =" .. tostring(_persTable.config.slider2).. "\n" ..
+        "O1 =" .. tostring(_persTable.config.option1).. "\n" .. 
+        "O2 =" .. tostring(_persTable.config.option2).. "\n";
 end
 
 --This function draws the gui state
@@ -203,6 +201,7 @@ function Gui:loadValues()
     Gui.checkBox.option2:SetChecked(_persTable.config.option2);
     Gui.slider.slider1:SetValue(_persTable.config.slider1);
     Gui.slider.slider2:SetValue(_persTable.config.slider2);
+    Gui:tempTextOutput();
 end
 
 --updates all values which can be chanced by gui elements
@@ -234,6 +233,7 @@ function Gui:updateValues()
     else
         _persTable.upgrades.godMode = 0;
     end
+    Gui:tempTextOutput();
 end
 
 --Onclick event of the start button
