@@ -65,33 +65,27 @@ function Level:draw(bait)
     bait:draw();
 end;
 
---- Check the state of the god mode and updates the god mode fuel value
+--- Check the state of the god mode and updates the god mode fuel value.
+--- Note that the fuel of the god mode is not up to date every frame.
 function Level:checkGodMode()
-    print(self.posY);
     if self.godModeActive == 1 then
         if self.godModeDistance == -1 then
             self.godModeDistance = self.posY;
-            print("godModeDistance = self.posY", self.godModeDistance, self.posY)
         else
             self.godModeDistance = self.posY - self.godModeDistance;
-            print("godModeDistance = ", self.godModeDistance);
-            self:setGodModeFuel((self:getGodModeFuel() - math.abs(self.godModeDistance)));            
-            print("fuel = ", self.godModeFuel);
+            self:setGodModeFuel(self:getGodModeFuel() - math.abs(self.godModeDistance));            
         end
     end
-    print("fuel = ", self.godModeFuel);
 end;
 
 --- Try to activate the god Mode.
---- @return When the god mode was successfully activated it returns 1 otherwise 0;
+--- @return When the god mode was successfully activated it returns 1 otherwise 0.
 function Level:activateGodMode()
-    print("godMode = ", _G._persTable.upgrades.godMode);
-    print("godModeFuel = ", self.godModeFuel);
     if _G._persTable.upgrades.godMode == 1 and self.godModeFuel > 0 then
         self.godModeActive = 1;
-        print("god mode activated!");
         return 1;
     else
+        self.godModeActive = 0;
         return 0;
     end
 end
@@ -99,7 +93,6 @@ end
 --- Deactivates the god mode.
 function Level:deactivateGodMode()
     self.godModeActive = 0;
-    print("God mode deactivated");
 end;
 
 --- Returns the amount of the fuel for the god mode
@@ -114,7 +107,6 @@ function Level:setGodModeFuel(newFuel)
     self.godModeFuel = newFuel;
     if self.godModeFuel <= 0 then
         self.godModeActive = 0;
-        print("god mode deactivated");
     end
 end;
 
