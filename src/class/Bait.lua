@@ -8,7 +8,6 @@ local Bait = Class {
         self.winDim = winDim;
         self.posXBait = (winDim[1] / 2) - (self.size / 2);
         local yPos = (self.winDim[2] / 2) - (self.size / 2);
-        love.mouse.setPosition(self.posXBait, yPos);
     end;
     size = 10;
     speed = 100;
@@ -37,13 +36,13 @@ end
 function Bait:draw()
     love.graphics.setColor(127, 0, 255);
     local yPos = (self.winDim[2] / 2) - (self.size / 2);
-    local xPos = self:getCappedPosX();
+    self:setCappedPosX();
+    local xPos = self.posXBait;
     love.graphics.rectangle("fill", xPos, yPos, self.size, self.size);
 end
 
 --- Determines the capped X position of the Bait (SpeedLimit)
--- @return The actual X position of the Bait
-function Bait:getCappedPosX()
+function Bait:setCappedPosX()
     local delta = self.posXMouse - self.posXBait;
     local posX;
     if delta > self.maxSpeedX then
@@ -54,7 +53,12 @@ function Bait:getCappedPosX()
         posX = self.posXMouse;
     end
     self.posXBait = posX;
-    return posX;
+end
+
+--- Returns the actual X position of the Bait
+-- @return The actual X position of the Bait
+function Bait:getPosX()
+  return self.posXBait;
 end
 
 return Bait;
