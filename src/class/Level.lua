@@ -28,6 +28,9 @@ local Level = Class{
     upperBoarder = 1000;    -- if you want higher you should increase this value!
     mapBreakthroughBonus1 = -1000;
     mapBreakthroughBonus2 = -1000;
+    
+    --- list for objekts caught at this round
+    caughtThisRound = {};
 };
 
 --- Update the game state. Called every frame.
@@ -35,9 +38,10 @@ local Level = Class{
 -- last time this function was called.
 -- @param bait The bait object, which stands for the user.
 function Level:update(dt, bait)
-    _G._persTable.moved = math.ceil(dt * bait.speed);
+    _G._persTable.moved = 0;
     if self.direction == 1 and self.posY > self.lowerBoarder 
     and self.posY < self.upperBoarder then
+         _G._persTable.moved = math.ceil(dt * bait.speed);
         self.sizeY = self.winDim[2] + math.ceil(dt * bait.speed);
         self.posY = self.posY - math.ceil(dt * bait.speed);
     elseif self.posY < self.upperBoarder 
@@ -102,6 +106,15 @@ end;
 -- @return Returns the current y position.
 function Level:getYPos()
     return self.posY;
+end;
+
+--- adds the caught Objekt to the caughtThisRound table with amount
+function Level:addToCaught(name)
+    -- add the first 
+    if self.caughtThisRound[name] == nil then
+        self.caughtThisRound[name] = 0;
+    end;
+    self.caughtThisRound[name] = self.caughtThisRound[name] + 1;
 end;
 
 return Level;
