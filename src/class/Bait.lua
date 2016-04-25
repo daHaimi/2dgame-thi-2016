@@ -11,10 +11,10 @@ local Bait = Class {
         love.mouse.setPosition(self.posXBait, yPos);
     end;
     size = 10;
-    speed = 100;
+    speed = 200;
     posXMouse = 0;
     posXBait = 0;
-    maxSpeedX = 5;
+    maxSpeedX = 20;
     winDim = {};
     life = 1;
     money = 0;

@@ -54,6 +54,10 @@ function Level:update(dt, bait)
         self.lowerBoarder = self.lowerBoarder + self.mapBreakthroughBonus2;
         _persTable.upgrades.mapBreakthrough2 = 0;
     end
+    
+    if self.posY <= self.lowerBoarder+10 then
+        bait.speed = (-200);
+    end
 end
 
 --- Draw on the screen. Called every frame.
