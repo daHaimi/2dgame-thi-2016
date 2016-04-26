@@ -41,7 +41,6 @@ function Level:update(dt, bait)
     if self.direction == 1 and self.posY > self.lowerBoarder
             and self.posY < self.upperBoarder then
         _G._persTable.moved = math.ceil(dt * bait.speed);
-        self.sizeY = self.winDim[2] + math.ceil(dt * bait.speed);
         self.posY = self.posY - math.ceil(dt * bait.speed);
     elseif self.posY < self.upperBoarder
             and _persTable.upgrades.mapBreakthrough1 == 1 then
@@ -52,14 +51,12 @@ function Level:update(dt, bait)
             and _persTable.upgrades.mapBreakthrough2 == 1 then
         self.lowerBoarder = self.lowerBoarder + self.mapBreakthroughBonus2;
         _persTable.upgrades.mapBreakthrough2 = 0;
-    end
-    
-    --if lower border reached, change direction
-    if self.posY <= self.lowerBoarder+10 then  
-        bait.speed = (-200);
-    -- if start position reached, stop moving
-    elseif self.posY >= (self.winDim[2] / 2) and bait.speed < 0 then
+    elseif self.posY >= (self.winDim[2] / 2) and self.direction == -1 then
         bait.speed = 0;
+    elseif self.posY <= self.lowerBoarder+10 or self.direction == -1 then
+        _G._persTable.moved = math.ceil(dt * bait.speed * (-1));
+        self.posY = self.posY - math.ceil(dt * bait.speed * (-1));
+        self.direction = -1;
     end
 end
 
@@ -71,6 +68,9 @@ function Level:draw(bait)
     love.graphics.draw(self.bg, self.bgq, 0, self.posY);
     bait:draw();
 end
+
+;
+
 
 --- Set the value for the lower boarder.
 -- @param newBoarderVal The new lower boarder value.
