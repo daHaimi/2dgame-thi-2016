@@ -1,4 +1,5 @@
 Class = require "lib.hump.class";
+CollisionDetection = require "class.CollisionDetection";
 
 --- Class for the Bait swimming for Phase 1 and 2
 -- @param winDim window Size
@@ -31,15 +32,38 @@ function Bait:checkUpgrades()
     end
 end
 
---- implements drawing interface
---
+---updates the bait and checks for collisions
+function Bait:update()
+    self.yPos = (self.winDim[2] / 2) - (self.size / 2);
+    self:setCappedPosX();
+    self.xPos = self.posXBait;
+    self:checkForCollision();
+end
+
+---checks for collision
+function Bait:checkForCollision()
+    for i = 1, #SwarmFactory.createdFishables, 1 do
+        fishable = SwarmFactory.createdFishables[i];
+        CollisionDetection:setCollision();
+        CollisionDetection:calculateCollision(self.xPos, self.yPos, fishable.xPosition, fishable.yPosition, fishable.xHitbox, fishable.yHitbox);
+        if CollisionDetection:getCollision() then
+            self:collisionDetected();
+        end
+    end
+end
+
+---is called every time the bait hits a fishable object
+function Bait:collisionDetected()
+    print "collision"
+end
+
+---implements drawing interface
 function Bait:draw()
     love.graphics.setColor(127, 0, 255);
-    local yPos = (self.winDim[2] / 2) - (self.size / 2);
-    self:setCappedPosX();
-    local xPos = self.posXBait;
-    love.graphics.rectangle("fill", xPos, yPos, self.size, self.size);
+    self:update();
+    love.graphics.rectangle("fill", self.xPos, self.yPos, self.size, self.size);
 end
+
 
 --- Determines the capped X position of the Bait (SpeedLimit)
 function Bait:setCappedPosX()

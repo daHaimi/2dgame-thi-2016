@@ -20,11 +20,14 @@ end
 
 --- This function checks if the bait collides with an object.
 -- The border of the object counts for the collision.
--- xBait is the x-coordinate of the bait
--- xObject is the leftmost x-coordinate of the objects Hitbox
--- w is the width of the objects Hitbox
-function CollisionDetection:calculateCollision ( xBait, xObject, w )
-    if xBait >= xObject and xBait <= xObject + w then
+--@param xBait is the x-coordinate of the bait
+--@param yBait is the y-coordinate of the bait
+--@param xObject is the leftmost x-coordinate of the objects hitbox
+--@param yObject is the upmost y-coordinate of the objects hitbox
+--@param w is the width of the objects hitbox
+--@param h is the height of the objects hitbox
+function CollisionDetection:calculateCollision ( xBait, yBait, xObject, yObject, w, h)
+    if xBait >= xObject and xBait <= xObject + w and yBait >= yObject and yBait <= yObject + h then
         self.collision = true;
     end
     return self.collision;
