@@ -52,9 +52,9 @@ function love.load()
     love.graphics.setBackgroundColor(30, 180, 240);
     gui = Gui();
     _G._persTable.winDim = { love.window.getDesktopDimensions(flags.display) };
-    _G._persTable.winDim[2] = _G._persTable.winDim[2] - 50; -- Sub 50px for taskbar and window header
+    _G._persTable.winDim[2] = _G._persTable.winDim[2] - 150; -- Sub 50px for taskbar and window header
     _G._persTable.winDim[1] = (_G._persTable.winDim[2] / 16) * 9; -- Example: 16:9
-    love.window.setMode(_G._persTable.winDim[1], _G._persTable.winDim[2], flags);
+    love.window.setMode(_G._persTable.winDim[1], _G._persTable.winDim[2], {centered});
     curLevel = Level("assets/testbg.png", _G._persTable.winDim, 1);
     player = Bait(_G._persTable.winDim);
     player:checkUpgrades();
