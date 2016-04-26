@@ -9,7 +9,8 @@ Class = require "lib.hump.class";
 -- @param value: value of the object
 -- @param hitpoints: amoung of the hitpoints of the object
 local FishableObject = Class {
-    init = function(self, imageSrc, yPosition, minSpeed, maxSpeed, xHitbox, yHitbox, value, hitpoints)
+    init = function(self, name, imageSrc, yPosition, minSpeed, maxSpeed, xHitbox, yHitbox, value, hitpoints)
+        self.name = name;
         self.image = love.graphics.newImage("assets/" .. imageSrc);
         self.xPosition = math.random(_G._persTable.winDim[1]);
         self.yPosition = yPosition;
@@ -19,7 +20,7 @@ local FishableObject = Class {
         self.value = value;
         self.hitpoints = hitpoints;
     end;
-
+    name = "no name";
     xPosition = 0;
     yPosition = 0;
     xHitbox = 0;
