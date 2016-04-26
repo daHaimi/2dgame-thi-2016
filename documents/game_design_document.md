@@ -4,13 +4,13 @@
 To do
 
 #### Story ####
-To do (Hamster)
+To do
 
 #### Genre ####
 Action
 
 #### Audience ####
-Ages 6 - 30
+Ages 6 - 99
 
 #### Game Flow Summary ####
 To do  
@@ -42,9 +42,8 @@ You try to catch as many different things as possible, earn cash, proceed to lat
 
 #### Player Perspective ####
 Intro (missing)
-Instructions (missing or not required) to be discussed
 
-- start fishing (with or without knowing what to do depending on instructions)
+- start fishing
 - reels objects in
 - earn cash
 - menu for fishing again, going to shop, etc.

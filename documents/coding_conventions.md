@@ -4,7 +4,7 @@ Semikolon am Statementende
 Einrückung: 4 Spaces  
 Encoding: UTF-8  
 Zeilenende: "Backslash" + "n" (\n)  
-Zeilenlänge: 80 Zeichen  
+Zeilenlänge: 120 Zeichen  
 Operatoren mit space trennen  
 Variablen: lower Camelcase  
 globale Variablen: "_" + lowerCamelcase  
@@ -14,3 +14,7 @@ Dokumentationsblock vor jeder Funktion und Klasse
 Dokumentationen müssen auf Englisch sein  
 Maximale Schachteltiefe: 3  
 Funktionen dürfen maximal 20 Zeilen lang sein
+Funktionen: lower Camelcase
+ansprechende Namen für Klassen, Funktionen und Variablen verwenden
+Unittests mit "test_" + "Dateiname der zu testenden Datei" benennen
+Files: lower Camelcase
