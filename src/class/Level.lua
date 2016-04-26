@@ -7,7 +7,7 @@ Class = require "lib.hump.class";
 
 Class = require "lib.hump.class";
 
-_G.math.inf = 1/0;
+_G.math.inf = 1 / 0;
 
 local Level = Class{
     init = function(self, backgroundPath, winDim, direction)
@@ -59,6 +59,14 @@ function Level:update(dt, bait)
             and _persTable.upgrades.mapBreakthrough2 == 1 then
         self.lowerBoarder = self.lowerBoarder + self.mapBreakthroughBonus2;
         _persTable.upgrades.mapBreakthrough2 = 0;
+    end
+
+    --if lower border reached, change direction
+    if self.posY <= self.lowerBoarder+10 then  
+        bait.speed = (-200);
+    -- if start position reached, stop moving
+    elseif self.posY >= (self.winDim[2] / 2) and bait.speed < 0 then
+        bait.speed = 0;
     end
     
     self:checkGodMode();
