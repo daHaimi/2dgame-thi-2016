@@ -99,11 +99,9 @@ function Level:activateGodMode()
         return 0;
     end
 end
-
-<<<<<<< HEAD
 ;
 
-=======
+
 --- Deactivates the god mode.
 function Level:deactivateGodMode()
     self.godModeActive = 0;
@@ -129,7 +127,7 @@ end;
 function Level:getGodModeStat()
     return self.godModeActive;
 end;
->>>>>>> c9257024ccd25786cddcd3c2c74f67191a2b13ee
+
 
 --- Set the value for the lower boarder.
 -- @param newBoarderVal The new lower boarder value.
