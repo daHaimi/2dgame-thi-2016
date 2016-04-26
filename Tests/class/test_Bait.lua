@@ -117,7 +117,56 @@ describe("Unit test for Bait.lua", function()
         myInstance:checkUpgrades();
         assert.are.same(myInstance.speed, exp);
     end)
+  
+  it("Test x position limited to maxSpeed (positive direction)", function()
+        local myInstance = testClass(locWinDim);
+        myInstance.posXMouse = 70;
+        myInstance.posXBait = 40;
+        local newPos = myInstance.posXBait + myInstance.maxSpeedX;
+        myInstance:setCappedPosX();
+        assert.are.same(myInstance.posXBait, newPos);
+    end)
+  
+  it("Test x position limited to maxSpeed (negative direction)", function()
+        local myInstance = testClass(locWinDim);
+        myInstance.posXMouse = 10;
+        myInstance.posXBait = 40;
+        local newPos = myInstance.posXBait - myInstance.maxSpeedX;
+        myInstance:setCappedPosX();
+        assert.are.same(myInstance.posXBait, newPos);
+    end)
+  
+   it("Test x position not limited to maxSpeed (positive direction)", function()
+        local myInstance = testClass(locWinDim);
+        myInstance.posXMouse = 41;
+        myInstance.posXBait = 40;
+        local newPos = myInstance.posXMouse;
+        myInstance:setCappedPosX();
+        assert.are.same(myInstance.posXBait, newPos);
+    end)
+  
+  it("Test x position not limited to maxSpeed (negative direction)", function()
+        local myInstance = testClass(locWinDim);
+        myInstance.posXMouse = 40;
+        myInstance.posXBait = 41;
+        local newPos = myInstance.posXMouse;
+        myInstance:setCappedPosX();
+        assert.are.same(myInstance.posXBait, newPos);
+    end)
     
-    
+     it("Test x positon with no change", function()
+        local myInstance = testClass(locWinDim);
+        myInstance.posXMouse = 40;
+        myInstance.posXBait = 40;
+        local newPos = myInstance.posXMouse;
+        myInstance:setCappedPosX();
+        assert.are.same(myInstance.posXBait, newPos);
+    end)
+  
+  it("Test getXPos", function()
+        local myInstance = testClass(locWinDim);
+        myInstance.posXBait = 0;
+        assert.are.same(myInstance:getPosX(), 0);
+    end)
     
 end)
