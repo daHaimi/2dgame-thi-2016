@@ -5,6 +5,8 @@
 
 Class = require "lib.hump.class";
 
+_G.math.inf = 1/0;
+
 local Level = Class{
     init = function(self, backgroundPath, winDim, direction)
         self.bg = love.graphics.newImage(backgroundPath);
@@ -28,8 +30,8 @@ local Level = Class{
     upperBoarder = 1000;    -- if you want higher you should increase this value!
     mapBreakthroughBonus1 = -1000;
     mapBreakthroughBonus2 = -1000;
-    godModeDistance = -1;
-    godModeFuel = 1500;  
+    oldPosY = _G.math.inf;
+    godModeFuel = 800;  
     godModeActive = 0;
 };
 
@@ -69,11 +71,11 @@ end;
 --- Note that the fuel of the god mode is not up to date every frame.
 function Level:checkGodMode()
     if self.godModeActive == 1 then
-        if self.godModeDistance == -1 then
-            self.godModeDistance = self.posY;
+        if self.oldPosY == _G.math.inf then
+            self.oldPosY = self.posY;
         else
-            self.godModeDistance = self.posY - self.godModeDistance;
-            self:setGodModeFuel(self:getGodModeFuel() - math.abs(self.godModeDistance));            
+            self:setGodModeFuel(self:getGodModeFuel() - math.abs(self.posY - self.oldPosY));
+            self.oldPosY = self.posY;
         end
     end
 end;
@@ -160,8 +162,8 @@ function Level:getYPos()
 end;
 
 --- Call this function to make known that the player has stopped the god mode
-function Level:resetGodModeDistance()
-    self.godModeDistance = -1;
+function Level:resetOldPosY()
+    self.oldPosY = _G.math.inf;
 end;
 
 return Level;
