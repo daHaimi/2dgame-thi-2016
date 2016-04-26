@@ -4,7 +4,7 @@ Bait = require "class.Bait"
 Level = require "class.Level"
 
 -- Global variables
-
+_G.math.inf = 1/0;
 
 --- globale persistance table
 _G._persTable = {
@@ -80,12 +80,10 @@ end
 
 function love.mousepressed(x, y, isTouch)
     curLevel:activateGodMode();
-    print("Mouse klicked");
 end;
     
     
 function love.mousereleased(x, y, isTouch)
-    print("Mouse released");
     curLevel:deactivateGodMode();
-    curLevel:resetGodModeDistance();
+    curLevel:resetOldPosY();
 end;
