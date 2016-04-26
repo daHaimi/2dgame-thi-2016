@@ -24,7 +24,7 @@ local Level = Class{
     bg = nil;
     bgq = nil;
     winDim = {};
-    lowerBoarder = -2000;   -- if you want deeper you should decrease this value!
+    lowerBoarder = -100;   -- if you want deeper you should decrease this value!
     upperBoarder = 1000;    -- if you want higher you should increase this value!
     mapBreakthroughBonus1 = -1000;
     mapBreakthroughBonus2 = -1000;
@@ -55,8 +55,12 @@ function Level:update(dt, bait)
         _persTable.upgrades.mapBreakthrough2 = 0;
     end
     
-    if self.posY <= self.lowerBoarder+10 then
+    --if lower border reached, change direction
+    if self.posY <= self.lowerBoarder+10 then  
         bait.speed = (-200);
+    -- if start position reached, stop moving
+    elseif self.posY >= (self.winDim[2] / 2) and bait.speed < 0 then
+        bait.speed = 0;
     end
 end
 
