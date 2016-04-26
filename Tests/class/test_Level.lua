@@ -62,7 +62,7 @@ describe("Test unit test suite", function()
         testClass.godModeFuel = 20;
         local sSGMF = spy.on(testClass, "setGodModeFuel");
         
-        for i = -1, -30, -1
+        for i = 10, -20, -1
         do
             testClass.posY = i;
             testClass:checkGodMode();
@@ -72,23 +72,23 @@ describe("Test unit test suite", function()
     end)
     
     it("Testing activateGodMode", function()
-            _G._persTable.upgrades.godMode = 1;
-            testClass.godModeFuel = 500;
-            local sAGM = spy.on(testClass, "activateGodMode");
-            testClass:activateGodMode();
-            assert.spy(sAGM).was.called(1);
-            assert.are.same(testClass.godModeActive, 1);
-            
-            testClass.godModeFuel = 0;
-            testClass:activateGodMode();
-            assert.spy(sAGM).was.called(2);
-            assert.are.same(testClass.godModeActive, 0);
-            
-            _G._persTable.upgrades.godMode = 0;
-            testClass.godModeFuel = 1000;
-            testClass:activateGodMode();
-            assert.spy(sAGM).was.called(3);
-            assert.are.same(testClass.godModeActive, 0);
+        _G._persTable.upgrades.godMode = 1;
+        testClass.godModeFuel = 500;
+        local sAGM = spy.on(testClass, "activateGodMode");
+        testClass:activateGodMode();
+        assert.spy(sAGM).was.called(1);
+        assert.are.same(testClass.godModeActive, 1);
+        
+        testClass.godModeFuel = 0;
+        testClass:activateGodMode();
+        assert.spy(sAGM).was.called(2);
+        assert.are.same(testClass.godModeActive, 0);
+        
+        _G._persTable.upgrades.godMode = 0;
+        testClass.godModeFuel = 1000;
+        testClass:activateGodMode();
+        assert.spy(sAGM).was.called(3);
+        assert.are.same(testClass.godModeActive, 0);
     end)
 
     it("Testing deactivateGodMode", function()
@@ -117,5 +117,4 @@ describe("Test unit test suite", function()
         testClass:resetOldPosY();
         assert.are.same(testClass.oldPosY, math.inf);
     end)
-
 end)
