@@ -57,6 +57,20 @@ describe("Test unit test suite", function()
         assert.are.same(testClass:getYPos(), 0);
     end)
 
+    it("Testing checkGodMode", function()
+        testClass.godModeActive = 1;
+        testClass.godModeFuel = 20;
+        local sSGMF = spy.on(testClass, "setGodModeFuel");
+        
+        for i = -1, -30, -1
+        do
+            testClass.posY = i;
+            testClass:checkGodMode();
+        end
+        assert.spy(sSGMF).was.called(20);
+        assert.are.same(testClass.godModeActive, 0);
+    end)
+    
     it("Testing activateGodMode", function()
             _G._persTable.upgrades.godMode = 1;
             testClass.godModeFuel = 500;
@@ -89,5 +103,19 @@ describe("Test unit test suite", function()
         assert.are.same(testClass:getGodModeStat(), 0);
     end)
 
+    it("Testing setGodModeFuel and getGodModeFuel", function()
+        testClass.godModeActive = 1;
+        testClass:setGodModeFuel(1000);
+        assert.are.same(testClass:getGodModeFuel(), 1000);
+        testClass:setGodModeFuel(0);
+        assert.are.same(testClass:getGodModeFuel(), 0);
+        assert.are.same(testClass.godModeActive, 0);
+    end)
+
+    it("Testing resetOldPosY", function()
+        testClass.oldPosY = -400;
+        testClass:resetOldPosY();
+        assert.are.same(testClass.oldPosY, math.inf);
+    end)
 
 end)
