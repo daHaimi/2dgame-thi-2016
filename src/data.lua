@@ -59,8 +59,8 @@ fishableObject {
     image = "lolli.png",
     minSpeed = 0,
     maxSpeed = 2,
-    xHitbox = 2,
-    yHitbox = 4,
+    xHitbox = 40,
+    yHitbox = 20,
     value = -10,
     hitpoints = 5
 }

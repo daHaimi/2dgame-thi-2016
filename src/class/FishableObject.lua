@@ -39,9 +39,11 @@ function FishableObject:draw()
             love.graphics.draw(self.image, self.xPosition, self.yPosition);
         else
             love.graphics.scale(-1, 1);
-            love.graphics.draw(self.image, -self.xPosition, self.yPosition);
+            love.graphics.draw(self.image, -self.xPosition-self.xHitbox, self.yPosition);
             love.graphics.scale(-1, 1);
         end
+        love.graphics.setColor(0,0,0);
+        love.graphics.rectangle("line", self.xPosition, self.yPosition, self.xHitbox, self.yHitbox);
     end
 end
 
