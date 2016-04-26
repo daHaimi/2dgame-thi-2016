@@ -7,6 +7,8 @@ Loveframes = require "lib.LoveFrames"
 Gui = require "class.Gui"
 
 -- Global variables
+_G.math.inf = 1 / 0;
+
 --- globale persistance table
 _G._persTable = {
     statistic = {};
@@ -21,33 +23,33 @@ _G._persTable = {
 
 --- upgrades list in persTable, "0" means unbought
 _G._persTable.upgrades = {
-    speedUp = 0; --- "0" no Speedup for more looke bait.lua
-    moneyMult = 0; --- "0" means no additional money
-    moreLife = 0; --- amount of additional lifes
-    godMode = 0; ---
-    mapBreakthrough1 = 0; --- can you access the first map limit? 0 = no, 1 = yes
-    mapBreakthrough2 = 0; --- can you access the second map limit? 0 = no, 1 = yes
+    speedUp = 0; -- "0" no Speedup for more looke bait.lua
+    moneyMult = 0; -- "0" means no additional money
+    moreLife = 0; -- amount of additional lifes
+    godMode = 1; -- indicates if the god mode is available or not
+    mapBreakthrough1 = 0; -- can you access the first map limit? 0 = no, 1 = yes
+    mapBreakthrough2 = 0; -- can you access the second map limit? 0 = no, 1 = yes
 };
 
 --- config options
 _G._persTable.config = {
-    slider1 = 30; --these values are only examples. Options have to be reviewed later
+    slider1 = 30; -- these values are only examples. Options have to be reviewed later
     slider2 = 80;
     option1 = true;
     option2 = false;
 }
 
 --- Local variables
-local curLevel = nil;
-local player = nil;
-local swarmFactory = nil;
-local gui = nil;
+local curLevel;
+local player;
+local swarmFactory;
+local gui;
 
 --- The bootstrap of the game.
 -- This function is called exactly once at the beginning of the game.
 function love.load()
-    local _, _, flags = love.window.getMode()
-    love.graphics.setBackgroundColor(30, 180, 240)
+    local _, _, flags = love.window.getMode();
+    love.graphics.setBackgroundColor(30, 180, 240);
     gui = Gui();
     _G._persTable.winDim = { love.window.getDesktopDimensions(flags.display) };
     _G._persTable.winDim[2] = _G._persTable.winDim[2] - 50; -- Sub 50px for taskbar and window header
@@ -115,9 +117,13 @@ function love.mousepressed(x, y, button)
         button = 'l';
     end
     Loveframes.mousepressed(x, y, button);
+
+    -- activate the god mode when you press the mouse
+    curLevel:activateGodMode();
 end
 
---- @param x The mouse position on the x-axis.
+--- Callback function triggered wehen the mouse is released.
+-- @param x The mouse position on the x-axis.
 -- @param y The mouse position on the y-axis.
 -- @param button The pressed mousebutton.
 function love.mousereleased(x, y, button)
@@ -127,5 +133,8 @@ function love.mousereleased(x, y, button)
         button = 'l';
     end
     Loveframes.mousereleased(x, y, button);
-end
 
+    -- deactivate the god mode when you release the mouse
+    curLevel:deactivateGodMode();
+    curLevel:resetOldPosY();
+end

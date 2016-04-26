@@ -1,5 +1,6 @@
 Class = require "lib.hump.class";
 CollisionDetection = require "class.CollisionDetection";
+Level = require "class.Level";
 
 --- Class for the Bait swimming for Phase 1 and 2
 -- @param winDim window Size
@@ -18,6 +19,7 @@ local Bait = Class {
     winDim = {};
     life = 1;
     money = 0;
+    caughtThisRound ={};
 };
 
 --- TODO need balancing
@@ -30,7 +32,7 @@ function Bait:checkUpgrades()
     if _G._persTable.upgrades.speedUp > 0 then
         self.speed = self.speed * (1 + _G._persTable.upgrades.speedUp);
     end
-end
+end;
 
 ---updates the bait and checks for collisions
 function Bait:update()
@@ -43,18 +45,23 @@ end
 ---checks for collision
 function Bait:checkForCollision()
     for i = 1, #SwarmFactory.createdFishables, 1 do
-        fishable = SwarmFactory.createdFishables[i];
+        local fishable = SwarmFactory.createdFishables[i];
         CollisionDetection:setCollision();
         CollisionDetection:calculateCollision(self.xPos, self.yPos, fishable.xPosition, fishable.yPosition, fishable.xHitbox, fishable.yHitbox);
         if CollisionDetection:getCollision() then
-            self:collisionDetected();
+            self:collisionDetected(fishable, i);
         end
     end
 end
 
 ---is called every time the bait hits a fishable object
-function Bait:collisionDetected()
-    print "collision"
+function Bait:collisionDetected(fishable, index)   
+    for i = 1, #SwarmFactory.createdFishables, 1 do
+        if i == index then
+            SwarmFactory.createdFishables[i] = SwarmFactory.createdFishables[i+1];
+        end
+    end
+    Level:addToCaught(fishable.name);
 end
 
 ---implements drawing interface
@@ -63,7 +70,6 @@ function Bait:draw()
     self:update();
     love.graphics.rectangle("fill", self.xPos, self.yPos, self.size, self.size);
 end
-
 
 --- Determines the capped X position of the Bait (SpeedLimit)
 function Bait:setCappedPosX()

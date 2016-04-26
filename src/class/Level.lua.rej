@@ -1,0 +1,11 @@
+diff a/src/class/Level.lua b/src/class/Level.lua	(rejected hunks)
+@@ -69,6 +69,9 @@
+     bait:draw();
+ end
+ 
++;
++
++
+ --- Set the value for the lower boarder.
+ -- @param newBoarderVal The new lower boarder value.
+ function Level:setLowerBoarder(newBoarderVal)
