@@ -1,3 +1,7 @@
+Loveframes = require "lib.LoveFrames";
+Class = require "lib.hump.class";
+
+
 local Gui = Class {
     init = function(self)
         Gui:loadValues();
