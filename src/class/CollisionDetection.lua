@@ -1,7 +1,7 @@
---- Class for CollisionDetection
 
 Class = require "lib.hump.class";
 
+--- Class for CollisionDetection
 local CollisionDetection = Class {
     init = function(self)
     end;
