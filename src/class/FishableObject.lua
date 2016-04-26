@@ -28,42 +28,42 @@ local FishableObject = Class {
     speed = 0;
     value = 0;
     hitpoints = 1;
+    drawIt = true;
 };
 
 --- draw the object, still no sprite implementet
 function FishableObject:draw()
-
-    love.graphics.setColor(255, 255, 255);
-    if self.speed < 0 then
-        love.graphics.draw(self.image, self.xPosition, self.yPosition);
-    else
-        love.graphics.scale(-1, 1);
-        love.graphics.draw(self.image, -self.xPosition, self.yPosition);
-        love.graphics.scale(-1, 1);
+    if self.drawIt then
+        love.graphics.setColor(255, 255, 255);
+        if self.speed < 0 then
+            love.graphics.draw(self.image, self.xPosition, self.yPosition);
+        else
+            love.graphics.scale(-1, 1);
+            love.graphics.draw(self.image, -self.xPosition, self.yPosition);
+            love.graphics.scale(-1, 1);
+        end
     end
 end
 
 --- Updates the position of the object depending on its speed
 function FishableObject:update()
+        if ((self.xPosition + self.xHitbox + self.speed) > _G._persTable.winDim[1]) then
 
-    if ((self.xPosition + self.xHitbox + self.speed) > _G._persTable.winDim[1]) then
+            self.xPosition = _G._persTable.winDim[1] - self.xHitbox;
+            self.speed = self.speed * (-1);
 
-        self.xPosition = _G._persTable.winDim[1] - self.xHitbox;
-        self.speed = self.speed * (-1);
+        elseif self.xPosition + self.speed < 0 then
 
-    elseif self.xPosition + self.speed < 0 then
+            self.xPosition = math.abs(self.speed) - self.xPosition;
+            self.speed = self.speed * (-1);
 
-        self.xPosition = math.abs(self.speed) - self.xPosition;
-        self.speed = self.speed * (-1);
+        else
 
-    else
+            self.xPosition = self.xPosition + self.speed;
+        end
 
-        self.xPosition = self.xPosition + self.speed;
-    end
-
-    self.yPosition = self.yPosition - _G._persTable.moved;
+        self.yPosition = self.yPosition - _G._persTable.moved;
 end
-
 --- sets the xPosition
 function FishableObject:setXPosition(xPosition)
     self.xPosition = xPosition;
