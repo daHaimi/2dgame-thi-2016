@@ -4,7 +4,12 @@ Class = require "lib.hump.class";
 -- @param backgroundPath The relative path to the picture
 -- @param winDim The dimensions of the window
 -- @param direction The y direction (-1 means up and 1 means down)
-local Level = Class {
+
+Class = require "lib.hump.class";
+
+_G.math.inf = 1/0;
+
+local Level = Class{
     init = function(self, backgroundPath, winDim, direction)
         self.bg = love.graphics.newImage(backgroundPath);
         if self.bg ~= nil then -- do not remove this if statement or busted will crash
@@ -27,9 +32,11 @@ local Level = Class {
     upperBoarder = 1000; -- if you want higher you should increase this value!
     mapBreakthroughBonus1 = -1000;
     mapBreakthroughBonus2 = -1000;
-
     -- list for objekts caught at this round
     caughtThisRound = {};
+    oldPosY = _G.math.inf;
+    godModeFuel = 800;  
+    godModeActive = 0;
 };
 
 --- Update the game state. Called every frame.
@@ -53,7 +60,9 @@ function Level:update(dt, bait)
         self.lowerBoarder = self.lowerBoarder + self.mapBreakthroughBonus2;
         _persTable.upgrades.mapBreakthrough2 = 0;
     end
-end
+    
+    self:checkGodMode();
+end;
 
 --- Draw on the screen. Called every frame.
 -- Draws the background and the bait on the screen.
@@ -62,7 +71,57 @@ function Level:draw(bait)
     love.graphics.setColor(255, 255, 255);
     love.graphics.draw(self.bg, self.bgq, 0, self.posY);
     bait:draw();
+end;
+
+--- Check the state of the god mode and updates the god mode fuel value.
+function Level:checkGodMode()
+    if self.godModeActive == 1 then
+        if self.oldPosY == _G.math.inf then
+            self.oldPosY = self.posY;
+        else
+            self:setGodModeFuel(self:getGodModeFuel() - math.abs(self.posY - self.oldPosY));
+            self.oldPosY = self.posY;
+        end
+    end
+end;
+
+--- Try to activate the god Mode.
+-- @return When the god mode was successfully activated it returns 1 otherwise 0.
+function Level:activateGodMode()
+    if _G._persTable.upgrades.godMode == 1 and self.godModeFuel > 0 then
+        self.godModeActive = 1;
+        return 1;
+    else
+        self.godModeActive = 0;
+        return 0;
+    end
 end
+
+--- Deactivates the god mode.
+function Level:deactivateGodMode()
+    self.godModeActive = 0;
+end;
+
+--- Returns the amount of the fuel for the god mode
+-- @return Returns the amount of the fuel for the god mode
+function Level:getGodModeFuel()
+    return self.godModeFuel;
+end;
+
+--- Set the fuel for the god mode to the new value. 
+-- Is newFuel <= 0, the god mode will be deactivated.
+function Level:setGodModeFuel(newFuel)
+    self.godModeFuel = newFuel;
+    if self.godModeFuel <= 0 then
+        self.godModeActive = 0;
+    end
+end;
+
+--- Returns the state of the god mode.
+-- @return Returns 1 when the god mode was activated. Otherwise 0.
+function Level:getGodModeStat()
+    return self.godModeActive;
+end;
 
 --- Set the value for the lower boarder.
 -- @param newBoarderVal The new lower boarder value.
@@ -131,5 +190,10 @@ function Level:addToCaught(name)
 end
 
 ;
+
+--- Call this function to make known that the player has stopped the god mode
+function Level:resetOldPosY()
+    self.oldPosY = _G.math.inf;
+end;
 
 return Level;

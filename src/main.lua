@@ -7,6 +7,8 @@ Loveframes = require "lib.LoveFrames"
 Gui = require "class.Gui"
 
 -- Global variables
+_G.math.inf = 1/0;
+
 --- globale persistance table
 _G._persTable = {
     statistic = {};
@@ -24,7 +26,7 @@ _G._persTable.upgrades = {
     speedUp = 0; --- "0" no Speedup for more looke bait.lua
     moneyMult = 0; --- "0" means no additional money
     moreLife = 0; --- amount of additional lifes
-    godMode = 0; ---
+    godMode = 1; --- indicates if the god mode is available or not
     mapBreakthrough1 = 0; --- can you access the first map limit? 0 = no, 1 = yes
     mapBreakthrough2 = 0; --- can you access the second map limit? 0 = no, 1 = yes
 };
@@ -115,6 +117,9 @@ function love.mousepressed(x, y, button)
         button = 'l';
     end
     Loveframes.mousepressed(x, y, button);
+    
+    -- activate the god mode when you press the mouse
+    curLevel:activateGodMode();
 end
 
 --- @param x The mouse position on the x-axis.
@@ -127,5 +132,8 @@ function love.mousereleased(x, y, button)
         button = 'l';
     end
     Loveframes.mousereleased(x, y, button);
+    
+    -- deactivate the god mode when you release the mouse
+    curLevel:deactivateGodMode();
+    curLevel:resetOldPosY();
 end
-

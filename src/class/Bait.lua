@@ -30,7 +30,7 @@ function Bait:checkUpgrades()
     if _G._persTable.upgrades.speedUp > 0 then
         self.speed = self.speed * (1 + _G._persTable.upgrades.speedUp);
     end
-end
+end;
 
 ---updates the bait and checks for collisions
 function Bait:update()
@@ -63,7 +63,6 @@ function Bait:draw()
     self:update();
     love.graphics.rectangle("fill", self.xPos, self.yPos, self.size, self.size);
 end
-
 
 --- Determines the capped X position of the Bait (SpeedLimit)
 function Bait:setCappedPosX()
