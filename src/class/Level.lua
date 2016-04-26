@@ -1,16 +1,13 @@
 Class = require "lib.hump.class";
 
+_G.math.inf = 1 / 0;
+
 --- The class Level contains all informations about the world/level
 -- @param backgroundPath The relative path to the picture
 -- @param winDim The dimensions of the window
 -- @param direction The y direction (-1 means up and 1 means down)
-
-Class = require "lib.hump.class";
-
-_G.math.inf = 1 / 0;
-
 local Level = Class{
-    init = function(self, backgroundPath, winDim, direction)
+    init = function(self, backgroundPath, winDim, direction, swarmFactory)
         self.bg = love.graphics.newImage(backgroundPath);
         if self.bg ~= nil then -- do not remove this if statement or busted will crash
         self.bg:setWrap("repeat", "repeat");
@@ -21,8 +18,11 @@ local Level = Class{
         self.direction = direction;
         if self.bg ~= nil then -- do not remove this if statement or busted will crash
         self.bgq = love.graphics.newQuad(0, 0, winDim[1], 20000, self.bg:getWidth(), self.bg:getHeight());
+        self.swarmFac = swarmFactory;
         end;
     end,
+    swarmFac = nil;
+    levelFinished = 0;
     posY = 0;
     direction = 1; -- (-1) means up and 1 means down
     bg = nil;
@@ -67,6 +67,7 @@ function Level:update(dt, bait)
     -- if start position reached, stop moving
     elseif self.posY >= (self.winDim[2] / 2) and bait.speed < 0 then
         bait.speed = 0;
+        self.levelFinished = 1;
     end
     
     self:checkGodMode();
@@ -110,6 +111,16 @@ function Level:deactivateGodMode()
     self.godModeActive = 0;
 end;
 
+--- Calculates the value of the fished objects.
+-- @return Returns the value of all fished objects.
+function Level:calcFishedValue()
+    local fishedVal = 0;
+    for name, amount in caughtThisRound do
+        fishedVal = self.swarmFac:getFishableObjects()[name].value * amount;
+    end
+    return fishedVal;
+end;
+
 --- Returns the amount of the fuel for the god mode
 -- @return Returns the amount of the fuel for the god mode
 function Level:getGodModeFuel()
@@ -131,62 +142,60 @@ function Level:getGodModeStat()
     return self.godModeActive;
 end;
 
+--- Set the swarmfactory for the map.
+-- @param swarmFactory Stands for the swarmfactory object.
+function setSwarmFactory(swarmFactory)
+    self.swarmFac = swarmFactory;
+end)
+
 --- Set the value for the lower boarder.
 -- @param newBoarderVal The new lower boarder value.
 function Level:setLowerBoarder(newBoarderVal)
     self.lowerBoarder = newBoarderVal;
-end
-
-;
+end;
 
 --- Returns the value of the actual lower boarder.
 -- @return Returns the value of the actual lower boarder.
 function Level:getLowerBoarder()
     return self.lowerBoarder;
-end
-
-;
+end;
 
 --- Set the value for the upper boarder.
 -- @param newBoarderVal The new upper boarder value.
 function Level:setUpperBoarder(newBoarderVal)
     self.upperBoarder = newBoarderVal;
-end
-
-;
+end;
 
 --- Returns the value of the actual upper boarder.
 -- @return Returns the value of the actual upper boarder.
 function Level:getUpperBoarder()
     return self.upperBoarder;
-end
-
-;
+end;
 
 --- Set the direction of the current Level.
 -- @param direction Stands for the direction. 1 means down and -1 means up
 function Level:setDirection(direction)
     self.direction = direction;
-end
-
-;
+end;
 
 --- Returns the direction of the current map.
 -- @return 1 means down and -1 means up all and
 -- other values stands for an error.
 function Level:getDirection()
     return self.direction;
-end
-
-;
+end;
 
 --- Returns the current y position.
 -- @return Returns the current y position.
 function Level:getYPos()
     return self.posY;
-end
+end;
 
-;
+--- Return the state of the level.
+-- @return Returns 1 
+function Level:isFinished()
+    return self.levelFinished;
+end;
 
 --- adds the caught Objekt to the caughtThisRound table with amount
 function Level:addToCaught(name)
@@ -195,9 +204,7 @@ function Level:addToCaught(name)
         self.caughtThisRound[name] = 0;
     end;
     self.caughtThisRound[name] = self.caughtThisRound[name] + 1;
-end
-
-;
+end;
 
 --- Call this function to make known that the player has stopped the god mode
 function Level:resetOldPosY()

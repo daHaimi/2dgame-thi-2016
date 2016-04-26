@@ -55,10 +55,11 @@ function love.load()
     _G._persTable.winDim[2] = _G._persTable.winDim[2] - 50; -- Sub 50px for taskbar and window header
     _G._persTable.winDim[1] = (_G._persTable.winDim[2] / 16) * 9; -- Example: 16:9
     love.window.setMode(_G._persTable.winDim[1], _G._persTable.winDim[2], flags);
-    curLevel = Level("assets/testbg.png", _G._persTable.winDim, 1);
+    curLevel = Level("assets/testbg.png", _G._persTable.winDim, 1, nil);
     player = Bait(_G._persTable.winDim);
     player:checkUpgrades();
     swarmFactory = SwarmFactory(curLevel, player);
+    curLevel:setSwarmFactory(swarmFactory); 
 end
 
 --- The love main draw call, which draws every frame on the screen.
