@@ -72,6 +72,7 @@ function Level:update(dt, bait)
     self:checkGodMode();
 end;
 
+---when the bait hit a object or the boarder is reached, start phase 2
 function Level:switchToPhase2(bait)
     bait.speed = (-200);
 end
