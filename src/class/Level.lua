@@ -62,8 +62,8 @@ function Level:update(dt, bait)
     end
 
     --if lower border reached, change direction
-    if self.posY <= self.lowerBoarder+10 then  
-        bait.speed = (-200);
+    if self.posY <= self.lowerBoarder+10 then 
+        self:switchToPhase2(bait);
     -- if start position reached, stop moving
     elseif self.posY >= (self.winDim[2] / 2) and bait.speed < 0 then
         bait.speed = 0;
@@ -71,6 +71,10 @@ function Level:update(dt, bait)
     
     self:checkGodMode();
 end;
+
+function Level:switchToPhase2(bait)
+    bait.speed = (-200);
+end
 
 --- Draw on the screen. Called every frame.
 -- Draws the background and the bait on the screen.

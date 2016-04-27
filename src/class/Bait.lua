@@ -58,7 +58,8 @@ function Bait:checkForCollision()
 end
 
 ---is called every time the bait hits a fishable object
-function Bait:collisionDetected(fishable, index)   
+function Bait:collisionDetected(fishable, index)
+    Level:switchToPhase2(self);
     for i = 1, #SwarmFactory.createdFishables, 1 do
         if i == index then
             SwarmFactory.createdFishables[i].drawIt = false;
