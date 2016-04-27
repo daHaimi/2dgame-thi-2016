@@ -39,7 +39,7 @@ describe("Unit test for SwarmFactory.lua", function()
     end)
 
     it("Testing createNextSwarm method", function()
-        local testInstance = testClass();
+        local testInstance = testClass(level, player, "src/data.lua");
         testInstance.currentSwarm = 0;
         testInstance.createdFishables = {};
         testInstance:createNextSwarm(100);

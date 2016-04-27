@@ -58,7 +58,7 @@ function love.load()
     curLevel = Level("assets/testbg.png", _G._persTable.winDim, 1);
     player = Bait(_G._persTable.winDim);
     player:checkUpgrades();
-    swarmFactory = SwarmFactory(curLevel, player);
+    swarmFactory = SwarmFactory(curLevel, player, "data.lua");
 end
 
 --- The love main draw call, which draws every frame on the screen.

@@ -6,7 +6,8 @@ local SwarmFactory = Class {
     --- Initializes the swarm factory
     -- @param level The current level
     -- @param player The player object
-    init = function(self, level, player)
+    -- @param dataFile The path and name of the data file
+    init = function(self, level, player, dataFile)
         self.level = level;
         self.player = player;
 
@@ -22,7 +23,10 @@ local SwarmFactory = Class {
             self.swarmsSewer = swarms;
         end
         
-        dofile("data.lua");
+        if dataFile ~= nil then
+            dofile(dataFile);
+        end
+        
         addedHeights = 800; -- Start at 800 to create swarms for now
         for i = 1, #self.swarmsSewer, 1 do
             self:createNextSwarm(addedHeights);
