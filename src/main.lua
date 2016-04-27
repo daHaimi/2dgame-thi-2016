@@ -47,8 +47,6 @@ local gui = nil;
 -- This function is called exactly once at the beginning of the game.
 function love.load()
     local _, _, flags = love.window.getMode()
-    love.graphics.setBackgroundColor(30, 180, 240)
-    gui = Gui();
     _G._persTable.winDim = {love.window.getDesktopDimensions(flags.display)};
     _G._persTable.winDim[2] = _G._persTable.winDim[2] - 50; -- Sub 50px for taskbar and window header
     _G._persTable.winDim[1] = (_G._persTable.winDim[2] / 16) * 9; -- Example: 16:9
@@ -57,6 +55,12 @@ function love.load()
     player = Bait(_G._persTable.winDim);
     player:checkUpgrades();
     swarmFactory = SwarmFactory(curLevel, player);
+        love.graphics.setBackgroundColor(30, 180, 240)
+    gui = Gui();
+    gui:tempTextOutput();
+    gui:buildFrames();
+    gui:loadValues();
+    gui:startGui();
 end
 
 -- The love main draw call, which draws every frame on the screen.
@@ -78,6 +82,7 @@ end
 -- @param dt Delta time  is the amount of seconds since the 
 -- last time this function was called.
 function love.update(dt)
+    gui:updateGui();
     Loveframes.update(dt);
     if gui.drawGame() then--updates the curLevel only in the InGame GUI
         curLevel:update(dt, player);

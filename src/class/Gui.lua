@@ -1,18 +1,31 @@
+Frame = require "class.Frame";
 Loveframes = require "lib.LoveFrames";
 Class = require "lib.hump.class";
 
-
 local Gui = Class {
     init = function(self)
-        Gui:loadValues();
-        Gui:clearAll();
-        Gui:draw("MainMenu");
     end;
     
-    guiName = "";--Text in the left upper corner
+    --guiName = "";--Text in the left upper corner
     tempOutput = "";--Output values on the Main Menu. Will be replaced later
-    state = {"", ""};--The current and last gui state
-
+    --state = {"", ""};--The current and last gui state
+    state = {};
+    changeFrame = false;
+    
+    myFrame ={
+        mainMenu = Frame("MainMenu"),
+        options = Frame("Options"),
+        upgradeMenu = Frame("UpgradeMenu"),
+        wiki = Frame("Wiki"),
+        credits = Frame("Credits"),
+        inGame = Frame("InGame"),
+        score = Frame("Score"),
+        tutorial = Frame("Tutorial"),
+        achievements = Frame("Achievements"),
+        pause = Frame("Pause"),
+        level = Frame("Level")
+    };
+    
     --Tabel contains all sliders
     slider = { 
         slider1 = Loveframes.Create("slider"):SetText("slider1"):SetMinMax(0, 100):SetWidth(80),
@@ -31,7 +44,7 @@ local Gui = Class {
         level2 = Loveframes.Create("button"):SetText("Level 2"),
         level3 = Loveframes.Create("button"):SetText("Level 3"),
         retry = Loveframes.Create("button"):SetText("Retry"),
-        Pause = Loveframes.Create("button"):SetText("Pause"),
+        pause = Loveframes.Create("button"):SetText("Pause"),
         tempEndTurn = Loveframes.Create("button"):SetText("End turn"),
         tempGo = Loveframes.Create("button"):SetText("Skip tutorial"),
         backToMenu = Loveframes.Create("button"):SetText("Back to menu"),
@@ -51,47 +64,138 @@ local Gui = Class {
     };
 };
 
+
+function Gui:startGui()
+    self:clearAll();
+    self:draw(self.myFrame.mainMenu);
+end
+
 --set the visible of all elements to false
 function Gui:clearAll()
-    for k, v in pairs(Gui.button) do v:SetVisible(false); end
-    for k, v in pairs(Gui.checkBox) do v:SetVisible(false); end
-    for k, v in pairs(Gui.slider) do v:SetVisible(false); end
+    for k, v in pairs(self.myFrame) do v:clearFrame(); end
 end
 
---set the visilbe and position of delivered elements
--- @param elements Table contains all elements to be displayed
--- @param xStart Start position of the first element on the x axis
--- @param yStart Start position of the first element on the y axis
--- @param dx The difference between the actual and the previous...
---...element on the x axis
--- @param dy The difference between the actual and the previous...
---...element on the y axis
-function Gui:drawElements(elements, xStart, yStart, dx, dy)
-    for k,v in ipairs(elements) do
-        v:SetPos((xStart + dx * k), (yStart +  dy * k));
-        v:SetVisible(true);
+function Gui:buildFrames()
+    local x = (200);
+    local y = (200);
+    --Build Main Menu
+    self.myFrame.mainMenu:setPosition(x, y);
+    self.myFrame.mainMenu:addElement(self.checkBox.tutorial, 30, 30);
+    self.myFrame.mainMenu:addElement(self.button.start, 30, 60);
+    self.myFrame.mainMenu:addElement(self.button.upgradeMenu, 30, 90);
+    self.myFrame.mainMenu:addElement(self.button.credits, 30, 120);
+    self.myFrame.mainMenu:addElement(self.button.wiki, 30, 150);
+    self.myFrame.mainMenu:addElement(self.button.achievements, 30, 180);
+    self.myFrame.mainMenu:addElement(self.button.options, 30, 210);
+
+    --Build Upgrade Menu
+    self.myFrame.upgradeMenu:setPosition(x, y);
+    self.myFrame.upgradeMenu:addElement(self.checkBox.upgrade1, 30, 30);
+    self.myFrame.upgradeMenu:addElement(self.checkBox.upgrade2, 30, 60);
+    self.myFrame.upgradeMenu:addElement(self.checkBox.upgrade3, 30, 90);
+    self.myFrame.upgradeMenu:addElement(self.checkBox.upgrade4, 30, 120);
+    self.myFrame.upgradeMenu:addElement(self.checkBox.upgrade5, 30, 150);
+    self.myFrame.upgradeMenu:addElement(self.checkBox.upgrade6, 30, 180);
+    self.myFrame.upgradeMenu:addElement(self.button.back, 30, 210);
+    
+    --Build Credits
+    self.myFrame.credits:setPosition(x, y);
+    self.myFrame.credits:addElement(self.button.back, 30, 0);
+    
+    --Build Wiki
+    self.myFrame.wiki:setPosition(x, y);
+    self.myFrame.wiki:addElement(self.button.back, 30, 0);
+    
+    --Build Achievements
+    self.myFrame.achievements:setPosition(x, y);
+    self.myFrame.achievements:addElement(self.button.back, 30, 0);
+    
+    --Build Options
+    self.myFrame.options:setPosition(x, y);
+    self.myFrame.options:addElement(self.slider.slider1, 30, 0);
+    self.myFrame.options:addElement(self.slider.slider2, 30, 30);
+    self.myFrame.options:addElement(self.checkBox.option1, 30, 60);
+    self.myFrame.options:addElement(self.checkBox.option2, 30, 90);
+    self.myFrame.options:addElement(self.button.back, 30, 120);
+    
+    --Build Pause
+    self.myFrame.pause:setPosition(x, y);
+    self.myFrame.pause:addElement(self.button.backToGame, 30, 0);
+    self.myFrame.pause:addElement(self.button.backToMenu, 30, 30);
+    self.myFrame.pause:addElement(self.button.options, 30, 60);
+    
+    --Build In Game
+    self.myFrame.inGame:setPosition(0, 30);
+    self.myFrame.inGame:addElement(self.button.pause, 30, 0);
+    self.myFrame.inGame:addElement(self.button.tempEndTurn, 30, 30);
+    
+    --Build Level
+    self.myFrame.level:setPosition(x, y);
+    self.myFrame.level:addElement(self.button.level1, 30, 0);
+    self.myFrame.level:addElement(self.button.level2, 30, 30);
+    self.myFrame.level:addElement(self.button.level3, 30, 60);
+    self.myFrame.level:addElement(self.button.back, 30, 90);
+    
+    --Build Score
+    self.myFrame.score:setPosition(x, y);
+    self.myFrame.score:addElement(self.button.backToMenu, 30, 0);
+    self.myFrame.score:addElement(self.button.retry, 30, 30);
+    
+    --Build Tutorial
+    self.myFrame.tutorial:setPosition(x, y);
+    self.myFrame.tutorial:addElement(self.button.tempGo, 30, 0);
+end
+
+function Gui:updateGui()
+    if Gui.changeFrame then
+        self.state[1]:flyIn();
+        if self.state[2] ~= nil then 
+            self.state[2]:flyOut("down"); 
+        end
+        if self.state[1]:onPosition() then
+            if self.state[2] ~= nil then self.state[2]:clearFrame(); end
+            self:setChangeFrame(false);
+
+        end
     end
 end
 
---this function set the current state name.
---In a later version it will chance the Background picture
-function Gui:drawBackground(actstate)
-    Gui.guiName = actstate;
-end
+--This function draws the gui state
+function Gui:draw(newFrame)
+    Gui:logState(newFrame);
+    self.state[1]:setOffset(0, -300);
+    self.state[1]:showFrame()
+    self:setChangeFrame(true);
 
---print the state-name and values
-function Gui:tempDrawText()
-    love.graphics.print(Gui.guiName, 10, 10);
-    if Gui.state[1] == "MainMenu" then
-        love.graphics.print(Gui.tempOutput, 10, 300);
-    end
+end
+function Gui:setChangeFrame(bool)
+    Gui.changeFrame = bool;
 end
 
 --logging the current state in a table
 -- @param actGui The currenet gui state
-function Gui:logState(actGui)
+function Gui:logState(actFrame)
     Gui.state[2] = Gui.state[1];
-    Gui.state[1] = actGui;
+    Gui.state[1] = actFrame;
+end
+
+--checking the gui state and return a boolean
+function Gui:drawGame()
+    --returns "true" in the InGame-state
+    if Gui.state[1] ~= Gui.myFrame.inGame then
+        return false;
+    else
+        return true;
+    end
+end
+
+--print the state-name and values
+function Gui:tempDrawText()
+    love.graphics.print(Gui.state[1].name, 0, 0);
+    if Gui.state[1] == Gui.myFrame.mainMenu then
+        --print(Gui.tempOutput);
+        love.graphics.print(Gui.tempOutput, 0, 20);
+    end
 end
 
 --convert all values into drawable text
@@ -113,81 +217,6 @@ function Gui:tempTextOutput()
         "O1 =" .. tostring(_persTable.config.option1).. "\n" .. 
         "O2 =" .. tostring(_persTable.config.option2).. "\n";
 end
-
---This function draws the gui state
-function Gui:draw(state)
-    local elements = {};
-    
-    if state == "MainMenu" then
-        elements ={
-            Gui.checkBox.tutorial,
-            Gui.button.start,
-            Gui.button.upgradeMenu, 
-            Gui.button.credits, 
-            Gui.button.wiki, 
-            Gui.button.achievements, 
-            Gui.button.options}
-    elseif state == "UpgradeMenu" then
-        elements ={
-            Gui.checkBox.upgrade1,
-            Gui.checkBox.upgrade2,
-            Gui.checkBox.upgrade3, 
-            Gui.checkBox.upgrade4,
-            Gui.checkBox.upgrade5,
-            Gui.checkBox.upgrade6,
-            Gui.button.back}
-    elseif state == "Credits" then
-        elements ={Gui.button.back}
-    elseif state == "Wiki" then
-        elements ={Gui.button.back}
-    elseif state == "Achievements" then
-        elements ={Gui.button.back}
-    elseif state == "Options" then
-        elements ={
-            Gui.slider.slider1,
-            Gui.slider.slider2,
-            Gui.checkBox.option1, 
-            Gui.checkBox.option2,
-            Gui.button.back}
-    elseif state == "Pause" then
-        elements ={
-            Gui.button.backToGame,
-            Gui.button.backToMenu,
-            Gui.button.options}
-    elseif state == "InGame" then
-        elements ={
-            Gui.button.Pause,
-            Gui.button.tempEndTurn}
-    elseif state == "Level" then
-        elements ={
-            Gui.button.level1,
-            Gui.button.level2,
-            Gui.button.level3,
-            Gui.button.back}
-    elseif state == "Score" then
-        elements ={
-            Gui.button.backToMenu,
-            Gui.button.retry}
-    elseif state == "Tutorial" then
-        elements ={Gui.button.tempGo}
-    end
-    
-    Gui:logState(state);--logging the new state
-    Gui:clearAll();--clears all elements of the old state
-    Gui:drawBackground(state);
-    Gui:drawElements(elements, 10, 10, 0, 30);
-end
-
---checking the gui state and return a boolean
-function Gui:drawGame()
-    --returns "true" in the InGame-state
-    if Gui.state[1] == "InGame" then
-        return true;
-    else
-        return false;
-    end
-end
-
 --set the state of the gui elements on the defined status
 --this function is called exactly once at the beginning of the game
 function Gui:loadValues()
@@ -259,16 +288,15 @@ function Gui:updateValues()
     end
     Gui:tempTextOutput();
 end
-
 --Onclick event of the start button
 -- @param obj The clicked button object
 -- @param x The mouse position on the x axis
 -- @param y The mouse position on the y axis
 Gui.button.start.OnClick = function(obj, x, y)
     if Gui.checkBox.tutorial:GetChecked() then
-        Gui:draw("Tutorial");
+        Gui:draw(Gui.myFrame.tutorial);
     else
-        Gui:draw("Level");
+        Gui:draw(Gui.myFrame.level);
     end
 end
 
@@ -277,7 +305,7 @@ end
 -- @param x The mouse position on the x axis
 -- @param y The mouse position on the y axis
 Gui.button.upgradeMenu.OnClick = function(obj, x, y)
-    Gui:draw("UpgradeMenu");
+    Gui:draw(Gui.myFrame.upgradeMenu);
 end
 
 --Onclick event of the credits button
@@ -285,7 +313,7 @@ end
 -- @param x The mouse position on the x axis
 -- @param y The mouse position on the y axis
 Gui.button.credits.OnClick = function(obj, x, y)
-    Gui:draw("Credits");
+    Gui:draw(Gui.myFrame.credits);
 end
 
 --Onclick event of the wiki button
@@ -293,7 +321,7 @@ end
 -- @param x The mouse position on the x axis
 -- @param y The mouse position on the y axis
 Gui.button.wiki.OnClick = function(obj, x, y)
-    Gui:draw("Wiki");
+    Gui:draw(Gui.myFrame.wiki);
 end
 
 --Onclick event of the achievements button
@@ -301,7 +329,7 @@ end
 -- @param x The mouse position on the x axis
 -- @param y The mouse position on the y axis
 Gui.button.achievements.OnClick = function(obj, x, y)
-    Gui:draw("Achievements");
+    Gui:draw(Gui.myFrame.achievements);
 end
 
 --Onclick event of the options button
@@ -309,7 +337,7 @@ end
 -- @param x The mouse position on the x axis
 -- @param y The mouse position on the y axis
 Gui.button.options.OnClick = function(obj, x, y)
-    Gui:draw("Options");
+    Gui:draw(Gui.myFrame.options);
 end
 
 --Onclick event of the level 1 button
@@ -317,7 +345,7 @@ end
 -- @param x The mouse position on the x axis
 -- @param y The mouse position on the y axis
 Gui.button.level1.OnClick = function(obj, x, y)
-    Gui:draw("InGame");
+    Gui:draw(Gui.myFrame.inGame);
 end
 
 --Onclick event of the level 2 button
@@ -325,7 +353,7 @@ end
 -- @param x The mouse position on the x axis
 -- @param y The mouse position on the y axis
 Gui.button.level2.OnClick = function(obj, x, y)
-    Gui:draw("InGame");
+    Gui:draw(Gui.myFrame.inGame);
 end
 
 --Onclick event of the level 3 button
@@ -333,7 +361,7 @@ end
 -- @param x The mouse position on the x axis
 -- @param y The mouse position on the y axis
 Gui.button.level3.OnClick = function(obj, x, y)
-    Gui:draw("InGame");
+    Gui:draw(Gui.myFrame.inGame);
 end
 
 --Onclick event of the retry button
@@ -341,7 +369,7 @@ end
 -- @param x The mouse position on the x axis
 -- @param y The mouse position on the y axis
 Gui.button.retry.OnClick = function(obj, x, y)
-    Gui:draw("InGame");
+    Gui:draw(Gui.myFrame.inGame);
 end
 
 --Onclick event of the end turn button
@@ -350,15 +378,15 @@ end
 -- @param y The mouse position on the y axis
 --this function will be replaced in a later version
 Gui.button.tempEndTurn.OnClick = function(obj, x, y)
-    Gui:draw("Score");
+    Gui:draw(Gui.myFrame.score);
 end
 
 --Onclick event of the pause button
 -- @param obj The clicked button object
 -- @param x The mouse position on the x axis
 -- @param y The mouse position on the y axis
-Gui.button.Pause.OnClick = function(obj, x, y)
-    Gui:draw("Pause");
+Gui.button.pause.OnClick = function(obj, x, y)
+    Gui:draw(Gui.myFrame.pause);
 end
 
 --Onclick event of the skip tutorial button
@@ -367,7 +395,7 @@ end
 -- @param y The mouse position on the y axis
 --this function will be replaced in a later version
 Gui.button.tempGo.OnClick = function(obj, x, y)
-    Gui:draw("InGame");
+    Gui:draw(Gui.myFrame.inGame);
 end
 
 --Onclick event of the back to menu button
@@ -375,7 +403,7 @@ end
 -- @param x The mouse position on the x axis
 -- @param y The mouse position on the y axis
 Gui.button.backToMenu.OnClick = function(obj, x, y)
-    Gui:draw("MainMenu");
+    Gui:draw(Gui.myFrame.mainMenu);
 end
 
 --Onclick event of the back to game button
@@ -383,7 +411,7 @@ end
 -- @param x The mouse position on the x axis
 -- @param y The mouse position on the y axis
 Gui.button.backToGame.OnClick = function(obj, x, y)
-    Gui:draw("InGame");
+    Gui:draw(Gui.myFrame.inGame);
 end
 
 --Onclick event of the back button
@@ -391,21 +419,10 @@ end
 -- @param x The mouse position on the x axis
 -- @param y The mouse position on the y axis
 Gui.button.back.OnClick = function(obj, x, y)
-    if Gui.state[1] == "Options" or Gui.state [1] == "UpgradeMenu" then
+    if Gui.state[1] == Gui.myFrame.options or Gui.state [1] == Gui.myFrame.upgradeMenu then
         Gui.updateValues();
     end
-    --go back to the last gui state
-    if Gui.state[2] == "MainMenu" then Gui:draw("MainMenu");
-    elseif Gui.state[2] == "upgradeMenu" then Gui:draw("UpgradeMenu");
-    elseif Gui.state[2] == "Credits" then Gui:draw("Credits");
-    elseif Gui.state[2] == "Achievements" then Gui:draw("Achievements");
-    elseif Gui.state[2] == "Wiki" then Gui:draw("Wiki");
-    elseif Gui.state[2] == "Options" then Gui:draw("Options");
-    elseif Gui.state[2] == "InGame" then Gui:draw("InGame");
-    elseif Gui.state[2] == "Pause" then Gui:draw("Pause");
-    elseif Gui.state[2] == "Score" then Gui:draw("Score");
-    elseif Gui.state[2] == "Tutorial" then Gui:draw("Tutorial");
-    end
+    Gui:draw(Gui.state[2]);
 end
 
 return Gui;
