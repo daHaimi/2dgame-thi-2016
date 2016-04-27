@@ -66,9 +66,9 @@ function SwarmFactory:createNextSwarm(startPosY)
         yPos = math.random(newSwarm.swarmHeight);
         fishable = self:determineFishable(newSwarm.allowedFishables, newSwarm.fishablesProbability);
 
-        self.createdFishables[#self.createdFishables + 1] = FishableObject(fishable.name, fishable.image, startPosY + yPos,
-            fishable.minSpeed, fishable.maxSpeed, fishable.xHitbox, fishable.yHitbox,
-            fishable.value, fishable.hitpoints);
+        self.createdFishables[#self.createdFishables + 1] = FishableObject(fishable.name, fishable.image, startPosY + 
+            yPos, fishable.minSpeed, fishable.maxSpeed, fishable.xHitbox, fishable.yHitbox, fishable.value, 
+            fishable.hitpoints, fishable.deltaXHitbox, fishable.deltaYHitbox);
     end
 end
 

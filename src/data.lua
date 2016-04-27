@@ -4,10 +4,12 @@ fishableObject {
     image = "nemo.png", -- The image file
     minSpeed = 4,       -- Min movement speed
     maxSpeed = 7,       -- Max movement speed
-    xHitbox = 30,        -- Hitbox width
+    xHitbox = 40,        -- Hitbox width
     yHitbox = 30,        -- Hitbox height
     value = 10,         -- The worth of the object
-    hitpoints = 10      -- The HP of the object
+    hitpoints = 10,      -- The HP of the object
+    deltaXHitbox = 12,
+    deltaYHitbox = 17
 }
 
 fishableObject {
@@ -18,7 +20,9 @@ fishableObject {
     xHitbox = 50,
     yHitbox = 30,
     value = 10,
-    hitpoints = 20
+    hitpoints = 20,
+    deltaXHitbox = 5,
+    deltaYHitbox = 17
 }
 
 fishableObject {
@@ -27,9 +31,11 @@ fishableObject {
     minSpeed = 5,
     maxSpeed = 8,
     xHitbox = 60,
-    yHitbox = 20,
+    yHitbox = 25,
     value = 20,
-    hitpoints = 5
+    hitpoints = 5,
+    deltaXHitbox = 2,
+    deltaYHitbox = 25
 }
 
 fishableObject {
@@ -37,10 +43,12 @@ fishableObject {
     image = "deadFish.png",
     minSpeed = 0,
     maxSpeed = 2,
-    xHitbox = 60,
-    yHitbox = 20,
-    value = -10,
-    hitpoints = 1
+   xHitbox = 64,
+    yHitbox = 25,
+    value = 20,
+    hitpoints = 5,
+    deltaXHitbox = 0,
+    deltaYHitbox = 20
 }
 
 fishableObject {
@@ -51,7 +59,9 @@ fishableObject {
     xHitbox = 30,
     yHitbox = 30,
     value = 20,
-    hitpoints = 20
+    hitpoints = 20,
+    deltaXHitbox = 0,
+    deltaYHitbox = 0
 }
 
 fishableObject {
@@ -59,10 +69,12 @@ fishableObject {
     image = "lolli.png",
     minSpeed = 0,
     maxSpeed = 2,
-    xHitbox = 40,
-    yHitbox = 20,
-    value = -10,
-    hitpoints = 5
+    xHitbox = 30,
+    yHitbox = 30,
+    value = 10,
+    hitpoints = 5,
+    deltaXHitbox = 17,
+    deltaYHitbox = 2
 }
 
 fishableObject {
@@ -73,7 +85,9 @@ fishableObject {
     xHitbox = 15,
     yHitbox = 15,
     value = 40,
-    hitpoints = 10
+    hitpoints = 10,
+    deltaXHitbox = 0,
+    deltaYHitbox = 0
 }
 
 fishableObject {
@@ -84,7 +98,9 @@ fishableObject {
     xHitbox = 30,
     yHitbox = 40,
     value = -20,
-    hitpoints = 20
+    hitpoints = 20,
+    deltaXHitbox = 0,
+    deltaYHitbox = 0
 }
 
 --- Data for the swarms for each level
