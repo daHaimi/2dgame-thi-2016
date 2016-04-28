@@ -118,6 +118,7 @@ function FishableObject:getHitboxYPosition()
     return self.yPosition + self.deltaYHitbox;
 end
 
+--- sets the amount of pixls to move upwards to match the baits movement
 function FishableObject:setYMovement(movement)
     self.yMovement = movement;
 end

@@ -83,9 +83,9 @@ describe("Unit test for Bait.lua", function()
         };
  
         local myInstance = testClass(locWinDim);
-        local exp = 100;
+        local exp = 200;
         myInstance:checkUpgrades();
-        assert.are.same(myInstance.speed, exp);
+        assert.are.same(exp, myInstance.speed);
     end)
     
     it("Test speed 1", function()
@@ -98,9 +98,9 @@ describe("Unit test for Bait.lua", function()
         };
  
         local myInstance = testClass(locWinDim);
-        local exp = 200;
+        local exp = 400;
         myInstance:checkUpgrades();
-        assert.are.same(myInstance.speed, exp);
+        assert.are.same(exp, myInstance.speed);
     end)
     
     it("Test speed -1", function()
@@ -113,9 +113,9 @@ describe("Unit test for Bait.lua", function()
         };
  
         local myInstance = testClass(locWinDim);
-        local exp = 100;
+        local exp = 200;
         myInstance:checkUpgrades();
-        assert.are.same(myInstance.speed, exp);
+        assert.are.same(exp, myInstance.speed);
     end)
   
   it("Test x position limited to maxSpeed (positive direction)", function()
