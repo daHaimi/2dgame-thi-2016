@@ -18,10 +18,17 @@ local Level = Class{
         self.backgroundPath = backgroundPath;
         self.winDim = winDim;
         self.posY = (winDim[2] / 2); --startpos
-        self.direction = direction;
+        --self.direction = self.direction * direction;
         if self.bg ~= nil then -- do not remove this if statement or busted will crash
         self.bgq = love.graphics.newQuad(0, 0, winDim[1], 20000, self.bg:getWidth(), self.bg:getHeight());
-        end;
+        end
+        if _persTable.upgrades.mapBreakthrough1 == 1 then
+            self.lowerBoarder = self.lowerBoarder + self.mapBreakthroughBonus1;
+        end
+        if _persTable.upgrades.mapBreakthrough2 == 1 then
+            self.lowerBoarder = self.lowerBoarder + self.mapBreakthroughBonus2;
+        end
+        
     end,
     posY = 0;
     direction = 1; -- (-1) means up and 1 means down
@@ -37,44 +44,41 @@ local Level = Class{
     oldPosY = _G.math.inf;
     godModeFuel = 800;  
     godModeActive = 0;
-};
+    moved = 0;
+}
 
 --- Update the game state. Called every frame.
 -- @param dt Delta time is the amount of seconds since the
 -- last time this function was called.
 -- @param bait The bait object, which stands for the user.
 function Level:update(dt, bait)
-    _G._persTable.moved = 0;
-    if self.direction == 1 and self.posY > self.lowerBoarder
-            and self.posY < self.upperBoarder then
-        _G._persTable.moved = math.ceil(dt * bait.speed);
-        self.sizeY = self.winDim[2] + math.ceil(dt * bait.speed);
-        self.posY = self.posY - math.ceil(dt * bait.speed);
-    elseif self.posY < self.upperBoarder
-            and _persTable.upgrades.mapBreakthrough1 == 1 then
-        self.lowerBoarder = self.lowerBoarder + self.mapBreakthroughBonus1;
-        _persTable.upgrades.mapBreakthrough1 = 0;
-    elseif self.posY < self.upperBoarder
-            and _persTable.upgrades.mapBreakthrough1 == 0
-            and _persTable.upgrades.mapBreakthrough2 == 1 then
-        self.lowerBoarder = self.lowerBoarder + self.mapBreakthroughBonus2;
-        _persTable.upgrades.mapBreakthrough2 = 0;
-    end
-
-    --if lower border reached, change direction
-    if self.posY <= self.lowerBoarder+10 then 
-        self:switchToPhase2(bait);
-    -- if start position reached, stop moving
-    elseif self.posY >= (self.winDim[2] / 2) and bait.speed < 0 then
-        bait.speed = 0;
+    --set the direction in relation of the yPosition
+    if  self.posY <= self.lowerBoarder then
+        self:switchToPhase2();
+    elseif self.posY >= (self.winDim[2] / 2) and self.direction == -1 then
+        self.direction = 0;
     end
     
+    --set the movement in relation of the direction
+    self.moved = 0;
+    if self.direction == 1 then
+        self.moved = math.ceil(dt * bait.speed);
+    end
+    if self.direction == -1 then
+        self.moved = -math.ceil(dt * bait.speed);
+    end
+    
+    --do the movement
+    FishableObject:setYMovement(self.moved);
+    self.sizeY = self.winDim[2] + self.moved;
+    self.posY = self.posY - self.moved;
+    
     self:checkGodMode();
-end;
+end
 
 ---when the bait hit a object or the boarder is reached, start phase 2
-function Level:switchToPhase2(bait)
-    bait.speed = (-200);
+function Level:switchToPhase2()
+    self.direction = -1;
 end
 
 --- Draw on the screen. Called every frame.
@@ -84,7 +88,7 @@ function Level:draw(bait)
     love.graphics.setColor(255, 255, 255);
     love.graphics.draw(self.bg, self.bgq, 0, self.posY);
     bait:draw();
-end;
+end
 
 --- Check the state of the god mode and updates the god mode fuel value.
 function Level:checkGodMode()
@@ -96,7 +100,7 @@ function Level:checkGodMode()
             self.oldPosY = self.posY;
         end
     end
-end;
+end
 
 --- Try to activate the god Mode.
 -- @return When the god mode was successfully activated it returns 1 otherwise 0.
@@ -113,13 +117,13 @@ end
 --- Deactivates the god mode.
 function Level:deactivateGodMode()
     self.godModeActive = 0;
-end;
+end
 
 --- Returns the amount of the fuel for the god mode
 -- @return Returns the amount of the fuel for the god mode
 function Level:getGodModeFuel()
     return self.godModeFuel;
-end;
+end
 
 --- Set the fuel for the god mode to the new value. 
 -- Is newFuel <= 0, the god mode will be deactivated.
@@ -128,13 +132,13 @@ function Level:setGodModeFuel(newFuel)
     if self.godModeFuel <= 0 then
         self.godModeActive = 0;
     end
-end;
+end
 
 --- Returns the state of the god mode.
 -- @return Returns 1 when the god mode was activated. Otherwise 0.
 function Level:getGodModeStat()
     return self.godModeActive;
-end;
+end
 
 --- Set the value for the lower boarder.
 -- @param newBoarderVal The new lower boarder value.
@@ -142,15 +146,11 @@ function Level:setLowerBoarder(newBoarderVal)
     self.lowerBoarder = newBoarderVal;
 end
 
-;
-
 --- Returns the value of the actual lower boarder.
 -- @return Returns the value of the actual lower boarder.
 function Level:getLowerBoarder()
     return self.lowerBoarder;
 end
-
-;
 
 --- Set the value for the upper boarder.
 -- @param newBoarderVal The new upper boarder value.
@@ -158,23 +158,17 @@ function Level:setUpperBoarder(newBoarderVal)
     self.upperBoarder = newBoarderVal;
 end
 
-;
-
 --- Returns the value of the actual upper boarder.
 -- @return Returns the value of the actual upper boarder.
 function Level:getUpperBoarder()
     return self.upperBoarder;
 end
 
-;
-
 --- Set the direction of the current Level.
 -- @param direction Stands for the direction. 1 means down and -1 means up
 function Level:setDirection(direction)
     self.direction = direction;
 end
-
-;
 
 --- Returns the direction of the current map.
 -- @return 1 means down and -1 means up all and
@@ -183,15 +177,11 @@ function Level:getDirection()
     return self.direction;
 end
 
-;
-
 --- Returns the current y position.
 -- @return Returns the current y position.
 function Level:getYPos()
     return self.posY;
 end
-
-;
 
 --- adds the caught Objekt to the caughtThisRound table with amount
 function Level:addToCaught(name)
@@ -201,8 +191,6 @@ function Level:addToCaught(name)
     end;
     self.caughtThisRound[name] = self.caughtThisRound[name] + 1;
 end
-
-;
 
 --- Call this function to make known that the player has stopped the god mode
 function Level:resetOldPosY()

@@ -43,7 +43,7 @@ fishableObject {
     image = "deadFish.png",
     minSpeed = 0,
     maxSpeed = 2,
-   xHitbox = 64,
+    xHitbox = 64,
     yHitbox = 25,
     value = 20,
     hitpoints = 5,

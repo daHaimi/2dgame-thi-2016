@@ -1,4 +1,5 @@
 Class = require "lib.hump.class";
+Level = require "class.Level"
 
 --- FishableObject is the class of all fishable object.
 -- @param xPosition: x-position of the object
@@ -34,6 +35,7 @@ local FishableObject = Class {
     deltaXHitbox = 0;
     deltaYHitbox = 0;
     drawIt = true;
+    yMovement = 0;
 };
 
 --- draw the object, still no sprite implementet
@@ -49,7 +51,7 @@ function FishableObject:draw()
             love.graphics.draw(self.image, -self.xPosition, self.yPosition);
             love.graphics.scale(-1, 1);
         end
-        --[[for showing the Hitbox
+        --[[--for showing the Hitbox
         love.graphics.setColor(0,0,0);
         love.graphics.rectangle("line", self:getHitboxXPosition(), self:getHitboxYPosition(), 
         self:getHitboxWidth(), self:getHitboxHeight());
@@ -59,22 +61,22 @@ end
 
 --- Updates the position of the object depending on its speed
 function FishableObject:update()
-        if ((self.xPosition + self.hitboxWidth + self.speed) > _G._persTable.winDim[1]) then
-
-            self.xPosition = _G._persTable.winDim[1] - self.hitboxWidth;
-            self.speed = self.speed * (-1);
-
-        elseif self.xPosition + self.speed < 0 then
-
-            self.xPosition = math.abs(self.speed) - self.xPosition;
-            self.speed = self.speed * (-1);
-
+        if ((self.xPosition - self.deltaXHitbox) >= _G._persTable.winDim[1]) and self.speed > 0 then
+            
+            --self.xPosition = 2 * _G._persTable.winDim[1] - self.xPosition + self.speed + 2* self.deltaXHitbox;
+            --self.speed = self.speed * -1;
+            self.speed = self.speed * -1;
+            self.xPosition = _G._persTable.winDim[1] - self.hitboxWidth - self.deltaXHitbox + self.speed;            
+            
+        elseif (self.xPosition + self.deltaXHitbox) <= 0 then
+            self.speed = self.speed * -1;
+            self.xPosition = math.abs(self.hitboxWidth + self.deltaXHitbox + self.speed);
         else
-
+        
             self.xPosition = self.xPosition + self.speed;
         end
 
-        self.yPosition = self.yPosition - _G._persTable.moved;
+        self.yPosition = self.yPosition - self.yMovement;
 end
 --- sets the xPosition
 function FishableObject:setXPosition(xPosition)
@@ -91,28 +93,33 @@ function FishableObject:getHitpoints()
     return self.hitpoints;
 end
 
---- returns the hitbox of the object
+--- returns width of the hitbox of the object
 function FishableObject:getHitboxWidth()
     return self.hitboxWidth;
 end
 
---- returns the hitbox of the object
+--- returns height of the hitbox of the object
 function FishableObject:getHitboxHeight()
     return self.hitboxHeight; 
 end
 
---- returns the position of the object
+--- returns x position of the object
 function FishableObject:getHitboxXPosition()
+    
     if self.speed < 0 then
         return self.xPosition + self.deltaXHitbox;
-    else 
+    else
         return self.xPosition + self.deltaXHitbox - 64;
     end
 end
 
---- returns the position of the object
+--- returns y the position of the object
 function FishableObject:getHitboxYPosition()
     return self.yPosition + self.deltaYHitbox;
+end
+
+function FishableObject:setYMovement(movement)
+    self.yMovement = movement;
 end
 
 return FishableObject;
