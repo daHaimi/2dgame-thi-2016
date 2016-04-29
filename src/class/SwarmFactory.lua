@@ -90,7 +90,7 @@ end
 
 --- Returns the table of the fishable objects.
 -- @return Returns the table of the fishable objects.
-function getFishableObjects()
+function SwarmFactory:getFishableObjects()
     return self.fishableObjects;
 end
 
