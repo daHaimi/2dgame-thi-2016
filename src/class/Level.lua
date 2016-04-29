@@ -76,7 +76,7 @@ function Level:update(dt, bait)
     
     -- check if the round has been finished
     if self.levelFinished == 1 and self.swarmFac ~= nil then
-        if self.gotPayed == 0 then
+        if self.gotPayed == 0 then -- check if the earned money was already payed
             local fishedVal = self:calcFishedValue();
             if _G._persTable.upgrades.moneyMult == 1 then
                 self.roundValue = self:multiplyFishedValue(2.5, fishedVal);
