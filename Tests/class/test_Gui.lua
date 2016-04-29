@@ -1,24 +1,18 @@
 _G.math.inf = 1 / 0
 
 testClass = require "src.class.Gui"
---Loveframes = require "src.lib.LoveFrames";
+
 
 describe("Test Gui", function()
     
     local locInstance = nil;
     
     before_each(function()
-        _G.love = {};
-        _G.love = {
-            graphics = {
-                newFont = function (...) return 12 end;
-                -- love.graphics.newFont
-            };
+        --_G.love = {};
+        Loveframes = {
+            Create = function (...) end;
         };
-        _G.loveframes.basicfont = _G.love.graphics.newFont(12);
-
-        
-        
+       
         locInstance = testClass();
     end)
     

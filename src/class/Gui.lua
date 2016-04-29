@@ -6,25 +6,44 @@ local Gui = Class {
     init = function(self)
     end;
     
-    --guiName = "";--Text in the left upper corner
     tempOutput = "";--Output values on the Main Menu. Will be replaced later
-    --state = {"", ""};--The current and last gui state
     state = {};
     changeFrame = false;
     
-    myFrame ={
-        mainMenu = Frame("MainMenu"),
-        options = Frame("Options"),
-        upgradeMenu = Frame("UpgradeMenu"),
-        wiki = Frame("Wiki"),
-        credits = Frame("Credits"),
-        inGame = Frame("InGame"),
-        score = Frame("Score"),
-        tutorial = Frame("Tutorial"),
-        achievements = Frame("Achievements"),
-        pause = Frame("Pause"),
-        level = Frame("Level")
+    background = {
+        mainMenu = Loveframes.Create("image"):SetImage("assets/gui_Test_Bg.png");
+        options = Loveframes.Create("image"):SetImage("assets/gui_Test_Bg.png");
+        credits = Loveframes.Create("image"):SetImage("assets/gui_Test_Bg.png");
+        wiki = Loveframes.Create("image"):SetImage("assets/gui_Test_Bg.png");
+        achievements = Loveframes.Create("image"):SetImage("assets/gui_Test_Bg.png");
+        upgradeMenu = Loveframes.Create("image"):SetImage("assets/gui_Test_Bg.png");
+        score = Loveframes.Create("image"):SetImage("assets/gui_Test_Bg.png");
+        level = Loveframes.Create("image"):SetImage("assets/gui_Test_Bg.png");
+        pause = Loveframes.Create("image"):SetImage("assets/gui_Test_Bg.png");
     };
+     --frameName, moveInDirection,moveOutDirection, moveSpeed, xStartOffset, yStartOffset
+    myFrame ={
+        mainMenu = Frame(
+            "MainMenu",--Frame name
+            "down",--Move in direction
+            "down",--Move out direction
+            30,--Movespeed
+            0,--Start offset X
+            -600--Start offset Y
+            ),
+        options = Frame("Options", "down", "down", 30, 0, -600),
+        upgradeMenu = Frame("UpgradeMenu", "down", "down", 30, 0, -600),
+        wiki = Frame("Wiki", "down", "down", 30, 0, -600),
+        credits = Frame("Credits", "down", "down", 30, 0, -600),
+        inGame = Frame("InGame", "right", "left", 10, -300, 0),
+        score = Frame("Score", "right", "left", 10, -300, 0),
+        tutorial = Frame("Tutorial", "up", "up", 30, 0, 600),
+        achievements = Frame("Achievements", "down", "down", 30, 0, -600),
+        pause = Frame("Pause", "right", "left", 30, -600, 0),
+        level = Frame("Level", "down", "down", 30, 0, -600)
+    };
+    
+
     
     --Tabel contains all sliders
     slider = { 
@@ -39,6 +58,7 @@ local Gui = Class {
         wiki = Loveframes.Create("button"):SetText("Wiki"),
         achievements = Loveframes.Create("button"):SetText("Achievements"),
         options = Loveframes.Create("button"):SetText("Options"),
+        options_mM = Loveframes.Create("button"):SetText("Options"),
         start = Loveframes.Create("button"):SetText("Start game"),
         level1 = Loveframes.Create("button"):SetText("Level 1"),
         level2 = Loveframes.Create("button"):SetText("Level 2"),
@@ -76,20 +96,24 @@ function Gui:clearAll()
 end
 
 function Gui:buildFrames()
-    local x = (200);
-    local y = (200);
+    local x = _persTable.winDim[1];
+    local y = _persTable.winDim[2];
     --Build Main Menu
-    self.myFrame.mainMenu:setPosition(x, y);
-    self.myFrame.mainMenu:addElement(self.checkBox.tutorial, 30, 30);
+
+    self.background.mainMenu:SetScale((x*0.5)/self.background.mainMenu:GetImageWidth(), (y*0.6)/self.background.mainMenu:GetImageHeight());
+    self.myFrame.mainMenu:setPosition((x/2 - self.background.mainMenu:GetImageWidth()/2*self.background.mainMenu:GetScaleX()), (y/2 - self.background.mainMenu:GetImageHeight()/2*self.background.mainMenu:GetScaleY()));
+    self.myFrame.mainMenu:addElement(self.background.mainMenu, 0, 0);
+    self.myFrame.mainMenu:addElement(self.checkBox.tutorial, self.checkBox.tutorial:GetWidth(), 30);
     self.myFrame.mainMenu:addElement(self.button.start, 30, 60);
     self.myFrame.mainMenu:addElement(self.button.upgradeMenu, 30, 90);
     self.myFrame.mainMenu:addElement(self.button.credits, 30, 120);
     self.myFrame.mainMenu:addElement(self.button.wiki, 30, 150);
     self.myFrame.mainMenu:addElement(self.button.achievements, 30, 180);
-    self.myFrame.mainMenu:addElement(self.button.options, 30, 210);
+    self.myFrame.mainMenu:addElement(self.button.options_mM, 30, 210);
 
     --Build Upgrade Menu
-    self.myFrame.upgradeMenu:setPosition(x, y);
+    self.myFrame.upgradeMenu:setPosition(x/2, y/2);
+    self.myFrame.upgradeMenu:addElement(self.background.upgradeMenu, 0, 0);
     self.myFrame.upgradeMenu:addElement(self.checkBox.upgrade1, 30, 30);
     self.myFrame.upgradeMenu:addElement(self.checkBox.upgrade2, 30, 60);
     self.myFrame.upgradeMenu:addElement(self.checkBox.upgrade3, 30, 90);
@@ -100,18 +124,22 @@ function Gui:buildFrames()
     
     --Build Credits
     self.myFrame.credits:setPosition(x, y);
+    self.myFrame.credits:addElement(self.background.credits, 0, 0);
     self.myFrame.credits:addElement(self.button.back, 30, 0);
     
     --Build Wiki
     self.myFrame.wiki:setPosition(x, y);
+    self.myFrame.wiki:addElement(self.background.wiki, 0, 0);
     self.myFrame.wiki:addElement(self.button.back, 30, 0);
     
     --Build Achievements
     self.myFrame.achievements:setPosition(x, y);
+    self.myFrame.achievements:addElement(self.background.achievements, 0, 0);
     self.myFrame.achievements:addElement(self.button.back, 30, 0);
     
     --Build Options
     self.myFrame.options:setPosition(x, y);
+    self.myFrame.options:addElement(self.background.options, 0, 0);
     self.myFrame.options:addElement(self.slider.slider1, 30, 0);
     self.myFrame.options:addElement(self.slider.slider2, 30, 30);
     self.myFrame.options:addElement(self.checkBox.option1, 30, 60);
@@ -120,6 +148,7 @@ function Gui:buildFrames()
     
     --Build Pause
     self.myFrame.pause:setPosition(x, y);
+    self.myFrame.pause:addElement(self.background.pause, 0, 0);
     self.myFrame.pause:addElement(self.button.backToGame, 30, 0);
     self.myFrame.pause:addElement(self.button.backToMenu, 30, 30);
     self.myFrame.pause:addElement(self.button.options, 30, 60);
@@ -131,6 +160,7 @@ function Gui:buildFrames()
     
     --Build Level
     self.myFrame.level:setPosition(x, y);
+    self.myFrame.level:addElement(self.background.level, 0, 0);
     self.myFrame.level:addElement(self.button.level1, 30, 0);
     self.myFrame.level:addElement(self.button.level2, 30, 30);
     self.myFrame.level:addElement(self.button.level3, 30, 60);
@@ -138,6 +168,7 @@ function Gui:buildFrames()
     
     --Build Score
     self.myFrame.score:setPosition(x, y);
+    self.myFrame.score:addElement(self.background.score, 0, 0);
     self.myFrame.score:addElement(self.button.backToMenu, 30, 0);
     self.myFrame.score:addElement(self.button.retry, 30, 30);
     
@@ -148,9 +179,9 @@ end
 
 function Gui:updateGui()
     if Gui.changeFrame then
-        self.state[1]:flyIn();
+        self.state[1]:moveIn();
         if self.state[2] ~= nil then 
-            self.state[2]:flyOut("down"); 
+            self.state[2]:moveOut(); 
         end
         if self.state[1]:onPosition() then
             if self.state[2] ~= nil then self.state[2]:clearFrame(); end
@@ -163,7 +194,7 @@ end
 --This function draws the gui state
 function Gui:draw(newFrame)
     Gui:logState(newFrame);
-    self.state[1]:setOffset(0, -300);
+    --self.state[1]:setOffset(0, -600);
     self.state[1]:showFrame()
     self:setChangeFrame(true);
 
@@ -337,6 +368,14 @@ end
 -- @param x The mouse position on the x axis
 -- @param y The mouse position on the y axis
 Gui.button.options.OnClick = function(obj, x, y)
+    Gui:draw(Gui.myFrame.options);
+end
+
+--Onclick event of the options button
+-- @param obj The clicked button object
+-- @param x The mouse position on the x axis
+-- @param y The mouse position on the y axis
+Gui.button.options_mM.OnClick = function(obj, x, y)
     Gui:draw(Gui.myFrame.options);
 end
 
