@@ -1,6 +1,8 @@
 Frame = require "class.Frame";
 Loveframes = require "lib.LoveFrames";
 Class = require "lib.hump.class";
+Chart = require "class.Chart";
+Checkbutton = require "class.Checkbutton";
 
 local Gui = Class {
     init = function(self)
@@ -22,6 +24,19 @@ local Gui = Class {
         level = Loveframes.Create("image"):SetImage("assets/gui/gui_Test_Bg.png");
         pause = Loveframes.Create("image"):SetImage("assets/gui/gui_Test_Bg.png");
     };
+    checkbutton = {
+        test1 = Checkbutton("test1", false, "assets/gui/gui_Test_checkbutton.png", "assets/gui/gui_Test_checkbutton_checked.png");
+        test2 = Checkbutton("test2", false, "assets/gui/gui_Test_checkbutton.png", "assets/gui/gui_Test_checkbutton_checked.png");
+        test3 = Checkbutton("test3", false, "assets/gui/gui_Test_checkbutton.png", "assets/gui/gui_Test_checkbutton_checked.png");
+        test4 = Checkbutton("test4", false, "assets/gui/gui_Test_checkbutton.png", "assets/gui/gui_Test_checkbutton_checked.png");
+        test5 = Checkbutton("test5", false, "assets/gui/gui_Test_checkbutton.png", "assets/gui/gui_Test_checkbutton_checked.png");
+        test6 = Checkbutton("test6", false, "assets/gui/gui_Test_checkbutton.png", "assets/gui/gui_Test_checkbutton_checked.png");
+    };
+    
+    chart = {
+        test = Chart(3)
+    };
+    
     --table contains all frames of the gui
     myFrame ={
         --create a new frame for every gui state
@@ -112,6 +127,13 @@ function Gui:buildFrames()
     --add all needed elements
     self.myFrame.mainMenu:addElement(self.background.mainMenu, 0, 0);
     self.myFrame.mainMenu:addElement(self.checkBox.tutorial, 50, 30);
+    self.chart.test.addCheckbutton(self.checkbutton.test1);
+    self.chart.test.addCheckbutton(self.checkbutton.test2);
+    self.chart.test.addCheckbutton(self.checkbutton.test3);
+    self.chart.test.addCheckbutton(self.checkbutton.test4);
+    self.chart.test.addCheckbutton(self.checkbutton.test5);
+    self.chart.test.addCheckbutton(self.checkbutton.test6);
+    self.myFrame.mainMenu:addElement(self.chart.test, 0, 0);
     self.myFrame.mainMenu:addElement(self.button.start, self.myFrame.mainMenu:centerElementX(x, self.background.mainMenu:GetImageWidth(), 128), 100);
     self.myFrame.mainMenu:addElement(self.button.upgradeMenu, self.myFrame.mainMenu:centerElementX(x, self.background.mainMenu:GetImageWidth(), 128), 150);
     self.myFrame.mainMenu:addElement(self.button.credits, self.myFrame.mainMenu:centerElementX(x, self.background.mainMenu:GetImageWidth(), 128), 200);

@@ -2,7 +2,7 @@
 Class = require "lib.hump.class";
 
 local Frame = Class {
-    init = function(self, frameName, moveInDirection,moveOutDirection, moveSpeed, xStartOffset, yStartOffset)
+    init = function(self, frameName, moveInDirection, moveOutDirection, moveSpeed, xStartOffset, yStartOffset)
         self.name = frameName; --name of the Frame
         self.elementsOnFrame = {}; --table with all elements on this frame
         self.xPosFrame = 0;--left upper corner the frame
