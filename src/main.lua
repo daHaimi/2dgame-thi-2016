@@ -53,10 +53,11 @@ function love.load()
     _G._persTable.winDim[2] = _G._persTable.winDim[2] - 150; -- Sub 50px for taskbar and window header
     _G._persTable.winDim[1] = (_G._persTable.winDim[2] / 16) * 9; -- Example: 16:9
     love.window.setMode(_G._persTable.winDim[1], _G._persTable.winDim[2], {centered});
-    curLevel = Level("assets/testbg.png", _G._persTable.winDim, 1);
+    curLevel = Level("assets/testbg.png", _G._persTable.winDim, 1, nil);
     player = Bait(_G._persTable.winDim);
     player:checkUpgrades();
     swarmFactory = SwarmFactory(curLevel, player, "data.lua");
+    curLevel:setSwarmFactory(swarmFactory);
     gui = Gui();
     gui:tempTextOutput();
     gui:buildFrames();

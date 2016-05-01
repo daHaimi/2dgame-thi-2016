@@ -141,4 +141,25 @@ describe("Test unit test suite", function()
         testClass:resetOldPosY();
         assert.are.same(testClass.oldPosY, math.inf);
     end)
+
+    it("Testing calcFishedValue", function()
+        testClass.swarmFac = {
+            getFishableObjects = function() return { ["turtle"] = {["value"] = 10}, ["rat"] = {["value"] = 20},
+                    ["nemo"] = {["value"] = 10}, ["deadFish"] = {["value"] = -10} } end;
+        };
+        testClass.caughtThisRound = {["turtle"] = 5, ["rat"] = 0, ["deadFish"] = 5, ["nemo"] = 3};
+        assert.are.same(testClass:calcFishedValue(), 30);
+    end)
+    
+    it("Testing multiplyFishedValue", function()
+        assert.are.same(testClass:multiplyFishedValue(55, 2.5), 138);
+        assert.are.same(testClass:multiplyFishedValue(0, 2.5), 0);
+        assert.are.same(testClass:multiplyFishedValue(-55, 2.5), -137);
+    end)
+
+    it("Testing isFinished", function()
+        assert.are.same(testClass:isFinished(), 0);
+        testClass.levelFinished = 1;
+        assert.are.same(testClass:isFinished(), 1);
+    end)
 end)
