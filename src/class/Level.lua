@@ -93,6 +93,9 @@ function Level:draw(bait)
     love.graphics.setColor(255, 255, 255);
     love.graphics.draw(self.bg, self.bgq, 0, self.posY);
     bait:draw();
+    if self.levelFinished == 1 then
+    self:printResult();
+    end
 end
 
 --- Pay the achieved money to the player and multiply it with the 
@@ -254,6 +257,27 @@ end
 --- Call this function to make known that the player has stopped the god mode
 function Level:resetOldPosY()
     self.oldPosY = _G.math.inf;
+end
+
+--- Displays the amount and value of the caught objects
+function Level:printResult()
+  local xpos = 0;
+  local ypos = 120;
+  love.graphics.setColor(0,0,0,255);
+  love.graphics.print("Caught objects in this round:", xpos, ypos);
+  if next(self.caughtThisRound) ~= nil then
+    local string = "";
+    for k, v in pairs(self.caughtThisRound) do
+      ypos = ypos + 15;
+      string = k .. ": " .. v .. " x " .. self.swarmFac:getFishableObjects()[k].value .. " Coins";
+      love.graphics.print(string, xpos, ypos);
+    end
+      ypos = ypos + 15;
+      love.graphics.print("Earned: " .. self:calcFishedValue() .. " Coins", xpos, ypos);
+  else
+    ypos = ypos + 15;
+    love.graphics.print("Nothing caught", xpos, ypos);
+  end
 end
 
 return Level;

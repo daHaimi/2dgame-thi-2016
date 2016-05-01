@@ -2,6 +2,7 @@
 _G.math.inf = 1/0
 
 testClass = require "src.class.Level"
+match = require 'luassert.match'
 
 describe("Test unit test suite", function()
     local locInstance;
@@ -11,6 +12,8 @@ describe("Test unit test suite", function()
             graphics = {
                 newImage = function(...) end,
                 newQuad = function(...) end,
+                setColor = function(...) end,
+                print = function(...) end,
                 Canvas = {
                     setWrap = function(...) end
                 }                
@@ -162,4 +165,27 @@ describe("Test unit test suite", function()
         testClass.levelFinished = 1;
         assert.are.same(testClass:isFinished(), 1);
     end)
+  
+    it("Testing printResult with no objects caught", function()
+        testClass.caughtThisRound = {};
+        testClass:printResult();
+        assert.spy(loveMock.graphics.print).was.called(2);
+        assert.spy(loveMock.graphics.print).was.called_with("Caught objects in this round:", match._, match._);
+        assert.spy(loveMock.graphics.print).was.called_with("Nothing caught", match._, match._);
+    end)
+  
+      it("Testing printResult with caught objects", function()
+        testClass.caughtThisRound["cat"] = 1;
+        testClass.caughtThisRound["dog"] = 2;
+        testClass.swarmFac = {
+            getFishableObjects = function() return { ["cat"] = {["value"] = 10}, ["dog"] = {["value"] = 20} } end;
+        };
+        testClass:printResult();
+        assert.spy(loveMock.graphics.print).was.called(4);
+        assert.spy(loveMock.graphics.print).was.called_with("Caught objects in this round:", match._, match._);
+        assert.spy(loveMock.graphics.print).was.called_with("cat: 1 x 10 Coins", match._, match._);
+        assert.spy(loveMock.graphics.print).was.called_with("dog: 2 x 20 Coins", match._, match._);
+        assert.spy(loveMock.graphics.print).was.called_with("Earned: 50 Coins", match._, match._);
+    end)
+
 end)
