@@ -132,7 +132,9 @@ end;
 function Level:calcFishedValue()
     local fishedVal = 0;
     for name, amount in pairs(self.caughtThisRound) do
-        fishedVal = fishedVal + self.swarmFac:getFishableObjects()[name].value * amount;
+        if amount > 0 then
+            fishedVal = fishedVal + self.swarmFac:getFishableObjects()[name].value * amount;
+        end
     end
     return fishedVal;
 end;
