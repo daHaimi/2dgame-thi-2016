@@ -43,6 +43,7 @@ describe("Unit test for FishableObject.lua", function()
     it("Testing draw Function 1", function()
         local loveMock = mock(_G.love, true);
         locInstance:setXPosition(150);
+        locInstance.speed = 30;
         locInstance:draw();
         assert.spy(loveMock.graphics.draw).was_called_with("assets/deadFish.png", -150, 50);  
     end)
@@ -58,6 +59,7 @@ describe("Unit test for FishableObject.lua", function()
     it("Testing Update Function", function()
         myInstance1= testClass("assets/deadFish.png", "deadFish", 50, 300, 300, 64, 25, 50, 5, 0, 0);
         myInstance1:setXPosition(250);
+        myInstance1.speed = 300;
         myInstance1:update();
         assert.are.equal(550, myInstance1.xPosition);
         myInstance1:update();
