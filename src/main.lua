@@ -18,6 +18,7 @@ _G._persTable = {
     money = 0;
     lastLevel = 1;
     winDim = {};
+    phase = 1;
 };
 
 --- upgrades list in persTable, "0" means unbought
