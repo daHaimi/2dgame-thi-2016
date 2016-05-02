@@ -19,6 +19,9 @@ _G._persTable = {
     lastLevel = 1;
     winDim = {};
     phase = 1;
+    enabled = {
+        ring = false;
+    }
 };
 
 --- upgrades list in persTable, "0" means unbought

@@ -16,6 +16,9 @@ describe("Unit test for SwarmFactory.lua", function()
         _G._persTable = { 
             winDim = {500; 500};
             moved = 0;
+            enabled = {
+                ring = true;
+            }
         }
         
         locInstance = testClass();

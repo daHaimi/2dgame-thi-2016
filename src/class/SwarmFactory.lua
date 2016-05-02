@@ -2,6 +2,7 @@
 
 FishableObject = require "class.FishableObject";
 
+
 local SwarmFactory = Class {
     --- Initializes the swarm factory
     -- @param level The current level
@@ -87,7 +88,11 @@ function SwarmFactory:determineFishable(allowedFishables, fishablesProbability)
     for i = 1, #fishablesProbability, 1 do
         addedProbability = addedProbability + fishablesProbability[i];
         if addedProbability >= fishableDecider then
-            return self.fishableObjects[allowedFishables[i]];
+            if self.fishableObjects[allowedFishables[i]].enabled == true then
+                return self.fishableObjects[allowedFishables[i]];                
+            else
+              return self:determineFishable(allowedFishables, fishablesProbability);
+            end
         end
     end
 end
