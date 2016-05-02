@@ -10,18 +10,24 @@ Level = require "class.Level"
 -- @param value: value of the object
 -- @param hitpoints: amoung of the hitpoints of the object
 local FishableObject = Class {
-    init = function(self, name, imageSrc, yPosition, minSpeed, maxSpeed, xHitbox, yHitbox, value, hitpoints, deltaXHitbox, deltaYHitbox)
+    init = function(self, name, imageSrc, yPosition, minSpeed, maxSpeed, xHitbox, yHitbox, value, hitpoints,
+            deltaXHitbox, deltaYHitbox)
         self.name = name;
         self.image = love.graphics.newImage("assets/" .. imageSrc);
-        self.xPosition = math.random(_G._persTable.winDim[1]);
+        self.xPosition = math.random(64 - deltaXHitbox, _G._persTable.winDim[1]);
         self.yPosition = yPosition;
-        self.speed = math.random(minSpeed, maxSpeed); -- for decimal numbers
         self.hitboxWidth = xHitbox;
         self.hitboxHeight = yHitbox;
         self.value = value;
         self.hitpoints = hitpoints;
         self.deltaXHitbox = deltaXHitbox;
         self.deltaYHitbox = deltaYHitbox;
+        
+        if(math.random() > 0.5) then
+            self.speed = math.random() * (maxSpeed - minSpeed) + minSpeed; 
+        else 
+            self.speed = - (math.random() * (maxSpeed - minSpeed) + minSpeed);
+        end
     end;
     
     name = "no name";
@@ -63,10 +69,8 @@ end
 function FishableObject:update()
         if ((self.xPosition - self.deltaXHitbox) >= _G._persTable.winDim[1]) and self.speed > 0 then
             
-            --self.xPosition = 2 * _G._persTable.winDim[1] - self.xPosition + self.speed + 2* self.deltaXHitbox;
-            --self.speed = self.speed * -1;
             self.speed = self.speed * -1;
-            self.xPosition = _G._persTable.winDim[1] - self.hitboxWidth - self.deltaXHitbox + self.speed;            
+            self.xPosition = _G._persTable.winDim[1] - self.hitboxWidth - self.deltaXHitbox + self.speed;
             
         elseif (self.xPosition + self.deltaXHitbox) <= 0 then
             self.speed = self.speed * -1;

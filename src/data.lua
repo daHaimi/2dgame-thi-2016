@@ -116,16 +116,16 @@ sewer {
     {
         allowedFishables = { "turtle", "rat", "deadFish", "shoe"}, -- Fishables allowed to appear in this swarm 
         fishablesProbability = { 10, 40, 30, 20 },              -- The odds of allowedFishables (Must be 100)
-        minFishables = 10,                                  -- The minimum amount of fishables in this swarm
-        maxFishables = 15,                                  -- The maximum amount of fishables in this swarm
+        minFishables = 20,                                  -- The minimum amount of fishables in this swarm
+        maxFishables = 25,                                  -- The maximum amount of fishables in this swarm
         swarmHeight = 2000                                  -- The height of this swarm
     },
     
     {
         allowedFishables = { "nemo", "lollipop", "deadFish", "ring", "angler"},
         fishablesProbability = { 30, 30, 10, 20, 10},
-        minFishables = 15,
-        maxFishables = 20,
+        minFishables = 25,
+        maxFishables = 30,
         swarmHeight = 2000
     }
 }
