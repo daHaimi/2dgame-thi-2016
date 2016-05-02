@@ -57,11 +57,12 @@ function FishableObject:draw()
             love.graphics.draw(self.image, -self.xPosition, self.yPosition);
             love.graphics.scale(-1, 1);
         end
-        ----for showing the Hitbox
+        
+        --[[--for showing the Hitbox
         love.graphics.setColor(0,0,0);
         love.graphics.rectangle("line", self:getHitboxXPosition(), self:getHitboxYPosition(), 
         self:getHitboxWidth(), self:getHitboxHeight());
-        
+        ]]
     end
 end
 

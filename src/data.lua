@@ -134,7 +134,7 @@ fishableObject {
     yHitbox = 10,
     value = 60,
     hitpoints = 60,
-    deltaXHitbox = 0, -- TODO: fix crocodile hitbox, changes on scale -1
+    deltaXHitbox = 0, -- TODO: fix crocodile hitbox, changes on scale -1?
     deltaYHitbox = 40,
     enabled = true
 }
@@ -142,18 +142,35 @@ fishableObject {
 --- Data for the swarms for each level
 sewer {
     {
-        allowedFishables = { "turtle", "rat", "deadFish", "shoe"}, -- Fishables allowed to appear in this swarm 
-        fishablesProbability = { 10, 40, 30, 20 },              -- The odds of allowedFishables (Must be 100)
-        minFishables = 20,                                  -- The minimum amount of fishables in this swarm
-        maxFishables = 25,                                  -- The maximum amount of fishables in this swarm
-        swarmHeight = 2000                                  -- The height of this swarm
+        -- Fishables allowed to appear in this swarm 
+        allowedFishables = { "turtle", "rat", "deadFish"}, 
+        
+        -- The odds of allowedFishables (Must be 100)
+        fishablesProbability = { 10, 50, 40 },  
+        
+        -- The minimum amount of fishables in this swarm
+        minFishables = 15,   
+        
+        -- The maximum amount of fishables in this swarm
+        maxFishables = 25,
+        
+        -- The height of this swarm
+        swarmHeight = 2500                                  
     },
     
     {
-        allowedFishables = { "nemo", "lollipop", "deadFish", "ring", "angler"},
-        fishablesProbability = { 30, 30, 10, 20, 10},
-        minFishables = 25,
-        maxFishables = 30,
+        allowedFishables = { "nemo", "lollipop", "deadFish", "angler"},
+        fishablesProbability = { 5, 50, 30, 15 },
+        minFishables = 20,
+        maxFishables = 25,
+        swarmHeight = 2000
+    },
+    
+    {
+        allowedFishables = { "ring", "shoe", "snake", "crocodile"},
+        fishablesProbability = { 5, 25, 35, 35 },
+        minFishables = 20,
+        maxFishables = 25,
         swarmHeight = 2000
     }
 }

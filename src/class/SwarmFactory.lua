@@ -1,7 +1,6 @@
 --- The class SwarmFactory creates swarms of fishable objects defined by data.lua
-
 FishableObject = require "class.FishableObject";
-require 'socket' math.randomseed(socket.gettime()*10000)
+require "socket" math.randomseed(socket.gettime() * 10000)
 
 local SwarmFactory = Class {
     --- Initializes the swarm factory
@@ -28,7 +27,7 @@ local SwarmFactory = Class {
             dofile(dataFile);
         end
         
-        addedHeights = 800; -- Start at 800 to create swarms for now
+        addedHeights = 600; -- Start at 600 to create swarms for now
         for i = 1, #self.swarmsSewer, 1 do
             self:createNextSwarm(addedHeights);
             addedHeights = addedHeights + self.swarmsSewer[i].swarmHeight;
@@ -82,7 +81,7 @@ end
 -- @param fishablesProbability Creation probabilities for the fishables
 -- @return The fishable to create
 function SwarmFactory:determineFishable(allowedFishables, fishablesProbability)
-    fishableDecider = math.random(100)
+    fishableDecider = math.random(100);
     addedProbability = 0;
     
     for i = 1, #fishablesProbability, 1 do
@@ -91,7 +90,7 @@ function SwarmFactory:determineFishable(allowedFishables, fishablesProbability)
             if self.fishableObjects[allowedFishables[i]].enabled == true then
                 return self.fishableObjects[allowedFishables[i]];                
             else
-              return self:determineFishable(allowedFishables, fishablesProbability);
+                return self:determineFishable(allowedFishables, fishablesProbability);
             end
         end
     end
