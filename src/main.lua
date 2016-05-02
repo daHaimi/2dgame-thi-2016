@@ -74,10 +74,9 @@ end
 function love.draw()
     if gui.drawGame() then
         curLevel:draw(player);
-        if swarmFactory then
-            swarmFactory:draw();
-        end
+        swarmFactory:draw();
     end
+    
     Loveframes.draw()
     --[[prints the State name and output values.
     This function will be replaced in a later version]] --
@@ -91,9 +90,7 @@ function love.update(dt)
     gui:updateGui();
     Loveframes.update(dt);
     if gui.drawGame() then --updates the curLevel only in the InGame GUI
-    curLevel:update(dt, player);
-    end
-    if swarmFactory then
+        curLevel:update(dt, player);
         swarmFactory:update();
     end
 end

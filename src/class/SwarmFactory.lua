@@ -2,7 +2,6 @@
 
 FishableObject = require "class.FishableObject";
 
-
 local SwarmFactory = Class {
     --- Initializes the swarm factory
     -- @param level The current level

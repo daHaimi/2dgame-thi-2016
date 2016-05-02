@@ -6,6 +6,7 @@ _G.math.inf = 1 / 0;
 -- @param backgroundPath The relative path to the picture
 -- @param winDim The dimensions of the window
 -- @param direction The y direction (-1 means up and 1 means down)
+-- @param swarmFactory The swarm factory
 local Level = Class{
     init = function(self, backgroundPath, winDim, direction, swarmFactory)
         self.swarmFac = swarmFactory;

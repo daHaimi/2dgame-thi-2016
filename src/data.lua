@@ -4,13 +4,13 @@ fishableObject {
     image = "nemo.png", -- The image file
     minSpeed = 4,       -- Min movement speed
     maxSpeed = 7,       -- Max movement speed
-    xHitbox = 40,        -- Hitbox width
-    yHitbox = 30,        -- Hitbox height
-    value = 10,         -- The worth of the object
-    hitpoints = 10,      -- The HP of the object
-    deltaXHitbox = 12,
-    deltaYHitbox = 17,
-    enabled = true
+    xHitbox = 40,       -- Hitbox width
+    yHitbox = 30,       -- Hitbox height
+    value = 30,         -- The worth of the object
+    hitpoints = 10,     -- The HP of the object
+    deltaXHitbox = 12,  -- The hitbox X adjustment 
+    deltaYHitbox = 17,  -- The hitbox Y adjustment 
+    enabled = true      -- Whether the object is enabled
 }
 
 fishableObject {
@@ -20,7 +20,7 @@ fishableObject {
     maxSpeed = 2,
     xHitbox = 50,
     yHitbox = 30,
-    value = 10,
+    value = 30,
     hitpoints = 20,
     deltaXHitbox = 5,
     deltaYHitbox = 17,
@@ -34,7 +34,7 @@ fishableObject {
     maxSpeed = 8,
     xHitbox = 60,
     yHitbox = 25,
-    value = 20,
+    value = -10,
     hitpoints = 5,
     deltaXHitbox = 2,
     deltaYHitbox = 25,
@@ -45,7 +45,7 @@ fishableObject {
     name = "deadFish",
     image = "deadFish.png",
     minSpeed = 0,
-    maxSpeed = 2,
+    maxSpeed = 1,
     xHitbox = 64,
     yHitbox = 25,
     value = 20,
@@ -58,11 +58,11 @@ fishableObject {
 fishableObject {
     name = "angler",
     image = "angler.png",
-    minSpeed = 3,
-    maxSpeed = 8,
+    minSpeed = 1,
+    maxSpeed = 5,
     xHitbox = 40,
     yHitbox = 40,
-    value = 20,
+    value = 40,
     hitpoints = 20,
     deltaXHitbox = 12,
     deltaYHitbox = 12,
@@ -88,12 +88,12 @@ fishableObject {
     image = "ring.png",
     minSpeed = 0,
     maxSpeed = 5,
-    xHitbox = 30,
-    yHitbox = 40,
-    value = 40,
-    hitpoints = 10,
-    deltaXHitbox = 17,
-    deltaYHitbox = 12,
+    xHitbox = 40,
+    yHitbox = 58,
+    value = 100,
+    hitpoints = 40,
+    deltaXHitbox = 12,
+    deltaYHitbox = 2,
     enabled = _G._persTable.enabled.ring;
 }
 
@@ -103,22 +103,57 @@ fishableObject {
     minSpeed = 0,
     maxSpeed = 0,
     xHitbox = 30,
-    yHitbox = 60,
+    yHitbox = 56,
     value = -20,
     hitpoints = 20,
     deltaXHitbox = 25,
-    deltaYHitbox = 0,
+    deltaYHitbox = 4,
+    enabled = true
+}
+
+fishableObject {
+    name = "snake",
+    image = "snake.png",
+    minSpeed = 0,
+    maxSpeed = 8,
+    xHitbox = 54,
+    yHitbox = 56,
+    value = 50,
+    hitpoints = 20,
+    deltaXHitbox = 5,
+    deltaYHitbox = 4,
+    enabled = true
+}
+
+fishableObject {
+    name = "crocodile",
+    image = "crocodile.png",
+    minSpeed = 1,
+    maxSpeed = 5,
+    xHitbox = 128, 
+    yHitbox = 10,
+    value = 60,
+    hitpoints = 60,
+    deltaXHitbox = 0, -- TODO: fix crocodile hitbox, changes on scale -1
+    deltaYHitbox = 40,
     enabled = true
 }
 
 --- Data for the swarms for each level
 sewer {
     {
-        allowedFishables = { "turtle", "rat", "deadFish", "shoe"}, -- Fishables allowed to appear in this swarm 
-        fishablesProbability = { 10, 40, 30, 20 },              -- The odds of allowedFishables (Must be 100)
-        minFishables = 10,                                  -- The minimum amount of fishables in this swarm
-        maxFishables = 15,                                  -- The maximum amount of fishables in this swarm
-        swarmHeight = 2000                                  -- The height of this swarm
+        -- Fishables allowed to appear in this swarm
+        allowedFishables = { "rat", "deadFish" },
+        
+        -- The odds of allowedFishables (Must be 100)
+        fishablesProbability = { 60, 40},
+        
+        -- The minimum amount of fishables in this swarm
+        minFishables = 5,
+        -- The maximum amount of fishables in this swarm
+        maxFishables = 15,
+        -- The height of this swarm
+        swarmHeight = 2000 
     },
     
     {
