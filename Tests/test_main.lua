@@ -1,7 +1,7 @@
 -- Lua 5.1 Hack
 _G.math.inf = 1 / 0
 
--- need to mock LoveFrame
+-- need to mock love first
 -- testClass = require "main"
 
 describe("Unit test for main.lua", function()
