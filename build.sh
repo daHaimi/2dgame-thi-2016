@@ -97,4 +97,4 @@ rm tmp/META-INF/*.RSA
 sed -i 's/Löve for Android/2D Game THI 2016/g' tmp/AndroidManifest.xml
 ( cd tmp && zip -r ../bin/${GAME_NAME}-${BUILD_NR}-android.apk . )
 rm -r tmp
-#${JAVA_HOME}/bin/jarsigner -verbose -sigalg SHA1withRSA -digestalg SHA1 -keystore stubs/android/keystore -storepass BannnanasGrowOnTreees -keypass MunkeyysMustThereforeDigDeeep bin/android.apk 2dgame
+${JAVA_HOME}/bin/jarsigner -verbose -sigalg SHA1withRSA -digestalg SHA1 -keystore util/android.keystore -storepass NeverGonnaGiveYouUp -keypass NeverGonnaGiveYouUp bin/android.apk ${GAME_NAME}
