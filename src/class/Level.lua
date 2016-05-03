@@ -7,7 +7,7 @@ _G.math.inf = 1 / 0;
 -- @param winDim The dimensions of the window
 -- @param direction The y direction (-1 means up and 1 means down)
 -- @param swarmFactory The swarm factory
-local Level = Class{
+local Level = Class {
     init = function(self, backgroundPath, winDim, direction, swarmFactory)
         self.swarmFac = swarmFactory;
         self.bg = love.graphics.newImage(backgroundPath);
@@ -28,12 +28,12 @@ local Level = Class{
             self.lowerBoarder = self.lowerBoarder + self.mapBreakthroughBonus2;
         end
     end,
-    
+
     -- Member variables
     swarmFac = nil;
     levelFinished = 0; -- 0 means the round hasn´t been finished until yet
-    gotPayed = 0;       -- 0 means the amount of money hasn´t calculated until yet
-    roundValue = 0;     -- the amount of money fished in this round
+    gotPayed = 0; -- 0 means the amount of money hasn´t calculated until yet
+    roundValue = 0; -- the amount of money fished in this round
     posY = 0;
     direction = 1; -- (-1) means up and 1 means down
     bg = nil;
@@ -46,7 +46,7 @@ local Level = Class{
     -- list for objekts caught at this round
     caughtThisRound = {};
     oldPosY = _G.math.inf;
-    godModeFuel = 800;  
+    godModeFuel = 800;
     godModeActive = 0;
     moved = 0;
 }
@@ -57,14 +57,14 @@ local Level = Class{
 -- @param bait The bait object, which stands for the user.
 function Level:update(dt, bait)
     --set the direction in relation of the yPosition
-    if  self.posY <= self.lowerBoarder then
+    if self.posY <= self.lowerBoarder then
         self:switchToPhase2();
     elseif self.posY >= (self.winDim[2] / 2) and self.direction == -1 then
         self.direction = 0;
         self.levelFinished = 1;
         self:payPlayer();
     end
-    
+
     --set the movement in relation of the direction
     self.moved = 0;
     if self.direction == 1 then
@@ -73,22 +73,21 @@ function Level:update(dt, bait)
     if self.direction == -1 then
         self.moved = -math.ceil(dt * bait.speed);
     end
-    
+
     --do the movement
     FishableObject:setYMovement(self.moved);
     self.sizeY = self.winDim[2] + self.moved;
     self.posY = self.posY - self.moved;
-    
+
     self:checkGodMode();
 end
 
----when the bait hit a object or the boarder is reached, start phase 2
+--- when the bait hit a object or the boarder is reached, start phase 2
 function Level:switchToPhase2()
     if _G._persTable.phase == 1 then
         self.direction = -1;
         _G._persTable.phase = 2;
     end
-    
 end
 
 --- Draw on the screen. Called every frame.
@@ -99,28 +98,28 @@ function Level:draw(bait)
     love.graphics.draw(self.bg, self.bgq, 0, self.posY);
     bait:draw();
     if self.levelFinished == 1 then
-    self:printResult();
+        self:printResult();
     end
 end
 
---- Pay the achieved money to the player and multiply it with the 
+--- Pay the achieved money to the player and multiply it with the
 -- bonus value (when activated) at the end of each round. Remove the money multi when it was activated.
 function Level:payPlayer()
     -- check if the round has been finished
     if self.levelFinished == 1 and self.swarmFac ~= nil then
         if self.gotPayed == 0 then -- check if the earned money was already payed
-            local fishedVal = self:calcFishedValue();
-            if _G._persTable.upgrades.moneyMult == 1 then
-                self.roundValue = self:multiplyFishedValue(2.5, fishedVal);
-                self.gotPayed = 1;
-                _G._persTable.upgrades.moneyMult = 0;
-            else
-                self.roundValue = fishedVal;
-                self.gotPayed = 1;
-            end
+        local fishedVal = self:calcFishedValue();
+        if _G._persTable.upgrades.moneyMult == 1 then
+            self.roundValue = self:multiplyFishedValue(2.5, fishedVal);
+            self.gotPayed = 1;
+            _G._persTable.upgrades.moneyMult = 0;
+        else
+            self.roundValue = fishedVal;
+            self.gotPayed = 1;
+        end
         end
     end
-end;
+end
 
 --- Check the state of the god mode and updates the god mode fuel value.
 function Level:checkGodMode()
@@ -161,7 +160,7 @@ function Level:calcFishedValue()
         end
     end
     return fishedVal;
-end;
+end
 
 --- Calculate the amount of money with the given multiply bonus (round up).
 -- @param multy The factor of the bonus.
@@ -169,7 +168,7 @@ end;
 -- @return The amount of money.
 function Level:multiplyFishedValue(multy, fishedValue)
     return math.ceil(fishedValue * multy);
-end;
+end
 
 --- Returns the amount of the fuel for the god mode
 -- @return Returns the amount of the fuel for the god mode
@@ -177,7 +176,7 @@ function Level:getGodModeFuel()
     return self.godModeFuel;
 end
 
---- Set the fuel for the god mode to the new value. 
+--- Set the fuel for the god mode to the new value.
 -- Is newFuel <= 0, the god mode will be deactivated.
 function Level:setGodModeFuel(newFuel)
     self.godModeFuel = newFuel;
@@ -198,7 +197,7 @@ function Level:setSwarmFactory(swarmFactory)
     if swarmFactory ~= nil then
         self.swarmFac = swarmFactory;
     end
-end;
+end
 
 --- Set the value for the lower boarder.
 -- @param newBoarderVal The new lower boarder value.
@@ -266,23 +265,23 @@ end
 
 --- Displays the amount and value of the caught objects
 function Level:printResult()
-  local xpos = 0;
-  local ypos = 120;
-  love.graphics.setColor(0,0,0,255);
-  love.graphics.print("Caught objects in this round:", xpos, ypos);
-  if next(self.caughtThisRound) ~= nil then
-    local string = "";
-    for k, v in pairs(self.caughtThisRound) do
-      ypos = ypos + 15;
-      string = k .. ": " .. v .. " x " .. self.swarmFac:getFishableObjects()[k].value .. " Coins";
-      love.graphics.print(string, xpos, ypos);
+    local xpos = 0;
+    local ypos = 120;
+    love.graphics.setColor(0, 0, 0, 255);
+    love.graphics.print("Caught objects in this round:", xpos, ypos);
+    if next(self.caughtThisRound) ~= nil then
+        local string = "";
+        for k, v in pairs(self.caughtThisRound) do
+            ypos = ypos + 15;
+            string = k .. ": " .. v .. " x " .. self.swarmFac:getFishableObjects()[k].value .. " Coins";
+            love.graphics.print(string, xpos, ypos);
+        end
+        ypos = ypos + 15;
+        love.graphics.print("Earned: " .. self:calcFishedValue() .. " Coins", xpos, ypos);
+    else
+        ypos = ypos + 15;
+        love.graphics.print("Nothing caught", xpos, ypos);
     end
-      ypos = ypos + 15;
-      love.graphics.print("Earned: " .. self:calcFishedValue() .. " Coins", xpos, ypos);
-  else
-    ypos = ypos + 15;
-    love.graphics.print("Nothing caught", xpos, ypos);
-  end
 end
 
 return Level;

@@ -13,30 +13,30 @@ local SwarmFactory = Class {
 
         --- Takes the fishable form the data file
         -- @param fishable The fishable
-        function fishableObject(fishable) 
+        function fishableObject(fishable)
             self.fishableObjects[fishable.name] = fishable;
         end
-        
+
         --- Takes the sewer swarms from the data file
         -- @param swarms The swarms
-        function sewer(swarms) 
+        function sewer(swarms)
             self.swarmsSewer = swarms;
         end
-        
+
         if dataFile ~= nil then
             dofile(dataFile);
         end
-        
+
         addedHeights = 600; -- Start at 600 to create swarms for now
         for i = 1, #self.swarmsSewer, 1 do
             self:createNextSwarm(addedHeights);
             addedHeights = addedHeights + self.swarmsSewer[i].swarmHeight;
         end
     end;
-    
+
     level = nil;
     player = nil;
-    
+
     fishableObjects = {};
     currentSwarm = 0;
 
@@ -65,13 +65,13 @@ function SwarmFactory:createNextSwarm(startPosY)
     self.currentSwarm = self.currentSwarm + 1;
     newSwarm = self.swarmsSewer[self.currentSwarm];
     amountFishables = math.random(newSwarm.minFishables, newSwarm.maxFishables);
- 
+
     for i = 1, amountFishables, 1 do
         yPos = math.random(newSwarm.swarmHeight);
         fishable = self:determineFishable(newSwarm.allowedFishables, newSwarm.fishablesProbability);
 
-        self.createdFishables[#self.createdFishables + 1] = FishableObject(fishable.name, fishable.image, startPosY + 
-            yPos, fishable.minSpeed, fishable.maxSpeed, fishable.xHitbox, fishable.yHitbox, fishable.value, 
+        self.createdFishables[#self.createdFishables + 1] = FishableObject(fishable.name, fishable.image, startPosY +
+                yPos, fishable.minSpeed, fishable.maxSpeed, fishable.xHitbox, fishable.yHitbox, fishable.value,
             fishable.hitpoints, fishable.deltaXHitbox, fishable.deltaYHitbox);
     end
 end
@@ -83,12 +83,12 @@ end
 function SwarmFactory:determineFishable(allowedFishables, fishablesProbability)
     fishableDecider = math.random(100);
     addedProbability = 0;
-    
+
     for i = 1, #fishablesProbability, 1 do
         addedProbability = addedProbability + fishablesProbability[i];
         if addedProbability >= fishableDecider then
             if self.fishableObjects[allowedFishables[i]].enabled == true then
-                return self.fishableObjects[allowedFishables[i]];                
+                return self.fishableObjects[allowedFishables[i]];
             else
                 return self:determineFishable(allowedFishables, fishablesProbability);
             end

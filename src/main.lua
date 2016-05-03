@@ -56,7 +56,7 @@ function love.load()
     _G._persTable.winDim = { love.window.getDesktopDimensions(flags.display) };
     _G._persTable.winDim[2] = _G._persTable.winDim[2] - 150; -- Sub 50px for taskbar and window header
     _G._persTable.winDim[1] = (_G._persTable.winDim[2] / 16) * 9; -- Example: 16:9
-    love.window.setMode(_G._persTable.winDim[1], _G._persTable.winDim[2], {centered});
+    love.window.setMode(_G._persTable.winDim[1], _G._persTable.winDim[2], { centered });
     curLevel = Level("assets/testbg.png", _G._persTable.winDim, 1, nil);
     player = Bait(_G._persTable.winDim);
     player:checkUpgrades();
@@ -76,7 +76,7 @@ function love.draw()
         curLevel:draw(player);
         swarmFactory:draw();
     end
-    
+
     Loveframes.draw()
     --[[prints the State name and output values.
     This function will be replaced in a later version]] --
@@ -89,7 +89,8 @@ end
 function love.update(dt)
     gui:updateGui();
     Loveframes.update(dt);
-    if gui.drawGame() then --updates the curLevel only in the InGame GUI
+    if gui.drawGame() then
+        -- updates the curLevel only in the InGame GUI
         curLevel:update(dt, player);
         swarmFactory:update();
     end
@@ -97,8 +98,8 @@ end
 
 --- Callback function triggered when the mouse is moved.
 -- @param x The mouse position on the x-axis.
--- @param y The mouse position on the y-axis.
-function love.mousemoved(x, y)
+-- @param _ The mouse position on the y-axis. unused
+function love.mousemoved(x, _)
     if player then
         if x < (player.size / 2) then
             player.posXMouse = 0;

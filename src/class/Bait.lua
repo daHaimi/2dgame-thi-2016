@@ -9,7 +9,7 @@ local Bait = Class {
     init = function(self, winDim)
         self.winDim = winDim;
         self.posXBait = (winDim[1] / 2) - (self.size / 2);
-        local yPos = (self.winDim[2] / 2) - (self.size / 2);
+        local yPos = (self.winDim[2] / 2) - (self.size / 2); -- FIXME unused local
     end;
     size = 10;
     speed = 200;
@@ -21,7 +21,7 @@ local Bait = Class {
     money = 0;
     numberOfHits = 0;
     hittedFishable = 0;
-    caughtThisRound ={};
+    caughtThisRound = {};
 };
 
 --- TODO need balancing
@@ -34,9 +34,9 @@ function Bait:checkUpgrades()
     if _G._persTable.upgrades.speedUp > 0 then
         self.speed = self.speed * (1 + _G._persTable.upgrades.speedUp);
     end
-end;
+end
 
----updates the bait and checks for collisions
+--- updates the bait and checks for collisions
 function Bait:update()
     self.yPos = (self.winDim[2] / 2) - (self.size / 2);
     self:setCappedPosX();
@@ -44,13 +44,13 @@ function Bait:update()
     self:checkForCollision();
 end
 
----checks for collision
+--- checks for collision
 function Bait:checkForCollision()
     for i = 1, #SwarmFactory.createdFishables, 1 do
         if SwarmFactory.createdFishables[i].drawIt then
             local fishable = SwarmFactory.createdFishables[i];
             CollisionDetection:setCollision();
-            CollisionDetection:calculateCollision(self.xPos, self.yPos, fishable:getHitboxXPosition(), 
+            CollisionDetection:calculateCollision(self.xPos, self.yPos, fishable:getHitboxXPosition(),
                 fishable:getHitboxYPosition(), fishable:getHitboxWidth(), fishable:getHitboxHeight());
             if CollisionDetection:getCollision() then
                 self:collisionDetected(fishable, i);
@@ -59,24 +59,24 @@ function Bait:checkForCollision()
     end
 end
 
----is called every time the bait hits a fishable object
---@param fishable the fishable object hitted
---@param index index of the fishable object hitted
-function Bait:collisionDetected(fishable, index)   
+--- is called every time the bait hits a fishable object
+-- @param fishable the fishable object hitted
+-- @param index index of the fishable object hitted
+function Bait:collisionDetected(fishable, index)
     if not (self.hittedFishable == index) then
-        
+
         self.hittedFishable = index;
         if self.numberOfHits >= _G._persTable.upgrades.moreLife + 1 or _G._persTable.phase == 2 then
-           SwarmFactory.createdFishables[index].drawIt = false;
-           Level:switchToPhase2();
-           Level:addToCaught(fishable.name);
+            SwarmFactory.createdFishables[index].drawIt = false;
+            Level:switchToPhase2();
+            Level:addToCaught(fishable.name);
         end
-        
+
         self.numberOfHits = self.numberOfHits + 1;
-    end    
+    end
 end
 
----implements drawing interface
+--- implements drawing interface
 function Bait:draw()
     love.graphics.setColor(127, 0, 255);
     self:update();
@@ -100,7 +100,7 @@ end
 --- Returns the actual X position of the Bait
 -- @return The actual X position of the Bait
 function Bait:getPosX()
-  return self.posXBait;
+    return self.posXBait;
 end
 
 return Bait;

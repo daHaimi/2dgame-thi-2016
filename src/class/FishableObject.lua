@@ -1,5 +1,5 @@
 Class = require "lib.hump.class";
-Level = require "class.Level"
+Level = require "class.Level";
 
 --- FishableObject is the class of all fishable object.
 -- @param xPosition: x-position of the object
@@ -11,7 +11,7 @@ Level = require "class.Level"
 -- @param hitpoints: amoung of the hitpoints of the object
 local FishableObject = Class {
     init = function(self, name, imageSrc, yPosition, minSpeed, maxSpeed, xHitbox, yHitbox, value, hitpoints,
-            deltaXHitbox, deltaYHitbox)
+    deltaXHitbox, deltaYHitbox)
         self.name = name;
         self.image = love.graphics.newImage("assets/" .. imageSrc);
         self.xPosition = math.random(64 - deltaXHitbox, _G._persTable.winDim[1]);
@@ -22,14 +22,14 @@ local FishableObject = Class {
         self.hitpoints = hitpoints;
         self.deltaXHitbox = deltaXHitbox;
         self.deltaYHitbox = deltaYHitbox;
-        
-        if(math.random() > 0.5) then
-            self.speed = math.random() * (maxSpeed - minSpeed) + minSpeed; 
-        else 
-            self.speed = - (math.random() * (maxSpeed - minSpeed) + minSpeed);
+
+        if (math.random() > 0.5) then
+            self.speed = math.random() * (maxSpeed - minSpeed) + minSpeed;
+        else
+            self.speed = -(math.random() * (maxSpeed - minSpeed) + minSpeed);
         end
     end;
-    
+
     name = "no name";
     xPosition = 0;
     yPosition = 0;
@@ -50,17 +50,17 @@ function FishableObject:draw()
         love.graphics.setColor(255, 255, 255);
         if self.speed < 0 then
             love.graphics.draw(self.image, self.xPosition, self.yPosition);
-            love.graphics.setColor(0,0,0);
+            love.graphics.setColor(0, 0, 0);
         else
             love.graphics.scale(-1, 1);
             love.graphics.setColor(255, 255, 255);
             love.graphics.draw(self.image, -self.xPosition, self.yPosition);
             love.graphics.scale(-1, 1);
         end
-        
+
         --[[--for showing the Hitbox
         love.graphics.setColor(0,0,0);
-        love.graphics.rectangle("line", self:getHitboxXPosition(), self:getHitboxYPosition(), 
+        love.graphics.rectangle("line", self:getHitboxXPosition(), self:getHitboxYPosition(),
         self:getHitboxWidth(), self:getHitboxHeight());
         ]]
     end
@@ -68,21 +68,22 @@ end
 
 --- Updates the position of the object depending on its speed
 function FishableObject:update()
-        if ((self.xPosition - self.deltaXHitbox) >= _G._persTable.winDim[1]) and self.speed > 0 then
-            
-            self.speed = self.speed * -1;
-            self.xPosition = _G._persTable.winDim[1] - self.hitboxWidth - self.deltaXHitbox + self.speed;
-            
-        elseif (self.xPosition + self.deltaXHitbox) <= 0 then
-            self.speed = self.speed * -1;
-            self.xPosition = math.abs(self.hitboxWidth + self.deltaXHitbox + self.speed);
-        else
-        
-            self.xPosition = self.xPosition + self.speed;
-        end
+    if ((self.xPosition - self.deltaXHitbox) >= _G._persTable.winDim[1]) and self.speed > 0 then
 
-        self.yPosition = self.yPosition - self.yMovement;
+        self.speed = self.speed * -1;
+        self.xPosition = _G._persTable.winDim[1] - self.hitboxWidth - self.deltaXHitbox + self.speed;
+
+    elseif (self.xPosition + self.deltaXHitbox) <= 0 then
+        self.speed = self.speed * -1;
+        self.xPosition = math.abs(self.hitboxWidth + self.deltaXHitbox + self.speed);
+    else
+
+        self.xPosition = self.xPosition + self.speed;
+    end
+
+    self.yPosition = self.yPosition - self.yMovement;
 end
+
 --- sets the xPosition
 function FishableObject:setXPosition(xPosition)
     self.xPosition = xPosition;
@@ -105,12 +106,12 @@ end
 
 --- returns height of the hitbox of the object
 function FishableObject:getHitboxHeight()
-    return self.hitboxHeight; 
+    return self.hitboxHeight;
 end
 
 --- returns x position of the object
 function FishableObject:getHitboxXPosition()
-    
+
     if self.speed < 0 then
         return self.xPosition + self.deltaXHitbox;
     else

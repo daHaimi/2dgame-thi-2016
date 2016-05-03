@@ -6,7 +6,7 @@ testClass = require "src.class.Frame"
 describe("Unit test for Frame.lua", function()
     local locInstance;
     local locElements = {};
-    
+
     before_each(function()
         locInstance = testClass("TestFrame", "down", "down", 50, 0, -1000);
         local Element = {
@@ -23,6 +23,7 @@ describe("Unit test for Frame.lua", function()
         function Element:SetVisible(bool)
             self.visible = bool;
         end
+
         function Element:SetPos(x, y)
             self.xPos = x;
             self.yPos = y;
@@ -38,7 +39,7 @@ describe("Unit test for Frame.lua", function()
         local myInstance = testClass("TestFrame", "down", "down", 50, 0, -1000);
         local newElement = {};
         --add all Elements from locElements to Instances
-        for k, v in ipairs (locElements) do
+        for k, v in ipairs(locElements) do
             myInstance:addElement(v, 10 * k, 10);
             locInstance:addElement(v, 10 * k, 10);
         end
@@ -48,7 +49,7 @@ describe("Unit test for Frame.lua", function()
     it("Testing getElements function", function()
         local myInstance = testClass("TestFrame", "down", "down", 50, 0, -1000);
         --add all Elements from locElements to Instances
-        for k, v in ipairs (locElements) do
+        for k, v in ipairs(locElements) do
             myInstance:addElement(v, 10 * k, 10);
         end
         assert.are.same(locElements, myInstance:getElements());
@@ -89,7 +90,7 @@ describe("Unit test for Frame.lua", function()
         myInstance:setOffset(0, 0);
         assert.are.equal(myInstance:onPosition(), true);
     end)
-        
+
     it("Testing move function/ up", function()
         local myInstance = testClass("TestFrame", "up", "down", 50, 0, -1000);
         myInstance:setOffset(100, 100);
@@ -122,13 +123,13 @@ describe("Unit test for Frame.lua", function()
         local myInstance = testClass("TestFrame", "down", "down", 50, 0, -1000);
         local TestElements;
         local result = {};
-        local expectedResult = {false, false, false, false};
-        for k, v in ipairs (locElements) do
+        local expectedResult = { false, false, false, false };
+        for k, v in ipairs(locElements) do
             myInstance:addElement(v, 10 * k, 10);
         end
         myInstance:clearFrame();
         TestElements = myInstance:getElements();
-        for k, v in ipairs (TestElements) do
+        for k, v in ipairs(TestElements) do
             result[k] = v.visible;
         end
         assert.are.same(result, expectedResult);
@@ -138,24 +139,24 @@ describe("Unit test for Frame.lua", function()
         local myInstance = testClass("TestFrame", "down", "down", 50, 0, -1000);
         local TestElements
         local result = {}
-        local expectedResult = {true, true, true, true}
-        for k, v in ipairs (locElements) do
+        local expectedResult = { true, true, true, true }
+        for k, v in ipairs(locElements) do
             myInstance:addElement(v, 10 * k, 10);
         end
         myInstance:showFrame();
         TestElements = myInstance:getElements();
-        for k, v in ipairs (TestElements) do
+        for k, v in ipairs(TestElements) do
             result[k] = v.visible;
         end
         assert.are.same(result, expectedResult);
     end)
-    
+
     it("Testing showFrame function/ xPos", function()
         local myInstance = testClass("TestFrame", "down", "down", 50, 0, -1000);
         local result = {}
-        local expectedResult = {10, 20, 30, 40};
-        
-        for k, v in ipairs (locElements) do
+        local expectedResult = { 10, 20, 30, 40 };
+
+        for k, v in ipairs(locElements) do
             myInstance:addElement(v, 10 * k, 10);
         end
         myInstance:showFrame();
@@ -165,9 +166,9 @@ describe("Unit test for Frame.lua", function()
     it("Testing showFrame function/ yPos", function()
         local myInstance = testClass("TestFrame", "down", "down", 50, 0, -1000);
         local result = {}
-        local expectedResult = {10, 20, 30, 40};
+        local expectedResult = { 10, 20, 30, 40 };
 
-        for k, v in ipairs (locElements) do
+        for k, v in ipairs(locElements) do
             myInstance:addElement(v, 10, 10 * k);
         end
         myInstance:showFrame();
@@ -203,6 +204,6 @@ describe("Unit test for Frame.lua", function()
     end)
     it("Testing centerElementX function", function()
         local myInstance = testClass("TestFrame", "left", "left", 50, 0, -1000);
-        assert.are.equal(myInstance:centerElementX(100, 50, 100) , -25);
+        assert.are.equal(myInstance:centerElementX(100, 50, 100), -25);
     end)
 end)

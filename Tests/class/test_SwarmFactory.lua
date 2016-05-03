@@ -2,7 +2,7 @@ testClass = require "src.class.SwarmFactory"
 
 describe("Unit test for SwarmFactory.lua", function()
     local locInstance;
-    
+
     before_each(function()
         _G.love = {
             graphics = {
@@ -12,15 +12,15 @@ describe("Unit test for SwarmFactory.lua", function()
                 scale = function(...) end;
             }
         }
-        
-        _G._persTable = { 
-            winDim = {500; 500};
+
+        _G._persTable = {
+            winDim = { 500; 500 };
             moved = 0;
             enabled = {
                 ring = true;
             }
         }
-        
+
         locInstance = testClass();
     end)
 
@@ -46,12 +46,12 @@ describe("Unit test for SwarmFactory.lua", function()
         testInstance.currentSwarm = 0;
         testInstance.createdFishables = {};
         testInstance:createNextSwarm(100);
-        testSwarmheight = testInstance.swarmsSewer[testInstance.currentSwarm].swarmHeight;
-        testSwarmMaxYPos = 100 + testSwarmheight;
-        swarm = testInstance.createdFishables;
-        
+        local testSwarmheight = testInstance.swarmsSewer[testInstance.currentSwarm].swarmHeight;
+        local testSwarmMaxYPos = 100 + testSwarmheight;
+        local swarm = testInstance.createdFishables;
+
         for i = 1, #swarm, 1 do
-            assert.has_no.errors(function() 
+            assert.has_no.errors(function()
                 if swarm[i].yPosition < 100 or swarm[i].yPosition > testSwarmMaxYPos then
                     error("Position error");
                 end
@@ -60,11 +60,11 @@ describe("Unit test for SwarmFactory.lua", function()
     end)
 
     it("Testing determineFishable method", function()
-        allowedFishablesTest = { "nemo", "lollipop", "deadFish" };
-        fishablesProbabilityTest = { 100, 0, 0 };
-        fishableRes = locInstance:determineFishable(allowedFishablesTest, fishablesProbabilityTest);
+        local allowedFishablesTest = { "nemo", "lollipop", "deadFish" };
+        local fishablesProbabilityTest = { 100, 0, 0 };
+        local fishableRes = locInstance:determineFishable(allowedFishablesTest, fishablesProbabilityTest);
         assert.same(fishableRes, locInstance.fishableObjects["nemo"]);
-        
+
         allowedFishablesTest = { "deadFish", "lollipop" };
         fishablesProbabilityTest = { 0, 100 };
         fishableRes = locInstance:determineFishable(allowedFishablesTest, fishablesProbabilityTest);
