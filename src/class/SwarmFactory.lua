@@ -1,12 +1,13 @@
 --- The class SwarmFactory creates swarms of fishable objects defined by data.lua
-
 FishableObject = require "class.FishableObject";
+require "socket" math.randomseed(socket.gettime() * 10000)
 
 local SwarmFactory = Class {
     --- Initializes the swarm factory
     -- @param level The current level
     -- @param player The player object
-    init = function(self, level, player)
+    -- @param dataFile The path and name of the data file
+    init = function(self, level, player, dataFile)
         self.level = level;
         self.player = player;
 
@@ -22,8 +23,11 @@ local SwarmFactory = Class {
             self.swarmsSewer = swarms;
         end
         
-        dofile("data.lua");
-        addedHeights = 800; -- Start at 800 to create swarms for now
+        if dataFile ~= nil then
+            dofile(dataFile);
+        end
+        
+        addedHeights = 600; -- Start at 600 to create swarms for now
         for i = 1, #self.swarmsSewer, 1 do
             self:createNextSwarm(addedHeights);
             addedHeights = addedHeights + self.swarmsSewer[i].swarmHeight;
@@ -66,9 +70,9 @@ function SwarmFactory:createNextSwarm(startPosY)
         yPos = math.random(newSwarm.swarmHeight);
         fishable = self:determineFishable(newSwarm.allowedFishables, newSwarm.fishablesProbability);
 
-        self.createdFishables[#self.createdFishables + 1] = FishableObject(fishable.name, fishable.image, startPosY + yPos,
-            fishable.minSpeed, fishable.maxSpeed, fishable.xHitbox, fishable.yHitbox,
-            fishable.value, fishable.hitpoints);
+        self.createdFishables[#self.createdFishables + 1] = FishableObject(fishable.name, fishable.image, startPosY + 
+            yPos, fishable.minSpeed, fishable.maxSpeed, fishable.xHitbox, fishable.yHitbox, fishable.value, 
+            fishable.hitpoints, fishable.deltaXHitbox, fishable.deltaYHitbox);
     end
 end
 
@@ -83,9 +87,19 @@ function SwarmFactory:determineFishable(allowedFishables, fishablesProbability)
     for i = 1, #fishablesProbability, 1 do
         addedProbability = addedProbability + fishablesProbability[i];
         if addedProbability >= fishableDecider then
-            return self.fishableObjects[allowedFishables[i]];
+            if self.fishableObjects[allowedFishables[i]].enabled == true then
+                return self.fishableObjects[allowedFishables[i]];                
+            else
+                return self:determineFishable(allowedFishables, fishablesProbability);
+            end
         end
     end
+end
+
+--- Returns the table of the fishable objects.
+-- @return Returns the table of the fishable objects.
+function SwarmFactory:getFishableObjects()
+    return self.fishableObjects;
 end
 
 return SwarmFactory;

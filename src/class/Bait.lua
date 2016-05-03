@@ -19,6 +19,8 @@ local Bait = Class {
     winDim = {};
     life = 1;
     money = 0;
+    numberOfHits = 0;
+    hittedFishable = 0;
     caughtThisRound ={};
 };
 
@@ -48,7 +50,8 @@ function Bait:checkForCollision()
         if SwarmFactory.createdFishables[i].drawIt then
             local fishable = SwarmFactory.createdFishables[i];
             CollisionDetection:setCollision();
-            CollisionDetection:calculateCollision(self.xPos, self.yPos, fishable.xPosition, fishable.yPosition, fishable.xHitbox, fishable.yHitbox);
+            CollisionDetection:calculateCollision(self.xPos, self.yPos, fishable:getHitboxXPosition(), 
+                fishable:getHitboxYPosition(), fishable:getHitboxWidth(), fishable:getHitboxHeight());
             if CollisionDetection:getCollision() then
                 self:collisionDetected(fishable, i);
             end
@@ -57,13 +60,20 @@ function Bait:checkForCollision()
 end
 
 ---is called every time the bait hits a fishable object
+--@param fishable the fishable object hitted
+--@param index index of the fishable object hitted
 function Bait:collisionDetected(fishable, index)   
-    for i = 1, #SwarmFactory.createdFishables, 1 do
-        if i == index then
-            SwarmFactory.createdFishables[i].drawIt = false;
+    if not (self.hittedFishable == index) then
+        
+        self.hittedFishable = index;
+        if self.numberOfHits >= _G._persTable.upgrades.moreLife + 1 or _G._persTable.phase == 2 then
+           SwarmFactory.createdFishables[index].drawIt = false;
+           Level:switchToPhase2();
+           Level:addToCaught(fishable.name);
         end
-    end
-    Level:addToCaught(fishable.name);
+        
+        self.numberOfHits = self.numberOfHits + 1;
+    end    
 end
 
 ---implements drawing interface
