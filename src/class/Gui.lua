@@ -3,6 +3,7 @@ Loveframes = require "lib.LoveFrames";
 Class = require "lib.hump.class";
 Chart = require "class.Chart";
 Checkbutton = require "class.Checkbutton";
+Textbox = require "class.Textbox";
 
 local Gui = Class {
     init = function(self)
@@ -25,17 +26,23 @@ local Gui = Class {
         pause = Loveframes.Create("image"):SetImage("assets/gui/gui_Test_Bg.png");
     };
     checkbutton = {
-        test1 = Checkbutton("test1", false, "assets/gui/gui_Test_checkbutton.png", "assets/gui/gui_Test_checkbutton_checked.png");
-        test2 = Checkbutton("test2", false, "assets/gui/gui_Test_checkbutton.png", "assets/gui/gui_Test_checkbutton_checked.png");
-        test3 = Checkbutton("test3", false, "assets/gui/gui_Test_checkbutton.png", "assets/gui/gui_Test_checkbutton_checked.png");
-        test4 = Checkbutton("test4", false, "assets/gui/gui_Test_checkbutton.png", "assets/gui/gui_Test_checkbutton_checked.png");
-        test5 = Checkbutton("test5", false, "assets/gui/gui_Test_checkbutton.png", "assets/gui/gui_Test_checkbutton_checked.png");
-        test6 = Checkbutton("test6", false, "assets/gui/gui_Test_checkbutton.png", "assets/gui/gui_Test_checkbutton_checked.png");
+        upgrade1 = Checkbutton("Speed", false, "assets/gui/gui_Test_checkbutton.png", "assets/gui/gui_Test_checkbutton_checked.png");
+        upgrade2 = Checkbutton("Money", false, "assets/gui/gui_Test_checkbutton.png", "assets/gui/gui_Test_checkbutton_checked.png");
+        upgrade3 = Checkbutton("Life", false, "assets/gui/gui_Test_checkbutton.png", "assets/gui/gui_Test_checkbutton_checked.png");
+        upgrade4 = Checkbutton("God", false, "assets/gui/gui_Test_checkbutton.png", "assets/gui/gui_Test_checkbutton_checked.png");
+        upgrade5 = Checkbutton("BT1", false, "assets/gui/gui_Test_checkbutton.png", "assets/gui/gui_Test_checkbutton_checked.png");
+        upgrade6 = Checkbutton("BT2", false, "assets/gui/gui_Test_checkbutton.png", "assets/gui/gui_Test_checkbutton_checked.png");
+
     };
     
     chart = {
-        test = Chart(3)
+        test = Chart(3);
     };
+    
+    text = {
+        test = Textbox (128);
+    };
+    
     
     --table contains all frames of the gui
     myFrame ={
@@ -83,17 +90,12 @@ local Gui = Class {
         tempEndTurn = Loveframes.Create("imagebutton"):SetImage("assets/gui/gui_Test_Button.png"):SizeToImage():SetText("End turn"),
         tempGo = Loveframes.Create("imagebutton"):SetImage("assets/gui/gui_Test_Button.png"):SizeToImage():SetText("Skip tutorial"),
         backToMenu = Loveframes.Create("imagebutton"):SetImage("assets/gui/gui_Test_Button.png"):SizeToImage():SetText("Back to menu"),
-        backToGame = Loveframes.Create("imagebutton"):SetImage("assets/gui/gui_Test_Button.png"):SizeToImage():SetText("Back to game")
+        backToGame = Loveframes.Create("imagebutton"):SetImage("assets/gui/gui_Test_Button.png"):SizeToImage():SetText("Back to game"),
+        buy = Loveframes.Create("imagebutton"):SetImage("assets/gui/gui_Test_Button.png"):SizeToImage():SetText("Buy Upgrade")
     };
     --Table contains all checkboxes
     checkBox = {
         tutorial = Loveframes.Create("checkbox"):SetText("enter tutorial?"),
-        upgrade1 = Loveframes.Create("checkbox"):SetText("Speed Up"),--speed Up Upgrade
-        upgrade2 = Loveframes.Create("checkbox"):SetText("Money Mult"),--Money multiplier upgrade
-        upgrade3 = Loveframes.Create("checkbox"):SetText("More Life"),--One life added upgrade
-        upgrade4 = Loveframes.Create("checkbox"):SetText("God Mode"),--God mode upgrade
-        upgrade5 = Loveframes.Create("checkbox"):SetText("Breakthrough 1"),--Map breakthrough 1 upgrade
-        upgrade6 = Loveframes.Create("checkbox"):SetText("Breakthrough 2"),--Map breakthrough 2 upgrade
         option1 = Loveframes.Create("checkbox"):SetText("Option1"),
         option2 = Loveframes.Create("checkbox"):SetText("Option2"),
     };
@@ -127,13 +129,7 @@ function Gui:buildFrames()
     --add all needed elements
     self.myFrame.mainMenu:addElement(self.background.mainMenu, 0, 0);
     self.myFrame.mainMenu:addElement(self.checkBox.tutorial, 50, 30);
-    self.chart.test.addCheckbutton(self.checkbutton.test1);
-    self.chart.test.addCheckbutton(self.checkbutton.test2);
-    self.chart.test.addCheckbutton(self.checkbutton.test3);
-    self.chart.test.addCheckbutton(self.checkbutton.test4);
-    self.chart.test.addCheckbutton(self.checkbutton.test5);
-    self.chart.test.addCheckbutton(self.checkbutton.test6);
-    self.myFrame.mainMenu:addElement(self.chart.test, 0, 0);
+    --self.myFrame.mainMenu:addElement(self.text.test, 0, 0);
     self.myFrame.mainMenu:addElement(self.button.start, self.myFrame.mainMenu:centerElementX(x, self.background.mainMenu:GetImageWidth(), 128), 100);
     self.myFrame.mainMenu:addElement(self.button.upgradeMenu, self.myFrame.mainMenu:centerElementX(x, self.background.mainMenu:GetImageWidth(), 128), 150);
     self.myFrame.mainMenu:addElement(self.button.credits, self.myFrame.mainMenu:centerElementX(x, self.background.mainMenu:GetImageWidth(), 128), 200);
@@ -148,14 +144,18 @@ function Gui:buildFrames()
     self.myFrame.upgradeMenu:setPosition(
         (x/2 - self.background.upgradeMenu:GetImageWidth()/2*self.background.upgradeMenu:GetScaleX()),
         (y/2 - self.background.upgradeMenu:GetImageHeight()/2*self.background.upgradeMenu:GetScaleY()));
+    
+    self.chart.test:addCheckbutton(self.checkbutton.upgrade1);
+    self.chart.test:addCheckbutton(self.checkbutton.upgrade2);
+    self.chart.test:addCheckbutton(self.checkbutton.upgrade3);
+    self.chart.test:addCheckbutton(self.checkbutton.upgrade4);
+    self.chart.test:addCheckbutton(self.checkbutton.upgrade5);
+    self.chart.test:addCheckbutton(self.checkbutton.upgrade6);
+    self.myFrame.upgradeMenu:addElement(self.chart.test, 0, 0);
+    
     self.myFrame.upgradeMenu:addElement(self.background.upgradeMenu, 0, 0);
-    self.myFrame.upgradeMenu:addElement(self.checkBox.upgrade1, 30, 30);
-    self.myFrame.upgradeMenu:addElement(self.checkBox.upgrade2, 30, 60);
-    self.myFrame.upgradeMenu:addElement(self.checkBox.upgrade3, 30, 90);
-    self.myFrame.upgradeMenu:addElement(self.checkBox.upgrade4, 30, 120);
-    self.myFrame.upgradeMenu:addElement(self.checkBox.upgrade5, 30, 150);
-    self.myFrame.upgradeMenu:addElement(self.checkBox.upgrade6, 30, 180);
     self.myFrame.upgradeMenu:addElement(self.button.back, 30, 210);
+    self.myFrame.upgradeMenu:addElement(self.button.buy, 30, 260);
     --                                                               Credits
     self.background.credits:SetScale(
         (x*0.5)/self.background.credits:GetImageWidth(),
@@ -239,6 +239,7 @@ function Gui:updateGui()
             self:setChangeFrame(false);--"close" the frame change
         end
     end
+
 end
 
 ---This function draws the gui state
@@ -306,21 +307,21 @@ end
 function Gui:loadValues()
     --convert 0, 1 or more in to boolean. A 2 equals multiply checkboxes
     if _persTable.upgrades.speedUp == 1 then
-        Gui.checkBox.upgrade1:SetChecked(true);
+        Gui.checkbutton.upgrade1:check();
     end
     if _persTable.upgrades.moneyMult == 1 then
-        Gui.checkBox.upgrade2:SetChecked(true);
+        Gui.checkbutton.upgrade2:check();
     end
     if _persTable.upgrades.moreLife == 1 then
-        Gui.checkBox.upgrade3:SetChecked(true);
+        Gui.checkbutton.upgrade3:check();
     end
     if _persTable.upgrades.godMode == 1 then
-        Gui.checkBox.upgrade4:SetChecked(true);
+        Gui.checkbutton.upgrade4:check();
     end
     if _persTable.upgrades.mapBreakthrough1 == 1 then
-        Gui.checkBox.upgrade4:SetChecked(true);
+        Gui.checkbutton.upgrade4:check();
         if _persTable.upgrades.mapBreakthrough2 == 1 then
-            Gui.checkBox.upgrade4:SetChecked(true);
+            Gui.checkbutton.upgrade4:check();
         end
     end
     Gui.checkBox.option1:SetChecked(_persTable.config.option1);
@@ -338,32 +339,32 @@ function Gui:updateValues()
     _persTable.config.slider1 = Gui.slider.slider1:GetValue();
     _persTable.config.slider2 = Gui.slider.slider2:GetValue();
     --transform the boolean to 0, 1 or more
-    if Gui.checkBox.upgrade1:GetChecked() then
+    if Gui.checkbutton.upgrade1:GetChecked() then
         _persTable.upgrades.speedUp = 1;
     else
         _persTable.upgrades.speedUp = 0;
     end
-    if Gui.checkBox.upgrade2:GetChecked() then
+    if Gui.checkbutton.upgrade2:GetChecked() then
         _persTable.upgrades.moneyMult = 1;
     else
         _persTable.upgrades.moneyMult = 0;
     end
-    if Gui.checkBox.upgrade3:GetChecked() then
+    if Gui.checkbutton.upgrade3:GetChecked() then
         _persTable.upgrades.moreLife = 1;
     else
         _persTable.upgrades.moreLife = 0;
     end
-    if Gui.checkBox.upgrade4:GetChecked() then
+    if Gui.checkbutton.upgrade4:GetChecked() then
         _persTable.upgrades.godMode = 1;
     else
         _persTable.upgrades.godMode = 0;
     end
-    if Gui.checkBox.upgrade5:GetChecked() then
+    if Gui.checkbutton.upgrade5:GetChecked() then
         _persTable.upgrades.mapBreakthrough1 = 1;
     else
         _persTable.upgrades.mapBreakthrough1 = 0;
     end
-    if Gui.checkBox.upgrade6:GetChecked() then
+    if Gui.checkbutton.upgrade6:GetChecked() then
         _persTable.upgrades.mapBreakthrough2 = 1;
     else
         _persTable.upgrades.mapBreakthrough2 = 0;
@@ -514,6 +515,35 @@ Gui.button.back.OnClick = function(obj, x, y)
         Gui.updateValues();
     end
     Gui:draw(Gui.state[2]);
+    Gui.chart.test.markFrame:SetVisible(false);
 end
+
+Gui.button.buy.OnClick = function(obj, x, y)
+    if Gui.chart.test.markedElement ~= nil then
+        Gui.chart.test.markedElement:check();
+    end
+end
+
+Gui.checkbutton.upgrade1.object.OnClick = function (obj, x, y)
+    Gui.chart.test:markElement(Gui.checkbutton.upgrade1);
+end
+Gui.checkbutton.upgrade2.object.OnClick = function (obj, x, y)
+    --Gui.checkbutton.upgrade2:check();
+    Gui.chart.test:markElement(Gui.checkbutton.upgrade2);
+end
+Gui.checkbutton.upgrade3.object.OnClick = function (obj, x, y)
+    Gui.chart.test:markElement(Gui.checkbutton.upgrade3);
+end
+Gui.checkbutton.upgrade4.object.OnClick = function (obj, x, y)
+    Gui.chart.test:markElement(Gui.checkbutton.upgrade4);
+end
+Gui.checkbutton.upgrade5.object.OnClick = function (obj, x, y)
+    Gui.chart.test:markElement(Gui.checkbutton.upgrade5);
+end
+Gui.checkbutton.upgrade6.object.OnClick = function (obj, x, y)
+    Gui.chart.test:markElement(Gui.checkbutton.upgrade6);
+end
+
+
 
 return Gui;

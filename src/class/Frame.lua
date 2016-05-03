@@ -26,7 +26,7 @@ local Frame = Class {
 -- @param xPos: x position of the new element
 -- @param yPos: y position of the new element
 function Frame:addElement(newElement, xPos, yPos)
-    table.insert(self.elementsOnFrame, newElement)
+    table.insert(self.elementsOnFrame, newElement);
     table.insert(self.elementPosition.xPos, xPos);
     table.insert(self.elementPosition.yPos, yPos);
 end
