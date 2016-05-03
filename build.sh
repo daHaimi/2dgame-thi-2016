@@ -83,11 +83,18 @@ for platform in {i386,amd64}; do
 done
 
 # Android APK erstellen
-#rm -rf tmp 2> /dev/null
-#unzip stubs/android/stub.apk -d tmp
-#cp bin/game.love tmp/assets/game.love
-#rm tmp/META-INF/*.SF
-#rm tmp/META-INF/*.RSA
-#( cd tmp && zip -r ../bin/android.apk . )
-#rm -r tmp
+rm -rf tmp 2> /dev/null
+if [ ! -e ${STUB_DIR}/love-android-0.10.0-release.apk ]; then
+    ( cd ${STUB_DIR} && wget https://bitbucket.org/MartinFelis/love-android-sdl2/downloads/love-android-0.10.0-release.apk )
+fi
+unzip ${STUB_DIR}/love-android-0.10.0-release.apk -d tmp
+if [ ! -e tmp/assets ]; then
+    mkdir tmp/assets
+fi
+cp bin/game.love tmp/assets/game.love
+rm tmp/META-INF/*.SF
+rm tmp/META-INF/*.RSA
+sed -i 's/Löve for Android/2D Game THI 2016/g' tmp/AndroidManifest.xml
+( cd tmp && zip -r ../bin/${GAME_NAME}-${BUILD_NR}-android.apk . )
+rm -r tmp
 #${JAVA_HOME}/bin/jarsigner -verbose -sigalg SHA1withRSA -digestalg SHA1 -keystore stubs/android/keystore -storepass BannnanasGrowOnTreees -keypass MunkeyysMustThereforeDigDeeep bin/android.apk 2dgame
