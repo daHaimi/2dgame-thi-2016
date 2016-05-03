@@ -1,5 +1,6 @@
 --- Data for the fishable objects
 fishableObject {
+    -- definition of the object
     name = "nemo",      -- The name
     image = "nemo.png", -- The image file
     minSpeed = 4,       -- Min movement speed
@@ -10,6 +11,11 @@ fishableObject {
     hitpoints = 10,     -- The HP of the object
     deltaXHitbox = 12,  -- The hitbox X adjustment 
     deltaYHitbox = 17,  -- The hitbox Y adjustment 
+    
+    -- definition of the swarm
+    minAmount = 3,      -- min amount of objects per swarm
+    maxAmount = 5,      -- max amount of objects per swarm
+    swarmHeight = 300,  -- height of the swarm of this object
     enabled = true      -- Whether the object is enabled
 }
 
@@ -24,7 +30,11 @@ fishableObject {
     hitpoints = 20,
     deltaXHitbox = 5,
     deltaYHitbox = 17,
-    enabled = true
+    
+    minAmount = 2,
+    maxAmount = 4,
+    swarmHeight = 225,
+    enabled = true,
 }
 
 fishableObject {
@@ -38,6 +48,10 @@ fishableObject {
     hitpoints = 5,
     deltaXHitbox = 2,
     deltaYHitbox = 25,
+    
+    minAmount = 3,
+    maxAmount = 6,
+    swarmHeight = 350,
     enabled = true
 }
 
@@ -52,6 +66,10 @@ fishableObject {
     hitpoints = 5,
     deltaXHitbox = 0,
     deltaYHitbox = 20,
+    
+    minAmount = 1,
+    maxAmount = 2,
+    swarmHeight = 125,
     enabled = true
 }
 
@@ -66,6 +84,10 @@ fishableObject {
     hitpoints = 20,
     deltaXHitbox = 12,
     deltaYHitbox = 12,
+    
+    minAmount = 1,
+    maxAmount = 4,
+    swarmHeight = 200,
     enabled = true
 }
 
@@ -80,6 +102,10 @@ fishableObject {
     hitpoints = 5,
     deltaXHitbox = 17,
     deltaYHitbox = 2,
+    
+    minAmount = 1,
+    maxAmount = 1,
+    swarmHeight = 100,
     enabled = true
 }
 
@@ -94,6 +120,10 @@ fishableObject {
     hitpoints = 40,
     deltaXHitbox = 12,
     deltaYHitbox = 2,
+    
+    minAmount = 1,
+    maxAmount = 1,
+    swarmHeight = 100,
     enabled = _G._persTable.enabled.ring;
 }
 
@@ -108,6 +138,10 @@ fishableObject {
     hitpoints = 20,
     deltaXHitbox = 25,
     deltaYHitbox = 4,
+    
+    minAmount = 1,
+    maxAmount = 1,
+    swarmHeight = 100,
     enabled = true
 }
 
@@ -122,6 +156,10 @@ fishableObject {
     hitpoints = 20,
     deltaXHitbox = 5,
     deltaYHitbox = 4,
+    
+    minAmount = 2,
+    maxAmount = 3,
+    swarmHeight = 200,
     enabled = true
 }
 
@@ -136,6 +174,10 @@ fishableObject {
     hitpoints = 60,
     deltaXHitbox = 0, -- TODO: fix crocodile hitbox, changes on scale -1?
     deltaYHitbox = 40,
+    
+    minAmount = 1,
+    maxAmount = 3,
+    swarmHeight = 200,
     enabled = true
 }
 
@@ -145,32 +187,22 @@ sewer {
         -- Fishables allowed to appear in this swarm 
         allowedFishables = { "turtle", "rat", "deadFish"}, 
         
-        -- The odds of allowedFishables (Must be 100)
-        fishablesProbability = { 10, 50, 40 },  
-        
-        -- The minimum amount of fishables in this swarm
-        minFishables = 15,   
-        
-        -- The maximum amount of fishables in this swarm
-        maxFishables = 25,
-        
-        -- The height of this swarm
-        swarmHeight = 2500                                  
+        -- The odds of allowedFishables allready added up(10, 50, 40)
+        fishablesProbability = {10, 60, 100},  
+
+        -- The deepest possible height of this swarm
+        maxSwarmHeight = 2000;                                  
     },
     
     {
         allowedFishables = { "nemo", "lollipop", "deadFish", "angler"},
-        fishablesProbability = { 5, 50, 30, 15 },
-        minFishables = 20,
-        maxFishables = 25,
-        swarmHeight = 2000
+        fishablesProbability = {5, 55, 85, 100 }, --(5, 50, 30, 15)
+        maxSwarmHeight = 5000
     },
     
     {
         allowedFishables = { "ring", "shoe", "snake", "crocodile"},
-        fishablesProbability = { 5, 25, 35, 35 },
-        minFishables = 20,
-        maxFishables = 25,
-        swarmHeight = 2000
+        fishablesProbability = { 5, 30, 65, 100 }, --(3, 25, 35, 35)
+        maxSwarmHeight = 7000
     }
 }

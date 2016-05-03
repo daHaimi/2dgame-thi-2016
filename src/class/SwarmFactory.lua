@@ -10,35 +10,39 @@ local SwarmFactory = Class {
     init = function(self, level, player, dataFile)
         self.level = level;
         self.player = player;
+        
+        if not level == nil then 
+            self.maxDepth = level.lowerBoarder;
+        end
 
         --- Takes the fishable form the data file
         -- @param fishable The fishable
-        function fishableObject(fishable)
+        function fishableObject(fishable) 
             self.fishableObjects[fishable.name] = fishable;
         end
-
+        
         --- Takes the sewer swarms from the data file
         -- @param swarms The swarms
-        function sewer(swarms)
+        function sewer(swarms) 
             self.swarmsSewer = swarms;
         end
-
+        
         if dataFile ~= nil then
             dofile(dataFile);
         end
-
+        
         addedHeights = 600; -- Start at 600 to create swarms for now
-        for i = 1, #self.swarmsSewer, 1 do
-            self:createNextSwarm(addedHeights);
-            addedHeights = addedHeights + self.swarmsSewer[i].swarmHeight;
+        while addedHeights <= -self.maxDepth do
+            addedHeights = addedHeights + self:createNextSwarm(addedHeights);
         end
     end;
-
+    
     level = nil;
     player = nil;
-
+    maxDepth = -5000;
+    
     fishableObjects = {};
-    currentSwarm = 0;
+    currentSwarm = 1;
 
     swarmsSewer = {};
 
@@ -62,18 +66,24 @@ end
 --- Creates the next swarm
 -- @param startPosY Start y position of the swarm
 function SwarmFactory:createNextSwarm(startPosY)
-    self.currentSwarm = self.currentSwarm + 1;
+    if self.swarmsSewer[self.currentSwarm].maxSwarmHeight < startPosY then
+        self.currentSwarm = self.currentSwarm + 1;
+    end
+    
     newSwarm = self.swarmsSewer[self.currentSwarm];
-    amountFishables = math.random(newSwarm.minFishables, newSwarm.maxFishables);
-
+    fishable = self:determineFishable(newSwarm.allowedFishables, newSwarm.fishablesProbability);
+    
+    amountFishables = math.random(fishable.minAmount, fishable.maxAmount);
+ 
     for i = 1, amountFishables, 1 do
-        yPos = math.random(newSwarm.swarmHeight);
-        fishable = self:determineFishable(newSwarm.allowedFishables, newSwarm.fishablesProbability);
-
-        self.createdFishables[#self.createdFishables + 1] = FishableObject(fishable.name, fishable.image, startPosY +
-                yPos, fishable.minSpeed, fishable.maxSpeed, fishable.xHitbox, fishable.yHitbox, fishable.value,
+        yPos = math.random(fishable.swarmHeight);
+        
+        self.createdFishables[#self.createdFishables + 1] = FishableObject(fishable.name, fishable.image, startPosY + 
+            yPos, fishable.minSpeed, fishable.maxSpeed, fishable.xHitbox, fishable.yHitbox, fishable.value, 
             fishable.hitpoints, fishable.deltaXHitbox, fishable.deltaYHitbox);
     end
+    
+    return math.random (fishable.swarmHeight * 0.9 , fishable.swarmHeight); -- to enable 2 swarms to overlap
 end
 
 --- Determines the next fishable to create
@@ -82,13 +92,11 @@ end
 -- @return The fishable to create
 function SwarmFactory:determineFishable(allowedFishables, fishablesProbability)
     fishableDecider = math.random(100);
-    addedProbability = 0;
-
+    
     for i = 1, #fishablesProbability, 1 do
-        addedProbability = addedProbability + fishablesProbability[i];
-        if addedProbability >= fishableDecider then
+        if fishablesProbability[i] >= fishableDecider then
             if self.fishableObjects[allowedFishables[i]].enabled == true then
-                return self.fishableObjects[allowedFishables[i]];
+                return self.fishableObjects[allowedFishables[i]];                
             else
                 return self:determineFishable(allowedFishables, fishablesProbability);
             end
