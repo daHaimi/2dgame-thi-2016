@@ -1,6 +1,7 @@
 -- Lua 5.1 Hack
 _G.math.inf = 1 / 0
 
+FishableObject = require "src.class.FishableObject"
 testClass = require "src.class.Level"
 match = require 'luassert.match'
 
@@ -8,6 +9,7 @@ describe("Test unit test suite", function()
     local locInstance;
 
     before_each(function()
+
         _G.love = {
             graphics = {
                 newImage = function(...) end,
@@ -28,7 +30,8 @@ describe("Test unit test suite", function()
         _G._persTable = {
             upgrades = {
                 godMode = 1
-            }
+            },
+            phase = 1;
         }
 
         _G.loveMock = mock(_G.love, true);
@@ -191,5 +194,23 @@ describe("Test unit test suite", function()
         assert.spy(loveMock.graphics.print).was.called_with("cat: 1 x 10 Coins", match._, match._);
         assert.spy(loveMock.graphics.print).was.called_with("dog: 2 x 20 Coins", match._, match._);
         assert.spy(loveMock.graphics.print).was.called_with("Earned: 50 Coins", match._, match._);
+    end)
+
+    it("Testing switchToPhase2", function()
+        locInstance:switchToPhase2();
+        assert.are.same(-1, locInstance:getDirection());
+    end)
+
+    it("Testing Update", function()
+        local dt = 4;
+        local bait = {
+            speed = 200;
+        };
+        locInstance.posY = -7500;
+        locInstance:update(dt, bait);
+        assert.are.same(-1, locInstance:getDirection());
+        locInstance.posY = 1200;
+        locInstance:update(dt, bait);
+        assert.are.same(0, locInstance:getDirection());
     end)
 end)

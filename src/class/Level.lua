@@ -75,7 +75,9 @@ function Level:update(dt, bait)
     end
 
     --do the movement
-    FishableObject:setYMovement(self.moved);
+    if not (FishableObject == nil) then
+        FishableObject:setYMovement(self.moved);
+    end
     self.sizeY = self.winDim[2] + self.moved;
     self.posY = self.posY - self.moved;
 
