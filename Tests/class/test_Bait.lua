@@ -162,4 +162,20 @@ describe("Unit test for Bait.lua", function()
         myInstance.posXBait = 0;
         assert.are.same(myInstance:getPosX(), 0);
     end)
+
+    it("Test sleepingPillHitted", function()
+        _G._persTable.upgrades = {
+            sleepingPillDuration = 600; -- duration of the effect of the sleeping pill
+            sleepingPillSlow = 0.3; -- sets the slow factor of the sleeping pill 0.25 = 25% of the usual movement
+        };
+        
+        FishableObject = require "src.class.FishableObject";
+        
+        local myInstance = testClass (locWinDim);
+        myInstance.sleepingPillDuration = 0;
+        myInstance:sleepingPillHitted(FishableObject);
+        
+        
+        assert.are.same(600, myInstance.sleepingPillDuration);
+    end)
 end)

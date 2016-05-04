@@ -40,8 +40,8 @@ fishableObject {
 fishableObject {
     name = "rat",
     image = "ratte.png",
-    minSpeed = 5,
-    maxSpeed = 8,
+    minSpeed = 3,
+    maxSpeed = 5,
     xHitbox = 60,
     yHitbox = 25,
     value = -10,
@@ -50,7 +50,7 @@ fishableObject {
     deltaYHitbox = 25,
     
     minAmount = 3,
-    maxAmount = 6,
+    maxAmount = 5,
     swarmHeight = 350,
     enabled = true
 }
@@ -148,8 +148,8 @@ fishableObject {
 fishableObject {
     name = "snake",
     image = "snake.png",
-    minSpeed = 0,
-    maxSpeed = 8,
+    minSpeed = 2,
+    maxSpeed = 5,
     xHitbox = 54,
     yHitbox = 56,
     value = 50,
@@ -181,28 +181,46 @@ fishableObject {
     enabled = true
 }
 
+fishableObject {
+    name = "sleepingPill",
+    image = "hamster.png",
+    minSpeed = 0,
+    maxSpeed = 0,
+    xHitbox = 30, 
+    yHitbox = 30,
+    value = 0,
+    hitpoints = 0,
+    deltaXHitbox = 17,
+    deltaYHitbox = 17,
+    
+    minAmount = 1,
+    maxAmount = 1,
+    swarmHeight = 50,
+    enabled = _G._persTable.enabled.sleepingPill;
+}
+
 --- Data for the swarms for each level
 sewer {
     {
         -- Fishables allowed to appear in this swarm 
-        allowedFishables = { "turtle", "rat", "deadFish"}, 
+        allowedFishables = { "turtle", "rat", "deadFish", "sleepingPill"}, 
         
-        -- The odds of allowedFishables allready added up(10, 50, 40)
-        fishablesProbability = {10, 60, 100},  
+        -- The odds of allowedFishables allready added up(10, 40, 40, 10)
+        fishablesProbability = {10, 50, 90, 100},  
 
         -- The deepest possible height of this swarm
         maxSwarmHeight = 3000;                                  
     },
     
     {
-        allowedFishables = { "nemo", "lollipop", "deadFish", "angler"},
-        fishablesProbability = {5, 55, 85, 100 }, --(5, 50, 30, 15)
+        allowedFishables = { "nemo", "lollipop", "deadFish", "angler", "sleepingPill"},
+        fishablesProbability = {5, 45, 75, 90, 100 }, --(5, 40, 30, 15, 10)
         maxSwarmHeight = 6000
     },
     
     {
-        allowedFishables = { "ring", "shoe", "snake", "crocodile"},
-        fishablesProbability = { 5, 30, 65, 100 }, --(3, 25, 35, 35)
+        allowedFishables = { "ring", "shoe", "snake", "crocodile", "sleepingPill"},
+        fishablesProbability = { 5, 30, 55, 90, 100}, --(3, 25, 25, 35, 10)
         maxSwarmHeight = 9000
     }
 }

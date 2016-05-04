@@ -20,11 +20,11 @@ describe("Unit test for FishableObject.lua", function()
             moved = 0;
         }
 
-        _G.locInstance = testClass("assets/deadFish.png", "deadFish", 50, 30, 35, 100, 75, 50, 5, 2, 3);
+        _G.locInstance = testClass("deadFish", "assets/deadFish.png", 50, 30, 35, 100, 75, 50, 5, 2, 3);
     end)
 
     it("Testing Constructor", function()
-        local myInstance = testClass("assets/deadFish.png", "deadFish", 50, 30, 35, 100, 75, 50, 5, 0, 0);
+        local myInstance = testClass("deadFish", "assets/deadFish.png", 50, 30, 35, 100, 75, 50, 5, 0, 0);
         assert.are.equal(locInstance.yPosition, myInstance.yPosition);
         assert.are.equal(locInstance.xHitbox, myInstance.xHitbox);
         assert.are.equal(locInstance.yHitbox, myInstance.yHitbox);
@@ -102,4 +102,19 @@ describe("Unit test for FishableObject.lua", function()
         locInstance:setYMovement(30);
         assert.are.same(30, locInstance.yMovement);
     end)
+
+    it("Testing getName Function", function()        
+        assert.are.same("deadFish", locInstance:getName());
+    end)
+
+    it("Testing setMovementMultiplicator Function", function()
+        locInstance:setSpeedMultiplicator(0.3);
+        assert.are.same(0.3, locInstance.speedMulitplicator);
+    end)
+
+    it("Testing getYMovement Function", function ()
+        locInstance:setYMovement(4);
+        assert.are.same(4, locInstance:getYMovement());
+    end)
+
 end)

@@ -22,6 +22,7 @@ local Bait = Class {
     numberOfHits = 0;
     hittedFishable = 0;
     caughtThisRound = {};
+    sleepingPillDuration = 0;
 };
 
 --- TODO need balancing
@@ -42,6 +43,13 @@ function Bait:update()
     self:setCappedPosX();
     self.xPos = self.posXBait;
     self:checkForCollision();
+    
+    if self.sleepingPillDuration > 0 then
+        self.sleepingPillDuration = self.sleepingPillDuration - math.abs(FishableObject:getYMovement());
+    else
+        self.sleepingPillDuration = 0;
+        FishableObject:setSpeedMultiplicator(1);
+    end
 end
 
 --- checks for collision
@@ -59,21 +67,31 @@ function Bait:checkForCollision()
     end
 end
 
---- is called every time the bait hits a fishable object
+--- is called everytime the bait hits a fishable object
 -- @param fishable the fishable object hitted
 -- @param index index of the fishable object hitted
 function Bait:collisionDetected(fishable, index)
     if not (self.hittedFishable == index) then
 
         self.hittedFishable = index;
-        if self.numberOfHits >= _G._persTable.upgrades.moreLife + 1 or _G._persTable.phase == 2 then
+        if fishable:getName() == "sleepingPill" then
+            self:sleepingPillHitted(FishableObject);
             SwarmFactory.createdFishables[index].drawIt = false;
-            Level:switchToPhase2();
-            Level:addToCaught(fishable.name);
+        else
+            if self.numberOfHits >= _G._persTable.upgrades.moreLife or _G._persTable.phase == 2 then
+                SwarmFactory.createdFishables[index].drawIt = false;
+                Level:switchToPhase2();
+                Level:addToCaught(fishable.name);
+            end
+            self.numberOfHits = self.numberOfHits + 1;
         end
-
-        self.numberOfHits = self.numberOfHits + 1;
     end
+end
+
+--- is called everytime the bait hits a sleeping pill
+function Bait:sleepingPillHitted(FishableObject)
+    FishableObject:setSpeedMultiplicator(_G._persTable.upgrades.sleepingPillSlow);
+    self.sleepingPillDuration = self.sleepingPillDuration + _G._persTable.upgrades.sleepingPillDuration;
 end
 
 --- implements drawing interface

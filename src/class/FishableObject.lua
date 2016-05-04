@@ -36,6 +36,7 @@ local FishableObject = Class {
     hitboxWidth = 0;
     hitboxHeight = 0;
     speed = 0;
+    speedMulitplicator = 1;
     value = 0;
     hitpoints = 1;
     deltaXHitbox = 0;
@@ -71,14 +72,15 @@ function FishableObject:update()
     if ((self.xPosition - self.deltaXHitbox) >= _G._persTable.winDim[1]) and self.speed > 0 then
 
         self.speed = self.speed * -1;
-        self.xPosition = _G._persTable.winDim[1] - self.hitboxWidth - self.deltaXHitbox + self.speed;
+        self.xPosition = _G._persTable.winDim[1] - self.hitboxWidth - self.deltaXHitbox + 
+            self.speed * self.speedMulitplicator;
 
     elseif (self.xPosition + self.deltaXHitbox) <= 0 then
         self.speed = self.speed * -1;
-        self.xPosition = math.abs(self.hitboxWidth + self.deltaXHitbox + self.speed);
+        self.xPosition = math.abs(self.hitboxWidth + self.deltaXHitbox + self.speed * self.speedMulitplicator);
     else
 
-        self.xPosition = self.xPosition + self.speed;
+        self.xPosition = self.xPosition + self.speed * self.speedMulitplicator;
     end
 
     self.yPosition = self.yPosition - self.yMovement;
@@ -127,6 +129,21 @@ end
 --- sets the amount of pixls to move upwards to match the baits movement
 function FishableObject:setYMovement(movement)
     self.yMovement = movement;
+end
+
+function FishableObject:getYMovement()
+    return self.yMovement;
+end
+
+--- returns the name of the fishable object
+function FishableObject:getName()
+    return self.name;
+end
+
+--- sets the speed multiplicator to a certain amount
+--@param amount prozentage of the slow. 0.25 for slow to 25%
+function FishableObject:setSpeedMultiplicator(amount)
+    self.speedMulitplicator = amount;
 end
 
 return FishableObject;

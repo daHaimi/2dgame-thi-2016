@@ -21,6 +21,7 @@ _G._persTable = {
     phase = 1;
     enabled = {
         ring = false;
+        sleepingPill = true;
     }
 };
 
@@ -32,6 +33,8 @@ _G._persTable.upgrades = {
     godMode = 1; -- indicates if the god mode is available or not
     mapBreakthrough1 = 0; -- can you access the first map limit? 0 = no, 1 = yes
     mapBreakthrough2 = 0; -- can you access the second map limit? 0 = no, 1 = yes
+    sleepingPillDuration = 600; -- duration of the effect of the sleeping pill
+    sleepingPillSlow = 0.25; -- sets the slow factor of the sleeping pill 0.25 = 25% of the usual movement
 };
 
 --- config options
