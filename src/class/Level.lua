@@ -133,6 +133,16 @@ function Level:checkGodMode()
     end
 end
 
+--- Activates the god mode after a collision.
+-- @param dt Delta time is the amount of seconds since the last time 
+-- the update function was called.
+-- @param speed The speed of the player.
+function Level:activateShortGM(dt, speed)
+    local tempGMTime = 0.300;
+    self.godModeFuel = self.godModeFuel + (dt * speed) * (tempGMTime / dt) ;
+    self:activateGodMode();
+end
+
 --- Try to activate the god Mode.
 -- @return When the god mode was successfully activated it returns 1 otherwise 0.
 function Level:activateGodMode()
@@ -141,6 +151,7 @@ function Level:activateGodMode()
         return 1;
     else
         self.godModeActive = 0;
+        self.godModeFuel = 0; -- remove negativ fuel values
         return 0;
     end
 end
