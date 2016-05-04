@@ -11,10 +11,8 @@ local SwarmFactory = Class {
         self.level = level;
         self.player = player;
         
-        if not level == nil then 
-            self.maxDepth = level.lowerBoarder;
-        end
-
+        self.maxDepth = level.lowerBoarder - 2 * level.winDim[2];
+        
         --- Takes the fishable form the data file
         -- @param fishable The fishable
         function fishableObject(fishable) 
@@ -39,6 +37,7 @@ local SwarmFactory = Class {
     
     level = nil;
     player = nil;
+    
     maxDepth = -5000;
     
     fishableObjects = {};

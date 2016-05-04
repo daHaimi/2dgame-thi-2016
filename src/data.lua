@@ -191,18 +191,18 @@ sewer {
         fishablesProbability = {10, 60, 100},  
 
         -- The deepest possible height of this swarm
-        maxSwarmHeight = 2000;                                  
+        maxSwarmHeight = 3000;                                  
     },
     
     {
         allowedFishables = { "nemo", "lollipop", "deadFish", "angler"},
         fishablesProbability = {5, 55, 85, 100 }, --(5, 50, 30, 15)
-        maxSwarmHeight = 5000
+        maxSwarmHeight = 6000
     },
     
     {
         allowedFishables = { "ring", "shoe", "snake", "crocodile"},
         fishablesProbability = { 5, 30, 65, 100 }, --(3, 25, 35, 35)
-        maxSwarmHeight = 7000
+        maxSwarmHeight = 9000
     }
 }

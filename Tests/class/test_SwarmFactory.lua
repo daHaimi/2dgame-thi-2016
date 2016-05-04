@@ -7,6 +7,7 @@ describe("Unit test for SwarmFactory.lua", function()
     
     local level = {
         lowerBoarder = -7000;
+        winDim = {500, 1000};
     }
 
     before_each(function()
