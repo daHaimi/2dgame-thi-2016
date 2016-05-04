@@ -58,7 +58,6 @@ describe("Unit test for SwarmFactory.lua", function()
         local swarm = testInstance.createdFishables;
 
         for i = 1, #swarm, 1 do
-            print (swarm[i].yPosition);
             assert.has_no.errors(function()
                 if swarm[i].yPosition < 0 or swarm[i].yPosition > 500 then
                     error("Position error");
