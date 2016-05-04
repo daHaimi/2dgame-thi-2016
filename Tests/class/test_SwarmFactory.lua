@@ -1,7 +1,13 @@
 testClass = require "src.class.SwarmFactory"
 
+
+
 describe("Unit test for SwarmFactory.lua", function()
     local locInstance;
+    
+    local level = {
+        lowerBoarder = -7000;
+    }
 
     before_each(function()
         _G.love = {
@@ -20,12 +26,12 @@ describe("Unit test for SwarmFactory.lua", function()
                 ring = true;
             }
         }
-
-        locInstance = testClass();
+        
+        locInstance = testClass(level, player, "src/data.lua");
     end)
 
     it("Testing constructor", function()
-        local myInstance = testClass();
+        local myInstance = testClass(level, player, "src/data.lua");
         assert.are.same(locInstance, myInstance);
     end)
 
@@ -43,16 +49,18 @@ describe("Unit test for SwarmFactory.lua", function()
 
     it("Testing createNextSwarm method", function()
         local testInstance = testClass(level, player, "src/data.lua");
-        testInstance.currentSwarm = 0;
+        testInstance.currentSwarm = 1;
         testInstance.createdFishables = {};
-        testInstance:createNextSwarm(100);
-        local testSwarmheight = testInstance.swarmsSewer[testInstance.currentSwarm].swarmHeight;
+        
+        testInstance:createNextSwarm(20);
+        local testSwarmheight = 100;
         local testSwarmMaxYPos = 100 + testSwarmheight;
         local swarm = testInstance.createdFishables;
 
         for i = 1, #swarm, 1 do
+            print (swarm[i].yPosition);
             assert.has_no.errors(function()
-                if swarm[i].yPosition < 100 or swarm[i].yPosition > testSwarmMaxYPos then
+                if swarm[i].yPosition < 0 or swarm[i].yPosition > 500 then
                     error("Position error");
                 end
             end)
