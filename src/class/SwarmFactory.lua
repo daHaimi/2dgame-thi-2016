@@ -79,7 +79,7 @@ function SwarmFactory:createNextSwarm(startPosY)
         
         self.createdFishables[#self.createdFishables + 1] = FishableObject(fishable.name, fishable.image, startPosY + 
             yPos, fishable.minSpeed, fishable.maxSpeed, fishable.xHitbox, fishable.yHitbox, fishable.value, 
-            fishable.hitpoints, fishable.deltaXHitbox, fishable.deltaYHitbox);
+            fishable.hitpoints, fishable.deltaXHitbox, fishable.deltaYHitbox, fishable.spriteSize);
     end
     
     return math.random (fishable.swarmHeight * 0.9 , fishable.swarmHeight); -- to enable 2 swarms to overlap

@@ -11,6 +11,7 @@ fishableObject {
     hitpoints = 10,     -- The HP of the object
     deltaXHitbox = 12,  -- The hitbox X adjustment 
     deltaYHitbox = 17,  -- The hitbox Y adjustment 
+    spriteSize = 64,
     
     -- definition of the swarm
     minAmount = 3,      -- min amount of objects per swarm
@@ -30,6 +31,7 @@ fishableObject {
     hitpoints = 20,
     deltaXHitbox = 5,
     deltaYHitbox = 17,
+    spriteSize = 64,
     
     minAmount = 2,
     maxAmount = 4,
@@ -48,6 +50,7 @@ fishableObject {
     hitpoints = 5,
     deltaXHitbox = 2,
     deltaYHitbox = 25,
+    spriteSize = 64,
     
     minAmount = 3,
     maxAmount = 5,
@@ -66,6 +69,7 @@ fishableObject {
     hitpoints = 5,
     deltaXHitbox = 0,
     deltaYHitbox = 20,
+    spriteSize = 64,
     
     minAmount = 1,
     maxAmount = 2,
@@ -84,6 +88,7 @@ fishableObject {
     hitpoints = 20,
     deltaXHitbox = 12,
     deltaYHitbox = 12,
+    spriteSize = 64,
     
     minAmount = 1,
     maxAmount = 4,
@@ -102,6 +107,7 @@ fishableObject {
     hitpoints = 5,
     deltaXHitbox = 17,
     deltaYHitbox = 2,
+    spriteSize = 64,
     
     minAmount = 1,
     maxAmount = 1,
@@ -120,6 +126,7 @@ fishableObject {
     hitpoints = 40,
     deltaXHitbox = 12,
     deltaYHitbox = 2,
+    spriteSize = 64,
     
     minAmount = 1,
     maxAmount = 1,
@@ -138,6 +145,7 @@ fishableObject {
     hitpoints = 20,
     deltaXHitbox = 25,
     deltaYHitbox = 4,
+    spriteSize = 64,
     
     minAmount = 1,
     maxAmount = 1,
@@ -156,6 +164,7 @@ fishableObject {
     hitpoints = 20,
     deltaXHitbox = 5,
     deltaYHitbox = 4,
+    spriteSize = 64,
     
     minAmount = 2,
     maxAmount = 3,
@@ -174,6 +183,7 @@ fishableObject {
     hitpoints = 60,
     deltaXHitbox = 0, -- TODO: fix crocodile hitbox, changes on scale -1?
     deltaYHitbox = 40,
+    spriteSize = 128,
     
     minAmount = 1,
     maxAmount = 3,
@@ -192,6 +202,7 @@ fishableObject {
     hitpoints = 0,
     deltaXHitbox = 17,
     deltaYHitbox = 17,
+    spriteSize = 64,
     
     minAmount = 1,
     maxAmount = 1,

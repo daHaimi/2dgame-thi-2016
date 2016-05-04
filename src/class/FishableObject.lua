@@ -11,10 +11,10 @@ Level = require "class.Level";
 -- @param hitpoints: amoung of the hitpoints of the object
 local FishableObject = Class {
     init = function(self, name, imageSrc, yPosition, minSpeed, maxSpeed, xHitbox, yHitbox, value, hitpoints,
-    deltaXHitbox, deltaYHitbox)
+    deltaXHitbox, deltaYHitbox, spriteSize)
         self.name = name;
         self.image = love.graphics.newImage("assets/" .. imageSrc);
-        self.xPosition = math.random(64 - deltaXHitbox, _G._persTable.winDim[1]);
+        self.xPosition = math.random(spriteSize - deltaXHitbox, _G._persTable.winDim[1]);
         self.yPosition = yPosition;
         self.hitboxWidth = xHitbox;
         self.hitboxHeight = yHitbox;
@@ -22,6 +22,7 @@ local FishableObject = Class {
         self.hitpoints = hitpoints;
         self.deltaXHitbox = deltaXHitbox;
         self.deltaYHitbox = deltaYHitbox;
+        self.spriteSize = spriteSize;
 
         if (math.random() > 0.5) then
             self.speed = math.random() * (maxSpeed - minSpeed) + minSpeed;
@@ -41,6 +42,7 @@ local FishableObject = Class {
     hitpoints = 1;
     deltaXHitbox = 0;
     deltaYHitbox = 0;
+    spriteSize = 0;
     drawIt = true;
     yMovement = 0;
 };
@@ -117,7 +119,7 @@ function FishableObject:getHitboxXPosition()
     if self.speed < 0 then
         return self.xPosition + self.deltaXHitbox;
     else
-        return self.xPosition + self.deltaXHitbox - 64;
+        return self.xPosition + self.deltaXHitbox - self.spriteSize;
     end
 end
 
