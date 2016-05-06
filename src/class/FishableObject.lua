@@ -1,5 +1,4 @@
 Class = require "lib.hump.class";
-Level = require "class.Level";
 
 --- FishableObject is the class of all fishable object.
 -- @param xPosition: x-position of the object

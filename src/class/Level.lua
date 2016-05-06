@@ -1,4 +1,5 @@
 Class = require "lib.hump.class";
+LevelManager = require "class.LevelManager";
 
 _G.math.inf = 1 / 0;
 
@@ -8,8 +9,8 @@ _G.math.inf = 1 / 0;
 -- @param direction The y direction (-1 means up and 1 means down)
 -- @param swarmFactory The swarm factory
 local Level = Class {
-    init = function(self, backgroundPath, winDim, direction, swarmFactory)
-        self.swarmFac = swarmFactory;
+    init = function(self, backgroundPath, winDim, direction, levelManager)
+        self.levMan = levelManager;
         self.bg = love.graphics.newImage(backgroundPath);
         if self.bg ~= nil then -- do not remove this if statement or busted will crash
         self.bg:setWrap("repeat", "repeat");
@@ -30,7 +31,7 @@ local Level = Class {
     end,
 
     -- Member variables
-    swarmFac = nil;
+    levMan = nil;
     levelFinished = 0; -- 0 means the round hasn´t been finished until yet
     gotPayed = 0; -- 0 means the amount of money hasn´t calculated until yet
     roundValue = 0; -- the amount of money fished in this round
@@ -110,7 +111,7 @@ end
 -- bonus value (when activated) at the end of each round. Remove the money multi when it was activated.
 function Level:payPlayer()
     -- check if the round has been finished
-    if self.levelFinished == 1 and self.swarmFac ~= nil then
+    if self.levelFinished == 1 and self.levMan:getCurSwarmFactory() ~= nil then
         if self.gotPayed == 0 then -- check if the earned money was already payed
         local fishedVal = self:calcFishedValue();
         if _G._persTable.upgrades.moneyMult == 1 then
@@ -194,7 +195,7 @@ function Level:calcFishedValue()
     local fishedVal = 0;
     for name, amount in pairs(self.caughtThisRound) do
         if amount > 0 then
-            fishedVal = fishedVal + self.swarmFac:getFishableObjects()[name].value * amount;
+            fishedVal = fishedVal + self.levMan:getCurSwarmFactory():getFishableObjects()[name].value * amount;
         end
     end
     return fishedVal;
@@ -227,14 +228,6 @@ end
 -- @return Returns 1 when the god mode was activated. Otherwise 0.
 function Level:getGodModeStat()
     return self.godModeActive;
-end
-
---- Set the swarmfactory for the map.
--- @param swarmFactory Stands for the swarmfactory object.
-function Level:setSwarmFactory(swarmFactory)
-    if swarmFactory ~= nil then
-        self.swarmFac = swarmFactory;
-    end
 end
 
 --- Set the value for the lower boarder.
@@ -311,7 +304,8 @@ function Level:printResult()
         local string = "";
         for k, v in pairs(self.caughtThisRound) do
             ypos = ypos + 15;
-            string = k .. ": " .. v .. " x " .. self.swarmFac:getFishableObjects()[k].value .. " Coins";
+            string = k .. ": " .. v .. " x " .. 
+                self.levMan:getCurSwarmFactory():getFishableObjects()[k].value .. " Coins";
             love.graphics.print(string, xpos, ypos);
         end
         ypos = ypos + 15;

@@ -1,17 +1,16 @@
 --- The class SwarmFactory creates swarms of fishable objects defined by data.lua
 FishableObject = require "class.FishableObject";
+LevelManager = require "class.LevelManager";
 require "socket" math.randomseed(socket.gettime() * 10000);
 
 local SwarmFactory = Class {
     --- Initializes the swarm factory
     -- @param level The current level
-    -- @param player The player object
     -- @param dataFile The path and name of the data file
-    init = function(self, level, player, dataFile)
-        self.level = level;
-        self.player = player;
+    init = function(self, dataFile, levelManager)
+        self.levMan = levelManager;
         
-        self.maxDepth = level.lowerBoarder - 2 * level.winDim[2];
+        self.maxDepth = self.levMan:getCurLevel():getLowerBoarder() - 2 * _G._persTable.winDim[2];
         
         --- Takes the fishable form the data file
         -- @param fishable The fishable
@@ -35,16 +34,11 @@ local SwarmFactory = Class {
         end
     end;
     
-    level = nil;
-    player = nil;
-    
-    maxDepth = -5000;
-    
+    levMan = nil;    
+    maxDepth = -5000;    
     fishableObjects = {};
     currentSwarm = 1;
-
     swarmsSewer = {};
-
     createdFishables = {};
 };
 

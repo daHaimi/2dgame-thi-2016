@@ -1,17 +1,19 @@
 Class = require "lib.hump.class";
 CollisionDetection = require "class.CollisionDetection";
 Level = require "class.Level";
+LevelManager = require "class.LevelManager";
 
 --- Class for the Bait swimming for Phase 1 and 2
 -- @param winDim window Size
---
 local Bait = Class {
-    init = function(self, winDim, level)
+    init = function(self, winDim, levelManager)
         self.winDim = winDim;
         self.posXBait = (winDim[1] / 2) - (self.size / 2);
-        self.curLevel = level;
+        self.levMan = levelManager;
         local yPos = (self.winDim[2] / 2) - (self.size / 2); -- FIXME unused local
     end;
+    
+    levMan = nil;
     size = 10;
     speed = 200;
     posXMouse = 0;
@@ -24,7 +26,6 @@ local Bait = Class {
     hittedFishable = 0;
     caughtThisRound = {};
     sleepingPillDuration = 0;
-    curLevel = nil;
     deltaTime = 0;
 };
 
@@ -85,15 +86,15 @@ function Bait:collisionDetected(fishable, index)
         else
             if self.numberOfHits >= _G._persTable.upgrades.moreLife or _G._persTable.phase == 2 then
                 SwarmFactory.createdFishables[index].drawIt = false;
-                Level:switchToPhase2();
-                Level:addToCaught(fishable.name);
+                self.levMan:getCurLevel():switchToPhase2();
+                self.levMan:getCurLevel():addToCaught(fishable.name);
             end
             
             self.numberOfHits = self.numberOfHits + 1;
             
             -- if the player is still alive after a collision he will be invulnerable for a short time
             if self.numberOfHits <= _G._persTable.upgrades.moreLife then
-                self.curLevel:activateShortGM(self.deltaTime, self.speed);
+                self.levMan:getCurLevel():activateShortGM(self.deltaTime, self.speed);
             end
         end
     end
@@ -131,9 +132,19 @@ function Bait:getPosX()
     return self.posXBait;
 end
 
---- Set a new level reference
-function Bait:setLevel(newLevel)
-    self.curLevel = newLevel;
+--- Get the size of the player.
+-- @return Returns the size of the player.
+function Bait:getSize()
+    return self.size;
+end
+
+---
+function Bait:setPosXMouse(XPosMouse)
+    self.posXMouse = XPosMouse;
+end
+
+function Bait:getPosXMouse()
+    return self.posXMouse;
 end
 
 return Bait;
