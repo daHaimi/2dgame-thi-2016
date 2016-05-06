@@ -24,7 +24,7 @@ local Bait = Class {
     hittedFishable = 0;
     caughtThisRound = {};
     curLevel = nil;
-    self.deltaTime = 0;
+    deltaTime = 0;
 };
 
 --- TODO need balancing
@@ -42,10 +42,10 @@ end
 --- updates the bait and checks for collisions
 -- @param dt Delta time is the amount of seconds since the last time this function was called.
 function Bait:update(dt)
-    self.deltaTime = dt;
     self.yPos = (self.winDim[2] / 2) - (self.size / 2);
     self:setCappedPosX();
     self.xPos = self.posXBait;
+    self.deltaTime = dt;
     self:checkForCollision();
 end
 
@@ -78,6 +78,7 @@ function Bait:collisionDetected(fishable, index)
         else
             -- if the player is still alive after a collision he will be invulnerable for a short time
             self.curLevel:activateShortGM(self.deltaTime, self.speed)
+            print("collision! dt = ".. self.deltaTime .. " speed = " .. self.speed);
         end
         self.numberOfHits = self.numberOfHits + 1;
     end
@@ -86,7 +87,6 @@ end
 --- implements drawing interface
 function Bait:draw()
     love.graphics.setColor(127, 0, 255);
-    self:update();
     love.graphics.rectangle("fill", self.xPos, self.yPos, self.size, self.size);
 end
 

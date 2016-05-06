@@ -128,7 +128,6 @@ function Level:checkGodMode()
     if self.godModeActive == 1 then
         if self.shortGMDist > 0 then
             self:reduceShortGMDist();
-            print("Short GM activated at " .. self.posY);
         else
             if self.oldPosY == _G.math.inf then
                 self.oldPosY = self.posY;
@@ -145,14 +144,14 @@ end
 -- the update function was called.
 -- @param speed The speed of the player.
 function Level:activateShortGM(dt, speed)
-    local tempGMTime = 0.6;
-    self.shortGMDist = (dt * speed) * (tempGMTime / dt);
-    print("Short GM distance is " .. self.shortGMDist);
+    local tempGMTime = 0.8;
+    self.shortGMDist = math.ceil((dt * speed) * (tempGMTime / dt));
     self.oldPosY = _G.math.inf;
     self.godModeActive = 1;
 end
 
---- 
+--- Reduce the distance of the short god mode 
+-- and deactivate it when the distance was moved
 function Level:reduceShortGMDist()
     if self.oldPosY == _G.math.inf then
         self.oldPosY = self.posY;
@@ -166,7 +165,6 @@ function Level:reduceShortGMDist()
         self.oldPosY = _G.math.inf;
         self.shortGMDist = 0;
         self.godModeActive = 0;
-        print("Short GM ends at " .. self.posY);
     end
 end
 
