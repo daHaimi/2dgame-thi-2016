@@ -77,8 +77,7 @@ function Bait:collisionDetected(fishable, index)
             Level:addToCaught(fishable.name);
         else
             -- if the player is still alive after a collision he will be invulnerable for a short time
-            self.curLevel:activateShortGM(self.deltaTime, self.speed)
-            print("collision! dt = ".. self.deltaTime .. " speed = " .. self.speed);
+            self.curLevel:activateShortGM(self.deltaTime, self.speed);
         end
         self.numberOfHits = self.numberOfHits + 1;
     end
