@@ -78,25 +78,21 @@ end
 -- @param fishable the fishable object hitted
 -- @param index index of the fishable object hitted
 function Bait:collisionDetected(fishable, index)
-    if not (self.hittedFishable == index) then
-
-        self.hittedFishable = index;
-        if fishable:getName() == "sleepingPill" then
-            self:sleepingPillHitted(FishableObject);
+    if fishable:getName() == "sleepingPill" then
+        self:sleepingPillHitted(FishableObject);
+        SwarmFactory.createdFishables[index].drawIt = false;
+    else
+        if (self.numberOfHits >= _G._persTable.upgrades.moreLife or _G._persTable.phase == 2) and self.curLevel:getGodModeStat() == 0 then
             SwarmFactory.createdFishables[index].drawIt = false;
-        else
-            if self.numberOfHits >= _G._persTable.upgrades.moreLife or _G._persTable.phase == 2 then
-                SwarmFactory.createdFishables[index].drawIt = false;
-                Level:switchToPhase2();
-                Level:addToCaught(fishable.name);
-            end
-            
-            self.numberOfHits = self.numberOfHits + 1;
-            
-            -- if the player is still alive after a collision he will be invulnerable for a short time
-            if self.numberOfHits <= _G._persTable.upgrades.moreLife then
-                self.curLevel:activateShortGM(self.deltaTime, self.speed);
-            end
+            Level:switchToPhase2();
+            Level:addToCaught(fishable.name);
+        end
+        
+        self.numberOfHits = self.numberOfHits + 1;
+        
+        -- if the player is still alive after a collision he will be invulnerable for a short time
+        if self.numberOfHits <= _G._persTable.upgrades.moreLife then
+            self.curLevel:activateShortGM(self.deltaTime, self.speed);
         end
     end
 end
