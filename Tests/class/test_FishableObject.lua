@@ -2,7 +2,7 @@
 _G.math.inf = 1 / 0
 
 testClass = require "src.class.FishableObject"
---self, name, imageSrc, yPosition, minSpeed, maxSpeed, xHitbox, yHitbox, value, hitpoints, deltaXHitbox, deltaYHitbox
+--self, name, imageSrc, yPosition, minSpeed, maxSpeed, value, hitpoints, spriteSize, hitbox
 describe("Unit test for FishableObject.lua", function()
 
     before_each(function()
@@ -19,12 +19,21 @@ describe("Unit test for FishableObject.lua", function()
             winDim = { 500; 500 };
             moved = 0;
         }
+        
+        local hitbox = {
+            {
+                width = 64,
+                height = 25,
+                deltaXPos = 0,
+                deltaYPos = 20
+            }
+        }
 
-        _G.locInstance = testClass("deadFish", "assets/deadFish.png", 50, 30, 35, 100, 75, 50, 5, 2, 3);
+        _G.locInstance = testClass("deadFish", "assets/deadFish.png", 50, 30, 35, 50, 5, 64, hitbox);
     end)
 
     it("Testing Constructor", function()
-        local myInstance = testClass("deadFish", "assets/deadFish.png", 50, 30, 35, 100, 75, 50, 5, 0, 0);
+        local myInstance = testClass("deadFish", "assets/deadFish.png", 50, 30, 35, 50, 5, 64, hitbox);
         assert.are.equal(locInstance.yPosition, myInstance.yPosition);
         assert.are.equal(locInstance.xHitbox, myInstance.xHitbox);
         assert.are.equal(locInstance.yHitbox, myInstance.yHitbox);
@@ -56,17 +65,17 @@ describe("Unit test for FishableObject.lua", function()
     end)
 
     it("Testing Update Function", function()
-        local myInstance1 = testClass("assets/deadFish.png", "deadFish", 50, 300, 300, 64, 25, 50, 5, 0, 0);
-        myInstance1:setXPosition(250);
-        myInstance1.speed = 300;
-        myInstance1:update();
-        assert.are.equal(550, myInstance1.xPosition);
-        myInstance1:update();
-        assert.are.equal(136, myInstance1.xPosition);
-        myInstance1:update();
-        assert.are.equal(-164, myInstance1.xPosition);
-        myInstance1:update();
-        assert.are.equal(364, myInstance1.xPosition);
+        locInstance.speed = 300;
+        locInstance:setXPosition(250);
+        locInstance.speed = 300;
+        locInstance:update();
+        assert.are.equal(550, locInstance.xPosition);
+        locInstance:update();
+        assert.are.equal(136, locInstance.xPosition);
+        locInstance:update();
+        assert.are.equal(-164, locInstance.xPosition);
+        locInstance:update();
+        assert.are.equal(364, locInstance.xPosition);
     end)
 
     it("Testing getValue Function", function()
@@ -78,24 +87,24 @@ describe("Unit test for FishableObject.lua", function()
     end)
 
     it("Testing getHitboxWidth Function", function()
-        assert.are.same(100, locInstance:getHitboxWidth());
+        assert.are.same(64, locInstance:getHitboxWidth(1));
     end)
 
     it("Testing getHitboxHeight Function", function()
-        assert.are.same(75, locInstance:getHitboxHeight());
+        assert.are.same(25, locInstance:getHitboxHeight(1));
     end)
 
     it("Testing getHitboxXPosition Function", function()
         locInstance:setXPosition(50);
         locInstance.speed = -30;
-        assert.are.same(52, locInstance:getHitboxXPosition());
+        assert.are.same(50, locInstance:getHitboxXPosition(1));
         locInstance:setXPosition(450);
         locInstance.speed = 30;
-        assert.are.same(388, locInstance:getHitboxXPosition());
+        assert.are.same(386, locInstance:getHitboxXPosition(1));
     end)
 
     it("Testing getHitboxYPosition Function", function()
-        assert.are.same(53, locInstance:getHitboxYPosition());
+        assert.are.same(70, locInstance:getHitboxYPosition(1));
     end)
 
     it("Testing setYMovement Function", function()

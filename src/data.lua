@@ -3,211 +3,261 @@ fishableObject {
     -- definition of the object
     name = "nemo",      -- The name
     image = "nemo.png", -- The image file
+    spriteSize = 64,    -- width of the image
     minSpeed = 4,       -- Min movement speed
     maxSpeed = 7,       -- Max movement speed
-    xHitbox = 40,       -- Hitbox width
-    yHitbox = 30,       -- Hitbox height
     value = 30,         -- The worth of the object
-    hitpoints = 10,     -- The HP of the object
-    deltaXHitbox = 12,  -- The hitbox X adjustment 
-    deltaYHitbox = 17,  -- The hitbox Y adjustment 
-    spriteSize = 64,
+    hitpoints = 10,      -- The HP of the object
+    minAmount = 3,            -- min amount of objects per swarm
+    maxAmount = 5,            -- max amount of objects per swarm
+    swarmHeight = 300,       -- height of the swarm of this object
+    enabled = true,      -- Whether the object is enabled
     
-    -- definition of the swarm
-    minAmount = 3,      -- min amount of objects per swarm
-    maxAmount = 5,      -- max amount of objects per swarm
-    swarmHeight = 300,  -- height of the swarm of this object
-    enabled = true      -- Whether the object is enabled
+    -- definition of the hitbox
+    hitbox = {
+        {
+            width = 40,       -- Hitbox width
+            height = 30,       -- Hitbox height
+            deltaXPos= 12,   -- The hitbox X adjustment 
+            deltaYPos = 17   -- The hitbox Y adjustment 
+        }
+    }
 }
 
 fishableObject {
     name = "turtle",
     image = "turtle.png",
+    spriteSize = 64,
     minSpeed = 1,
     maxSpeed = 2,
-    xHitbox = 50,
-    yHitbox = 30,
+    hitpoints = 20,        
     value = 30,
-    hitpoints = 20,
-    deltaXHitbox = 5,
-    deltaYHitbox = 17,
-    spriteSize = 64,
-    
     minAmount = 2,
     maxAmount = 4,
     swarmHeight = 225,
     enabled = true,
+    
+    hitbox = {
+        {
+            width = 50,
+            height = 30,
+            deltaXPos = 5,
+            deltaYPos = 17
+        }
+    } 
 }
 
 fishableObject {
     name = "rat",
     image = "ratte.png",
-    minSpeed = 3,
-    maxSpeed = 5,
-    xHitbox = 60,
-    yHitbox = 25,
-    value = -10,
-    hitpoints = 5,
-    deltaXHitbox = 2,
-    deltaYHitbox = 25,
     spriteSize = 64,
-    
+    minSpeed = 3,
+    maxSpeed = 4,
+    hitpoints = 5,        
+    value = -10,
     minAmount = 3,
-    maxAmount = 5,
+    maxAmount = 3,
     swarmHeight = 350,
-    enabled = true
+    enabled = true,
+    
+    hitbox = {
+        {
+            width = 60,
+            height = 25,
+            deltaXPos = 2,
+            deltaYPos = 25
+        }
+    }
 }
 
 fishableObject {
     name = "deadFish",
     image = "deadFish.png",
+    spriteSize = 64,
     minSpeed = 0,
     maxSpeed = 1,
-    xHitbox = 64,
-    yHitbox = 25,
+    hitpoints = 5,        
     value = 20,
-    hitpoints = 5,
-    deltaXHitbox = 0,
-    deltaYHitbox = 20,
-    spriteSize = 64,
-    
     minAmount = 1,
     maxAmount = 2,
     swarmHeight = 125,
-    enabled = true
-}
+    enabled = true,
 
+    hitbox = {
+        {
+            width = 64,
+            height = 25,
+            deltaXPos = 0,
+            deltaYPos = 20
+        }
+    } 
+}
 fishableObject {
     name = "angler",
     image = "angler.png",
+    spriteSize = 64,
     minSpeed = 1,
     maxSpeed = 5,
-    xHitbox = 40,
-    yHitbox = 40,
+    hitpoints = 20,        
     value = 40,
-    hitpoints = 20,
-    deltaXHitbox = 12,
-    deltaYHitbox = 12,
-    spriteSize = 64,
-    
     minAmount = 1,
     maxAmount = 4,
     swarmHeight = 200,
-    enabled = true
+    enabled = true,
+    
+    hitbox = {
+        {
+            width = 40,
+            height = 40,
+            deltaXPos = 12,
+            deltaYPos = 12
+        }
+    }
 }
 
 fishableObject {
     name = "lollipop",
     image = "lolli.png",
+    spriteSize = 64,
     minSpeed = 0,
     maxSpeed = 2,
-    xHitbox = 30,
-    yHitbox = 30,
+    hitpoints = 5,        
     value = 10,
-    hitpoints = 5,
-    deltaXHitbox = 17,
-    deltaYHitbox = 2,
-    spriteSize = 64,
-    
     minAmount = 1,
     maxAmount = 1,
     swarmHeight = 100,
-    enabled = true
+    enabled = true,
+    
+    hitbox = {
+        {
+            width = 30,
+            height = 30,
+            deltaXPos = 17,
+            deltaYPos = 2
+        }
+    }
 }
 
 fishableObject {
     name = "ring",
     image = "ring.png",
+    spriteSize = 64,
     minSpeed = 0,
     maxSpeed = 5,
-    xHitbox = 40,
-    yHitbox = 58,
+    hitpoints = 40,        
     value = 100,
-    hitpoints = 40,
-    deltaXHitbox = 12,
-    deltaYHitbox = 2,
-    spriteSize = 64,
-    
     minAmount = 1,
     maxAmount = 1,
     swarmHeight = 100,
-    enabled = _G._persTable.enabled.ring;
+    enabled = _G._persTable.enabled.ring,
+    
+    hitbox = {
+        {
+            width = 40,
+            height = 58,
+            deltaXPos = 12,
+            deltaYPos = 2
+        }
+    }
 }
 
 fishableObject {
-    name = "shoe",
-    image = "shoe.png",
-    minSpeed = 0,
-    maxSpeed = 0,
-    xHitbox = 30,
-    yHitbox = 56,
-    value = -20,
-    hitpoints = 20,
-    deltaXHitbox = 25,
-    deltaYHitbox = 4,
-    spriteSize = 64,
+        name = "shoe",
+        image = "shoe.png",
+        spriteSize = 64,
+        minSpeed = 0,
+        maxSpeed = 0,
+        hitpoints = 20,        
+        value = -20,
+        minAmount = 1,
+        maxAmount = 1,
+        swarmHeight = 100,
+        enabled = true,
     
-    minAmount = 1,
-    maxAmount = 1,
-    swarmHeight = 100,
-    enabled = true
+    hitbox = {
+        {
+            width = 55,
+            height = 17,
+            deltaXPos = 2,
+            deltaYPos = 43            
+        },
+        
+        {
+            width = 30,
+            height = 56,
+            deltaXPos = 25,
+            deltaYPos = 4
+        }
+    }
 }
 
 fishableObject {
     name = "snake",
     image = "snake.png",
+    spriteSize = 64,
     minSpeed = 2,
     maxSpeed = 5,
-    xHitbox = 54,
-    yHitbox = 56,
+    hitpoints = 20,        
     value = 50,
-    hitpoints = 20,
-    deltaXHitbox = 5,
-    deltaYHitbox = 4,
-    spriteSize = 64,
-    
     minAmount = 2,
     maxAmount = 3,
     swarmHeight = 200,
-    enabled = true
+    enabled = true,
+    
+    hitbox = {
+        {
+            width = 54,
+            height = 56,
+            deltaXPos = 5,
+            deltaYPos = 4
+        }
+    }
 }
 
 fishableObject {
     name = "crocodile",
     image = "crocodile.png",
+    spriteSize = 128,
     minSpeed = 1,
     maxSpeed = 5,
-    xHitbox = 128, 
-    yHitbox = 10,
+    hitpoints = 60,        
     value = 60,
-    hitpoints = 60,
-    deltaXHitbox = 0, -- TODO: fix crocodile hitbox, changes on scale -1?
-    deltaYHitbox = 40,
-    spriteSize = 128,
-    
     minAmount = 1,
     maxAmount = 3,
     swarmHeight = 200,
-    enabled = true
+    enabled = true,
+
+    hitbox = {
+        {
+            width = 128,
+            height = 10,
+            deltaXPos = 0,
+            deltaYPos = 40
+        }
+    }
 }
 
 fishableObject {
     name = "sleepingPill",
     image = "hamster.png",
+    spriteSize = 64,
     minSpeed = 0,
     maxSpeed = 0,
-    xHitbox = 30, 
-    yHitbox = 30,
+    hitpoints = 0,        
     value = 0,
-    hitpoints = 0,
-    deltaXHitbox = 17,
-    deltaYHitbox = 17,
-    spriteSize = 64,
-    
     minAmount = 1,
     maxAmount = 1,
     swarmHeight = 50,
-    enabled = _G._persTable.enabled.sleepingPill;
+    enabled = _G._persTable.enabled.sleepingPill,
+    
+    hitbox = {
+        {
+            width = 30,
+            height = 30,
+            deltaXPos = 17,
+            deltaYPos = 17
+        }
+    }
 }
 
 --- Data for the swarms for each level

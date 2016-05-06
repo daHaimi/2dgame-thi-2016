@@ -10,19 +10,16 @@ Level = require "class.Level";
 -- @param value: value of the object
 -- @param hitpoints: amoung of the hitpoints of the object
 local FishableObject = Class {
-    init = function(self, name, imageSrc, yPosition, minSpeed, maxSpeed, xHitbox, yHitbox, value, hitpoints,
-    deltaXHitbox, deltaYHitbox, spriteSize)
+    init = function(self, name, imageSrc, yPosition, minSpeed, maxSpeed, value, hitpoints, spriteSize, hitbox)
         self.name = name;
         self.image = love.graphics.newImage("assets/" .. imageSrc);
-        self.xPosition = math.random(spriteSize - deltaXHitbox, _G._persTable.winDim[1]);
+        self.xPosition = math.random(spriteSize, _G._persTable.winDim[1]);
         self.yPosition = yPosition;
-        self.hitboxWidth = xHitbox;
-        self.hitboxHeight = yHitbox;
         self.value = value;
         self.hitpoints = hitpoints;
-        self.deltaXHitbox = deltaXHitbox;
-        self.deltaYHitbox = deltaYHitbox;
         self.spriteSize = spriteSize;
+        
+        self.hitbox = hitbox;
 
         if (math.random() > 0.5) then
             self.speed = math.random() * (maxSpeed - minSpeed) + minSpeed;
@@ -34,15 +31,14 @@ local FishableObject = Class {
     name = "no name";
     xPosition = 0;
     yPosition = 0;
-    hitboxWidth = 0;
-    hitboxHeight = 0;
     speed = 0;
     speedMulitplicator = 1;
     value = 0;
     hitpoints = 1;
-    deltaXHitbox = 0;
-    deltaYHitbox = 0;
     spriteSize = 0;
+    
+    hitbox = {};
+    
     drawIt = true;
     yMovement = 0;
 };
@@ -61,25 +57,27 @@ function FishableObject:draw()
             love.graphics.scale(-1, 1);
         end
 
-        --[[--for showing the Hitbox
-        love.graphics.setColor(0,0,0);
-        love.graphics.rectangle("line", self:getHitboxXPosition(), self:getHitboxYPosition(),
-        self:getHitboxWidth(), self:getHitboxHeight());
-        ]]
+        --for showing the Hitbox
+        --[[for i = 1, #self.hitbox, 1 do 
+            love.graphics.setColor(0,0,0);
+            love.graphics.rectangle("line", self:getHitboxXPosition(i), self:getHitboxYPosition(i),
+            self:getHitboxWidth(i), self:getHitboxHeight(i));
+        end]]
+        
     end
 end
 
 --- Updates the position of the object depending on its speed
 function FishableObject:update()
-    if ((self.xPosition - self.deltaXHitbox) >= _G._persTable.winDim[1]) and self.speed > 0 then
+    if ((self.xPosition - self.hitbox[1].deltaXPos) >= _G._persTable.winDim[1]) and self.speed > 0 then
 
         self.speed = self.speed * -1;
-        self.xPosition = _G._persTable.winDim[1] - self.hitboxWidth - self.deltaXHitbox + 
+        self.xPosition = _G._persTable.winDim[1] - self:getHitboxWidth(1) - self.hitbox[1].deltaXPos + 
             self.speed * self.speedMulitplicator;
 
-    elseif (self.xPosition + self.deltaXHitbox) <= 0 then
+    elseif (self.xPosition + self.hitbox[1].deltaXPos) <= 0 then
         self.speed = self.speed * -1;
-        self.xPosition = math.abs(self.hitboxWidth + self.deltaXHitbox + self.speed * self.speedMulitplicator);
+        self.xPosition = math.abs(self:getHitboxWidth(1) + self.hitbox[1].deltaXPos + self.speed * self.speedMulitplicator);
     else
 
         self.xPosition = self.xPosition + self.speed * self.speedMulitplicator;
@@ -104,28 +102,28 @@ function FishableObject:getHitpoints()
 end
 
 --- returns width of the hitbox of the object
-function FishableObject:getHitboxWidth()
-    return self.hitboxWidth;
+function FishableObject:getHitboxWidth(i)
+    return self.hitbox[i].width;
 end
 
 --- returns height of the hitbox of the object
-function FishableObject:getHitboxHeight()
-    return self.hitboxHeight;
+function FishableObject:getHitboxHeight(i)
+    return self.hitbox[i].height;
 end
 
 --- returns x position of the object
-function FishableObject:getHitboxXPosition()
+function FishableObject:getHitboxXPosition(i)
 
     if self.speed < 0 then
-        return self.xPosition + self.deltaXHitbox;
+        return self.xPosition + self.hitbox[i].deltaXPos;
     else
-        return self.xPosition + self.deltaXHitbox - self.spriteSize;
+        return self.xPosition + self.hitbox[i].deltaXPos - self.spriteSize;
     end
 end
 
 --- returns y the position of the object
-function FishableObject:getHitboxYPosition()
-    return self.yPosition + self.deltaYHitbox;
+function FishableObject:getHitboxYPosition(i)
+    return self.yPosition + self.hitbox[i].deltaYPos;
 end
 
 --- sets the amount of pixls to move upwards to match the baits movement

@@ -20,7 +20,7 @@ _G._persTable = {
     winDim = {};
     phase = 1;
     enabled = {
-        ring = false;
+        ring = true;
         sleepingPill = true;
     }
 };

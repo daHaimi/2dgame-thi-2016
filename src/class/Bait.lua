@@ -62,11 +62,13 @@ function Bait:checkForCollision()
     for i = 1, #SwarmFactory.createdFishables, 1 do
         if SwarmFactory.createdFishables[i].drawIt then
             local fishable = SwarmFactory.createdFishables[i];
-            CollisionDetection:setCollision();
-            CollisionDetection:calculateCollision(self.xPos, self.yPos, fishable:getHitboxXPosition(),
-                fishable:getHitboxYPosition(), fishable:getHitboxWidth(), fishable:getHitboxHeight());
-            if CollisionDetection:getCollision() then
-                self:collisionDetected(fishable, i);
+            for c = 1, #fishable.hitbox, 1 do
+                CollisionDetection:setCollision();
+                CollisionDetection:calculateCollision(self.xPos, self.yPos, fishable:getHitboxXPosition(c),
+                    fishable:getHitboxYPosition(c), fishable:getHitboxWidth(c), fishable:getHitboxHeight(c));
+                if CollisionDetection:getCollision() then
+                    self:collisionDetected(fishable, i);
+                end
             end
         end
     end
