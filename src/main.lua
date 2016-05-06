@@ -1,10 +1,10 @@
 -- Includes
 Class = require "lib.hump.class";
-Bait = require "class.Bait"
-Level = require "class.Level"
-SwarmFactory = require "class.SwarmFactory"
-Loveframes = require "lib.LoveFrames"
-Gui = require "class.Gui"
+Bait = require "class.Bait";
+Level = require "class.Level";
+SwarmFactory = require "class.SwarmFactory";
+Loveframes = require "lib.LoveFrames";
+Gui = require "class.Gui";
 
 -- Global variables
 _G.math.inf = 1 / 0;
@@ -29,7 +29,7 @@ _G._persTable = {
 _G._persTable.upgrades = {
     speedUp = 0; -- "0" no Speedup for more looke bait.lua
     moneyMult = 0; -- "0" means no additional money
-    moreLife = 0; -- amount of additional lifes
+    moreLife = 1; -- amount of additional lifes
     godMode = 1; -- indicates if the god mode is available or not
     mapBreakthrough1 = 0; -- can you access the first map limit? 0 = no, 1 = yes
     mapBreakthrough2 = 0; -- can you access the second map limit? 0 = no, 1 = yes
@@ -61,10 +61,11 @@ function love.load()
     _G._persTable.winDim[1] = (_G._persTable.winDim[2] / 16) * 9; -- Example: 16:9
     love.window.setMode(_G._persTable.winDim[1], _G._persTable.winDim[2], { centered });
     curLevel = Level("assets/testbg.png", _G._persTable.winDim, 1, nil);
-    player = Bait(_G._persTable.winDim);
+    player = Bait(_G._persTable.winDim, nil);
     player:checkUpgrades();
     swarmFactory = SwarmFactory(curLevel, player, "data.lua");
     curLevel:setSwarmFactory(swarmFactory);
+    player:setLevel(curLevel);
     gui = Gui();
     gui:tempTextOutput();
     gui:buildFrames();

@@ -1,9 +1,9 @@
 -- Lua 5.1 Hack
 _G.math.inf = 1 / 0
 
-FishableObject = require "src.class.FishableObject"
-testClass = require "src.class.Level"
-match = require 'luassert.match'
+FishableObject = require "src.class.FishableObject";
+testClass = require "src.class.Level";
+match = require 'luassert.match';
 
 describe("Test unit test suite", function()
     local locInstance;
@@ -204,6 +204,7 @@ describe("Test unit test suite", function()
     it("Testing Update", function()
         local dt = 4;
         local bait = {
+            update = function(...) end;
             speed = 200;
         };
         locInstance.posY = -7500;
@@ -212,5 +213,45 @@ describe("Test unit test suite", function()
         locInstance.posY = 1200;
         locInstance:update(dt, bait);
         assert.are.same(0, locInstance:getDirection());
+    end)
+
+    it("Testing setSwarmFactory", function()
+        testClass.swarmFac = {5, 7, 9};
+        local swFacAddress = tostring(testClass.swarmFac);
+        testClass.setSwarmFactory(nil);
+        assert.are.same(tostring(testClass.swarmFac), swFacAddress);
+
+        local newSwFac = {1.5, 3.2, 5, 6, 5, 222, 887, 7777798548, 66978, 557412877,
+            1144, 33557878, 774123685, 88321458};
+        testClass:setSwarmFactory(newSwFac);
+        assert.are.same(tostring(testClass.swarmFac), tostring(newSwFac));
+    end)
+
+    it("Testing activateShortGM", function()
+        testClass.shortGMDist = 0;
+        testClass.godModeActive = 0;
+        testClass.oldPosY = 210;
+        testClass:activateShortGM(0.12, 200);
+        
+        assert.are.same(testClass.godModeActive, 1);
+        assert.are.same(testClass.oldPosY, _G.math.inf);
+    end)
+
+    it("Testing reduceShortGMDist", function()
+        testClass.godModeActive = 0;
+        testClass.godModeFuel = 250;
+        testClass:activateShortGM(0.12, 200);
+        local sRSGM = spy.on(testClass, "reduceShortGMDist");
+
+        for i = 10, -250, -1
+        do
+            testClass.posY = i;
+            testClass:checkGodMode();
+        end
+        assert.spy(sRSGM).was.called(161);
+        assert.are.same(testClass.godModeActive, 0);
+        assert.are.same(testClass.shortGMDist, 0);
+        assert.are.same(testClass.oldPosY, _G.math.inf);
+        assert.are.same(testClass.godModeFuel, 250);
     end)
 end)

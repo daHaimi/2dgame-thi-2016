@@ -6,9 +6,10 @@ Level = require "class.Level";
 -- @param winDim window Size
 --
 local Bait = Class {
-    init = function(self, winDim)
+    init = function(self, winDim, level)
         self.winDim = winDim;
         self.posXBait = (winDim[1] / 2) - (self.size / 2);
+        self.curLevel = level;
         local yPos = (self.winDim[2] / 2) - (self.size / 2); -- FIXME unused local
     end;
     size = 10;
@@ -23,6 +24,8 @@ local Bait = Class {
     hittedFishable = 0;
     caughtThisRound = {};
     sleepingPillDuration = 0;
+    curLevel = nil;
+    deltaTime = 0;
 };
 
 --- TODO need balancing
@@ -38,10 +41,12 @@ function Bait:checkUpgrades()
 end
 
 --- updates the bait and checks for collisions
-function Bait:update()
+-- @param dt Delta time is the amount of seconds since the last time this function was called.
+function Bait:update(dt)
     self.yPos = (self.winDim[2] / 2) - (self.size / 2);
     self:setCappedPosX();
     self.xPos = self.posXBait;
+    self.deltaTime = dt;
     self:checkForCollision();
     
     if self.sleepingPillDuration > 0 then
@@ -83,7 +88,13 @@ function Bait:collisionDetected(fishable, index)
                 Level:switchToPhase2();
                 Level:addToCaught(fishable.name);
             end
+            
             self.numberOfHits = self.numberOfHits + 1;
+            
+            -- if the player is still alive after a collision he will be invulnerable for a short time
+            if self.numberOfHits <= _G._persTable.upgrades.moreLife then
+                self.curLevel:activateShortGM(self.deltaTime, self.speed);
+            end
         end
     end
 end
@@ -97,7 +108,6 @@ end
 --- implements drawing interface
 function Bait:draw()
     love.graphics.setColor(127, 0, 255);
-    self:update();
     love.graphics.rectangle("fill", self.xPos, self.yPos, self.size, self.size);
 end
 
@@ -119,6 +129,11 @@ end
 -- @return The actual X position of the Bait
 function Bait:getPosX()
     return self.posXBait;
+end
+
+--- Set a new level reference
+function Bait:setLevel(newLevel)
+    self.curLevel = newLevel;
 end
 
 return Bait;

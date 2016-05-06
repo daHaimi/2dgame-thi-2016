@@ -47,6 +47,7 @@ local Level = Class {
     caughtThisRound = {};
     oldPosY = _G.math.inf;
     godModeFuel = 800;
+    shortGMDist = 0;
     godModeActive = 0;
     moved = 0;
 }
@@ -82,6 +83,7 @@ function Level:update(dt, bait)
     self.posY = self.posY - self.moved;
 
     self:checkGodMode();
+    bait:update(dt);
 end
 
 --- when the bait hit a object or the boarder is reached, start phase 2
@@ -123,26 +125,60 @@ function Level:payPlayer()
     end
 end
 
---- Check the state of the god mode and updates the god mode fuel value.
+--- Check the state of the god mode and updates the god mode fuel and shortGMDist value.
 function Level:checkGodMode()
     if self.godModeActive == 1 then
-        if self.oldPosY == _G.math.inf then
-            self.oldPosY = self.posY;
+        if self.shortGMDist > 0 then
+            self:reduceShortGMDist();
         else
-            self:setGodModeFuel(self:getGodModeFuel() - math.abs(self.posY - self.oldPosY));
-            self.oldPosY = self.posY;
+            if self.oldPosY == _G.math.inf then
+                self.oldPosY = self.posY;
+            else
+                self:setGodModeFuel(self:getGodModeFuel() - math.abs(self.posY - self.oldPosY));
+                self.oldPosY = self.posY;
+            end
         end
+    end
+end
+
+--- Activates the god mode after a collision.
+-- @param dt Delta time is the amount of seconds since the last time 
+-- the update function was called.
+-- @param speed The speed of the player.
+function Level:activateShortGM(dt, speed)
+    local tempGMTime = 0.8;
+    self.shortGMDist = math.ceil((dt * speed) * (tempGMTime / dt));
+    self.oldPosY = _G.math.inf;
+    self.godModeActive = 1;
+end
+
+--- Reduce the distance of the short god mode 
+-- and deactivate it when the distance was moved
+function Level:reduceShortGMDist()
+    if self.oldPosY == _G.math.inf then
+        self.oldPosY = self.posY;
+    else
+        self.shortGMDist = self.shortGMDist - math.abs(self.posY - self.oldPosY);
+        self.oldPosY = self.posY;
+    end
+    
+    -- reset the oldPosY for the real god mode when the shortGM ends
+    if self.shortGMDist <= 0 then
+        self.oldPosY = _G.math.inf;
+        self.shortGMDist = 0;
+        self.godModeActive = 0;
     end
 end
 
 --- Try to activate the god Mode.
 -- @return When the god mode was successfully activated it returns 1 otherwise 0.
 function Level:activateGodMode()
-    if _G._persTable.upgrades.godMode == 1 and self.godModeFuel > 0 then
+    if _G._persTable.upgrades.godMode == 1 and self.godModeFuel > 0  and self.godModeActive == 0 then
         self.godModeActive = 1;
         return 1;
     else
         self.godModeActive = 0;
+        self.godModeFuel = 0; -- remove negativ fuel values
         return 0;
     end
 end
