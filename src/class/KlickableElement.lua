@@ -1,4 +1,4 @@
-local Upgrade = Class {
+local KlickableElement = Class {
     init = function(self, name, imagepath, imagepath_checked, description)
         self.name = name;
         self.checked = false;
@@ -9,30 +9,30 @@ local Upgrade = Class {
     end;
 };
 
-function Upgrade:SetVisible(visible)
+function KlickableElement:SetVisible(visible)
     self.object:SetVisible(visible);
 end
 
-function Upgrade:reset()
+function KlickableElement:reset()
     self.checked = false;
     self.object:SetImage(self.imagepath);
 end
 
-function Upgrade:check()
+function KlickableElement:check()
     self.checked = true;
     self.object:SetImage(self.imagepath_checked);
 end
 
-function Upgrade:SetPos(x, y)
+function KlickableElement:SetPos(x, y)
     self.object:SetPos(x, y);
 end
 
-function Upgrade:SetChecked()
+function KlickableElement:SetChecked()
     self.check();
 end
 
-function Upgrade:GetChecked()
+function KlickableElement:GetChecked()
     return self.checked;
 end
 
-return Upgrade;
+return KlickableElement;
