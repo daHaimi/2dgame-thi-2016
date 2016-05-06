@@ -1,4 +1,3 @@
---Loveframes = require "lib.LoveFrames";
 
 local Textbox = Class {
     init = function(self, width, length, imagepath)
@@ -26,8 +25,5 @@ function Textbox:SetPos(x, y)
     self.objText:SetPos(x + 5, y + 25):SetMaxWidth(self.width);
     --self.objBackground:SetPos(x, y):SetScale( bla bla);
 end
-
-
-
 
 return Textbox;
