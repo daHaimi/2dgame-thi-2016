@@ -1,10 +1,10 @@
 -- Includes
 Class = require "lib.hump.class";
-Bait = require "class.Bait"
-Level = require "class.Level"
-SwarmFactory = require "class.SwarmFactory"
-Loveframes = require "lib.LoveFrames"
-Gui = require "class.Gui"
+Bait = require "class.Bait";
+Level = require "class.Level";
+SwarmFactory = require "class.SwarmFactory";
+Loveframes = require "lib.LoveFrames";
+Gui = require "class.Gui";
 
 -- Global variables
 _G.math.inf = 1 / 0;
