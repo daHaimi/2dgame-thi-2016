@@ -31,10 +31,8 @@ _G._persTable.upgrades = {
 
 --config options
 _G._persTable.config = {
-    slider1 = 30;--these values are only examples. Options have to be reviewed later
-    slider2 = 80;
-    option1 = true;
-    option2 = false;
+    bgm = 100;
+    music = 100;
 }
 
 -- Local variables

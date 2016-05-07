@@ -58,11 +58,6 @@ describe("Unit test for Frame.lua", function()
         local myInstance = testClass("TestFrame", "down", "down", 50, 0, -1000);
         myInstance:setPosition(5, 10);
         assert.are.equal(myInstance.xPosFrame, 5);
-    end)
-
-    it("Testing setPosition function/ yPosFrame", function()
-        local myInstance = testClass("TestFrame", "down", "down", 50, 0, -1000);
-        myInstance:setPosition(5, 10);
         assert.are.equal(myInstance.yPosFrame, 10);
     end)
 
@@ -70,11 +65,6 @@ describe("Unit test for Frame.lua", function()
         local myInstance = testClass("TestFrame", "down", "down", 50, 0, -1000);
         myInstance:setOffset(5, 10);
         assert.are.equal(myInstance.xOffset, 5);
-    end)
-
-    it("Testing setOffset function/ yOffset", function()
-        local myInstance = testClass("TestFrame", "down", "down", 50, 0, -1000);
-        myInstance:setOffset(5, 10);
         assert.are.equal(myInstance.yOffset, 10);
     end)
 
@@ -82,14 +72,10 @@ describe("Unit test for Frame.lua", function()
         local myInstance = testClass("TestFrame", "down", "down", 50, 0, -1000);
         myInstance:setOffset(10, 10);
         assert.are.equal(myInstance:onPosition(), false);
-    end)
-
-    it("Testing onPosition function/ true", function()
-        local myInstance = testClass("TestFrame", "down", "down", 50, 0, -1000);
         myInstance:setOffset(0, 0);
         assert.are.equal(myInstance:onPosition(), true);
     end)
-        
+
     it("Testing move function/ up", function()
         local myInstance = testClass("TestFrame", "up", "down", 50, 0, -1000);
         myInstance:setOffset(100, 100);
@@ -156,21 +142,10 @@ describe("Unit test for Frame.lua", function()
         local expectedResult = {10, 20, 30, 40};
         
         for k, v in ipairs (locElements) do
-            myInstance:addElement(v, 10 * k, 10);
+            myInstance:addElement(v, 10 * k, 10 * k);
         end
         myInstance:showFrame();
         assert.are.same(myInstance.elementPosition.xPos, expectedResult);
-    end)
-
-    it("Testing showFrame function/ yPos", function()
-        local myInstance = testClass("TestFrame", "down", "down", 50, 0, -1000);
-        local result = {}
-        local expectedResult = {10, 20, 30, 40};
-
-        for k, v in ipairs (locElements) do
-            myInstance:addElement(v, 10, 10 * k);
-        end
-        myInstance:showFrame();
         assert.are.same(myInstance.elementPosition.yPos, expectedResult);
     end)
 
