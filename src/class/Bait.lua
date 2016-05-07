@@ -82,7 +82,7 @@ function Bait:collisionDetected(fishable, index)
         self:sleepingPillHitted(FishableObject);
         SwarmFactory.createdFishables[index].drawIt = false;
     else
-        if (self.numberOfHits >= _G._persTable.upgrades.moreLife or _G._persTable.phase == 2) and self.curLevel:getGodModeStat() == 0 then
+        if (self.numberOfHits >= _G._persTable.upgrades.moreLife and self.curLevel:getGodModeStat() == 0) or _G._persTable.phase == 2 then
             SwarmFactory.createdFishables[index].drawIt = false;
             Level:switchToPhase2();
             Level:addToCaught(fishable.name);
