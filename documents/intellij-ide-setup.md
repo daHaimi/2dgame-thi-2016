@@ -14,9 +14,9 @@ Die Intallationsanleitung in der Readme sollte keine Fragen offen lassen.
 
 ## löve
 ### run configuration
- | Feld | parameter | Bsp: |
- |---|---|---|
- | Scrip name | <Pfad zu 2dgame-thi-2016\src\> | C:\thi\2dgame-thi-2016\src\ |
- | lua Inerpreter | <Pfad zu love\> | C:\LOVE\love.exe |
- | Working directory | <Pfad zu 2dgame-thi-2016\src\> | C:\thi\2dgame-thi-2016\src\ |
+ | Feld                 | parameter                             | Bsp:                          |
+ | -------------------- | ------------------------------------- | ----------------------------- |
+ | Scrip name           | <Pfad zu 2dgame-thi-2016\src\>        | C:\thi\2dgame-thi-2016\src\   |
+ | lua Inerpreter       | <Pfad zu love\> | C:\LOVE\love.exe    |                               |
+ | Working directory    | <Pfad zu 2dgame-thi-2016\src\>        | C:\thi\2dgame-thi-2016\src\   |
  Die restlichen Felder bleiben leer.
