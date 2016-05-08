@@ -26,6 +26,28 @@ local Gui = Class {
         pause = Loveframes.Create("image"):SetImage("assets/gui/gui_Test_Bg.png");
     };
     
+           --Table contains all buttons
+    button = {
+        back = Loveframes.Create("imagebutton"):SetImage("assets/gui/gui_Test_Button.png"):SizeToImage():SetText("Back");
+        upgradeMenu = Loveframes.Create("imagebutton"):SetImage("assets/gui/gui_Test_Button.png"):SizeToImage():SetText("Upgrade Menu");
+        credits = Loveframes.Create("imagebutton"):SetImage("assets/gui/gui_Test_Button.png"):SizeToImage():SetText("Credits");
+        wiki = Loveframes.Create("imagebutton"):SetImage("assets/gui/gui_Test_Button.png"):SizeToImage():SetText("Wiki");
+        achievements = Loveframes.Create("imagebutton"):SetImage("assets/gui/gui_Test_Button.png"):SizeToImage():SetText("Achievements");
+        options = Loveframes.Create("imagebutton"):SetImage("assets/gui/gui_Test_Button.png"):SizeToImage():SetText("Options");
+        options_mM = Loveframes.Create("imagebutton"):SetImage("assets/gui/gui_Test_Button.png"):SizeToImage():SetText("Options");
+        start = Loveframes.Create("imagebutton"):SetImage("assets/gui/gui_Test_Button.png"):SizeToImage():SetText("Start game");
+        level1 = Loveframes.Create("imagebutton"):SetImage("assets/gui/gui_Test_Button.png"):SizeToImage():SetText("Level 1");
+        level2 = Loveframes.Create("imagebutton"):SetImage("assets/gui/gui_Test_Button.png"):SizeToImage():SetText("Level 2");
+        level3 = Loveframes.Create("imagebutton"):SetImage("assets/gui/gui_Test_Button.png"):SizeToImage():SetText("Level 3");
+        retry = Loveframes.Create("imagebutton"):SetImage("assets/gui/gui_Test_Button.png"):SizeToImage():SetText("Retry");
+        pause = Loveframes.Create("imagebutton"):SetImage("assets/gui/gui_Test_Button.png"):SizeToImage():SetText("Pause");
+        tempEndTurn = Loveframes.Create("imagebutton"):SetImage("assets/gui/gui_Test_Button.png"):SizeToImage():SetText("End turn");
+        backToMenu = Loveframes.Create("imagebutton"):SetImage("assets/gui/gui_Test_Button.png"):SizeToImage():SetText("Back to menu");
+        backToGame = Loveframes.Create("imagebutton"):SetImage("assets/gui/gui_Test_Button.png"):SizeToImage():SetText("Back to game");
+        buy = Loveframes.Create("imagebutton"):SetImage("assets/gui/gui_Test_Button.png"):SizeToImage():SetText("Buy Upgrade");
+        reset = Loveframes.Create("imagebutton"):SetImage("assets/gui/gui_Test_Button.png"):SizeToImage():SetText("Reset")
+    };
+
     --table contains all elements like upgradebutton, achievementbuttons and wikibuttons
     klickableElement = {
         upgrade1 = KlickableElement("SpeedUp", "assets/gui/gui_Test_klickableElement.png", "assets/gui/gui_Test_klickableElement_checked.png", "Text for SpeedUp. Text for SpeedUp. Text for SpeedUp. ");
@@ -76,32 +98,13 @@ local Gui = Class {
         music = Loveframes.Create("slider"):SetText("Music"):SetMinMax(0, 100):SetWidth(128)
     };
     --Table contains all buttons
-    button = {
-        back = Loveframes.Create("imagebutton"):SetImage("assets/gui/gui_Test_Button.png"):SizeToImage():SetText("Back");
-        upgradeMenu = Loveframes.Create("imagebutton"):SetImage("assets/gui/gui_Test_Button.png"):SizeToImage():SetText("Upgrade Menu");
-        credits = Loveframes.Create("imagebutton"):SetImage("assets/gui/gui_Test_Button.png"):SizeToImage():SetText("Credits");
-        wiki = Loveframes.Create("imagebutton"):SetImage("assets/gui/gui_Test_Button.png"):SizeToImage():SetText("Wiki");
-        achievements = Loveframes.Create("imagebutton"):SetImage("assets/gui/gui_Test_Button.png"):SizeToImage():SetText("Achievements");
-        options = Loveframes.Create("imagebutton"):SetImage("assets/gui/gui_Test_Button.png"):SizeToImage():SetText("Options");
-        options_mM = Loveframes.Create("imagebutton"):SetImage("assets/gui/gui_Test_Button.png"):SizeToImage():SetText("Options");
-        start = Loveframes.Create("imagebutton"):SetImage("assets/gui/gui_Test_Button.png"):SizeToImage():SetText("Start game");
-        level1 = Loveframes.Create("imagebutton"):SetImage("assets/gui/gui_Test_Button.png"):SizeToImage():SetText("Level 1");
-        level2 = Loveframes.Create("imagebutton"):SetImage("assets/gui/gui_Test_Button.png"):SizeToImage():SetText("Level 2");
-        level3 = Loveframes.Create("imagebutton"):SetImage("assets/gui/gui_Test_Button.png"):SizeToImage():SetText("Level 3");
-        retry = Loveframes.Create("imagebutton"):SetImage("assets/gui/gui_Test_Button.png"):SizeToImage():SetText("Retry");
-        pause = Loveframes.Create("imagebutton"):SetImage("assets/gui/gui_Test_Button.png"):SizeToImage():SetText("Pause");
-        tempEndTurn = Loveframes.Create("imagebutton"):SetImage("assets/gui/gui_Test_Button.png"):SizeToImage():SetText("End turn");
-        backToMenu = Loveframes.Create("imagebutton"):SetImage("assets/gui/gui_Test_Button.png"):SizeToImage():SetText("Back to menu");
-        backToGame = Loveframes.Create("imagebutton"):SetImage("assets/gui/gui_Test_Button.png"):SizeToImage():SetText("Back to game");
-        buy = Loveframes.Create("imagebutton"):SetImage("assets/gui/gui_Test_Button.png"):SizeToImage():SetText("Buy Upgrade");
-        reset = Loveframes.Create("imagebutton"):SetImage("assets/gui/gui_Test_Button.png"):SizeToImage():SetText("Reset")
-    };
+
 };
 
----returns a scaled value for element positions
+---returns a scaled value in pixel for elements positions
 -- @parm axis: x or y axis
 -- @parm percent: Length in percent
-function Gui:getScaledValue(axis, percent)
+function Gui:getScaledPixel(axis, percent)
     if axis == "x" then
         return (_persTable.winDim[1] / 100 * percent);
     elseif axis == "y" then
@@ -135,28 +138,28 @@ function Gui:buildMainMenu(x, y)
     self.myFrame.mainMenu:addElement(self.background.mainMenu, 0, 0);
     
     self.myFrame.mainMenu:addElement(
-        self.button.start, 
+        Gui.button.start, 
         self.myFrame.mainMenu:centerElementX(x, self.background.mainMenu:GetImageWidth(), 128), 
-        self:getScaledValue("y", 5));
+        self:getScaledPixel("y", 5));
     self.myFrame.mainMenu:addElement(
-        self.button.upgradeMenu, 
+        Gui.button.upgradeMenu, 
         self.myFrame.mainMenu:centerElementX(x, self.background.mainMenu:GetImageWidth(), 128), 
-        32 + self:getScaledValue("y", 7));
+        32 + self:getScaledPixel("y", 7));
     self.myFrame.mainMenu:addElement(
-        self.button.credits,
+        Gui.button.credits,
         self.myFrame.mainMenu:centerElementX(x, self.background.mainMenu:GetImageWidth(), 128),
-        64 + self:getScaledValue("y", 9));
-    self.myFrame.mainMenu:addElement(self.button.wiki,
+        64 + self:getScaledPixel("y", 9));
+    self.myFrame.mainMenu:addElement(Gui.button.wiki,
         self.myFrame.mainMenu:centerElementX(x, self.background.mainMenu:GetImageWidth(), 128),
-        96 + self:getScaledValue("y", 11));
+        96 + self:getScaledPixel("y", 11));
     self.myFrame.mainMenu:addElement(
-        self.button.achievements,
+        Gui.button.achievements,
         self.myFrame.mainMenu:centerElementX(x, self.background.mainMenu:GetImageWidth(), 128),
-        128 + self:getScaledValue("y", 13));
+        128 + self:getScaledPixel("y", 13));
     self.myFrame.mainMenu:addElement(
-        self.button.options_mM,
+        Gui.button.options_mM,
         self.myFrame.mainMenu:centerElementX(x, self.background.mainMenu:GetImageWidth(), 128),
-        160 + self:getScaledValue("y", 15));
+        160 + self:getScaledPixel("y", 15));
 end
 
 ---add, scale and postion all elements on upgrade menu
@@ -176,11 +179,11 @@ function Gui:buildUpgradeMenu(x, y)
     self.chart.upgrades:addKlickableElement(self.klickableElement.upgrade6);
     self.myFrame.upgradeMenu:addElement(self.chart.upgrades,
         self.myFrame.upgradeMenu:centerElementX(x, self.background.upgradeMenu:GetImageWidth(), 192), 
-        self:getScaledValue("y", 5));
+        self:getScaledPixel("y", 5));
     
     self.myFrame.upgradeMenu:addElement(self.background.upgradeMenu, 0, 0);
-    self.myFrame.upgradeMenu:addElement(self.button.buy, self.myFrame.upgradeMenu:centerElementX(x, self.background.upgradeMenu:GetImageWidth(), 128), self:getScaledValue("y", 7) + 200);
-    self.myFrame.upgradeMenu:addElement(self.button.back, self.myFrame.upgradeMenu:centerElementX(x, self.background.upgradeMenu:GetImageWidth(), 128), self:getScaledValue("y", 9) + 232);
+    self.myFrame.upgradeMenu:addElement(Gui.button.buy, self.myFrame.upgradeMenu:centerElementX(x, self.background.upgradeMenu:GetImageWidth(), 128), self:getScaledPixel("y", 7) + 200);
+    self.myFrame.upgradeMenu:addElement(Gui.button.back, self.myFrame.upgradeMenu:centerElementX(x, self.background.upgradeMenu:GetImageWidth(), 128), self:getScaledPixel("y", 9) + 232);
 end
 
 ---add, scale and postion all elements on credits
@@ -194,7 +197,7 @@ function Gui:buildCredits(x, y)
     self.myFrame.credits:setPosition((x/2 - self.background.credits:GetImageWidth()/2*self.background.credits:GetScaleX()),
         (y/2 - self.background.credits:GetImageHeight()/2*self.background.credits:GetScaleY()));
     self.myFrame.credits:addElement(self.background.credits, 0, 0);
-    self.myFrame.credits:addElement(self.button.back, self.myFrame.credits:centerElementX(x, self.background.credits:GetImageWidth(), 128), 50);
+    self.myFrame.credits:addElement(Gui.button.back, self.myFrame.credits:centerElementX(x, self.background.credits:GetImageWidth(), 128), 50);
 end
 
 ---add, scale and postion all elements on wiki
@@ -214,10 +217,10 @@ function Gui:buildWiki(x, y)
     self.chart.wiki:addKlickableElement(self.klickableElement.wiki6);
     self.myFrame.wiki:addElement(self.chart.wiki,
         self.myFrame.upgradeMenu:centerElementX(x, self.background.upgradeMenu:GetImageWidth(), 192), 
-        self:getScaledValue("y", 5));
+        self:getScaledPixel("y", 5));
 
     self.myFrame.wiki:addElement(self.background.wiki, 0, 0);
-    self.myFrame.wiki:addElement(self.button.back, self.myFrame.upgradeMenu:centerElementX(x, self.background.upgradeMenu:GetImageWidth(), 128), self:getScaledValue("y", 7) + 200);
+    self.myFrame.wiki:addElement(Gui.button.back, self.myFrame.upgradeMenu:centerElementX(x, self.background.upgradeMenu:GetImageWidth(), 128), self:getScaledPixel("y", 7) + 200);
 end
 
 ---add, scale and postion all elements on achievements
@@ -230,9 +233,9 @@ function Gui:buildAchievements(x, y)
         (y/2 - self.background.achievements:GetImageHeight()/2*self.background.achievements:GetScaleY()));
     
     self.myFrame.achievements:addElement(self.background.achievements, 0, 0);
-    self.myFrame.achievements:addElement(self.button.back,
+    self.myFrame.achievements:addElement(Gui.button.back,
         self.myFrame.mainMenu:centerElementX(x, self.background.mainMenu:GetImageWidth(), 128), 
-        self:getScaledValue("y", 5));
+        self:getScaledPixel("y", 5));
 end
 
 function Gui:buildOptions(x, y)
@@ -242,16 +245,16 @@ function Gui:buildOptions(x, y)
     self.myFrame.options:addElement(self.background.options, 0, 0);
     self.myFrame.options:addElement(self.slider.bgm,
         self.myFrame.options:centerElementX(x, self.background.options:GetImageWidth(), 128), 
-        self:getScaledValue("y", 5));
+        self:getScaledPixel("y", 5));
     self.myFrame.options:addElement(self.slider.music,
         self.myFrame.options:centerElementX(x, self.background.options:GetImageWidth(), 128), 
-        self:getScaledValue("y", 7) + 32);
-    self.myFrame.options:addElement(self.button.reset,
+        self:getScaledPixel("y", 7) + 32);
+    self.myFrame.options:addElement(Gui.button.reset,
         self.myFrame.options:centerElementX(x, self.background.options:GetImageWidth(), 128), 
-        self:getScaledValue("y", 9) + 64);
-    self.myFrame.options:addElement(self.button.back,
+        self:getScaledPixel("y", 9) + 64);
+    self.myFrame.options:addElement(Gui.button.back,
         self.myFrame.options:centerElementX(x, self.background.options:GetImageWidth(), 128), 
-        self:getScaledValue("y", 11) + 96);
+        self:getScaledPixel("y", 11) + 96);
 end
 
 ---add, scale and postion all elements on pause
@@ -263,16 +266,16 @@ function Gui:buildPause(x, y)
         (x/2 - self.background.pause:GetImageWidth()/2*self.background.pause:GetScaleX()),
         (y/2 - self.background.pause:GetImageHeight()/2*self.background.pause:GetScaleY()));
     self.myFrame.pause:addElement(self.background.pause, 0, 0);
-    self.myFrame.pause:addElement(self.button.backToGame, self.myFrame.pause:centerElementX(x, self.background.pause:GetImageWidth(), 128), 50);
-    self.myFrame.pause:addElement(self.button.backToMenu, self.myFrame.pause:centerElementX(x, self.background.pause:GetImageWidth(), 128), 100);
-    self.myFrame.pause:addElement(self.button.options, self.myFrame.pause:centerElementX(x, self.background.pause:GetImageWidth(), 128), 150);
+    self.myFrame.pause:addElement(Gui.button.backToGame, self.myFrame.pause:centerElementX(x, self.background.pause:GetImageWidth(), 128), 50);
+    self.myFrame.pause:addElement(Gui.button.backToMenu, self.myFrame.pause:centerElementX(x, self.background.pause:GetImageWidth(), 128), 100);
+    self.myFrame.pause:addElement(Gui.button.options, self.myFrame.pause:centerElementX(x, self.background.pause:GetImageWidth(), 128), 150);
 end
 
 ---add, scale and postion all elements on ingame
 function Gui:buildInGame(x, y)
     self.myFrame.inGame:setPosition(0, 30);
-    self.myFrame.inGame:addElement(self.button.pause, 30, 0);
-    self.myFrame.inGame:addElement(self.button.tempEndTurn, 30, 50);
+    self.myFrame.inGame:addElement(Gui.button.pause, 30, 0);
+    self.myFrame.inGame:addElement(Gui.button.tempEndTurn, 30, 50);
 end
 
 ---add, scale and postion all elements on level
@@ -284,10 +287,10 @@ function Gui:buildLevel(x, y)
         (x/2 - self.background.level:GetImageWidth()/2*self.background.level:GetScaleX()),
         (y/2 - self.background.level:GetImageHeight()/2*self.background.level:GetScaleY()));
     self.myFrame.level:addElement(self.background.level, 0, 0);
-    self.myFrame.level:addElement(self.button.level1, self.myFrame.level:centerElementX(x, self.background.level:GetImageWidth(), 128), 50);
-    self.myFrame.level:addElement(self.button.level2, self.myFrame.level:centerElementX(x, self.background.level:GetImageWidth(), 128), 100);
-    self.myFrame.level:addElement(self.button.level3, self.myFrame.level:centerElementX(x, self.background.level:GetImageWidth(), 128), 150);
-    self.myFrame.level:addElement(self.button.back, self.myFrame.level:centerElementX(x, self.background.level:GetImageWidth(), 128), 200);
+    self.myFrame.level:addElement(Gui.button.level1, self.myFrame.level:centerElementX(x, self.background.level:GetImageWidth(), 128), 50);
+    self.myFrame.level:addElement(Gui.button.level2, self.myFrame.level:centerElementX(x, self.background.level:GetImageWidth(), 128), 100);
+    self.myFrame.level:addElement(Gui.button.level3, self.myFrame.level:centerElementX(x, self.background.level:GetImageWidth(), 128), 150);
+    self.myFrame.level:addElement(Gui.button.back, self.myFrame.level:centerElementX(x, self.background.level:GetImageWidth(), 128), 200);
 end
 
 ---add, scale and postion all elements on score
@@ -296,8 +299,8 @@ function Gui:buildScore(x, y)
     self.myFrame.score:setPosition((x/2 - self.background.score:GetImageWidth()/2*self.background.score:GetScaleX()),
         (y/2 - self.background.score:GetImageHeight()/2*self.background.score:GetScaleY()));
     self.myFrame.score:addElement(self.background.score, 0, 0);
-    self.myFrame.score:addElement(self.button.backToMenu, self.myFrame.score:centerElementX(x, self.background.score:GetImageWidth(), 128), 50);
-    self.myFrame.score:addElement(self.button.retry, self.myFrame.score:centerElementX(x, self.background.score:GetImageWidth(), 128), 100);
+    self.myFrame.score:addElement(Gui.button.backToMenu, self.myFrame.score:centerElementX(x, self.background.score:GetImageWidth(), 128), 50);
+    self.myFrame.score:addElement(Gui.button.retry, self.myFrame.score:centerElementX(x, self.background.score:GetImageWidth(), 128), 100);
 end
 
     
@@ -390,7 +393,7 @@ function Gui:tempTextOutput()
         "\n" ..
         "_persTable.config" .. "\n" .. 
         "BGM =" .. tostring(_persTable.config.bgm).. "\n" ..
-        "Music =" .. tostring(_persTable.config.music).. "\n";
+        "Music =" .. tostring(_persTable.config.music);
 end
 
 ---set the state of the gui elements on the defined status
