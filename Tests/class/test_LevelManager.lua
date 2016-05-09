@@ -5,7 +5,6 @@ LevelManager = require "src.class.LevelManager";
 match = require 'luassert.match';
 
 describe("Unit test suite for the LevelManager class", function()
-    
     before_each(function()
         _G.love = {
             graphics = {
@@ -25,35 +24,59 @@ describe("Unit test suite for the LevelManager class", function()
             }
         }
         
-        Level = {
-            
-        }
+        _G.Level = {
+            init = function(...) return {1} end
+        };
+
+        _G.Bait = {
+            init = function(...) end,
+            checkUpgrades = function(...) end
+        };
+
+        _G.SwarmFactory = {
+            init = function(...) end
+        };
 
         _G._persTable = {
-            winDim = {930, 523.125}
+            winDim = {930, 523.125},
             upgrades = {
                 godMode = 1
             },
             phase = 1;
-        }
+        };
 
         _G.loveMock = mock(_G.love, true);
-            
-        levMan = LevelManager("testPfad", 1, "data.lua");
+        _G.levelMock = mock(_G.Level, true);
+        _G.playerMock = mock(_G.Bait, true);
+        _G.swarmFacMock = mock(_G.SwarmFactory, true);
+        levMan = LevelManager();
     end)
 
     it("Testing Constructor", function()
+        local const = spy.on(LevelManager, "init");
         local myInstance = LevelManager();
-        assert.are.same(levMan, myInstance);
+        assert.spy(const).was.called(1);
+        assert.spy(const).was.called_with(myInstance);
     end)
 
     it("Testing newLevel", function()
-        levMan:newLevel("testPfad", 1, "data.lua");
-        assert.spy(loveMock.graphics.newImage).was.called_with("testPfad");
         
+        levMan:newLevel("testPfad", 1, "data.lua");
+        assert.spy(levelMock.init).was.called_with("testPfad", 1, "data.lua");
     end)
 
     it("Testing getCurLevel", function()
-        
+        levMan.curLevel = {1, 2, 4};
+        assert.are.same(levMan.curLevel, levMan:getCurLevel());
+    end)
+
+    it("Testing getCurPlayer", function()
+        levMan.curPlayer = {4, 689, 693};
+        assert.are.same(levMan.curPlayer, levMan:getCurPlayer());
+    end)
+
+    it("Testing getCurSwarmFactory", function()
+        levMan.curSwarmFac = {2, 46, 8939};
+        assert.are.same(levMan.curSwarmFac, levMan:getCurSwarmFactory());
     end)
 end)
