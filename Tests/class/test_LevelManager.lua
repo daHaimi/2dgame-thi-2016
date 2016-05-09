@@ -60,7 +60,6 @@ describe("Unit test suite for the LevelManager class", function()
     end)
 
     it("Testing newLevel", function()
-        
         levMan:newLevel("testPfad", 1, "data.lua");
         assert.spy(levelMock.init).was.called_with("testPfad", 1, "data.lua");
     end)

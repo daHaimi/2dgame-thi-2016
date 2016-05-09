@@ -16,7 +16,6 @@ local LevelManager = Class {
 
 --- Create a new level object.
 -- @param backgroundPath The relative path to the picture.
--- @param winDim The dimensions of the window.
 -- @param direction The y direction (-1 means up and 1 means down).
 -- @param swarmFactory The swarm factory of the level.
 -- @return Returns a reference to the created level object.
@@ -35,10 +34,14 @@ function LevelManager:getCurLevel()
     return self.curLevel;
 end
 
+--- Get the current swarmfactory object.
+-- @return Returns the reference to the current swarmfactory object.
 function LevelManager:getCurSwarmFactory()
     return self.curSwarmFac;
 end
 
+--- Get the current bait/player object.
+-- @return Returns the reference to the current player object.
 function LevelManager:getCurPlayer()
     return self.curPlayer;
 end

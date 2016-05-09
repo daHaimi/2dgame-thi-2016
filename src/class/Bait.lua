@@ -5,6 +5,7 @@ LevelManager = require "class.LevelManager";
 
 --- Class for the Bait swimming for Phase 1 and 2
 -- @param winDim window Size
+-- @param levelManager The reference to the level manager object
 local Bait = Class {
     init = function(self, winDim, levelManager)
         self.winDim = winDim;
