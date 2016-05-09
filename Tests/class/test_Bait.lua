@@ -10,6 +10,7 @@ describe("Unit test for Bait.lua", function()
     local locWinDim = { 400, 800 };
     local locLevel = {
         moved = 4;
+        getMoved = function() return 4 end;
         getDirection = function() return 1 end;
         getSwarmFactory = function() return 
             { 
@@ -43,7 +44,7 @@ describe("Unit test for Bait.lua", function()
     it("Testing Update", function()
         local myInstance = testClass(locWinDim, locLevel);
         myInstance:update();
-        assert.are.same(0.32, myInstance.modifire);
+        assert.are.same(0.32, myInstance.modifier);
         myInstance.curLevel = {
             moved = -4;
             getDirection = function () return -1; end;
@@ -61,9 +62,24 @@ describe("Unit test for Bait.lua", function()
         end;
         }
         myInstance:update();
-        assert.are.same(0.325, myInstance.modifire);
+        assert.are.same(0.325, myInstance.modifier);
+        myInstance.modifier = 0.8
+        myInstance:update();
+        assert.are.same(0.68, myInstance.modifier);
     end)
 
+    it("Test sleeping pill duration", function()
+        local myInstance = testClass(locWinDim, locLevel);
+        myInstance.sleepingPillDuration = 10;
+        myInstance:update();
+        assert.are.same(6, myInstance.sleepingPillDuration);
+    end)
+
+    it("Test getGoldenRule", function()
+        lower, upper = locInstance:getGoldenRule()
+        assert.are.same(0.32, lower);
+        assert.are.same(0.68, upper);
+    end)
 
     --- Tests for more Life
     it("Test moreLife 0", function()
@@ -217,5 +233,10 @@ describe("Unit test for Bait.lua", function()
         
         
         assert.are.same(600, myInstance.sleepingPillDuration);
+    end)
+
+    it("Test setLevel", function()
+        locInstance:setLevel("just a level");
+        assert.are.same("just a level", locInstance.curLevel);
     end)
 end)

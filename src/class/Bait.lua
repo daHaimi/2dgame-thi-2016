@@ -26,7 +26,7 @@ local Bait = Class {
     sleepingPillDuration = 0;
     curLevel = nil;
     deltaTime = 0;
-    modifire = 0;
+    modifier = 0;
     goldenRuleLowerPoint = 0.32;
     goldenRuleUpperPoint = 0.68;
 };
@@ -46,20 +46,20 @@ end
 --- updates the bait and checks for collisions
 -- @param dt Delta time is the amount of seconds since the last time this function was called.
 function Bait:update(dt)
-    -- calculate modifire for the golden rule
+    -- calculate modifier for the golden rule
     if self.curLevel:getDirection() == 1 then
        
-        self.modifire = self.goldenRuleLowerPoint;
+        self.modifier = self.goldenRuleLowerPoint;
     else
       
-        if self.modifire < self.goldenRuleUpperPoint then
-            self.modifire = self.modifire - self.curLevel.moved /self.winDim[2];
+        if self.modifier < self.goldenRuleUpperPoint then
+            self.modifier = self.modifier - self.curLevel.moved /self.winDim[2];
         else
-            self.modifire = self.goldenRuleUpperPoint;
+            self.modifier = self.goldenRuleUpperPoint;
         end
     end
     
-    self.yPos = (self.winDim[2] * self.modifire) - (self.size / 2);
+    self.yPos = (self.winDim[2] * self.modifier) - (self.size / 2);
     self:setCappedPosX();
     self.xPos = self.posXBait;
     self.deltaTime = dt;
@@ -160,7 +160,7 @@ function Bait:setLevel(newLevel)
 end
 
 function Bait:getGoldenRule()
-    return goldenRuleLowerPoint, goldenRuleUpperPoint;
+    return self.goldenRuleLowerPoint, self.goldenRuleUpperPoint;
 end
 
 return Bait;
