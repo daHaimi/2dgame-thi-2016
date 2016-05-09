@@ -9,6 +9,10 @@ describe("Unit test for FishableObject.lua", function()
         _G.love = {
             graphics = {
                 setColor = function(...) end;
+                setNewFont = function(...)end;
+                getFont = function(...) return "this could be your font" end;
+                setFont = function(...) end;
+                print = function(...) end;
                 newImage = function(...) return "assets/deadFish.png" end;
                 draw = function(...) end;
                 scale = function(...) end;
@@ -41,6 +45,12 @@ describe("Unit test for FishableObject.lua", function()
         assert.are.equal(locInstance.hitpoints, myInstance.hitpoints);
     end)
 
+    it("Testing setToCaught Function", function()
+        locInstance:setToCaught();
+        assert.are.same(locInstance.yPosition, locInstance.caughtAt);
+        assert.are.same(true, locInstance.caught);
+    end)
+
     it("Testing setXPosition", function()
         locInstance:setXPosition(30);
         assert.are.equal(30, locInstance.xPosition);
@@ -48,7 +58,7 @@ describe("Unit test for FishableObject.lua", function()
         assert.are.equal(50, locInstance.xPosition);
     end)
 
-    it("Testing draw Function 1", function()
+    it("Testing draw Function with positiv speed", function()
         local loveMock = mock(_G.love, true);
         locInstance:setXPosition(150);
         locInstance.speed = 30;
@@ -56,12 +66,21 @@ describe("Unit test for FishableObject.lua", function()
         assert.spy(loveMock.graphics.draw).was_called_with("assets/deadFish.png", -150, 50);
     end)
 
-    it("Testing draw Function 2", function()
+    it("Testing draw Function with negativ speed", function()
         local loveMock = mock(_G.love, true);
         locInstance:setXPosition(400);
         locInstance.speed = -300;
         locInstance:draw();
         assert.spy(loveMock.graphics.draw).was_called_with("assets/deadFish.png", 400, 50);
+    end)
+
+    it("Testing draw Function when caught", function()
+        local loveMock = mock(_G.love, true);
+        locInstance.xPosition = 50;
+        locInstance.yPosition = 100;
+        locInstance:setToCaught();
+        locInstance:draw();
+        assert.spy(loveMock.graphics.print).was_called_with(50, 50, 100);
     end)
 
     it("Testing Update Function", function()
@@ -74,6 +93,9 @@ describe("Unit test for FishableObject.lua", function()
         assert.are.equal(136, locInstance.xPosition);
         locInstance:update();
         assert.are.equal(-164, locInstance.xPosition);
+        locInstance:update();
+        assert.are.equal(364, locInstance.xPosition);
+        locInstance:setToCaught();
         locInstance:update();
         assert.are.equal(364, locInstance.xPosition);
     end)
