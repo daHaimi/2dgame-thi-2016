@@ -239,8 +239,8 @@ fishableObject {
 
 fishableObject {
     name = "sleepingPill",
-    image = "hamster.png",
-    spriteSize = 64,
+    image = "pill.png",
+    spriteSize = 32,
     minSpeed = 0,
     maxSpeed = 0,
     hitpoints = 0,        
@@ -252,10 +252,22 @@ fishableObject {
     
     hitbox = {
         {
-            width = 30,
-            height = 30,
-            deltaXPos = 17,
-            deltaYPos = 17
+            width = 15,
+            height = 15,
+            deltaXPos = 1,
+            deltaYPos = 1
+        },
+        {
+            width = 15,
+            height = 15,
+            deltaXPos = 8,
+            deltaYPos = 8
+        },
+        {
+            width = 15,
+            height = 15,
+            deltaXPos = 15,
+            deltaYPos = 15
         }
     }
 }
