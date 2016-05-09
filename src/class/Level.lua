@@ -16,7 +16,7 @@ local Level = Class {
         end;
         self.backgroundPath = backgroundPath;
         self.winDim = winDim;
-        self.posY = (winDim[2] / 2); --startpos
+        self.posY = (winDim[2] * 0.32); --startpos
         --self.direction = self.direction * direction;
         if self.bg ~= nil then -- do not remove this if statement or busted will crash
         self.bgq = love.graphics.newQuad(0, 0, winDim[1], 20000, self.bg:getWidth(), self.bg:getHeight());
@@ -320,6 +320,15 @@ function Level:printResult()
         ypos = ypos + 15;
         love.graphics.print("Nothing caught", xpos, ypos);
     end
+end
+
+--- returns the amount of pixels moved in y direction
+function Level:getMoved()
+    return self.moved;
+end
+
+function Level:getSwarmFactory()
+    return self.swarmFac;
 end
 
 return Level;

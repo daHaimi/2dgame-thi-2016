@@ -2,13 +2,29 @@
 _G.math.inf = 1 / 0
 
 testClass = require "src.class.Bait"
+SwarmFactory = require"src.class.SwarmFactory";
 
 describe("Unit test for Bait.lua", function()
     local locInstance;
     --- possible Window size
     local locWinDim = { 400, 800 };
-
-
+    local locLevel = {
+        moved = 4;
+        getDirection = function() return 1 end;
+        getSwarmFactory = function() return 
+            { 
+                createdFishables = {
+                    {
+                        caught = false;
+                        hitbox = {
+                            
+                        };
+                    }
+                    };
+            }
+        end;
+    }
+    
     before_each(function()
         _G.love = {
             mouse = {
@@ -22,6 +38,30 @@ describe("Unit test for Bait.lua", function()
     it("Testing Constructor", function()
         local myInstance = testClass(locWinDim);
         assert.are.same(locInstance, myInstance);
+    end)
+
+    it("Testing Update", function()
+        local myInstance = testClass(locWinDim, locLevel);
+        myInstance:update();
+        assert.are.same(0.32, myInstance.modifire);
+        myInstance.curLevel = {
+            moved = -4;
+            getDirection = function () return -1; end;
+            getSwarmFactory = function() return 
+            { 
+                createdFishables = {
+                    {
+                        caught = false;
+                        hitbox = {
+                            
+                        };
+                    }
+                    };
+            }
+        end;
+        }
+        myInstance:update();
+        assert.are.same(0.325, myInstance.modifire);
     end)
 
 

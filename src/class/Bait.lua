@@ -48,8 +48,10 @@ end
 function Bait:update(dt)
     -- calculate modifire for the golden rule
     if self.curLevel:getDirection() == 1 then
+       
         self.modifire = self.goldenRuleLowerPoint;
     else
+      
         if self.modifire < self.goldenRuleUpperPoint then
             self.modifire = self.modifire - self.curLevel.moved /self.winDim[2];
         else
@@ -61,11 +63,11 @@ function Bait:update(dt)
     self:setCappedPosX();
     self.xPos = self.posXBait;
     self.deltaTime = dt;
-    self:checkForCollision();
+    self:checkForCollision(#self.curLevel:getSwarmFactory().createdFishables);
     
     -- decrease or deativate sleeping pill
     if self.sleepingPillDuration > 0 then
-        self.sleepingPillDuration = self.sleepingPillDuration - math.abs(FishableObject:getYMovement());
+        self.sleepingPillDuration = self.sleepingPillDuration - math.abs(self.curLevel:getMoved());
     else
         self.sleepingPillDuration = 0;
         FishableObject:setSpeedMultiplicator(1);
@@ -73,10 +75,11 @@ function Bait:update(dt)
 end
 
 --- checks for collision
-function Bait:checkForCollision()
-    for i = 1, #SwarmFactory.createdFishables, 1 do
-        if not SwarmFactory.createdFishables[i].caught then
-            local fishable = SwarmFactory.createdFishables[i];
+-- @param CollisionDetection class of the collision detection
+function Bait:checkForCollision(numberOfFishables)
+    for i = 1, numberOfFishables, 1 do
+        if not self.curLevel:getSwarmFactory().createdFishables[i].caught then
+            local fishable = self.curLevel:getSwarmFactory().createdFishables[i];
             for c = 1, #fishable.hitbox, 1 do
                 CollisionDetection:setCollision();
                 CollisionDetection:calculateCollision(self.xPos, self.yPos, fishable:getHitboxXPosition(c),
