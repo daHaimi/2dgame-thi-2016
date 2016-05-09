@@ -26,6 +26,9 @@ local Bait = Class {
     sleepingPillDuration = 0;
     curLevel = nil;
     deltaTime = 0;
+    modifire = 0;
+    goldenRuleLowerPoint = 0.32;
+    goldenRuleUpperPoint = 0.68;
 };
 
 --- TODO need balancing
@@ -43,12 +46,24 @@ end
 --- updates the bait and checks for collisions
 -- @param dt Delta time is the amount of seconds since the last time this function was called.
 function Bait:update(dt)
-    self.yPos = (self.winDim[2] / 2) - (self.size / 2);
+    -- calculate modifire for the golden rule
+    if self.curLevel:getDirection() == 1 then
+        self.modifire = self.goldenRuleLowerPoint;
+    else
+        if self.modifire < self.goldenRuleUpperPoint then
+            self.modifire = self.modifire - self.curLevel.moved /self.winDim[2];
+        else
+            self.modifire = self.goldenRuleUpperPoint;
+        end
+    end
+    
+    self.yPos = (self.winDim[2] * self.modifire) - (self.size / 2);
     self:setCappedPosX();
     self.xPos = self.posXBait;
     self.deltaTime = dt;
     self:checkForCollision();
     
+    -- decrease or deativate sleeping pill
     if self.sleepingPillDuration > 0 then
         self.sleepingPillDuration = self.sleepingPillDuration - math.abs(FishableObject:getYMovement());
     else
@@ -139,6 +154,10 @@ end
 --- Set a new level reference
 function Bait:setLevel(newLevel)
     self.curLevel = newLevel;
+end
+
+function Bait:getGoldenRule()
+    return goldenRuleLowerPoint, goldenRuleUpperPoint;
 end
 
 return Bait;

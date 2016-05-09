@@ -1,7 +1,6 @@
 -- Lua 5.1 Hack
 _G.math.inf = 1 / 0
 
-FishableObject = require "src.class.FishableObject";
 testClass = require "src.class.Level";
 match = require 'luassert.match';
 

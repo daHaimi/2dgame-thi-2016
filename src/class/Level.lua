@@ -60,7 +60,7 @@ function Level:update(dt, bait)
     --set the direction in relation of the yPosition
     if self.posY <= self.lowerBoarder then
         self:switchToPhase2();
-    elseif self.posY >= (self.winDim[2] / 2) and self.direction == -1 then
+    elseif self.posY >= (self.winDim[2] * 0.68) and self.direction == -1 then
         self.direction = 0;
         self.levelFinished = 1;
         self:payPlayer();
