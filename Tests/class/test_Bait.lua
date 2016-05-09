@@ -30,8 +30,13 @@ describe("Unit test for Bait.lua", function()
         _G.love = {
             mouse = {
                 setPosition = function(...) end
+            },
+            graphics = {
+                setColor = function(...) end;
+                rectangle = function(...) end;
             }
         }
+        
 
         locInstance = testClass(locWinDim);
     end)
@@ -211,6 +216,21 @@ describe("Unit test for Bait.lua", function()
         local newPos = myInstance.posXMouse;
         myInstance:setCappedPosX();
         assert.are.same(myInstance.posXBait, newPos);
+    end)
+
+    it("Test draw", function()
+        local myInstance = testClass(locWinDim, locLevel);
+        local loveMock = mock(_G.love, true);
+        myInstance.curLevel = {getGodModeStat = function() return 0; end};
+        myInstance.xPos = 500;
+        myInstance.yPos = 400;
+        myInstance.size = 10;
+        myInstance:draw();
+        assert.spy(loveMock.graphics.setColor).was_called_with(127, 0, 255);
+        myInstance.curLevel = {getGodModeStat = function() return 1; end};
+        myInstance:draw();
+        assert.spy(loveMock.graphics.setColor).was_called_with(255, 0, 0);
+        assert.spy(loveMock.graphics.rectangle).was_called_with("fill", 500, 400, 10, 10);
     end)
 
     it("Test getXPos", function()
