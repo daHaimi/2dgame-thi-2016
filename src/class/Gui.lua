@@ -4,6 +4,7 @@ Class = require "lib.hump.class";
 Chart = require "class.Chart";
 KlickableElement = require "class.KlickableElement";
 Textbox = require "class.Textbox";
+Healthbar = require "class.Healthbar";
 
 
 local Gui = Class {
@@ -45,7 +46,8 @@ local Gui = Class {
         backToMenu = Loveframes.Create("imagebutton"):SetImage("assets/gui/gui_Test_Button.png"):SizeToImage():SetText("Back to menu");
         backToGame = Loveframes.Create("imagebutton"):SetImage("assets/gui/gui_Test_Button.png"):SizeToImage():SetText("Back to game");
         buy = Loveframes.Create("imagebutton"):SetImage("assets/gui/gui_Test_Button.png"):SizeToImage():SetText("Buy Upgrade");
-        reset = Loveframes.Create("imagebutton"):SetImage("assets/gui/gui_Test_Button.png"):SizeToImage():SetText("Reset")
+        reset = Loveframes.Create("imagebutton"):SetImage("assets/gui/gui_Test_Button.png"):SizeToImage():SetText("Reset");
+        minusLife = Loveframes.Create("imagebutton"):SetImage("assets/gui/gui_Test_Button.png"):SizeToImage():SetText("-1 Life");
     };
 
     --table contains all elements like upgradebutton, achievementbuttons and wikibuttons
@@ -97,6 +99,10 @@ local Gui = Class {
         bgm = Loveframes.Create("slider"):SetText("BGM"):SetMinMax(0, 100):SetWidth(128);
         music = Loveframes.Create("slider"):SetText("Music"):SetMinMax(0, 100):SetWidth(128)
     };
+    
+    inGameElements ={
+        healthbar = Healthbar("assets/hamster.png", "assets/heart_grey.png", "assets/heart.png", 3);
+        };
 };
 
 ---returns a scaled value in pixel for elements positions
@@ -158,6 +164,7 @@ function Gui:buildMainMenu(x, y)
         Gui.button.options_mM,
         self.myFrame.mainMenu:centerElementX(x, self.background.mainMenu:GetImageWidth(), 128),
         160 + self:getScaledPixel("y", 15));
+    
 end
 
 ---add, scale and postion all elements on upgrade menu
@@ -272,8 +279,11 @@ end
 ---add, scale and postion all elements on ingame
 function Gui:buildInGame(x, y)
     self.myFrame.inGame:setPosition(0, 30);
-    self.myFrame.inGame:addElement(Gui.button.pause, 30, 0);
-    self.myFrame.inGame:addElement(Gui.button.tempEndTurn, 30, 50);
+    self.myFrame.inGame:addElement(Gui.button.pause, 0, 0);
+    self.myFrame.inGame:addElement(Gui.button.tempEndTurn, 0, 30);
+    self.myFrame.inGame:addElement(Gui.button.minusLife, 0, 60); 
+    self.myFrame.inGame:addElement(Gui.inGameElements.healthbar, 0, 0);
+    
 end
 
 ---add, scale and postion all elements on level
@@ -391,7 +401,9 @@ function Gui:tempTextOutput()
         "\n" ..
         "_persTable.config" .. "\n" .. 
         "BGM =" .. tostring(_persTable.config.bgm).. "\n" ..
-        "Music =" .. tostring(_persTable.config.music);
+        "Music =" .. tostring(_persTable.config.music).. "\n" ..
+        "\n" ..
+        "Money =" .. tostring(_persTable.money);
 end
 
 
@@ -585,6 +597,22 @@ end
 -- @param y The mouse position on the y axis
 Gui.button.backToGame.OnClick = function(obj, x, y)
     Gui:draw(Gui.myFrame.inGame);
+end
+
+--- Onclick event of the back to game button
+-- @param obj The clicked button object
+-- @param x The mouse position on the x axis
+-- @param y The mouse position on the y axis
+Gui.button.minusLife.OnClick = function(obj, x, y)
+    Gui.inGameElements.healthbar:minus();
+end
+
+--- Onclick event of the back to game button
+-- @param obj The clicked button object
+-- @param x The mouse position on the x axis
+-- @param y The mouse position on the y axis
+Gui.button.reset.OnClick = function(obj, x, y)
+    
 end
 
 --- Onclick event of the back button
