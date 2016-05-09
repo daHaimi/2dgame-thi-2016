@@ -39,13 +39,15 @@ local FishableObject = Class {
     
     hitbox = {};
     
-    drawIt = true;
     yMovement = 0;
+    
+    caught = false;
+    caughtAt = nil;
 };
 
 --- draw the object, still no sprite implementet
 function FishableObject:draw()
-    if self.drawIt then
+    if not self.caught then
         love.graphics.setColor(255, 255, 255);
         if self.speed < 0 then
             love.graphics.draw(self.image, self.xPosition, self.yPosition);
@@ -64,26 +66,44 @@ function FishableObject:draw()
             self:getHitboxWidth(i), self:getHitboxHeight(i));
         end]]
         
+    else
+        if math.abs(self.caughtAt - self.yPosition) < 50 then
+            if self.value > 0 then
+                love.graphics.setColor (0, 255, 0);
+            else
+                love.graphics.setColor (255, 0, 0);
+            end
+            
+            if not (self.value == 0) then
+                tempFont = love.graphics.getFont();
+                love.graphics.setNewFont(20);
+                love.graphics.print (math.abs(self.value), self.xPosition, self.yPosition);
+                love.graphics.setFont(tempFont);
+            end
+        end
     end
 end
 
 --- Updates the position of the object depending on its speed
 function FishableObject:update()
-    if ((self.xPosition - self.hitbox[1].deltaXPos) >= _G._persTable.winDim[1]) and self.speed > 0 then
+    if not self.caught then
+        if ((self.xPosition - self.hitbox[1].deltaXPos) >= _G._persTable.winDim[1]) and self.speed > 0 then
 
-        self.speed = self.speed * -1;
-        self.xPosition = _G._persTable.winDim[1] - self:getHitboxWidth(1) - self.hitbox[1].deltaXPos + 
-            self.speed * self.speedMulitplicator;
+            self.speed = self.speed * -1;
+            self.xPosition = _G._persTable.winDim[1] - self:getHitboxWidth(1) - self.hitbox[1].deltaXPos + 
+                self.speed * self.speedMulitplicator;
 
-    elseif (self.xPosition + self.hitbox[1].deltaXPos) <= 0 then
-        self.speed = self.speed * -1;
-        self.xPosition = math.abs(self:getHitboxWidth(1) + self.hitbox[1].deltaXPos + self.speed * self.speedMulitplicator);
+        elseif (self.xPosition + self.hitbox[1].deltaXPos) <= 0 then
+            self.speed = self.speed * -1;
+            self.xPosition = math.abs(self:getHitboxWidth(1) + self.hitbox[1].deltaXPos + self.speed * self.speedMulitplicator);
+        else
+
+            self.xPosition = self.xPosition + self.speed * self.speedMulitplicator;
+        end
+        self.yPosition = self.yPosition - self.yMovement;
     else
-
-        self.xPosition = self.xPosition + self.speed * self.speedMulitplicator;
+        self.yPosition = self.yPosition + 0.5 * self.yMovement;
     end
-
-    self.yPosition = self.yPosition - self.yMovement;
 end
 
 --- sets the xPosition
@@ -144,6 +164,12 @@ end
 --@param amount prozentage of the slow. 0.25 for slow to 25%
 function FishableObject:setSpeedMultiplicator(amount)
     self.speedMulitplicator = amount;
+end
+
+--- sets the objects to caught some functions behave in a different way now
+function FishableObject:setToCaught()
+    self.caught = true;
+    self.caughtAt = self.yPosition;
 end
 
 return FishableObject;

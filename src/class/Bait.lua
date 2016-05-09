@@ -60,7 +60,7 @@ end
 --- checks for collision
 function Bait:checkForCollision()
     for i = 1, #SwarmFactory.createdFishables, 1 do
-        if SwarmFactory.createdFishables[i].drawIt then
+        if not SwarmFactory.createdFishables[i].caught then
             local fishable = SwarmFactory.createdFishables[i];
             for c = 1, #fishable.hitbox, 1 do
                 CollisionDetection:setCollision();
@@ -80,10 +80,10 @@ end
 function Bait:collisionDetected(fishable, index)
     if fishable:getName() == "sleepingPill" then
         self:sleepingPillHitted(FishableObject);
-        SwarmFactory.createdFishables[index].drawIt = false;
+        SwarmFactory.createdFishables[index]:setToCaught();
     else
         if (self.numberOfHits >= _G._persTable.upgrades.moreLife and self.curLevel:getGodModeStat() == 0) or _G._persTable.phase == 2 then
-            SwarmFactory.createdFishables[index].drawIt = false;
+            SwarmFactory.createdFishables[index]:setToCaught();
             Level:switchToPhase2();
             Level:addToCaught(fishable.name);
         end
