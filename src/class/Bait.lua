@@ -84,8 +84,8 @@ function Bait:collisionDetected(fishable, index)
     else
         if (self.numberOfHits >= _G._persTable.upgrades.moreLife and self.curLevel:getGodModeStat() == 0) or _G._persTable.phase == 2 then
             SwarmFactory.createdFishables[index]:setToCaught();
-            Level:switchToPhase2();
-            Level:addToCaught(fishable.name);
+            self.curLevel:switchToPhase2();
+            self.curLevel:addToCaught(fishable.name);
         end
         
         self.numberOfHits = self.numberOfHits + 1;
@@ -105,7 +105,11 @@ end
 
 --- implements drawing interface
 function Bait:draw()
-    love.graphics.setColor(127, 0, 255);
+    if self.curLevel:getGodModeStat() == 0 then
+        love.graphics.setColor(127, 0, 255);
+    else
+        love.graphics.setColor(255, 0, 0);
+    end
     love.graphics.rectangle("fill", self.xPos, self.yPos, self.size, self.size);
 end
 
