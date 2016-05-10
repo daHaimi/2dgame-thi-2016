@@ -317,7 +317,7 @@ describe("Unit test for Bait.lua", function()
         local myInstance = testClass(locWinDim, locLevel);
         local fishable = {getName = function() return "deadFish" end};
         myInstance.curLevel = { 
-            getGodModeStat = function(...) return 1 end;
+            getGodModeStat = function(...) return 0 end;
             activateShortGM = function(...) end;
             getDirection = function(...) return -1 end;
             switchToPhase2 = function(...) end;
