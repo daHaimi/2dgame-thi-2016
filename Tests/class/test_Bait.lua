@@ -180,10 +180,10 @@ describe("Unit test for Bait.lua", function()
     end)
 
     it("Test x position limited to maxSpeed (positive direction)", function()
+        local myInstance = testClass(locWinDim);
         myInstance.curLevel = {
             isFinished = function() return 0 end;
         }
-        local myInstance = testClass(locWinDim);
         myInstance.posXMouse = 70;
         myInstance.posXBait = 40;
         local newPos = myInstance.posXBait + myInstance.maxSpeedX;
@@ -192,10 +192,11 @@ describe("Unit test for Bait.lua", function()
     end)
 
     it("Test x position limited to maxSpeed (negative direction)", function()
+        local myInstance = testClass(locWinDim);
         myInstance.curLevel = {
             isFinished = function() return 0 end;
         }
-        local myInstance = testClass(locWinDim);
+        
         myInstance.posXMouse = 10;
         myInstance.posXBait = 40;
         local newPos = myInstance.posXBait - myInstance.maxSpeedX;
@@ -205,6 +206,9 @@ describe("Unit test for Bait.lua", function()
 
     it("Test x position not limited to maxSpeed (positive direction)", function()
         local myInstance = testClass(locWinDim);
+        myInstance.curLevel = {
+            isFinished = function() return 0 end;
+        }
         myInstance.posXMouse = 41;
         myInstance.posXBait = 40;
         local newPos = myInstance.posXMouse;
@@ -213,10 +217,11 @@ describe("Unit test for Bait.lua", function()
     end)
 
     it("Test x position not limited to maxSpeed (negative direction)", function()
+        local myInstance = testClass(locWinDim);
         myInstance.curLevel = {
             isFinished = function() return 0 end;
         }
-        local myInstance = testClass(locWinDim);
+        
         myInstance.posXMouse = 40;
         myInstance.posXBait = 41;
         local newPos = myInstance.posXMouse;
@@ -226,6 +231,10 @@ describe("Unit test for Bait.lua", function()
 
     it("Test x positon with no change", function()
         local myInstance = testClass(locWinDim);
+        myInstance.curLevel = {
+            isFinished = function() return 0 end;
+        }
+        
         myInstance.posXMouse = 40;
         myInstance.posXBait = 40;
         local newPos = myInstance.posXMouse;
