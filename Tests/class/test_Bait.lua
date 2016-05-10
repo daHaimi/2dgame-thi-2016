@@ -358,4 +358,33 @@ describe("Unit test for Bait.lua", function()
         assert.are.same(0, myInstance.numberOfHits);
     end)
 
+    it("Test checkForCollision", function()
+        locLevel = {
+            getGodModeStat = function(...) return 0 end;
+            moved = 4;
+            activateShortGM = function (...) end;
+            getMoved = function() return 4 end;
+            getDirection = function() return 1 end;
+            switchToPhase2 = function() end;
+        }
+        local myInstance = testClass(locWinDim, locLevel);
+        myInstance.xPos = 20;
+        myInstance.yPos = 25;
+        someFishables = {
+            {
+                getHitboxHeight = function(...) return 10; end;
+                getHitboxWidth = function(...) return 10; end;
+                getHitboxXPosition = function(...) return 15; end;
+                getHitboxYPosition = function(...) return 20; end;
+                getName = function(...) return "deadFish"; end;
+                     hitbox = {
+                    {
+                        
+                    }
+                }
+            }
+        }
+        myInstance:checkForCollision(someFishables);
+    end)
+
 end)
