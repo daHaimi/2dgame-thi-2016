@@ -10,16 +10,18 @@ local SwarmFactory = Class {
     init = function(self, level, player, data)
         self.level = level;
         self.player = player;
-        self.currentSwarm = 1;
         self.maxDepth = level.lowerBoarder - 2 * level.winDim[2];
         
-        for k,v in pairs(data) do
-            if type(_G._persTable.enabled[k]) == nil then
-                v.enabled = true;
+        self.fishableObjects = data.fishableObjects;
+        self.swarmsSewer = data.swarmsSewer;
+        
+        for k,v in pairs(self.fishableObjects) do
+            if _G._persTable.enabled[k] == nil then
+                self.fishableObjects[k].enabled = true;
+                
             else
-                v.enabled = _G._persTable.enabled[k];
+                self.fishableObjects[k].enabled = _G._persTable.enabled[k];
             end
-            self[k] = v;
         end
         
         addedHeights = 600; -- Start at 600 to create swarms for now
