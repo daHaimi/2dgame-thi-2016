@@ -28,11 +28,11 @@ describe("Unit test for SwarmFactory.lua", function()
             }
         }
         
-        locInstance = testClass(level, player, "src/data.lua");
+        locInstance = testClass(level, player, {foo={"bar"}});
     end)
 
     it("Testing constructor", function()
-        local myInstance = testClass(level, player, "src/data.lua");
+        local myInstance = testClass(level, player, {foo={"bar"}});
         assert.are.same(locInstance, myInstance);
     end)
 
@@ -49,7 +49,7 @@ describe("Unit test for SwarmFactory.lua", function()
     end)
 
     it("Testing createNextSwarm method", function()
-        local testInstance = testClass(level, player, "src/data.lua");
+        local testInstance = testClass(level, player, {foo={"bar"}});
         testInstance.currentSwarm = 1;
         testInstance.createdFishables = {};
         
