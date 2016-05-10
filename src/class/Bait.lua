@@ -114,11 +114,11 @@ function Bait:collisionDetected(fishable, index)
         if self.numberOfHits > _G._persTable.upgrades.moreLife then
             self.curLevel:switchToPhase2();
         end
-        -- while phase 2
-        if self.curLevel:getDirection() == -1 then
-            self.curLevel:getSwarmFactory().createdFishables[index]:setToCaught();
-            self.curLevel:addToCaught(fishable.name);
-        end
+    end
+    -- while phase 2
+    if self.curLevel:getDirection() == -1 then
+        self.curLevel:getSwarmFactory().createdFishables[index]:setToCaught();
+        self.curLevel:addToCaught(fishable.name);
     end
 end
 
