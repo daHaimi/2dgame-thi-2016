@@ -13,6 +13,7 @@ describe("Unit test for Bait.lua", function()
         activateShortGM = function (...) end;
         getMoved = function() return 4 end;
         getDirection = function() return 1 end;
+        isFinished = function() return 0 end;
         getSwarmFactory = function() return 
             { 
                 createdFishables = {
