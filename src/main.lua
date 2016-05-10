@@ -5,6 +5,7 @@ Level = require "class.Level";
 SwarmFactory = require "class.SwarmFactory";
 Loveframes = require "lib.LoveFrames";
 Gui = require "class.Gui";
+Gamestate = require "lib.hump.gamestate"
 
 _G.data = require "data"
 
