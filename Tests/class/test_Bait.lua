@@ -299,13 +299,27 @@ describe("Unit test for Bait.lua", function()
         assert.are.same(1, myInstance.numberOfHits);
     end)
 
-it("Test collisionDetected with a fishable and godMode", function()
+    it("Test collisionDetected with a fishable and godMode", function()
         local myInstance = testClass(locWinDim, locLevel);
         local fishable = {getName = function() return "deadFish" end};
         myInstance.curLevel = { 
             getGodModeStat = function(...) return 1 end;
             activateShortGM = function(...) end;
             getDirection = function(...) return 1 end;
+            switchToPhase2 = function(...) end;
+            };
+        _G._persTable.upgrades.moreLife = 0;
+        myInstance:collisionDetected(fishable, 1);
+        assert.are.same(0, myInstance.numberOfHits);
+    end)
+
+    it("Test collisionDetected with a fishable and direction = -1", function()
+        local myInstance = testClass(locWinDim, locLevel);
+        local fishable = {getName = function() return "deadFish" end};
+        myInstance.curLevel = { 
+            getGodModeStat = function(...) return 1 end;
+            activateShortGM = function(...) end;
+            getDirection = function(...) return -1 end;
             switchToPhase2 = function(...) end;
             };
         _G._persTable.upgrades.moreLife = 0;
