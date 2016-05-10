@@ -1,17 +1,20 @@
 Class = require "lib.hump.class";
 CollisionDetection = require "class.CollisionDetection";
 Level = require "class.Level";
+LevelManager = require "class.LevelManager";
 
 --- Class for the Bait swimming for Phase 1 and 2
 -- @param winDim window Size
---
+-- @param levelManager The reference to the level manager object
 local Bait = Class {
-    init = function(self, winDim, level)
+    init = function(self, winDim, levelManager)
         self.winDim = winDim;
         self.posXBait = (winDim[1] / 2) - (self.size / 2);
-        self.curLevel = level;
+        self.levMan = levelManager;
         local yPos = (self.winDim[2] / 2) - (self.size / 2); -- FIXME unused local
     end;
+    
+    levMan = nil;
     size = 10;
     speed = 200;
     posXMouse = 0;
@@ -24,7 +27,6 @@ local Bait = Class {
     hittedFishable = 0;
     caughtThisRound = {};
     sleepingPillDuration = 0;
-    curLevel = nil;
     deltaTime = 0;
     modifire = 0;
     goldenRuleLowerPoint = 0.32;
@@ -47,11 +49,11 @@ end
 -- @param dt Delta time is the amount of seconds since the last time this function was called.
 function Bait:update(dt)
     -- calculate modifire for the golden rule
-    if self.curLevel:getDirection() == 1 then
+    if self.levMan:getCurLevel():getDirection() == 1 then
         self.modifire = self.goldenRuleLowerPoint;
     else
         if self.modifire < self.goldenRuleUpperPoint then
-            self.modifire = self.modifire - self.curLevel.moved /self.winDim[2];
+            self.modifire = self.modifire - self.levMan:getCurLevel().moved /self.winDim[2];
         else
             self.modifire = self.goldenRuleUpperPoint;
         end
@@ -98,19 +100,19 @@ function Bait:collisionDetected(fishable, index)
         self:sleepingPillHitted(FishableObject);
         SwarmFactory.createdFishables[index]:setToCaught();
     -- other fishable object hitted and no godMode active
-    elseif self.curLevel:getGodModeStat() == 0 then
+    elseif self.levMan:getCurLevel():getGodModeStat() == 0 then
         -- still lifes left
         if self.numberOfHits < _G._persTable.upgrades.moreLife then
             self.numberOfHits = self.numberOfHits + 1;
-            self.curLevel:activateShortGM(self.deltaTime, self.speed);
+            self.levMan:getCurLevel():activateShortGM(self.deltaTime, self.speed);
         else
         -- no more lifes left
-            self.curLevel:switchToPhase2();
+            self.levMan:getCurLevel():switchToPhase2();
         end
         -- while phase 2
-        if self.curLevel:getDirection() == -1 then
+        if self.levMan:getCurLevel():getDirection() == -1 then
             SwarmFactory.createdFishables[index]:setToCaught();
-            self.curLevel:addToCaught(fishable.name);
+            self.levMan:getCurLevel():addToCaught(fishable.name);
         end
     end
 end
@@ -123,7 +125,7 @@ end
 
 --- implements drawing interface
 function Bait:draw()
-    if self.curLevel:getGodModeStat() == 0 then
+    if self.levMan:getCurLevel():getGodModeStat() == 0 then
         love.graphics.setColor(127, 0, 255);
     else
         love.graphics.setColor(255, 0, 0);
@@ -151,9 +153,19 @@ function Bait:getPosX()
     return self.posXBait;
 end
 
---- Set a new level reference
-function Bait:setLevel(newLevel)
-    self.curLevel = newLevel;
+--- Get the size of the player.
+-- @return Returns the size of the player.
+function Bait:getSize()
+    return self.size;
+end
+
+---
+function Bait:setPosXMouse(XPosMouse)
+    self.posXMouse = XPosMouse;
+end
+
+function Bait:getPosXMouse()
+    return self.posXMouse;
 end
 
 function Bait:getGoldenRule()
