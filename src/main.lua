@@ -6,6 +6,8 @@ SwarmFactory = require "class.SwarmFactory";
 Loveframes = require "lib.LoveFrames";
 Gui = require "class.Gui";
 
+_G.data = require "data"
+
 -- Global variables
 _G.math.inf = 1 / 0;
 
@@ -61,7 +63,7 @@ function love.load()
     curLevel = Level("assets/testbg.png", _G._persTable.winDim, 1, nil);
     player = Bait(_G._persTable.winDim, curLevel);
     player:checkUpgrades();
-    swarmFactory = SwarmFactory(curLevel, player, "data.lua");
+    swarmFactory = SwarmFactory(curLevel, player, _G.data);
     curLevel:setSwarmFactory(swarmFactory);
     gui = Gui();
     gui:tempTextOutput();

@@ -7,26 +7,19 @@ local SwarmFactory = Class {
     -- @param level The current level
     -- @param player The player object
     -- @param dataFile The path and name of the data file
-    init = function(self, level, player, dataFile)
+    init = function(self, level, player, data)
         self.level = level;
         self.player = player;
         
         self.maxDepth = level.lowerBoarder - 2 * level.winDim[2];
         
-        --- Takes the fishable form the data file
-        -- @param fishable The fishable
-        function fishableObject(fishable) 
-            self.fishableObjects[fishable.name] = fishable;
-        end
-        
-        --- Takes the sewer swarms from the data file
-        -- @param swarms The swarms
-        function sewer(swarms) 
-            self.swarmsSewer = swarms;
-        end
-        
-        if dataFile ~= nil then
-            dofile(dataFile);
+        for k,v in pairs(data) do
+            if type(_G._persTable.enabled[k]) == nil then
+                v.enabled = true;
+            else
+                v.enabled = _G._persTable.enabled[k];
+            end
+            self[k] = v;
         end
         
         addedHeights = 600; -- Start at 600 to create swarms for now
