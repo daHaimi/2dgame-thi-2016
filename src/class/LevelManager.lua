@@ -24,7 +24,7 @@ function LevelManager:newLevel(backgroundPath, direction, swarmFactoryData)
     self.curPlayer = Bait(_G._persTable.winDim, self);
     self.curPlayer:checkUpgrades();
     self.curSwarmFac = SwarmFactory(swarmFactoryData, self);
-    
+
     return self.curLevel;
 end
 

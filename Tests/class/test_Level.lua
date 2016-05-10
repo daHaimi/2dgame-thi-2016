@@ -33,11 +33,21 @@ describe("Test unit test suite", function()
             },
             phase = 1;
         }
+        
+        _G.levMan = {
+            curLevel = nil,
+            curPlayer = nil,
+            curSwarmFac = nil,
+            getCurSwarmFactory = function(...) return _G.levMan.curSwarmFac end,
+            getCurPlayer = function(...) return _G.levMan.curPlayer end,
+            getCurLevel = function(...) return _G.levMan.curLevel end
+        }
 
         _G.loveMock = mock(_G.love, true);
         locInstance = testClass("assets/testbg.png", { 512, 256 }, 1);
 
         testClass.caughtThisRound = {};
+        testClass.levMan = _G.levMan;
     end)
 
     it("Testing Constructor", function()
@@ -149,7 +159,7 @@ describe("Test unit test suite", function()
     end)
 
     it("Testing calcFishedValue", function()
-        testClass.swarmFac = {
+        testClass.levMan.curSwarmFac = {
             getFishableObjects = function() return {
                 ["turtle"] = { ["value"] = 10 },
                 ["rat"] = { ["value"] = 20 },
@@ -185,7 +195,7 @@ describe("Test unit test suite", function()
     it("Testing printResult with caught objects", function()
         testClass.caughtThisRound["cat"] = 1;
         testClass.caughtThisRound["dog"] = 2;
-        testClass.swarmFac = {
+        testClass.levMan.curSwarmFac = {
             getFishableObjects = function() return { ["cat"] = { ["value"] = 10 }, ["dog"] = { ["value"] = 20 } } end;
         };
         testClass:printResult();
@@ -213,18 +223,6 @@ describe("Test unit test suite", function()
         locInstance.posY = 1200;
         locInstance:update(dt, bait);
         assert.are.same(0, locInstance:getDirection());
-    end)
-
-    it("Testing setSwarmFactory", function()
-        testClass.swarmFac = {5, 7, 9};
-        local swFacAddress = tostring(testClass.swarmFac);
-        testClass.setSwarmFactory(nil);
-        assert.are.same(tostring(testClass.swarmFac), swFacAddress);
-
-        local newSwFac = {1.5, 3.2, 5, 6, 5, 222, 887, 7777798548, 66978, 557412877,
-            1144, 33557878, 774123685, 88321458};
-        testClass:setSwarmFactory(newSwFac);
-        assert.are.same(tostring(testClass.swarmFac), tostring(newSwFac));
     end)
 
     it("Testing activateShortGM", function()

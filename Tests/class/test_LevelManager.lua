@@ -23,20 +23,12 @@ describe("Unit test suite for the LevelManager class", function()
                 }
             }
         }
+
+    
+        _G.Bait = function(...) return {checkUpgrades = function(...) return 42 end} end;
+        _G.Level = function(...) return {4,5} end;
+        _G.SwarmFactory = function(...) return {3} end;
         
-        _G.Level = {
-            init = function(...) return {1} end
-        };
-
-        _G.Bait = {
-            init = function(...) end,
-            checkUpgrades = function(...) end
-        };
-
-        _G.SwarmFactory = {
-            init = function(...) end
-        };
-
         _G._persTable = {
             winDim = {930, 523.125},
             upgrades = {
@@ -45,11 +37,11 @@ describe("Unit test suite for the LevelManager class", function()
             phase = 1;
         };
 
-        _G.loveMock = mock(_G.love, true);
-        _G.levelMock = mock(_G.Level, true);
-        _G.playerMock = mock(_G.Bait, true);
-        _G.swarmFacMock = mock(_G.SwarmFactory, true);
         levMan = LevelManager();
+        --_G.loveMock = mock(_G.love, true);
+        --_G.levelMock = mock(_G.Level, true);
+        --_G.playerMock = mock(_G.Bait, true);
+        --_G.swarmFacMock = mock(_G.SwarmFactory, true);
     end)
 
     it("Testing Constructor", function()
@@ -61,7 +53,8 @@ describe("Unit test suite for the LevelManager class", function()
 
     it("Testing newLevel", function()
         levMan:newLevel("testPfad", 1, "data.lua");
-        assert.spy(levelMock.init).was.called_with("testPfad", 1, "data.lua");
+        assert.are.same(levMan.curLevel, {4,5});
+        assert.are.same(levMan.curSwarmFac, {3});
     end)
 
     it("Testing getCurLevel", function()
