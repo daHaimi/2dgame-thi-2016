@@ -28,7 +28,7 @@ local Bait = Class {
     caughtThisRound = {};
     sleepingPillDuration = 0;
     deltaTime = 0;
-    modifire = 0;
+    modifier = 0;
     goldenRuleLowerPoint = 0.32;
     goldenRuleUpperPoint = 0.68;
 };
@@ -48,37 +48,42 @@ end
 --- updates the bait and checks for collisions
 -- @param dt Delta time is the amount of seconds since the last time this function was called.
 function Bait:update(dt)
-    -- calculate modifire for the golden rule
+    -- calculate modifier for the golden rule
     if self.levMan:getCurLevel():getDirection() == 1 then
-        self.modifire = self.goldenRuleLowerPoint;
+       
+        self.modifier = self.goldenRuleLowerPoint;
     else
-        if self.modifire < self.goldenRuleUpperPoint then
-            self.modifire = self.modifire - self.levMan:getCurLevel().moved /self.winDim[2];
+      
+        if self.modifier < self.goldenRuleUpperPoint then
+            self.modifier = self.modifier - self.levMan:getCurLevel().moved /self.winDim[2];
         else
-            self.modifire = self.goldenRuleUpperPoint;
+            self.modifier = self.goldenRuleUpperPoint;
         end
     end
     
-    self.yPos = (self.winDim[2] * self.modifire) - (self.size / 2);
+    self.yPos = (self.winDim[2] * self.modifier) - (self.size / 2);
     self:setCappedPosX();
     self.xPos = self.posXBait;
     self.deltaTime = dt;
-    self:checkForCollision();
+    self:checkForCollision(#self.levMan:getCurSwarmFactory().createdFishables);
     
     -- decrease or deativate sleeping pill
     if self.sleepingPillDuration > 0 then
-        self.sleepingPillDuration = self.sleepingPillDuration - math.abs(FishableObject:getYMovement());
+        self.sleepingPillDuration = self.sleepingPillDuration - math.abs(self.levMan:getCurLevel():getMoved());
     else
         self.sleepingPillDuration = 0;
-        FishableObject:setSpeedMultiplicator(1);
+        for i = 1, #self.levMan:getCurSwarmFactory().createdFishables, 1 do
+            self.levMan:getCurSwarmFactory().createdFishables[i]:setSpeedMultiplicator(1);
+        end
     end
 end
 
 --- checks for collision
-function Bait:checkForCollision()
-    for i = 1, #SwarmFactory.createdFishables, 1 do
-        if not SwarmFactory.createdFishables[i].caught then
-            local fishable = SwarmFactory.createdFishables[i];
+-- @param CollisionDetection class of the collision detection
+function Bait:checkForCollision(numberOfFishables)
+    for i = 1, numberOfFishables, 1 do
+        if not self.levMan:getCurSwarmFactory().createdFishables[i].caught then
+            local fishable = self.levMan:getCurSwarmFactory().createdFishables[i];
             for c = 1, #fishable.hitbox, 1 do
                 CollisionDetection:setCollision();
                 CollisionDetection:calculateCollision(self.xPos, self.yPos, fishable:getHitboxXPosition(c),
@@ -97,29 +102,34 @@ end
 function Bait:collisionDetected(fishable, index)
     -- sleeping Pill hitted
     if fishable:getName() == "sleepingPill" then
-        self:sleepingPillHitted(FishableObject);
-        SwarmFactory.createdFishables[index]:setToCaught();
+        self:sleepingPillHitted();
+        self.levMan:getCurSwarmFactory().createdFishables[index]:setToCaught();
     -- other fishable object hitted and no godMode active
     elseif self.levMan:getCurLevel():getGodModeStat() == 0 then
         -- still lifes left
-        if self.numberOfHits < _G._persTable.upgrades.moreLife then
+        if self.numberOfHits <= _G._persTable.upgrades.moreLife then
             self.numberOfHits = self.numberOfHits + 1;
             self.levMan:getCurLevel():activateShortGM(self.deltaTime, self.speed);
-        else
+        end
+        
         -- no more lifes left
+        if self.numberOfHits > _G._persTable.upgrades.moreLife then
             self.levMan:getCurLevel():switchToPhase2();
         end
-        -- while phase 2
-        if self.levMan:getCurLevel():getDirection() == -1 then
-            SwarmFactory.createdFishables[index]:setToCaught();
-            self.levMan:getCurLevel():addToCaught(fishable.name);
-        end
+    end
+    -- while phase 2
+    if self.levMan:getCurLevel():getDirection() == -1 then
+        self.levMan:getCurSwarmFactory().createdFishables[index]:setToCaught();
+        self.levMan:getCurLevel():addToCaught(fishable.name);
     end
 end
 
 --- is called everytime the bait hits a sleeping pill
-function Bait:sleepingPillHitted(FishableObject)
-    FishableObject:setSpeedMultiplicator(_G._persTable.upgrades.sleepingPillSlow);
+function Bait:sleepingPillHitted()
+    for i = 1, #self.levMan:getCurSwarmFactory().createdFishables, 1 do
+        self.levMan:getCurSwarmFactory().createdFishables[i]:
+            setSpeedMultiplicator(_G._persTable.upgrades.sleepingPillSlow);
+    end
     self.sleepingPillDuration = self.sleepingPillDuration + _G._persTable.upgrades.sleepingPillDuration;
 end
 
@@ -135,16 +145,18 @@ end
 
 --- Determines the capped X position of the Bait (SpeedLimit)
 function Bait:setCappedPosX()
-    local delta = self.posXMouse - self.posXBait;
-    local posX;
-    if delta > self.maxSpeedX then
-        posX = self.posXBait + self.maxSpeedX;
-    elseif delta < self.maxSpeedX * (-1) then
-        posX = self.posXBait - self.maxSpeedX;
-    else
-        posX = self.posXMouse;
+    if self.levMan:getCurLevel():isFinished() == 0 then
+        local delta = self.posXMouse - self.posXBait;
+        local posX;
+        if delta > self.maxSpeedX then
+            posX = self.posXBait + self.maxSpeedX;
+        elseif delta < self.maxSpeedX * (-1) then
+            posX = self.posXBait - self.maxSpeedX;
+        else
+            posX = self.posXMouse;
+        end
+        self.posXBait = posX;
     end
-    self.posXBait = posX;
 end
 
 --- Returns the actual X position of the Bait
@@ -169,7 +181,7 @@ function Bait:getPosXMouse()
 end
 
 function Bait:getGoldenRule()
-    return goldenRuleLowerPoint, goldenRuleUpperPoint;
+    return self.goldenRuleLowerPoint, self.goldenRuleUpperPoint;
 end
 
 return Bait;

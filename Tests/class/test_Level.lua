@@ -251,4 +251,14 @@ describe("Test unit test suite", function()
         assert.are.same(testClass.oldPosY, _G.math.inf);
         assert.are.same(testClass.godModeFuel, 250);
     end)
+
+    it("Testing getMoved()", function()
+        testClass.moved = 5;
+        assert.are.same(5, testClass:getMoved());
+    end)
+
+    it("Testing getSwarmFactory()", function ()
+        locInstance.swarmFac = {"some", "objects"};
+        assert.are.same({"some", "objects"}, locInstance:getSwarmFactory());
+    end)
 end)

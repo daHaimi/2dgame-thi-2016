@@ -7,6 +7,8 @@ Loveframes = require "lib.LoveFrames";
 Gui = require "class.Gui";
 LevelManager = require "class.LevelManager";
 
+_G.data = require "data"
+
 -- Global variables
 _G.math.inf = 1 / 0;
 
@@ -61,7 +63,7 @@ function love.load()
     _G._persTable.winDim[1] = (_G._persTable.winDim[2] / 16) * 9; -- Example: 16:9
     love.window.setMode(_G._persTable.winDim[1], _G._persTable.winDim[2], { centered });
     levMan = LevelManager();
-    levMan:newLevel("assets/testbg.png", 1, "data.lua");
+    levMan:newLevel("assets/testbg.png", 1, _G.data);
     gui = Gui();
     gui:tempTextOutput();
     gui:buildFrames();

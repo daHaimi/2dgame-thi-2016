@@ -17,7 +17,7 @@ local Level = Class {
         end;
         self.backgroundPath = backgroundPath;
         self.winDim = winDim;
-        self.posY = (winDim[2] / 2); --startpos
+        self.posY = (winDim[2] * 0.32); --startpos
         --self.direction = self.direction * direction;
         if self.bg ~= nil then -- do not remove this if statement or busted will crash
         self.bgq = love.graphics.newQuad(0, 0, winDim[1], 20000, self.bg:getWidth(), self.bg:getHeight());
@@ -92,6 +92,7 @@ function Level:switchToPhase2()
     if _G._persTable.phase == 1 then
         self.direction = -1;
         _G._persTable.phase = 2;
+        self:deactivateGodMode();
     end
 end
 
@@ -174,7 +175,8 @@ end
 --- Try to activate the god Mode.
 -- @return When the god mode was successfully activated it returns 1 otherwise 0.
 function Level:activateGodMode()
-    if _G._persTable.upgrades.godMode == 1 and self.godModeFuel > 0  and self.godModeActive == 0 then
+    if _G._persTable.upgrades.godMode == 1 and self.godModeFuel > 0  
+        and self.godModeActive == 0 and self.direction == 1 then
         self.godModeActive = 1;
         return 1;
     else
@@ -314,6 +316,15 @@ function Level:printResult()
         ypos = ypos + 15;
         love.graphics.print("Nothing caught", xpos, ypos);
     end
+end
+
+--- returns the amount of pixels moved in y direction
+function Level:getMoved()
+    return self.moved;
+end
+
+function Level:getSwarmFactory()
+    return self.swarmFac;
 end
 
 return Level;

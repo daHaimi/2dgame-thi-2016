@@ -28,11 +28,26 @@ describe("Unit test for SwarmFactory.lua", function()
             }
         }
         
-        locInstance = testClass(level, player, "src/data.lua");
+        _G.levMan = {
+            curLevel = {
+                lowerBoarder = -7000;
+                winDim = {500, 1000};
+                getLowerBoarder = function(...) return _G.levMan.curLevel.lowerBoarder end;
+            },
+            curPlayer = nil,
+            curSwarmFac = nil,
+            getCurSwarmFactory = function(...) return _G.levMan.curSwarmFac end,
+            getCurPlayer = function(...) return _G.levMan.curPlayer end,
+            getCurLevel = function(...) return _G.levMan.curLevel end
+        }
+        
+        local data = require "src.data";
+        
+        locInstance = testClass(data, levMan);
     end)
 
     it("Testing constructor", function()
-        local myInstance = testClass(level, player, "src/data.lua");
+        local myInstance = testClass(require "src.data", levMan);
         assert.are.same(locInstance, myInstance);
     end)
 
@@ -49,7 +64,7 @@ describe("Unit test for SwarmFactory.lua", function()
     end)
 
     it("Testing createNextSwarm method", function()
-        local testInstance = testClass(level, player, "src/data.lua");
+        local testInstance = testClass(require "src.data", levMan);
         testInstance.currentSwarm = 1;
         testInstance.createdFishables = {};
         

@@ -5,27 +5,21 @@ require "socket" math.randomseed(socket.gettime() * 10000);
 
 local SwarmFactory = Class {
     --- Initializes the swarm factory
-    -- @param level The current level
-    -- @param dataFile The path and name of the data file
-    init = function(self, dataFile, levelManager)
+    -- @param data The path and name of the data file
+    -- @param levelManager Reference to the level manager object
+    init = function(self, data, levelManager)
         self.levMan = levelManager;
         
-        self.maxDepth = self.levMan:getCurLevel():getLowerBoarder() - 2 * _G._persTable.winDim[2];
+        self.maxDepth = self.levMan:getCurLevel():getLowerBoarder() - 2 * _G._persTable.winDim[2];        
+        self.fishableObjects = data.fishableObjects;
+        self.swarmsSewer = data.swarmsSewer;
         
-        --- Takes the fishable form the data file
-        -- @param fishable The fishable
-        function fishableObject(fishable) 
-            self.fishableObjects[fishable.name] = fishable;
-        end
-        
-        --- Takes the sewer swarms from the data file
-        -- @param swarms The swarms
-        function sewer(swarms) 
-            self.swarmsSewer = swarms;
-        end
-        
-        if dataFile ~= nil then
-            dofile(dataFile);
+        for k,v in pairs(self.fishableObjects) do
+            if _G._persTable.enabled[k] == nil then
+                self.fishableObjects[k].enabled = true;
+            else
+                self.fishableObjects[k].enabled = _G._persTable.enabled[k];
+            end
         end
         
         addedHeights = 600; -- Start at 600 to create swarms for now
@@ -34,11 +28,9 @@ local SwarmFactory = Class {
         end
     end;
     
-    levMan = nil;    
+    levMan = nil;        
     maxDepth = -5000;    
-    fishableObjects = {};
     currentSwarm = 1;
-    swarmsSewer = {};
     createdFishables = {};
 };
 
