@@ -18,7 +18,6 @@ local SwarmFactory = Class {
         for k,v in pairs(self.fishableObjects) do
             if _G._persTable.enabled[k] == nil then
                 self.fishableObjects[k].enabled = true;
-                
             else
                 self.fishableObjects[k].enabled = _G._persTable.enabled[k];
             end
@@ -35,10 +34,7 @@ local SwarmFactory = Class {
     
     maxDepth = -5000;
     
-    fishableObjects = {};
     currentSwarm = 1;
-
-    swarmsSewer = {};
 
     createdFishables = {};
 };
