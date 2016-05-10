@@ -13,6 +13,7 @@ describe("Unit test for Bait.lua", function()
         activateShortGM = function (...) end;
         getMoved = function() return 4 end;
         getDirection = function() return 1 end;
+        isFinished = function() return 0 end;
         getSwarmFactory = function() return 
             { 
                 createdFishables = {
@@ -55,6 +56,7 @@ describe("Unit test for Bait.lua", function()
         myInstance.curLevel = {
             moved = -4;
             getDirection = function () return -1; end;
+            isFinished = function() return 0 end;
             getSwarmFactory = function() return 
             { 
                 createdFishables = {
@@ -178,6 +180,9 @@ describe("Unit test for Bait.lua", function()
     end)
 
     it("Test x position limited to maxSpeed (positive direction)", function()
+        myInstance.curLevel = {
+            isFinished = function() return 0 end;
+        }
         local myInstance = testClass(locWinDim);
         myInstance.posXMouse = 70;
         myInstance.posXBait = 40;
@@ -187,6 +192,9 @@ describe("Unit test for Bait.lua", function()
     end)
 
     it("Test x position limited to maxSpeed (negative direction)", function()
+        myInstance.curLevel = {
+            isFinished = function() return 0 end;
+        }
         local myInstance = testClass(locWinDim);
         myInstance.posXMouse = 10;
         myInstance.posXBait = 40;
@@ -205,6 +213,9 @@ describe("Unit test for Bait.lua", function()
     end)
 
     it("Test x position not limited to maxSpeed (negative direction)", function()
+        myInstance.curLevel = {
+            isFinished = function() return 0 end;
+        }
         local myInstance = testClass(locWinDim);
         myInstance.posXMouse = 40;
         myInstance.posXBait = 41;
@@ -275,6 +286,7 @@ describe("Unit test for Bait.lua", function()
         myInstance.curLevel = { 
             getGodModeStat = function(...) return 0 end;
             activateShortGM = function(...) end;
+            isFinished = function() return 0 end;
             getDirection = function(...) return 1 end;
             };
         _G._persTable.upgrades.moreLife = 1;
@@ -288,6 +300,7 @@ describe("Unit test for Bait.lua", function()
         myInstance.curLevel = { 
             getGodModeStat = function(...) return 0 end;
             activateShortGM = function(...) end;
+            isFinished = function() return 0 end;
             getDirection = function(...) return 1 end;
             switchToPhase2 = function(...) end;
             };
@@ -302,6 +315,7 @@ describe("Unit test for Bait.lua", function()
         myInstance.curLevel = { 
             getGodModeStat = function(...) return 1 end;
             activateShortGM = function(...) end;
+            isFinished = function() return 0 end;
             getDirection = function(...) return 1 end;
             switchToPhase2 = function(...) end;
             };
@@ -318,6 +332,7 @@ describe("Unit test for Bait.lua", function()
             activateShortGM = function(...) end;
             getDirection = function(...) return -1 end;
             switchToPhase2 = function(...) end;
+            isFinished = function() return 0 end;
             addToCaught = function(...) end;
             getSwarmFactory = function(...) return { 
                     createdFishables = {
@@ -332,6 +347,35 @@ describe("Unit test for Bait.lua", function()
         _G._persTable.upgrades.moreLife = 0;
         myInstance:collisionDetected(fishable, 1);
         assert.are.same(0, myInstance.numberOfHits);
+    end)
+
+    it("Test checkForCollision", function()
+        locLevel = {
+            getGodModeStat = function(...) return 0 end;
+            moved = 4;
+            activateShortGM = function (...) end;
+            getMoved = function() return 4 end;
+            getDirection = function() return 1 end;
+            switchToPhase2 = function() end;
+        }
+        local myInstance = testClass(locWinDim, locLevel);
+        myInstance.xPos = 20;
+        myInstance.yPos = 25;
+        someFishables = {
+            {
+                getHitboxHeight = function(...) return 10; end;
+                getHitboxWidth = function(...) return 10; end;
+                getHitboxXPosition = function(...) return 15; end;
+                getHitboxYPosition = function(...) return 20; end;
+                getName = function(...) return "deadFish"; end;
+                     hitbox = {
+                    {
+                        
+                    }
+                }
+            }
+        }
+        myInstance:checkForCollision(someFishables);
     end)
 
 end)
