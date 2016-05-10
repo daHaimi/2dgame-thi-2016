@@ -6,8 +6,8 @@ SwarmFactory = require "class.SwarmFactory";
 Loveframes = require "lib.LoveFrames";
 Gui = require "class.Gui";
 LevelManager = require "class.LevelManager";
-
-_G.data = require "data"
+Gamestate = require "lib.hump.gamestate";
+_G.data = require "data";
 
 -- Global variables
 _G.math.inf = 1 / 0;

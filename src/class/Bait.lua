@@ -65,7 +65,7 @@ function Bait:update(dt)
     self:setCappedPosX();
     self.xPos = self.posXBait;
     self.deltaTime = dt;
-    self:checkForCollision(#self.levMan:getCurSwarmFactory().createdFishables);
+    self:checkForCollision(self.levMan:getCurSwarmFactory().createdFishables);
     
     -- decrease or deativate sleeping pill
     if self.sleepingPillDuration > 0 then
@@ -80,10 +80,10 @@ end
 
 --- checks for collision
 -- @param CollisionDetection class of the collision detection
-function Bait:checkForCollision(numberOfFishables)
-    for i = 1, numberOfFishables, 1 do
-        if not self.levMan:getCurSwarmFactory().createdFishables[i].caught then
-            local fishable = self.levMan:getCurSwarmFactory().createdFishables[i];
+function Bait:checkForCollision(createdFishables)
+    for i = 1, #createdFishables, 1 do
+        if not createdFishables[i].caught then
+            local fishable = createdFishables[i];
             for c = 1, #fishable.hitbox, 1 do
                 CollisionDetection:setCollision();
                 CollisionDetection:calculateCollision(self.xPos, self.yPos, fishable:getHitboxXPosition(c),

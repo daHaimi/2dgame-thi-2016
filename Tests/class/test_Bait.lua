@@ -21,7 +21,7 @@ describe("Unit test for Bait.lua", function()
             curLevel = locLevel,
             curPlayer = nil,
             curSwarmFac = { 
-                createdFishables = {
+            createdFishables = {
                     {
                         setToCaught = function(...) end;
                         setSpeedMultiplicator = function(...) end;
@@ -64,6 +64,7 @@ describe("Unit test for Bait.lua", function()
             moved = -4,
             isFinished = function(...) return 0 end;
             getDirection = function () return -1; end;
+            isFinished = function() return 0 end;
             getSwarmFactory = function() return 
             { 
                 createdFishables = {
@@ -190,6 +191,9 @@ describe("Unit test for Bait.lua", function()
 
     it("Test x position limited to maxSpeed (positive direction)", function()
         local myInstance = testClass(locWinDim, levMan);
+        myInstance.levMan.curLevel = {
+            isFinished = function() return 0 end;
+        }
         myInstance.posXMouse = 70;
         myInstance.posXBait = 40;
         local newPos = myInstance.posXBait + myInstance.maxSpeedX;
@@ -199,6 +203,9 @@ describe("Unit test for Bait.lua", function()
 
     it("Test x position limited to maxSpeed (negative direction)", function()
         local myInstance = testClass(locWinDim, levMan);
+        myInstance.levMan.curLevel = {
+            isFinished = function() return 0 end;
+        }
         myInstance.posXMouse = 10;
         myInstance.posXBait = 40;
         local newPos = myInstance.posXBait - myInstance.maxSpeedX;
@@ -208,6 +215,9 @@ describe("Unit test for Bait.lua", function()
 
     it("Test x position not limited to maxSpeed (positive direction)", function()
         local myInstance = testClass(locWinDim, levMan);
+        myInstance.levMan.curLevel = {
+            isFinished = function() return 0 end;
+        };
         myInstance.posXMouse = 41;
         myInstance.posXBait = 40;
         local newPos = myInstance.posXMouse;
@@ -217,6 +227,9 @@ describe("Unit test for Bait.lua", function()
 
     it("Test x position not limited to maxSpeed (negative direction)", function()
         local myInstance = testClass(locWinDim, levMan);
+        myInstance.levMan.curLevel = {
+            isFinished = function() return 0 end;
+        }
         myInstance.posXMouse = 40;
         myInstance.posXBait = 41;
         local newPos = myInstance.posXMouse;
@@ -226,6 +239,9 @@ describe("Unit test for Bait.lua", function()
 
     it("Test x positon with no change", function()
         local myInstance = testClass(locWinDim, levMan);
+        myInstance.levMan.curLevel = {
+            isFinished = function() return 0 end;
+        }
         myInstance.posXMouse = 40;
         myInstance.posXBait = 40;
         local newPos = myInstance.posXMouse;
@@ -281,6 +297,7 @@ describe("Unit test for Bait.lua", function()
         myInstance.levMan.curLevel = { 
             getGodModeStat = function(...) return 0 end;
             activateShortGM = function(...) end;
+            isFinished = function() return 0 end;
             getDirection = function(...) return 1 end;
             };
         _G._persTable.upgrades.moreLife = 1;
@@ -294,6 +311,7 @@ describe("Unit test for Bait.lua", function()
         myInstance.levMan.curLevel = { 
             getGodModeStat = function(...) return 0 end;
             activateShortGM = function(...) end;
+            isFinished = function() return 0 end;
             getDirection = function(...) return 1 end;
             switchToPhase2 = function(...) end;
             };
@@ -308,6 +326,7 @@ describe("Unit test for Bait.lua", function()
         myInstance.levMan.curLevel = { 
             getGodModeStat = function(...) return 1 end;
             activateShortGM = function(...) end;
+            isFinished = function() return 0 end;
             getDirection = function(...) return 1 end;
             switchToPhase2 = function(...) end;
             };
@@ -324,6 +343,7 @@ describe("Unit test for Bait.lua", function()
             activateShortGM = function(...) end;
             getDirection = function(...) return -1 end;
             switchToPhase2 = function(...) end;
+            isFinished = function() return 0 end;
             addToCaught = function(...) end;
             getSwarmFactory = function(...) return { 
                     createdFishables = {
@@ -338,6 +358,35 @@ describe("Unit test for Bait.lua", function()
         _G._persTable.upgrades.moreLife = 0;
         myInstance:collisionDetected(fishable, 1);
         assert.are.same(0, myInstance.numberOfHits);
+    end)
+
+    it("Test checkForCollision", function()
+        levMan.curLevel = {
+            getGodModeStat = function(...) return 0 end;
+            moved = 4;
+            activateShortGM = function (...) end;
+            getMoved = function() return 4 end;
+            getDirection = function() return 1 end;
+            switchToPhase2 = function() end;
+        }
+        local myInstance = testClass(locWinDim, levMan);
+        myInstance.xPos = 20;
+        myInstance.yPos = 25;
+        someFishables = {
+            {
+                getHitboxHeight = function(...) return 10; end;
+                getHitboxWidth = function(...) return 10; end;
+                getHitboxXPosition = function(...) return 15; end;
+                getHitboxYPosition = function(...) return 20; end;
+                getName = function(...) return "deadFish"; end;
+                     hitbox = {
+                    {
+                        
+                    }
+                }
+            }
+        }
+        myInstance:checkForCollision(someFishables);
     end)
 
 end)
