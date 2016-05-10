@@ -3,8 +3,7 @@ Class = require "lib.hump.class";
 --- Class for CollisionDetection
 local CollisionDetection = Class {
     init = function(self) end;
-    collision = false;
-};
+    collision = false };
 
 --- Setter for collision
 function CollisionDetection:setCollision(newCollision)
