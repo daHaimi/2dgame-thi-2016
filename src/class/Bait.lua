@@ -143,16 +143,18 @@ end
 
 --- Determines the capped X position of the Bait (SpeedLimit)
 function Bait:setCappedPosX()
-    local delta = self.posXMouse - self.posXBait;
-    local posX;
-    if delta > self.maxSpeedX then
-        posX = self.posXBait + self.maxSpeedX;
-    elseif delta < self.maxSpeedX * (-1) then
-        posX = self.posXBait - self.maxSpeedX;
-    else
-        posX = self.posXMouse;
+    if self.curLevel:isFinished() == 0 then
+        local delta = self.posXMouse - self.posXBait;
+        local posX;
+        if delta > self.maxSpeedX then
+            posX = self.posXBait + self.maxSpeedX;
+        elseif delta < self.maxSpeedX * (-1) then
+            posX = self.posXBait - self.maxSpeedX;
+        else
+            posX = self.posXMouse;
+        end
+        self.posXBait = posX;
     end
-    self.posXBait = posX;
 end
 
 --- Returns the actual X position of the Bait
