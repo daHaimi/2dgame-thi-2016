@@ -70,7 +70,9 @@ function Bait:update(dt)
         self.sleepingPillDuration = self.sleepingPillDuration - math.abs(self.curLevel:getMoved());
     else
         self.sleepingPillDuration = 0;
-        FishableObject:setSpeedMultiplicator(1);
+        for i = 1, #self.curLevel:getSwarmFactory().createdFishables, 1 do
+            self.curLevel:getSwarmFactory().createdFishables[i]:setSpeedMultiplicator(1);
+        end
     end
 end
 
@@ -98,29 +100,34 @@ end
 function Bait:collisionDetected(fishable, index)
     -- sleeping Pill hitted
     if fishable:getName() == "sleepingPill" then
-        self:sleepingPillHitted(FishableObject);
-        SwarmFactory.createdFishables[index]:setToCaught();
+        self:sleepingPillHitted();
+        self.curLevel:getSwarmFactory().createdFishables[index]:setToCaught();
     -- other fishable object hitted and no godMode active
     elseif self.curLevel:getGodModeStat() == 0 then
         -- still lifes left
-        if self.numberOfHits < _G._persTable.upgrades.moreLife then
+        if self.numberOfHits <= _G._persTable.upgrades.moreLife then
             self.numberOfHits = self.numberOfHits + 1;
             self.curLevel:activateShortGM(self.deltaTime, self.speed);
-        else
+        end
+        
         -- no more lifes left
+        if self.numberOfHits > _G._persTable.upgrades.moreLife then
             self.curLevel:switchToPhase2();
         end
         -- while phase 2
         if self.curLevel:getDirection() == -1 then
-            SwarmFactory.createdFishables[index]:setToCaught();
+            self.curLevel:getSwarmFactory().createdFishables[index]:setToCaught();
             self.curLevel:addToCaught(fishable.name);
         end
     end
 end
 
 --- is called everytime the bait hits a sleeping pill
-function Bait:sleepingPillHitted(FishableObject)
-    FishableObject:setSpeedMultiplicator(_G._persTable.upgrades.sleepingPillSlow);
+function Bait:sleepingPillHitted()
+    for i = 1, #self.curLevel:getSwarmFactory().createdFishables, 1 do
+        self.curLevel:getSwarmFactory().createdFishables[i]:
+            setSpeedMultiplicator(_G._persTable.upgrades.sleepingPillSlow);
+    end
     self.sleepingPillDuration = self.sleepingPillDuration + _G._persTable.upgrades.sleepingPillDuration;
 end
 

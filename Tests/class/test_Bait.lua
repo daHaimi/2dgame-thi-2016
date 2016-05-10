@@ -2,7 +2,7 @@
 _G.math.inf = 1 / 0
 
 testClass = require "src.class.Bait"
-SwarmFactory = require"src.class.SwarmFactory";
+
 
 describe("Unit test for Bait.lua", function()
     local locInstance;
@@ -10,18 +10,23 @@ describe("Unit test for Bait.lua", function()
     local locWinDim = { 400, 800 };
     local locLevel = {
         moved = 4;
+        activateShortGM = function (...) end;
         getMoved = function() return 4 end;
         getDirection = function() return 1 end;
         getSwarmFactory = function() return 
             { 
+                
                 createdFishables = {
+                    
                     {
+                        setToCaught = function(...) end;
+                        setSpeedMultiplicator = function(...) end;
                         caught = false;
                         hitbox = {
                             
                         };
                     }
-                    };
+                };
             }
         end;
     }
@@ -57,6 +62,8 @@ describe("Unit test for Bait.lua", function()
             { 
                 createdFishables = {
                     {
+                        setToCaught = function(...) end;
+                        setSpeedMultiplicator = function(...) end;
                         caught = false;
                         hitbox = {
                             
@@ -245,9 +252,7 @@ describe("Unit test for Bait.lua", function()
             sleepingPillSlow = 0.3; -- sets the slow factor of the sleeping pill 0.25 = 25% of the usual movement
         };
         
-        FishableObject = require "src.class.FishableObject";
-        
-        local myInstance = testClass (locWinDim);
+        local myInstance = testClass (locWinDim, locLevel);
         myInstance.sleepingPillDuration = 0;
         myInstance:sleepingPillHitted(FishableObject);
         
@@ -258,5 +263,53 @@ describe("Unit test for Bait.lua", function()
     it("Test setLevel", function()
         locInstance:setLevel("just a level");
         assert.are.same("just a level", locInstance.curLevel);
+    end)
+
+    it("Test collisionDetected with a sleeping pill", function()
+        local myInstance = testClass(locWinDim, locLevel);
+        local fishable = {getName = function() return "sleepingPill" end};
+        myInstance:collisionDetected(fishable, 1);
+        assert.are.same(0, myInstance.numberOfHits);
+    end)
+
+    it("Test collisionDetected with a fishable and an extra life", function()
+        local myInstance = testClass(locWinDim, locLevel);
+        local fishable = {getName = function() return "deadFish" end};
+        myInstance.curLevel = { 
+            getGodModeStat = function(...) return 0 end;
+            activateShortGM = function(...) end;
+            getDirection = function(...) return 1 end;
+            };
+        _G._persTable.upgrades.moreLife = 1;
+        myInstance:collisionDetected(fishable, 1);
+        assert.are.same(1, myInstance.numberOfHits);
+    end)
+
+    it("Test collisionDetected with a fishable and no extra life", function()
+        local myInstance = testClass(locWinDim, locLevel);
+        local fishable = {getName = function() return "deadFish" end};
+        myInstance.curLevel = { 
+            getGodModeStat = function(...) return 0 end;
+            activateShortGM = function(...) end;
+            getDirection = function(...) return 1 end;
+            switchToPhase2 = function(...) end;
+            };
+        _G._persTable.upgrades.moreLife = 0;
+        myInstance:collisionDetected(fishable, 1);
+        assert.are.same(1, myInstance.numberOfHits);
+    end)
+
+it("Test collisionDetected with a fishable and godMode", function()
+        local myInstance = testClass(locWinDim, locLevel);
+        local fishable = {getName = function() return "deadFish" end};
+        myInstance.curLevel = { 
+            getGodModeStat = function(...) return 1 end;
+            activateShortGM = function(...) end;
+            getDirection = function(...) return 1 end;
+            switchToPhase2 = function(...) end;
+            };
+        _G._persTable.upgrades.moreLife = 0;
+        myInstance:collisionDetected(fishable, 1);
+        assert.are.same(0, myInstance.numberOfHits);
     end)
 end)
