@@ -10,7 +10,7 @@ local SwarmFactory = Class {
     init = function(self, level, player, data)
         self.level = level;
         self.player = player;
-        
+        self.currentSwarm = 1;
         self.maxDepth = level.lowerBoarder - 2 * level.winDim[2];
         
         for k,v in pairs(data) do
