@@ -28,7 +28,9 @@ describe("Test unit test suite", function()
         }
         _G._persTable = {
             upgrades = {
-                godMode = 1
+                godMode = 1,
+                mapBreakthrough1 = 0,
+                mapBreakthrough2 = 0;
             },
             phase = 1;
         }
@@ -51,8 +53,19 @@ describe("Test unit test suite", function()
 
     it("Testing Constructor", function()
         local myInstance = testClass("assets/testbg.png", { 512, 256 }, 1);
+        local lb = myInstance.lowerBoarder;
+        local mbb1 = myInstance.mapBreakthroughBonus1;
+        local mbb2 = myInstance.mapBreakthroughBonus2;
         assert.are.same(locInstance, myInstance);
         assert.spy(loveMock.graphics.newImage).was.called_with("assets/testbg.png");
+        
+        _persTable.upgrades.mapBreakthrough1 = 1;
+        local myInstance = testClass("assets/testbg.png", { 512, 256 }, 1);
+        assert.are.same( lb + mbb1, myInstance.lowerBoarder);
+        
+        _persTable.upgrades.mapBreakthrough2 = 1;
+        local myInstance = testClass("assets/testbg.png", { 512, 256 }, 1);
+        assert.are.same(lb + mbb1 + mbb2, myInstance.lowerBoarder);
     end)
 
     it("Testing setLowerBoarder and getLowerBoarder", function()
