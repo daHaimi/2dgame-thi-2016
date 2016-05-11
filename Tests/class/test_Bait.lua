@@ -401,10 +401,10 @@ describe("Unit test for Bait.lua", function()
         assert.are.same("new mouse position", myInstance:getPosXMouse());
     end)
     
-    it("Test getGoldenRule", function()
+    it("Test getSize", function()
         local myInstance = testClass(locWinDim, levMan);
-        assert.are.same(0.32, myInstance:getGoldenRule()[1]);
-        assert.are.same(0.68, myInstance:getGoldenRule()[2]);
+        myInstance.size = "new size";
+        assert.are.same("new size", myInstance:getSize())
     end)
 
 end)
