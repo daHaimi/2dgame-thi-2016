@@ -44,6 +44,7 @@ describe("Unit test for Bait.lua", function()
                 setColor = function(...) end;
                 rectangle = function(...) end;
                 draw = function(...) end;
+                newImage =  function(...) return "something" end;
             }
         }
         
