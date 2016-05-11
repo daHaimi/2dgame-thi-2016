@@ -389,4 +389,22 @@ describe("Unit test for Bait.lua", function()
         myInstance:checkForCollision(someFishables);
     end)
 
+    it("Test setPosXMouse", function()
+        local myInstance = testClass(locWinDim, levMan);
+        myInstance:setPosXMouse("new mouse position");
+        assert.are.same("new mouse position", myInstance.posXMouse);
+    end)
+
+    it("Test getPosXMouse", function()
+        local myInstance = testClass(locWinDim, levMan);
+        myInstance.posXMouse = "new mouse position";
+        assert.are.same("new mouse position", myInstance:getPosXMouse());
+    end)
+    
+    it("Test getGoldenRule", function()
+        local myInstance = testClass(locWinDim, levMan);
+        assert.are.same(0.32, myInstance:getGoldenRule()[1]);
+        assert.are.same(0.68, myInstance:getGoldenRule()[2]);
+    end)
+
 end)

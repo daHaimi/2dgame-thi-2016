@@ -171,15 +171,18 @@ function Bait:getSize()
     return self.size;
 end
 
----
+--- sets the x position of the mouse
+--@param XPosMouse: x position the mouse position will be set to
 function Bait:setPosXMouse(XPosMouse)
     self.posXMouse = XPosMouse;
 end
 
+--- returns the x position of the mouse
 function Bait:getPosXMouse()
     return self.posXMouse;
 end
 
+--- returns the upper and the lower point of the golden rule
 function Bait:getGoldenRule()
     return self.goldenRuleLowerPoint, self.goldenRuleUpperPoint;
 end
