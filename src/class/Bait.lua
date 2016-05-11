@@ -31,7 +31,6 @@ local Bait = Class {
     modifier = 0;
     goldenRuleLowerPoint = 0.32;
     goldenRuleUpperPoint = 0.68;
-    image = love.graphics.newImage("assets/hamster_hooker.png");
 };
 
 --- TODO need balancing
@@ -137,11 +136,10 @@ end
 --- implements drawing interface
 function Bait:draw()
     if self.levMan:getCurLevel():getGodModeStat() == 0 then
-        love.graphics.setColor(255, 255, 255);
+        love.graphics.setColor(127, 0, 255);
     else
         love.graphics.setColor(255, 0, 0);
     end
-    love.graphics.draw(self.image, self.xPos - 27, self.yPos - 125);
     love.graphics.rectangle("fill", self.xPos, self.yPos, self.size, self.size);
 end
 

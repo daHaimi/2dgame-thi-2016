@@ -43,8 +43,6 @@ describe("Unit test for Bait.lua", function()
             graphics = {
                 setColor = function(...) end;
                 rectangle = function(...) end;
-                draw = function(...) end;
-                newImage =  function(...) return "something" end;
             }
         }
         
@@ -259,7 +257,7 @@ describe("Unit test for Bait.lua", function()
         myInstance.yPos = 400;
         myInstance.size = 10;
         myInstance:draw();
-        assert.spy(loveMock.graphics.setColor).was_called_with(255, 255, 255);
+        assert.spy(loveMock.graphics.setColor).was_called_with(127, 0, 255);
         myInstance.levMan.curLevel = {getGodModeStat = function() return 1; end};
         myInstance:draw();
         assert.spy(loveMock.graphics.setColor).was_called_with(255, 0, 0);
