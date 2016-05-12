@@ -10,7 +10,9 @@ local Bait = Class {
         self.winDim = winDim;
         self.posXBait = (winDim[1] / 2) - (self.size / 2);
         self.curLevel = level;
-        local yPos = (self.winDim[2] / 2) - (self.size / 2); -- FIXME unused local
+        -- local yPos = (self.winDim[2] / 2) - (self.size / 2); -- unused local
+        self.shader = love.graphics.newShader("shader/test.glsl")
+        self.image = love.graphics.newImage("assets/hamster_hooker.png");
     end;
     size = 10;
     speed = 200;
@@ -48,7 +50,7 @@ function Bait:update(dt)
     self.xPos = self.posXBait;
     self.deltaTime = dt;
     self:checkForCollision();
-    
+
     if self.sleepingPillDuration > 0 then
         self.sleepingPillDuration = self.sleepingPillDuration - math.abs(FishableObject:getYMovement());
     else
@@ -87,9 +89,9 @@ function Bait:collisionDetected(fishable, index)
             Level:switchToPhase2();
             Level:addToCaught(fishable.name);
         end
-        
+
         self.numberOfHits = self.numberOfHits + 1;
-        
+
         -- if the player is still alive after a collision he will be invulnerable for a short time
         if self.numberOfHits <= _G._persTable.upgrades.moreLife then
             self.curLevel:activateShortGM(self.deltaTime, self.speed);
@@ -106,7 +108,12 @@ end
 --- implements drawing interface
 function Bait:draw()
     love.graphics.setColor(127, 0, 255);
-    love.graphics.rectangle("fill", self.xPos, self.yPos, self.size, self.size);
+    self.shader:send("hue", math.random() * 2 * math.pi)
+    love.graphics.setShader(self.shader);
+    love.graphics.draw(self.image, self.xPos, self.yPos - 120); -- FIXME magic number
+    --love.graphics.rectangle("fill", self.xPos, self.yPos, self.size, self.size);
+    love.graphics.setShader();
+    love.postshader.addEffect("bloom");
 end
 
 --- Determines the capped X position of the Bait (SpeedLimit)
