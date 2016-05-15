@@ -1,12 +1,15 @@
 ---Chart contains a table with clickable elements and an textfield
+Class = require "lib.hump.class";
+Textbox = require "class.Textbox";
 
 local Chart = Class {
     init = function(self)
         self.column = 3;--amount of the columns of the table
         self.elementsOnChart = {};--elements in the table
         self.markedElement = nil;
-        
-        self.markFrame = Loveframes.Create("image"):SetImage("assets/gui/markFrame.png"):SetVisible(false);
+        self.markFrame = Loveframes.Create("image");
+        self.markFrame:SetImage("assets/gui/markFrame.png");
+        self.markFrame:SetVisible(false);
         self.textField = Textbox(128);
     end;
 };
@@ -20,12 +23,7 @@ end
 ---add a new klickable element the the table
 -- @parm newKlickableElement: object of the new klickable element
 function Chart:addKlickableElement(newKlickableElement)
-    --self.elementsOnChart = {};
     table.insert(self.elementsOnChart, newKlickableElement);
-    if self.elementsOnChart ~= nil then
-        --table.insert(self.elementsOnChart, newUpgrade);
-    end
-
 end
 
 ---Set the visible of all elements
@@ -57,7 +55,8 @@ end
 -- @parm element: selected element
 function Chart:markElement(element)
     local x, y = element.object:GetPos();
-    self.markFrame:SetPos(x, y):SetVisible(true);
+    self.markFrame:SetPos(x, y)
+    self.markFrame:SetVisible(true);
     self.markedElement = element;
     self.textField:changeText(element.name, element.description);
 end

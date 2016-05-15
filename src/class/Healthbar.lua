@@ -1,29 +1,46 @@
 ---a klickableElement represents an achievement, wikielement or an upgrade
 
 Class = require "lib.hump.class";
-Loveframes = require "lib.LoveFrames";
 
 local Healthbar = Class {
-    init = function(self, iconPath, blackHeartPath, redHeartPath, unlockedHearts)
-        self.icon = Loveframes.Create("image"):SetImage(iconPath);
+    init = function(self, iconPath, blackHeartPath, redHeartPath)
+        self.icon = Loveframes.Create("image")
+        self.icon:SetImage(iconPath);
         self.blackHeartPath = blackHeartPath;
-        self.redHeardPath = redHeartPath;
-        self.unlockedHearts = unlockedHearts;
-        self.currentHearts = unlockedHearts;
-        self.hearts = {};
-        for var = 1, self.unlockedHearts, 1 do
-            self.hearts[var] = Loveframes.Create("image"):SetImage(self.redHeardPath):SetScale(0.5, 0.5);
-        end
+        self.redHeartPath = redHeartPath;
+        self.unlockedHearts = 1;
+        self.currentHearts = 1;
+        self.hearts = {
+            Loveframes.Create("image");
+        };
+        self.hearts[1]:SetImage(self.redHeartPath);
         self.basic = {
             xPos = nil;
             yPos = nil;
             visible = false;
         };
+        self:scaleHearts();
     end;
 };
 
----Refresh the Healtbarh
+function Healthbar:scaleHearts()
+    for k, v in pairs(self.hearts) do
+        v:SetScale(0.5, 0.5);
+    end
+end
+
+
+function Healthbar:buyExtraLife()
+    self.unlockedHearts = self.unlockedHearts + 1;
+    self.currentHearts = self.unlockedHearts;
+    self.hearts[self.unlockedHearts] = Loveframes.Create("image");
+    self.hearts[self.unlockedHearts]:SetImage(self.redHeartPath);
+    self:refresh();
+end
+
+---Refresh the position and visible of the Healtbarh
 function Healthbar:refresh()
+    self:scaleHearts();
     self:SetVisible(self.basic.visible);
     self:SetPos(self.basic.xPos, self.basic.yPos);
 end
@@ -33,8 +50,10 @@ function Healthbar:minus()
     if self.currentHearts < 1 then
         --trigger turn end
     else
+        --trigger short time in godmode
         self.hearts[self.currentHearts]:Remove();
-        self.hearts[self.currentHearts] = Loveframes.Create("image"):SetImage(self.blackHeartPath):SetScale(0.5, 0.5);
+        self.hearts[self.currentHearts] = Loveframes.Create("image");
+        self.hearts[self.currentHearts]:SetImage(self.blackHeartPath);
         self.currentHearts = self.currentHearts - 1;
         self:refresh();
     end
@@ -53,13 +72,17 @@ function Healthbar:SetVisible(visible)
     self.icon:SetVisible(visible);
 end
 
-
 ---reset the Element (just the checked state and the image)
+---has to be called at the end of a turn
 function Healthbar:reset()
     self.currentHearts = self.unlockedHearts;
+    for k, v in ipairs(self.hearts) do
+        self.hearts[k]:Remove();
+        self.hearts[k] = Loveframes.Create("image");
+        self.hearts[k]:SetImage(self.redHeartPath);
+    end
+    self:refresh();
 end
-
-
 
 ---set the position of the element
 -- @parm x: x axis position
@@ -68,10 +91,9 @@ function Healthbar:SetPos(x, y)
     self.basic.xPos = x;
     self.basic.yPos = y;
     for k, v in ipairs(self.hearts) do
-        v:SetPos(_persTable.winDim[1] - (v:GetWidth()*v:GetScaleX()) * k, 16);
+        v:SetPos(_persTable.winDim[1] - 32 * k, 16);
     end
     self.icon:SetPos(_persTable.winDim[1] - (32 * self.unlockedHearts + 64), 0);
 end
-
 
 return Healthbar;
