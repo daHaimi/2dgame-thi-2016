@@ -8,43 +8,10 @@ Gui = require "class.Gui";
 LevelManager = require "class.LevelManager";
 Gamestate = require "lib.hump.gamestate";
 _G.data = require "data";
+Persistence = require"class.Persistence";
 
 -- Global variables
 _G.math.inf = 1 / 0;
-
---- globale persistance table
-_G._persTable = {
-    statistic = {};
-    achivments = {};
-    config = {};
-    fishCaught = {};
-    money = 0;
-    lastLevel = 1;
-    winDim = {};
-    phase = 1;
-    enabled = {
-        ring = true;
-        sleepingPill = true;
-    }
-};
-
---- upgrades list in persTable, "0" means unbought
-_G._persTable.upgrades = {
-    speedUp = 0; -- "0" no Speedup for more looke bait.lua
-    moneyMult = 0; -- "0" means no additional money
-    moreLife = 1; -- amount of additional lifes
-    godMode = 1; -- indicates if the god mode is available or not
-    mapBreakthrough1 = 0; -- can you access the first map limit? 0 = no, 1 = yes
-    mapBreakthrough2 = 0; -- can you access the second map limit? 0 = no, 1 = yes
-    sleepingPillDuration = 600; -- duration of the effect of the sleeping pill
-    sleepingPillSlow = 0.25; -- sets the slow factor of the sleeping pill 0.25 = 25% of the usual movement
-};
-
---- config options
-_G._persTable.config = {
-    bgm = 100;
-    music = 100;
-}
 
 --- Local variables
 local curLevel;
@@ -52,10 +19,12 @@ local player;
 local swarmFactory;
 local gui;
 local levMan;
+local persistence;
 
 --- The bootstrap of the game.
 -- This function is called exactly once at the beginning of the game.
 function love.load()
+    persistence = Persistence();
     local _, _, flags = love.window.getMode();
     love.graphics.setBackgroundColor(30, 180, 240);
     _G._persTable.winDim = { love.window.getDesktopDimensions(flags.display) };
