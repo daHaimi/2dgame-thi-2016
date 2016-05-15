@@ -9,3 +9,4 @@ luacov.*.out
 *.tap
 **/*.swp
 .idea/
+lib/
