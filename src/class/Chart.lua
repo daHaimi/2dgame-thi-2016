@@ -1,6 +1,6 @@
 ---Chart contains a table with clickable elements and an textfield
 Class = require "lib.hump.class";
-Textbox = require "class.Textbox";
+TextField = require "class.TextField";
 
 local Chart = Class {
     init = function(self)
@@ -10,7 +10,7 @@ local Chart = Class {
         self.markFrame = Loveframes.Create("image");
         self.markFrame:SetImage("assets/gui/markFrame.png");
         self.markFrame:SetVisible(false);
-        self.textField = Textbox(128);
+        self.textField = TextField(128);
     end;
 };
 

@@ -11,11 +11,11 @@ describe("Unit test for Textbox.lua", function()
         _G.Loveframes = {
             Create = function(...) return fakeImagebutton(); end
         }
-        locInstance = testClass("testClass", "test/path/testImage.png", "test/path/testImage_checked.png", "test discription");
+        locInstance = testClass("testClass", "test/path/testImage.png", "test/path/testImage_disable.png", "test discription");
     end)
     
     it("Testing Constructor", function()
-        local myInstance = testClass("testClass", "test/path/testImage.png", "test/path/testImage_checked.png", "test discription");
+        local myInstance = testClass("testClass", "test/path/testImage.png", "test/path/testImage_disable.png", "test discription");
         assert.are.same(locInstance, myInstance);
     end)
     
@@ -25,9 +25,9 @@ describe("Unit test for Textbox.lua", function()
     end)
 
     it("Testing check function", function()
-        locInstance:check();
-        assert.are.equal(locInstance.checked, true);
-        assert.are.equal(locInstance.object.imagepath, "test/path/testImage_checked.png");
+        locInstance:disable();
+        assert.are.equal(locInstance.enable, false);
+        assert.are.equal(locInstance.object.imagepath, "test/path/testImage_disable.png");
     end)
 
     it("Testing SetPos function", function()
@@ -37,7 +37,7 @@ describe("Unit test for Textbox.lua", function()
 
     it("Testing getEnable function", function()
         locInstance.enable = false;
-        assert.are.equal(locInstance:GetChecked(), false);
+        assert.are.equal(locInstance:getEnable(), false);
     end)
 
 end)

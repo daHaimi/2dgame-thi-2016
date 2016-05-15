@@ -1,11 +1,11 @@
 -- Lua 5.1 Hack
 _G.math.inf = 1 / 0
 
-testClass = require "src.class.Textbox"
+testClass = require "src.class.TextField"
 fakeText = require "Tests.fakeLoveframes.fakeText"
 
 
-describe("Unit test for Textbox.lua", function()
+describe("Unit test for TextField.lua", function()
     local locInstance;
     
     before_each(function()

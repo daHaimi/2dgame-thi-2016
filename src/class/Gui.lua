@@ -3,7 +3,6 @@ Loveframes = require "lib.LoveFrames";
 Class = require "lib.hump.class";
 Chart = require "class.Chart";
 KlickableElement = require "class.KlickableElement";
-Textbox = require "class.Textbox";
 Healthbar = require "class.Healthbar";
 
 
@@ -52,12 +51,12 @@ local Gui = Class {
 
     --table contains all elements like upgradebutton, achievementbuttons and wikibuttons
     klickableElement = {
-        upgrade1 = KlickableElement("SpeedUp", "assets/gui/gui_Test_klickableElement.png", "assets/gui/gui_Test_klickableElement_checked.png", "Text for SpeedUp. Text for SpeedUp. Text for SpeedUp. ");
-        upgrade2 = KlickableElement("Money", "assets/gui/gui_Test_klickableElement.png", "assets/gui/gui_Test_klickableElement_checked.png", "Text for Money. Text for Money. Text for Money. ");
-        upgrade3 = KlickableElement("Life", "assets/gui/gui_Test_klickableElement.png", "assets/gui/gui_Test_klickableElement_checked.png", "Text for Life. Text for Life. Text for Life. ");
-        upgrade4 = KlickableElement("God", "assets/gui/gui_Test_klickableElement.png", "assets/gui/gui_Test_klickableElement_checked.png", "Text for God. Text for God. Text for God. ");
-        upgrade5 = KlickableElement("BT1", "assets/gui/gui_Test_klickableElement.png", "assets/gui/gui_Test_klickableElement_checked.png", "Text for BT1. Text for BT1. Text for BT1. ");
-        upgrade6 = KlickableElement("BT2", "assets/gui/gui_Test_klickableElement.png", "assets/gui/gui_Test_klickableElement_checked.png", "Text for BT2. Text for BT2. Text for BT2. ");
+        upgrade1 = KlickableElement("SpeedUp", "assets/gui/gui_Test_klickableElement.png", "assets/gui/gui_Test_klickableElement_disable.png", "Text for SpeedUp. Text for SpeedUp. Text for SpeedUp. ");
+        upgrade2 = KlickableElement("Money", "assets/gui/gui_Test_klickableElement.png", "assets/gui/gui_Test_klickableElement_disable.png", "Text for Money. Text for Money. Text for Money. ");
+        upgrade3 = KlickableElement("Life", "assets/gui/gui_Test_klickableElement.png", "assets/gui/gui_Test_klickableElement_disable.png", "Text for Life. Text for Life. Text for Life. ");
+        upgrade4 = KlickableElement("God", "assets/gui/gui_Test_klickableElement.png", "assets/gui/gui_Test_klickableElement_disable.png", "Text for God. Text for God. Text for God. ");
+        upgrade5 = KlickableElement("BT1", "assets/gui/gui_Test_klickableElement.png", "assets/gui/gui_Test_klickableElement_disable.png", "Text for BT1. Text for BT1. Text for BT1. ");
+        upgrade6 = KlickableElement("BT2", "assets/gui/gui_Test_klickableElement.png", "assets/gui/gui_Test_klickableElement_disable.png", "Text for BT2. Text for BT2. Text for BT2. ");
         wiki1 = KlickableElement("Angler", "assets/angler.png", nil, "Text for Angler. Text for Angler. Text for Angler.");
         wiki2 = KlickableElement("Dead Fish", "assets/deadFish.png", nil, "Text for dead Fish. Text for dead Fish. Text for dead Fish.");
         wiki3 = KlickableElement("Lolli", "assets/lolli.png", nil, "Text for Lolli. Text for Lolli. Text for Lolli.");
@@ -412,25 +411,23 @@ end
 function Gui:loadValues()
     --convert 0, 1 or more in to boolean. A 2 equals multiply checkboxes
     if _persTable.upgrades.speedUp == 1 then
-        Gui.klickableElement.upgrade1:check();
+        Gui.klickableElement.upgrade1:disable();
     end
     if _persTable.upgrades.moneyMult == 1 then
-        Gui.klickableElement.upgrade2:check();
+        Gui.klickableElement.upgrade2:disable();
     end
     if _persTable.upgrades.moreLife == 1 then
-        Gui.klickableElement.upgrade3:check();
+        Gui.klickableElement.upgrade3:disable();
     end
     if _persTable.upgrades.godMode == 1 then
-        Gui.klickableElement.upgrade4:check();
+        Gui.klickableElement.upgrade4:disable();
     end
     if _persTable.upgrades.mapBreakthrough1 == 1 then
-        Gui.klickableElement.upgrade4:check();
+        Gui.klickableElement.upgrade4:disable();
         if _persTable.upgrades.mapBreakthrough2 == 1 then
-            Gui.klickableElement.upgrade4:check();
+            Gui.klickableElement.upgrade4:disable();
         end
     end
-    --Gui.checkBox.option1:SetChecked(_persTable.config.option1);
-    --Gui.checkBox.option2:SetChecked(_persTable.config.option2);
     Gui.slider.bgm:SetValue(_persTable.config.bgm);
     Gui.slider.music:SetValue(_persTable.config.music);
     Gui:tempTextOutput();
@@ -440,40 +437,38 @@ end
 ---updates all values which can be chanced by gui elements
 ---this function is called on every Back-Button clickevent
 function Gui:updateValues()
-    --_persTable.config.option1 = Gui.checkBox.option1:GetChecked();
-    --_persTable.config.option2 = Gui.checkBox.option2:GetChecked();
     _persTable.config.bgm = Gui.slider.bgm:GetValue();
     _persTable.config.music = Gui.slider.music:GetValue();
     --transform the boolean to 0, 1 or more
-    if Gui.klickableElement.upgrade1:GetChecked() then
-        _persTable.upgrades.speedUp = 1;
-    else
+    if Gui.klickableElement.upgrade1:getEnable() then
         _persTable.upgrades.speedUp = 0;
-    end
-    if Gui.klickableElement.upgrade2:GetChecked() then
-        _persTable.upgrades.moneyMult = 1;
     else
+        _persTable.upgrades.speedUp = 1;
+    end
+    if Gui.klickableElement.upgrade2:getEnable() then
         _persTable.upgrades.moneyMult = 0;
-    end
-    if Gui.klickableElement.upgrade3:GetChecked() then
-        _persTable.upgrades.moreLife = 1;
     else
+        _persTable.upgrades.moneyMult = 1;
+    end
+    if Gui.klickableElement.upgrade3:getEnable() then
         _persTable.upgrades.moreLife = 0;
-    end
-    if Gui.klickableElement.upgrade4:GetChecked() then
-        _persTable.upgrades.godMode = 1;
     else
+        _persTable.upgrades.moreLife = 1;
+    end
+    if Gui.klickableElement.upgrade4:getEnable() then
         _persTable.upgrades.godMode = 0;
-    end
-    if Gui.klickableElement.upgrade5:GetChecked() then
-        _persTable.upgrades.mapBreakthrough1 = 1;
     else
+        _persTable.upgrades.godMode = 1;
+    end
+    if Gui.klickableElement.upgrade5:getEnable() then
         _persTable.upgrades.mapBreakthrough1 = 0;
-    end
-    if Gui.klickableElement.upgrade6:GetChecked() then
-        _persTable.upgrades.mapBreakthrough2 = 1;
     else
+        _persTable.upgrades.mapBreakthrough1 = 1;
+    end
+    if Gui.klickableElement.upgrade6:getEnable() then
         _persTable.upgrades.mapBreakthrough2 = 0;
+    else
+        _persTable.upgrades.mapBreakthrough2 = 1;
     end
     Gui:tempTextOutput();
 end
@@ -631,7 +626,7 @@ end
 --Onclick event of  the buy button
 Gui.button.buy.OnClick = function(obj, x, y)
     if Gui.chart.upgrades.markedElement ~= nil then
-        Gui.chart.upgrades.markedElement:check();
+        Gui.chart.upgrades.markedElement:disable();
     end
 end
 
@@ -642,7 +637,6 @@ Gui.klickableElement.upgrade1.object.OnClick = function (obj, x, y)
 end
 
 Gui.klickableElement.upgrade2.object.OnClick = function (obj, x, y)
-    --Gui.klickableElement.upgrade2:check();
     Gui.chart.upgrades:markElement(Gui.klickableElement.upgrade2);
 end
 Gui.klickableElement.upgrade3.object.OnClick = function (obj, x, y)
@@ -664,7 +658,6 @@ Gui.klickableElement.wiki1.object.OnClick = function (obj, x, y)
 end
 
 Gui.klickableElement.wiki2.object.OnClick = function (obj, x, y)
-    --Gui.klickableElement.upgrade2:check();
     Gui.chart.wiki:markElement(Gui.klickableElement.wiki2);
 end
 Gui.klickableElement.wiki3.object.OnClick = function (obj, x, y)
