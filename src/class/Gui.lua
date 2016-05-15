@@ -57,6 +57,12 @@ local Gui = Class {
         upgrade4 = KlickableElement("God", "assets/gui/gui_Test_klickableElement.png", "assets/gui/gui_Test_klickableElement_disable.png", "Text for God. Text for God. Text for God. ");
         upgrade5 = KlickableElement("BT1", "assets/gui/gui_Test_klickableElement.png", "assets/gui/gui_Test_klickableElement_disable.png", "Text for BT1. Text for BT1. Text for BT1. ");
         upgrade6 = KlickableElement("BT2", "assets/gui/gui_Test_klickableElement.png", "assets/gui/gui_Test_klickableElement_disable.png", "Text for BT2. Text for BT2. Text for BT2. ");
+        upgrade7 = KlickableElement("Up7", "assets/gui/gui_Test_klickableElement.png", "assets/gui/gui_Test_klickableElement_disable.png", "");
+        upgrade8 = KlickableElement("Up8", "assets/gui/gui_Test_klickableElement.png", "assets/gui/gui_Test_klickableElement_disable.png", "");
+        upgrade9 = KlickableElement("Up9", "assets/gui/gui_Test_klickableElement.png", "assets/gui/gui_Test_klickableElement_disable.png", "");
+        upgrade10 = KlickableElement("Up10", "assets/gui/gui_Test_klickableElement.png", "assets/gui/gui_Test_klickableElement_disable.png", "T");
+        upgrade11 = KlickableElement("Up11", "assets/gui/gui_Test_klickableElement.png", "assets/gui/gui_Test_klickableElement_disable.png", "");
+        
         wiki1 = KlickableElement("Angler", "assets/angler.png", nil, "Text for Angler. Text for Angler. Text for Angler.");
         wiki2 = KlickableElement("Dead Fish", "assets/deadFish.png", nil, "Text for dead Fish. Text for dead Fish. Text for dead Fish.");
         wiki3 = KlickableElement("Lolli", "assets/lolli.png", nil, "Text for Lolli. Text for Lolli. Text for Lolli.");
@@ -181,13 +187,20 @@ function Gui:buildUpgradeMenu(x, y)
     self.chart.upgrades:addKlickableElement(self.klickableElement.upgrade4);
     self.chart.upgrades:addKlickableElement(self.klickableElement.upgrade5);
     self.chart.upgrades:addKlickableElement(self.klickableElement.upgrade6);
+    self.chart.upgrades:addKlickableElement(self.klickableElement.upgrade7);
+    self.chart.upgrades:addKlickableElement(self.klickableElement.upgrade8);
+    self.chart.upgrades:addKlickableElement(self.klickableElement.upgrade9);
+    self.chart.upgrades:addKlickableElement(self.klickableElement.upgrade10);
+    self.chart.upgrades:addKlickableElement(self.klickableElement.upgrade11);
+    
+    --Chart has to be the first element 
     self.myFrame.upgradeMenu:addElement(self.chart.upgrades,
         self.myFrame.upgradeMenu:centerElementX(x, self.background.upgradeMenu:GetImageWidth(), 192), 
         self:getScaledPixel("y", 5));
     
     self.myFrame.upgradeMenu:addElement(self.background.upgradeMenu, 0, 0);
-    self.myFrame.upgradeMenu:addElement(Gui.button.buy, self.myFrame.upgradeMenu:centerElementX(x, self.background.upgradeMenu:GetImageWidth(), 128), self:getScaledPixel("y", 7) + 200);
-    self.myFrame.upgradeMenu:addElement(Gui.button.back, self.myFrame.upgradeMenu:centerElementX(x, self.background.upgradeMenu:GetImageWidth(), 128), self:getScaledPixel("y", 9) + 232);
+    self.myFrame.upgradeMenu:addElement(Gui.button.buy, self.myFrame.upgradeMenu:centerElementX(x, self.background.upgradeMenu:GetImageWidth(), 128), self:getScaledPixel("y", 7) + 320);
+    self.myFrame.upgradeMenu:addElement(Gui.button.back, self.myFrame.upgradeMenu:centerElementX(x, self.background.upgradeMenu:GetImageWidth(), 128), self:getScaledPixel("y", 9) + 350);
 end
 
 ---add, scale and postion all elements on credits
@@ -473,6 +486,10 @@ function Gui:updateValues()
     Gui:tempTextOutput();
 end
 
+function Gui:getCurrentState()
+    return Gui.state[1];
+end
+
 --- Onclick event of the start button
 -- @param obj The clicked button object
 -- @param x The mouse position on the x axis
@@ -618,9 +635,10 @@ Gui.button.back.OnClick = function(obj, x, y)
     if Gui.state[1] == Gui.myFrame.options or Gui.state [1] == Gui.myFrame.upgradeMenu then
         Gui.updateValues();
     end
+    if Gui.state[1] == Gui.myFrame.wiki or Gui.state [1] == Gui.myFrame.upgradeMenu or Gui.state [1] == Gui.myFrame.achievements then
+        Gui.state[1].elementsOnFrame[1]:resetMarkedFrame();
+    end
     Gui:draw(Gui.state[2]);
-    Gui.chart.upgrades.markFrame:SetVisible(false);
-    Gui.chart.wiki.markFrame:SetVisible(false);
 end
 
 --Onclick event of  the buy button
@@ -651,7 +669,21 @@ end
 Gui.klickableElement.upgrade6.object.OnClick = function (obj, x, y)
     Gui.chart.upgrades:markElement(Gui.klickableElement.upgrade6);
 end
-
+Gui.klickableElement.upgrade7.object.OnClick = function (obj, x, y)
+    Gui.chart.upgrades:markElement(Gui.klickableElement.upgrade7);
+end
+Gui.klickableElement.upgrade8.object.OnClick = function (obj, x, y)
+    Gui.chart.upgrades:markElement(Gui.klickableElement.upgrade8);
+end
+Gui.klickableElement.upgrade9.object.OnClick = function (obj, x, y)
+    Gui.chart.upgrades:markElement(Gui.klickableElement.upgrade9);
+end
+Gui.klickableElement.upgrade10.object.OnClick = function (obj, x, y)
+    Gui.chart.upgrades:markElement(Gui.klickableElement.upgrade10);
+end
+Gui.klickableElement.upgrade11.object.OnClick = function (obj, x, y)
+    Gui.chart.upgrades:markElement(Gui.klickableElement.upgrade11);
+end
 
 Gui.klickableElement.wiki1.object.OnClick = function (obj, x, y)
     Gui.chart.wiki:markElement(Gui.klickableElement.wiki1);
