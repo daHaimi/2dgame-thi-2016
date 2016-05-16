@@ -65,8 +65,8 @@ describe("Unit test for Bait.lua", function()
             isFinished = function(...) return 0 end;
             getDirection = function () return -1; end;
             isFinished = function() return 0 end;
-            getSwarmFactory = function() return;
             getYPos = function() return 400 end;
+            getSwarmFactory = function() return 
             { 
                 createdFishables = {
                     {
