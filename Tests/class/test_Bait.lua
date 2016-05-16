@@ -61,7 +61,7 @@ describe("Unit test for Bait.lua", function()
         assert.are.same(0.495, myInstance.modifier);
         
         myInstance.levMan.curLevel = {
-            moved = -4,
+            getMoved = function(...) return -4 end;
             isFinished = function(...) return 0 end;
             getDirection = function () return -1; end;
             isFinished = function() return 0 end;
