@@ -58,7 +58,7 @@ describe("Unit test for Bait.lua", function()
     it("Testing Update", function()
         local myInstance = testClass(locWinDim, levMan);        
         myInstance:update();
-        assert.are.same(0.5, myInstance.modifier);
+        assert.are.same(0.495, myInstance.modifier);
         
         myInstance.levMan.curLevel = {
             moved = -4,
@@ -406,7 +406,7 @@ describe("Unit test for Bait.lua", function()
     it("Test changeModifierTo()", function()
         local myInstance = testClass(locWinDim, levMan);
         myInstance.modifier = 0.3;
-        myInstance:changeModifierTo(0.5);
+        myInstance.modifire = myInstance:changeModifierTo(0.5);
         assert.are.same(0.325, myInstance.modifier);
     end)
 
