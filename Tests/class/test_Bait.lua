@@ -83,7 +83,7 @@ describe("Unit test for Bait.lua", function()
         }
         
         myInstance:update();
-        assert.are.same(0.475, myInstance.modifier);
+        assert.are.same(0.5, myInstance.modifier);
     end)
 
     it("Test sleeping pill duration", function()
