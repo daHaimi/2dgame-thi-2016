@@ -17,7 +17,7 @@ local Level = Class {
         end;
         self.backgroundPath = backgroundPath;
         self.winDim = winDim;
-        self.posY = (winDim[2] * 0.32); --startpos
+        self.posY = (winDim[2] * 0.5); --startpos
         --self.direction = self.direction * direction;
         if self.bg ~= nil then -- do not remove this if statement or busted will crash
         self.bgq = love.graphics.newQuad(0, 0, winDim[1], 20000, self.bg:getWidth(), self.bg:getHeight());
@@ -61,7 +61,7 @@ function Level:update(dt, bait)
     --set the direction in relation of the yPosition
     if self.posY <= self.lowerBoarder then
         self:switchToPhase2();
-    elseif self.posY >= (self.winDim[2] * 0.68) and self.direction == -1 then
+    elseif self.posY >= (self.winDim[2] * 0.5) and self.direction == -1 then
         self.direction = 0;
         self.levelFinished = 1;
         self:payPlayer();

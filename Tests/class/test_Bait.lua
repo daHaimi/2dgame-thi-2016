@@ -58,7 +58,7 @@ describe("Unit test for Bait.lua", function()
     it("Testing Update", function()
         local myInstance = testClass(locWinDim, levMan);        
         myInstance:update();
-        assert.are.same(0.32, myInstance.modifier);
+        assert.are.same(0.5, myInstance.modifier);
         
         myInstance.levMan.curLevel = {
             moved = -4,
@@ -82,11 +82,7 @@ describe("Unit test for Bait.lua", function()
         }
         
         myInstance:update();
-        assert.are.same(0.325, myInstance.modifier);
-        
-        myInstance.modifier = 0.8
-        myInstance:update();
-        assert.are.same(0.68, myInstance.modifier);
+        assert.are.same(0.475, myInstance.modifier);
     end)
 
     it("Test sleeping pill duration", function()
@@ -405,6 +401,13 @@ describe("Unit test for Bait.lua", function()
         local myInstance = testClass(locWinDim, levMan);
         myInstance.size = "new size";
         assert.are.same("new size", myInstance:getSize())
+    end)
+
+    it("Test changeModifierTo()" function()
+        local myInstance = testClass(locWinDim, levMan);
+        myInstance.modifier = 0.3;
+        myInstance:changeModifierTo(0.5);
+        assert.are.same(0.325, myInstance.modifier);
     end)
 
 end)

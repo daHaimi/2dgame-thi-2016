@@ -28,7 +28,7 @@ local Bait = Class {
     caughtThisRound = {};
     sleepingPillDuration = 0;
     deltaTime = 0;
-    modifier = 0;
+    modifier = 0.5;
     goldenRuleLowerPoint = 0.32;
     goldenRuleUpperPoint = 0.68;
 };
@@ -50,15 +50,12 @@ end
 function Bait:update(dt)
     -- calculate modifier for the golden rule
     if self.levMan:getCurLevel():getDirection() == 1 then
-       
-        self.modifier = self.goldenRuleLowerPoint;
+        self.modifier = self:changeModifierTo(self.goldenRuleLowerPoint);
+    elseif self.levMan:getCurLevel():getDirection() == -1 and 
+        self.levMan:getCurLevel():getYPos() < self.winDim[2] * self.goldenRuleLowerPoint then
+        self.modifier = self:changeModifierTo(self.goldenRuleUpperPoint);
     else
-      
-        if self.modifier < self.goldenRuleUpperPoint then
-            self.modifier = self.modifier - self.levMan:getCurLevel().moved /self.winDim[2];
-        else
-            self.modifier = self.goldenRuleUpperPoint;
-        end
+        self.modifier = self:changeModifierTo(0.5);
     end
     
     self.yPos = (self.winDim[2] * self.modifier) - (self.size / 2);
@@ -157,6 +154,26 @@ function Bait:setCappedPosX()
         end
         self.posXBait = posX;
     end
+end
+
+--- changes the modifier of the height of the bait in small steps
+--@param newModifier the modifier the bait is going to have
+function Bait:changeModifierTo(newModifier)
+    local result = newModifier;
+    if self.modifier < newModifier then
+        if self.modifier > newModifier + math.abs(self.levMan:getCurLevel():getMoved()/self.winDim[2]) then
+            result = newModifier;
+        else
+            result = self.modifier + math.abs(self.levMan:getCurLevel():getMoved()/self.winDim[2]);
+        end
+    elseif self.modifier > newModifier then
+        if self.modifier < newModifier + math.abs(self.levMan:getCurLevel():getMoved()/self.winDim[2]) then
+            result = newModifier;
+        else
+            result = self.modifier - math.abs(self.levMan:getCurLevel():getMoved()/self.winDim[2]);
+        end
+    end
+    return result
 end
 
 --- Returns the actual X position of the Bait

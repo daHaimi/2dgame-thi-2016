@@ -22,7 +22,8 @@ local SwarmFactory = Class {
             end
         end
         
-        addedHeights = 600; -- Start at 600 to create swarms for now
+        -- Start at the lower 75% of the screen to create swarms
+        addedHeights = self.levMan:getCurLevel().winDim[2] *0.75;
         while addedHeights <= -self.maxDepth do
             addedHeights = addedHeights + self:createNextSwarm(addedHeights);
         end
