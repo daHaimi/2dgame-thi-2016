@@ -34,7 +34,7 @@ describe("Unit test for Bait.lua", function()
             },
             getCurSwarmFactory = function(...) return _G.levMan.curSwarmFac end,
             getCurPlayer = function(...) return _G.levMan.curPlayer end,
-            getCurLevel = function(...) return locLevel end
+            getCurLevel = function(...) return _G.levMan.curLevel end
         }
             
         _G.love = {
