@@ -403,7 +403,7 @@ describe("Unit test for Bait.lua", function()
         assert.are.same("new size", myInstance:getSize())
     end)
 
-    it("Test changeModifierTo()" function()
+    it("Test changeModifierTo()", function()
         local myInstance = testClass(locWinDim, levMan);
         myInstance.modifier = 0.3;
         myInstance:changeModifierTo(0.5);
