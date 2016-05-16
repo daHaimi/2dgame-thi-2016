@@ -14,6 +14,7 @@ describe("Unit test for Bait.lua", function()
         isFinished = function(...) return 0 end;
         getMoved = function() return 4 end;
         getDirection = function() return 1 end;
+        getYPos = function() return 400 end;
     }
     
     before_each(function()
@@ -406,7 +407,7 @@ describe("Unit test for Bait.lua", function()
     it("Test changeModifierTo()", function()
         local myInstance = testClass(locWinDim, levMan);
         myInstance.modifier = 0.3;
-        myInstance.modifire = myInstance:changeModifierTo(0.5);
+        myInstance.modifier = myInstance:changeModifierTo(0.5);
         assert.are.same(0.325, myInstance.modifier);
     end)
 
