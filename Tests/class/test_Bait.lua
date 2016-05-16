@@ -34,7 +34,7 @@ describe("Unit test for Bait.lua", function()
             },
             getCurSwarmFactory = function(...) return _G.levMan.curSwarmFac end,
             getCurPlayer = function(...) return _G.levMan.curPlayer end,
-            getCurLevel = function(...) return _G.levMan.curLevel end
+            getCurLevel = function(...) return locLevel end
         }
             
         _G.love = {
@@ -408,7 +408,7 @@ describe("Unit test for Bait.lua", function()
         local myInstance = testClass(locWinDim, levMan);
         myInstance.modifier = 0.3;
         myInstance.modifier = myInstance:changeModifierTo(0.5);
-        assert.are.same(0.325, myInstance.modifier);
+        assert.are.same(0.305, myInstance.modifier);
     end)
 
 end)
