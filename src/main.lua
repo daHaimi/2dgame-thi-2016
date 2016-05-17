@@ -12,6 +12,8 @@ Persistence = require"class.Persistence";
 
 -- Global variables
 _G.math.inf = 1 / 0;
+_G._gui = Gui();
+
 
 --- Local variables
 local curLevel;
@@ -33,17 +35,17 @@ function love.load()
     love.window.setMode(_G._persTable.winDim[1], _G._persTable.winDim[2], { centered });
     levMan = LevelManager();
     levMan:newLevel("assets/testbg.png", 1, _G.data);
-    gui = Gui();
-    gui:tempTextOutput();
-    gui:buildFrames();
-    gui:loadValues();
-    gui:startGui();
+
+    _gui:tempTextOutput();
+    --gui:buildFrames();
+    --gui:loadValues();
+    _gui:start();
 end
 
 --- The love main draw call, which draws every frame on the screen.
 -- This function is called continuously by the love.run().
 function love.draw()
-    if gui.drawGame() then
+    if _gui:drawGame() then
         levMan:getCurLevel():draw(levMan:getCurPlayer());
         levMan:getCurSwarmFactory():draw();
     end
@@ -51,16 +53,16 @@ function love.draw()
     Loveframes.draw()
     --[[prints the State name and output values.
     This function will be replaced in a later version]] --
-    gui:tempDrawText()
+    _gui:tempDrawText()
 end
 
 --- This function is called continuously by the love.run().
 -- @param dt Delta time  is the amount of seconds since the
 -- last time this function was called.
 function love.update(dt)
-    gui:updateGui();
+    _gui:update();
     Loveframes.update(dt);
-    if gui.drawGame() then
+    if _gui.drawGame() then
         -- updates the curLevel only in the InGame GUI
         levMan:getCurLevel():update(dt, levMan:getCurPlayer());
         levMan:getCurSwarmFactory():update();
