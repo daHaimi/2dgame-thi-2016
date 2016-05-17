@@ -3,12 +3,28 @@ Class = require "lib.hump.class";
 
 Mainmenu = require "class.frames.MainMenu";
 Achievements = require "class.frames.Achievements";
+Options = require "class.frames.Options";
+UpgradeMenu = require "class.frames.UpgradeMenu";
+Dictionary = require "class.frames.Dictionary";
+Credits = require "class.frames.Credits";
+Score = require "class.frames.Score";
+Pause = require "class.frames.Pause";
+ChooseLevel = require "class.frames.Level";
+InGame = require "class.frames.inGame";
 
 local Gui = Class {
     init = function(self)
         self.myFrames = {
-            mainMenu = Mainmenu();
             achievements = Achievements();
+            mainMenu = Mainmenu();
+            options = Options();
+            upgradeMenu = UpgradeMenu();
+            dictionary = Dictionary();
+            credits = Credits();
+            score = Score();
+            pause = Pause();
+            level = ChooseLevel();
+            inGame = InGame();
         };
         
         self.p_frameChangeActiv = false;--true if a frame change is activ
@@ -54,20 +70,15 @@ function Gui:update()
     end
 end
 
-
-
-
-
-
-
-
-
-
-
 function Gui:setFrameChangeActivity(activity)
     self.p_frameChangeActiv = activity;
 end
 
+function Gui:getLastState()
+    if self.p_states.lastState ~= nil then
+        return self.p_states.lastState;
+    end
+end
 
 
 ---set the visible of all frames to false
@@ -77,34 +88,20 @@ function Gui:clearAll()
     end
 end
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 ---checking the gui state and return a boolean
 function Gui:drawGame()
     --returns "true" in the InGame-state
-    --if self.p_states.currentState ~= self.myFrames.inGame then
+    if self.p_states.currentState ~= self.myFrames.inGame then
         return false;
-    --else
---        return true;
-    --end
+    else
+        return true;
+    end
 end
 
 ---print the state-name and values
 function Gui:tempDrawText()
     love.graphics.print(self.p_states.currentState.name, 0, 0);
-    if self.p_states.currentState == self.myFrames.mainmenu then
+    if self.p_states.currentState == self.myFrames.mainMenu then
         self:tempTextOutput();
         love.graphics.print(self.p_textOutput, 0, 20);
     end

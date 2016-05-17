@@ -62,7 +62,7 @@ end
 function love.update(dt)
     _gui:update();
     Loveframes.update(dt);
-    if _gui.drawGame() then
+    if _gui:drawGame() then
         -- updates the curLevel only in the InGame GUI
         levMan:getCurLevel():update(dt, levMan:getCurPlayer());
         levMan:getCurSwarmFactory():update();

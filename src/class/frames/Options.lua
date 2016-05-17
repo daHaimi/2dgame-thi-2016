@@ -3,13 +3,7 @@ Class = require "lib.hump.class";
 local Options = Class {
     init = function(self)
         self.name = "Options";
-        self.xPos = 50;
-        self.yPos = 50;
-        self.xDefaultOffset = 0; 
-        self.yDefaultOffset = -1500;
-        self.xOffset = self.xDefaultOffset;
-        self.yOffset = self.yDefaultOffset;
-        self.moveSpeed = 50;
+        self.frame = Frame(100, 100, "down", "down", 50, 0, -1500);
         self:create();
     end;
 };
@@ -20,6 +14,8 @@ function Options:create()
     self.elementsOnFrame = {
         background = {
             object = Loveframes.Create("image");
+            x = 0;
+            y = 0;
         };
         slider_bgm = {
             object = Loveframes.Create("slider");
@@ -76,52 +72,33 @@ function Options:create()
     end
     
     self.elementsOnFrame.button_back.object.OnClick = function(object)
-        _gui:changeFrame(_gui.myFrames.mainMenu);
+        _gui:changeFrame(_gui:getLastState());
     end
+end
+
+
+function Options:draw()
+    self.frame:draw(self.elementsOnFrame);
 end
 
 --called to "delete" this frame
 function Options:clear()
-    --visible set on false/ should only done in this function
-    self.elementsOnFrame.background.object:SetVisible(false);
-    self.elementsOnFrame.button_back.object:SetVisible(false);
-    --set the offset on the default value
-    self.xOffset = self.xDefaultOffset;
-    self.yOffset = self.yDefaultOffset;
+    self.frame:clear(self.elementsOnFrame)
 end
 
 --called in the "fly in" state 
 function Options:appear()
-    self.yOffset = self.yOffset + self.moveSpeed;
-    self:setPosition();
+    self.frame:appear(self.elementsOnFrame)
 end
 
 --called in the "fly out" state
 function Options:disappear()
-    self.yOffset = self.yOffset + self.moveSpeed;
-    self:setPosition();
-end
-
-function Options:setPosition()
-    self.elementsOnFrame.background.object:SetPos(self.xPos + self.xOffset, self.yPos + self.yOffset)
-    self.elementsOnFrame.button_back.object:SetPos(self.xPos + self.elementsOnFrame.button_back.x + self.xOffset, self.yPos + self.elementsOnFrame.button_back.y + self.yOffset);
-    
-    
-end
-
-function Options:draw()
-    for k, v in pairs(self.elementsOnFrame) do
-        v.object:SetVisible(true);
-    end
+    self.frame:disappear(self.elementsOnFrame)
 end
 
 ---return true if the frame is on position /fly in move is finished
 function Options:checkPosition()
-    if (self.xOffset == 0 and self.yOffset == 0) then
-        return true;
-    else
-        return false;
-    end
+    return self.frame:checkPosition();
 end
 
 return Options;

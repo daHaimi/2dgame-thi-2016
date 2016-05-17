@@ -3,14 +3,8 @@ Class = require "lib.hump.class";
 
 local Score = Class {
     init = function(self)
-        self.name = "Achievements";
-        self.xPos = 50;
-        self.yPos = 50;
-        self.xDefaultOffset = 0; 
-        self.yDefaultOffset = -1500;
-        self.xOffset = self.xDefaultOffset;
-        self.yOffset = self.yDefaultOffset;
-        self.moveSpeed = 50;
+        self.name = "Score";
+        self.frame = Frame(100, 100, "down", "down", 50, 0, -1500);
         self:create();
     end;
 };
@@ -21,78 +15,64 @@ function Score:create()
     self.elementsOnFrame = {
         background = {
             object = Loveframes.Create("image");
+            x = 0;
+            y = 0;
         };
-        button_back = {
+        button_retry = {
             object = Loveframes.Create("imagebutton");
             x = 10;
             y = 10;
+        };
+        button_backToMenu = {
+            object = Loveframes.Create("imagebutton");
+            x = 10;
+            y = 50;
         };
     };
     
     --adjust all elements on this frame
     self.elementsOnFrame.background.object:SetImage("assets/gui/gui_Test_Bg.png");
     
-    self.elementsOnFrame.button_back.object:SetImage("assets/gui/gui_Test_Button.png")
-    self.elementsOnFrame.button_back.object:SizeToImage()
-    self.elementsOnFrame.button_back.object:SetText("Back");
+    self.elementsOnFrame.button_retry.object:SetImage("assets/gui/gui_Test_Button.png")
+    self.elementsOnFrame.button_retry.object:SizeToImage()
+    self.elementsOnFrame.button_retry.object:SetText("Retry");
+    
+    self.elementsOnFrame.button_backToMenu.object:SetImage("assets/gui/gui_Test_Button.png")
+    self.elementsOnFrame.button_backToMenu.object:SizeToImage()
+    self.elementsOnFrame.button_backToMenu.object:SetText("Back to Menu");
     
     
     --onclick events for all buttons
-    self.elementsOnFrame.button_back.object.OnClick = function(object)
-        _gui:changeFrame("1");
+    self.elementsOnFrame.button_retry.object.OnClick = function(object)
+        _gui:changeFrame(_gui.myFrames.inGame);
+    end
+    
+    self.elementsOnFrame.button_backToMenu.object.OnClick = function(object)
+        _gui:changeFrame(_gui.myFrames.mainMenu);
     end
 end
 
+function Score:draw()
+    self.frame:draw(self.elementsOnFrame);
+end
 
 --called to "delete" this frame
 function Score:clear()
-    --visible set on false/ should only done in this function
-    self.elementsOnFrame.background.object:SetVisible(false);
-    self.elementsOnFrame.button_back.object:SetVisible(false);
-    --set the offset on the default value
-    self.xOffset = self.xDefaultOffset;
-    self.yOffset = self.yDefaultOffset;
+    self.frame:clear(self.elementsOnFrame)
 end
 
 --called in the "fly in" state 
 function Score:appear()
-    self.yOffset = self.yOffset + self.moveSpeed;
-    self:setPosition();
+    self.frame:appear(self.elementsOnFrame)
 end
 
 --called in the "fly out" state
 function Score:disappear()
-    self.yOffset = self.yOffset + self.moveSpeed;
-    self:setPosition();
+    self.frame:disappear(self.elementsOnFrame)
 end
-
-function Score:setPosition()
-    self.elementsOnFrame.background.object:SetPos(self.xPos + self.xOffset, self.yPos + self.yOffset)
-    self.elementsOnFrame.button_back.object:SetPos(self.xPos + self.elementsOnFrame.button_back.x + self.xOffset, self.yPos + self.elementsOnFrame.button_back.y + self.yOffset);
-    
-    
-end
-
-
-
-
-function Score:draw()
-    for k, v in pairs(self.elementsOnFrame) do
-        v.object:SetVisible(true);
-    end
-end
-
 
 ---return true if the frame is on position /fly in move is finished
 function Score:checkPosition()
-    if (self.xOffset == 0 and self.yOffset == 0) then
-        return true;
-    else
-        return false;
-    end
+    return self.frame:checkPosition();
 end
-
-
-
-
 return Score;
