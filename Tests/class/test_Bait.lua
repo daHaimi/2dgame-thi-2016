@@ -23,6 +23,10 @@ describe("Unit test for Bait.lua", function()
             curSwarmFac = { 
             createdFishables = {
                     {
+                        getHitboxHeight = function(...) return 10; end;
+                        getHitboxWidth = function(...) return 10; end;
+                        getHitboxXPosition = function(...) return 15; end;
+                        getHitboxYPosition = function(...) return 20; end;
                         setToCaught = function(...) end;
                         setSpeedMultiplicator = function(...) end;
                         caught = false;
@@ -258,7 +262,7 @@ describe("Unit test for Bait.lua", function()
         myInstance.levMan.curLevel = {getGodModeStat = function() return 1; end};
         myInstance:draw();
         assert.spy(loveMock.graphics.setColor).was_called_with(255, 0, 0);
-        assert.spy(loveMock.graphics.rectangle).was_called_with("fill", 500, 400, 10, 10);
+        assert.spy(loveMock.graphics.rectangle).was_called_with("fill", 495, 395, 10, 10);
     end)
 
     it("Test getXPos", function()
@@ -383,7 +387,10 @@ describe("Unit test for Bait.lua", function()
                 }
             }
         }
-        myInstance:checkForCollision(someFishables);
+        myInstance:checkForCollision(someFishables, 21);
+        myInstance:checkForCollision(someFishables, 19);
+        myInstance:checkForCollision(someFishables, 20);
+        
     end)
 
     it("Test setPosXMouse", function()

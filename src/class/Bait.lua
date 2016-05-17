@@ -13,7 +13,6 @@ local Bait = Class {
         self.levMan = levelManager;
         local yPos = (self.winDim[2] / 2) - (self.size / 2); -- FIXME unused local
     end;
-    
     levMan = nil;
     size = 10;
     speed = 200;
@@ -48,6 +47,8 @@ end
 --- updates the bait and checks for collisions
 -- @param dt Delta time is the amount of seconds since the last time this function was called.
 function Bait:update(dt)
+    oldXPos = self.xPos;
+    
     -- calculate modifier for the golden rule
     if self.levMan:getCurLevel():getDirection() == 1 then
         self.modifier = self:changeModifierTo(self.goldenRuleLowerPoint);
@@ -62,7 +63,7 @@ function Bait:update(dt)
     self:setCappedPosX();
     self.xPos = self.posXBait;
     self.deltaTime = dt;
-    self:checkForCollision(self.levMan:getCurSwarmFactory().createdFishables);
+    self:checkForCollision(self.levMan:getCurSwarmFactory().createdFishables, oldXPos);
     
     -- decrease or deativate sleeping pill
     if self.sleepingPillDuration > 0 then
@@ -75,21 +76,44 @@ function Bait:update(dt)
     end
 end
 
---- checks for collision
--- @param CollisionDetection class of the collision detection
-function Bait:checkForCollision(createdFishables)
+--- checks for collision with all fishable objects
+-- @param createdFishables all fishables in this level
+-- @param oldXPos the x position of the bait before the update
+function Bait:checkForCollision(createdFishables, oldXPos)
     for i = 1, #createdFishables, 1 do
-        if not createdFishables[i].caught then
-            local fishable = createdFishables[i];
-            for c = 1, #fishable.hitbox, 1 do
-                CollisionDetection:setCollision();
-                CollisionDetection:calculateCollision(self.xPos, self.yPos, fishable:getHitboxXPosition(c),
-                    fishable:getHitboxYPosition(c), fishable:getHitboxWidth(c), fishable:getHitboxHeight(c));
-                if CollisionDetection:getCollision() then
-                    self:collisionDetected(fishable, i);
-                end
+        local fishable = createdFishables[i];
+        if (not fishable.caught) and math.abs(fishable:getHitboxYPosition(1) - self.yPos) < 150 then
+            self:checkFishableForCollision(fishable, oldXPos, i);
+        end
+    end
+end
+--- checks collision with one fishable object
+-- @param the fishable object
+-- @param oldXPos the x position of the bait before the update
+-- @param i the index of the fishable object
+function Bait:checkFishableForCollision(fishable, oldXPos, index)
+    moved = self.levMan:getCurLevel():getMoved();
+    directionOfMovement = 0;
+    yPos = self.yPos
+    if oldXPos < self.xPos then
+        directionOfMovement = 1;
+    elseif oldXPos > self.xPos then
+        directionOfMovement = -1;
+    else
+        directionOfMovement = 1;
+        oldXPos = oldXPos - 1;
+    end
+    
+    for i = oldXPos, self.xPos, directionOfMovement do
+        for c = 1, #fishable.hitbox, 1 do
+            CollisionDetection:setCollision();
+            CollisionDetection:calculateCollision(oldXPos, yPos, fishable:getHitboxXPosition(c),
+                fishable:getHitboxYPosition(c), fishable:getHitboxWidth(c), fishable:getHitboxHeight(c));
+            if CollisionDetection:getCollision() then
+                self:collisionDetected(fishable, index);
             end
         end
+        yPos = yPos + moved / math.abs(oldXPos - self.xPos);
     end
 end
 
@@ -137,7 +161,7 @@ function Bait:draw()
     else
         love.graphics.setColor(255, 0, 0);
     end
-    love.graphics.rectangle("fill", self.xPos, self.yPos, self.size, self.size);
+    love.graphics.rectangle("fill", self.xPos - 0.5 * self.size, self.yPos - 0.5 * self.size, self.size, self.size);
 end
 
 --- Determines the capped X position of the Bait (SpeedLimit)
