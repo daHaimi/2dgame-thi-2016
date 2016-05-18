@@ -1,7 +1,8 @@
 -- Lua 5.1 Hack
-_G.math.inf = 1 / 0
-testClass = require "src.class.KlickableElement"
-fakeImagebutton = require "Tests.fakeLoveframes.fakeImagebutton"
+_G.math.inf = 1 / 0;
+
+testClass = require "src.class.KlickableElement";
+fakeElement = require "Tests.fakeLoveframes.fakeImagebutton";
 
 
 describe("Unit test for Textbox.lua", function()
@@ -9,7 +10,7 @@ describe("Unit test for Textbox.lua", function()
     
     before_each(function()
         _G.Loveframes = {
-            Create = function(...) return fakeImagebutton(); end
+            Create = function(...) return fakeElement(); end
         }
         locInstance = testClass("testClass", "test/path/testImage.png", "test/path/testImage_disable.png", "test discription");
     end)
@@ -32,7 +33,8 @@ describe("Unit test for Textbox.lua", function()
 
     it("Testing SetPos function", function()
         locInstance:SetPos(5, 5);
-        assert.are.same(locInstance.object.position, {xPos = 5; yPos = 5;});
+        assert.are.same(locInstance.object.position, 5);
+        assert.are.same(locInstance.object.position, 5);
     end)
 
     it("Testing getEnable function", function()

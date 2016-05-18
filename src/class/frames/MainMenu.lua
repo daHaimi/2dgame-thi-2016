@@ -1,5 +1,6 @@
 Class = require "lib.hump.class";
 Frame = require "class.Frame";
+Loveframes = require "lib.LoveFrames";
 
 local MainMenu = Class {
     init = function(self)

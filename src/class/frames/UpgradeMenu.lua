@@ -1,6 +1,7 @@
 Class = require "lib.hump.class";
 Chart = require "class.Chart";
 KlickableElement = require "class.KlickableElement"
+Loveframes = require "lib.LoveFrames";
 
 local UpgradeMenu = Class {
     init = function(self)
@@ -113,6 +114,7 @@ function UpgradeMenu:create()
             _persTable.upgrades.moreLife = 0;
         else
             _persTable.upgrades.moreLife = 1;
+            _gui.myFrames.inGame.elementsOnFrame.healthbar.object:refreshAfterBuy();
         end
         if self.upgrades.upgrade4:getEnable() then
             _persTable.upgrades.godMode = 0;

@@ -1,4 +1,4 @@
-
+Loveframes = require "lib.LoveFrames";
 Class = require "lib.hump.class";
 
 local Credits = Class {

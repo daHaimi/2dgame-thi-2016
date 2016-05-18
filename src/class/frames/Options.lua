@@ -1,4 +1,5 @@
 Class = require "lib.hump.class";
+Loveframes = require "lib.LoveFrames";
 
 local Options = Class {
     init = function(self)

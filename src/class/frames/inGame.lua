@@ -1,5 +1,6 @@
-
+Loveframes = require "lib.LoveFrames";
 Class = require "lib.hump.class";
+Healthbar = require "class.Healthbar";
 
 local InGame = Class {
     init = function(self)
@@ -18,6 +19,12 @@ function InGame:create()
             x = 10;
             y = 10;
         };
+        healthbar = {
+            object = Healthbar("assets/hamster.png", "assets/heart_grey.png", "assets/heart.png");
+            x = 0;
+            y = 0;
+        }
+        
     };
     
     --adjust all elements on this frame

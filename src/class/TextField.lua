@@ -1,5 +1,6 @@
 Class = require "lib.hump.class";
 
+Loveframes = require "lib.LoveFrames";
 local Textbox = Class {
     init = function(self, width, length) --imagepath)
         self.objTopic = Loveframes.Create("text");

@@ -1,4 +1,3 @@
-Loveframes = require "lib.LoveFrames";
 Class = require "lib.hump.class";
 
 Mainmenu = require "class.frames.MainMenu";
@@ -26,7 +25,6 @@ local Gui = Class {
             level = ChooseLevel();
             inGame = InGame();
         };
-        
         self.p_frameChangeActiv = false;--true if a frame change is activ
         self.p_states = {
             currentState = nil;
@@ -43,17 +41,16 @@ function Gui:start()
     self:changeFrame(self.myFrames.mainMenu);
 end
 
+---called to draw a new frame
+--@parm: newFrame: the frame which should be draw
 function Gui:changeFrame(newFrame)
     self:setFrameChangeActivity(true);
     self.p_states.lastState = self.p_states.currentState;
     self.p_states.currentState = newFrame;
-    self.p_states.currentState:draw()
+    self.p_states.currentState:draw();
 end
 
-
-
-
-
+---updates the gui. called in the love.update function
 function Gui:update()
     if self.p_frameChangeActiv then
         if (not self.p_states.currentState:checkPosition()) then
@@ -70,16 +67,17 @@ function Gui:update()
     end
 end
 
+---Set to start the flyIn/Out of the frames
 function Gui:setFrameChangeActivity(activity)
     self.p_frameChangeActiv = activity;
 end
 
+---returns te last state. needed for  the back button
 function Gui:getLastState()
     if self.p_states.lastState ~= nil then
         return self.p_states.lastState;
     end
 end
-
 
 ---set the visible of all frames to false
 function Gui:clearAll()
@@ -131,12 +129,10 @@ end
 ---set the state of the gui elements on the defined status
 ---this function is called exactly once at the beginning of the game
 function Gui:loadValues()
-
     Gui.slider.bgm:SetValue(_persTable.config.bgm);
     Gui.slider.music:SetValue(_persTable.config.music);
     Gui:tempTextOutput();
 end
-
 
 ---updates all values which can be chanced by gui elements
 ---this function is called on every Back-Button clickevent
@@ -145,10 +141,6 @@ function Gui:updateValues()
     _persTable.config.music = Gui.slider.music:GetValue();
     --transform the boolean to 0, 1 or more
     
-end
-
-function Gui:getCurrentState()
-    return Gui.state[1];
 end
 ]]--
 return Gui;

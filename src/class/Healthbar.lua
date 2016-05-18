@@ -30,8 +30,8 @@ function Healthbar:scaleHearts()
 end
 
 
-function Healthbar:buyExtraLife()
-    self.unlockedHearts = self.unlockedHearts + 1;
+function Healthbar:refreshAfterBuy()
+    self.unlockedHearts = 1 + _persTable.upgrades.moreLife;
     self.currentHearts = self.unlockedHearts;
     self.hearts[self.unlockedHearts] = Loveframes.Create("image");
     self.hearts[self.unlockedHearts]:SetImage(self.redHeartPath);
