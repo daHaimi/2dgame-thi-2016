@@ -12,7 +12,7 @@ Persistence = require"class.Persistence";
 
 -- Global variables
 _G.math.inf = 1 / 0;
-_G._gui = Gui();
+_G._gui = nil;
 
 
 --- Local variables
@@ -27,6 +27,7 @@ local persistence;
 -- This function is called exactly once at the beginning of the game.
 function love.load()
     persistence = Persistence();
+    _gui = Gui();
     local _, _, flags = love.window.getMode();
     love.graphics.setBackgroundColor(30, 180, 240);
     _G._persTable.winDim = { love.window.getDesktopDimensions(flags.display) };

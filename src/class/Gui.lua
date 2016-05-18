@@ -131,25 +131,7 @@ end
 ---set the state of the gui elements on the defined status
 ---this function is called exactly once at the beginning of the game
 function Gui:loadValues()
-    --convert 0, 1 or more in to boolean. A 2 equals multiply checkboxes
-    if _persTable.upgrades.speedUp == 1 then
-        Gui.klickableElement.upgrade1:disable();
-    end
-    if _persTable.upgrades.moneyMult == 1 then
-        Gui.klickableElement.upgrade2:disable();
-    end
-    if _persTable.upgrades.moreLife == 1 then
-        Gui.klickableElement.upgrade3:disable();
-    end
-    if _persTable.upgrades.godMode == 1 then
-        Gui.klickableElement.upgrade4:disable();
-    end
-    if _persTable.upgrades.mapBreakthrough1 == 1 then
-        Gui.klickableElement.upgrade4:disable();
-        if _persTable.upgrades.mapBreakthrough2 == 1 then
-            Gui.klickableElement.upgrade4:disable();
-        end
-    end
+
     Gui.slider.bgm:SetValue(_persTable.config.bgm);
     Gui.slider.music:SetValue(_persTable.config.music);
     Gui:tempTextOutput();
@@ -162,37 +144,7 @@ function Gui:updateValues()
     _persTable.config.bgm = Gui.slider.bgm:GetValue();
     _persTable.config.music = Gui.slider.music:GetValue();
     --transform the boolean to 0, 1 or more
-    if Gui.klickableElement.upgrade1:getEnable() then
-        _persTable.upgrades.speedUp = 0;
-    else
-        _persTable.upgrades.speedUp = 1;
-    end
-    if Gui.klickableElement.upgrade2:getEnable() then
-        _persTable.upgrades.moneyMult = 0;
-    else
-        _persTable.upgrades.moneyMult = 1;
-    end
-    if Gui.klickableElement.upgrade3:getEnable() then
-        _persTable.upgrades.moreLife = 0;
-    else
-        _persTable.upgrades.moreLife = 1;
-    end
-    if Gui.klickableElement.upgrade4:getEnable() then
-        _persTable.upgrades.godMode = 0;
-    else
-        _persTable.upgrades.godMode = 1;
-    end
-    if Gui.klickableElement.upgrade5:getEnable() then
-        _persTable.upgrades.mapBreakthrough1 = 0;
-    else
-        _persTable.upgrades.mapBreakthrough1 = 1;
-    end
-    if Gui.klickableElement.upgrade6:getEnable() then
-        _persTable.upgrades.mapBreakthrough2 = 0;
-    else
-        _persTable.upgrades.mapBreakthrough2 = 1;
-    end
-    Gui:tempTextOutput();
+    
 end
 
 function Gui:getCurrentState()

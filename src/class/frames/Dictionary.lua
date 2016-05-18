@@ -18,10 +18,15 @@ function Dictionary:create()
             x = 0;
             y = 0;
         };
+        chart = {
+            object = Chart();
+            x = 10;
+            y = 10;
+        };
         button_back = {
             object = Loveframes.Create("imagebutton");
             x = 10;
-            y = 10;
+            y = 300;
         };
     };
     

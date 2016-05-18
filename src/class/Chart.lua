@@ -2,35 +2,47 @@
 Class = require "lib.hump.class";
 TextField = require "class.TextField";
 
-
-
-
 local Chart = Class {
     init = function(self)
         self.column = 3;--amount of the columns of the table
         self.row = 0;
         self.toprow = 0;
-        self.elementsOnChart = {};--elements in the table
-        self.markedElement = nil;
-        self.markFrame = Loveframes.Create("image");
-        self.markFrame:SetImage("assets/gui/markFrame.png");
-        self.markFrame:SetVisible(false);
-        self.textField = TextField(128);
         self.xPos = 0;
         self.yPos = 0;
+        
+        self.elementsOnChart = {};--elements in the table
+        self.markedElement = nil;
+        
+        self:create();
     end;
-    buttonUp = Loveframes.Create("imagebutton"):SetImage("assets/gui/gui_Up_Button.png"):SizeToImage():SetText("");
-    buttonDown = Loveframes.Create("imagebutton"):SetImage("assets/gui/gui_Down_Button.png"):SizeToImage():SetText("");
 };
-function Chart.buttonUp.OnClick(obj, x, y)
-    local currentFrame = Gui.getCurrentState();
-    currentFrame.elementsOnFrame[1]:scrollUp();
+
+function Chart:create()
+    self.button_up = Loveframes.Create("imagebutton");
+    self.button_up:SetImage("assets/gui/gui_Up_Button.png");
+    self.button_up:SizeToImage();
+    self.button_up:SetText("");
+    
+    self.button_down = Loveframes.Create("imagebutton");
+    self.button_down:SetImage("assets/gui/gui_Down_Button.png");
+    self.button_down:SizeToImage();
+    self.button_down:SetText("");
+    
+    self.markFrame = Loveframes.Create("image");
+    self.markFrame:SetImage("assets/gui/markFrame.png");
+    self.markFrame:SetVisible(false);
+    
+    self.textField = TextField(128);
+    
+    self.button_up.OnClick = function(object)
+        self:scrollUp();
+    end
+    
+    self.button_down.OnClick = function(object)
+        self:scrollDown();
+    end
 end
 
-function Chart.buttonDown.OnClick(obj, x, y)
-    local currentFrame = Gui.getCurrentState();
-    currentFrame.elementsOnFrame[1]:scrollDown();
-end
 
 function Chart:scrollUp()
     if (self.toprow > 0) then
@@ -99,8 +111,8 @@ end
 ---Set the visible of all elements
 -- @parm visible: true or false
 function Chart:SetVisible(visible)
-    self.buttonUp:SetVisible(visible):MoveToTop();
-    self.buttonDown:SetVisible(visible):MoveToTop();
+    self.button_up:SetVisible(visible);--:MoveToTop();
+    self.button_down:SetVisible(visible);--:MoveToTop();
     self.textField:SetVisible(visible);
     if visible then
         self:drawChart(visible);
@@ -109,7 +121,7 @@ function Chart:SetVisible(visible)
             v:SetVisible(visible);
         end
     end
-    
+    self.markFrame:SetVisible(false);
 end
 
 ---Set the chart position
@@ -118,21 +130,25 @@ end
 function Chart:SetPos(x, y)
     self.xPos = x;
     self.yPos = y;
-    self.buttonUp:SetPos(x, y);
-    self.buttonDown:SetPos(x, y + 224);
+    self.button_up:SetPos(x, y);
+    self.button_down:SetPos(x, y + 224);
     self:setPosOfKlickableElements();
     self.textField:SetPos(x, y + 256);
-    
+    if self.markFrame:GetX() ~= nil then
+        self.markFrame:SetPos(self.markFrame:GetX() + x, self.markFrame:GetY() + y);
+    end
 end
 
 ---marks the selected element
 -- @parm element: selected element
 function Chart:markElement(element)
     local x, y = element.object:GetPos();
-    self.markFrame:SetPos(x, y)
+    self.markFrame:SetPos(x, y);
     self.markFrame:SetVisible(true);
+    self.markFrame:MoveToTop();
     self.markedElement = element;
     self.textField:changeText(element.name, element.description);
+    
 end
 
 return Chart;
