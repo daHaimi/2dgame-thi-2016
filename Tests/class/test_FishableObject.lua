@@ -6,6 +6,10 @@ testClass = require "src.class.FishableObject"
 describe("Unit test for FishableObject.lua", function()
 
     before_each(function()
+        _G.TEsound = {
+            play = function (...) end;
+        }
+        
         _G.love = {
             graphics = {
                 setColor = function(...) end;

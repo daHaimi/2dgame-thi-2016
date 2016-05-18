@@ -51,6 +51,7 @@ local Level = Class {
     shortGMDist = 0;
     godModeActive = 0;
     moved = 0;
+    gMMusicPlaying = false;
 }
 
 --- Update the game state. Called every frame.
@@ -85,6 +86,15 @@ function Level:update(dt, bait)
 
     self:checkGodMode();
     bait:update(dt);
+    
+    --Update music
+    if self.godModeActive == 1 and not self.gMMusicPlaying then
+        TEsound.playLooping({"assets/sound/godMode.wav"}, 'abc');
+        self.gMMusicPlaying = true;
+    elseif self.godModeActive == 0 then
+        TEsound.stop('abc');
+        self.gMMusicPlaying = false;
+    end        
 end
 
 --- when the bait hit a object or the boarder is reached, start phase 2

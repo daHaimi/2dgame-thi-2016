@@ -42,6 +42,8 @@ local FishableObject = Class {
     
     caught = false;
     caughtAt = nil;
+    
+    soundPlayed = false;
 };
 
 --- draw the object, still no sprite implementet
@@ -69,8 +71,16 @@ function FishableObject:draw()
         if math.abs(self.caughtAt - self.yPosition) < 50 then
             if self.value > 0 then
                 love.graphics.setColor (0, 255, 0);
-            else
+                if not self.soundPlayed then
+                    TEsound.play("assets/sound/collectedPositivValue.wav");
+                    self.soundPlayed = true;
+                end
+            elseif self.value < 0 then
                 love.graphics.setColor (255, 0, 0);
+                if not self.soundPlayed then
+                    TEsound.play("assets/sound/collectedNegativValue.wav");
+                    self.soundPlayed = true;
+                end
             end
             
             if not (self.value == 0) then

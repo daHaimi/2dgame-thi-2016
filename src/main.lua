@@ -9,6 +9,7 @@ LevelManager = require "class.LevelManager";
 Gamestate = require "lib.hump.gamestate";
 _G.data = require "data";
 Persistence = require"class.Persistence";
+require "lib.TEsound";
 
 -- Global variables
 _G.math.inf = 1 / 0;
@@ -65,6 +66,7 @@ function love.update(dt)
         levMan:getCurLevel():update(dt, levMan:getCurPlayer());
         levMan:getCurSwarmFactory():update();
     end
+    TEsound.cleanup();
 end
 
 --- Callback function triggered when the mouse is moved.

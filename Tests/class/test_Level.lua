@@ -8,6 +8,11 @@ describe("Test unit test suite", function()
     local locInstance;
 
     before_each(function()
+            
+        _G.TEsound = {
+            playLooping = function (...) end;
+            stop = function (...) end;
+        }
 
         _G.love = {
             graphics = {
