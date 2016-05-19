@@ -273,7 +273,36 @@ return {
                     deltaYPos = 15
                 }
             }
-        }
+        },
+        
+        squirrel = {
+            name = "squirrel",
+            image = "squirrel.png",
+            spriteSize = 64,
+            minSpeed = 3,
+            maxSpeed = 8,
+            hitpoints = 20,        
+            value = 50,
+            minAmount = 1,
+            maxAmount = 5,
+            swarmHeight = 300,
+            enabled = true,
+
+            hitbox = {
+                {
+                    width = 15,
+                    height = 34,
+                    deltaXPos = 0,
+                    deltaYPos = 0
+                },
+                {
+                    width = 46,
+                    height = 64,
+                    deltaXPos = 16,
+                    deltaYPos = 0
+                }
+            }
+        },
     },
 
     --- Data for the swarms for each level
