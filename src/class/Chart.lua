@@ -1,7 +1,6 @@
 ---Chart contains a table with clickable elements and a textfield
 Class = require "lib.hump.class";
 TextField = require "class.TextField";
-Loveframes = require "lib.LoveFrames";
 
 local Chart = Class {
     init = function(self)

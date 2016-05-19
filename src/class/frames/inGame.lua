@@ -24,7 +24,6 @@ function InGame:create()
             x = 0;
             y = 0;
         }
-        
     };
     
     --adjust all elements on this frame

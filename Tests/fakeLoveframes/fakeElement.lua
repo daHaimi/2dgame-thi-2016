@@ -1,8 +1,9 @@
 Class = require "lib.hump.class";
 
 local fakeElement = Class {
-    init = function(self)
+    init = function(self, typeName)
         --basics
+        self.type = typeName;
         self.x = nil;
         self.y = nil
         self.visible = nil;

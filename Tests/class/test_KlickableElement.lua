@@ -2,10 +2,10 @@
 _G.math.inf = 1 / 0;
 
 testClass = require "src.class.KlickableElement";
-fakeElement = require "Tests.fakeLoveframes.fakeImagebutton";
+fakeElement = require "Tests.fakeLoveframes.fakeElement";
 
 
-describe("Unit test for Textbox.lua", function()
+describe("Unit test for KlickableElement.lua", function()
     local locInstance;
     
     before_each(function()
@@ -33,8 +33,8 @@ describe("Unit test for Textbox.lua", function()
 
     it("Testing SetPos function", function()
         locInstance:SetPos(5, 5);
-        assert.are.same(locInstance.object.position, 5);
-        assert.are.same(locInstance.object.position, 5);
+        assert.are.equal(locInstance.object.x, 5);
+        assert.are.equal(locInstance.object.y, 5);
     end)
 
     it("Testing getEnable function", function()

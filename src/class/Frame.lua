@@ -15,8 +15,6 @@ local Frame = Class {
     end;
 };
 
-
-
 --- Call to set all Elements invisible and reset the x/yOffset
 function Frame:clear(elements)
     for k, v in pairs(elements) do

@@ -9,6 +9,7 @@ describe("Unit test for Healthbar.lua", function()
     local locInstance;
     
     before_each(function()
+        --_persTable.upgrades.moreLife = 1;
         _G.Loveframes = {
             Create = function(...) return fakeElement(); end
         }
@@ -18,20 +19,25 @@ describe("Unit test for Healthbar.lua", function()
                 [1] = 500;
                 [2] = 900;
             };
+            upgrades = {
+                moreLife = 1;
+            };
+            
         };
-        
         locInstance = testClass("path1", "path2", "path3");
+        --locInstance:refreshAfterBuy();
     end)
 
 
     it("Testing Constructor", function()
         local myInstance = testClass("path1", "path2", "path3");
+        --locInstance:refreshAfterBuy();
         assert.are.same(locInstance, myInstance);
     end)
-
+--[[
     it("Testing buyExtraLife function", function()
         spy.on(locInstance, "refresh");
-        locInstance:buyExtraLife();
+        --locInstance:buyExtraLife();
         assert.are.equal(locInstance.unlockedHearts, 2);
         assert.are.equal(locInstance.currentHearts, 2);
         --image in that table is a red heart
@@ -39,9 +45,9 @@ describe("Unit test for Healthbar.lua", function()
         assert.are.equal(locInstance.hearts[2].imagepath, "path3");
         assert.spy(locInstance.refresh).was_called(1);
     end)
-
+]]--
     it("Testing scaleHearts function", function()
-        locInstance:buyExtraLife();
+        --locInstance:buyExtraLife();
         locInstance:scaleHearts();
         assert.are.equal(locInstance.hearts[1].xScale, 0.5);
         assert.are.equal(locInstance.hearts[1].yScale, 0.5);
@@ -50,7 +56,7 @@ describe("Unit test for Healthbar.lua", function()
     end)
     
     it("Testing SetVisible function", function()
-        locInstance:buyExtraLife();
+        --locInstance:buyExtraLife();
         locInstance:SetVisible(true);
         assert.are.equal(locInstance.basic.visible, true);
         assert.are.equal(locInstance.hearts[1].visible, true);
@@ -59,7 +65,8 @@ describe("Unit test for Healthbar.lua", function()
     end)
     
     it("Testing SetPos function", function()
-        locInstance:buyExtraLife();
+        --locInstance:buyExtraLife();
+        locInstance:refresh();
         locInstance:SetPos(5, 5);
         assert.are.equal(locInstance.basic.xPos, 5);
         assert.are.equal(locInstance.basic.yPos, 5);
@@ -86,8 +93,10 @@ describe("Unit test for Healthbar.lua", function()
         locInstance.currentHearts = 0;
         locInstance:minus();
         assert.spy(locInstance.refresh).was_not_called();
-        
-        locInstance:buyExtraLife();
+    end)
+
+    it("Testing minus function", function()
+        --locInstance:buyExtraLife();
         assert.are.equal(locInstance.currentHearts, 2);
         locInstance:minus();
         assert.are.equal(locInstance.hearts[2].imagepath, "path2");
@@ -96,10 +105,10 @@ describe("Unit test for Healthbar.lua", function()
     
     it("Testing reset function", function()
         spy.on(locInstance, "refresh");
-        locInstance:buyExtraLife();
+        
         locInstance:reset();
         assert.are.equal(locInstance.currentHearts, 2);
-        assert.are.equal(locInstance.hearts[2].imagepath, "path3");
+        --assert.are.equal(locInstance.hearts[2].imagepath, "path3");
         assert.spy(locInstance.refresh).was_called();
     end)
     

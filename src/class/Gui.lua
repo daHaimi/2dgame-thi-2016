@@ -1,4 +1,5 @@
 Class = require "lib.hump.class";
+Loveframes = require "lib.LoveFrames";
 
 Mainmenu = require "class.frames.MainMenu";
 Achievements = require "class.frames.Achievements";

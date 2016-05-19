@@ -8,8 +8,8 @@ local Healthbar = Class {
         self.icon:SetImage(iconPath);
         self.blackHeartPath = blackHeartPath;
         self.redHeartPath = redHeartPath;
-        self.unlockedHearts = 1;
-        self.currentHearts = 1;
+        self.unlockedHearts = 1 + _persTable.upgrades.moreLife;
+        self.currentHearts = self.unlockedHearts;
         self.hearts = {
             Loveframes.Create("image");
         };
@@ -76,10 +76,10 @@ end
 ---has to be called at the end of a turn
 function Healthbar:reset()
     self.currentHearts = self.unlockedHearts;
-    for k, v in ipairs(self.hearts) do
-        self.hearts[k]:Remove();
-        self.hearts[k] = Loveframes.Create("image");
-        self.hearts[k]:SetImage(self.redHeartPath);
+    for var1 = 1, self.currentHearts do
+        self.hearts[var1]:Remove();
+        self.hearts[var1] = Loveframes.Create("image");
+        self.hearts[var1]:SetImage(self.redHeartPath);
     end
     self:refresh();
 end

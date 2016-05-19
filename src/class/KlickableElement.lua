@@ -1,5 +1,4 @@
 ---a klickableElement represents an achievement, wikielement or an upgrade
-Loveframes = require "lib.LoveFrames";
 Class = require "lib.hump.class";
 
 local KlickableElement = Class {
