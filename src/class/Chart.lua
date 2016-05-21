@@ -136,8 +136,8 @@ function Chart:SetPos(x, y)
     self.button_down:SetPos(x, y + 224);
     self:setPosOfKlickableElements();
     self.textField:SetPos(x, y + 256);
-    if self.markFrame:GetX() ~= nil then
-        self.markFrame:SetPos(self.markFrame:GetX() + x, self.markFrame:GetY() + y);
+    if self.markedElement ~= nil then
+        self.markFrame:SetPos(self.markedElement.object:GetX(), self.markedElement.object:GetY());
     end
 end
 
