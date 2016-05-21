@@ -62,11 +62,11 @@ function FishableObject:draw()
         end
 
         --for showing the Hitbox
-        for i = 1, #self.hitbox, 1 do 
+        --[[for i = 1, #self.hitbox, 1 do 
             love.graphics.setColor(0,0,0);
             love.graphics.rectangle("line", self:getHitboxXPosition(i), self:getHitboxYPosition(i),
             self:getHitboxWidth(i), self:getHitboxHeight(i));
-        end
+        end]]
         
     else
         if math.abs(self.caughtAt - self.yPosition) < 50 then
@@ -182,7 +182,6 @@ end
 function FishableObject:setToCaught()
     self.caught = true;
     self.caughtAt = self.yPosition;
-    print (self.speed);
 end
 
 return FishableObject;
