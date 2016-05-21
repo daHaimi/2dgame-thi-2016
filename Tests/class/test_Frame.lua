@@ -8,178 +8,125 @@ describe("Unit test for Frame.lua", function()
     local locElements = {};
 
     before_each(function()
-        locInstance = testClass("TestFrame", "down", "down", 50, 0, -1000);
+        locInstance = testClass(50, 50, "down", "down", 50, 0, -1000);
         local Element = {
-            visible = true;
-            xPos = 0;
-            yPos = 0;
+            object = {
+                visible = nil;
+                xPos = nil;
+                yPos = nil;
+            };
+            x = 0;
+            y = 0;
         };
-        locElements = {
-            Element,
-            Element,
-            Element,
-            Element
-        }
-        function Element:SetVisible(bool)
-            self.visible = bool;
+        function Element.object:SetVisible(visible)
+            self.visible = visible;
         end
 
-        function Element:SetPos(x, y)
+        function Element.object:SetPos(x, y)
             self.xPos = x;
             self.yPos = y;
         end
+        spy.on(Element.object, "SetPos");
+        
+        locElements = {Element, Element, Element};
     end)
 
     it("Testing Constructor", function()
-        local myInstance = testClass("TestFrame", "down", "down", 50, 0, -1000);
+        local myInstance = testClass(50, 50, "down", "down", 50, 0, -1000);
         assert.are.same(locInstance, myInstance);
     end)
 
-    it("Testing addElement function", function()
-        local myInstance = testClass("TestFrame", "down", "down", 50, 0, -1000);
-        local newElement = {};
-        --add all Elements from locElements to Instances
-        for k, v in ipairs(locElements) do
-            myInstance:addElement(v, 10 * k, 10);
-            locInstance:addElement(v, 10 * k, 10);
-        end
-        assert.are.same(locInstance, myInstance);
+    it("DefaultOffset has to be a multiple of moveSpeed", function()
+        assert.are.equal((locInstance.xDefaultOffset) % (locInstance.moveSpeed), 0);
+        assert.are.equal((locInstance.yDefaultOffset) % (locInstance.moveSpeed), 0);
+    end)
+    
+    
+    it("Testing clear function", function()
+        locInstance.xOffset = nil;
+        locInstance.yOffset = nil;
+        locInstance:clear(locElements);
+        assert.are.equal(locElements[1].object.visible, false);
+        assert.are.equal(locElements[2].object.visible, false);
+        assert.are.equal(locElements[3].object.visible, false);
+        assert.are.equal(locInstance.xOffset, locInstance.xDefaultOffset);
+        assert.are.equal(locInstance.yOffset, locInstance.yDefaultOffset);
     end)
 
-    it("Testing getElements function", function()
-        local myInstance = testClass("TestFrame", "down", "down", 50, 0, -1000);
-        --add all Elements from locElements to Instances
-        for k, v in ipairs(locElements) do
-            myInstance:addElement(v, 10 * k, 10);
-        end
-        assert.are.same(locElements, myInstance:getElements());
-    end)
-
-    it("Testing setPosition function/ xPosFrame", function()
-        local myInstance = testClass("TestFrame", "down", "down", 50, 0, -1000);
-        myInstance:setPosition(5, 10);
-        assert.are.equal(myInstance.xPosFrame, 5);
-        assert.are.equal(myInstance.yPosFrame, 10);
-    end)
-
-    it("Testing setOffset function/ xOffset", function()
-        local myInstance = testClass("TestFrame", "down", "down", 50, 0, -1000);
-        myInstance:setOffset(5, 10);
-        assert.are.equal(myInstance.xOffset, 5);
-        assert.are.equal(myInstance.yOffset, 10);
-    end)
-
-    it("Testing onPosition function/ false", function()
-        local myInstance = testClass("TestFrame", "down", "down", 50, 0, -1000);
-        myInstance:setOffset(10, 10);
-        assert.are.equal(myInstance:onPosition(), false);
-        myInstance:setOffset(0, 0);
-        assert.are.equal(myInstance:onPosition(), true);
-    end)
-
-    it("Testing move function/ up", function()
-        local myInstance = testClass("TestFrame", "up", "down", 50, 0, -1000);
-        myInstance:setOffset(100, 100);
-        myInstance:moveIn();
-        assert.are.equal(myInstance.yOffset, (100 - myInstance.moveSpeed));
-    end)
-
-    it("Testing move function/ down", function()
-        local myInstance = testClass("TestFrame", "down", "down", 50, 0, -1000);
-        myInstance:setOffset(100, 100);
-        myInstance:moveIn();
-        assert.are.equal(myInstance.yOffset, (100 + myInstance.moveSpeed));
-    end)
-
-    it("Testing move function/ right", function()
-        local myInstance = testClass("TestFrame", "right", "down", 50, 0, -1000);
-        myInstance:setOffset(100, 100);
-        myInstance:moveIn();
-        assert.are.equal(myInstance.xOffset, (100 + myInstance.moveSpeed));
-    end)
-
-    it("Testing move function/ left", function()
-        local myInstance = testClass("TestFrame", "left", "down", 50, 0, -1000);
-        myInstance:setOffset(100, 100);
-        myInstance:moveIn();
-        assert.are.equal(myInstance.xOffset, (100 - myInstance.moveSpeed));
-    end)
-
-    it("Testing clearFrame function", function()
-        local myInstance = testClass("TestFrame", "down", "down", 50, 0, -1000);
-        local TestElements;
-        local result = {};
-        local expectedResult = { false, false, false, false };
-        for k, v in ipairs(locElements) do
-            myInstance:addElement(v, 10 * k, 10);
-        end
-        myInstance:clearFrame();
-        TestElements = myInstance:getElements();
-        for k, v in ipairs(TestElements) do
-            result[k] = v.visible;
-        end
-        assert.are.same(result, expectedResult);
-    end)
-
-    it("Testing showFrame function/ Visible", function()
-        local myInstance = testClass("TestFrame", "down", "down", 50, 0, -1000);
-        local TestElements
-        local result = {}
-        local expectedResult = { true, true, true, true }
-        for k, v in ipairs(locElements) do
-            myInstance:addElement(v, 10 * k, 10);
-        end
-        myInstance:showFrame();
-        TestElements = myInstance:getElements();
-        for k, v in ipairs(TestElements) do
-            result[k] = v.visible;
-        end
-        assert.are.same(result, expectedResult);
-    end)
-
-    it("Testing showFrame function", function()
-        local myInstance = testClass("TestFrame", "down", "down", 50, 0, -1000);
-        local result = {}
-
-        local expectedResult = {10, 20, 30, 40};
+    it("Testing draw function", function()
+        locElements[1].x = 1;
+        locElements[1].y = 2;
+        locElements[2].x = 3;
+        locElements[2].y = 4;
+        locElements[3].x = 5;
+        locElements[3].y = 6;
+        locInstance:draw(locElements);
         
-        for k, v in ipairs (locElements) do
-            myInstance:addElement(v, 10 * k, 10 * k);
-        end
-        myInstance:showFrame();
-        assert.are.same(myInstance.elementPosition.xPos, expectedResult);
-        assert.are.same(myInstance.elementPosition.yPos, expectedResult);
+        assert.are.equal(locElements[1].object.visible, true);
+        assert.are.equal(locElements[2].object.visible, true);
+        assert.are.equal(locElements[3].object.visible, true);
+
+        assert.are.equal(locElements[1].object.xPos, locElements[1].x + locInstance.xPos + locInstance.xOffset);
+        
+        assert.are.equal(locElements[1].object.yPos, locElements[1].y + locInstance.yPos + locInstance.yOffset);
+        assert.are.equal(locElements[2].object.xPos, locElements[2].x + locInstance.xPos + locInstance.xOffset);
+        assert.are.equal(locElements[2].object.yPos, locElements[2].y + locInstance.yPos + locInstance.yOffset);
+        assert.are.equal(locElements[3].object.xPos, locElements[3].x + locInstance.xPos + locInstance.xOffset);
+        assert.are.equal(locElements[3].object.yPos, locElements[3].y + locInstance.yPos + locInstance.yOffset);
     end)
 
-    it("Testing move function/ up", function()
-        local myInstance = testClass("TestFrame", "up", "up", 50, 0, -1000);
-        myInstance:setOffset(100, 100);
-        myInstance:moveOut();
-        assert.are.equal(myInstance.yOffset, (100 - myInstance.moveSpeed));
-    end)
+    it("Testing appear function", function()
+        locInstance.yOffset = 100;
+        locInstance.moveInDirection = "up";
+        locInstance:appear(locElements);
+        assert.are.equal(locInstance.yOffset, 100 - locInstance.moveSpeed);
 
-    it("Testing move function/ down", function()
-        local myInstance = testClass("TestFrame", "down", "down", 50, 0, -1000);
-        myInstance:setOffset(100, 100);
-        myInstance:moveOut();
-        assert.are.equal(myInstance.yOffset, (100 + myInstance.moveSpeed));
+        locInstance.yOffset = 100;
+        locInstance.moveInDirection = "down";
+        locInstance:appear(locElements);
+        assert.are.equal(locInstance.yOffset, 100 + locInstance.moveSpeed);
+        
+        locInstance.xOffset = 100;
+        locInstance.moveInDirection = "left";
+        locInstance:appear(locElements);
+        assert.are.equal(locInstance.xOffset, 100 - locInstance.moveSpeed);
+        
+        locInstance.xOffset = 100;
+        locInstance.moveInDirection = "right";
+        locInstance:appear(locElements);
+        assert.are.equal(locInstance.xOffset, 100 + locInstance.moveSpeed);
+        
     end)
+    
+    it("Testing disappear function", function()
+        locInstance.yOffset = 100;
+        locInstance.moveOutDirection = "up";
+        locInstance:disappear(locElements);
+        assert.are.equal(locInstance.yOffset, 100 - locInstance.moveSpeed);
 
-    it("Testing move function/ right", function()
-        local myInstance = testClass("TestFrame", "right", "right", 50, 0, -1000);
-        myInstance:setOffset(100, 100);
-        myInstance:moveOut();
-        assert.are.equal(myInstance.xOffset, (100 + myInstance.moveSpeed));
+        locInstance.yOffset = 100;
+        locInstance.moveOutDirection = "down";
+        locInstance:disappear(locElements);
+        assert.are.equal(locInstance.yOffset, 100 + locInstance.moveSpeed);
+        
+        locInstance.xOffset = 100;
+        locInstance.moveOutDirection = "left";
+        locInstance:disappear(locElements);
+        assert.are.equal(locInstance.xOffset, 100 - locInstance.moveSpeed);
+        
+        locInstance.xOffset = 100;
+        locInstance.moveOutDirection = "right";
+        locInstance:disappear(locElements);
+        assert.are.equal(locInstance.xOffset, 100 + locInstance.moveSpeed);
+        
     end)
-
-    it("Testing move function/ left", function()
-        local myInstance = testClass("TestFrame", "left", "left", 50, 0, -1000);
-        myInstance:setOffset(100, 100);
-        myInstance:moveOut();
-        assert.are.equal(myInstance.xOffset, (100 - myInstance.moveSpeed));
-    end)
-    it("Testing centerElementX function", function()
-        local myInstance = testClass("TestFrame", "left", "left", 50, 0, -1000);
-        assert.are.equal(myInstance:centerElementX(100, 50, 100), -25);
+    
+    it("Testing checkPosition function", function()
+        locInstance.xOffset = 1;
+        locInstance.yOffset = 1;
+        assert.are.equal(locInstance:checkPosition(), false);
+        locInstance.xOffset = 0;
+        locInstance.yOffset = 0;
+        assert.are.equal(locInstance:checkPosition(), true);
     end)
 end)

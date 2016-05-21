@@ -49,8 +49,20 @@ describe("Unit test for Bait.lua", function()
                 rectangle = function(...) end;
             }
         }
+        _G._gui = {
+            myFrames = {
+                inGame = {
+                    elementsOnFrame = {
+                        healthbar = {
+                            object = {
+                                minus = function(...) end;
+                            };
+                        };
+                    };
+                };
+            };
+        };
         
-
         locInstance = testClass(locWinDim, levMan);
     end)
 

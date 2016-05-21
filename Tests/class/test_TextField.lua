@@ -2,7 +2,7 @@
 _G.math.inf = 1 / 0
 
 testClass = require "src.class.TextField"
-fakeText = require "Tests.fakeLoveframes.fakeText"
+fakeElement = require "Tests.fakeLoveframes.fakeElement"
 
 
 describe("Unit test for TextField.lua", function()
@@ -10,7 +10,7 @@ describe("Unit test for TextField.lua", function()
     
     before_each(function()
         _G.Loveframes = {
-            Create = function(...) return fakeText(); end
+            Create = function(...) return fakeElement(); end
         }
         locInstance = testClass(3, 4);
     end)
@@ -35,8 +35,10 @@ describe("Unit test for TextField.lua", function()
 
     it("Testing SetPos function", function()
         locInstance:SetPos(50, 50);
-        assert.are.same(locInstance.objTopic.position, {xPos = 55, yPos = 55});
-        assert.are.same(locInstance.objText.position, {xPos = 55, yPos = 75});
+        assert.are.equal(locInstance.objTopic.x, 55);
+        assert.are.equal(locInstance.objTopic.y, 55);
+        assert.are.equal(locInstance.objText.x, 55);
+        assert.are.equal(locInstance.objText.y, 75);
         assert.are.equal(locInstance.objTopic.maxWidth, 3);
         assert.are.equal(locInstance.objText.maxWidth, 3);
     end)
