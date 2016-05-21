@@ -290,15 +290,21 @@ return {
 
             hitbox = {
                 {
+                    width = 62,
+                    height = 0,
+                    deltaXPos = 2,
+                    deltaYPos = 0
+                },
+                {
                     width = 15,
                     height = 34,
-                    deltaXPos = 0,
+                    deltaXPos = 49,
                     deltaYPos = 0
                 },
                 {
                     width = 46,
                     height = 64,
-                    deltaXPos = 16,
+                    deltaXPos = 2,
                     deltaYPos = 0
                 }
             }

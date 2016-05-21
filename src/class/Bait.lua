@@ -139,7 +139,7 @@ function Bait:collisionDetected(fishable, index)
         end
     end
     -- while phase 2
-    if self.levMan:getCurLevel():getDirection() == -1 then
+    if self.levMan:getCurLevel():getDirection() == -1 and not fishable.caught then
         self.levMan:getCurSwarmFactory().createdFishables[index]:setToCaught();
         self.levMan:getCurLevel():addToCaught(fishable.name);
     end

@@ -1,4 +1,5 @@
 Class = require "lib.hump.class";
+require "socket" math.randomseed(socket.gettime() * 10000);
 
 --- FishableObject is the class of all fishable object.
 -- @param xPosition: x-position of the object
@@ -50,7 +51,7 @@ local FishableObject = Class {
 function FishableObject:draw()
     if not self.caught then
         love.graphics.setColor(255, 255, 255);
-        if self.speed < 0 then
+        if self.speed <= 0 then
             love.graphics.draw(self.image, self.xPosition, self.yPosition);
             love.graphics.setColor(0, 0, 0);
         else
@@ -61,11 +62,11 @@ function FishableObject:draw()
         end
 
         --for showing the Hitbox
-        --[[for i = 1, #self.hitbox, 1 do 
+        for i = 1, #self.hitbox, 1 do 
             love.graphics.setColor(0,0,0);
             love.graphics.rectangle("line", self:getHitboxXPosition(i), self:getHitboxYPosition(i),
             self:getHitboxWidth(i), self:getHitboxHeight(i));
-        end]]
+        end
         
     else
         if math.abs(self.caughtAt - self.yPosition) < 50 then
@@ -145,8 +146,10 @@ function FishableObject:getHitboxXPosition(i)
 
     if self.speed < 0 then
         return self.xPosition + self.hitbox[i].deltaXPos;
+    elseif self.speed == 0 then
+        return self.xPosition - self.hitbox[i].deltaXPos - self.hitbox[i].width + self.spriteSize;
     else
-        return self.xPosition + self.hitbox[i].deltaXPos - self.spriteSize;
+        return self.xPosition - self.hitbox[i].deltaXPos - self.hitbox[i].width;
     end
 end
 
@@ -179,6 +182,7 @@ end
 function FishableObject:setToCaught()
     self.caught = true;
     self.caughtAt = self.yPosition;
+    print (self.speed);
 end
 
 return FishableObject;
