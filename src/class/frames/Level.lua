@@ -1,4 +1,3 @@
-Loveframes = require "lib.LoveFrames";
 Class = require "lib.hump.class";
 
 local Level = Class {
@@ -9,7 +8,7 @@ local Level = Class {
     end;
 };
 
---creates the achievement frame
+--creates the level frame
 function Level:create()
     --add, create and position all elements on this frame
     self.elementsOnFrame = {
@@ -59,7 +58,6 @@ function Level:create()
     self.elementsOnFrame.button_back.object:SizeToImage();
     self.elementsOnFrame.button_back.object:SetText("Back");
     
-    
     --onclick events for all buttons
     self.elementsOnFrame.button_level1.object.OnClick = function(object)
         _gui:changeFrame(_gui.myFrames.inGame);
@@ -78,23 +76,22 @@ function Level:create()
     end
 end
 
-
-
+---shows the frame on screen
 function Level:draw()
     self.frame:draw(self.elementsOnFrame);
 end
 
---called to "delete" this frame
+---called to "delete" this frame
 function Level:clear()
     self.frame:clear(self.elementsOnFrame)
 end
 
---called in the "fly in" state 
+---called in the "fly in" state 
 function Level:appear()
     self.frame:appear(self.elementsOnFrame)
 end
 
---called in the "fly out" state
+---called in the "fly out" state
 function Level:disappear()
     self.frame:disappear(self.elementsOnFrame)
 end
@@ -103,4 +100,5 @@ end
 function Level:checkPosition()
     return self.frame:checkPosition();
 end
+
 return Level;

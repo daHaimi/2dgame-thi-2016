@@ -15,6 +15,7 @@ local KlickableElement = Class {
     end;
 };
 
+---Function not conform to CC/ implements an interface
 ---Set the visible of the element
 -- @parm visible: true or false
 function KlickableElement:SetVisible(visible)
@@ -33,6 +34,7 @@ function KlickableElement:disable()
     self.object:SetImage(self.imagepath_disable);
 end
 
+---Function not conform to CC/ implements an interface
 ---set the position of the element
 -- @parm x: x axis position
 -- @parm y: y axis position

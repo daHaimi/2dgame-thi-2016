@@ -108,6 +108,7 @@ function Chart:addKlickableElement(newKlickableElement)
     self.row = math.ceil(table.getn(self.elementsOnChart) / self.column);
 end
 
+---Function not conform to CC/ implements an interface
 ---Set the visible of all elements
 -- @parm visible: true or false
 function Chart:SetVisible(visible)
@@ -124,6 +125,7 @@ function Chart:SetVisible(visible)
     self.markFrame:SetVisible(false);
 end
 
+---Function not conform to CC/ implements an interface
 ---Set the chart position
 -- @parm x: x axis position
 -- @parm y: y axis position
@@ -151,4 +153,3 @@ function Chart:markElement(element)
 end
 
 return Chart;
-

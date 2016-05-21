@@ -1,6 +1,5 @@
 Class = require "lib.hump.class";
 Frame = require "class.Frame";
-Loveframes = require "lib.LoveFrames";
 
 local MainMenu = Class {
     init = function(self)
@@ -10,7 +9,7 @@ local MainMenu = Class {
     end;
 };
 
---creates the achievement frame
+--creates the main menu frame
 function MainMenu:create()
     --add, create and position all elements on this frame
     self.elementsOnFrame = {
@@ -118,85 +117,22 @@ function MainMenu:create()
     end
 end
 
-
---[[
-
-
-
---- Call to set all Elements invisible and reset the x/y
-function MainMenu:clear()
-    for k, v in pairs(self.elementsOnFrame) do
-        v.object:SetVisible(false);
-    end
-    --self.xOffset = self.xStartOffset;
-    --self.yOffset = self.yStartOffset;
-end
-
---- Call to set all Elements visible/ set all elements on position
-function MainMenu:draw()
-    for k, v in pairs(self.elementsOnFrame) do
-        v.object:SetVisible(true);
-        v.object:SetPos(v.x + self.xPos + self.xOffset, v.y + self.yPos + self.yOffset);
-    end
-end
-
---called in the "fly in" state 
-function MainMenu:appear()
-    self.yOffset = self.yOffset - self.moveSpeed;
-    for k, v in pairs(self.elementsOnFrame) do
-        v.object:SetPos(v.x + self.xPos + self.xOffset, v.y + self.yPos + self.yOffset);
-    end
-end
-
---called in the "fly out" state
-function MainMenu:disappear()
-    self.yOffset = self.yOffset + self.moveSpeed;
-    for k, v in pairs(self.elementsOnFrame) do
-        v.object:SetPos(self.xPos + v.object.x + self.xOffset, self.yPos + v.object.y + self.yOffset);
-    end
-end
-
-
----return true if the frame is on position /fly in move is finished
-function MainMenu:checkPosition()
-    if (self.xOffset == 0 and self.yOffset == 0) then
-        return true;
-    else
-        return false;
-    end
-end
-
-
-]]--
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+---shows the frame on screen
 function MainMenu:draw()
     self.frame:draw(self.elementsOnFrame);
 end
 
---called to "delete" this frame
+---called to "delete" this frame
 function MainMenu:clear()
     self.frame:clear(self.elementsOnFrame)
 end
 
---called in the "fly in" state 
+---called in the "fly in" state 
 function MainMenu:appear()
     self.frame:appear(self.elementsOnFrame)
 end
 
---called in the "fly out" state
+---called in the "fly out" state
 function MainMenu:disappear()
     self.frame:disappear(self.elementsOnFrame)
 end
@@ -205,9 +141,5 @@ end
 function MainMenu:checkPosition()
     return self.frame:checkPosition();
 end
-
-
-
-
 
 return MainMenu;

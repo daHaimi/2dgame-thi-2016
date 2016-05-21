@@ -21,7 +21,10 @@ local fakeElement = Class {
         self.calledRemove = false;
         
         --slider
-        
+        self.min = nil;
+        self.max = nil;
+        self.width = nil;
+        self.value = 123;
         
     end;
 };
@@ -40,6 +43,23 @@ function fakeElement:SetText(text)
     self.text = text;
 end
 
+---slider
+function fakeElement:SetValue(value)
+    self.value = value;
+end
+
+function fakeElement:GetValue()
+    return self.value;
+end
+
+function fakeElement:SetMinMax(min, max)
+    self.min = min;
+    self.max = max;
+end
+
+function fakeElement:SetWidth(width)
+    self.width = width;
+end
 
 
 ---text

@@ -18,6 +18,7 @@ function Textbox:changeText(newTopic, newText)
     self.objText:SetText(newText);
 end
 
+---Function not conform to CC/ implements an interface
 ---set visible of the textfield
 -- @parm visible: true or false
 function Textbox:SetVisible(visible)
@@ -26,6 +27,7 @@ function Textbox:SetVisible(visible)
     --self.objBackground:SetVisibile(visible);
 end
 
+---Function not conform to CC/ implements an interface
 ---Set position of the textfield
 -- @parm x: x axis position
 -- @parm y: y axis position

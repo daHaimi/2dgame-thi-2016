@@ -1,4 +1,3 @@
-Loveframes = require "lib.LoveFrames";
 Class = require "lib.hump.class";
 
 local Pause = Class {
@@ -9,7 +8,7 @@ local Pause = Class {
     end;
 };
 
---creates the achievement frame
+---creates the pause frame
 function Pause:create()
     --add, create and position all elements on this frame
     self.elementsOnFrame = {
@@ -64,21 +63,22 @@ function Pause:create()
     end
 end
 
+---shows the frame on screen
 function Pause:draw()
     self.frame:draw(self.elementsOnFrame);
 end
 
---called to "delete" this frame
+---called to "delete" this frame
 function Pause:clear()
     self.frame:clear(self.elementsOnFrame)
 end
 
---called in the "fly in" state 
+---called in the "fly in" state 
 function Pause:appear()
     self.frame:appear(self.elementsOnFrame)
 end
 
---called in the "fly out" state
+---called in the "fly out" state
 function Pause:disappear()
     self.frame:disappear(self.elementsOnFrame)
 end
@@ -87,4 +87,5 @@ end
 function Pause:checkPosition()
     return self.frame:checkPosition();
 end
+
 return Pause;

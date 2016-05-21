@@ -6,7 +6,7 @@ fakeElement = require "Tests.fakeLoveframes.fakeElement";
 Frame = require "class.Frame";
 
 
-describe("Unit test for Credits.lua", function()
+describe("Unit test for Dictionary.lua", function()
     local locInstance;
 
 

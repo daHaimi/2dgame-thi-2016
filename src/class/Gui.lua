@@ -125,23 +125,5 @@ function Gui:tempTextOutput()
         "\n" ..
         "Money =" .. tostring(_persTable.money);
 end
---[[
 
----set the state of the gui elements on the defined status
----this function is called exactly once at the beginning of the game
-function Gui:loadValues()
-    Gui.slider.bgm:SetValue(_persTable.config.bgm);
-    Gui.slider.music:SetValue(_persTable.config.music);
-    Gui:tempTextOutput();
-end
-
----updates all values which can be chanced by gui elements
----this function is called on every Back-Button clickevent
-function Gui:updateValues()
-    _persTable.config.bgm = Gui.slider.bgm:GetValue();
-    _persTable.config.music = Gui.slider.music:GetValue();
-    --transform the boolean to 0, 1 or more
-    
-end
-]]--
 return Gui;

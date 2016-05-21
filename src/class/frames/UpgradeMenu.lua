@@ -1,7 +1,6 @@
 Class = require "lib.hump.class";
 Chart = require "class.Chart";
 KlickableElement = require "class.KlickableElement"
-Loveframes = require "lib.LoveFrames";
 
 local UpgradeMenu = Class {
     init = function(self)
@@ -11,7 +10,7 @@ local UpgradeMenu = Class {
     end;
 };
 
---creates the achievement frame
+---creates the shop frame
 function UpgradeMenu:create()
     --add, create and position all elements on this frame
     self.elementsOnFrame = {
@@ -114,7 +113,6 @@ function UpgradeMenu:create()
             _persTable.upgrades.moreLife = 0;
         else
             _persTable.upgrades.moreLife = 1;
-            _gui.myFrames.inGame.elementsOnFrame.healthbar.object:refreshAfterBuy();
         end
         if self.upgrades.upgrade4:getEnable() then
             _persTable.upgrades.godMode = 0;
@@ -186,21 +184,22 @@ function UpgradeMenu:create()
     end
 end
 
+---shows the frame on screen
 function UpgradeMenu:draw()
     self.frame:draw(self.elementsOnFrame);
 end
 
---called to "delete" this frame
+---called to "delete" this frame
 function UpgradeMenu:clear()
     self.frame:clear(self.elementsOnFrame)
 end
 
---called in the "fly in" state 
+---called in the "fly in" state 
 function UpgradeMenu:appear()
     self.frame:appear(self.elementsOnFrame)
 end
 
---called in the "fly out" state
+---called in the "fly out" state
 function UpgradeMenu:disappear()
     self.frame:disappear(self.elementsOnFrame)
 end

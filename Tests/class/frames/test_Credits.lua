@@ -9,7 +9,6 @@ Frame = require "class.Frame";
 describe("Unit test for Credits.lua", function()
     local locInstance;
 
-
     before_each(function()
         _G.Loveframes = {
             Create = function(typeName) 

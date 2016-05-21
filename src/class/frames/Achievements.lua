@@ -1,6 +1,6 @@
 Class = require "lib.hump.class";
 Frame = require "class.Frame";
-Loveframes = require "lib.LoveFrames";
+Chart = require "class.Chart";
 
 local Achievements = Class {
     init = function(self)
@@ -10,7 +10,7 @@ local Achievements = Class {
     end;
 };
 
---creates the achievement frame
+---creates the achievement frame
 function Achievements:create()
     --add, create and position all elements on this frame
     self.elementsOnFrame = {
@@ -45,22 +45,22 @@ function Achievements:create()
     end
 end
 
-
+---shows the frame on screen
 function Achievements:draw()
     self.frame:draw(self.elementsOnFrame);
 end
 
---called to "delete" this frame
+---called to "delete" this frame
 function Achievements:clear()
     self.frame:clear(self.elementsOnFrame)
 end
 
---called in the "fly in" state 
+---called in the "fly in" state 
 function Achievements:appear()
     self.frame:appear(self.elementsOnFrame)
 end
 
---called in the "fly out" state
+---called in the "fly out" state
 function Achievements:disappear()
     self.frame:disappear(self.elementsOnFrame)
 end

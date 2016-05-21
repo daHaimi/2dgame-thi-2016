@@ -1,4 +1,3 @@
---- Frame contains all Elements on a GUI state
 Class = require "lib.hump.class";
 
 local Frame = Class {
@@ -73,6 +72,5 @@ function Frame:checkPosition()
         return false;
     end
 end
-
 
 return Frame;

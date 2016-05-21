@@ -1,5 +1,5 @@
-Loveframes = require "lib.LoveFrames";
 Class = require "lib.hump.class";
+Chart = require "class.Chart";
 
 local Dictionary = Class {
     init = function(self)
@@ -9,7 +9,7 @@ local Dictionary = Class {
     end;
 };
 
---creates the achievement frame
+---creates the dictionary frame
 function Dictionary:create()
     --add, create and position all elements on this frame
     self.elementsOnFrame = {
@@ -37,29 +37,28 @@ function Dictionary:create()
     self.elementsOnFrame.button_back.object:SizeToImage()
     self.elementsOnFrame.button_back.object:SetText("Back");
     
-    
     --onclick events for all buttons
     self.elementsOnFrame.button_back.object.OnClick = function(object)
         _gui:changeFrame(_gui.myFrames.mainMenu);
     end
 end
 
-
+---shows the frame on screen
 function Dictionary:draw()
     self.frame:draw(self.elementsOnFrame);
 end
 
---called to "delete" this frame
+---called to "delete" this frame
 function Dictionary:clear()
     self.frame:clear(self.elementsOnFrame)
 end
 
---called in the "fly in" state 
+---called in the "fly in" state 
 function Dictionary:appear()
     self.frame:appear(self.elementsOnFrame)
 end
 
---called in the "fly out" state
+---called in the "fly out" state
 function Dictionary:disappear()
     self.frame:disappear(self.elementsOnFrame)
 end
@@ -68,4 +67,5 @@ end
 function Dictionary:checkPosition()
     return self.frame:checkPosition();
 end
+
 return Dictionary;

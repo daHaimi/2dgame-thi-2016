@@ -6,7 +6,7 @@ fakeElement = require "Tests.fakeLoveframes.fakeElement";
 Frame = require "class.Frame";
 
 
-describe("Unit test for Credits.lua", function()
+describe("Unit test for Options.lua", function()
     local locInstance;
 
 
@@ -16,18 +16,16 @@ describe("Unit test for Credits.lua", function()
                 return fakeElement(typeName);
             end
         }
+        _G._persTable = {
+            config = {
+                bgm = 50;
+                music = 50;
+            };
+        };
+        
         _G.Frame = function(...) return Frame; end;
 
         locInstance = testClass();
-    end)
-
-    it("Testing Constructor", function()
-            --[[
-        local myInstance = testClass();
-        myInstance.elementsOnFrame.button_back.object.OnClick = {};
-        locInstance.elementsOnFrame.button_back.object.OnClick = {};
-        assert.are.same(locInstance, myInstance);
-        ]]--
     end)
 
     it("Testing draw function", function()

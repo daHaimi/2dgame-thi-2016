@@ -1,4 +1,3 @@
-Loveframes = require "lib.LoveFrames";
 Class = require "lib.hump.class";
 
 local Score = Class {
@@ -9,7 +8,7 @@ local Score = Class {
     end;
 };
 
---creates the achievement frame
+---creates the Score frame
 function Score:create()
     --add, create and position all elements on this frame
     self.elementsOnFrame = {
@@ -52,21 +51,22 @@ function Score:create()
     end
 end
 
+---shows the frame on screen
 function Score:draw()
     self.frame:draw(self.elementsOnFrame);
 end
 
---called to "delete" this frame
+---called to "delete" this frame
 function Score:clear()
     self.frame:clear(self.elementsOnFrame)
 end
 
---called in the "fly in" state 
+---called in the "fly in" state 
 function Score:appear()
     self.frame:appear(self.elementsOnFrame)
 end
 
---called in the "fly out" state
+---called in the "fly out" state
 function Score:disappear()
     self.frame:disappear(self.elementsOnFrame)
 end
@@ -75,4 +75,5 @@ end
 function Score:checkPosition()
     return self.frame:checkPosition();
 end
+
 return Score;

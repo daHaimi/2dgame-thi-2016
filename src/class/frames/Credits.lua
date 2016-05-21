@@ -8,7 +8,7 @@ local Credits = Class {
     end;
 };
 
---creates the achievement frame
+---creates the credits frame
 function Credits:create()
     --add, create and position all elements on this frame
     self.elementsOnFrame = {
@@ -30,29 +30,29 @@ function Credits:create()
     self.elementsOnFrame.button_back.object:SetImage("assets/gui/gui_Test_Button.png")
     self.elementsOnFrame.button_back.object:SizeToImage()
     self.elementsOnFrame.button_back.object:SetText("Back");
-    
-    
+
     --onclick events for all buttons
     self.elementsOnFrame.button_back.object.OnClick = function(object)
         _gui:changeFrame(_gui.myFrames.mainMenu);
     end
 end
 
+---shows the frame on screen
 function Credits:draw()
     self.frame:draw(self.elementsOnFrame);
 end
 
---called to "delete" this frame
+---called to "delete" this frame
 function Credits:clear()
     self.frame:clear(self.elementsOnFrame)
 end
 
---called in the "fly in" state 
+---called in the "fly in" state 
 function Credits:appear()
     self.frame:appear(self.elementsOnFrame)
 end
 
---called in the "fly out" state
+---called in the "fly out" state
 function Credits:disappear()
     self.frame:disappear(self.elementsOnFrame)
 end

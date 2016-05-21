@@ -1,19 +1,18 @@
----a klickableElement represents an achievement, wikielement or an upgrade
-
 Class = require "lib.hump.class";
 
 local Healthbar = Class {
-    init = function(self, iconPath, blackHeartPath, redHeartPath)
+    init = function(self)
         self.icon = Loveframes.Create("image")
-        self.icon:SetImage(iconPath);
-        self.blackHeartPath = blackHeartPath;
-        self.redHeartPath = redHeartPath;
+        self.icon:SetImage("assets/hamster.png");
+        self.blackHeartPath = "assets/heart_grey.png";
+        self.redHeartPath = "assets/heart.png";
         self.unlockedHearts = 1 + _persTable.upgrades.moreLife;
         self.currentHearts = self.unlockedHearts;
-        self.hearts = {
-            Loveframes.Create("image");
-        };
-        self.hearts[1]:SetImage(self.redHeartPath);
+        self.hearts = {};
+        for var1 = 1, self.unlockedHearts do
+            self.hearts[var1] = Loveframes.Create("image");
+            self.hearts[var1]:SetImage(self.redHeartPath);
+        end
         self.basic = {
             xPos = nil;
             yPos = nil;
@@ -23,19 +22,11 @@ local Healthbar = Class {
     end;
 };
 
+--scale the heart images to an half
 function Healthbar:scaleHearts()
     for k, v in pairs(self.hearts) do
         v:SetScale(0.5, 0.5);
     end
-end
-
-
-function Healthbar:refreshAfterBuy()
-    self.unlockedHearts = 1 + _persTable.upgrades.moreLife;
-    self.currentHearts = self.unlockedHearts;
-    self.hearts[self.unlockedHearts] = Loveframes.Create("image");
-    self.hearts[self.unlockedHearts]:SetImage(self.redHeartPath);
-    self:refresh();
 end
 
 ---Refresh the position and visible of the Healtbarh
@@ -59,7 +50,7 @@ function Healthbar:minus()
     end
 end
 
-
+---Function not conform to CC/ implements an interface
 ---Set the visible of the element
 -- @parm visible: true or false
 function Healthbar:SetVisible(visible)
@@ -72,18 +63,7 @@ function Healthbar:SetVisible(visible)
     self.icon:SetVisible(visible);
 end
 
----reset the Element (just the checked state and the image)
----has to be called at the end of a turn
-function Healthbar:reset()
-    self.currentHearts = self.unlockedHearts;
-    for var1 = 1, self.currentHearts do
-        self.hearts[var1]:Remove();
-        self.hearts[var1] = Loveframes.Create("image");
-        self.hearts[var1]:SetImage(self.redHeartPath);
-    end
-    self:refresh();
-end
-
+---Function not conform to CC/ implements an interface
 ---set the position of the element
 -- @parm x: x axis position
 -- @parm y: y axis position
