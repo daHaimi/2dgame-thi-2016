@@ -26,7 +26,7 @@ function Dictionary:create()
         button_back = {
             object = Loveframes.Create("imagebutton");
             x = 10;
-            y = 300;
+            y = 400;
         };
     };
     
@@ -37,9 +37,22 @@ function Dictionary:create()
     self.elementsOnFrame.button_back.object:SizeToImage()
     self.elementsOnFrame.button_back.object:SetText("Back");
     
+    self:addAllObjects();
+    
     --onclick events for all buttons
     self.elementsOnFrame.button_back.object.OnClick = function(object)
         _gui:changeFrame(_gui.myFrames.mainMenu);
+    end
+end
+
+--add all object written in the data.lua into the chart and adds an OnClick event
+function Dictionary:addAllObjects()
+    for k, v in pairs(_G.data.fishableObjects) do
+        local newKlickableElement = KlickableElement(v.name, "assets/" .. v.image, "assets/" .. v.image, v.description, v.value, nil);
+        newKlickableElement.object.OnClick = function(object)
+            self.elementsOnFrame.chart.object:markElement(newKlickableElement);
+        end
+        self.elementsOnFrame.chart.object:addKlickableElement(newKlickableElement);
     end
 end
 

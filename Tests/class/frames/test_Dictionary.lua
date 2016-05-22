@@ -16,6 +16,10 @@ describe("Unit test for Dictionary.lua", function()
                 return fakeElement(typeName);
             end
         }
+        _G.data = {
+            fishableObjects = {};
+        }
+        
         _G.Frame = function(...) return Frame; end;
 
         locInstance = testClass();

@@ -27,6 +27,10 @@ describe("Unit test for UpgradeMenu.lua", function()
                 mapBreakthrough2 = 0;
             };
         };
+        _G.data = {
+            upgrades = {};
+        };
+        
         locInstance = testClass();
     end)
 

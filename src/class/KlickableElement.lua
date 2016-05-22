@@ -2,11 +2,13 @@
 Class = require "lib.hump.class";
 
 local KlickableElement = Class {
-    init = function(self, name, imagepath, imagepath_disable, description)
+    init = function(self, name, imagepath, imagepath_disable, description, price, nameInPersTable)
         self.name = name;
         self.enable = true;
         self.imagepath = imagepath;
         self.imagepath_disable = imagepath_disable;
+        self.price = price;
+        self.nameInPersTable = nameInPersTable;
         self.description = description;
         self.object = Loveframes.Create("imagebutton");
         self.object:SetImage(self.imagepath);
@@ -32,6 +34,9 @@ end
 function KlickableElement:disable()
     self.enable = false;
     self.object:SetImage(self.imagepath_disable);
+    if self.nameInPersTable ~= nil then
+        _persTable.upgrades[self.nameInPersTable] = 1;
+    end
 end
 
 ---Function not conform to CC/ implements an interface

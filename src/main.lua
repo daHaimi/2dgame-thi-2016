@@ -14,20 +14,20 @@ require "lib.TEsound";
 -- Global variables
 _G.math.inf = 1 / 0;
 _G._gui = nil;
+_G._persistence = nil;
 
 
 --- Local variables
 local curLevel;
 local player;
 local swarmFactory;
-local gui;
 local levMan;
-local persistence;
+--local persistence;
 
 --- The bootstrap of the game.
 -- This function is called exactly once at the beginning of the game.
 function love.load()
-    persistence = Persistence();
+    _persistence = Persistence();
     _gui = Gui();
     local _, _, flags = love.window.getMode();
     love.graphics.setBackgroundColor(30, 180, 240);
@@ -39,8 +39,6 @@ function love.load()
     levMan:newLevel("assets/testbg.png", 1, _G.data);
 
     _gui:tempTextOutput();
-    --gui:buildFrames();
-    --gui:loadValues();
     _gui:start();
 end
 

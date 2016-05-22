@@ -14,7 +14,7 @@ return {
             maxAmount = 5,            -- max amount of objects per swarm
             swarmHeight = 300,       -- height of the swarm of this object
             enabled = true,      -- Whether the object is enabled
-            
+            description = "Nemo´s description";    --Description of the object. shown in the dictionary
             -- definition of the hitbox
             hitbox = {
                 {
@@ -38,7 +38,7 @@ return {
             maxAmount = 4,
             swarmHeight = 225,
             enabled = true,
-            
+            description = "Turtle´s description";
             hitbox = {
                 {
                     width = 50,
@@ -61,7 +61,7 @@ return {
             maxAmount = 3,
             swarmHeight = 350,
             enabled = true,
-            
+            description = "Rat´s description";
             hitbox = {
                 {
                     width = 60,
@@ -84,7 +84,7 @@ return {
             maxAmount = 2,
             swarmHeight = 125,
             enabled = true,
-
+            description = "deadFish´s description";
             hitbox = {
                 {
                     width = 64,
@@ -107,7 +107,7 @@ return {
             maxAmount = 4,
             swarmHeight = 200,
             enabled = true,
-            
+            description = "Angler´s description";
             hitbox = {
                 {
                     width = 40,
@@ -130,7 +130,7 @@ return {
             maxAmount = 1,
             swarmHeight = 100,
             enabled = true,
-            
+            description = "Lollipop´s description";
             hitbox = {
                 {
                     width = 30,
@@ -153,7 +153,7 @@ return {
             maxAmount = 1,
             swarmHeight = 100,
 --            enabled = _G._persTable.enabled.ring,
-            
+            description = "Ring´s description";
             hitbox = {
                 {
                     width = 40,
@@ -176,7 +176,7 @@ return {
             maxAmount = 1,
             swarmHeight = 100,
             enabled = true,
-        
+            description = "Shoe´s description";
             hitbox = {
                 {
                     width = 55,
@@ -206,7 +206,7 @@ return {
             maxAmount = 3,
             swarmHeight = 200,
             enabled = true,
-            
+            description = "Snake´s description";
             hitbox = {
                 {
                     width = 54,
@@ -229,7 +229,7 @@ return {
             maxAmount = 3,
             swarmHeight = 200,
             enabled = true,
-
+            description = "Crododile´s description";
             hitbox = {
                 {
                     width = 128,
@@ -252,7 +252,7 @@ return {
             maxAmount = 1,
             swarmHeight = 50,
 --            enabled = _G._persTable.enabled.sleepingPill,
-            
+            description = "SleepingPill´s description";
             hitbox = {
                 {
                     width = 15,
@@ -287,7 +287,7 @@ return {
             maxAmount = 5,
             swarmHeight = 300,
             enabled = true,
-
+            description = "Squirrel´s description";
             hitbox = {
                 {
                     width = 15,
@@ -329,5 +329,50 @@ return {
             fishablesProbability = { 5, 30, 55, 90, 100}, --(3, 25, 25, 35, 10)
             maxSwarmHeight = 9000
         }
-    }
+    },
+
+    --- Date for all upgrades
+    upgrades = {
+        oneMoreLife = {
+            nameInPersTable = "moreLife";
+            name = "One more life";
+            description = "add one more life to your healthbar.";
+            price = 100;
+            image = "assets/gui/gui_Test_klickableElement.png";
+            image_disable = "assets/gui/gui_Test_klickableElement_disable.png";
+        },
+        twoMoreLife = {
+            nameInPersTable = "moreLife";
+            name = "Two more life";
+            description = "add a third life to your healthbar.";
+            price = 200;
+            image = "assets/gui/gui_Test_klickableElement.png";
+            image_disable = "assets/gui/gui_Test_klickableElement_disable.png";
+        },
+        threeMoreLife = {
+            nameInPersTable = "moreLife";
+            name = "Three more life";
+            description = "upgrade your healthbar up to four lifes.";
+            price = 300;
+            image = "assets/gui/gui_Test_klickableElement.png";
+            image_disable = "assets/gui/gui_Test_klickableElement_disable.png";
+        },
+    },
+    
+    achievements = {
+        getFirtsObject = {
+            nameInPersTable = "getFirstObject";
+            name = "First object";
+            description = "You caught your first object";
+            image_lock = "assets/gui/gui_Test_klickableElement_disable.png";
+            image_unlock = "assets/gui/gui_Test_klickableElement.png";
+        },
+        getSecondObject = {
+            nameInPersTable = "getSecondObject";
+            name = "Second object";
+            description = "You caught your second object";
+            image_lock = "assets/gui/gui_Test_klickableElement_disable.png";
+            image_unlock = "assets/gui/gui_Test_klickableElement.png";
+        },
+    },
 }

@@ -27,6 +27,10 @@ end};
 -- @return boolean
 function Persistence:resetGame()
     self:createPersTable();
+    local _, _, flags = love.window.getMode();
+    _G._persTable.winDim = { love.window.getDesktopDimensions(flags.display) };
+    _G._persTable.winDim[2] = _G._persTable.winDim[2] - 150; -- Sub 50px for taskbar and window header
+    _G._persTable.winDim[1] = (_G._persTable.winDim[2] / 16) * 9; -- Example: 16:9
     return love.filesystem.remove("saveFile");
     
 end
@@ -47,39 +51,43 @@ end
 
 --- Creates initial persTable 
 function Persistence:createPersTable()
---- globale persistance table
-_G._persTable = {
-    statistic = {};
-    achivments = {};
-    config = {};
-    fishCaught = {};
-    money = 0;
-    lastLevel = 1;
-    winDim = {};
-    phase = 1;
-    enabled = {
-        ring = true;
-        sleepingPill = true;
-    }
-};
+    --- globale persistance table
+    _G._persTable = {
+        statistic = {};
+        achievements = {};
+        config = {};
+        fishCaught = {};
+        money = 0;
+        lastLevel = 1;
+        winDim = {};
+        phase = 1;
+        enabled = {
+            ring = true;
+            sleepingPill = true;
+        }
+    };
 
---- upgrades list in persTable, "0" means unbought
-_G._persTable.upgrades = {
-    speedUp = 1; -- "0" no Speedup for more looke bait.lua
-    moneyMult = 0; -- "0" means no additional money
-    moreLife = 1; -- amount of additional lifes
-    godMode = 1; -- indicates if the god mode is available or not
-    mapBreakthrough1 = 0; -- can you access the first map limit? 0 = no, 1 = yes
-    mapBreakthrough2 = 0; -- can you access the second map limit? 0 = no, 1 = yes
-    sleepingPillDuration = 600; -- duration of the effect of the sleeping pill
-    sleepingPillSlow = 0.25; -- sets the slow factor of the sleeping pill 0.25 = 25% of the usual movement
-};
+    --- upgrades list in persTable, "0" means unbought
+    _G._persTable.upgrades = {
+        speedUp = 0; -- "0" no Speedup for more looke bait.lua
+        moneyMult = 0; -- "0" means no additional money
+        moreLife = 0; -- amount of additional lifes
+        godMode = 1; -- indicates if the god mode is available or not
+        mapBreakthrough1 = 0; -- can you access the first map limit? 0 = no, 1 = yes
+        mapBreakthrough2 = 0; -- can you access the second map limit? 0 = no, 1 = yes
+        sleepingPillDuration = 600; -- duration of the effect of the sleeping pill
+        sleepingPillSlow = 0.25; -- sets the slow factor of the sleeping pill 0.25 = 25% of the usual movement
+    };
+    _G._persTable.achievements = {
+        getFirstObject = true;
+        getSecondObject = false;
+    };
 
---- config options
-_G._persTable.config = {
-    bgm = 100;
-    music = 100;
-}
-  end
+    --- config options
+    _G._persTable.config = {
+        bgm = 100;
+        music = 100;
+    };
+end
 
 return Persistence;

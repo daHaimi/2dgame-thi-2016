@@ -27,7 +27,7 @@ function Achievements:create()
         button_back = {
             object = Loveframes.Create("imagebutton");
             x = 10;
-            y = 300;
+            y = 400;
         };
     };
     
@@ -38,6 +38,8 @@ function Achievements:create()
     self.elementsOnFrame.button_back.object:SizeToImage()
     self.elementsOnFrame.button_back.object:SetText("Back");
     
+    self:addAllAchievements()
+    self:loadValuesFromPersTable();
     
     --onclick events for all buttons
     self.elementsOnFrame.button_back.object.OnClick = function(object)
@@ -45,9 +47,32 @@ function Achievements:create()
     end
 end
 
+--add all achievements written in the data.lua into the chart and adds an OnClick event
+function Achievements:addAllAchievements()
+    for k, v in pairs(_G.data.achievements) do
+        local newKlickableElement = KlickableElement(v.name, v.image_lock, v.image_unlock, v.description, nil, v.nameInPersTable);
+        newKlickableElement.object.OnClick = function(object)
+            self.elementsOnFrame.chart.object:markElement(newKlickableElement);
+        end
+        self.elementsOnFrame.chart.object:addKlickableElement(newKlickableElement);
+    end
+end
+
+function Achievements:loadValuesFromPersTable()
+    for k, v in pairs(self.elementsOnFrame.chart.object.elementsOnChart) do
+        local elementName = v.nameInPersTable;
+        if _G._persTable.achievements[elementName] then
+            if _G._persTable.achievements[elementName] == true then
+                v:disable();
+            end
+        end
+    end
+end
+
 ---shows the frame on screen
 function Achievements:draw()
     self.frame:draw(self.elementsOnFrame);
+    self:loadValuesFromPersTable();
 end
 
 ---called to "delete" this frame

@@ -16,6 +16,10 @@ describe("Unit test for Achievements.lua", function()
                 return fakeElement(typeName);
             end
         }
+        _G.data = {
+            achievements = {};
+        }
+        
         _G.Frame = function(...) return Frame; end;
 
         locInstance = testClass();

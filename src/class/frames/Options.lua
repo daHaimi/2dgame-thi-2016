@@ -72,7 +72,7 @@ function Options:create()
     end
     
     self.elementsOnFrame.button_reset.object.OnClick = function(object)
-        --enter reset event
+        _persistence:resetGame();
     end
     
     self.elementsOnFrame.button_back.object.OnClick = function(object)
