@@ -92,7 +92,6 @@ end
 function Options:loadValuesFromPersTable()
     self.elementsOnFrame.slider_bgm.object:SetValue(_persTable.config.bgm);
     self.elementsOnFrame.slider_music.object:SetValue(_persTable.config.music);
-    print(_persTable.config.bgm);
 end
 
 ---shows the frame on screen
