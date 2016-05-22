@@ -59,9 +59,8 @@ function Options:create()
     self.elementsOnFrame.button_back.object:SetText("Back");
     
     --load values out of persTable into the chart
-    self.elementsOnFrame.slider_bgm.object:SetValue(_persTable.config.bgm);
-    self.elementsOnFrame.slider_music.object:SetValue(_persTable.config.music);
-    
+    self:loadValuesFromPersTable();
+        
     --onclick events for all buttons
     self.elementsOnFrame.slider_bgm.OnValueChanged = function(object)
         _persTable.config.bgm = self.elementsOnFrame.slider_bgm.object:GetValue();
@@ -73,18 +72,32 @@ function Options:create()
     
     self.elementsOnFrame.button_reset.object.OnClick = function(object)
         _persistence:resetGame();
+        self:loadValuesFromPersTable();
+        _gui:tempTextOutput();
     end
     
     self.elementsOnFrame.button_back.object.OnClick = function(object)
-        _persTable.config.bgm = self.elementsOnFrame.slider_bgm.object:GetValue();
-        _persTable.config.music = self.elementsOnFrame.slider_music.object:GetValue();
+        self:loadValuesInPersTable();
         _gui:tempTextOutput();
         _gui:changeFrame(_gui:getLastState());
     end
 end
 
+function Options:loadValuesInPersTable()
+    _persTable.config.bgm = self.elementsOnFrame.slider_bgm.object:GetValue();
+    _persTable.config.music = self.elementsOnFrame.slider_music.object:GetValue();
+end
+
+
+function Options:loadValuesFromPersTable()
+    self.elementsOnFrame.slider_bgm.object:SetValue(_persTable.config.bgm);
+    self.elementsOnFrame.slider_music.object:SetValue(_persTable.config.music);
+    print(_persTable.config.bgm);
+end
+
 ---shows the frame on screen
 function Options:draw()
+    self:loadValuesFromPersTable();
     self.frame:draw(self.elementsOnFrame);
 end
 
