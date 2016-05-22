@@ -1,4 +1,5 @@
 Class = require "lib.hump.class";
+require "socket" math.randomseed(socket.gettime() * 10000);
 
 --- FishableObject is the class of all fishable object.
 -- @param xPosition: x-position of the object
@@ -50,7 +51,7 @@ local FishableObject = Class {
 function FishableObject:draw()
     if not self.caught then
         love.graphics.setColor(255, 255, 255);
-        if self.speed < 0 then
+        if self.speed <= 0 then
             love.graphics.draw(self.image, self.xPosition, self.yPosition);
             love.graphics.setColor(0, 0, 0);
         else
@@ -145,8 +146,10 @@ function FishableObject:getHitboxXPosition(i)
 
     if self.speed < 0 then
         return self.xPosition + self.hitbox[i].deltaXPos;
+    elseif self.speed == 0 then
+        return self.xPosition - self.hitbox[i].deltaXPos - self.hitbox[i].width + self.spriteSize;
     else
-        return self.xPosition + self.hitbox[i].deltaXPos - self.spriteSize;
+        return self.xPosition - self.hitbox[i].deltaXPos - self.hitbox[i].width;
     end
 end
 
