@@ -113,7 +113,8 @@ function MainMenu:create()
     end
     
     self.elementsOnFrame.button_close.object.OnClick = function(object)
-        love.window:close();
+        love.window:close(); -- close the window
+        love.event.quit(); -- exit the game
     end
 end
 
