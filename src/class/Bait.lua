@@ -218,12 +218,14 @@ function Bait:setPosXMouse(XPosMouse)
     self.posXMouse = XPosMouse;
 end
 
---- returns the x position of the mouse
+--- Returns the x position of the mouse
+-- @return Returns the x position of the mouse
 function Bait:getPosXMouse()
     return self.posXMouse;
 end
 
 --- returns the upper and the lower point of the golden rule
+-- @return Returns the upper and the lower point of the golden rule
 function Bait:getGoldenRule()
     return self.goldenRuleLowerPoint, self.goldenRuleUpperPoint;
 end
