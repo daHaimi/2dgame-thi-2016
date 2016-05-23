@@ -279,4 +279,12 @@ describe("Test unit test suite", function()
         locInstance.swarmFac = {"some", "objects"};
         assert.are.same({"some", "objects"}, locInstance:getSwarmFactory());
     end)
+
+    it("Testing getTime()", function()
+        if os.date("%M") < "30" then
+            assert.are.same("day", locInstance:getTime());
+        else
+            assert.are.same("night", locInstance:getTime());
+        end 
+    end)
 end)

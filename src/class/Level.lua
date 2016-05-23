@@ -28,6 +28,12 @@ local Level = Class {
         if _persTable.upgrades.mapBreakthrough2 == 1 then
             self.lowerBoarder = self.lowerBoarder + self.mapBreakthroughBonus2;
         end
+        
+        if os.date("%M") < "30" then
+            self.time = "day";
+        else
+            self.time = "night";
+        end
     end,
 
     -- Member variables
@@ -51,6 +57,7 @@ local Level = Class {
     shortGMDist = 0;
     godModeActive = 0;
     moved = 0;
+    time = nil;
     gMMusicPlaying = false;
 }
 
@@ -335,6 +342,10 @@ end
 
 function Level:getSwarmFactory()
     return self.swarmFac;
+end
+
+function Level:getTime()
+    return self.time;
 end
 
 return Level;
