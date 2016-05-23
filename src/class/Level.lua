@@ -1,4 +1,5 @@
 Class = require "lib.hump.class";
+LevelManager = require "class.LevelManager";
 
 _G.math.inf = 1 / 0;
 
@@ -8,15 +9,15 @@ _G.math.inf = 1 / 0;
 -- @param direction The y direction (-1 means up and 1 means down)
 -- @param swarmFactory The swarm factory
 local Level = Class {
-    init = function(self, backgroundPath, winDim, direction, swarmFactory)
-        self.swarmFac = swarmFactory;
+    init = function(self, backgroundPath, winDim, direction, levelManager)
+        self.levMan = levelManager;
         self.bg = love.graphics.newImage(backgroundPath);
         if self.bg ~= nil then -- do not remove this if statement or busted will crash
         self.bg:setWrap("repeat", "repeat");
         end;
         self.backgroundPath = backgroundPath;
         self.winDim = winDim;
-        self.posY = (winDim[2] / 2); --startpos
+        self.posY = (winDim[2] * 0.5); --startpos
         --self.direction = self.direction * direction;
         if self.bg ~= nil then -- do not remove this if statement or busted will crash
         self.bgq = love.graphics.newQuad(0, 0, winDim[1], 20000, self.bg:getWidth(), self.bg:getHeight());
@@ -27,10 +28,16 @@ local Level = Class {
         if _persTable.upgrades.mapBreakthrough2 == 1 then
             self.lowerBoarder = self.lowerBoarder + self.mapBreakthroughBonus2;
         end
+        
+        if os.date("%M") < "30" then
+            self.time = "day";
+        else
+            self.time = "night";
+        end
     end,
 
     -- Member variables
-    swarmFac = nil;
+    levMan = nil;
     levelFinished = 0; -- 0 means the round hasn´t been finished until yet
     gotPayed = 0; -- 0 means the amount of money hasn´t calculated until yet
     roundValue = 0; -- the amount of money fished in this round
@@ -50,6 +57,8 @@ local Level = Class {
     shortGMDist = 0;
     godModeActive = 0;
     moved = 0;
+    time = nil;
+    gMMusicPlaying = false;
 }
 
 --- Update the game state. Called every frame.
@@ -60,7 +69,7 @@ function Level:update(dt, bait)
     --set the direction in relation of the yPosition
     if self.posY <= self.lowerBoarder then
         self:switchToPhase2();
-    elseif self.posY >= (self.winDim[2] / 2) and self.direction == -1 then
+    elseif self.posY >= (self.winDim[2] * 0.5) and self.direction == -1 then
         self.direction = 0;
         self.levelFinished = 1;
         self:payPlayer();
@@ -84,6 +93,15 @@ function Level:update(dt, bait)
 
     self:checkGodMode();
     bait:update(dt);
+    
+    --Update music
+    if self.godModeActive == 1 and not self.gMMusicPlaying then
+        TEsound.playLooping({"assets/sound/godMode.wav"}, 'abc');
+        self.gMMusicPlaying = true;
+    elseif self.godModeActive == 0 then
+        TEsound.stop('abc');
+        self.gMMusicPlaying = false;
+    end        
 end
 
 --- when the bait hit a object or the boarder is reached, start phase 2
@@ -91,6 +109,7 @@ function Level:switchToPhase2()
     if _G._persTable.phase == 1 then
         self.direction = -1;
         _G._persTable.phase = 2;
+        self:deactivateGodMode();
     end
 end
 
@@ -110,7 +129,7 @@ end
 -- bonus value (when activated) at the end of each round. Remove the money multi when it was activated.
 function Level:payPlayer()
     -- check if the round has been finished
-    if self.levelFinished == 1 and self.swarmFac ~= nil then
+    if self.levelFinished == 1 and self.levMan:getCurSwarmFactory() ~= nil then
         if self.gotPayed == 0 then -- check if the earned money was already payed
         local fishedVal = self:calcFishedValue();
         if _G._persTable.upgrades.moneyMult == 1 then
@@ -173,7 +192,8 @@ end
 --- Try to activate the god Mode.
 -- @return When the god mode was successfully activated it returns 1 otherwise 0.
 function Level:activateGodMode()
-    if _G._persTable.upgrades.godMode == 1 and self.godModeFuel > 0  and self.godModeActive == 0 then
+    if _G._persTable.upgrades.godMode == 1 and self.godModeFuel > 0  
+        and self.godModeActive == 0 and self.direction == 1 then
         self.godModeActive = 1;
         return 1;
     else
@@ -194,7 +214,7 @@ function Level:calcFishedValue()
     local fishedVal = 0;
     for name, amount in pairs(self.caughtThisRound) do
         if amount > 0 then
-            fishedVal = fishedVal + self.swarmFac:getFishableObjects()[name].value * amount;
+            fishedVal = fishedVal + self.levMan:getCurSwarmFactory():getFishableObjects()[name].value * amount;
         end
     end
     return fishedVal;
@@ -227,14 +247,6 @@ end
 -- @return Returns 1 when the god mode was activated. Otherwise 0.
 function Level:getGodModeStat()
     return self.godModeActive;
-end
-
---- Set the swarmfactory for the map.
--- @param swarmFactory Stands for the swarmfactory object.
-function Level:setSwarmFactory(swarmFactory)
-    if swarmFactory ~= nil then
-        self.swarmFac = swarmFactory;
-    end
 end
 
 --- Set the value for the lower boarder.
@@ -311,7 +323,8 @@ function Level:printResult()
         local string = "";
         for k, v in pairs(self.caughtThisRound) do
             ypos = ypos + 15;
-            string = k .. ": " .. v .. " x " .. self.swarmFac:getFishableObjects()[k].value .. " Coins";
+            string = k .. ": " .. v .. " x " .. 
+                self.levMan:getCurSwarmFactory():getFishableObjects()[k].value .. " Coins";
             love.graphics.print(string, xpos, ypos);
         end
         ypos = ypos + 15;
@@ -320,6 +333,19 @@ function Level:printResult()
         ypos = ypos + 15;
         love.graphics.print("Nothing caught", xpos, ypos);
     end
+end
+
+--- returns the amount of pixels moved in y direction
+function Level:getMoved()
+    return self.moved;
+end
+
+function Level:getSwarmFactory()
+    return self.swarmFac;
+end
+
+function Level:getTime()
+    return self.time;
 end
 
 return Level;

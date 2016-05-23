@@ -1,13 +1,14 @@
 ---a klickableElement represents an achievement, wikielement or an upgrade
-
 Class = require "lib.hump.class";
 
 local KlickableElement = Class {
-    init = function(self, name, imagepath, imagepath_checked, description)
+    init = function(self, name, imagepath, imagepath_disable, description, price, nameInPersTable)
         self.name = name;
-        self.checked = false;
+        self.enable = true;
         self.imagepath = imagepath;
-        self.imagepath_checked = imagepath_checked;
+        self.imagepath_disable = imagepath_disable;
+        self.price = price;
+        self.nameInPersTable = nameInPersTable;
         self.description = description;
         self.object = Loveframes.Create("imagebutton");
         self.object:SetImage(self.imagepath);
@@ -16,24 +17,29 @@ local KlickableElement = Class {
     end;
 };
 
+---Function not conform to CC/ implements an interface
 ---Set the visible of the element
 -- @parm visible: true or false
 function KlickableElement:SetVisible(visible)
     self.object:SetVisible(visible);
 end
 
----reset the Element (just the checked state and the image)
+---reset the Element (just the enable state and the image)
 function KlickableElement:reset()
-    self.checked = false;
+    self.enable = true;
     self.object:SetImage(self.imagepath);
 end
 
 ---represents an upgrade buy
-function KlickableElement:check()
-    self.checked = true;
-    self.object:SetImage(self.imagepath_checked);
+function KlickableElement:disable()
+    self.enable = false;
+    self.object:SetImage(self.imagepath_disable);
+    if self.nameInPersTable ~= nil then
+        _persTable.upgrades[self.nameInPersTable] = 1;
+    end
 end
 
+---Function not conform to CC/ implements an interface
 ---set the position of the element
 -- @parm x: x axis position
 -- @parm y: y axis position
@@ -41,14 +47,9 @@ function KlickableElement:SetPos(x, y)
     self.object:SetPos(x, y);
 end
 
----setter of the checked parameter without a reset
-function KlickableElement:SetChecked()
-    self.check();
-end
-
----getter of the checked parameter
-function KlickableElement:GetChecked()
-    return self.checked;
+---getter of the enable parameter
+function KlickableElement:getEnable()
+    return self.enable;
 end
 
 return KlickableElement;

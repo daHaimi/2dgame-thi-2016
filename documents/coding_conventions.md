@@ -18,3 +18,4 @@
  - ansprechende Namen für Klassen, Funktionen und Variablen verwenden
  - Unittests mit "test_" + "Dateiname der zu testenden Datei" benennen
  - Files: lower Camelcase
+ - alles was private sein soll: "p_" + lowerCamelcase

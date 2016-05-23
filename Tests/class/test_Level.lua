@@ -1,7 +1,6 @@
 -- Lua 5.1 Hack
 _G.math.inf = 1 / 0
 
-FishableObject = require "src.class.FishableObject";
 testClass = require "src.class.Level";
 match = require 'luassert.match';
 
@@ -9,6 +8,11 @@ describe("Test unit test suite", function()
     local locInstance;
 
     before_each(function()
+            
+        _G.TEsound = {
+            playLooping = function (...) end;
+            stop = function (...) end;
+        }
 
         _G.love = {
             graphics = {
@@ -29,21 +33,44 @@ describe("Test unit test suite", function()
         }
         _G._persTable = {
             upgrades = {
-                godMode = 1
+                godMode = 1,
+                mapBreakthrough1 = 0,
+                mapBreakthrough2 = 0;
             },
             phase = 1;
+        }
+        
+        _G.levMan = {
+            curLevel = nil,
+            curPlayer = nil,
+            curSwarmFac = nil,
+            getCurSwarmFactory = function(...) return _G.levMan.curSwarmFac end,
+            getCurPlayer = function(...) return _G.levMan.curPlayer end,
+            getCurLevel = function(...) return _G.levMan.curLevel end
         }
 
         _G.loveMock = mock(_G.love, true);
         locInstance = testClass("assets/testbg.png", { 512, 256 }, 1);
 
         testClass.caughtThisRound = {};
+        testClass.levMan = _G.levMan;
     end)
 
     it("Testing Constructor", function()
         local myInstance = testClass("assets/testbg.png", { 512, 256 }, 1);
+        local lb = myInstance.lowerBoarder;
+        local mbb1 = myInstance.mapBreakthroughBonus1;
+        local mbb2 = myInstance.mapBreakthroughBonus2;
         assert.are.same(locInstance, myInstance);
         assert.spy(loveMock.graphics.newImage).was.called_with("assets/testbg.png");
+        
+        _persTable.upgrades.mapBreakthrough1 = 1;
+        local myInstance = testClass("assets/testbg.png", { 512, 256 }, 1);
+        assert.are.same( lb + mbb1, myInstance.lowerBoarder);
+        
+        _persTable.upgrades.mapBreakthrough2 = 1;
+        local myInstance = testClass("assets/testbg.png", { 512, 256 }, 1);
+        assert.are.same(lb + mbb1 + mbb2, myInstance.lowerBoarder);
     end)
 
     it("Testing setLowerBoarder and getLowerBoarder", function()
@@ -149,7 +176,7 @@ describe("Test unit test suite", function()
     end)
 
     it("Testing calcFishedValue", function()
-        testClass.swarmFac = {
+        testClass.levMan.curSwarmFac = {
             getFishableObjects = function() return {
                 ["turtle"] = { ["value"] = 10 },
                 ["rat"] = { ["value"] = 20 },
@@ -185,7 +212,7 @@ describe("Test unit test suite", function()
     it("Testing printResult with caught objects", function()
         testClass.caughtThisRound["cat"] = 1;
         testClass.caughtThisRound["dog"] = 2;
-        testClass.swarmFac = {
+        testClass.levMan.curSwarmFac = {
             getFishableObjects = function() return { ["cat"] = { ["value"] = 10 }, ["dog"] = { ["value"] = 20 } } end;
         };
         testClass:printResult();
@@ -215,18 +242,6 @@ describe("Test unit test suite", function()
         assert.are.same(0, locInstance:getDirection());
     end)
 
-    it("Testing setSwarmFactory", function()
-        testClass.swarmFac = {5, 7, 9};
-        local swFacAddress = tostring(testClass.swarmFac);
-        testClass.setSwarmFactory(nil);
-        assert.are.same(tostring(testClass.swarmFac), swFacAddress);
-
-        local newSwFac = {1.5, 3.2, 5, 6, 5, 222, 887, 7777798548, 66978, 557412877,
-            1144, 33557878, 774123685, 88321458};
-        testClass:setSwarmFactory(newSwFac);
-        assert.are.same(tostring(testClass.swarmFac), tostring(newSwFac));
-    end)
-
     it("Testing activateShortGM", function()
         testClass.shortGMDist = 0;
         testClass.godModeActive = 0;
@@ -253,5 +268,25 @@ describe("Test unit test suite", function()
         assert.are.same(testClass.shortGMDist, 0);
         assert.are.same(testClass.oldPosY, _G.math.inf);
         assert.are.same(testClass.godModeFuel, 250);
+    end)
+
+    it("Testing getMoved()", function()
+        testClass.moved = 5;
+        assert.are.same(5, testClass:getMoved());
+    end)
+
+    it("Testing getSwarmFactory()", function ()
+        locInstance.swarmFac = {"some", "objects"};
+        assert.are.same({"some", "objects"}, locInstance:getSwarmFactory());
+    end)
+
+    it("Testing getTime()", function()
+        _G.os.date = function(...) return "22" end;
+        local myInstance = testClass("assets/testbg.png", { 512, 256 }, 1);
+        assert.are.same("day", myInstance:getTime());
+            
+        _G.os.date = function(...) return "35" end;
+        local myInstance = testClass("assets/testbg.png", { 512, 256 }, 1);
+        assert.are.same("night", myInstance:getTime());
     end)
 end)

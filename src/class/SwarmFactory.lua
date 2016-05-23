@@ -1,50 +1,37 @@
 --- The class SwarmFactory creates swarms of fishable objects defined by data.lua
 FishableObject = require "class.FishableObject";
+LevelManager = require "class.LevelManager";
 require "socket" math.randomseed(socket.gettime() * 10000);
 
 local SwarmFactory = Class {
     --- Initializes the swarm factory
-    -- @param level The current level
-    -- @param player The player object
-    -- @param dataFile The path and name of the data file
-    init = function(self, level, player, dataFile)
-        self.level = level;
-        self.player = player;
+    -- @param data The path and name of the data file
+    -- @param levelManager Reference to the level manager object
+    init = function(self, data, levelManager)
+        self.levMan = levelManager;
         
-        self.maxDepth = level.lowerBoarder - 2 * level.winDim[2];
+        self.maxDepth = self.levMan:getCurLevel():getLowerBoarder() - 2 * _G._persTable.winDim[2];        
+        self.fishableObjects = data.fishableObjects;
+        self.swarmsSewer = data.swarmsSewer;
         
-        --- Takes the fishable form the data file
-        -- @param fishable The fishable
-        function fishableObject(fishable) 
-            self.fishableObjects[fishable.name] = fishable;
+        for k,v in pairs(self.fishableObjects) do
+            if _G._persTable.enabled[k] == nil then
+                self.fishableObjects[k].enabled = true;
+            else
+                self.fishableObjects[k].enabled = _G._persTable.enabled[k];
+            end
         end
         
-        --- Takes the sewer swarms from the data file
-        -- @param swarms The swarms
-        function sewer(swarms) 
-            self.swarmsSewer = swarms;
-        end
-        
-        if dataFile ~= nil then
-            dofile(dataFile);
-        end
-        
-        addedHeights = 600; -- Start at 600 to create swarms for now
+        -- Start at the lower 75% of the screen to create swarms
+        addedHeights = self.levMan:getCurLevel().winDim[2] *0.75;
         while addedHeights <= -self.maxDepth do
             addedHeights = addedHeights + self:createNextSwarm(addedHeights);
         end
     end;
     
-    level = nil;
-    player = nil;
-    
-    maxDepth = -5000;
-    
-    fishableObjects = {};
+    levMan = nil;        
+    maxDepth = -5000;    
     currentSwarm = 1;
-
-    swarmsSewer = {};
-
     createdFishables = {};
 };
 
@@ -106,6 +93,12 @@ end
 -- @return Returns the table of the fishable objects.
 function SwarmFactory:getFishableObjects()
     return self.fishableObjects;
+end
+
+--- Returns the created fishable objects.
+-- @return Returns the table of created fishable objects.
+function SwarmFactory:getCreatedFishables()
+    return self.createdFishables;
 end
 
 return SwarmFactory;
