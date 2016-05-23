@@ -28,6 +28,7 @@ local levMan;
 -- This function is called exactly once at the beginning of the game.
 function love.load()
     _persistence = Persistence();
+    _persistence:resetGame();
     _gui = Gui();
     local _, _, flags = love.window.getMode();
     love.graphics.setBackgroundColor(30, 180, 240);
