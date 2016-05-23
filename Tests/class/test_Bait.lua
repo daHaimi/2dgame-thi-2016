@@ -63,7 +63,7 @@ describe("Unit test for Bait.lua", function()
                 };
             };
         };
-        
+        _G._gui.getFrames = function(...) return _G._gui.myFrames; end;
         locInstance = testClass(locWinDim, levMan);
     end)
 
