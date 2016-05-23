@@ -51,15 +51,15 @@ function Pause:create()
     
     --onclick events for all buttons
     self.elementsOnFrame.button_backToGame.object.OnClick = function(object)
-        _gui:changeFrame(_gui.myFrames.inGame);
+        _gui:changeFrame(_gui:getFrames().inGame);
     end
     
     self.elementsOnFrame.button_backToMenu.object.OnClick = function(object)
-        _gui:changeFrame(_gui.myFrames.mainMenu);
+        _gui:changeFrame(_gui:getFrames().mainMenu);
     end
     
     self.elementsOnFrame.button_options.object.OnClick = function(object)
-        _gui:changeFrame(_gui.myFrames.options);
+        _gui:changeFrame(_gui:getFrames().options);
     end
 end
 

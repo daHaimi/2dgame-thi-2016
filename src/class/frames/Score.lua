@@ -43,11 +43,11 @@ function Score:create()
     
     --onclick events for all buttons
     self.elementsOnFrame.button_retry.object.OnClick = function(object)
-        _gui:changeFrame(_gui.myFrames.inGame);
+        _gui:changeFrame(_gui:getFrames().inGame);
     end
     
     self.elementsOnFrame.button_backToMenu.object.OnClick = function(object)
-        _gui:changeFrame(_gui.myFrames.mainMenu);
+        _gui:changeFrame(_gui:getFrames().mainMenu);
     end
 end
 

@@ -38,13 +38,13 @@ describe("Unit test for Chart.lua", function()
         
         locInstance.toprow = 0;
         locInstance:scrollUp();
-        assert.are.equal(locInstance.toprow, 0);
+        assert.are.equal(locInstance.p_toprow, 0);
         assert.spy(locInstance.drawChart).was_not_called();
         assert.spy(locInstance.resetMarkedFrame).was_not_called();
         
-        locInstance.toprow = 2;
+        locInstance.p_toprow = 2;
         locInstance:scrollUp();
-        assert.are.equal(locInstance.toprow, 1);
+        assert.are.equal(locInstance.p_toprow, 1);
         assert.spy(locInstance.drawChart).was_called(1);
         assert.spy(locInstance.resetMarkedFrame).was_called(1);
     end)
@@ -53,25 +53,25 @@ describe("Unit test for Chart.lua", function()
         local a = spy.on(locInstance, "drawChart");
         local b = spy.on(locInstance, "resetMarkedFrame");
         
-        locInstance.row = 2
-        locInstance.toprow = 0;
+        locInstance.p_row = 2
+        locInstance.p_toprow = 0;
         locInstance:scrollDown();
-        assert.are.equal(locInstance.toprow, 0);
+        assert.are.equal(locInstance.p_toprow, 0);
         assert.spy(locInstance.drawChart).was_not_called();
         assert.spy(locInstance.resetMarkedFrame).was_not_called();
         
-        locInstance.row = 4
-        locInstance.toprow = 0;
+        locInstance.p_row = 4
+        locInstance.p_toprow = 0;
         locInstance:scrollDown();
-        assert.are.equal(locInstance.toprow, 1);
+        assert.are.equal(locInstance.p_toprow, 1);
         assert.spy(locInstance.drawChart).was_called(1);
         assert.spy(locInstance.resetMarkedFrame).was_called(1);
     end)
     
     it("Testing resetTopRow function", function()
-        locInstance.toprow = 5;
+        locInstance.p_toprow = 5;
         locInstance:resetTopRow();
-        assert.are.equal(locInstance.toprow, 0);
+        assert.are.equal(locInstance.p_toprow, 0);
     end)
 
     it("Testing resetMarkedFrame function", function()

@@ -37,20 +37,20 @@ describe("Unit test for Frame.lua", function()
     end)
 
     it("DefaultOffset has to be a multiple of moveSpeed", function()
-        assert.are.equal((locInstance.xDefaultOffset) % (locInstance.moveSpeed), 0);
-        assert.are.equal((locInstance.yDefaultOffset) % (locInstance.moveSpeed), 0);
+        assert.are.equal((locInstance.p_xDefaultOffset) % (locInstance.p_moveSpeed), 0);
+        assert.are.equal((locInstance.p_yDefaultOffset) % (locInstance.p_moveSpeed), 0);
     end)
     
     
     it("Testing clear function", function()
-        locInstance.xOffset = nil;
-        locInstance.yOffset = nil;
+        locInstance.p_xOffset = nil;
+        locInstance.p_yOffset = nil;
         locInstance:clear(locElements);
         assert.are.equal(locElements[1].object.visible, false);
         assert.are.equal(locElements[2].object.visible, false);
         assert.are.equal(locElements[3].object.visible, false);
-        assert.are.equal(locInstance.xOffset, locInstance.xDefaultOffset);
-        assert.are.equal(locInstance.yOffset, locInstance.yDefaultOffset);
+        assert.are.equal(locInstance.p_xOffset, locInstance.p_xDefaultOffset);
+        assert.are.equal(locInstance.p_yOffset, locInstance.p_yDefaultOffset);
     end)
 
     it("Testing draw function", function()
@@ -66,67 +66,67 @@ describe("Unit test for Frame.lua", function()
         assert.are.equal(locElements[2].object.visible, true);
         assert.are.equal(locElements[3].object.visible, true);
 
-        assert.are.equal(locElements[1].object.xPos, locElements[1].x + locInstance.xPos + locInstance.xOffset);
+        assert.are.equal(locElements[1].object.xPos, locElements[1].x + locInstance.p_xPos + locInstance.p_xOffset);
         
-        assert.are.equal(locElements[1].object.yPos, locElements[1].y + locInstance.yPos + locInstance.yOffset);
-        assert.are.equal(locElements[2].object.xPos, locElements[2].x + locInstance.xPos + locInstance.xOffset);
-        assert.are.equal(locElements[2].object.yPos, locElements[2].y + locInstance.yPos + locInstance.yOffset);
-        assert.are.equal(locElements[3].object.xPos, locElements[3].x + locInstance.xPos + locInstance.xOffset);
-        assert.are.equal(locElements[3].object.yPos, locElements[3].y + locInstance.yPos + locInstance.yOffset);
+        assert.are.equal(locElements[1].object.yPos, locElements[1].y + locInstance.p_yPos + locInstance.p_yOffset);
+        assert.are.equal(locElements[2].object.xPos, locElements[2].x + locInstance.p_xPos + locInstance.p_xOffset);
+        assert.are.equal(locElements[2].object.yPos, locElements[2].y + locInstance.p_yPos + locInstance.p_yOffset);
+        assert.are.equal(locElements[3].object.xPos, locElements[3].x + locInstance.p_xPos + locInstance.p_xOffset);
+        assert.are.equal(locElements[3].object.yPos, locElements[3].y + locInstance.p_yPos + locInstance.p_yOffset);
     end)
 
     it("Testing appear function", function()
-        locInstance.yOffset = 100;
-        locInstance.moveInDirection = "up";
+        locInstance.p_yOffset = 100;
+        locInstance.p_moveInDirection = "up";
         locInstance:appear(locElements);
-        assert.are.equal(locInstance.yOffset, 100 - locInstance.moveSpeed);
+        assert.are.equal(locInstance.p_yOffset, 100 - locInstance.p_moveSpeed);
 
-        locInstance.yOffset = 100;
-        locInstance.moveInDirection = "down";
+        locInstance.p_yOffset = 100;
+        locInstance.p_moveInDirection = "down";
         locInstance:appear(locElements);
-        assert.are.equal(locInstance.yOffset, 100 + locInstance.moveSpeed);
+        assert.are.equal(locInstance.p_yOffset, 100 + locInstance.p_moveSpeed);
         
-        locInstance.xOffset = 100;
-        locInstance.moveInDirection = "left";
+        locInstance.p_xOffset = 100;
+        locInstance.p_moveInDirection = "left";
         locInstance:appear(locElements);
-        assert.are.equal(locInstance.xOffset, 100 - locInstance.moveSpeed);
+        assert.are.equal(locInstance.p_xOffset, 100 - locInstance.p_moveSpeed);
         
-        locInstance.xOffset = 100;
-        locInstance.moveInDirection = "right";
+        locInstance.p_xOffset = 100;
+        locInstance.p_moveInDirection = "right";
         locInstance:appear(locElements);
-        assert.are.equal(locInstance.xOffset, 100 + locInstance.moveSpeed);
+        assert.are.equal(locInstance.p_xOffset, 100 + locInstance.p_moveSpeed);
         
     end)
     
     it("Testing disappear function", function()
-        locInstance.yOffset = 100;
-        locInstance.moveOutDirection = "up";
+        locInstance.p_yOffset = 100;
+        locInstance.p_moveOutDirection = "up";
         locInstance:disappear(locElements);
-        assert.are.equal(locInstance.yOffset, 100 - locInstance.moveSpeed);
+        assert.are.equal(locInstance.p_yOffset, 100 - locInstance.p_moveSpeed);
 
-        locInstance.yOffset = 100;
-        locInstance.moveOutDirection = "down";
+        locInstance.p_yOffset = 100;
+        locInstance.p_moveOutDirection = "down";
         locInstance:disappear(locElements);
-        assert.are.equal(locInstance.yOffset, 100 + locInstance.moveSpeed);
+        assert.are.equal(locInstance.p_yOffset, 100 + locInstance.p_moveSpeed);
         
-        locInstance.xOffset = 100;
-        locInstance.moveOutDirection = "left";
+        locInstance.p_xOffset = 100;
+        locInstance.p_moveOutDirection = "left";
         locInstance:disappear(locElements);
-        assert.are.equal(locInstance.xOffset, 100 - locInstance.moveSpeed);
+        assert.are.equal(locInstance.p_xOffset, 100 - locInstance.p_moveSpeed);
         
-        locInstance.xOffset = 100;
-        locInstance.moveOutDirection = "right";
+        locInstance.p_xOffset = 100;
+        locInstance.p_moveOutDirection = "right";
         locInstance:disappear(locElements);
-        assert.are.equal(locInstance.xOffset, 100 + locInstance.moveSpeed);
+        assert.are.equal(locInstance.p_xOffset, 100 + locInstance.p_moveSpeed);
         
     end)
     
     it("Testing checkPosition function", function()
-        locInstance.xOffset = 1;
-        locInstance.yOffset = 1;
+        locInstance.p_xOffset = 1;
+        locInstance.p_yOffset = 1;
         assert.are.equal(locInstance:checkPosition(), false);
-        locInstance.xOffset = 0;
-        locInstance.yOffset = 0;
+        locInstance.p_xOffset = 0;
+        locInstance.p_yOffset = 0;
         assert.are.equal(locInstance:checkPosition(), true);
     end)
 end)

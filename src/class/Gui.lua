@@ -14,7 +14,7 @@ InGame = require "class.frames.inGame";
 
 local Gui = Class {
     init = function(self)
-        self.myFrames = {
+        self.p_myFrames = {
             achievements = Achievements();
             mainMenu = Mainmenu();
             options = Options();
@@ -35,11 +35,15 @@ local Gui = Class {
     end;
 };
 
+function Gui:getFrames()
+    return self.p_myFrames;
+end
+
 ---called in the load function
 ---clears all frames and starts at the main menu
 function Gui:start()
     self:clearAll();
-    self:changeFrame(self.myFrames.mainMenu);
+    self:changeFrame(self.p_myFrames.mainMenu);
 end
 
 ---called to draw a new frame
@@ -82,7 +86,7 @@ end
 
 ---set the visible of all frames to false
 function Gui:clearAll()
-    for k, v in pairs(self.myFrames) do
+    for k, v in pairs(self.p_myFrames) do
         v:clear(false);
     end
 end
@@ -90,7 +94,7 @@ end
 ---checking the gui state and return a boolean
 function Gui:drawGame()
     --returns "true" in the InGame-state
-    if self.p_states.currentState ~= self.myFrames.inGame then
+    if self.p_states.currentState ~= self.p_myFrames.inGame then
         return false;
     else
         return true;
@@ -100,7 +104,7 @@ end
 ---print the state-name and values
 function Gui:tempDrawText()
     love.graphics.print(self.p_states.currentState.name, 0, 0);
-    if self.p_states.currentState == self.myFrames.mainMenu then
+    if self.p_states.currentState == self.p_myFrames.mainMenu then
         self:tempTextOutput();
         love.graphics.print(self.p_textOutput, 0, 20);
     end

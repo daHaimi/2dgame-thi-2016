@@ -71,7 +71,7 @@ function Persistence:createPersTable()
     _G._persTable.upgrades = {
         speedUp = 0; -- "0" no Speedup for more looke bait.lua
         moneyMult = 0; -- "0" means no additional money
-        moreLife = 0; -- amount of additional lifes
+        moreLife = 2; -- amount of additional lifes
         godMode = 1; -- indicates if the god mode is available or not
         mapBreakthrough1 = 0; -- can you access the first map limit? 0 = no, 1 = yes
         mapBreakthrough2 = 0; -- can you access the second map limit? 0 = no, 1 = yes

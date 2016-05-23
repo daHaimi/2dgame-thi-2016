@@ -48,6 +48,7 @@ function UpgradeMenu:create()
     self.elementsOnFrame.button_back.object:SetText("Back");
     
     self:addAllUpgrades();
+    self:loadValuesFromPersTable();
     
     --load values out of persTable into the chart
     --convert 0, 1 or more in to boolean. A 2 equals multiply checkboxes
@@ -107,12 +108,12 @@ function UpgradeMenu:create()
             _persTable.upgrades.mapBreakthrough2 = 1;
         end]]--
         _gui:tempTextOutput();
-        _gui:changeFrame(_gui.myFrames.mainMenu);
+        _gui:changeFrame(_gui:getFrames().mainMenu);
     end
     
     self.elementsOnFrame.button_buy.object.OnClick = function(object)
-        if self.elementsOnFrame.chart.object.markedElement ~= nil then
-            self.elementsOnFrame.chart.object.markedElement:disable();
+        if self.elementsOnFrame.chart.object:getMarkedElement() ~= nil then
+            self.elementsOnFrame.chart.object:getMarkedElement():disable();
         end
     end
     
@@ -121,7 +122,8 @@ end
 --add all upgrades written in the data.lua into the chart and adds an OnClick event
 function UpgradeMenu:addAllUpgrades()
     for k, v in pairs(_G.data.upgrades) do
-        local newKlickableElement = KlickableElement(v.name, v.image, v.image_disable, v.description, v.price, v.nameInPersTable);
+        local newKlickableElement = KlickableElement(v.name, v.image, v.image_disable,
+            v.description, v.price, v.nameOnPersTable);
         newKlickableElement.object.OnClick = function(object)
             self.elementsOnFrame.chart.object:markElement(newKlickableElement);
         end
@@ -131,8 +133,6 @@ end
 
 
 function UpgradeMenu:loadValuesFromPersTable()
-    
-    
     
 end
 

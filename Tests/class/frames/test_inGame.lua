@@ -35,7 +35,7 @@ describe("Unit test for inGame.lua", function()
             };
             getLastState = function(...) return _G._gui.myFrames.pause; end;
         };
-        
+        _gui.getFrames = function(...) return _G._gui.myFrames; end;
         stub(locInstance.frame, "draw");
         locInstance:draw();
         assert.stub(locInstance.frame.draw).was_called(1);

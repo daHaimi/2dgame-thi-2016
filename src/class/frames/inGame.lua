@@ -32,14 +32,14 @@ function InGame:create()
     
     --onclick events for all buttons
     self.elementsOnFrame.button_pause.object.OnClick = function(object)
-        _gui:changeFrame(_gui.myFrames.pause);
+        _gui:changeFrame(_gui:getFrames().pause);
     end
 end
 
 ---shows the elements on screen
 function InGame:draw()
     --the healthbar does not reset after the pause state
-    if _gui:getLastState() ~= _gui.myFrames.pause then
+    if _gui:getLastState() ~= _gui:getFrames().pause then
         self.elementsOnFrame.healthbar.object = Healthbar();
     end
     self.frame:draw(self.elementsOnFrame);

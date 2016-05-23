@@ -89,27 +89,27 @@ function MainMenu:create()
     
     --onclick events for all buttons
     self.elementsOnFrame.button_start.object.OnClick = function(object)
-        _gui:changeFrame(_gui.myFrames.level);
+        _gui:changeFrame(_gui:getFrames().level);
     end
     
     self.elementsOnFrame.button_upgradeMenu.object.OnClick = function(object)
-        _gui:changeFrame(_gui.myFrames.upgradeMenu);
+        _gui:changeFrame(_gui:getFrames().upgradeMenu);
     end
     
     self.elementsOnFrame.button_dictionary.object.OnClick = function(object)
-        _gui:changeFrame(_gui.myFrames.dictionary);
+        _gui:changeFrame(_gui:getFrames().dictionary);
     end
     
     self.elementsOnFrame.button_achievements.object.OnClick = function(object)
-        _gui:changeFrame(_gui.myFrames.achievements);
+        _gui:changeFrame(_gui:getFrames().achievements);
     end
     
     self.elementsOnFrame.button_options.object.OnClick = function(object)
-        _gui:changeFrame(_gui.myFrames.options);
+        _gui:changeFrame(_gui:getFrames().options);
     end
     
     self.elementsOnFrame.button_credits.object.OnClick = function(object)
-        _gui:changeFrame(_gui.myFrames.credits);
+        _gui:changeFrame(_gui:getFrames().credits);
     end
     
     self.elementsOnFrame.button_close.object.OnClick = function(object)

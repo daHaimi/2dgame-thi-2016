@@ -43,14 +43,14 @@ function Achievements:create()
     
     --onclick events for all buttons
     self.elementsOnFrame.button_back.object.OnClick = function(object)
-        _gui:changeFrame(_gui.myFrames.mainMenu);
+        _gui:changeFrame(_gui:getFrames().mainMenu);
     end
 end
 
 --add all achievements written in the data.lua into the chart and adds an OnClick event
 function Achievements:addAllAchievements()
     for k, v in pairs(_G.data.achievements) do
-        local newKlickableElement = KlickableElement(v.name, v.image_lock, v.image_unlock, v.description, nil, v.nameInPersTable);
+        local newKlickableElement = KlickableElement(v.name, v.image_lock, v.image_unlock, v.description, nil, v.nameOnPersTable);
         newKlickableElement.object.OnClick = function(object)
             self.elementsOnFrame.chart.object:markElement(newKlickableElement);
         end
@@ -59,8 +59,8 @@ function Achievements:addAllAchievements()
 end
 
 function Achievements:loadValuesFromPersTable()
-    for k, v in pairs(self.elementsOnFrame.chart.object.elementsOnChart) do
-        local elementName = v.nameInPersTable;
+    for k, v in pairs(self.elementsOnFrame.chart.object:getAllElements()) do
+        local elementName = v.nameOnPersTable;
         if _G._persTable.achievements[elementName] then
             if _G._persTable.achievements[elementName] == true then
                 v:disable();

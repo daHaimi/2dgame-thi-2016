@@ -60,19 +60,19 @@ function Level:create()
     
     --onclick events for all buttons
     self.elementsOnFrame.button_level1.object.OnClick = function(object)
-        _gui:changeFrame(_gui.myFrames.inGame);
+        _gui:changeFrame(_gui:getFrames().inGame);
     end
     
     self.elementsOnFrame.button_level2.object.OnClick = function(object)
-        _gui:changeFrame(_gui.myFrames.inGame);
+        _gui:changeFrame(_gui:getFrames().inGame);
     end
     
     self.elementsOnFrame.button_level3.object.OnClick = function(object)
-        _gui:changeFrame(_gui.myFrames.inGame);
+        _gui:changeFrame(_gui:getFrames().inGame);
     end
     
     self.elementsOnFrame.button_back.object.OnClick = function(object)
-        _gui:changeFrame(_gui.myFrames.mainMenu);
+        _gui:changeFrame(_gui:getFrames().mainMenu);
     end
 end
 

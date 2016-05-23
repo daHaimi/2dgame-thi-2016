@@ -340,7 +340,7 @@ return {
     --- Date for all upgrades
     upgrades = {
         oneMoreLife = {
-            nameInPersTable = "moreLife";
+            nameOnPersTable = "moreLife";
             name = "One more life";
             description = "add one more life to your healthbar.";
             price = 100;
@@ -348,7 +348,7 @@ return {
             image_disable = "assets/gui/gui_Test_klickableElement_disable.png";
         },
         twoMoreLife = {
-            nameInPersTable = "moreLife";
+            nameOnPersTable = "moreLife";
             name = "Two more life";
             description = "add a third life to your healthbar.";
             price = 200;
@@ -356,7 +356,7 @@ return {
             image_disable = "assets/gui/gui_Test_klickableElement_disable.png";
         },
         threeMoreLife = {
-            nameInPersTable = "moreLife";
+            nameOnPersTable = "moreLife";
             name = "Three more life";
             description = "upgrade your healthbar up to four lifes.";
             price = 300;
@@ -367,14 +367,14 @@ return {
     
     achievements = {
         getFirtsObject = {
-            nameInPersTable = "getFirstObject";
+            nameOnPersTable = "getFirstObject";
             name = "First object";
             description = "You caught your first object";
             image_lock = "assets/gui/gui_Test_klickableElement_disable.png";
             image_unlock = "assets/gui/gui_Test_klickableElement.png";
         },
         getSecondObject = {
-            nameInPersTable = "getSecondObject";
+            nameOnPersTable = "getSecondObject";
             name = "Second object";
             description = "You caught your second object";
             image_lock = "assets/gui/gui_Test_klickableElement_disable.png";

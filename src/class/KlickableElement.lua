@@ -2,13 +2,13 @@
 Class = require "lib.hump.class";
 
 local KlickableElement = Class {
-    init = function(self, name, imagepath, imagepath_disable, description, price, nameInPersTable)
+    init = function(self, name, imagepath, imagepath_disable, description, price, nameOnPersTable)
         self.name = name;
         self.enable = true;
         self.imagepath = imagepath;
         self.imagepath_disable = imagepath_disable;
         self.price = price;
-        self.nameInPersTable = nameInPersTable;
+        self.nameOnPersTable = nameOnPersTable;
         self.description = description;
         self.object = Loveframes.Create("imagebutton");
         self.object:SetImage(self.imagepath);
@@ -34,8 +34,8 @@ end
 function KlickableElement:disable()
     self.enable = false;
     self.object:SetImage(self.imagepath_disable);
-    if self.nameInPersTable ~= nil then
-        _persTable.upgrades[self.nameInPersTable] = 1;
+    if self.nameOnPersTable ~= nil then
+        _persTable.upgrades[self.nameOnPersTable] = 1;
     end
 end
 

@@ -33,7 +33,7 @@ function Credits:create()
 
     --onclick events for all buttons
     self.elementsOnFrame.button_back.object.OnClick = function(object)
-        _gui:changeFrame(_gui.myFrames.mainMenu);
+        _gui:changeFrame(_gui:getFrames().mainMenu);
     end
 end
 

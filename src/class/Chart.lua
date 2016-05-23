@@ -4,18 +4,29 @@ TextField = require "class.TextField";
 
 local Chart = Class {
     init = function(self)
-        self.column = 3;--amount of the columns of the table
-        self.row = 0;--automatically calculated value of the amount of rows in the table
-        self.toprow = 0;--top visible row. needed to scroll up and down
-        self.xPos = 0;
-        self.yPos = 0;
+        self.p_column = 3;--amount of the columns of the table
+        self.p_row = 0;--automatically calculated value of the amount of rows in the table
+        self.p_toprow = 0;--top visible row. needed to scroll up and down
+        self.p_xPos = 0;
+        self.p_yPos = 0;
         
-        self.elementsOnChart = {};--elements in the table
-        self.markedElement = nil;
+        self.p_elementsOnChart = {};--elements in the table
+        self.p_markedElement = nil;
         
         self:create();
     end;
 };
+
+---Getter of all Elements
+function Chart:getAllElements()
+    return self.p_elementsOnChart;
+end
+
+
+---Getter of the marked Element
+function Chart:getMarkedElement()
+    return self.p_markedElement;
+end
 
 ---function called in the constructor of this class. creates backround and buttons
 function Chart:create()
@@ -47,8 +58,8 @@ end
 
 ---called to scroll the table up
 function Chart:scrollUp()
-    if (self.toprow > 0) then
-        self.toprow = self.toprow - 1;
+    if (self.p_toprow > 0) then
+        self.p_toprow = self.p_toprow - 1;
         self:drawChart(true);
         self:resetMarkedFrame();
     end
@@ -56,8 +67,8 @@ end
 
 ---called to scroll the table down
 function Chart:scrollDown()
-    if self.toprow + 3 < self.row then
-        self.toprow = self.toprow + 1;
+    if self.p_toprow + 3 < self.p_row then
+        self.p_toprow = self.p_toprow + 1;
         self:drawChart(true);
         self:resetMarkedFrame();
     end
@@ -65,7 +76,7 @@ end
 
 ---resets the top row. called at the back button to reset the table for the next shop visit
 function Chart:resetTopRow()
-    self.toprow = 0;
+    self.p_toprow = 0;
 end
 
 ---reset the markedFrame visible to false
@@ -76,13 +87,13 @@ end
 ---draws the elements shown in the table
 function Chart:drawChart(visible)
     --clear
-    for k, v in pairs(self.elementsOnChart) do
+    for k, v in pairs(self.p_elementsOnChart) do
         v:SetVisible(false);
     end
     --draw new elements
-    for var1 = 1 + (self.row * self.toprow - 1), 9 + (self.row * self.toprow) do
-        if self.elementsOnChart[var1] ~= nil then
-            self.elementsOnChart[var1]:SetVisible(visible);
+    for var1 = 1 + (self.p_row * self.p_toprow - 1), 9 + (self.p_row * self.p_toprow) do
+        if self.p_elementsOnChart[var1] ~= nil then
+            self.p_elementsOnChart[var1]:SetVisible(visible);
         end
     end
     self:setPosOfKlickableElements()
@@ -90,22 +101,22 @@ end
 
 ---set the position of all elements in the table
 function Chart:setPosOfKlickableElements()
-    local row = 0;
-    for var1 = 1, self.row do
-        for var2 = 1, self.column do
-            if self.elementsOnChart[var2 + row * self.column] ~= nil then
-                self.elementsOnChart[var2 + row * self.column]:SetPos(self.xPos + 64 * (var2 - 1), (self.yPos + 32 + 64 * row) - 64 * self.toprow);
+    local p_row = 0;
+    for var1 = 1, self.p_row do
+        for var2 = 1, self.p_column do
+            if self.p_elementsOnChart[var2 + p_row * self.p_column] ~= nil then
+                self.p_elementsOnChart[var2 + p_row * self.p_column]:SetPos(self.p_xPos + 64 * (var2 - 1), (self.p_yPos + 32 + 64 * p_row) - 64 * self.p_toprow);
             end
         end
-        row = row + 1;
+        p_row = p_row + 1;
     end
 end
 
 ---add a new klickable element the the table
 -- @parm newKlickableElement: object of the new klickable element
 function Chart:addKlickableElement(newKlickableElement)
-    table.insert(self.elementsOnChart, newKlickableElement);
-    self.row = math.ceil(table.getn(self.elementsOnChart) / self.column);
+    table.insert(self.p_elementsOnChart, newKlickableElement);
+    self.p_row = math.ceil(table.getn(self.p_elementsOnChart) / self.p_column);
 end
 
 ---Function not conform to CC/ implements an interface
@@ -118,7 +129,7 @@ function Chart:SetVisible(visible)
     if visible then
         self:drawChart(visible);
     else
-        for k, v in pairs(self.elementsOnChart) do
+        for k, v in pairs(self.p_elementsOnChart) do
             v:SetVisible(visible);
         end
     end
@@ -130,14 +141,14 @@ end
 -- @parm x: x axis position
 -- @parm y: y axis position
 function Chart:SetPos(x, y)
-    self.xPos = x;
-    self.yPos = y;
+    self.p_xPos = x;
+    self.p_yPos = y;
     self.button_up:SetPos(x, y);
     self.button_down:SetPos(x, y + 224);
     self:setPosOfKlickableElements();
     self.textField:SetPos(x, y + 256);
-    if self.markedElement ~= nil then
-        self.markFrame:SetPos(self.markedElement.object:GetX(), self.markedElement.object:GetY());
+    if self.p_markedElement ~= nil then
+        self.markFrame:SetPos(self.p_markedElement.object:GetX(), self.p_markedElement.object:GetY());
     end
 end
 
@@ -148,7 +159,7 @@ function Chart:markElement(element)
     self.markFrame:SetPos(x, y);
     self.markFrame:SetVisible(true);
     self.markFrame:MoveToTop();
-    self.markedElement = element;
+    self.p_markedElement = element;
     self.textField:changeText(element.name, element.description);
 end
 
