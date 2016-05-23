@@ -16,6 +16,10 @@ _G.math.inf = 1 / 0;
 _G._gui = nil;
 _G._persistence = nil;
 
+-- loads all functions from util to the global space
+for k,v in pairs(require "util") do
+  _G[k] = v;
+end
 
 --- Local variables
 local curLevel;
@@ -65,6 +69,7 @@ function love.update(dt)
     Loveframes.update(dt);
     if _gui:drawGame() then
         -- updates the curLevel only in the InGame GUI
+        setMouseVisibility(levMan:getCurLevel());
         levMan:getCurLevel():update(dt, levMan:getCurPlayer());
         levMan:getCurSwarmFactory():update();
     end
@@ -101,7 +106,15 @@ function love.mousepressed(x, y, button)
     Loveframes.mousepressed(x, y, button);
 
     -- activate the god mode when you press the mouse
-    levMan:getCurLevel():activateGodMode();
+    if love.mouse.isDown(1) then
+      levMan:getCurLevel():activateGodMode();
+    end
+    
+    -- pause game when when mouse is pressed (right button)
+    if love.mouse.isDown(2) and _gui:drawGame() then
+      _gui:changeFrame(_gui.myFrames.pause)
+      setMouseVisibility(levMan:getCurLevel());
+    end
 end
 
 --- Callback function triggered wehen the mouse is released.
