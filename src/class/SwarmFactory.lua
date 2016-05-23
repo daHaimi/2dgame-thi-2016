@@ -29,9 +29,10 @@ local SwarmFactory = Class {
         end
     end;
     
-    levMan = nil;        
-    maxDepth = -5000;    
+    levMan = nil;
+    maxDepth = -5000;
     currentSwarm = 1;
+    fishableObjects = {};
     createdFishables = {};
 };
 
@@ -51,6 +52,7 @@ end
 
 --- Creates the next swarm
 -- @param startPosY Start y position of the swarm
+-- @return Returns a random value.
 function SwarmFactory:createNextSwarm(startPosY)
     if self.swarmsSewer[self.currentSwarm].maxSwarmHeight < startPosY then
         self.currentSwarm = self.currentSwarm + 1;
@@ -68,7 +70,7 @@ function SwarmFactory:createNextSwarm(startPosY)
             yPos, fishable.minSpeed, fishable.maxSpeed, fishable.value, fishable.hitpoints, fishable.spriteSize, fishable.hitbox);
     end
     
-    return math.random (fishable.swarmHeight * 0.9 , fishable.swarmHeight); -- to enable 2 swarms to overlap
+    return math.random(fishable.swarmHeight * 0.9 , fishable.swarmHeight); -- to enable 2 swarms to overlap
 end
 
 --- Determines the next fishable to create
