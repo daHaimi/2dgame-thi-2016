@@ -5,8 +5,6 @@ Level = require "class.Level";
 SwarmFactory = require "class.SwarmFactory";
 Loveframes = require "lib.LoveFrames";
 Gui = require "class.Gui";
-require('lib/postshader');
-require('lib/light');
 
 -- Global variables
 _G.math.inf = 1 / 0;

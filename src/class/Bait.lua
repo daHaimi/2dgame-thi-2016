@@ -1,6 +1,7 @@
 Class = require "lib.hump.class";
 CollisionDetection = require "class.CollisionDetection";
 Level = require "class.Level";
+Shaders = require "class.Shaders";
 
 --- Class for the Bait swimming for Phase 1 and 2
 -- @param winDim window Size
@@ -11,7 +12,6 @@ local Bait = Class {
         self.posXBait = (winDim[1] / 2) - (self.size / 2);
         self.curLevel = level;
         -- local yPos = (self.winDim[2] / 2) - (self.size / 2); -- unused local
-        self.shader = love.graphics.newShader("shader/test.glsl")
         self.image = love.graphics.newImage("assets/hamster_hooker.png");
     end;
     size = 10;
@@ -84,7 +84,8 @@ function Bait:collisionDetected(fishable, index)
         self:sleepingPillHitted(FishableObject);
         SwarmFactory.createdFishables[index].drawIt = false;
     else
-        if (self.numberOfHits >= _G._persTable.upgrades.moreLife and self.curLevel:getGodModeStat() == 0) or _G._persTable.phase == 2 then
+        local dead = self.numberOfHits >= _G._persTable.upgrades.moreLife and self.curLevel:getGodModeStat() == 0
+        if dead or _G._persTable.phase == 2 then
             SwarmFactory.createdFishables[index].drawIt = false;
             Level:switchToPhase2();
             Level:addToCaught(fishable.name);
@@ -107,13 +108,9 @@ end
 
 --- implements drawing interface
 function Bait:draw()
-    love.graphics.setColor(127, 0, 255);
-    self.shader:send("hue", math.random() * 2 * math.pi)
-    love.graphics.setShader(self.shader);
-    love.graphics.draw(self.image, self.xPos, self.yPos - 120); -- FIXME magic number
-    --love.graphics.rectangle("fill", self.xPos, self.yPos, self.size, self.size);
-    love.graphics.setShader();
-    love.postshader.addEffect("bloom");
+    --Shaders:addBlur(.6, .5);
+    love.graphics.draw(self.image, self.xPos, self.yPos - 120); -- FIXME magic number yOffset
+    Shaders:clear();
 end
 
 --- Determines the capped X position of the Bait (SpeedLimit)
