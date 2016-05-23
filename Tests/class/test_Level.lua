@@ -281,10 +281,12 @@ describe("Test unit test suite", function()
     end)
 
     it("Testing getTime()", function()
-        if os.date("%M") < "30" then
-            assert.are.same("day", locInstance:getTime());
-        else
-            assert.are.same("night", locInstance:getTime());
-        end 
+        _G.os.date = function(...) return "22" end;
+        local myInstance = testClass("assets/testbg.png", { 512, 256 }, 1);
+        assert.are.same("day", myInstance:getTime());
+            
+        _G.os.date = function(...) return "35" end;
+        local myInstance = testClass("assets/testbg.png", { 512, 256 }, 1);
+        assert.are.same("night", myInstance:getTime());
     end)
 end)
