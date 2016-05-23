@@ -9,4 +9,5 @@ luacov.*.out
 *.tap
 **/*.swp
 .idea/
-lib/
+lib/hump
+lib/LoveFrames

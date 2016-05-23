@@ -116,34 +116,42 @@ function FishableObject:update()
     end
 end
 
---- sets the xPosition
+--- Sets the xPosition
+-- @param xPosition The new x position
 function FishableObject:setXPosition(xPosition)
     self.xPosition = xPosition;
 end
 
---- returns the value of the object
+--- Returns the value of the fishable object
+-- @return Returns the value of the fishable object
 function FishableObject:getValue()
     return self.value;
 end
 
 --- returns the remaining hitpoints of the object
+-- @return Returns the remaining hitpoints of the object
 function FishableObject:getHitpoints()
     return self.hitpoints;
 end
 
---- returns width of the hitbox of the object
+--- Returns width of the hitbox of the fishable object
+-- @param i The index of the hitbox.
+-- @return Returns width of the hitbox of the fishablde object
 function FishableObject:getHitboxWidth(i)
     return self.hitbox[i].width;
 end
 
---- returns height of the hitbox of the object
+--- Returns height of the hitbox of the object
+-- @param i The index of the hitbox.
+-- @return Returns height of the hitbox of the object
 function FishableObject:getHitboxHeight(i)
     return self.hitbox[i].height;
 end
 
---- returns x position of the object
+--- Returns x position of the object.
+-- @param i The index of the hitbox.
+-- @return Returns x position of the object.
 function FishableObject:getHitboxXPosition(i)
-
     if self.speed < 0 then
         return self.xPosition + self.hitbox[i].deltaXPos;
     elseif self.speed == 0 then
@@ -153,21 +161,27 @@ function FishableObject:getHitboxXPosition(i)
     end
 end
 
---- returns y the position of the object
+--- Returns y the position of the object.
+-- @param i The index of the hitbox.
+-- @return Returns y the position of the object.
 function FishableObject:getHitboxYPosition(i)
     return self.yPosition + self.hitbox[i].deltaYPos;
 end
 
 --- sets the amount of pixls to move upwards to match the baits movement
+-- @param movement The movement in y direction.
 function FishableObject:setYMovement(movement)
     self.yMovement = movement;
 end
 
+--- Returns the movement.
+-- @return Returns the movement.
 function FishableObject:getYMovement()
     return self.yMovement;
 end
 
---- returns the name of the fishable object
+--- Returns the name of the fishable object.
+-- @return Returns the name of the fishable object.
 function FishableObject:getName()
     return self.name;
 end

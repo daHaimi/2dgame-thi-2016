@@ -20,7 +20,7 @@ describe("Unit test for Bait.lua", function()
         _G.levMan = {
             curLevel = locLevel,
             curPlayer = nil,
-            curSwarmFac = { 
+            curSwarmFac = {
             createdFishables = {
                     {
                         getHitboxHeight = function(...) return 10; end;
@@ -33,7 +33,8 @@ describe("Unit test for Bait.lua", function()
                         hitbox = {
                         };
                     }
-                };
+                },
+                getCreatedFishables = function(...) return _G.levMan.curSwarmFac.createdFishables end;
             },
             getCurSwarmFactory = function(...) return _G.levMan.curSwarmFac end,
             getCurPlayer = function(...) return _G.levMan.curPlayer end,
@@ -95,7 +96,8 @@ describe("Unit test for Bait.lua", function()
                         }
                     };
                 }
-            end;
+            end,            
+            getCreatedFishables = function(...) return myInstance.levMan.curLevel:getSwarmFactory().createdFishables end;
         }
         
         myInstance:update();

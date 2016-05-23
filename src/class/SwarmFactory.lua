@@ -95,4 +95,10 @@ function SwarmFactory:getFishableObjects()
     return self.fishableObjects;
 end
 
+--- Returns the created fishable objects.
+-- @return Returns the table of created fishable objects.
+function SwarmFactory:getCreatedFishables()
+    return self.createdFishables;
+end
+
 return SwarmFactory;

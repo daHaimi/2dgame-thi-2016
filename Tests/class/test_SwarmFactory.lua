@@ -93,4 +93,9 @@ describe("Unit test for SwarmFactory.lua", function()
         fishableRes = locInstance:determineFishable(allowedFishablesTest, fishablesProbabilityTest);
         assert.are_not.same(fishableRes, locInstance.fishableObjects["deadFish"])
     end)
+
+    it("Testing getCreatedFishables method", function()
+        locInstance.createdFishables = {"fish1", "fish2", "fish3"};
+        assert.are.same({"fish1", "fish2", "fish3"}, locInstance:getCreatedFishables());
+    end)
 end)
