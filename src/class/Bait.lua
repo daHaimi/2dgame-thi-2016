@@ -63,15 +63,15 @@ function Bait:update(dt)
     self:setCappedPosX();
     self.xPos = self.posXBait;
     self.deltaTime = dt;
-    self:checkForCollision(self.levMan:getCurSwarmFactory().createdFishables, oldXPos);
+    self:checkForCollision(self.levMan:getCurSwarmFactory():getCreatedFishables(), oldXPos);
     
     -- decrease or deativate sleeping pill
     if self.sleepingPillDuration > 0 then
         self.sleepingPillDuration = self.sleepingPillDuration - math.abs(self.levMan:getCurLevel():getMoved());
     else
         self.sleepingPillDuration = 0;
-        for i = 1, #self.levMan:getCurSwarmFactory().createdFishables, 1 do
-            self.levMan:getCurSwarmFactory().createdFishables[i]:setSpeedMultiplicator(1);
+        for i = 1, #self.levMan:getCurSwarmFactory():getCreatedFishables(), 1 do
+            self.levMan:getCurSwarmFactory():getCreatedFishables()[i]:setSpeedMultiplicator(1);
         end
     end
 end
@@ -124,7 +124,7 @@ function Bait:collisionDetected(fishable, index)
     -- sleeping Pill hitted
     if fishable:getName() == "sleepingPill" then
         self:sleepingPillHitted();
-        self.levMan:getCurSwarmFactory().createdFishables[index]:setToCaught();
+        self.levMan:getCurSwarmFactory():getCreatedFishables()[index]:setToCaught();
     -- other fishable object hitted and no godMode active
     elseif self.levMan:getCurLevel():getGodModeStat() == 0 then
         -- still lifes left
@@ -140,15 +140,15 @@ function Bait:collisionDetected(fishable, index)
     end
     -- while phase 2
     if self.levMan:getCurLevel():getDirection() == -1 and not fishable.caught then
-        self.levMan:getCurSwarmFactory().createdFishables[index]:setToCaught();
+        self.levMan:getCurSwarmFactory():getCreatedFishables()[index]:setToCaught();
         self.levMan:getCurLevel():addToCaught(fishable.name);
     end
 end
 
 --- is called everytime the bait hits a sleeping pill
 function Bait:sleepingPillHitted()
-    for i = 1, #self.levMan:getCurSwarmFactory().createdFishables, 1 do
-        self.levMan:getCurSwarmFactory().createdFishables[i]:
+    for i = 1, #self.levMan:getCurSwarmFactory():getCreatedFishables(), 1 do
+        self.levMan:getCurSwarmFactory():getCreatedFishables()[i]:
             setSpeedMultiplicator(_G._persTable.upgrades.sleepingPillSlow);
     end
     self.sleepingPillDuration = self.sleepingPillDuration + _G._persTable.upgrades.sleepingPillDuration;
