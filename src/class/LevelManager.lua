@@ -12,6 +12,23 @@ local LevelManager = Class {
     curLevel = nil;
     curPlayer = nil;
     curSwarmFac = nil;
+    p_LevelProperties = {
+        sewers = {
+            levelName = "sewers",
+            direction = 1,
+            bgPath = "Testpfad";
+        },
+        canyon = {
+            levelName = "canyon",
+            direction = 1,
+            bgPath = "Testpfad";
+        },
+        space = {
+            levelName = "space",
+            direction = -1,
+            bgPath = "Testpfad";
+        }
+    }
 }
 
 --- Create a new level object.

@@ -48,23 +48,23 @@ end
 -- @param dt Delta time is the amount of seconds since the last time this function was called.
 function Bait:update(dt)
     oldXPos = self.xPos;
-    
+
     -- calculate modifier for the golden rule
     if self.levMan:getCurLevel():getDirection() == 1 then
         self.modifier = self:changeModifierTo(self.goldenRuleLowerPoint);
-    elseif self.levMan:getCurLevel():getDirection() == -1 and 
-        self.levMan:getCurLevel():getYPos() < self.winDim[2] * self.goldenRuleLowerPoint then
+    elseif self.levMan:getCurLevel():getDirection() == -1 and
+            self.levMan:getCurLevel():getYPos() < self.winDim[2] * self.goldenRuleLowerPoint then
         self.modifier = self:changeModifierTo(self.goldenRuleUpperPoint);
     else
         self.modifier = self:changeModifierTo(0.5);
     end
-    
+
     self.yPos = (self.winDim[2] * self.modifier) - (self.size / 2);
     self:setCappedPosX();
     self.xPos = self.posXBait;
     self.deltaTime = dt;
     self:checkForCollision(self.levMan:getCurSwarmFactory().createdFishables, oldXPos);
-    
+
     -- decrease or deativate sleeping pill
     if self.sleepingPillDuration > 0 then
         self.sleepingPillDuration = self.sleepingPillDuration - math.abs(self.levMan:getCurLevel():getMoved());
@@ -87,6 +87,7 @@ function Bait:checkForCollision(createdFishables, oldXPos)
         end
     end
 end
+
 --- checks collision with one fishable object
 -- @param the fishable object
 -- @param oldXPos the x position of the bait before the update
@@ -103,7 +104,7 @@ function Bait:checkFishableForCollision(fishable, oldXPos, index)
         directionOfMovement = 1;
         oldXPos = oldXPos - 1;
     end
-    
+
     for i = oldXPos, self.xPos, directionOfMovement do
         for c = 1, #fishable.hitbox, 1 do
             CollisionDetection:setCollision();
@@ -125,7 +126,7 @@ function Bait:collisionDetected(fishable, index)
     if fishable:getName() == "sleepingPill" then
         self:sleepingPillHitted();
         self.levMan:getCurSwarmFactory().createdFishables[index]:setToCaught();
-    -- other fishable object hitted and no godMode active
+        -- other fishable object hitted and no godMode active
     elseif self.levMan:getCurLevel():getGodModeStat() == 0 then
         -- still lifes left
         if self.numberOfHits <= _G._persTable.upgrades.moreLife then
@@ -148,8 +149,7 @@ end
 --- is called everytime the bait hits a sleeping pill
 function Bait:sleepingPillHitted()
     for i = 1, #self.levMan:getCurSwarmFactory().createdFishables, 1 do
-        self.levMan:getCurSwarmFactory().createdFishables[i]:
-            setSpeedMultiplicator(_G._persTable.upgrades.sleepingPillSlow);
+        self.levMan:getCurSwarmFactory().createdFishables[i]:setSpeedMultiplicator(_G._persTable.upgrades.sleepingPillSlow);
     end
     self.sleepingPillDuration = self.sleepingPillDuration + _G._persTable.upgrades.sleepingPillDuration;
 end
@@ -181,20 +181,20 @@ function Bait:setCappedPosX()
 end
 
 --- changes the modifier of the height of the bait in small steps
---@param newModifier the modifier the bait is going to have
+-- @param newModifier the modifier the bait is going to have
 function Bait:changeModifierTo(newModifier)
     local result = newModifier;
     if self.modifier < newModifier then
-        if self.modifier > newModifier + math.abs(self.levMan:getCurLevel():getMoved()/self.winDim[2]) then
+        if self.modifier > newModifier + math.abs(self.levMan:getCurLevel():getMoved() / self.winDim[2]) then
             result = newModifier;
         else
-            result = self.modifier + math.abs(self.levMan:getCurLevel():getMoved()/self.winDim[2]);
+            result = self.modifier + math.abs(self.levMan:getCurLevel():getMoved() / self.winDim[2]);
         end
     elseif self.modifier > newModifier then
-        if self.modifier < newModifier + math.abs(self.levMan:getCurLevel():getMoved()/self.winDim[2]) then
+        if self.modifier < newModifier + math.abs(self.levMan:getCurLevel():getMoved() / self.winDim[2]) then
             result = newModifier;
         else
-            result = self.modifier - math.abs(self.levMan:getCurLevel():getMoved()/self.winDim[2]);
+            result = self.modifier - math.abs(self.levMan:getCurLevel():getMoved() / self.winDim[2]);
         end
     end
     return result
@@ -213,7 +213,7 @@ function Bait:getSize()
 end
 
 --- sets the x position of the mouse
---@param XPosMouse: x position the mouse position will be set to
+-- @param XPosMouse: x position the mouse position will be set to
 function Bait:setPosXMouse(XPosMouse)
     self.posXMouse = XPosMouse;
 end
