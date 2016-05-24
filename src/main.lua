@@ -7,7 +7,6 @@ Loveframes = require "lib.LoveFrames";
 Gui = require "class.Gui";
 LevelManager = require "class.LevelManager";
 Gamestate = require "lib.hump.gamestate";
-_G.data = require "data";
 Persistence = require"class.Persistence";
 require "lib.TEsound";
 
@@ -15,6 +14,9 @@ require "lib.TEsound";
 _G.math.inf = 1 / 0;
 _G._gui = nil;
 _G._persistence = nil;
+
+-- Game Title
+love.window.setTitle("Simon Hamsters insane trip");
 
 -- loads all functions from util to the global space
 for k,v in pairs(require "util") do
@@ -31,6 +33,7 @@ local levMan;
 --- The bootstrap of the game.
 -- This function is called exactly once at the beginning of the game.
 function love.load()
+    _G.data = require "data"; -- loading cycle on android requires data to be load on love.load()
     _persistence = Persistence();
     _persistence:resetGame();
     _gui = Gui();

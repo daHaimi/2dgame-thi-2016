@@ -58,10 +58,10 @@ function SwarmFactory:createNextSwarm(startPosY)
         self.currentSwarm = self.currentSwarm + 1;
     end
     
-    newSwarm = self.swarmsSewer[self.currentSwarm];
-    fishable = self:determineFishable(newSwarm.allowedFishables, newSwarm.fishablesProbability);
+    local newSwarm = self.swarmsSewer[self.currentSwarm];
+    local fishable = self:determineFishable(newSwarm.allowedFishables, newSwarm.fishablesProbability);
     
-    amountFishables = math.random(fishable.minAmount, fishable.maxAmount);
+    local amountFishables = math.random(fishable.minAmount, fishable.maxAmount);
  
     for i = 1, amountFishables, 1 do
         yPos = math.random(fishable.swarmHeight);
@@ -78,7 +78,7 @@ end
 -- @param fishablesProbability Creation probabilities for the fishables
 -- @return The fishable to create
 function SwarmFactory:determineFishable(allowedFishables, fishablesProbability)
-    fishableDecider = math.random(100);
+    local fishableDecider = math.random(100);
     
     for i = 1, #fishablesProbability, 1 do
         if fishablesProbability[i] >= fishableDecider then
