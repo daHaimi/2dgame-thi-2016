@@ -7,7 +7,6 @@ Loveframes = require "lib.LoveFrames";
 Gui = require "class.Gui";
 LevelManager = require "class.LevelManager";
 Gamestate = require "lib.hump.gamestate";
-_G.data = require "data";
 Persistence = require"class.Persistence";
 require "lib.TEsound";
 
@@ -31,6 +30,7 @@ local levMan;
 --- The bootstrap of the game.
 -- This function is called exactly once at the beginning of the game.
 function love.load()
+    _G.data = require "data"; -- loading cycle on android requires data to be load on love.load()
     _persistence = Persistence();
     _persistence:resetGame();
     _gui = Gui();

@@ -78,7 +78,7 @@ end
 -- @param fishablesProbability Creation probabilities for the fishables
 -- @return The fishable to create
 function SwarmFactory:determineFishable(allowedFishables, fishablesProbability)
-    fishableDecider = math.random(100);
+    local fishableDecider = math.random(100);
     
     for i = 1, #fishablesProbability, 1 do
         if fishablesProbability[i] >= fishableDecider then
