@@ -33,6 +33,8 @@ local Gui = Class {
         };
         self.p_textOutput = "";
     end;
+    
+    levMan = nil;
 };
 
 function Gui:getFrames()
@@ -128,6 +130,18 @@ function Gui:tempTextOutput()
         "Music =" .. tostring(_persTable.config.music).. "\n" ..
         "\n" ..
         "Money =" .. tostring(_persTable.money);
+end
+
+--- Returns the reference to the LevelManager object.
+-- @return Returns the reference to the LevelManager object.
+function Gui:getLevelManager()
+    return self.levMan;
+end
+
+--- Set the reference to the LevelManager object.
+-- @param levelManager The reference to the LevelManager object.
+function Gui:setLevelManager(levelManager)
+    self.levMan = levelManager;
 end
 
 return Gui;

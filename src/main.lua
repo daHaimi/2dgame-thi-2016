@@ -45,7 +45,7 @@ function love.load()
     love.window.setMode(_G._persTable.winDim[1], _G._persTable.winDim[2], { centered });
     levMan = LevelManager();
     levMan:newLevel(levMan:getLevelPropMapByName("sewers"), _G.data);
-
+    _gui:setLevelManager(levMan);
     _gui:tempTextOutput();
     _gui:start();
 end

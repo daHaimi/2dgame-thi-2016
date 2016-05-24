@@ -27,10 +27,15 @@ function Pause:create()
             x = 10;
             y = 50;
         };
-        button_options = {
+        button_restartLevel = {
             object = Loveframes.Create("imagebutton");
             x = 10;
             y = 90;
+        };        
+        button_options = {
+            object = Loveframes.Create("imagebutton");
+            x = 10;
+            y = 130;
         };
     };
     
@@ -45,6 +50,10 @@ function Pause:create()
     self.elementsOnFrame.button_backToMenu.object:SizeToImage()
     self.elementsOnFrame.button_backToMenu.object:SetText("Back to Menu");
     
+    self.elementsOnFrame.button_restartLevel.object:SetImage("assets/gui/gui_Test_Button.png")
+    self.elementsOnFrame.button_restartLevel.object:SizeToImage()
+    self.elementsOnFrame.button_restartLevel.object:SetText("Restart Level");
+    
     self.elementsOnFrame.button_options.object:SetImage("assets/gui/gui_Test_Button.png")
     self.elementsOnFrame.button_options.object:SizeToImage()
     self.elementsOnFrame.button_options.object:SetText("Options");
@@ -56,6 +65,11 @@ function Pause:create()
     
     self.elementsOnFrame.button_backToMenu.object.OnClick = function(object)
         _gui:changeFrame(_gui:getFrames().mainMenu);
+    end
+    
+    self.elementsOnFrame.button_restartLevel.object.OnClick = function(object)
+        _gui:getLevelManager():replayLevel();
+        _gui:changeFrame(_gui:getFrames().inGame);
     end
     
     self.elementsOnFrame.button_options.object.OnClick = function(object)
