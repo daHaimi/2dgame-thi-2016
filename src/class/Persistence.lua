@@ -71,13 +71,26 @@ function Persistence:createPersTable()
     _G._persTable.upgrades = {
         speedUp = 0; -- "0" no Speedup for more looke bait.lua
         moneyMult = 0; -- "0" means no additional money
-        moreLife = 2; -- amount of additional lifes
+        moreLife = 0; -- amount of additional lifes
         godMode = 1; -- indicates if the god mode is available or not
         mapBreakthrough1 = 0; -- can you access the first map limit? 0 = no, 1 = yes
         mapBreakthrough2 = 0; -- can you access the second map limit? 0 = no, 1 = yes
         sleepingPillDuration = 600; -- duration of the effect of the sleeping pill
         sleepingPillSlow = 0.25; -- sets the slow factor of the sleeping pill 0.25 = 25% of the usual movement
     };
+    --[[
+    _G._persTable.upgrades = {
+        firstSpeedUp = false;
+        secondSpeedUp = false;
+        moneyMulitplier = false;
+        oneMoreLife = false;
+        twoMoreLife = false;
+        threeMoreLife = false;
+        godMode = false;
+        mapBreakthrough1 = false;
+        mapBreakthrough2 = false;
+    }
+    ]]--
     _G._persTable.achievements = {
         getFirstObject = true;
         getSecondObject = false;
@@ -87,6 +100,7 @@ function Persistence:createPersTable()
     _G._persTable.config = {
         bgm = 100;
         music = 100;
+        language = "english";
     };
 end
 

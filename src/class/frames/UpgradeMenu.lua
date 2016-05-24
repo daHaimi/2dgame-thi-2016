@@ -50,63 +50,8 @@ function UpgradeMenu:create()
     self:addAllUpgrades();
     self:loadValuesFromPersTable();
     
-    --load values out of persTable into the chart
-    --convert 0, 1 or more in to boolean. A 2 equals multiply checkboxes
-    --[[
-    if _persTable.upgrades.speedUp == 1 then
-        self.upgrades.upgrade1:disable();
-    end
-    if _persTable.upgrades.moneyMult == 1 then
-        self.upgrades.upgrade2:disable();
-    end
-    if _persTable.upgrades.moreLife == 1 then
-        self.upgrades.upgrade3:disable();
-    end
-    if _persTable.upgrades.godMode == 1 then
-        self.upgrades.upgrade4:disable();
-    end
-    if _persTable.upgrades.mapBreakthrough1 == 1 then
-        self.upgrades.upgrade4:disable();
-        if _persTable.upgrades.mapBreakthrough2 == 1 then
-            self.upgrades.upgrade4:disable();
-        end
-    end
-    ]]--
-    
     --onclick events for all buttons
     self.elementsOnFrame.button_back.object.OnClick = function(object)
-        --[[
-        --update persTable with new bought updates
-        if self.upgrades.upgrade1:getEnable() then
-            _persTable.upgrades.speedUp = 0;
-        else
-            _persTable.upgrades.speedUp = 1;
-        end
-        if self.upgrades.upgrade2:getEnable() then
-            _persTable.upgrades.moneyMult = 0;
-        else
-            _persTable.upgrades.moneyMult = 1;
-        end
-        if self.upgrades.upgrade3:getEnable() then
-            _persTable.upgrades.moreLife = 0;
-        else
-            _persTable.upgrades.moreLife = 1;
-        end
-        if self.upgrades.upgrade4:getEnable() then
-            _persTable.upgrades.godMode = 0;
-        else
-            _persTable.upgrades.godMode = 1;
-        end
-        if self.upgrades.upgrade5:getEnable() then
-            _persTable.upgrades.mapBreakthrough1 = 0;
-        else
-            _persTable.upgrades.mapBreakthrough1 = 1;
-        end
-        if self.upgrades.upgrade6:getEnable() then
-            _persTable.upgrades.mapBreakthrough2 = 0;
-        else
-            _persTable.upgrades.mapBreakthrough2 = 1;
-        end]]--
         _gui:tempTextOutput();
         _gui:changeFrame(_gui:getFrames().mainMenu);
     end
@@ -123,7 +68,8 @@ end
 function UpgradeMenu:addAllUpgrades()
     for k, v in pairs(_G.data.upgrades) do
         local newKlickableElement = KlickableElement(v.name, v.image, v.image_disable,
-            v.description, v.price, v.nameOnPersTable);
+        v.description, v.price, v.nameOnPersTable);
+        --add OnClick event
         newKlickableElement.object.OnClick = function(object)
             self.elementsOnFrame.chart.object:markElement(newKlickableElement);
         end
@@ -133,15 +79,16 @@ end
 
 
 function UpgradeMenu:loadValuesFromPersTable()
-    
+    --[[
+    for k, v in pairs(self.elementsOnFrame.chart.object:getAllElements()) do
+        local elementName = v.nameOnPersTable;
+        if _G._persTable.upgrades[elementName] then
+            if _G._persTable.upgrades[elementName] == true then
+                v:disable();
+            end
+        end
+    end]]---
 end
-
-function UpgradeMenu:loadValuesInPersTable()
-    
-    
-    
-end
-
 
 ---shows the frame on screen
 function UpgradeMenu:draw()

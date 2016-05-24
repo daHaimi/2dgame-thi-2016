@@ -1,5 +1,6 @@
 Class = require "lib.hump.class";
 Frame = require "class.Frame";
+FlagButton = require "class.FlagButton";
 
 local MainMenu = Class {
     init = function(self)
@@ -53,6 +54,12 @@ function MainMenu:create()
             object = Loveframes.Create("imagebutton");
             x = 10;
             y = 250;
+        };
+        
+        language = {
+            object = FlagButton();
+            x = 300;
+            y = 500;
         };
     };
     

@@ -16,6 +16,20 @@ describe("Unit test for MainMenu.lua", function()
                 return fakeElement(typeName);
             end
         }
+        _G.data = {
+            languages = {
+                english = {
+                    name = "english";
+                    flagImage = "path1";
+                },
+            };
+            
+        };
+        _G._persTable = {
+            config = {
+                language = "english";
+            };
+        };
         _G.Frame = function(...) return Frame; end;
 
         locInstance = testClass();
