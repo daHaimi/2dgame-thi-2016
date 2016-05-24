@@ -35,6 +35,7 @@ function KlickableElement:disable()
     self.enable = false;
     self.object:SetImage(self.imagepath_disable);
     if self.nameOnPersTable ~= nil then
+        --_persTable.upgrades[self.nameOnPersTable] = true;
         _persTable.upgrades[self.nameOnPersTable] = 1;
     end
 end

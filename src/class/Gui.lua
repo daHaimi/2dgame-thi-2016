@@ -124,8 +124,9 @@ function Gui:tempTextOutput()
         "Breakthrough 2 = " .. tostring(_persTable.upgrades.mapBreakthrough2) .. "\n" ..
         "\n" ..
         "_persTable.config" .. "\n" .. 
-        "BGM =" .. tostring(_persTable.config.bgm).. "\n" ..
-        "Music =" .. tostring(_persTable.config.music).. "\n" ..
+        "BGM = " .. tostring(_persTable.config.bgm).. "\n" ..
+        "Music = " .. tostring(_persTable.config.music).. "\n" ..
+        "Language = " .. tostring(_persTable.config.language) .. "\n" ..
         "\n" ..
         "Money =" .. tostring(_persTable.money);
 end
