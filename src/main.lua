@@ -15,6 +15,9 @@ _G.math.inf = 1 / 0;
 _G._gui = nil;
 _G._persistence = nil;
 
+-- Game Title
+love.window.setTitle("Simon Hamsters insane trip");
+
 -- loads all functions from util to the global space
 for k,v in pairs(require "util") do
   _G[k] = v;
