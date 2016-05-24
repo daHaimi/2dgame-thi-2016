@@ -28,11 +28,24 @@ end};
 function Persistence:resetGame()
     self:createPersTable();
     local _, _, flags = love.window.getMode();
-    _G._persTable.winDim = { love.window.getDesktopDimensions(flags.display) };
-    _G._persTable.winDim[2] = _G._persTable.winDim[2] - 150; -- Sub 50px for taskbar and window header
-    _G._persTable.winDim[1] = (_G._persTable.winDim[2] / 16) * 9; -- Example: 16:9
+    love.graphics.setBackgroundColor(30, 180, 240);
+    _G._persTable.deviceDim = {love.window.getDesktopDimensions(flags.display)};
+    _G._persTable.winDim[1], _G._persTable.winDim[2], scaleFactor = getScaledDimension(_G._persTable.deviceDim);
     return love.filesystem.remove("saveFile");
-    
+end
+
+function getScaledDimension(deviceDim)
+    resultDim = {};
+    if deviceDim[1] > deviceDim[2] then
+        scaleFactor = (0.9 * deviceDim[2]) / (480 * 16 / 9);
+        resultDim[1] = 480;
+        resultDim[2] = resultDim[1] * 16 / 9;
+    else
+        scaleFactor = deviceDim[1] / 480;
+        resultDim[2] = deviceDim[2] / deviceDim[1] * 480;
+        resultDim[1] = 480;
+    end
+        return resultDim[1], resultDim[2], scaleFactor;
 end
 
 --- Save the persTable data at saveFile
