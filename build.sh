@@ -96,6 +96,6 @@ cp bin/game.love tmp/assets/game.love
 sed -i 's/LÖVE for Android/2D Game THI 2016/g' tmp/AndroidManifest.xml
 sed -i 's/org.love2d.android/de.thi.projekt.ss16/g' tmp/AndroidManifest.xml
 #/usr/local/bin/apktool b tmp -o ${GAME_NAME}-${BUILD_NR}-android.apk -p frmtmp
-zip -r bin/${GAME_NAME}-${BUILD_NR}-android.apk tmp
+zip -r bin/${GAME_NAME}-${BUILD_NR}-android.apk tmp/*
 rm -rf tmp frmtmp
 ${JAVA_HOME}/bin/jarsigner -verbose -sigalg SHA1withRSA -digestalg SHA1 -keystore util/android.keystore -storepass NeverGonnaGiveYouUp -keypass LetYouDown bin/${GAME_NAME}-${BUILD_NR}-android.apk ${GAME_NAME}
