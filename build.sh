@@ -91,10 +91,11 @@ if [ ! -e tmp/assets ]; then
     mkdir tmp/assets
 fi
 cp bin/game.love tmp/assets/game.love
-rm tmp/META-INF/*.SF
-rm tmp/META-INF/*.
+#rm tmp/META-INF/*.SF
+#rm tmp/META-INF/*.
 sed -i 's/LÖVE for Android/2D Game THI 2016/g' tmp/AndroidManifest.xml
 sed -i 's/org.love2d.android/de.thi.projekt.ss16/g' tmp/AndroidManifest.xml
-/usr/local/bin/apktool b tmp -o ${GAME_NAME}-${BUILD_NR}-android.apk -p frmtmp
+#/usr/local/bin/apktool b tmp -o ${GAME_NAME}-${BUILD_NR}-android.apk -p frmtmp
+zip -r ${GAME_NAME}-${BUILD_NR}-android.apk tmp
 rm -rf tmp
 ${JAVA_HOME}/bin/jarsigner -verbose -sigalg SHA1withRSA -digestalg SHA1 -keystore util/android.keystore -storepass NeverGonnaGiveYouUp -keypass LetYouDown bin/${GAME_NAME}-${BUILD_NR}-android.apk ${GAME_NAME}
