@@ -95,7 +95,7 @@ fi
 cp bin/game.love tmp/assets/game.love
 rm tmp/META-INF/*.SF 2> /dev/null
 rm tmp/META-INF/*. 2> /dev/null
-sed -i 's/LÖVE for Android/2D Game THI 2016/g' tmp/AndroidManifest.xml
+#sed -i 's/LÖVE for Android/2D Game THI 2016/g' tmp/AndroidManifest.xml
 #sed -i 's/org.love2d.android/de.thi.projekt.ss16/g' tmp/AndroidManifest.xml
 cat tmp/AndroidManifest.xml
 /usr/local/bin/apktool b tmp -o bin/${GAME_NAME}-${BUILD_NR}-android.apk -a /usr/local/bin/aapt -p frmtmp
