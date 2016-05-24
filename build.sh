@@ -83,17 +83,16 @@ for platform in {i386,amd64}; do
 done
 
 # Android APK erstellen
-/usr/local/bin/apktool d ${STUB_DIR}/love-${LOVE_VERSION}-android.apk
-tmpdir="love-${LOVE_VERSION}-android"
-if [ ! -e ${tmpdir}/assets ]; then
-    mkdir ${tmpdir}/assets
+mkdir -p tmp 2> /dev/null
+/usr/local/bin/apktool d ${STUB_DIR}/love-${LOVE_VERSION}-android.apk tmp
+if [ ! -e tmp/assets ]; then
+    mkdir tmp/assets
 fi
-cp bin/game.love ${tmpdir}/assets/game.love
-rm ${tmpdir}/META-INF/*.SF
-rm ${tmpdir}/META-INF/*.
-sed -i 's/LÖVE for Android/2D Game THI 2016/g' ${tmpdir}/AndroidManifest.xml
-sed -i 's/org.love2d.android/de.thi.projekt.ss16/g' ${tmpdir}/AndroidManifest.xml
-mv ${tmpdir} ${GAME_NAME}-${BUILD_NR}-android
-/usr/local/bin/apktool b ${GAME_NAME}-${BUILD_NR}-android
-rm -rf ${GAME_NAME}-${BUILD_NR}-android
+cp bin/game.love tmp/assets/game.love
+rm tmp/META-INF/*.SF
+rm tmp/META-INF/*.
+sed -i 's/LÖVE for Android/2D Game THI 2016/g' tmp/AndroidManifest.xml
+sed -i 's/org.love2d.android/de.thi.projekt.ss16/g' tmp/AndroidManifest.xml
+/usr/local/bin/apktool b tmp -o ${GAME_NAME}-${BUILD_NR}-android.apk
+rm -rf tmp
 ${JAVA_HOME}/bin/jarsigner -verbose -sigalg SHA1withRSA -digestalg SHA1 -keystore util/android.keystore -storepass NeverGonnaGiveYouUp -keypass LetYouDown bin/${GAME_NAME}-${BUILD_NR}-android.apk ${GAME_NAME}
