@@ -85,7 +85,8 @@ done
 # Android APK erstellen
 rm -rf tmp 2> /dev/null
 mkdir -p tmp 2> /dev/null
-/usr/local/bin/apktool d ${STUB_DIR}/love-${LOVE_VERSION}-android.apk -o tmp -f
+mkdir frmtmp 2> /dev/null
+/usr/local/bin/apktool d ${STUB_DIR}/love-${LOVE_VERSION}-android.apk -o tmp -f -p frmtmp
 if [ ! -e tmp/assets ]; then
     mkdir tmp/assets
 fi
@@ -94,6 +95,6 @@ rm tmp/META-INF/*.SF
 rm tmp/META-INF/*.
 sed -i 's/LÖVE for Android/2D Game THI 2016/g' tmp/AndroidManifest.xml
 sed -i 's/org.love2d.android/de.thi.projekt.ss16/g' tmp/AndroidManifest.xml
-/usr/local/bin/apktool b tmp -o ${GAME_NAME}-${BUILD_NR}-android.apk
+/usr/local/bin/apktool b tmp -o ${GAME_NAME}-${BUILD_NR}-android.apk -p frmtmp
 rm -rf tmp
 ${JAVA_HOME}/bin/jarsigner -verbose -sigalg SHA1withRSA -digestalg SHA1 -keystore util/android.keystore -storepass NeverGonnaGiveYouUp -keypass LetYouDown bin/${GAME_NAME}-${BUILD_NR}-android.apk ${GAME_NAME}
