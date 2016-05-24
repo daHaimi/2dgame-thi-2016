@@ -98,6 +98,6 @@ rm tmp/META-INF/*. 2> /dev/null
 #sed -i 's/LÖVE for Android/2D Game THI 2016/g' tmp/AndroidManifest.xml
 #sed -i 's/org.love2d.android/de.thi.projekt.ss16/g' tmp/AndroidManifest.xml
 cat tmp/AndroidManifest.xml
-/usr/local/bin/apktool b tmp -o bin/${GAME_NAME}-${BUILD_NR}-android.apk -a /usr/local/bin/aapt -p frmtmp
+sudo /usr/local/bin/apktool b tmp -o bin/${GAME_NAME}-${BUILD_NR}-android.apk -a /usr/local/bin/aapt -p frmtmp
 rm -rf tmp frmtmp
 ${JAVA_HOME}/bin/jarsigner -verbose -sigalg SHA1withRSA -digestalg SHA1 -keystore util/android.keystore -storepass NeverGonnaGiveYouUp -keypass LetYouDown bin/${GAME_NAME}-${BUILD_NR}-android.apk ${GAME_NAME}
