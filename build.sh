@@ -85,7 +85,7 @@ done
 # Android APK erstellen
 rm -rf tmp 2> /dev/null
 mkdir -p tmp 2> /dev/null
-/usr/local/bin/apktool d ${STUB_DIR}/love-${LOVE_VERSION}-android.apk -o tmp
+/usr/local/bin/apktool d ${STUB_DIR}/love-${LOVE_VERSION}-android.apk -o tmp -f
 if [ ! -e tmp/assets ]; then
     mkdir tmp/assets
 fi
