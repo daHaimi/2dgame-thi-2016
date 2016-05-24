@@ -71,4 +71,16 @@ describe("Unit test suite for the LevelManager class", function()
         levMan.curSwarmFac = {2, 46, 8939};
         assert.are.same(levMan.curSwarmFac, levMan:getCurSwarmFactory());
     end)
+
+    it("Testing getLevelPropMapByName", function()
+        levMan.p_levelProperties = {
+            sewers = {
+                levelName = "sewers",
+                direction = 1,
+                bgPath = "assets/testbg.png";
+            }
+        };
+
+        assert.are.same("sewers", levMan:getLevelPropMapByName("sewers").levelName);
+    end)
 end)

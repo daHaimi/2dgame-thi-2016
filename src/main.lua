@@ -44,7 +44,7 @@ function love.load()
     _G._persTable.winDim[1] = (_G._persTable.winDim[2] / 16) * 9; -- Example: 16:9
     love.window.setMode(_G._persTable.winDim[1], _G._persTable.winDim[2], { centered });
     levMan = LevelManager();
-    levMan:newLevel("assets/testbg.png", 1, _G.data);
+    levMan:newLevel(levMan:getLevelPropMapByName("sewers"), _G.data);
 
     _gui:tempTextOutput();
     _gui:start();
