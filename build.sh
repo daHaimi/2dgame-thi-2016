@@ -88,7 +88,7 @@ mkdir -p tmp 2> /dev/null
 # mkdir -p tmp2 2> /dev/null
 mkdir frmtmp 2> /dev/null
 # unzip ${STUB_DIR}/love-${LOVE_VERSION}-android.apk -d tmp
-/usr/local/bin/apktool d ${STUB_DIR}/love-${LOVE_VERSION}-android.apk -o tmp -f -p frmtmp
+/usr/local/bin/apktool d ${STUB_DIR}/love-${LOVE_VERSION}-android.apk -o tmp -f -r -p frmtmp
 if [ ! -e tmp/assets ]; then
     mkdir tmp/assets
 fi
