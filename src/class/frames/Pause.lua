@@ -3,7 +3,8 @@ Class = require "lib.hump.class";
 local Pause = Class {
     init = function(self)
         self.name = "Pause";
-        self.frame = Frame(100, 100, "down", "down", 50, 0, -1500);
+        self.frame = Frame((_G._persTable.scaledDeviceDim[1] - 256) / 2, (_G._persTable.scaledDeviceDim[2] - 512) / 2,
+            "down", "down", 50, 0, -1500);
         self:create();
     end;
 };

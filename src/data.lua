@@ -309,6 +309,29 @@ return {
                 }
             }
         },
+        
+        backpack = {
+            name = "backpack",
+            image = "backpack.png",
+            spriteSize = 64,
+            minSpeed = 0,
+            maxSpeed = 0,
+            hitpoints = 50,        
+            value = 100,
+            minAmount = 1,
+            maxAmount = 3,
+            swarmHeight = 500,
+            enabled = true,
+            description = "A nice backpack someone seems to have lost";
+            hitbox = {
+                {
+                    width = 50,
+                    height = 56,
+                    deltaXPos = 6,
+                    deltaYPos = 6
+                }
+            }
+        }
     },
 
     --- Data for the swarms for each level
