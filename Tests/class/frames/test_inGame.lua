@@ -27,6 +27,18 @@ describe("Unit test for inGame.lua", function()
         locInstance = testClass();
     end)
 
+    it("Testing create function", function()
+        _G._gui = {
+            getFrames = function(...) return{}; end;
+            changeFrame = function(...) end;
+        };
+        
+        locInstance:create();
+
+        spy.on(_G._gui, "changeFrame");
+        locInstance.elementsOnFrame.button_pause.object.OnClick();
+        assert.spy(_gui.changeFrame).was.called();
+    end)
 
     it("Testing draw function", function()
         _G._gui = {

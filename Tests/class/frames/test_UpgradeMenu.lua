@@ -9,7 +9,6 @@ Frame = require "class.Frame";
 describe("Unit test for UpgradeMenu.lua", function()
     local locInstance;
 
-
     before_each(function()
         _G.Loveframes = {
             Create = function(typeName) 
@@ -32,6 +31,75 @@ describe("Unit test for UpgradeMenu.lua", function()
         };
         
         locInstance = testClass();
+    end)
+
+    it("Testing create function", function()
+        _G._gui = {
+            getFrames = function(...) return{}; end;
+            changeFrame = function(...) end;
+            tempTextOutput = function(...) end;
+        };
+        
+        spy.on(locInstance, "addAllUpgrades");
+        spy.on(locInstance, "loadValuesFromPersTable");
+        locInstance:create();
+
+        assert.spy(locInstance.addAllUpgrades).was.called();
+        assert.spy(locInstance.loadValuesFromPersTable).was.called();
+
+        spy.on(_G._gui, "changeFrame");
+        spy.on(_G._gui, "tempTextOutput");
+        locInstance.elementsOnFrame.button_back.object.OnClick();
+        assert.spy(_gui.changeFrame).was.called();
+        assert.spy(_gui.tempTextOutput).was.called();
+        
+        locInstance.elementsOnFrame.chart.object.p_markedElement = 1;
+        stub(locInstance, "buyElement");
+        locInstance.elementsOnFrame.button_buy.object.OnClick();
+        assert.spy(locInstance.buyElement).was.called();
+    end)
+
+    it("Testing buyElement function", function()
+        local KE = {
+            disable = function(...) end;
+        };
+
+        locInstance.elementsOnFrame.chart.object.p_markedElement = KE;
+        stub(locInstance.elementsOnFrame.chart.object.p_markedElement, "disable");
+        locInstance:buyElement();
+        assert.stub(locInstance.elementsOnFrame.chart.object.p_markedElement.disable).was.called();
+    end)
+
+    it("Testing addAllUpgrades function", function()
+        _G.data = {
+            upgrades = {
+                testUp1 = {
+                    nameOnPersTable = "test1";
+                    name = "test1";
+                    description = "test1";
+                    image = "path1";
+                    image_disable = "path2";
+                    price = 1;
+                },
+                testUp2 = {
+                    nameOnPersTable = "test2";
+                    name = "test2";
+                    description = "test2";
+                    image = "path3";
+                    image_disable = "path4";
+                    price = 2;
+                }
+            };
+        };
+        
+        locInstance:addAllUpgrades();
+        locInstance.elementsOnFrame.chart.object.p_elementsOnChart[1].object = {};
+        locInstance.elementsOnFrame.chart.object.p_elementsOnChart[2].object = {};
+        local KE1 = KlickableElement("test1", "path1", "path2", "test1", 1, "test1");
+        local KE2 = KlickableElement("test2", "path3", "path4", "test2", 2, "test2");
+        KE1.object = {};
+        KE2.object = {};
+        assert.same(locInstance.elementsOnFrame.chart.object.p_elementsOnChart, {KE2, KE1});
     end)
 
     it("Testing draw function", function()

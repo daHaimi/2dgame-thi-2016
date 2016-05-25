@@ -1,6 +1,7 @@
 Class = require "lib.hump.class";
 Frame = require "class.Frame";
 Chart = require "class.Chart";
+KlickableElement = require "class.KlickableElement";
 
 local Achievements = Class {
     init = function(self)
@@ -38,7 +39,7 @@ function Achievements:create()
     self.elementsOnFrame.button_back.object:SizeToImage()
     self.elementsOnFrame.button_back.object:SetText("Back");
     
-    self:addAllAchievements()
+    self:addAllAchievements();
     self:loadValuesFromPersTable();
     
     --onclick events for all buttons

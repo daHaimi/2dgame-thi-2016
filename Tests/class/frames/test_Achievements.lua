@@ -4,6 +4,7 @@ _G.math.inf = 1 / 0
 testClass = require "src.class.frames.Achievements";
 fakeElement = require "Tests.fakeLoveframes.fakeElement";
 Frame = require "class.Frame";
+KlickableElement = require "class.KlickableElement";
 
 
 describe("Unit test for Achievements.lua", function()
@@ -23,6 +24,89 @@ describe("Unit test for Achievements.lua", function()
         _G.Frame = function(...) return Frame; end;
 
         locInstance = testClass();
+    end)
+
+
+    it("Testing create function", function()
+        _G._gui = {
+            getFrames = function(...) return{}; end;
+            changeFrame = function(...) end;
+        };
+        
+        spy.on(locInstance, "addAllAchievements");
+        spy.on(locInstance, "loadValuesFromPersTable");
+        locInstance:create();
+
+        assert.spy(locInstance.addAllAchievements).was.called();
+        assert.spy(locInstance.loadValuesFromPersTable).was.called();
+
+        spy.on(_G._gui, "changeFrame");
+        locInstance.elementsOnFrame.button_back.object.OnClick();
+        assert.spy(_gui.changeFrame).was.called();
+    end)
+
+    it("Testing addAllAchievements function", function()
+        _G.data = {
+            achievements = {
+                testAch1 = {
+                    nameOnPersTable = "test1";
+                    name = "test1";
+                    description = "test1";
+                    image_lock = "path1";
+                    image_unlock = "path2";
+                },
+                testAch2 = {
+                    nameOnPersTable = "test2";
+                    name = "test2";
+                    description = "test2";
+                    image_lock = "path3";
+                    image_unlock = "path4";
+                }
+            };
+        };
+        
+        locInstance:addAllAchievements();
+        locInstance.elementsOnFrame.chart.object.p_elementsOnChart[1].object = {};
+        locInstance.elementsOnFrame.chart.object.p_elementsOnChart[2].object = {};
+        local KE1 = KlickableElement("test1", "path1", "path2", "test1", nil, "test1");
+        local KE2 = KlickableElement("test2", "path3", "path4", "test2", nil, "test2");
+        KE1.object = {};
+        KE2.object = {};
+        assert.same(locInstance.elementsOnFrame.chart.object.p_elementsOnChart, {KE1, KE2});
+    end)
+
+    it("Testing loadValuesFromPersTable function", function()
+        _G._persTable = {
+            upgrades = {};
+            achievements = {
+                testAch1 = true;
+                testAch2 = false;
+            };
+        };
+        _G.data = {
+            achievements = {
+                testAch1 = {
+                    nameOnPersTable = "testAch1";
+                    name = "test1";
+                    description = "test1";
+                    image_lock = "path1";
+                    image_unlock = "path2";
+                },
+                testAch2 = {
+                    nameOnPersTable = "testAch2";
+                    name = "test2";
+                    description = "test2";
+                    image_lock = "path3";
+                    image_unlock = "path4";
+                }
+            };
+        };
+
+        locInstance:addAllAchievements();
+        locInstance:loadValuesFromPersTable();
+
+        assert.equal(locInstance.elementsOnFrame.chart.object.p_elementsOnChart[1].enable, false);
+        assert.equal(locInstance.elementsOnFrame.chart.object.p_elementsOnChart[2].enable, true);
     end)
 
     it("Testing draw function", function()

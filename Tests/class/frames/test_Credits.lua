@@ -20,6 +20,19 @@ describe("Unit test for Credits.lua", function()
         locInstance = testClass();
     end)
 
+    it("Testing create function", function()
+        _G._gui = {
+            getFrames = function(...) return{}; end;
+            changeFrame = function(...) end;
+        };
+
+        locInstance:create();
+
+        spy.on(_G._gui, "changeFrame");
+        locInstance.elementsOnFrame.button_back.object.OnClick();
+        assert.spy(_gui.changeFrame).was.called();
+    end)
+
     it("Testing Constructor", function()
         local myInstance = testClass();
         myInstance.elementsOnFrame.button_back.object.OnClick = {};

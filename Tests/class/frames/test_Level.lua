@@ -21,6 +21,22 @@ describe("Unit test for Level.lua", function()
         locInstance = testClass();
     end)
 
+    it("Testing create function", function()
+        _G._gui = {
+            getFrames = function(...) return{}; end;
+            changeFrame = function(...) end;
+        };
+        
+        locInstance:create();
+
+        spy.on(_G._gui, "changeFrame");
+        locInstance.elementsOnFrame.button_back.object.OnClick();
+        locInstance.elementsOnFrame.button_level1.object.OnClick();
+        locInstance.elementsOnFrame.button_level2.object.OnClick();
+        locInstance.elementsOnFrame.button_level3.object.OnClick();
+        assert.spy(_gui.changeFrame).was.called(4);
+    end)
+
     it("Testing draw function", function()
         stub(locInstance.frame, "draw");
         locInstance:draw();
