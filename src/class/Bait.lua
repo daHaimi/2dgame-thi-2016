@@ -23,7 +23,7 @@ local Bait = Class {
     life = 1;
     money = 0;
     numberOfHits = 0;
-    hittedFishable = 0;
+    hitFishable = 0;
     caughtThisRound = {};
     sleepingPillDuration = 0;
     deltaTime = 0;
@@ -119,14 +119,14 @@ function Bait:checkFishableForCollision(fishable, oldXPos, index)
 end
 
 --- is called everytime the bait hits a fishable object
--- @param fishable the fishable object hitted
--- @param index index of the fishable object hitted
+-- @param fishable the fishable object hit
+-- @param index index of the fishable object hit
 function Bait:collisionDetected(fishable, index)
-    -- sleeping Pill hitted
+    -- sleeping Pill hit
     if fishable:getName() == "sleepingPill" then
-        self:sleepingPillHitted();
+        self:sleepingPillHit();
         self.levMan:getCurSwarmFactory().createdFishables[index]:setToCaught();
-        -- other fishable object hitted and no godMode active
+        -- other fishable object hit and no godMode active
     elseif self.levMan:getCurLevel():getGodModeStat() == 0 then
         -- still lifes left
         if self.numberOfHits <= _G._persTable.upgrades.moreLife then
@@ -147,7 +147,7 @@ function Bait:collisionDetected(fishable, index)
 end
 
 --- is called everytime the bait hits a sleeping pill
-function Bait:sleepingPillHitted()
+function Bait:sleepingPillHit()
     for i = 1, #self.levMan:getCurSwarmFactory().createdFishables, 1 do
         self.levMan:getCurSwarmFactory().createdFishables[i]:setSpeedMultiplicator(_G._persTable.upgrades.sleepingPillSlow);
     end

@@ -331,6 +331,303 @@ return {
                     deltaYPos = 6
                 }
             }
+        },
+        
+        drink = {
+            name = "drink",
+            image = "drink.png",
+            spriteSize = 64,
+            minSpeed = 0,
+            maxSpeed = 0,
+            hitpoints = 20,        
+            value = 30,
+            minAmount = 0,
+            maxAmount = 1,
+            swarmHeight = 100,
+            enabled = true,
+            description = "A delicious drink";
+            hitbox = {
+                {
+                    width = 22,
+                    height = 10,
+                    deltaXPos = 10,
+                    deltaYPos = 3
+                },
+                {
+                    width = 44,
+                    height = 20,
+                    deltaXPos = 8,
+                    deltaYPos = 20
+                },
+                {
+                    width = 30,
+                    height = 20,
+                    deltaXPos = 16,
+                    deltaYPos = 40
+                }
+            }
+        },
+        
+        egg = {
+            name = "egg",
+            image = "egg.png",
+            spriteSize = 64,
+            minSpeed = 0,
+            maxSpeed = 0,
+            hitpoints = 50,        
+            value = 80,
+            minAmount = 1,
+            maxAmount = 5,
+            swarmHeight = 50,
+            enabled = true,
+            description = "A dinosaur egg. Better sell it fast";
+            hitbox = {
+                {
+                    width = 22,
+                    height = 10,
+                    deltaXPos = 22,
+                    deltaYPos = 10
+                },
+                {
+                    width = 42,
+                    height = 36,
+                    deltaXPos = 12,
+                    deltaYPos = 20
+                }
+            }
+        },
+        
+        camera = {
+            name = "camera",
+            image = "camera.png",
+            spriteSize = 64,
+            minSpeed = 0,
+            maxSpeed = 0,
+            hitpoints = 20,        
+            value = 100,
+            minAmount = 1,
+            maxAmount = 1,
+            swarmHeight = 100,
+            enabled = true,
+            description = "High-Tech 40 MP Camera";
+            hitbox = {
+                {
+                    width = 10,
+                    height = 8,
+                    deltaXPos = 47,
+                    deltaYPos = 9
+                },
+                {
+                    width = 60,
+                    height = 38,
+                    deltaXPos = 2,
+                    deltaYPos = 16
+                }
+            }
+        },
+        
+        canyonSnake = {
+            name = "canyonSnake",
+            image = "canyon_snake.png",
+            spriteSize = 64,
+            minSpeed = 1,
+            maxSpeed = 4,
+            hitpoints = 10,        
+            value = 40,
+            minAmount = 1,
+            maxAmount = 3,
+            swarmHeight = 200,
+            enabled = true,
+            description = "Canyon Snake´s description";
+            hitbox = {
+                {
+                    width = 54,
+                    height = 56,
+                    deltaXPos = 5,
+                    deltaYPos = 4
+                }
+            }
+        },
+        
+        cactus = {
+            name = "cactus",
+            image = "cactus.png",
+            spriteSize = 64,
+            minSpeed = 0,
+            maxSpeed = 0,
+            hitpoints = 50,        
+            value = -30,
+            minAmount = 3,
+            maxAmount = 8,
+            swarmHeight = 200,
+            enabled = true,
+            description = "Very prickly";
+            hitbox = {
+                {
+                    width = 16,
+                    height = 54,
+                    deltaXPos = 28,
+                    deltaYPos = 2
+                },
+                {
+                    width = 36,
+                    height = 10,
+                    deltaXPos = 17,
+                    deltaYPos = 54
+                },
+                {
+                    width = 10,
+                    height = 14,
+                    deltaXPos = 11,
+                    deltaYPos = 15
+                },
+                {
+                    width = 10,
+                    height = 14,
+                    deltaXPos = 48,
+                    deltaYPos = 13
+                }
+            }
+        },
+        
+        leaf = {
+            name = "leaf",
+            image = "leaf.png",
+            spriteSize = 64,
+            minSpeed = 0,
+            maxSpeed = 5,
+            hitpoints = -10,        
+            value = 20,
+            minAmount = 3,
+            maxAmount = 10,
+            swarmHeight = 20,
+            enabled = true,
+            description = "Simply leaf";
+            hitbox = {
+                {
+                    width = 3,
+                    height = 10,
+                    deltaXPos = 60,
+                    deltaYPos = 10
+                },
+                {
+                    width = 46,
+                    height = 20,
+                    deltaXPos = 4,
+                    deltaYPos = 38
+                },
+                {
+                    width = 44,
+                    height = 20,
+                    deltaXPos = 14,
+                    deltaYPos = 20
+                }
+            }
+        },
+        
+        bird = {
+            name = "bird",
+            image = "bird.png",
+            spriteSize = 64,
+            minSpeed = 2,
+            maxSpeed = 8,
+            hitpoints = 10,        
+            value = 20,
+            minAmount = 1,
+            maxAmount = 6,
+            swarmHeight = 200,
+            enabled = true,
+            description = "A hungry bird";
+            hitbox = {
+                {
+                    width = 60,
+                    height = 14,
+                    deltaXPos = 2,
+                    deltaYPos = 8
+                },
+                {
+                    width = 22,
+                    height = 22,
+                    deltaXPos = 18,
+                    deltaYPos = 22
+                },
+                {
+                    width = 10,
+                    height = 14,
+                    deltaXPos = 30,
+                    deltaYPos = 44
+                }
+            }
+        },
+        
+        balloon = {
+            name = "balloon",
+            image = "balloon.png",
+            spriteSize = 64,
+            minSpeed = 2,
+            maxSpeed = 5,
+            hitpoints = 5,        
+            value = -5,
+            minAmount = 1,
+            maxAmount = 10,
+            swarmHeight = 300,
+            enabled = true,
+            description = "A balloon";
+            hitbox = {
+                {
+                    width = 20,
+                    height = 40,
+                    deltaXPos = 22,
+                    deltaYPos = 4
+                },
+                {
+                    width = 30,
+                    height = 14,
+                    deltaXPos = 18,
+                    deltaYPos = 14
+                },
+                {
+                    width = 6,
+                    height = 20,
+                    deltaXPos = 34,
+                    deltaYPos = 44
+                }
+            }
+        },
+        
+        ufo = {
+            name = "ufo",
+            image = "ufo.png",
+            spriteSize = 64,
+            minSpeed = 1,
+            maxSpeed = 4,
+            hitpoints = 100,        
+            value = 60,
+            minAmount = 1,
+            maxAmount = 1,
+            swarmHeight = 100,
+            enabled = true,
+            description = "A mysterious UFO";
+            hitbox = {
+                {
+                    width = 30,
+                    height = 14,
+                    deltaXPos = 18,
+                    deltaYPos = 10
+                },
+                {
+                    width = 58,
+                    height = 16,
+                    deltaXPos = 3,
+                    deltaYPos = 24
+                },
+                {
+                    width = 37,
+                    height = 22,
+                    deltaXPos = 14,
+                    deltaYPos = 40
+                }
+            }
         }
     },
 
