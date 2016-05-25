@@ -285,7 +285,7 @@ describe("Unit test for Bait.lua", function()
         assert.are.same(myInstance:getPosX(), 0);
     end)
 
-    it("Test sleepingPillHitted", function()
+    it("Test sleepingPillHit", function()
         _G._persTable.upgrades = {
             sleepingPillDuration = 600; -- duration of the effect of the sleeping pill
             sleepingPillSlow = 0.3; -- sets the slow factor of the sleeping pill 0.25 = 25% of the usual movement
@@ -293,7 +293,7 @@ describe("Unit test for Bait.lua", function()
         
         local myInstance = testClass (locWinDim, levMan);
         myInstance.sleepingPillDuration = 0;
-        myInstance:sleepingPillHitted(FishableObject);
+        myInstance:sleepingPillHit(FishableObject);
         
         
         assert.are.same(600, myInstance.sleepingPillDuration);
