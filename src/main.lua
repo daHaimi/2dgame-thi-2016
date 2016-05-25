@@ -39,10 +39,12 @@ function love.load()
     
     local _, _, flags = love.window.getMode();
     love.graphics.setBackgroundColor(30, 180, 240);
-    _G._persTable.deviceDim = {love.window.getDesktopDimensions(flags.display)};
-    _G._persTable.winDim[1], _G._persTable.winDim[2], scaleFactor = getScaledDimension(_G._persTable.deviceDim);
+    deviceDim = {love.window.getDesktopDimensions(flags.display)};
+    --deviceDim = {480, 833};
+    _G._persTable.winDim[1], _G._persTable.winDim[2], scaleFactor = getScaledDimension(deviceDim);
     
-    love.window.setMode(_G._persTable.winDim[1] * scaleFactor, _G._persTable.winDim[2] * scaleFactor, { centered });
+    _G._persTable.scaledDeviceDim = {_G._persTable.winDim[1] * scaleFactor, _G._persTable.winDim[2] * scaleFactor};
+    love.window.setMode(_G._persTable.scaledDeviceDim[1], _G._persTable.scaledDeviceDim[2], { centered });
     levMan = LevelManager();
     levMan:newLevel("assets/testbg.png", 1, _G.data);
 
