@@ -13,7 +13,7 @@ local KlickableElement = Class {
         self.object = Loveframes.Create("imagebutton");
         self.object:SetImage(self.imagepath);
         self.object:SizeToImage();
-        self.object:SetText(self.name);
+        self.object:SetText("");
     end;
 };
 
@@ -34,7 +34,7 @@ end
 function KlickableElement:disable()
     self.enable = false;
     self.object:SetImage(self.imagepath_disable);
-    if self.nameOnPersTable ~= nil then
+    if _persTable.upgrades[self.nameOnPersTable] then
         --_persTable.upgrades[self.nameOnPersTable] = true;
         _persTable.upgrades[self.nameOnPersTable] = 1;
     end

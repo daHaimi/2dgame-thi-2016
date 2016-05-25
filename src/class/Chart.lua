@@ -22,7 +22,6 @@ function Chart:getAllElements()
     return self.p_elementsOnChart;
 end
 
-
 ---Getter of the marked Element
 function Chart:getMarkedElement()
     return self.p_markedElement;
@@ -101,14 +100,14 @@ end
 
 ---set the position of all elements in the table
 function Chart:setPosOfKlickableElements()
-    local p_row = 0;
+    local row = 0;
     for var1 = 1, self.p_row do
         for var2 = 1, self.p_column do
-            if self.p_elementsOnChart[var2 + p_row * self.p_column] ~= nil then
-                self.p_elementsOnChart[var2 + p_row * self.p_column]:SetPos(self.p_xPos + 64 * (var2 - 1), (self.p_yPos + 32 + 64 * p_row) - 64 * self.p_toprow);
+            if self.p_elementsOnChart[var2 + row * self.p_column] ~= nil then
+                self.p_elementsOnChart[var2 + row * self.p_column]:SetPos(self.p_xPos + 64 * (var2 - 1), (self.p_yPos + 32 + 64 * row) - 64 * self.p_toprow);
             end
         end
-        p_row = p_row + 1;
+        row = row + 1;
     end
 end
 

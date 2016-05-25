@@ -6,11 +6,29 @@ fakeElement = require "Tests.fakeLoveframes.fakeElement";
 
 describe("Unit test for Chart.lua", function()
     local locInstance;
+    local Element;
     
     before_each(function()
         _G.Loveframes = {
             Create = function(...) return fakeElement(); end,
         }
+        
+        Element = {
+            visible = nil;
+            x = nil;
+            y = nil;
+        };
+        function Element:SetVisible(visible) 
+            self.visible = visible; 
+        end;
+        
+        function Element:SetPos(x, y) 
+            self.x = x; 
+            self.y = y; 
+        end;
+        
+        
+        
         locInstance = testClass();
     end)
     
@@ -21,6 +39,16 @@ describe("Unit test for Chart.lua", function()
         locInstance.button_up.OnClick = {"onClick function"};
         locInstance.button_down.OnClick = {"onClick function"};
         assert.are.same(locInstance, myInstance);
+    end)
+
+    it("Testing getAllElements function", function()
+        locInstance.p_elementsOnChart = "test";
+        assert.are.equal(locInstance:getAllElements(), "test");
+    end)
+
+    it("Testing getMarkedElement function", function()
+        locInstance.p_markedElement = "test";
+        assert.are.equal(locInstance:getMarkedElement(), "test");
     end)
 
     it("Testing OnClick function of the up and down button", function()        
@@ -78,13 +106,20 @@ describe("Unit test for Chart.lua", function()
         locInstance:resetMarkedFrame()
         assert.are.equal(locInstance.markFrame.visible, false);
     end)
+
+
 --[[
-    it("Testing addKlickableElement function", function()
+
+    it("Testing setPosOfKlickableElements function", function()
+        locInstance.p_elementsOnChart = {Element, Element, Element};
+        locInstance:setPosOfKlickableElements();
+        assert.are.equal(locInstance.p_elementsOnChart[1].x, 1);
+        assert.are.equal(locInstance.p_elementsOnChart[1].y, 1);
+        assert.are.equal(locInstance.p_elementsOnChart[2].x, 1);
+        assert.are.equal(locInstance.p_elementsOnChart[2].y, 1);
+        assert.are.equal(locInstance.p_elementsOnChart[3].x, 1);
+        assert.are.equal(locInstance.p_elementsOnChart[3].y, 1);
         
-        table = {
-            insert = function(...) end
-            --getn = function(...) return 33; end
-        }
     end)
 
     it("Testing drawChart function", function()

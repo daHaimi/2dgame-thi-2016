@@ -17,8 +17,28 @@ describe("Unit test for Pause.lua", function()
             end
         }
         _G.Frame = function(...) return Frame; end;
-
+        _G._persTable = {
+            scaledDeviceDim = {
+                [1] = 500;
+                [2] = 500;
+            };
+        };
         locInstance = testClass();
+    end)
+
+    it("Testing create function", function()
+        _G._gui = {
+            getFrames = function(...) return{}; end;
+            changeFrame = function(...) end;
+        };
+
+        locInstance:create();
+
+        spy.on(_G._gui, "changeFrame");
+        locInstance.elementsOnFrame.button_backToGame.object.OnClick();
+        locInstance.elementsOnFrame.button_backToMenu.object.OnClick();
+        locInstance.elementsOnFrame.button_options.object.OnClick();
+        assert.spy(_gui.changeFrame).was.called(3);
     end)
 
     it("Testing draw function", function()

@@ -12,23 +12,17 @@ describe("Unit test for KlickableElement.lua", function()
         _G.Loveframes = {
             Create = function(...) return fakeElement(); end
         }
-        locInstance = testClass("testClass", "test/path/testImage.png", "test/path/testImage_disable.png", "test discription");
+        locInstance = testClass("testClass", "test/path/testImage.png", "test/path/testImage_disable.png", "test discription", 0, "testName");
     end)
     
     it("Testing Constructor", function()
-        local myInstance = testClass("testClass", "test/path/testImage.png", "test/path/testImage_disable.png", "test discription");
+        local myInstance = testClass("testClass", "test/path/testImage.png", "test/path/testImage_disable.png", "test discription", 0, "testName");
         assert.are.same(locInstance, myInstance);
     end)
     
     it("Testing SetVisible function", function()
         locInstance:SetVisible(true);
         assert.are.same(locInstance.object.visible, true);
-    end)
-
-    it("Testing check function", function()
-        locInstance:disable();
-        assert.are.equal(locInstance.enable, false);
-        assert.are.equal(locInstance.object.imagepath, "test/path/testImage_disable.png");
     end)
 
     it("Testing SetPos function", function()
@@ -42,4 +36,23 @@ describe("Unit test for KlickableElement.lua", function()
         assert.are.equal(locInstance:getEnable(), false);
     end)
 
+    it("Testing reset function", function()
+        stub(locInstance.object, "SetImage");
+        locInstance:reset();
+        assert.are.equal(locInstance.enable, true);
+        assert.stub(locInstance.object.SetImage).was.called();
+    end)
+
+    it("Testing disable function", function()
+        stub(locInstance.object, "SetImage");
+        _G._persTable = {
+            upgrades = {
+                [locInstance.nameOnPersTable] = 0;
+            }
+        }
+        locInstance:disable();
+        assert.are.equal(locInstance.enable, false);
+        assert.stub(locInstance.object.SetImage).was.called();
+        assert.are.equal(_G._persTable.upgrades[locInstance.nameOnPersTable], 1);
+    end)
 end)

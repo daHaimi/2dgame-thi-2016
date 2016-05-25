@@ -59,10 +59,15 @@ function UpgradeMenu:create()
     
     self.elementsOnFrame.button_buy.object.OnClick = function(object)
         if self.elementsOnFrame.chart.object:getMarkedElement() ~= nil then
-            self.elementsOnFrame.chart.object:getMarkedElement():disable();
+            self:buyElement();
         end
     end
     
+end
+
+---called to buy an Item
+function UpgradeMenu:buyElement()
+    self.elementsOnFrame.chart.object:getMarkedElement():disable();
 end
 
 --add all upgrades written in the data.lua into the chart and adds an OnClick event

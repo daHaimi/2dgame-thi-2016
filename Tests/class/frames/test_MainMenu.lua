@@ -29,10 +29,48 @@ describe("Unit test for MainMenu.lua", function()
             config = {
                 language = "english";
             };
+            scaledDeviceDim = {
+                [1] = 500;
+                [2] = 500;
+            };
         };
         _G.Frame = function(...) return Frame; end;
 
         locInstance = testClass();
+    end)
+
+    it("Testing create function", function()
+        _G._gui = {
+            getFrames = function(...) return{}; end;
+            changeFrame = function(...) end;
+        };
+        _G.love = {
+            window = {
+                close = function(...)end;
+            },
+            
+            event = {
+                quit = function(...)end;
+            }
+        };
+        
+        locInstance:create();
+
+        spy.on(_G._gui, "changeFrame");
+        locInstance.elementsOnFrame.button_start.object.OnClick();
+        locInstance.elementsOnFrame.button_upgradeMenu.object.OnClick();
+        locInstance.elementsOnFrame.button_dictionary.object.OnClick();
+        locInstance.elementsOnFrame.button_achievements.object.OnClick();
+        locInstance.elementsOnFrame.button_options.object.OnClick();
+        locInstance.elementsOnFrame.button_credits.object.OnClick();
+        assert.spy(_gui.changeFrame).was.called(6);
+        
+        spy.on(_G.love.window, "close");
+        spy.on(_G.love.event, "quit");
+        locInstance.elementsOnFrame.button_close.object.OnClick();
+        assert.spy(_G.love.window.close).was.called();
+        assert.spy(_G.love.event.quit).was.called();
+        
     end)
 
     it("Testing draw function", function()

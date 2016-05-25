@@ -1,5 +1,6 @@
 Class = require "lib.hump.class";
 Chart = require "class.Chart";
+KlickableElement = require "class.KlickableElement";
 
 local Dictionary = Class {
     init = function(self)
