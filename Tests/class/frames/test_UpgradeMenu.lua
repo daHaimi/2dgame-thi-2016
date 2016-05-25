@@ -25,6 +25,10 @@ describe("Unit test for UpgradeMenu.lua", function()
                 mapBreakthrough1 = 0;
                 mapBreakthrough2 = 0;
             };
+            scaledDeviceDim = {
+                [1] = 500;
+                [2] = 500;
+            };
         };
         _G.data = {
             upgrades = {};

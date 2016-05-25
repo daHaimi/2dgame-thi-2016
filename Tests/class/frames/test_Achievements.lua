@@ -20,7 +20,12 @@ describe("Unit test for Achievements.lua", function()
         _G.data = {
             achievements = {};
         }
-        
+        _G._persTable = {
+            scaledDeviceDim = {
+                [1] = 500;
+                [2] = 500;
+            };
+        };
         _G.Frame = function(...) return Frame; end;
 
         locInstance = testClass();

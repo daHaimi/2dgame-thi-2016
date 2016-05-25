@@ -16,7 +16,13 @@ describe("Unit test for Score.lua", function()
                 return fakeElement(typeName);
             end
         }
-
+        _G._persTable = {
+            scaledDeviceDim = {
+                [1] = 500;
+                [2] = 500;
+            };
+        };
+        
         _G.Frame = function(...) return Frame; end;
         locInstance = testClass();
     end)

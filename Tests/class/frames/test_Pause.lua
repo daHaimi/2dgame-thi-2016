@@ -17,7 +17,12 @@ describe("Unit test for Pause.lua", function()
             end
         }
         _G.Frame = function(...) return Frame; end;
-
+        _G._persTable = {
+            scaledDeviceDim = {
+                [1] = 500;
+                [2] = 500;
+            };
+        };
         locInstance = testClass();
     end)
 

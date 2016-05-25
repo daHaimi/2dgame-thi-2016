@@ -20,8 +20,11 @@ describe("Unit test for inGame.lua", function()
             upgrades = {
                 moreLife = 1;
             };
+            scaledDeviceDim = {
+                [1] = 500;
+                [2] = 500;
+            };
         };
-        
         _G.Frame = function(...) return Frame; end;
 
         locInstance = testClass();

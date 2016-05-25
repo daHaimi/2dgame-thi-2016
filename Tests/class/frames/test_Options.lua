@@ -21,8 +21,11 @@ describe("Unit test for Options.lua", function()
                 bgm = 50;
                 music = 50;
             };
+            scaledDeviceDim = {
+                [1] = 500;
+                [2] = 500;
+            };
         };
-        
         _G.Frame = function(...) return Frame; end;
 
         locInstance = testClass();

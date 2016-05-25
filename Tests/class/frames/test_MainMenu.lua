@@ -29,6 +29,10 @@ describe("Unit test for MainMenu.lua", function()
             config = {
                 language = "english";
             };
+            scaledDeviceDim = {
+                [1] = 500;
+                [2] = 500;
+            };
         };
         _G.Frame = function(...) return Frame; end;
 
