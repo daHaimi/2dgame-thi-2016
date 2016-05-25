@@ -7,7 +7,6 @@ local MainMenu = Class {
         self.name = "Main Menu";
         self.frame = Frame((_G._persTable.scaledDeviceDim[1] - 256) / 2, (_G._persTable.scaledDeviceDim[2] - 512) / 2,
             "down", "down", 50, 0, -1500);
-        print((_G._persTable.winDim[1] - 256) / 2 .. " = (" .. _G._persTable.winDim[1] .. " - 256 )/ 2");
         self:create();
     end;
 };
