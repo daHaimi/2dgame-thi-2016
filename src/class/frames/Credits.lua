@@ -5,9 +5,12 @@ local Credits = Class {
         self.name = "Credits";
         self.frame = Frame(100, 100, "down", "down", 50, 0, -1500);
         self:create();
+        
+        
     end;
     
-    staff = {"Marco Egner",
+    p_staffString = "";
+    p_staff = {"Marco Egner",
         "Samson Groß",
         "Mathias Haimerl",
         "Anna Käfferlein",
@@ -33,27 +36,37 @@ function Credits:create()
             x = 10;
             y = 10;
         };
+        text_credits = {
+            object = Loveframes.Create("text");
+            x = 15;
+            y = 70;
+        }
     };
     
-    staffString = "";
-    
-    for i=1, #self.staff, 1
+    for i=1, #self.p_staff, 1
     do
-        staffString = staffString .. self.staff[i] .. "\n";
+        self.p_staffString = self.p_staffString .. self.p_staff[i] .. "\n";
     end
     
     --adjust all elements on this frame
     self.elementsOnFrame.background.object:SetImage("assets/gui/gui_Test_Bg.png");
-    --self.elementsOnFrame.background.object:SetText(staffString);
     
     self.elementsOnFrame.button_back.object:SetImage("assets/gui/gui_Test_Button.png")
     self.elementsOnFrame.button_back.object:SizeToImage()
     self.elementsOnFrame.button_back.object:SetText("Back");
+    
+    print(self.p_staffString);
+    self.elementsOnFrame.text_credits.object:SetText(self.p_staffString);
+    self.elementsOnFrame.text_credits.object:SetLinksEnabled(true);
+    self.elementsOnFrame.text_credits.object:SetDetectLinks(true);
+    self.elementsOnFrame.text_credits.object:SetShadowColor(150, 210, 255)
 
     --onclick events for all buttons
     self.elementsOnFrame.button_back.object.OnClick = function(object)
         _gui:changeFrame(_gui:getFrames().mainMenu);
     end
+    
+    
 end
 
 ---shows the frame on screen
