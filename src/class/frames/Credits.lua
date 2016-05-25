@@ -6,6 +6,17 @@ local Credits = Class {
         self.frame = Frame(100, 100, "down", "down", 50, 0, -1500);
         self:create();
     end;
+    
+    staff = {"Marco Egner",
+        "Samson Groß",
+        "Mathias Haimerl",
+        "Anna Käfferlein",
+        "Baris Kutlu",
+        "Burak Kutlu",
+        "Martin Lechner",
+        "Daniel Plank",
+        "Daniel Zistl"
+    };
 };
 
 ---creates the credits frame
@@ -24,8 +35,16 @@ function Credits:create()
         };
     };
     
+    staffString = "";
+    
+    for i=1, #self.staff, 1
+    do
+        staffString = staffString .. self.staff[i] .. "\n";
+    end
+    
     --adjust all elements on this frame
     self.elementsOnFrame.background.object:SetImage("assets/gui/gui_Test_Bg.png");
+    --self.elementsOnFrame.background.object:SetText(staffString);
     
     self.elementsOnFrame.button_back.object:SetImage("assets/gui/gui_Test_Button.png")
     self.elementsOnFrame.button_back.object:SizeToImage()
