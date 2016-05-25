@@ -55,7 +55,6 @@ function Credits:create()
     self.elementsOnFrame.button_back.object:SizeToImage()
     self.elementsOnFrame.button_back.object:SetText("Back");
     
-    print(self.p_staffString);
     self.elementsOnFrame.text_credits.object:SetText(self.p_staffString);
     self.elementsOnFrame.text_credits.object:SetLinksEnabled(true);
     self.elementsOnFrame.text_credits.object:SetDetectLinks(true);

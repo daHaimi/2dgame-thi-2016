@@ -43,7 +43,7 @@ describe("Unit test for util.lua", function()
         }
         
         _G.loveMock = mock(_G.love, true);
-        _G.curLevel = levelClass("assets/testbg.png", { 512, 256 }, nil, nil);
+        _G.curLevel = levelClass("sewers", "assets/testbg.png", { 512, 256 }, nil, nil);
     
     end)
   
