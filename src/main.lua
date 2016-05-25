@@ -33,6 +33,7 @@ local levMan;
 --- The bootstrap of the game.
 -- This function is called exactly once at the beginning of the game.
 function love.load()
+    -- if arg[#arg] == "-debug" then require("mobdebug").start() end -- enables the debugging
     _G.data = require "data"; -- loading cycle on android requires data to be load on love.load()
     _persistence = Persistence();
     _persistence:resetGame();
@@ -44,7 +45,6 @@ function love.load()
     _G._persTable.winDim[1] = (_G._persTable.winDim[2] / 16) * 9; -- Example: 16:9
     love.window.setMode(_G._persTable.winDim[1], _G._persTable.winDim[2], { centered });
     levMan = LevelManager();
-    levMan:newLevel(levMan:getLevelPropMapByName("sewers"), _G.data);
     _gui:setLevelManager(levMan);
     _gui:tempTextOutput();
     _gui:start();
@@ -109,7 +109,8 @@ function love.mousepressed(x, y, button)
     Loveframes.mousepressed(x, y, button);
 
     -- activate the god mode when you press the mouse
-    if love.mouse.isDown(1) then
+    print(_gui:getCurrentState());
+    if love.mouse.isDown(1) and _gui:getCurrentState() == "InGame" then
       levMan:getCurLevel():activateGodMode();
     end
     
@@ -133,6 +134,8 @@ function love.mousereleased(x, y, button)
     Loveframes.mousereleased(x, y, button);
 
     -- deactivate the god mode when you release the mouse
-    levMan:getCurLevel():deactivateGodMode();
-    levMan:getCurLevel():resetOldPosY();
+    if _gui:getCurrentState() == "InGame" then
+        levMan:getCurLevel():deactivateGodMode();
+        levMan:getCurLevel():resetOldPosY();
+    end
 end

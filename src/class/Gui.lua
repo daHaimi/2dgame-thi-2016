@@ -45,7 +45,7 @@ end
 ---clears all frames and starts at the main menu
 function Gui:start()
     self:clearAll();
-    self:changeFrame(self.p_myFrames.mainMenu);
+    self:changeFrame(self.p_myFrames.mainMenu);    
 end
 
 ---called to draw a new frame
@@ -130,6 +130,12 @@ function Gui:tempTextOutput()
         "Music =" .. tostring(_persTable.config.music).. "\n" ..
         "\n" ..
         "Money =" .. tostring(_persTable.money);
+end
+
+--- Returns the current game state.
+-- @return Returns the current game state.
+function Gui:getCurrentState()
+    return self.p_states.currentState.name;
 end
 
 --- Returns the reference to the LevelManager object.
