@@ -34,6 +34,10 @@ local Level = Class {
         else
             self.time = "night";
         end
+        
+        -- temp bugfix to play the game with persistence 
+        -- delete when non persistent table exists
+        _G._persTable.phase = 1;
     end,
 
     -- Member variables
@@ -139,6 +143,11 @@ function Level:payPlayer()
         else
             self.roundValue = fishedVal;
             self.gotPayed = 1;
+        end
+        -- persist money from this round
+        if self.roundValue >= 0 then
+            _G._persTable.money = _G._persTable.money + self.roundValue;
+            _G._persistence:updateSaveFile();
         end
         end
     end

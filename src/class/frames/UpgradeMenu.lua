@@ -58,8 +58,10 @@ function UpgradeMenu:create()
     end
     
     self.elementsOnFrame.button_buy.object.OnClick = function(object)
-        if self.elementsOnFrame.chart.object:getMarkedElement() ~= nil then
+        if self.elementsOnFrame.chart.object:getMarkedElement() ~= nil and 
+        _G._persTable.money >= self.elementsOnFrame.chart.object:getMarkedElement().price then
             self:buyElement();
+            _G._persistence:updateSaveFile();
         end
     end
     
@@ -68,6 +70,8 @@ end
 ---called to buy an Item
 function UpgradeMenu:buyElement()
     self.elementsOnFrame.chart.object:getMarkedElement():disable();
+    local price = self.elementsOnFrame.chart.object:getMarkedElement().price;
+    _G._persTable.money = _G._persTable.money - price;
 end
 
 --add all upgrades written in the data.lua into the chart and adds an OnClick event
