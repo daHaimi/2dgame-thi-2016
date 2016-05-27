@@ -3,12 +3,45 @@ Class = require "lib.hump.class";
 TextField = require "class.TextField";
 
 local Chart = Class {
-    init = function(self)
+    init = function(self, size)
+        if _G._persTable.scaledDeviceDim[1] < 640 then
+            self.directory = "assets/gui/480px/";
+            self.widthPx = 480;
+            self.width = 384;
+            self.height = 666;
+            self.buttonHeight = 75;
+            self.buttonOffset = 15;
+            self.klickableSize = 96;
+            speed = 50;
+        elseif _G._persTable.scaledDeviceDim[1] < 720 then
+            self.widthPx = 640;
+            self.directory = "assets/gui/640px/";
+            self.width = 512;
+            self.height = 888;
+            self.buttonOffset = 20;
+            self.buttonHeight = 96;
+            self.klickableSize = 128;
+            speed = 67;
+        else
+            self.widthPx = 720;
+            self.directory = "assets/gui/720px/";
+            self.width = 576;
+            self.height = 1024;
+            self.buttonOffset = 30;
+            self.buttonHeight = 106;
+            self.klickableSize = 144;
+            speed = 75;
+        end
         self.p_column = 3;--amount of the columns of the table
         self.p_row = 0;--automatically calculated value of the amount of rows in the table
         self.p_toprow = 0;--top visible row. needed to scroll up and down
         self.p_xPos = 0;
         self.p_yPos = 0;
+        
+        if size ~= nil then
+            self.klickableSize = size;
+            self.p_column = 4;
+        end
         
         self.p_elementsOnChart = {};--elements in the table
         self.p_markedElement = nil;
@@ -30,20 +63,24 @@ end
 ---function called in the constructor of this class. creates backround and buttons
 function Chart:create()
     self.button_up = Loveframes.Create("imagebutton");
-    self.button_up:SetImage("assets/gui/gui_Up_Button.png");
+    self.button_up:SetImage(self.directory .. "gui_Up_Button.png");
     self.button_up:SizeToImage();
     self.button_up:SetText("");
     
     self.button_down = Loveframes.Create("imagebutton");
-    self.button_down:SetImage("assets/gui/gui_Down_Button.png");
+    self.button_down:SetImage(self.directory .. "gui_Down_Button.png");
     self.button_down:SizeToImage();
     self.button_down:SetText("");
     
     self.markFrame = Loveframes.Create("image");
-    self.markFrame:SetImage("assets/gui/markFrame.png");
+    if self.klickableSize == 64 then
+        self.markFrame:SetImage("assets/gui/markFrame.png");
+    else
+        self.markFrame:SetImage(self.directory .. "markFrame.png");
+    end
     self.markFrame:SetVisible(false);
     
-    self.textField = TextField(128);
+    self.textField = TextField(self.width);
     
     --onclick events of the buttons
     self.button_up.OnClick = function(object)
@@ -103,8 +140,15 @@ function Chart:setPosOfKlickableElements()
     local row = 0;
     for var1 = 1, self.p_row do
         for var2 = 1, self.p_column do
+
+            if self.p_elementsOnChart[var2 + self.p_row * self.p_column] ~= nil then
+                self.p_elementsOnChart[var2 + self.p_row * self.p_column]:SetPos(
+                    self.p_xPos + self.klickableSize * (var2 - 1) + self.buttonHeight, 
+                    (self.p_yPos + self.buttonHeight + self.klickableSize * self.p_row) - self.klickableSize * self.p_toprow);
+            end
             if self.p_elementsOnChart[var2 + row * self.p_column] ~= nil then
-                self.p_elementsOnChart[var2 + row * self.p_column]:SetPos(self.p_xPos + 64 * (var2 - 1), (self.p_yPos + 32 + 64 * row) - 64 * self.p_toprow);
+                self.p_elementsOnChart[var2 + row * self.p_column]:SetPos(self.p_xPos + self.klickableSize * (var2 - 1), 
+                    (self.p_yPos + self.klickableSize * row) - self.klickableSize * self.p_toprow +  self.buttonHeight);
             end
         end
         row = row + 1;
@@ -140,12 +184,14 @@ end
 -- @parm x: x axis position
 -- @parm y: y axis position
 function Chart:SetPos(x, y)
-    self.p_xPos = x;
+    buttonXPos = (_G._persTable.scaledDeviceDim[1] - self.width) /2 + self.width * 0.16
+    self.p_xPos = (_G._persTable.scaledDeviceDim[1] - self.klickableSize * self.p_column) / 2;
     self.p_yPos = y;
-    self.button_up:SetPos(x, y);
-    self.button_down:SetPos(x, y + 224);
+    self.button_up:SetPos(buttonXPos, y);
+    
+    self.button_down:SetPos(buttonXPos,y + math.min(self.p_row, 3) *self.klickableSize + self.buttonHeight + self.buttonOffset);
     self:setPosOfKlickableElements();
-    self.textField:SetPos(x, y + 256);
+    self.textField:SetPos(buttonXPos, y + self.height * 0.68);
     if self.p_markedElement ~= nil then
         self.markFrame:SetPos(self.p_markedElement.object:GetX(), self.p_markedElement.object:GetY());
     end

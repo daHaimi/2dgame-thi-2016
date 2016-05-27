@@ -664,24 +664,24 @@ return {
             name = "One more life";--Name shown on the Textfield on the shop
             description = "add one more life to your healthbar.";--shown on the shop
             price = 100;--price of this item
-            image = "assets/gui/upgrades/Up_oneMoreLife_locked.png";
-            image_disable = "assets/gui/upgrades/Up_oneMoreLife.png";
+            image = "gui_Test_klickableElement.png";
+            image_disable = "gui_Test_klickableElement_disable.png";
         },
         twoMoreLife = {
             nameOnPersTable = "moreLife";
             name = "Two more life";
             description = "add a third life to your healthbar.";
             price = 200;
-            image = "assets/gui/upgrades/Up_twoMoreLife_locked.png";
-            image_disable = "assets/gui/upgrades/Up_twoMoreLife.png";
+            image = "gui_Test_klickableElement.png";
+            image_disable = "gui_Test_klickableElement_disable.png";
         },
         threeMoreLife = {
             nameOnPersTable = "moreLife";
             name = "Three more life";
             description = "upgrade your healthbar up to four lifes.";
             price = 300;
-            image = "assets/gui/upgrades/Up_threeMoreLife_locked.png";
-            image_disable = "assets/gui/upgrades/Up_threeMoreLife.png";
+            image = "gui_Test_klickableElement.png";
+            image_disable = "gui_Test_klickableElement_disable.png";
         },
         --[[
         oneMoreLife = {
@@ -778,11 +778,11 @@ return {
     languages = {
         english = {
             language = "english";
-            flagImage = "assets/gui/BritishFlag.png";
+            flagImage = "BritishFlag.png";
         },
         german = {
             language = "german";
-            flagImage = "assets/gui/GermanFlag.png";
+            flagImage = "GermanFlag.png";
         },
         
     }

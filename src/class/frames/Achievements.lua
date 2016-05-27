@@ -1,19 +1,43 @@
 Class = require "lib.hump.class";
-Frame = require "class.Frame";
 Chart = require "class.Chart";
-KlickableElement = require "class.KlickableElement";
+KlickableElement = require "class.KlickableElement"
 
-local Achievements = Class {
+local UpgradeMenu = Class {
     init = function(self)
-        self.name = "Achievements";
-        self.frame = Frame((_G._persTable.scaledDeviceDim[1] - 256) / 2, (_G._persTable.scaledDeviceDim[2] - 512) / 2,
-            "down", "down", 50, 0, -1500);
+        if _G._persTable.scaledDeviceDim[1] < 640 then
+            self.directory = "assets/gui/480px/";
+            self.widthPx = 480;
+            self.width = 384;
+            self.height = 666;
+            self.buttonHeight = 75;
+            self.buttonOffset = 15;
+            speed = 50;
+        elseif _G._persTable.scaledDeviceDim[1] < 720 then
+            self.widthPx = 640;
+            self.directory = "assets/gui/640px/";
+            self.width = 512;
+            self.height = 888;
+            self.buttonOffset = 20;
+            self.buttonHeight = 96;
+            speed = 67;
+        else
+            self.widthPx = 720;
+            self.directory = "assets/gui/720px/";
+            self.width = 576;
+            self.height = 1024;
+            self.buttonOffset = 30;
+            self.buttonHeight = 106;
+            speed = 75;
+        end
+        self.name = "Shop";
+       self.frame = Frame((_G._persTable.scaledDeviceDim[1] - self.width) / 2, 
+            (_G._persTable.scaledDeviceDim[2] - self.height) / 2, "down", "down", speed, 0, -1500);
         self:create();
     end;
 };
 
----creates the achievement frame
-function Achievements:create()
+---creates the shop frame
+function UpgradeMenu:create()
     --add, create and position all elements on this frame
     self.elementsOnFrame = {
         background = {
@@ -23,36 +47,64 @@ function Achievements:create()
         };
         chart = {
             object = Chart();
-            x = 10;
-            y = 10;
+            x = 0.125 * self.width;
+            y = self.buttonOffset;
+        };
+        button_buy = {
+            object = Loveframes.Create("imagebutton");
+            x = 0.16 * self.width;
+            y = self.height - 2 * self.buttonHeight;
         };
         button_back = {
             object = Loveframes.Create("imagebutton");
-            x = 10;
-            y = 400;
+           x = 0.16 * self.width;
+            y = self.height - self.buttonHeight;
         };
     };
     
     --adjust all elements on this frame
-    self.elementsOnFrame.background.object:SetImage("assets/gui/gui_Test_Bg.png");
+    self.elementsOnFrame.background.object:SetImage(self.directory .. "gui_Test_Bg.png");
     
-    self.elementsOnFrame.button_back.object:SetImage("assets/gui/gui_Test_Button.png")
+    self.elementsOnFrame.button_buy.object:SetImage(self.directory .. "gui_Test_Button.png")
+    self.elementsOnFrame.button_buy.object:SizeToImage()
+    self.elementsOnFrame.button_buy.object:SetText("Buy Upgrade");
+    
+    self.elementsOnFrame.button_back.object:SetImage(self.directory .. "gui_Test_Button.png")
     self.elementsOnFrame.button_back.object:SizeToImage()
     self.elementsOnFrame.button_back.object:SetText("Back");
     
-    self:addAllAchievements();
+    self:addAllUpgrades();
     self:loadValuesFromPersTable();
     
     --onclick events for all buttons
     self.elementsOnFrame.button_back.object.OnClick = function(object)
+        _gui:tempTextOutput();
         _gui:changeFrame(_gui:getFrames().mainMenu);
     end
+    
+    self.elementsOnFrame.button_buy.object.OnClick = function(object)
+        if self.elementsOnFrame.chart.object:getMarkedElement() ~= nil and 
+        _G._persTable.money >= self.elementsOnFrame.chart.object:getMarkedElement().price then
+            self:buyElement();
+            _G._persistence:updateSaveFile();
+        end
+    end
+    
 end
 
---add all achievements written in the data.lua into the chart and adds an OnClick event
-function Achievements:addAllAchievements()
-    for k, v in pairs(_G.data.achievements) do
-        local newKlickableElement = KlickableElement(v.name, v.image_lock, v.image_unlock, v.description, nil, v.nameOnPersTable);
+---called to buy an Item
+function UpgradeMenu:buyElement()
+    self.elementsOnFrame.chart.object:getMarkedElement():disable();
+    local price = self.elementsOnFrame.chart.object:getMarkedElement().price;
+    _G._persTable.money = _G._persTable.money - price;
+end
+
+--add all upgrades written in the data.lua into the chart and adds an OnClick event
+function UpgradeMenu:addAllUpgrades()
+    for k, v in pairs(_G.data.upgrades) do
+        local newKlickableElement = KlickableElement(v.name, self.directory .. v.image, 
+            self. directory .. v.image_disable, v.description, v.price, v.nameOnPersTable);
+        --add OnClick event
         newKlickableElement.object.OnClick = function(object)
             self.elementsOnFrame.chart.object:markElement(newKlickableElement);
         end
@@ -60,41 +112,42 @@ function Achievements:addAllAchievements()
     end
 end
 
-function Achievements:loadValuesFromPersTable()
+
+function UpgradeMenu:loadValuesFromPersTable()
+    --[[
     for k, v in pairs(self.elementsOnFrame.chart.object:getAllElements()) do
         local elementName = v.nameOnPersTable;
-        if _G._persTable.achievements[elementName] then
-            if _G._persTable.achievements[elementName] == true then
+        if _G._persTable.upgrades[elementName] then
+            if _G._persTable.upgrades[elementName] == true then
                 v:disable();
             end
         end
-    end
+    end]]---
 end
 
 ---shows the frame on screen
-function Achievements:draw()
+function UpgradeMenu:draw()
     self.frame:draw(self.elementsOnFrame);
-    self:loadValuesFromPersTable();
 end
 
 ---called to "delete" this frame
-function Achievements:clear()
+function UpgradeMenu:clear()
     self.frame:clear(self.elementsOnFrame)
 end
 
 ---called in the "fly in" state 
-function Achievements:appear()
+function UpgradeMenu:appear()
     self.frame:appear(self.elementsOnFrame)
 end
 
 ---called in the "fly out" state
-function Achievements:disappear()
+function UpgradeMenu:disappear()
     self.frame:disappear(self.elementsOnFrame)
 end
 
 ---return true if the frame is on position /fly in move is finished
-function Achievements:checkPosition()
+function UpgradeMenu:checkPosition()
     return self.frame:checkPosition();
 end
 
-return Achievements;
+return UpgradeMenu;

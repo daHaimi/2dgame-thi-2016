@@ -10,9 +10,16 @@ local FlagButton = Class {
 };
 
 function FlagButton:create()
+    if _G._persTable.scaledDeviceDim[1] < 640 then
+        self.directory = "assets/gui/480px/";
+    elseif _G._persTable.scaledDeviceDim[1] < 720 then
+        self.directory = "assets/gui/640px/";
+    else
+        self.directory = "assets/gui/720px/";
+    end
     self.object = Loveframes.Create("imagebutton");
     self.object:SetText("");
-    self.object:SetImage(self.languages[_persTable.config.language].flagImage);
+    self.object:SetImage(self.directory .. self.languages[_persTable.config.language].flagImage);
     self.object:SetVisible(false);
     self.object.OnClick = function(object)
         self:changeLanguage();
@@ -25,7 +32,7 @@ function FlagButton:changeLanguage()
     else
         _persTable.config.language = "english";
     end
-    self.object:SetImage(self.languages[_persTable.config.language].flagImage);
+    self.object:SetImage(self.directory .. self.languages[_persTable.config.language].flagImage);
     _G._gui:tempTextOutput();
 end
 

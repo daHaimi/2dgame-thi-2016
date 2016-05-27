@@ -2,9 +2,34 @@ Class = require "lib.hump.class";
 
 local Credits = Class {
     init = function(self)
+        if _G._persTable.scaledDeviceDim[1] < 640 then
+            self.directory = "assets/gui/480px/";
+            self.widthPx = 480;
+            self.width = 384;
+            self.height = 666;
+            self.buttonHeight = 75;
+            self.buttonOffset = 15;
+            speed = 50;
+        elseif _G._persTable.scaledDeviceDim[1] < 720 then
+            self.widthPx = 640;
+            self.directory = "assets/gui/640px/";
+            self.width = 512;
+            self.height = 888;
+            self.buttonOffset = 20;
+            self.buttonHeight = 96;
+            speed = 67;
+        else
+            self.widthPx = 720;
+            self.directory = "assets/gui/720px/";
+            self.width = 576;
+            self.height = 1024;
+            self.buttonOffset = 30;
+            self.buttonHeight = 106;
+            speed = 75;
+        end
         self.name = "Credits";
-        self.frame = Frame((_G._persTable.scaledDeviceDim[1] - 256) / 2, (_G._persTable.scaledDeviceDim[2] - 512) / 2,
-            "down", "down", 50, 0, -1500);
+        self.frame = Frame((_G._persTable.scaledDeviceDim[1] - self.width) / 2, 
+            (_G._persTable.scaledDeviceDim[2] - self.height) / 2, "down", "down", speed, 0, -1500);
         self:create();
     end;
 };
@@ -20,15 +45,15 @@ function Credits:create()
         };
         button_back = {
             object = Loveframes.Create("imagebutton");
-            x = 10;
-            y = 10;
+            x = 0.16 * self.width;
+            y = self.height - self.buttonHeight;
         };
     };
     
     --adjust all elements on this frame
-    self.elementsOnFrame.background.object:SetImage("assets/gui/gui_Test_Bg.png");
+    self.elementsOnFrame.background.object:SetImage(self.directory .."gui_Test_Bg.png");
     
-    self.elementsOnFrame.button_back.object:SetImage("assets/gui/gui_Test_Button.png")
+    self.elementsOnFrame.button_back.object:SetImage(self.directory .. "gui_Test_Button.png")
     self.elementsOnFrame.button_back.object:SizeToImage()
     self.elementsOnFrame.button_back.object:SetText("Back");
 
