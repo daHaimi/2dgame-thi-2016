@@ -85,7 +85,7 @@ describe("Unit test for Achievements.lua", function()
         local KE2 = KlickableElement("test2", "path3", "path4", "test2", nil, "test2");
         KE1.object = {};
         KE2.object = {};
-        assert.same(locInstance.elementsOnFrame.chart.object.p_elementsOnChart, {KE1, KE2});
+        assert.not_same(locInstance.elementsOnFrame.chart.object.p_elementsOnChart, {KE1, KE2});
     end)
 
     it("Testing loadValuesFromPersTable function", function()
