@@ -22,10 +22,10 @@ local Level = Class {
         if self.bg ~= nil then -- do not remove this if statement or busted will crash
         self.bgq = love.graphics.newQuad(0, 0, winDim[1], 20000, self.bg:getWidth(), self.bg:getHeight());
         end
-        if _persTable.upgrades.mapBreakthrough1 == 1 then
+        if _persTable.upgrades.mapBreakthrough1 == true then
             self.lowerBoarder = self.lowerBoarder + self.mapBreakthroughBonus1;
         end
-        if _persTable.upgrades.mapBreakthrough2 == 1 then
+        if _persTable.upgrades.mapBreakthrough2 == true then
             self.lowerBoarder = self.lowerBoarder + self.mapBreakthroughBonus2;
         end
         
@@ -136,10 +136,10 @@ function Level:payPlayer()
     if self.levelFinished == 1 and self.levMan:getCurSwarmFactory() ~= nil then
         if self.gotPayed == 0 then -- check if the earned money was already payed
         local fishedVal = self:calcFishedValue();
-        if _G._persTable.upgrades.moneyMult == 1 then
+        if _G._persTable.upgrades.moneyMult == true then
             self.roundValue = self:multiplyFishedValue(2.5, fishedVal);
             self.gotPayed = 1;
-            _G._persTable.upgrades.moneyMult = 0;
+            _G._persTable.upgrades.moneyMult = false;
         else
             self.roundValue = fishedVal;
             self.gotPayed = 1;
@@ -201,7 +201,7 @@ end
 --- Try to activate the god Mode.
 -- @return When the god mode was successfully activated it returns 1 otherwise 0.
 function Level:activateGodMode()
-    if _G._persTable.upgrades.godMode == 1 and self.godModeFuel > 0  
+    if _G._persTable.upgrades.godMode == true and self.godModeFuel > 0  
         and self.godModeActive == 0 and self.direction == 1 then
         self.godModeActive = 1;
         return 1;
