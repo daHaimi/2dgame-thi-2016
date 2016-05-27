@@ -12,6 +12,9 @@ describe("Unit test for KlickableElement.lua", function()
         _G.Loveframes = {
             Create = function(...) return fakeElement(); end
         }
+        _G._persTable = {
+            scaledDeviceDim = {480, 833};
+        };
         locInstance = testClass("testClass", "test/path/testImage.png", "test/path/testImage_disable.png", "test discription", 0, "testName");
     end)
     

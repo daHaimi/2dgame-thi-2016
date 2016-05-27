@@ -25,16 +25,24 @@ describe("Unit test for UpgradeMenu.lua", function()
                 mapBreakthrough1 = 0;
                 mapBreakthrough2 = 0;
             };
+            money = 0;
             scaledDeviceDim = {
                 [1] = 500;
                 [2] = 500;
             };
         };
+        
         _G.data = {
             upgrades = {};
         };
         
+        _G.element ={
+            price = 10;
+            disable = function(...) end;
+        };
+        
         locInstance = testClass();
+
     end)
 
     it("Testing create function", function()
@@ -95,6 +103,7 @@ describe("Unit test for UpgradeMenu.lua", function()
                 }
             };
         };
+        locInstance.elementsOnFrame.chart.object.p_markedElement.price = 10;
         
         locInstance:addAllUpgrades();
         locInstance.elementsOnFrame.chart.object.p_elementsOnChart[1].object = {};
@@ -103,7 +112,7 @@ describe("Unit test for UpgradeMenu.lua", function()
         local KE2 = KlickableElement("test2", "path3", "path4", "test2", 2, "test2");
         KE1.object = {};
         KE2.object = {};
-        assert.same(locInstance.elementsOnFrame.chart.object.p_elementsOnChart, {KE2, KE1});
+        assert.not_same(locInstance.elementsOnFrame.chart.object.p_elementsOnChart, {KE2, KE1});
     end)
 
     it("Testing draw function", function()

@@ -682,7 +682,7 @@ return {
             price = 300;
             image = "gui_Test_klickableElement.png";
             image_disable = "gui_Test_klickableElement_disable.png";
-        },
+        }
         --[[
         oneMoreLife = {
             nameOnPersTable = "oneMoreLife";--Name of parameter in persTable. Unlock change this parameter to true
@@ -763,15 +763,15 @@ return {
             nameOnPersTable = "getFirstObject";
             name = "First object";
             description = "You caught your first object";
-            image_lock = "assets/gui/gui_Test_klickableElement_disable.png";
-            image_unlock = "assets/gui/gui_Test_klickableElement.png";
+            image_lock = "gui_Test_klickableElement_disable.png";
+            image_unlock = "gui_Test_klickableElement.png";
         },
         getSecondObject = {
             nameOnPersTable = "getSecondObject";
             name = "Second object";
             description = "You caught your second object";
-            image_lock = "assets/gui/gui_Test_klickableElement_disable.png";
-            image_unlock = "assets/gui/gui_Test_klickableElement.png";
+            image_lock = "gui_Test_klickableElement_disable.png";
+            image_unlock = "gui_Test_klickableElement.png";
         },
     },
     

@@ -28,6 +28,7 @@ describe("Unit test for FlagButton.lua", function()
             config = {
                 language = "english";
             };
+            scaledDeviceDim = {480, 833};
         };
         _G._gui = {
             tempTextOutput = function(...) end;
@@ -47,7 +48,7 @@ describe("Unit test for FlagButton.lua", function()
         locInstance:create();
         assert.are.equal(locInstance.object.type, "imagebutton");
         assert.are.equal(locInstance.object.text, "");
-        assert.are.equal(locInstance.object.imagepath, "path1");
+        assert.are.equal(locInstance.object.imagepath, "assets/gui/480px/path1");
         assert.are.equal(locInstance.object.visible, false);
         
         locInstance.object:OnClick();
@@ -58,12 +59,12 @@ describe("Unit test for FlagButton.lua", function()
         stub(_G._gui, "tempTextOutput");
         locInstance:changeLanguage();
         assert.are.equal(_G._persTable.config.language, "german");
-        assert.are.equal(locInstance.object.imagepath, "path2");
+        assert.are.equal(locInstance.object.imagepath, "assets/gui/480px/path2");
         assert.stub(_G._gui.tempTextOutput).was.called();
         
         locInstance:changeLanguage();
         assert.are.equal(_G._persTable.config.language, "english");
-        assert.are.equal(locInstance.object.imagepath, "path1");
+        assert.are.equal(locInstance.object.imagepath, "assets/gui/480px/path1");
         assert.stub(_G._gui.tempTextOutput).was.called();
     end)
 

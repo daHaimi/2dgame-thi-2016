@@ -18,13 +18,21 @@ describe("Unit test for Achievements.lua", function()
             end
         }
         _G.data = {
-            achievements = {};
+            achievements = {    
+            };
+            upgrades = {
+                oneMoreLife = {
+                    nameOnPersTable = "moreLife";--Name of parameter in persTable. Unlock change this parameter to true
+                    name = "One more life";--Name shown on the Textfield on the shop
+                    description = "add one more life to your healthbar.";--shown on the shop
+                    price = 100;--price of this item
+                    image = "gui_Test_klickableElement.png";
+                    image_disable = "gui_Test_klickableElement_disable.png";
+                }
+            }
         }
         _G._persTable = {
-            scaledDeviceDim = {
-                [1] = 500;
-                [2] = 500;
-            };
+            scaledDeviceDim = {500, 500};
         };
         _G.Frame = function(...) return Frame; end;
 
