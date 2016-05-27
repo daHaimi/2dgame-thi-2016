@@ -82,7 +82,11 @@ function Persistence:createPersTable()
 
     --- upgrades list in persTable, "0" means unbought
     _G._persTable.upgrades = {
-        speedUp = 0; -- "0" no Speedup for more looke bait.lua
+        firstSpeedUp = true;
+        secondSpeedUp = true;
+        threeMoreLife = false;
+        oneMoreLife = false;
+        twoMoreLife = false;
         moneyMult = 0; -- "0" means no additional money
         moreLife = 0; -- amount of additional lifes
         godMode = 1; -- indicates if the god mode is available or not
@@ -93,12 +97,8 @@ function Persistence:createPersTable()
     };
     --[[
     _G._persTable.upgrades = {
-        firstSpeedUp = false;
-        secondSpeedUp = false;
+
         moneyMulitplier = false;
-        oneMoreLife = false;
-        twoMoreLife = false;
-        threeMoreLife = false;
         godMode = false;
         mapBreakthrough1 = false;
         mapBreakthrough2 = false;

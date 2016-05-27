@@ -35,7 +35,7 @@ local levMan;
 function love.load()
     _G.data = require "data"; -- loading cycle on android requires data to be load on love.load()
     _persistence = Persistence();
-    --_persistence:resetGame();
+    _persistence:resetGame();
     
     local _, _, flags = love.window.getMode();
     love.graphics.setBackgroundColor(30, 180, 240);

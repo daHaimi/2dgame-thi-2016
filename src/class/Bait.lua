@@ -35,13 +35,26 @@ local Bait = Class {
 --- TODO need balancing
 -- a function to check wich upgrades are active for the bait
 function Bait:checkUpgrades()
-    if _G._persTable.upgrades.moreLife > 0 then
-        self.life = self.life + _G._persTable.upgrades.moreLife;
+    if _G._persTable.upgrades.oneMoreLife then
+        self.life = self.life + 1;
+    end
+    
+    if _G._persTable.upgrades.twoMoreLife then
+        self.life = self.life + 1;
+    end
+    
+    if _G._persTable.upgrades.threeMoreLife then
+        self.life = self.life + 1;
     end
     --- speed up while phase 1 and 2
-    if _G._persTable.upgrades.speedUp > 0 then
-        self.speed = self.speed * (1 + _G._persTable.upgrades.speedUp);
+    if _G._persTable.upgrades.firstSpeedUp then
+        self.speed = self.speed + 200;
     end
+    
+    if _G._persTable.upgrades.secondSpeedUp then
+        self.speed = self.speed + 200;
+    end
+    
 end
 
 --- updates the bait and checks for collisions
