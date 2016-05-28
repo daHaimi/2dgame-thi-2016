@@ -4,6 +4,10 @@ Bait = require "class.Bait";
 Level = require "class.Level";
 SwarmFactory = require "class.SwarmFactory";
 Loveframes = require "lib.LoveFrames";
+-- Disable cursor on android (otherwise it leads to errors)
+if love.os == "android" then
+    Loveframes.config["ENABLE_SYSTEM_CURSORS"] = true;
+end
 Gui = require "class.Gui";
 LevelManager = require "class.LevelManager";
 Gamestate = require "lib.hump.gamestate";
