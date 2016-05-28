@@ -122,8 +122,8 @@ describe("Unit test for Bait.lua", function()
         _G._persTable = {};
 
         _G._persTable.upgrades = {
-            speedUp = 0; --- "0" no Speedup
-            moreLife = 0; --- amount of additional lifes
+            moreLife = 0;
+            oneMoreLife = false; --- amount of additional lifes
         };
 
         local myInstance = testClass(locWinDim, levMan);
@@ -136,8 +136,8 @@ describe("Unit test for Bait.lua", function()
         _G._persTable = {};
 
         _G._persTable.upgrades = {
-            speedUp = 0; --- "0" no Speedup
-            moreLife = 1; --- amount of additional lifes
+            moreLife = 0;
+            oneMoreLife = true; --- amount of additional lifes
         };
 
         local myInstance = testClass(locWinDim, levMan);
@@ -146,28 +146,12 @@ describe("Unit test for Bait.lua", function()
         assert.are.same(myInstance.life, exp);
     end)
 
-    it("Test moreLife -1", function()
-        _G._persTable = {};
-
-        _G._persTable.upgrades = {
-            speedUp = 0; --- "0" no Speedup
-            moreLife = -1; --- bei
-        };
-
-        local myInstance = testClass(locWinDim, levMan);
-        local exp = 1;
-        myInstance:checkUpgrades();
-        assert.are.same(myInstance.life, exp);
-    end)
-
-
     --- test for more speed Upgrade
-    it("Test speed 0", function()
+    it("Test speed 1", function()
         _G._persTable = {};
 
         _G._persTable.upgrades = {
-            speedUp = 0; --- "0" no Speedup
-            moreLife = 0; --- amount of additional lifes
+        firstSpeedUp = false; -- more speed
         };
 
         local myInstance = testClass(locWinDim, levMan);
@@ -180,8 +164,7 @@ describe("Unit test for Bait.lua", function()
         _G._persTable = {};
 
         _G._persTable.upgrades = {
-            speedUp = 1; --- "0" no Speedup
-            moreLife = 0; --- amount of additional lifes
+              firstSpeedUp = true;
         };
 
         local myInstance = testClass(locWinDim, levMan);
@@ -194,8 +177,8 @@ describe("Unit test for Bait.lua", function()
         _G._persTable = {};
 
         _G._persTable.upgrades = {
-            speedUp = -1; --- weil kleiner null nix passiert wegen if
-            moreLife = 0; --- amount of additional lifes
+        firstSpeedUp = false; -- more speed
+        secondSpeedUp = false; -- more speed
         };
 
         local myInstance = testClass(locWinDim, levMan);
@@ -314,8 +297,10 @@ describe("Unit test for Bait.lua", function()
             activateShortGM = function(...) end;
             isFinished = function() return 0 end;
             getDirection = function(...) return 1 end;
-            };
-        _G._persTable.upgrades.moreLife = 1;
+          };
+          _G._persTable.upgrades.moreLife = 0;
+        _G._persTable.upgrades.oneMoreLife = true;
+        
         myInstance:collisionDetected(fishable, 1);
         assert.are.same(1, myInstance.numberOfHits);
     end)
@@ -329,8 +314,9 @@ describe("Unit test for Bait.lua", function()
             isFinished = function() return 0 end;
             getDirection = function(...) return 1 end;
             switchToPhase2 = function(...) end;
-            };
+          };
         _G._persTable.upgrades.moreLife = 0;
+        _G._persTable.upgrades.oneMoreLife = false;
         myInstance:collisionDetected(fishable, 1);
         assert.are.same(1, myInstance.numberOfHits);
     end)
@@ -344,8 +330,9 @@ describe("Unit test for Bait.lua", function()
             isFinished = function() return 0 end;
             getDirection = function(...) return 1 end;
             switchToPhase2 = function(...) end;
-            };
+          };
         _G._persTable.upgrades.moreLife = 0;
+        _G._persTable.upgrades.oneMoreLife = false;
         myInstance:collisionDetected(fishable, 1);
         assert.are.same(0, myInstance.numberOfHits);
     end)
@@ -369,8 +356,9 @@ describe("Unit test for Bait.lua", function()
                 }
             end;
 
-        }
+      }
         _G._persTable.upgrades.moreLife = 0;
+        _G._persTable.upgrades.oneMoreLife = false;
         myInstance:collisionDetected(fishable, 1);
         assert.are.same(0, myInstance.numberOfHits);
     end)
