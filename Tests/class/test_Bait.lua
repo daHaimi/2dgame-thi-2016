@@ -139,12 +139,40 @@ describe("Unit test for Bait.lua", function()
         assert.are.same(myInstance.life, exp);
     end)
 
-    it("Test moreLife 1", function()
+    it("Test oneMoreLife", function()
         _G._persTable = {};
 
         _G._persTable.upgrades = {
             moreLife = 0;
             oneMoreLife = true; --- amount of additional lifes
+        };
+
+        local myInstance = testClass(locWinDim, levMan);
+        local exp = 2;
+        myInstance:checkUpgrades();
+        assert.are.same(myInstance.life, exp);
+    end)
+  
+      it("Test twoMoreLife", function()
+        _G._persTable = {};
+
+    _G._persTable.upgrades = {
+            moreLife = 0;
+            twoMoreLife = true; --- amount of additional lifes
+        };
+
+        local myInstance = testClass(locWinDim, levMan);
+        local exp = 2;
+        myInstance:checkUpgrades();
+        assert.are.same(myInstance.life, exp);
+    end)
+
+    it("Test threeMoreLife", function()
+        _G._persTable = {};
+
+        _G._persTable.upgrades = {
+            moreLife = 0;
+            threeMoreLife = true; --- amount of additional lifes
         };
 
         local myInstance = testClass(locWinDim, levMan);
