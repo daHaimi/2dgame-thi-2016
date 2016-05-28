@@ -19,6 +19,12 @@ local Persistence = Class{
             self:createPersTable();
             self:updateSaveFile();
         end        
+        
+        --- creates a file or removes all contents if the file exist in order to simulate a temporary file
+        -- if you want to clear the contents of the file manually use:
+        -- 1) tmpfile:close();
+        -- 2) tmpfile = io.open("tmp.lua", "w+");
+        tmpfile = io.open("tmp.lua", "w+");
 end};
 
 
