@@ -83,6 +83,12 @@ function love.draw()
         love.graphics.scale(1/scaleFactor, 1/scaleFactor);
     end
     
+    if love.system.getOS() == "Android" then
+        local js = love.joystick.getJoysticks()[1];
+        local ax = js:getAxis(1);
+        love.graphics.print("Axis: " .. 1 .. "\n" .. "Value: " .. ax, 10, 200);
+    end
+
     Loveframes.draw()
     --[[prints the State name and output values.
     This function will be replaced in a later version]] --
@@ -102,16 +108,6 @@ function love.update(dt)
         levMan:getCurSwarmFactory():update();
     end
     TEsound.cleanup();
-end
-
---- Callback function triggered when the phone is tilt (android)
--- @param joystick The Joystick object
--- @param axis The axis number
--- @param value the axis value
-function love.joystickaxis( joystick, axis, value )
-    if love.system.getOS() == "Android" then
-        love.graphics.print("Axis: " .. axis .. "\n" .. "Value: " .. value, 10, 200);
-    end
 end
 
 --- Callback function triggered when the mouse is moved.
