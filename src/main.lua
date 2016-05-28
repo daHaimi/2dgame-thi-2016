@@ -110,8 +110,7 @@ end
 -- @param value the axis value
 function love.joystickaxis( joystick, axis, value )
     if love.system.getOS() == "Android" then
-        _gui.p_textOutput = _gui.p_textOutput .. "\n" ..
-            "Axis: " .. axis .. "\n" .. "Value: " .. value;
+        love.graphics.print("Axis: " .. axis .. "\n" .. "Value: " .. value, 10, 200);
     end
 end
 
