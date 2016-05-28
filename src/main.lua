@@ -86,7 +86,7 @@ function love.draw()
     if love.system.getOS() == "Android" then
         local js = love.joystick.getJoysticks()[1];
         local ax = js:getAxis(1);
-        love.graphics.print("Axis: " .. 1 .. "\n" .. "Value: " .. ax, 10, 200);
+        love.graphics.print("Axis: 1, Value: " .. js:getAxis(1) .. "\nAxis: 2, Value: " .. js:getAxis(2) .. "\nAxis: 3, Value: " .. js:getAxis(3), 100, 200);
     end
 
     Loveframes.draw()
