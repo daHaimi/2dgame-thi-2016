@@ -104,6 +104,17 @@ function love.update(dt)
     TEsound.cleanup();
 end
 
+--- Callback function triggered when the phone is tilt (android)
+-- @param joystick The Joystick object
+-- @param axis The axis number
+-- @param value the axis value
+function love.joystickaxis( joystick, axis, value )
+    if love.system.getOS() == "Android" then
+        _gui.p_textOutput = _gui.p_textOutput .. "\n" ..
+            "Axis: " .. axis .. "\n" .. "Value: " .. value;
+    end
+end
+
 --- Callback function triggered when the mouse is moved.
 -- @param x The mouse position on the x-axis.
 -- @param _ The mouse position on the y-axis. unused
