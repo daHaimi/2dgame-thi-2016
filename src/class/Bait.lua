@@ -12,6 +12,7 @@ local Bait = Class {
         self.posXBait = (winDim[1] / 2) - (self.size / 2);
         self.levMan = levelManager;
         local yPos = (self.winDim[2] / 2) - (self.size / 2); -- FIXME unused local
+        self.image = love.graphics.newImage("assets/hamster_hooker.png");
     end;
     levMan = nil;
     size = 10;
@@ -35,13 +36,29 @@ local Bait = Class {
 --- TODO need balancing
 -- a function to check wich upgrades are active for the bait
 function Bait:checkUpgrades()
-    if _G._persTable.upgrades.moreLife > 0 then
-        self.life = self.life + _G._persTable.upgrades.moreLife;
+    if _G._persTable.upgrades.oneMoreLife then
+        self.life = self.life + 1;
+        _G._persTable.upgrades.moreLife = _G._persTable.upgrades.moreLife + 1;
+    end
+    
+    if _G._persTable.upgrades.twoMoreLife then
+        self.life = self.life + 1;
+        _G._persTable.upgrades.moreLife = _G._persTable.upgrades.moreLife + 1;
+    end
+    
+    if _G._persTable.upgrades.threeMoreLife then
+        self.life = self.life + 1;
+        _G._persTable.upgrades.moreLife = _G._persTable.upgrades.moreLife + 1;
     end
     --- speed up while phase 1 and 2
-    if _G._persTable.upgrades.speedUp > 0 then
-        self.speed = self.speed * (1 + _G._persTable.upgrades.speedUp);
+    if _G._persTable.upgrades.firstSpeedUp then
+        self.speed = self.speed + 200;
     end
+    
+    if _G._persTable.upgrades.secondSpeedUp then
+        self.speed = self.speed + 200;
+    end
+    
 end
 
 --- updates the bait and checks for collisions
@@ -156,12 +173,12 @@ end
 
 --- implements drawing interface
 function Bait:draw()
-    if self.levMan:getCurLevel():getGodModeStat() == 0 then
-        love.graphics.setColor(127, 0, 255);
-    else
-        love.graphics.setColor(255, 0, 0);
+    local Shaders = require "class.Shaders";
+    if self.levMan:getCurLevel():getGodModeStat() ~= 0 then
+        Shaders:hueAjust(0.5);
     end
-    love.graphics.rectangle("fill", self.xPos - 0.5 * self.size, self.yPos - 0.5 * self.size, self.size, self.size);
+    love.graphics.draw(self.image, self.xPos - 32, self.yPos - 120); -- FIXME magic number
+    Shaders:clear();
 end
 
 --- Determines the capped X position of the Bait (SpeedLimit)

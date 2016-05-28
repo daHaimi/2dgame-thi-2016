@@ -13,6 +13,10 @@ describe("Unit test for Chart.lua", function()
             Create = function(...) return fakeElement(); end,
         }
         
+        _G._persTable = {
+            scaledDeviceDim = {480, 833};
+        };
+        
         Element = {
             visible = nil;
             x = nil;

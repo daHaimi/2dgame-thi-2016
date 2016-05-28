@@ -4,6 +4,10 @@ Bait = require "class.Bait";
 Level = require "class.Level";
 SwarmFactory = require "class.SwarmFactory";
 Loveframes = require "lib.LoveFrames";
+-- Disable cursor on android (otherwise it leads to errors)
+if love.system.getOS() == "Android" or love.system.getOS() == "iOS" then
+    Loveframes.config["ENABLE_SYSTEM_CURSORS"] = false;
+end
 Gui = require "class.Gui";
 LevelManager = require "class.LevelManager";
 Gamestate = require "lib.hump.gamestate";
@@ -36,7 +40,7 @@ local levMan;
 function love.load()
     _G.data = require "data"; -- loading cycle on android requires data to be load on love.load()
     _persistence = Persistence();
-    --_persistence:resetGame();
+    _persistence:resetGame();
     
     local _, _, flags = love.window.getMode();
     love.graphics.setBackgroundColor(30, 180, 240);
@@ -80,6 +84,12 @@ function love.draw()
         love.graphics.scale(1/scaleFactor, 1/scaleFactor);
     end
     
+    if love.system.getOS() == "Android" then
+        local js = love.joystick.getJoysticks()[1];
+        local ax = js:getAxis(1);
+        love.graphics.print("Axis: 1, Value: " .. js:getAxis(1) .. "\nAxis: 2, Value: " .. js:getAxis(2) .. "\nAxis: 3, Value: " .. js:getAxis(3), 100, 200);
+    end
+
     Loveframes.draw()
     --[[prints the State name and output values.
     This function will be replaced in a later version]] --
