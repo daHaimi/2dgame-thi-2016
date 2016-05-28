@@ -18,12 +18,6 @@ describe("Unit test for UpgradeMenu.lua", function()
         _G.Frame = function(...) return Frame; end;
         _G._persTable = {
             upgrades = {
-                speedUp = 0;
-                moneyMult = 0;
-                moreLife = 0;
-                godMode = 0;
-                mapBreakthrough1 = 0;
-                mapBreakthrough2 = 0;
             };
             money = 0;
             scaledDeviceDim = {
