@@ -95,8 +95,16 @@ fi
 cp bin/game.love tmp/assets/game.love
 rm tmp/META-INF/*.SF 2> /dev/null
 rm tmp/META-INF/*. 2> /dev/null
-#sed -i 's/LÖVE for Android/2D Game THI 2016/g' tmp/AndroidManifest.xml
-#sed -i 's/org.love2d.android/de.thi.projekt.ss16/g' tmp/AndroidManifest.xml
+# update Mainfest-config
+sed -i 's/LÖVE for Android/S.H.I.T/g' tmp/AndroidManifest.xml
+sed -i 's/@drawable\/love/@drawable\/shit/g' tmp/AndroidManifest.xml
+sed -i '/s/screenOrientation="landscape"/screenOrientation="portrait"/g' tmp/AndroidManifest.xml
+# create iconset
+convert -resize 48x48 -background none src/assets/icon/hamster.svg tmp/res/drawable-mdpi-v4/shit.png
+convert -resize 72x72 -background none src/assets/icon/hamster.svg tmp/res/drawable-hdpi-v4/shit.png
+convert -resize 96x96 -background none src/assets/icon/hamster.svg tmp/res/drawable-xhdpi-v4/shit.png
+convert -resize 144x144 -background none src/assets/icon/hamster.svg tmp/res/drawable-xxhdpi-v4/shit.png
+convert -resize 192x192 -background none src/assets/icon/hamster.svg tmp/res/drawable-xxxhdpi-v4/shit.png
 cat tmp/AndroidManifest.xml
 /usr/local/bin/apktool b tmp -o bin/${GAME_NAME}-${BUILD_NR}-android.apk -a /usr/bin/aapt -p frmtmp
 rm -rf tmp frmtmp
