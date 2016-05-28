@@ -18,6 +18,9 @@ require "lib.TEsound";
 _G.math.inf = 1 / 0;
 _G._gui = nil;
 _G._persistence = nil;
+_G._androidConfig = {};
+-- Font for android debugging
+_G.myfont = love.graphics.newFont(30);
 
 -- Game Title
 love.window.setTitle("Simon Hamsters insane trip");
@@ -52,6 +55,21 @@ function love.load()
     levMan = LevelManager();
     levMan:newLevel("assets/testbg.png", 1, _G.data);
 
+    -- Get Accelerometer if android
+    if love.system.getOS() == "Android" then
+        local joy = love.joystick.getJoysticks();
+        for k, js in pairs(joy) do
+            if js:getName() == "Android Accelerometer" then
+                _G._androidConfig.joystick = js;
+            end
+        end
+        if _G._data and _G._data.android then
+            _G._androidConfig.maxTilt = _G._data.android.maxTilt;
+        else 
+            _G._androidConfig.maxTilt = .3;
+        end
+    end
+
     _gui = Gui();
     _gui:tempTextOutput();
     _gui:start();
@@ -83,16 +101,17 @@ function love.draw()
         love.graphics.scale(1/scaleFactor, 1/scaleFactor);
     end
     
-    if love.system.getOS() == "Android" then
-        local js = love.joystick.getJoysticks()[1];
-        local ax = js:getAxis(1);
-        love.graphics.print("Axis: 1, Value: " .. js:getAxis(1) .. "\nAxis: 2, Value: " .. js:getAxis(2) .. "\nAxis: 3, Value: " .. js:getAxis(3), 100, 200);
+    if _G._androidConfig.joyPos then
+        love.graphics.push();
+        love.graphics.setFont(_G.myfont);
+        love.graphics.print(_G._androidConfig.joyPos, 100, 100);
+        love.graphics.pop();
     end
 
-    Loveframes.draw()
+    Loveframes.draw();
     --[[prints the State name and output values.
     This function will be replaced in a later version]] --
-    _gui:tempDrawText()
+    _gui:tempDrawText();
 end
 
 --- This function is called continuously by the love.run().
@@ -107,6 +126,21 @@ function love.update(dt)
         levMan:getCurLevel():update(dt, levMan:getCurPlayer());
         levMan:getCurSwarmFactory():update();
     end
+    -- if love.load had been executed and on android
+    if love.system.getOS() == "Android" then
+        -- shift [-30,30] to [0,60] and scale to windim[1]
+        local joyPos = (_G._androidConfig.joystick:getAxis(1) + _G._androidConfig.maxTilt) * (_G._persTable.winDim[1] / (_G._androidConfig.maxTilt * 2));
+        _G._androidConfig.joyPos = joyPos;
+        if joyPos < (levMan:getCurPlayer():getSize() / 2) then
+            levMan:getCurPlayer():setPosXMouse(0);
+        else
+            if joyPos > _G._persTable.winDim[1] - levMan:getCurPlayer():getSize() then
+                levMan:getCurPlayer():setPosXMouse(_G._persTable.winDim[1] - levMan:getCurPlayer():getSize());
+            else
+                levMan:getCurPlayer():setPosXMouse(joyPos - (levMan:getCurPlayer():getSize() / 2));
+            end
+        end
+    end
     TEsound.cleanup();
 end
 
@@ -114,7 +148,7 @@ end
 -- @param x The mouse position on the x-axis.
 -- @param _ The mouse position on the y-axis. unused
 function love.mousemoved(x, _)
-    if levMan:getCurPlayer() then
+    if levMan:getCurPlayer() and love.system.getOS() ~= "Android" then
         if x < (levMan:getCurPlayer():getSize() / 2) then
             levMan:getCurPlayer():setPosXMouse(0);
         else
