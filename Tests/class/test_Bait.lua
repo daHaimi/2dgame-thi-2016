@@ -301,15 +301,9 @@ describe("Unit test for Bait.lua", function()
             activateShortGM = function(...) end;
             isFinished = function() return 0 end;
             getDirection = function(...) return 1 end;
-<<<<<<< HEAD
           };
-          _G._persTable.upgrades.moreLife = 0;
-        _G._persTable.upgrades.oneMoreLife = true;
-        
-=======
-        };
         _G._persTable.upgrades.moreLife = 1;
->>>>>>> 0397822d537e0ae446403cad534d5161222f1646
+        _G._persTable.upgrades.oneMoreLife = true;
         myInstance:collisionDetected(fishable, 1);
         assert.are.same(1, myInstance.numberOfHits);
     end)
@@ -323,11 +317,7 @@ describe("Unit test for Bait.lua", function()
             isFinished = function() return 0 end;
             getDirection = function(...) return 1 end;
             switchToPhase2 = function(...) end;
-<<<<<<< HEAD
-          };
-=======
         };
->>>>>>> 0397822d537e0ae446403cad534d5161222f1646
         _G._persTable.upgrades.moreLife = 0;
         _G._persTable.upgrades.oneMoreLife = false;
         myInstance:collisionDetected(fishable, 1);
@@ -343,11 +333,7 @@ describe("Unit test for Bait.lua", function()
             isFinished = function() return 0 end;
             getDirection = function(...) return 1 end;
             switchToPhase2 = function(...) end;
-<<<<<<< HEAD
-          };
-=======
         };
->>>>>>> 0397822d537e0ae446403cad534d5161222f1646
         _G._persTable.upgrades.moreLife = 0;
         _G._persTable.upgrades.oneMoreLife = false;
         myInstance:collisionDetected(fishable, 1);
@@ -372,12 +358,7 @@ describe("Unit test for Bait.lua", function()
                 };
             }
             end;
-<<<<<<< HEAD
-
-      }
-=======
         }
->>>>>>> 0397822d537e0ae446403cad534d5161222f1646
         _G._persTable.upgrades.moreLife = 0;
         _G._persTable.upgrades.oneMoreLife = false;
         myInstance:collisionDetected(fishable, 1);
