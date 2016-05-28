@@ -1,5 +1,6 @@
 Class = require "lib.hump.class";
 Healthbar = require "class.Healthbar";
+ScoreDisplay = require "class.ScoreDisplay";
 
 local InGame = Class {
     init = function(self)
@@ -13,27 +14,18 @@ local InGame = Class {
 function InGame:create()
     --add, create and position all elements on this frame
     self.elementsOnFrame = {
-        button_pause = {
-            object = Loveframes.Create("imagebutton");
-            x = 10;
-            y = 10;
-        };
         healthbar = {
             object = Healthbar();
             x = 0;
             y = 0;
+        },
+        score = {
+            object = ScoreDisplay();
+            x = 0;
+            y = 0;
         }
+        
     };
-    
-    --adjust all elements on this frame
-    self.elementsOnFrame.button_pause.object:SetImage("assets/gui/gui_Test_Button.png")
-    self.elementsOnFrame.button_pause.object:SizeToImage()
-    self.elementsOnFrame.button_pause.object:SetText("Pause");
-    
-    --onclick events for all buttons
-    self.elementsOnFrame.button_pause.object.OnClick = function(object)
-        _gui:changeFrame(_gui:getFrames().pause);
-    end
 end
 
 ---shows the elements on screen

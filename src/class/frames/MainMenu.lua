@@ -15,57 +15,51 @@ local MainMenu = Class {
 function MainMenu:create()
     --add, create and position all elements on this frame
     self.elementsOnFrame = {
-        background = {
-            object = Loveframes.Create("image");
-            x = 0;
-            y = 0;
-        };
         button_start = {
             object = Loveframes.Create("imagebutton");
-            x = 10;
+            x = 0;
             y = 10;
         };
         button_upgradeMenu = {
             object = Loveframes.Create("imagebutton");
-            x = 10;
-            y = 50;
+            x = 0;
+            y = 90;
         };
         button_dictionary = {
             object = Loveframes.Create("imagebutton");
-            x = 10;
-            y = 90;
+            x = 0;
+            y = 170;
         };
         button_achievements = {
             object = Loveframes.Create("imagebutton");
-            x = 10;
-            y = 130;
+            x = 0;
+            y = 250;
         };
         button_options = {
             object = Loveframes.Create("imagebutton");
-            x = 10;
-            y = 170;
+            x = 0;
+            y = 330;
         };
         button_credits = {
             object = Loveframes.Create("imagebutton");
-            x = 10;
-            y = 210;
+            x = 0;
+            y = 410;
         };
         
         button_close = {
             object = Loveframes.Create("imagebutton");
-            x = 10;
-            y = 250;
+            x = 0;
+            y = 490;
         };
         
         language = {
             object = FlagButton();
-            x = 187;
-            y = 463;
+            x = 100;
+            y = 560;
         };
     };
     
     --adjust all elements on this frame
-    self.elementsOnFrame.background.object:SetImage("assets/gui/gui_Test_Bg.png");
     
     self.elementsOnFrame.button_start.object:SetImage("assets/gui/gui_Test_Button.png");
     self.elementsOnFrame.button_start.object:SizeToImage();

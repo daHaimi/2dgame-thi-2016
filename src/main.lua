@@ -14,6 +14,7 @@ require "lib.TEsound";
 _G.math.inf = 1 / 0;
 _G._gui = nil;
 _G._persistence = nil;
+_G.testScore = 0;
 
 -- Game Title
 love.window.setTitle("Simon Hamsters insane trip");

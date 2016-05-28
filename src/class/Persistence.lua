@@ -70,7 +70,7 @@ function Persistence:createPersTable()
         achievements = {};
         config = {};
         fishCaught = {};
-        money = 0;
+        money = 1000;
         lastLevel = 1;
         winDim = {};
         phase = 1;

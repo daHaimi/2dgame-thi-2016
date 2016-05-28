@@ -125,7 +125,8 @@ function Level:draw(bait)
     love.graphics.draw(self.bg, self.bgq, 0, self.posY);
     bait:draw();
     if self.levelFinished == 1 then
-        self:printResult();
+        _gui:changeFrame(_gui:getFrames().score);
+        --self:printResult();
     end
 end
 
@@ -338,6 +339,7 @@ function Level:printResult()
         end
         ypos = ypos + 15;
         love.graphics.print("Earned: " .. self:calcFishedValue() .. " Coins", xpos, ypos);
+        _G.testScore = self:calcFishedValue();
     else
         ypos = ypos + 15;
         love.graphics.print("Nothing caught", xpos, ypos);

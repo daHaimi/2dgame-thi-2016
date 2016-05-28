@@ -70,6 +70,10 @@ function Gui:update()
             end
         end
     end
+    if self:drawGame() then
+        self.p_myFrames.inGame.elementsOnFrame.score.object:update();
+    end
+    
 end
 
 ---Set to start the flyIn/Out of the frames
@@ -103,7 +107,7 @@ end
 
 ---print the state-name and values
 function Gui:tempDrawText()
-    love.graphics.print(self.p_states.currentState.name, 0, 0);
+    --love.graphics.print(self.p_states.currentState.name, 0, 0);
     if self.p_states.currentState == self.p_myFrames.mainMenu then
         self:tempTextOutput();
         love.graphics.print(self.p_textOutput, 0, 20);

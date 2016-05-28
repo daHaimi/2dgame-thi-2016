@@ -18,15 +18,20 @@ function Score:create()
             x = 0;
             y = 0;
         };
+        score = {
+            object = Loveframes.Create("text");
+            x = 0;
+            y = 0;
+        };
         button_retry = {
             object = Loveframes.Create("imagebutton");
             x = 10;
-            y = 10;
+            y = 30;
         };
         button_backToMenu = {
             object = Loveframes.Create("imagebutton");
             x = 10;
-            y = 50;
+            y = 110;
         };
     };
     
@@ -54,6 +59,7 @@ end
 
 ---shows the frame on screen
 function Score:draw()
+    self.elementsOnFrame.score.object:SetText(_G.testScore);
     self.frame:draw(self.elementsOnFrame);
 end
 
