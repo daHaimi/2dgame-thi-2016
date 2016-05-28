@@ -10,18 +10,18 @@ describe("Unit test for Bait.lua", function()
     local locWinDim = { 400, 800 };
     local locLevel = {
         moved = 4;
-        activateShortGM = function (...) end;
+        activateShortGM = function(...) end;
         isFinished = function(...) return 0 end;
         getMoved = function() return 4 end;
         getDirection = function() return 1 end;
     }
-    
+
     before_each(function()
         _G.levMan = {
             curLevel = locLevel,
             curPlayer = nil,
             curSwarmFac = {
-            createdFishables = {
+                createdFishables = {
                     {
                         getHitboxHeight = function(...) return 10; end;
                         getHitboxWidth = function(...) return 10; end;
@@ -30,8 +30,7 @@ describe("Unit test for Bait.lua", function()
                         setToCaught = function(...) end;
                         setSpeedMultiplicator = function(...) end;
                         caught = false;
-                        hitbox = {
-                        };
+                        hitbox = {};
                     }
                 },
                 getCreatedFishables = function(...) return _G.levMan.curSwarmFac.createdFishables end;
@@ -40,14 +39,24 @@ describe("Unit test for Bait.lua", function()
             getCurPlayer = function(...) return _G.levMan.curPlayer end,
             getCurLevel = function(...) return _G.levMan.curLevel end
         }
-            
+
         _G.love = {
             mouse = {
                 setPosition = function(...) end
             },
             graphics = {
                 setColor = function(...) end;
+                draw = function(...) end;
                 rectangle = function(...) end;
+                newImage = function(...)
+                    return 0;
+                end;
+                newShader = function(...)
+                    return {
+                        send = function(...) end;
+                    };
+                end;
+                setShader = function(...) end;
             }
         }
         _G._gui = {
@@ -64,6 +73,7 @@ describe("Unit test for Bait.lua", function()
             };
         };
         _G._gui.getFrames = function(...) return _G._gui.myFrames; end;
+
         locInstance = testClass(locWinDim, levMan);
     end)
 
@@ -73,33 +83,31 @@ describe("Unit test for Bait.lua", function()
     end)
 
     it("Testing Update", function()
-        local myInstance = testClass(locWinDim, levMan);        
+        local myInstance = testClass(locWinDim, levMan);
         myInstance:update();
         assert.are.same(0.495, myInstance.modifier);
-        
+
         myInstance.levMan.curLevel = {
             getMoved = function(...) return -4 end;
             isFinished = function(...) return 0 end;
-            getDirection = function () return -1; end;
+            getDirection = function() return -1; end;
             isFinished = function() return 0 end;
             getYPos = function() return 400 end;
-            getSwarmFactory = function() return 
-            { 
+            getSwarmFactory = function() return
+            {
                 createdFishables = {
                     {
                         setToCaught = function(...) end;
                         setSpeedMultiplicator = function(...) end;
                         caught = false;
-                        hitbox = {
-                            
-                            };
-                        }
-                    };
-                }
-            end,            
+                        hitbox = {};
+                    }
+                };
+            }
+            end,
             getCreatedFishables = function(...) return myInstance.levMan.curLevel:getSwarmFactory().createdFishables end;
         }
-        
+
         myInstance:update();
         assert.are.same(0.5, myInstance.modifier);
     end)
@@ -265,18 +273,16 @@ describe("Unit test for Bait.lua", function()
     end)
 
     it("Test draw", function()
+        --local shadersClass = require "src.class.Shaders";
         local myInstance = testClass(locWinDim, levMan);
-        local loveMock = mock(_G.love, true);
-        myInstance.levMan.curLevel = {getGodModeStat = function() return 0; end};
-        myInstance.xPos = 500;
-        myInstance.yPos = 400;
-        myInstance.size = 10;
+        local loveGraphicsMock = mock(_G.love.graphics, true);
+
+        myInstance.levMan.curLevel.getGodModeStat = function() return 0 end;
+        myInstance.xPos = 0;
+        myInstance.yPos = 0;
+
         myInstance:draw();
-        assert.spy(loveMock.graphics.setColor).was_called_with(127, 0, 255);
-        myInstance.levMan.curLevel = {getGodModeStat = function() return 1; end};
-        myInstance:draw();
-        assert.spy(loveMock.graphics.setColor).was_called_with(255, 0, 0);
-        assert.spy(loveMock.graphics.rectangle).was_called_with("fill", 495, 395, 10, 10);
+        assert.spy(loveGraphicsMock.draw).was_called();
     end)
 
     it("Test getXPos", function()
@@ -290,31 +296,31 @@ describe("Unit test for Bait.lua", function()
             sleepingPillDuration = 600; -- duration of the effect of the sleeping pill
             sleepingPillSlow = 0.3; -- sets the slow factor of the sleeping pill 0.25 = 25% of the usual movement
         };
-        
-        local myInstance = testClass (locWinDim, levMan);
+
+        local myInstance = testClass(locWinDim, levMan);
         myInstance.sleepingPillDuration = 0;
         myInstance:sleepingPillHitted(FishableObject);
-        
-        
+
+
         assert.are.same(600, myInstance.sleepingPillDuration);
     end)
 
     it("Test collisionDetected with a sleeping pill", function()
         local myInstance = testClass(locWinDim, levMan);
-        local fishable = {getName = function() return "sleepingPill" end};
+        local fishable = { getName = function() return "sleepingPill" end };
         myInstance:collisionDetected(fishable, 1);
         assert.are.same(0, myInstance.numberOfHits);
     end)
 
     it("Test collisionDetected with a fishable and an extra life", function()
         local myInstance = testClass(locWinDim, levMan);
-        local fishable = {getName = function() return "deadFish" end};
-        myInstance.levMan.curLevel = { 
+        local fishable = { getName = function() return "deadFish" end };
+        myInstance.levMan.curLevel = {
             getGodModeStat = function(...) return 0 end;
             activateShortGM = function(...) end;
             isFinished = function() return 0 end;
             getDirection = function(...) return 1 end;
-            };
+        };
         _G._persTable.upgrades.moreLife = 1;
         myInstance:collisionDetected(fishable, 1);
         assert.are.same(1, myInstance.numberOfHits);
@@ -322,14 +328,14 @@ describe("Unit test for Bait.lua", function()
 
     it("Test collisionDetected with a fishable and no extra life", function()
         local myInstance = testClass(locWinDim, levMan);
-        local fishable = {getName = function() return "deadFish" end};
-        myInstance.levMan.curLevel = { 
+        local fishable = { getName = function() return "deadFish" end };
+        myInstance.levMan.curLevel = {
             getGodModeStat = function(...) return 0 end;
             activateShortGM = function(...) end;
             isFinished = function() return 0 end;
             getDirection = function(...) return 1 end;
             switchToPhase2 = function(...) end;
-            };
+        };
         _G._persTable.upgrades.moreLife = 0;
         myInstance:collisionDetected(fishable, 1);
         assert.are.same(1, myInstance.numberOfHits);
@@ -337,14 +343,14 @@ describe("Unit test for Bait.lua", function()
 
     it("Test collisionDetected with a fishable and godMode", function()
         local myInstance = testClass(locWinDim, levMan);
-        local fishable = {getName = function() return "deadFish" end};
-        myInstance.levMan.curLevel = { 
+        local fishable = { getName = function() return "deadFish" end };
+        myInstance.levMan.curLevel = {
             getGodModeStat = function(...) return 1 end;
             activateShortGM = function(...) end;
             isFinished = function() return 0 end;
             getDirection = function(...) return 1 end;
             switchToPhase2 = function(...) end;
-            };
+        };
         _G._persTable.upgrades.moreLife = 0;
         myInstance:collisionDetected(fishable, 1);
         assert.are.same(0, myInstance.numberOfHits);
@@ -352,23 +358,22 @@ describe("Unit test for Bait.lua", function()
 
     it("Test collisionDetected with a fishable and godMode", function()
         local myInstance = testClass(locWinDim, levMan);
-        local fishable = {getName = function() return "deadFish" end};
-        myInstance.levMan.curLevel = { 
+        local fishable = { getName = function() return "deadFish" end };
+        myInstance.levMan.curLevel = {
             getGodModeStat = function(...) return 1 end;
             activateShortGM = function(...) end;
             getDirection = function(...) return -1 end;
             switchToPhase2 = function(...) end;
             isFinished = function() return 0 end;
             addToCaught = function(...) end;
-            getSwarmFactory = function(...) return { 
-                    createdFishables = {
-                        {
-                            setToCaught = function(...) end;
-                        }
-                    };
-                }
+            getSwarmFactory = function(...) return {
+                createdFishables = {
+                    {
+                        setToCaught = function(...) end;
+                    }
+                };
+            }
             end;
-
         }
         _G._persTable.upgrades.moreLife = 0;
         myInstance:collisionDetected(fishable, 1);
@@ -379,7 +384,10 @@ describe("Unit test for Bait.lua", function()
         levMan.curLevel = {
             getGodModeStat = function(...) return 0 end;
             moved = 4;
-            activateShortGM = function (...) end;
+            getGodModeStat = function(...)
+                return 0;
+            end;
+            activateShortGM = function(...) end;
             getMoved = function() return 4 end;
             getDirection = function() return 1 end;
             switchToPhase2 = function() end;
@@ -394,17 +402,14 @@ describe("Unit test for Bait.lua", function()
                 getHitboxXPosition = function(...) return 15; end;
                 getHitboxYPosition = function(...) return 20; end;
                 getName = function(...) return "deadFish"; end;
-                     hitbox = {
-                    {
-                        
-                    }
+                hitbox = {
+                    {}
                 }
             }
         }
         myInstance:checkForCollision(someFishables, 21);
         myInstance:checkForCollision(someFishables, 19);
         myInstance:checkForCollision(someFishables, 20);
-        
     end)
 
     it("Test setPosXMouse", function()
@@ -418,7 +423,7 @@ describe("Unit test for Bait.lua", function()
         myInstance.posXMouse = "new mouse position";
         assert.are.same("new mouse position", myInstance:getPosXMouse());
     end)
-    
+
     it("Test getSize", function()
         local myInstance = testClass(locWinDim, levMan);
         myInstance.size = "new size";
@@ -431,5 +436,4 @@ describe("Unit test for Bait.lua", function()
         myInstance.modifier = myInstance:changeModifierTo(0.5);
         assert.are.same(0.305, myInstance.modifier);
     end)
-
 end)
