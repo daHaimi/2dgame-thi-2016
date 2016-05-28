@@ -98,7 +98,7 @@ rm tmp/META-INF/*. 2> /dev/null
 # update Mainfest-config
 sed -i 's/LÖVE for Android/S.H.I.T/g' tmp/AndroidManifest.xml
 sed -i 's/@drawable\/love/@drawable\/shit/g' tmp/AndroidManifest.xml
-sed -i '/s/screenOrientation="landscape"/screenOrientation="portrait"/g' tmp/AndroidManifest.xml
+sed -i 's/screenOrientation="landscape"/screenOrientation="portrait"/g' tmp/AndroidManifest.xml
 # create iconset
 /usr/bin/convert -resize 48x48 -background none src/assets/icon/hamster.svg tmp/res/drawable-mdpi-v4/shit.png
 /usr/bin/convert -resize 72x72 -background none src/assets/icon/hamster.svg tmp/res/drawable-hdpi-v4/shit.png
