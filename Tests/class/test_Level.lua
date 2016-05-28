@@ -64,11 +64,11 @@ describe("Test unit test suite", function()
         assert.are.same(locInstance, myInstance);
         assert.spy(loveMock.graphics.newImage).was.called_with("assets/testbg.png");
         
-        _persTable.upgrades.mapBreakthrough1 = 1;
+        _persTable.upgrades.mapBreakthrough1 = true;
         local myInstance = testClass("assets/testbg.png", { 512, 256 }, 1);
         assert.are.same( lb + mbb1, myInstance.lowerBoarder);
         
-        _persTable.upgrades.mapBreakthrough2 = 1;
+        _persTable.upgrades.mapBreakthrough2 = true;
         local myInstance = testClass("assets/testbg.png", { 512, 256 }, 1);
         assert.are.same(lb + mbb1 + mbb2, myInstance.lowerBoarder);
     end)
@@ -129,7 +129,7 @@ describe("Test unit test suite", function()
     end)
 
     it("Testing activateGodMode", function()
-        _G._persTable.upgrades.godMode = 1;
+        _G._persTable.upgrades.godMode = true;
         testClass.godModeFuel = 500;
         local sAGM = spy.on(testClass, "activateGodMode");
         testClass:activateGodMode();
