@@ -7,16 +7,18 @@
    xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
    xmlns:svg="http://www.w3.org/2000/svg"
    xmlns="http://www.w3.org/2000/svg"
-   xmlns:xlink="http://www.w3.org/1999/xlink"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
    id="svg3479"
    version="1.1"
-   inkscape:version="0.91 r13725"
+   inkscape:version="0.91 r"
    width="80"
    height="86.25"
    viewBox="0 0 80 86.25"
-   sodipodi:docname="Unbenannt.svg">
+   sodipodi:docname="hamster.svg"
+   inkscape:export-filename="/home/haimi/Projekte/2dgame-thi-2016/src/assets/icon/hamster.png"
+   inkscape:export-xdpi="100"
+   inkscape:export-ydpi="100">
   <metadata
      id="metadata3485">
     <rdf:RDF>
@@ -40,30 +42,21 @@
      guidetolerance="10"
      inkscape:pageopacity="0"
      inkscape:pageshadow="2"
-     inkscape:window-width="640"
-     inkscape:window-height="480"
+     inkscape:window-width="1920"
+     inkscape:window-height="1028"
      id="namedview3481"
      showgrid="false"
-     inkscape:zoom="1.5652174"
-     inkscape:cx="10.626256"
-     inkscape:cy="25.231662"
-     inkscape:window-x="650"
-     inkscape:window-y="149"
-     inkscape:window-maximized="0"
+     inkscape:zoom="4.4271033"
+     inkscape:cx="-2.8530795"
+     inkscape:cy="15.563721"
+     inkscape:window-x="0"
+     inkscape:window-y="0"
+     inkscape:window-maximized="1"
      inkscape:current-layer="svg3479" />
-  <image
-     sodipodi:absref="C:\Users\Anna\Dropbox\_Studium\6. Semester\Projekt\Grafiken\allgemein\Unbenannt.png"
-     xlink:href="Unbenannt.png"
-     y="0"
-     x="0"
-     id="image3487"
-     preserveAspectRatio="none"
-     height="86.25"
-     width="80" />
   <g
      id="g3489">
     <path
-       style="fill:#fefefe"
+       style="fill:none"
        d="M 0,43.125 0,0 13.75,0 27.5,0 l 0,1.875 0,1.875 -1.875,0 -1.875,0 0,1.875 0,1.875 -1.875,0 -1.875,0 0,4.375 0,4.375 -1.25,0 -1.25,0 0,-1.875 0,-1.875 -5.625,0 -5.625,0 0,1.875 0,1.875 -1.875,0 -1.875,0 0,7.5 0,7.5 1.875,0 1.875,0 0,1.875 0,1.875 1.875,0 1.875,0 0,1.875 0,1.875 1.875,0 1.875,0 0,4.375 0,4.375 -1.875,0 -1.875,0 0,5.625 0,5.625 1.875,0 1.875,0 0,1.875 0,1.875 3.75,0 3.75,0 0,10 0,10 1.875,0 1.875,0 0,1.875 0,1.875 -12.5,0 -12.5,0 0,-43.125 z m 32.5,41.25 0,-1.875 1.875,0 1.875,0 0,-6.25 0,-6.25 3.75,0 3.75,0 0,6.25 0,6.25 1.875,0 1.875,0 0,1.875 0,1.875 -7.5,0 -7.5,0 0,-1.875 z m 22.5,0 0,-1.875 1.875,0 1.875,0 0,-10 0,-10 3.75,0 3.75,0 0,-1.875 0,-1.875 1.875,0 1.875,0 0,-5.625 0,-5.625 -1.875,0 -1.875,0 0,-4.375 0,-4.375 1.875,0 1.875,0 0,-1.875 0,-1.875 1.875,0 1.875,0 0,-1.875 0,-1.875 1.875,0 1.875,0 0,-7.5 0,-7.5 -1.875,0 -1.875,0 0,-1.875 0,-1.875 -5.625,0 -5.625,0 0,1.875 0,1.875 -1.25,0 -1.25,0 0,-4.375 0,-4.375 -1.875,0 -1.875,0 0,-1.875 0,-1.875 -1.875,0 -1.875,0 0,-1.875 L 52.5,0 66.25,0 80,0 l 0,43.125 0,43.125 -12.5,0 -12.5,0 0,-1.875 z m -20,-26.25 0,-1.875 1.875,0 1.875,0 0,1.875 0,1.875 -1.875,0 -1.875,0 0,-1.875 z m 6.25,0 0,-1.875 1.875,0 1.875,0 0,1.875 0,1.875 -1.875,0 -1.875,0 0,-1.875 z M 32.5,13.75 l 0,-2.5 7.5,0 7.5,0 0,2.5 0,2.5 -7.5,0 -7.5,0 0,-2.5 z"
        id="path3503"
        inkscape:connector-curvature="0" />
@@ -98,4 +91,14 @@
        id="path3491"
        inkscape:connector-curvature="0" />
   </g>
+  <path
+     style="color:#000000;display:inline;overflow:visible;visibility:visible;fill:#ffffff;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:3.38822007;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;marker:none;enable-background:accumulate"
+     d="m 34.908577,58.257195 c -0.431685,-0.947271 -0.784882,-1.760444 -0.784882,-1.807051 0,-0.04661 1.016466,-0.08474 2.258813,-0.08474 l 2.258814,0 0,1.807051 0,1.80705 -1.473932,0 -1.473931,0 -0.784882,-1.722309 z"
+     id="path4143"
+     inkscape:connector-curvature="0" />
+  <path
+     style="color:#000000;display:inline;overflow:visible;visibility:visible;fill:#ffffff;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:15;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;marker:none;enable-background:accumulate"
+     d="m 41.351898,58.172454 0,-1.807051 2.258813,0 c 1.242347,0 2.258813,0.03813 2.258813,0.08474 0,0.04661 -0.353197,0.85978 -0.784882,1.807051 l -0.784881,1.722309 -1.473932,0 -1.473931,0 0,-1.80705 z"
+     id="path4145"
+     inkscape:connector-curvature="0" />
 </svg>
