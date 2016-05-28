@@ -180,6 +180,22 @@ describe("Unit test for Bait.lua", function()
         myInstance:checkUpgrades();
         assert.are.same(myInstance.life, exp);
     end)
+  
+    it("Test allMoreLife upgrades true", function()
+        _G._persTable = {};
+
+        _G._persTable.upgrades = {
+            moreLife = 0;
+            oneMoreLife = true;
+            twoMoreLife = true;
+            threeMoreLife = true; --- amount of additional lifes
+        };
+
+        local myInstance = testClass(locWinDim, levMan);
+        local exp = 4;
+        myInstance:checkUpgrades();
+        assert.are.same(myInstance.life, exp);
+    end)
 
     --- test for more speed Upgrade
     it("Test speed 1", function()
@@ -204,6 +220,33 @@ describe("Unit test for Bait.lua", function()
 
         local myInstance = testClass(locWinDim, levMan);
         local exp = 400;
+        myInstance:checkUpgrades();
+        assert.are.same(exp, myInstance.speed);
+    end)
+
+    it("Test secondSpeed 1", function()
+        _G._persTable = {};
+
+        _G._persTable.upgrades = {
+              secondSpeedUp = true;
+        };
+
+        local myInstance = testClass(locWinDim, levMan);
+        local exp = 400;
+        myInstance:checkUpgrades();
+        assert.are.same(exp, myInstance.speed);
+    end)
+
+    it("bothSpeedUp upgrades true", function()
+        _G._persTable = {};
+
+        _G._persTable.upgrades = {
+              firstSpeedUp = true;
+              secondSpeedUp = true;
+        };
+
+        local myInstance = testClass(locWinDim, levMan);
+        local exp = 600;
         myInstance:checkUpgrades();
         assert.are.same(exp, myInstance.speed);
     end)
