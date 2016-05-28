@@ -2,6 +2,7 @@ Class = require "lib.hump.class";
 CollisionDetection = require "class.CollisionDetection";
 Level = require "class.Level";
 LevelManager = require "class.LevelManager";
+Animate = require "class.Animate";
 
 --- Class for the Bait swimming for Phase 1 and 2
 -- @param winDim window Size
@@ -11,8 +12,13 @@ local Bait = Class {
         self.winDim = winDim;
         self.posXBait = (winDim[1] / 2) - (self.size / 2);
         self.levMan = levelManager;
-        local yPos = (self.winDim[2] / 2) - (self.size / 2); -- FIXME unused local
-        self.image = love.graphics.newImage("assets/hamster_hooker.png");
+        --local yPos = (self.winDim[2] / 2) - (self.size / 2); -- FIXME unused local
+        local img = love.graphics.newImage("assets/sprites/sprite_hamster.png");
+        if img == 0 then
+            self.image = nil;
+        else 
+            self.image = Animate(img, 3, 1, .08, Animate.AnimType.bounce);
+        end
     end;
     levMan = nil;
     size = 10;
@@ -65,6 +71,11 @@ end
 -- @param dt Delta time is the amount of seconds since the last time this function was called.
 function Bait:update(dt)
     oldXPos = self.xPos;
+
+    -- update animation
+    if self.image ~= nil then
+        self.image:update(dt);
+    end
 
     -- calculate modifier for the golden rule
     if self.levMan:getCurLevel():getDirection() == 1 then
@@ -177,7 +188,9 @@ function Bait:draw()
     if self.levMan:getCurLevel():getGodModeStat() ~= 0 then
         Shaders:hueAjust(0.5);
     end
-    love.graphics.draw(self.image, self.xPos - 32, self.yPos - 120); -- FIXME magic number
+    self.image:draw(self.xPos - 32, self.yPos - 39); -- FIXME magic number
+    love.graphics.setColor(200, 200, 255, 64);
+    love.graphics.polygon("fill", self.xPos - 2, self.yPos - 39, self.xPos + 2, self.yPos - 39, self.winDim[1] / 2 + 2, 0, self.winDim[1] / 2 - 2, 0);
     Shaders:clear();
 end
 

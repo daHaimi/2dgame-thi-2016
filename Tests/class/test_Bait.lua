@@ -14,7 +14,11 @@ describe("Unit test for Bait.lua", function()
         isFinished = function(...) return 0 end;
         getMoved = function() return 4 end;
         getDirection = function() return 1 end;
-    }
+    };
+    local locImageStub = {
+        draw = function(...) end;
+        update = function(...) end;
+    };
 
     before_each(function()
         _G.levMan = {
@@ -56,6 +60,7 @@ describe("Unit test for Bait.lua", function()
                         send = function(...) end;
                     };
                 end;
+                polygon = function(...) end;
                 setShader = function(...) end;
             }
         }
@@ -75,15 +80,18 @@ describe("Unit test for Bait.lua", function()
         _G._gui.getFrames = function(...) return _G._gui.myFrames; end;
 
         locInstance = testClass(locWinDim, levMan);
+        locInstance.image = locImageStub;
     end)
 
     it("Testing Constructor", function()
         local myInstance = testClass(locWinDim, levMan);
+        myInstance.image = locImageStub;
         assert.are.same(locInstance, myInstance);
     end)
 
     it("Testing Update", function()
         local myInstance = testClass(locWinDim, levMan);
+        myInstance.image = locImageStub;
         myInstance:update();
         assert.are.same(0.495, myInstance.modifier);
 
@@ -113,6 +121,7 @@ describe("Unit test for Bait.lua", function()
 
     it("Test sleeping pill duration", function()
         local myInstance = testClass(locWinDim, levMan);
+        myInstance.image = locImageStub;
         myInstance.sleepingPillDuration = 10;
         myInstance:update();
         assert.are.same(6, myInstance.sleepingPillDuration);
@@ -148,7 +157,7 @@ describe("Unit test for Bait.lua", function()
         };
 
         local myInstance = testClass(locWinDim, levMan);
-        local exp = 2;
+        local exp = 1;
         myInstance:checkUpgrades();
         assert.are.same(myInstance.life, exp);
     end)
@@ -173,7 +182,8 @@ describe("Unit test for Bait.lua", function()
         _G._persTable = {};
 
         _G._persTable.upgrades = {
-            speedUp = 0; --- "0" no Speedup
+            firstSpeedUp = false; --- "0" no Speedup
+            secondSpeedUp = false; --- "0" no Speedup
             moreLife = 0; --- amount of additional lifes
         };
 
@@ -187,12 +197,30 @@ describe("Unit test for Bait.lua", function()
         _G._persTable = {};
 
         _G._persTable.upgrades = {
-            speedUp = 1; --- "0" no Speedup
+            firstSpeedUp = true; --- "0" no Speedup
+            secondSpeedUp = false; --- "0" no Speedup
             moreLife = 0; --- amount of additional lifes
         };
 
         local myInstance = testClass(locWinDim, levMan);
+        myInstance.image = locImageStub;
         local exp = 400;
+        myInstance:checkUpgrades();
+        assert.are.same(exp, myInstance.speed);
+    end)
+
+    it("Test speed 2", function()
+        _G._persTable = {};
+
+        _G._persTable.upgrades = {
+            firstSpeedUp = true; --- "0" no Speedup
+            secondSpeedUp = true; --- "0" no Speedup
+            moreLife = 0; --- amount of additional lifes
+        };
+
+        local myInstance = testClass(locWinDim, levMan);
+        myInstance.image = locImageStub;
+        local exp = 600;
         myInstance:checkUpgrades();
         assert.are.same(exp, myInstance.speed);
     end)
@@ -206,6 +234,7 @@ describe("Unit test for Bait.lua", function()
         };
 
         local myInstance = testClass(locWinDim, levMan);
+        myInstance.image = locImageStub;
         local exp = 200;
         myInstance:checkUpgrades();
         assert.are.same(exp, myInstance.speed);
@@ -213,6 +242,7 @@ describe("Unit test for Bait.lua", function()
 
     it("Test x position limited to maxSpeed (positive direction)", function()
         local myInstance = testClass(locWinDim, levMan);
+        myInstance.image = locImageStub;
         myInstance.levMan.curLevel = {
             isFinished = function() return 0 end;
         }
@@ -225,6 +255,7 @@ describe("Unit test for Bait.lua", function()
 
     it("Test x position limited to maxSpeed (negative direction)", function()
         local myInstance = testClass(locWinDim, levMan);
+        myInstance.image = locImageStub;
         myInstance.levMan.curLevel = {
             isFinished = function() return 0 end;
         }
@@ -237,6 +268,7 @@ describe("Unit test for Bait.lua", function()
 
     it("Test x position not limited to maxSpeed (positive direction)", function()
         local myInstance = testClass(locWinDim, levMan);
+        myInstance.image = locImageStub;
         myInstance.levMan.curLevel = {
             isFinished = function() return 0 end;
         };
@@ -249,6 +281,7 @@ describe("Unit test for Bait.lua", function()
 
     it("Test x position not limited to maxSpeed (negative direction)", function()
         local myInstance = testClass(locWinDim, levMan);
+        myInstance.image = locImageStub;
         myInstance.levMan.curLevel = {
             isFinished = function() return 0 end;
         }
@@ -261,6 +294,7 @@ describe("Unit test for Bait.lua", function()
 
     it("Test x positon with no change", function()
         local myInstance = testClass(locWinDim, levMan);
+        myInstance.image = locImageStub;
         myInstance.levMan.curLevel = {
             isFinished = function() return 0 end;
         }
@@ -274,7 +308,8 @@ describe("Unit test for Bait.lua", function()
     it("Test draw", function()
         --local shadersClass = require "src.class.Shaders";
         local myInstance = testClass(locWinDim, levMan);
-        local loveGraphicsMock = mock(_G.love.graphics, true);
+        myInstance.image = locImageStub;
+        local loveGraphicsMock = mock(myInstance.image, true);
 
         myInstance.levMan.curLevel.getGodModeStat = function() return 0 end;
         myInstance.xPos = 0;
@@ -286,6 +321,7 @@ describe("Unit test for Bait.lua", function()
 
     it("Test getXPos", function()
         local myInstance = testClass(locWinDim, levMan);
+        myInstance.image = locImageStub;
         myInstance.posXBait = 0;
         assert.are.same(myInstance:getPosX(), 0);
     end)
@@ -297,6 +333,7 @@ describe("Unit test for Bait.lua", function()
         };
 
         local myInstance = testClass(locWinDim, levMan);
+        myInstance.image = locImageStub;
         myInstance.sleepingPillDuration = 0;
         myInstance:sleepingPillHit(FishableObject);
 
@@ -305,6 +342,7 @@ describe("Unit test for Bait.lua", function()
 
     it("Test collisionDetected with a sleeping pill", function()
         local myInstance = testClass(locWinDim, levMan);
+        myInstance.image = locImageStub;
         local fishable = { getName = function() return "sleepingPill" end };
         myInstance:collisionDetected(fishable, 1);
         assert.are.same(0, myInstance.numberOfHits);
@@ -312,6 +350,7 @@ describe("Unit test for Bait.lua", function()
 
     it("Test collisionDetected with a fishable and an extra life", function()
         local myInstance = testClass(locWinDim, levMan);
+        myInstance.image = locImageStub;
         local fishable = { getName = function() return "deadFish" end };
         myInstance.levMan.curLevel = {
             getGodModeStat = function(...) return 0 end;
@@ -326,6 +365,7 @@ describe("Unit test for Bait.lua", function()
 
     it("Test collisionDetected with a fishable and no extra life", function()
         local myInstance = testClass(locWinDim, levMan);
+        myInstance.image = locImageStub;
         local fishable = { getName = function() return "deadFish" end };
         myInstance.levMan.curLevel = {
             getGodModeStat = function(...) return 0 end;
@@ -341,6 +381,7 @@ describe("Unit test for Bait.lua", function()
 
     it("Test collisionDetected with a fishable and godMode", function()
         local myInstance = testClass(locWinDim, levMan);
+        myInstance.image = locImageStub;
         local fishable = { getName = function() return "deadFish" end };
         myInstance.levMan.curLevel = {
             getGodModeStat = function(...) return 1 end;
@@ -356,6 +397,7 @@ describe("Unit test for Bait.lua", function()
 
     it("Test collisionDetected with a fishable and godMode", function()
         local myInstance = testClass(locWinDim, levMan);
+        myInstance.image = locImageStub;
         local fishable = { getName = function() return "deadFish" end };
         myInstance.levMan.curLevel = {
             getGodModeStat = function(...) return 1 end;
