@@ -21,13 +21,60 @@ describe("Unit test for Options.lua", function()
                 bgm = 50;
                 music = 50;
             };
+            scaledDeviceDim = {
+                [1] = 500;
+                [2] = 500;
+            };
         };
-        
         _G.Frame = function(...) return Frame; end;
 
         locInstance = testClass();
     end)
 
+    it("Testing create function", function()
+        _G._gui = {
+            getFrames = function(...) return{}; end;
+            changeFrame = function(...) end;
+            tempTextOutput = function(...) end;
+            getLastState = function(...) return {}; end;
+        };
+        _G._persistence = {
+            resetGame = function(...) end;
+        };
+        
+        spy.on(locInstance, "loadValuesFromPersTable");
+        spy.on(locInstance, "loadValuesInPersTable");
+        spy.on(_G._gui, "tempTextOutput");
+        spy.on(_G._gui, "changeFrame");
+        spy.on(_G._persistence, "resetGame");
+        
+        locInstance:create();
+
+        locInstance.elementsOnFrame.slider_bgm.OnValueChanged();
+        assert.equal(_persTable.config.bgm, 50);
+        
+        locInstance.elementsOnFrame.slider_music.OnValueChanged();
+        assert.equal(_persTable.config.music, 50);
+        
+        locInstance.elementsOnFrame.button_reset.object.OnClick();
+        assert.spy(_G._persistence.resetGame).was.called();
+        assert.spy(_gui.tempTextOutput).was.called();
+        assert.spy(locInstance.loadValuesFromPersTable).was.called(2);
+        
+        locInstance.elementsOnFrame.button_back.object.OnClick();
+        assert.spy(_gui.changeFrame).was.called();
+        assert.spy(locInstance.loadValuesInPersTable).was.called(1);
+        assert.spy(_gui.tempTextOutput).was.called();
+    end)
+
+    it("Testing loadValuesInPersTable function", function()
+        _persTable.config.bgm = 0;
+        _persTable.config.music = 0;
+        locInstance:loadValuesInPersTable();
+        assert.equal(_persTable.config.bgm, 50);
+        assert.equal(_persTable.config.music, 50);
+    end)
+    
     it("Testing draw function", function()
         stub(locInstance.frame, "draw");
         locInstance:draw();

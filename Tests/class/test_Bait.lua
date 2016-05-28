@@ -93,8 +93,7 @@ describe("Unit test for Bait.lua", function()
             getDirection = function() return -1; end;
             isFinished = function() return 0 end;
             getYPos = function() return 400 end;
-            getSwarmFactory = function() return
-            {
+            getSwarmFactory = function() return {
                 createdFishables = {
                     {
                         setToCaught = function(...) end;
@@ -291,7 +290,7 @@ describe("Unit test for Bait.lua", function()
         assert.are.same(myInstance:getPosX(), 0);
     end)
 
-    it("Test sleepingPillHitted", function()
+    it("Test sleepingPillHit", function()
         _G._persTable.upgrades = {
             sleepingPillDuration = 600; -- duration of the effect of the sleeping pill
             sleepingPillSlow = 0.3; -- sets the slow factor of the sleeping pill 0.25 = 25% of the usual movement
@@ -299,8 +298,7 @@ describe("Unit test for Bait.lua", function()
 
         local myInstance = testClass(locWinDim, levMan);
         myInstance.sleepingPillDuration = 0;
-        myInstance:sleepingPillHitted(FishableObject);
-
+        myInstance:sleepingPillHit(FishableObject);
 
         assert.are.same(600, myInstance.sleepingPillDuration);
     end)
@@ -384,10 +382,7 @@ describe("Unit test for Bait.lua", function()
         levMan.curLevel = {
             getGodModeStat = function(...) return 0 end;
             moved = 4;
-            getGodModeStat = function(...)
-                return 0;
-            end;
-            activateShortGM = function(...) end;
+            activateShortGM = function (...) end;
             getMoved = function() return 4 end;
             getDirection = function() return 1 end;
             switchToPhase2 = function() end;

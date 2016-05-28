@@ -2,8 +2,37 @@ Class = require "lib.hump.class";
 
 local Pause = Class {
     init = function(self)
+        if _G._persTable.scaledDeviceDim[1] < 640 then
+            self.directory = "assets/gui/480px/";
+            self.widthPx = 480;
+            self.width = 384;
+            self.height = 666;
+            self.buttonHeight = 75;
+            self.buttonOffset = 15;
+            self.buttonWidth = 261;
+            speed = 50;
+        elseif _G._persTable.scaledDeviceDim[1] < 720 then
+            self.widthPx = 640;
+            self.directory = "assets/gui/640px/";
+            self.width = 512;
+            self.height = 888;
+            self.buttonOffset = 20;
+            self.buttonHeight = 96;
+            self.buttonWidth = 384;
+            speed = 67;
+        else
+            self.widthPx = 720;
+            self.directory = "assets/gui/720px/";
+            self.width = 576;
+            self.height = 1024;
+            self.buttonOffset = 30;
+            self.buttonHeight = 106;
+            self.buttonWidth = 392;
+            speed = 75;
+        end
         self.name = "Pause";
-        self.frame = Frame(100, 100, "down", "down", 50, 0, -1500);
+       self.frame = Frame((_G._persTable.scaledDeviceDim[1] - self.width) / 2, 
+            (_G._persTable.scaledDeviceDim[2] - self.height) / 2, "down", "down", speed, 0, -1500);
         self:create();
     end;
 };
@@ -19,33 +48,33 @@ function Pause:create()
         };
         button_backToGame = {
             object = Loveframes.Create("imagebutton");
-            x = 10;
-            y = 10;
+            x = 0.16 * self.width;
+            y = self.buttonOffset;
         };
         button_backToMenu = {
             object = Loveframes.Create("imagebutton");
-            x = 10;
-            y = 50;
+            x = 0.16 * self.width;
+            y = self.buttonOffset + 1 * self.buttonHeight;
         };
         button_options = {
             object = Loveframes.Create("imagebutton");
-            x = 10;
-            y = 90;
+            x = 0.16 * self.width;
+            y = self.buttonOffset + 2 * self.buttonHeight;
         };
     };
     
     --adjust all elements on this frame
-    self.elementsOnFrame.background.object:SetImage("assets/gui/gui_Test_Bg.png");
+    self.elementsOnFrame.background.object:SetImage(self.directory .. "gui_Test_Bg.png");
     
-    self.elementsOnFrame.button_backToGame.object:SetImage("assets/gui/gui_Test_Button.png")
+    self.elementsOnFrame.button_backToGame.object:SetImage(self.directory .. "gui_Test_Button.png")
     self.elementsOnFrame.button_backToGame.object:SizeToImage()
     self.elementsOnFrame.button_backToGame.object:SetText("Back to the Game");
     
-    self.elementsOnFrame.button_backToMenu.object:SetImage("assets/gui/gui_Test_Button.png")
+    self.elementsOnFrame.button_backToMenu.object:SetImage(self.directory .. "gui_Test_Button.png")
     self.elementsOnFrame.button_backToMenu.object:SizeToImage()
     self.elementsOnFrame.button_backToMenu.object:SetText("Back to Menu");
     
-    self.elementsOnFrame.button_options.object:SetImage("assets/gui/gui_Test_Button.png")
+    self.elementsOnFrame.button_options.object:SetImage(self.directory .. "gui_Test_Button.png")
     self.elementsOnFrame.button_options.object:SizeToImage()
     self.elementsOnFrame.button_options.object:SetText("Options");
     

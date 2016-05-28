@@ -28,11 +28,24 @@ end};
 function Persistence:resetGame()
     self:createPersTable();
     local _, _, flags = love.window.getMode();
-    _G._persTable.winDim = { love.window.getDesktopDimensions(flags.display) };
-    _G._persTable.winDim[2] = _G._persTable.winDim[2] - 150; -- Sub 50px for taskbar and window header
-    _G._persTable.winDim[1] = (_G._persTable.winDim[2] / 16) * 9; -- Example: 16:9
+    love.graphics.setBackgroundColor(30, 180, 240);
+    _G._persTable.deviceDim = {love.window.getDesktopDimensions(flags.display)};
+    _G._persTable.winDim[1], _G._persTable.winDim[2], scaleFactor = getScaledDimension(_G._persTable.deviceDim);
     return love.filesystem.remove("saveFile");
-    
+end
+
+function getScaledDimension(deviceDim)
+    resultDim = {};
+    if deviceDim[1] > deviceDim[2] then
+        scaleFactor = (0.9 * deviceDim[2]) / (480 * 16 / 9);
+        resultDim[1] = 480;
+        resultDim[2] = resultDim[1] * 16 / 9;
+    else
+        scaleFactor = deviceDim[1] / 480;
+        resultDim[2] = deviceDim[2] / deviceDim[1] * 480;
+        resultDim[1] = 480;
+    end
+        return resultDim[1], resultDim[2], scaleFactor;
 end
 
 --- Save the persTable data at saveFile
@@ -69,15 +82,20 @@ function Persistence:createPersTable()
 
     --- upgrades list in persTable, "0" means unbought
     _G._persTable.upgrades = {
-        speedUp = 0; -- "0" no Speedup for more looke bait.lua
-        moneyMult = 0; -- "0" means no additional money
-        moreLife = 2; -- amount of additional lifes
-        godMode = 1; -- indicates if the god mode is available or not
-        mapBreakthrough1 = 0; -- can you access the first map limit? 0 = no, 1 = yes
-        mapBreakthrough2 = 0; -- can you access the second map limit? 0 = no, 1 = yes
+        firstSpeedUp = false; -- more speed
+        secondSpeedUp = false; -- more speed
+        oneMoreLife = true; -- more life
+        twoMoreLife = true; -- more life
+        threeMoreLife = false; -- more life
+        moneyMult = false; -- "0" means no additional money
+        moreLife = 0; -- needed for calculation in a few classes
+        godMode = true; -- indicates if the god mode is available or not
+        mapBreakthrough1 = false; -- can you access the first map limit? 0 = no, 1 = yes
+        mapBreakthrough2 = false; -- can you access the second map limit? 0 = no, 1 = yes
         sleepingPillDuration = 600; -- duration of the effect of the sleeping pill
         sleepingPillSlow = 0.25; -- sets the slow factor of the sleeping pill 0.25 = 25% of the usual movement
     };
+
     _G._persTable.achievements = {
         getFirstObject = true;
         getSecondObject = false;
@@ -87,6 +105,7 @@ function Persistence:createPersTable()
     _G._persTable.config = {
         bgm = 100;
         music = 100;
+        language = "english";
     };
 end
 

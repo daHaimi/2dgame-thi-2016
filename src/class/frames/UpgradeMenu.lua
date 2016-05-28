@@ -4,8 +4,34 @@ KlickableElement = require "class.KlickableElement"
 
 local UpgradeMenu = Class {
     init = function(self)
+        if _G._persTable.scaledDeviceDim[1] < 640 then
+            self.directory = "assets/gui/480px/";
+            self.widthPx = 480;
+            self.width = 384;
+            self.height = 666;
+            self.buttonHeight = 75;
+            self.buttonOffset = 15;
+            speed = 50;
+        elseif _G._persTable.scaledDeviceDim[1] < 720 then
+            self.widthPx = 640;
+            self.directory = "assets/gui/640px/";
+            self.width = 512;
+            self.height = 888;
+            self.buttonOffset = 20;
+            self.buttonHeight = 96;
+            speed = 67;
+        else
+            self.widthPx = 720;
+            self.directory = "assets/gui/720px/";
+            self.width = 576;
+            self.height = 1024;
+            self.buttonOffset = 30;
+            self.buttonHeight = 106;
+            speed = 75;
+        end
         self.name = "Shop";
-        self.frame = Frame(100, 100, "down", "down", 50, 0, -1500);
+       self.frame = Frame((_G._persTable.scaledDeviceDim[1] - self.width) / 2, 
+            (_G._persTable.scaledDeviceDim[2] - self.height) / 2, "down", "down", speed, 0, -1500);
         self:create();
     end;
 };
@@ -21,109 +47,64 @@ function UpgradeMenu:create()
         };
         chart = {
             object = Chart();
-            x = 10;
-            y = 10;
+            x = 0.125 * self.width;
+            y = self.buttonOffset;
         };
         button_buy = {
             object = Loveframes.Create("imagebutton");
-            x = 10;
-            y = 350;
+            x = 0.16 * self.width;
+            y = self.height - 2 * self.buttonHeight;
         };
         button_back = {
             object = Loveframes.Create("imagebutton");
-            x = 10;
-            y = 390;
+           x = 0.16 * self.width;
+            y = self.height - self.buttonHeight;
         };
     };
     
     --adjust all elements on this frame
-    self.elementsOnFrame.background.object:SetImage("assets/gui/gui_Test_Bg.png");
+    self.elementsOnFrame.background.object:SetImage(self.directory .. "gui_Test_Bg.png");
     
-    self.elementsOnFrame.button_buy.object:SetImage("assets/gui/gui_Test_Button.png")
+    self.elementsOnFrame.button_buy.object:SetImage(self.directory .. "gui_Test_Button.png")
     self.elementsOnFrame.button_buy.object:SizeToImage()
     self.elementsOnFrame.button_buy.object:SetText("Buy Upgrade");
     
-    self.elementsOnFrame.button_back.object:SetImage("assets/gui/gui_Test_Button.png")
+    self.elementsOnFrame.button_back.object:SetImage(self.directory .. "gui_Test_Button.png")
     self.elementsOnFrame.button_back.object:SizeToImage()
     self.elementsOnFrame.button_back.object:SetText("Back");
     
     self:addAllUpgrades();
     self:loadValuesFromPersTable();
     
-    --load values out of persTable into the chart
-    --convert 0, 1 or more in to boolean. A 2 equals multiply checkboxes
-    --[[
-    if _persTable.upgrades.speedUp == 1 then
-        self.upgrades.upgrade1:disable();
-    end
-    if _persTable.upgrades.moneyMult == 1 then
-        self.upgrades.upgrade2:disable();
-    end
-    if _persTable.upgrades.moreLife == 1 then
-        self.upgrades.upgrade3:disable();
-    end
-    if _persTable.upgrades.godMode == 1 then
-        self.upgrades.upgrade4:disable();
-    end
-    if _persTable.upgrades.mapBreakthrough1 == 1 then
-        self.upgrades.upgrade4:disable();
-        if _persTable.upgrades.mapBreakthrough2 == 1 then
-            self.upgrades.upgrade4:disable();
-        end
-    end
-    ]]--
-    
     --onclick events for all buttons
     self.elementsOnFrame.button_back.object.OnClick = function(object)
-        --[[
-        --update persTable with new bought updates
-        if self.upgrades.upgrade1:getEnable() then
-            _persTable.upgrades.speedUp = 0;
-        else
-            _persTable.upgrades.speedUp = 1;
-        end
-        if self.upgrades.upgrade2:getEnable() then
-            _persTable.upgrades.moneyMult = 0;
-        else
-            _persTable.upgrades.moneyMult = 1;
-        end
-        if self.upgrades.upgrade3:getEnable() then
-            _persTable.upgrades.moreLife = 0;
-        else
-            _persTable.upgrades.moreLife = 1;
-        end
-        if self.upgrades.upgrade4:getEnable() then
-            _persTable.upgrades.godMode = 0;
-        else
-            _persTable.upgrades.godMode = 1;
-        end
-        if self.upgrades.upgrade5:getEnable() then
-            _persTable.upgrades.mapBreakthrough1 = 0;
-        else
-            _persTable.upgrades.mapBreakthrough1 = 1;
-        end
-        if self.upgrades.upgrade6:getEnable() then
-            _persTable.upgrades.mapBreakthrough2 = 0;
-        else
-            _persTable.upgrades.mapBreakthrough2 = 1;
-        end]]--
         _gui:tempTextOutput();
         _gui:changeFrame(_gui:getFrames().mainMenu);
     end
     
     self.elementsOnFrame.button_buy.object.OnClick = function(object)
-        if self.elementsOnFrame.chart.object:getMarkedElement() ~= nil then
-            self.elementsOnFrame.chart.object:getMarkedElement():disable();
+        if self.elementsOnFrame.chart.object:getMarkedElement() ~= nil and 
+        _G._persTable.money >= self.elementsOnFrame.chart.object:getMarkedElement().price then
+            self:buyElement();
+            _G._persistence:updateSaveFile();
         end
     end
     
 end
 
+---called to buy an Item
+function UpgradeMenu:buyElement()
+    self.elementsOnFrame.chart.object:getMarkedElement():disable();
+    local price = self.elementsOnFrame.chart.object:getMarkedElement().price;
+    _G._persTable.money = _G._persTable.money - price;
+end
+
 --add all upgrades written in the data.lua into the chart and adds an OnClick event
 function UpgradeMenu:addAllUpgrades()
     for k, v in pairs(_G.data.upgrades) do
-        local newKlickableElement = KlickableElement(v.name, v.image, v.image_disable,
-            v.description, v.price, v.nameOnPersTable);
+        local newKlickableElement = KlickableElement(v.name, self.directory .. v.image, 
+            self. directory .. v.image_disable, v.description, v.price, v.nameOnPersTable);
+        --add OnClick event
         newKlickableElement.object.OnClick = function(object)
             self.elementsOnFrame.chart.object:markElement(newKlickableElement);
         end
@@ -133,15 +114,16 @@ end
 
 
 function UpgradeMenu:loadValuesFromPersTable()
-    
+    --[[
+    for k, v in pairs(self.elementsOnFrame.chart.object:getAllElements()) do
+        local elementName = v.nameOnPersTable;
+        if _G._persTable.upgrades[elementName] then
+            if _G._persTable.upgrades[elementName] == true then
+                v:disable();
+            end
+        end
+    end]]---
 end
-
-function UpgradeMenu:loadValuesInPersTable()
-    
-    
-    
-end
-
 
 ---shows the frame on screen
 function UpgradeMenu:draw()
