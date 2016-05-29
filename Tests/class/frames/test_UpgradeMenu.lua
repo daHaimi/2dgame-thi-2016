@@ -46,6 +46,14 @@ describe("Unit test for UpgradeMenu.lua", function()
             tempTextOutput = function(...) end;
         };
         
+       local ME = {
+         price = 0;
+         };
+        
+        _G._persistence = {
+          updateSaveFile = function(...) end;
+        };
+        
         spy.on(locInstance, "addAllUpgrades");
         spy.on(locInstance, "loadValuesFromPersTable");
         locInstance:create();
@@ -58,8 +66,8 @@ describe("Unit test for UpgradeMenu.lua", function()
         locInstance.elementsOnFrame.button_back.object.OnClick();
         assert.spy(_gui.changeFrame).was.called();
         assert.spy(_gui.tempTextOutput).was.called();
-        
-        locInstance.elementsOnFrame.chart.object.p_markedElement = 1;
+       
+        locInstance.elementsOnFrame.chart.object.p_markedElement = ME;
         stub(locInstance, "buyElement");
         locInstance.elementsOnFrame.button_buy.object.OnClick();
         assert.spy(locInstance.buyElement).was.called();
@@ -68,8 +76,9 @@ describe("Unit test for UpgradeMenu.lua", function()
     it("Testing buyElement function", function()
         local KE = {
             disable = function(...) end;
+            price = 0;
         };
-
+        
         locInstance.elementsOnFrame.chart.object.p_markedElement = KE;
         stub(locInstance.elementsOnFrame.chart.object.p_markedElement, "disable");
         locInstance:buyElement();
@@ -97,7 +106,12 @@ describe("Unit test for UpgradeMenu.lua", function()
                 }
             };
         };
-        locInstance.elementsOnFrame.chart.object.p_markedElement.price = 10;
+        
+        local KE = {
+          price = 10;
+          };
+        
+        locInstance.elementsOnFrame.chart.object.p_markedElement = KE;
         
         locInstance:addAllUpgrades();
         locInstance.elementsOnFrame.chart.object.p_elementsOnChart[1].object = {};
