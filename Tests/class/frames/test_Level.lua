@@ -11,6 +11,15 @@ describe("Unit test for Level.lua", function()
 
 
     before_each(function()
+        _G.levMan = {
+            curLevel = nil,
+            curPlayer = nil,
+            curSwarmFac = nil,
+            getCurSwarmFactory = function(...) return _G.levMan.curSwarmFac end,
+            getCurPlayer = function(...) return _G.levMan.curPlayer end,
+            getCurLevel = function(...) return _G.levMan.curLevel end
+        };
+            
         _G.Loveframes = {
             Create = function(typeName) 
                 return fakeElement(typeName);
@@ -31,6 +40,16 @@ describe("Unit test for Level.lua", function()
         _G._gui = {
             getFrames = function(...) return{}; end;
             changeFrame = function(...) end;
+            getLevelManager = function(...) return {
+                curLevel = nil,
+                curPlayer = nil,
+                curSwarmFac = nil,
+                getCurSwarmFactory = function(...) return _G._gui.getLevelManager.curSwarmFac end,
+                getCurPlayer = function(...) return _G._gui.getLevelManager.curPlayer end,
+                getCurLevel = function(...) return _G._gui.getLevelManager.curLevel end,
+                getLevelPropMapByName = function(...)  end,
+                newLevel = function(...) end;
+            } end;
         };
         
         locInstance:create();
