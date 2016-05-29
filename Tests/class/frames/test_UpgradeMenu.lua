@@ -65,18 +65,23 @@ describe("Unit test for UpgradeMenu.lua", function()
         assert.spy(_gui.changeFrame).was.called();
         assert.spy(_gui.tempTextOutput).was.called();
         
-        locInstance.elementsOnFrame.chart.object.p_markedElement = 1;
+        locInstance.elementsOnFrame.chart.object.p_markedElement = locInstance.elementsOnFrame.chart.object.p_elementsOnChart[1];
         stub(locInstance, "buyElement");
         locInstance.elementsOnFrame.button_buy.object.OnClick();
-        assert.spy(locInstance.buyElement).was.called();
+        assert.stub(locInstance.buyElement).was.called();
     end)
 
     it("Testing buyElement function", function()
         local KE = {
             disable = function(...) end;
+            price = 50;
         };
 
         locInstance.elementsOnFrame.chart.object.p_markedElement = KE;
+        locInstance.elementsOnFrame.chart.getMarkedElement = function(...) 
+            return locInstance.elementsOnFrame.chart.object.p_markedElement; 
+        end;
+        
         stub(locInstance.elementsOnFrame.chart.object.p_markedElement, "disable");
         locInstance:buyElement();
         assert.stub(locInstance.elementsOnFrame.chart.object.p_markedElement.disable).was.called();
@@ -103,7 +108,7 @@ describe("Unit test for UpgradeMenu.lua", function()
                 }
             };
         };
-        locInstance.elementsOnFrame.chart.object.p_markedElement.price = 10;
+        locInstance.elementsOnFrame.chart.object.p_markedElement = locInstance.elementsOnFrame.chart.object.p_elementsOnChart[1];
         
         locInstance:addAllUpgrades();
         locInstance.elementsOnFrame.chart.object.p_elementsOnChart[1].object = {};

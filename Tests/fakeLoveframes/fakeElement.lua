@@ -11,6 +11,7 @@ local fakeElement = Class {
         
         --text
         self.maxWidth = nil;
+        self.shadow = false;
         
         --imagebutton and image
         self.imagepath = nil;
@@ -67,7 +68,9 @@ function fakeElement:SetMaxWidth(maxWidth)
     self.maxWidth = maxWidth;
 end
 
-
+function fakeElement:SetShadow(bool)
+    self.shadow = bool;
+end
 
 ---imagebutton
 function fakeElement:SetImage(path)

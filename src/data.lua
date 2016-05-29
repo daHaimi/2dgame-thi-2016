@@ -682,80 +682,55 @@ return {
             price = 300;
             image = "gui_Test_klickableElement.png";
             image_disable = "gui_Test_klickableElement_disable.png";
-        }
-        --[[
-        oneMoreLife = {
-            nameOnPersTable = "oneMoreLife";--Name of parameter in persTable. Unlock change this parameter to true
-            name = "One more life";--Name shown on the Textfield on the shop
-            description = "add one more life to your healthbar.";--shown on the shop
-            price = 100;--price of this item
-            image = "assets/gui/gui_Test_klickableElement.png";
-            image_disable = "assets/gui/gui_Test_klickableElement_disable.png";
-        },
-        twoMoreLife = {
-            nameOnPersTable = "twoMoreLife";
-            name = "Two more life";
-            description = "add a third life to your healthbar.";
-            price = 200;
-            image = "assets/gui/gui_Test_klickableElement.png";
-            image_disable = "assets/gui/gui_Test_klickableElement_disable.png";
-        },
-        threeMoreLife = {
-            nameOnPersTable = "threeMoreLife";
-            name = "Three more life";
-            description = "upgrade your healthbar up to four lifes.";
-            price = 300;
-            image = "assets/gui/gui_Test_klickableElement.png";
-            image_disable = "assets/gui/gui_Test_klickableElement_disable.png";
         },
         firstSpeedUp = {
             nameOnPersTable = "firstSpeedUp";
             name = "1st Speed Update";
             description = "raise your speed.";
             price = 300;
-            image = "assets/gui/gui_Test_klickableElement.png";
-            image_disable = "assets/gui/gui_Test_klickableElement_disable.png";
+            image = "gui_Test_klickableElement.png";
+            image_disable = "gui_Test_klickableElement_disable.png";
         },
         secondSpeedUp = {
             nameOnPersTable = "secondSpeedUp";
             name = "2nd Speed Update";
             description = "raise your speed again.";
             price = 300;
-            image = "assets/gui/gui_Test_klickableElement.png";
-            image_disable = "assets/gui/gui_Test_klickableElement_disable.png";
+            image = "gui_Test_klickableElement.png";
+            image_disable = "gui_Test_klickableElement_disable.png";
         },
         moneyMulitplier = {
             nameOnPersTable = "moneyMultiplier";
             name = "Money Multiplier";
             description = "the value of your caught object are multiplied by 2.5.";
             price = 300;
-            image = "assets/gui/gui_Test_klickableElement.png";
-            image_disable = "assets/gui/gui_Test_klickableElement_disable.png";
+            image = "gui_Test_klickableElement.png";
+            image_disable = "gui_Test_klickableElement_disable.png";
         },
         godMode = {
             nameOnPersTable = "godMode";
             name = "God Mode";
             description = "unlock godMode";
             price = 300;
-            image = "assets/gui/gui_Test_klickableElement.png";
-            image_disable = "assets/gui/gui_Test_klickableElement_disable.png";
+            image = "gui_Test_klickableElement.png";
+            image_disable = "gui_Test_klickableElement_disable.png";
         },
         mapBreakthrough1 = {
             nameOnPersTable = "mapBreakthrough1";
             name = "MB1";
             description = "blablabla";
             price = 300;
-            image = "assets/gui/gui_Test_klickableElement.png";
-            image_disable = "assets/gui/gui_Test_klickableElement_disable.png";
+            image = "gui_Test_klickableElement.png";
+            image_disable = "gui_Test_klickableElement_disable.png";
         },
         mapBreakthrough2 = {
             nameOnPersTable = "mapBreakthrough2";
             name = "MB2";
             description = "blablabla";
             price = 300;
-            image = "assets/gui/gui_Test_klickableElement.png";
-            image_disable = "assets/gui/gui_Test_klickableElement_disable.png";
-        },]]--
+            image = "gui_Test_klickableElement.png";
+            image_disable = "gui_Test_klickableElement_disable.png";
+        }
     },
     
     achievements = {

@@ -46,7 +46,7 @@ function Dictionary:create()
             y = 0;
         };
         chart = {
-            object = Chart(64);
+            object = Chart();
             x = 0.125 * self.width;
             y = self.buttonOffset;
         };
@@ -58,7 +58,7 @@ function Dictionary:create()
     };
     
     --adjust all elements on this frame
-    self.elementsOnFrame.background.object:SetImage(self.directory .. "gui_Test_Bg.png");
+    self.elementsOnFrame.background.object:SetImage(self.directory .. "StandardBG.png");
     
     self.elementsOnFrame.button_back.object:SetImage(self.directory .. "gui_Test_Button.png")
     self.elementsOnFrame.button_back.object:SizeToImage()
@@ -75,7 +75,14 @@ end
 --add all object written in the data.lua into the chart and adds an OnClick event
 function Dictionary:addAllObjects()
     for k, v in pairs(_G.data.fishableObjects) do
-        local newKlickableElement = KlickableElement(v.name, "assets/" .. v.image, "assets/" .. v.image, v.description, v.value, nil);
+        local path = "";
+        if v.name == "angler" then
+            path = "assets/gui/480px/dic_" .. v.image;
+        else
+            path = "assets/" .. v.image;
+        end
+        
+        local newKlickableElement = KlickableElement(v.name, path, path, v.description, v.value, nil);
         newKlickableElement.object.OnClick = function(object)
             self.elementsOnFrame.chart.object:markElement(newKlickableElement);
         end

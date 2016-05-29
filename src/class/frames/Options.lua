@@ -69,7 +69,7 @@ function Options:create()
     };
 
     --adjust all elements on this frame
-    self.elementsOnFrame.background.object:SetImage(self.directory .. "gui_Test_Bg.png");
+    self.elementsOnFrame.background.object:SetImage(self.directory .. "StandardBG.png");
     
     self.elementsOnFrame.slider_bgm.object:SetText("BGM");
     self.elementsOnFrame.slider_bgm.object:SetMinMax(0, 100);

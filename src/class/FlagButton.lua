@@ -21,6 +21,7 @@ function FlagButton:create()
     self.object:SetText("");
     self.object:SetImage(self.directory .. self.languages[_persTable.config.language].flagImage);
     self.object:SetVisible(false);
+    self.object:SizeToImage();
     self.object.OnClick = function(object)
         self:changeLanguage();
     end

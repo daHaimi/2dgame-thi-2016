@@ -63,7 +63,7 @@ function UpgradeMenu:create()
     };
     
     --adjust all elements on this frame
-    self.elementsOnFrame.background.object:SetImage(self.directory .. "gui_Test_Bg.png");
+    self.elementsOnFrame.background.object:SetImage(self.directory .. "StandardBG.png");
     
     self.elementsOnFrame.button_buy.object:SetImage(self.directory .. "gui_Test_Button.png")
     self.elementsOnFrame.button_buy.object:SizeToImage()
