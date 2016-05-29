@@ -56,10 +56,15 @@ function Pause:create()
             x = 0.16 * self.width;
             y = self.buttonOffset + 1 * self.buttonHeight;
         };
-        button_options = {
+        button_restartLevel = {
             object = Loveframes.Create("imagebutton");
             x = 0.16 * self.width;
             y = self.buttonOffset + 2 * self.buttonHeight;
+        };        
+        button_options = {
+            object = Loveframes.Create("imagebutton");
+            x = 0.16 * self.width;
+            y = self.buttonOffset + 3 * self.buttonHeight;
         };
     };
     
@@ -67,15 +72,19 @@ function Pause:create()
     self.elementsOnFrame.background.object:SetImage(self.directory .. "gui_Test_Bg.png");
     
     self.elementsOnFrame.button_backToGame.object:SetImage(self.directory .. "gui_Test_Button.png")
-    self.elementsOnFrame.button_backToGame.object:SizeToImage()
+    self.elementsOnFrame.button_backToGame.object:SizeToImage();
     self.elementsOnFrame.button_backToGame.object:SetText("Back to the Game");
     
-    self.elementsOnFrame.button_backToMenu.object:SetImage(self.directory .. "gui_Test_Button.png")
-    self.elementsOnFrame.button_backToMenu.object:SizeToImage()
+    self.elementsOnFrame.button_backToMenu.object:SetImage(self.directory .. "gui_Test_Button.png");
+    self.elementsOnFrame.button_backToMenu.object:SizeToImage();
     self.elementsOnFrame.button_backToMenu.object:SetText("Back to Menu");
     
-    self.elementsOnFrame.button_options.object:SetImage(self.directory .. "gui_Test_Button.png")
-    self.elementsOnFrame.button_options.object:SizeToImage()
+    self.elementsOnFrame.button_restartLevel.object:SetImage(self.directory .. "gui_Test_Button.png");
+    self.elementsOnFrame.button_restartLevel.object:SizeToImage();
+    self.elementsOnFrame.button_restartLevel.object:SetText("Restart Level");
+    
+    self.elementsOnFrame.button_options.object:SetImage(self.directory .. "gui_Test_Button.png");
+    self.elementsOnFrame.button_options.object:SizeToImage();
     self.elementsOnFrame.button_options.object:SetText("Options");
     
     --onclick events for all buttons
@@ -85,6 +94,11 @@ function Pause:create()
     
     self.elementsOnFrame.button_backToMenu.object.OnClick = function(object)
         _gui:changeFrame(_gui:getFrames().mainMenu);
+    end
+    
+    self.elementsOnFrame.button_restartLevel.object.OnClick = function(object)
+        _gui:getLevelManager():replayLevel();
+        _gui:changeFrame(_gui:getFrames().inGame);
     end
     
     self.elementsOnFrame.button_options.object.OnClick = function(object)
@@ -99,17 +113,17 @@ end
 
 ---called to "delete" this frame
 function Pause:clear()
-    self.frame:clear(self.elementsOnFrame)
+    self.frame:clear(self.elementsOnFrame);
 end
 
 ---called in the "fly in" state 
 function Pause:appear()
-    self.frame:appear(self.elementsOnFrame)
+    self.frame:appear(self.elementsOnFrame);
 end
 
 ---called in the "fly out" state
 function Pause:disappear()
-    self.frame:disappear(self.elementsOnFrame)
+    self.frame:disappear(self.elementsOnFrame);
 end
 
 ---return true if the frame is on position /fly in move is finished

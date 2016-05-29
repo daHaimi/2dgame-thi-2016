@@ -31,7 +31,21 @@ local Credits = Class {
         self.frame = Frame((_G._persTable.scaledDeviceDim[1] - self.width) / 2, 
             (_G._persTable.scaledDeviceDim[2] - self.height) / 2, "down", "down", speed, 0, -1500);
         self:create();
+        
+        
     end;
+    
+    p_staffString = "";
+    p_staff = {"Marco Egner",
+        "Samson Groß",
+        "Mathias Haimerl",
+        "Anna Käfferlein",
+        "Baris Kutlu",
+        "Burak Kutlu",
+        "Martin Lechner",
+        "Daniel Plank",
+        "Daniel Zistl"
+    };
 };
 
 ---creates the credits frame
@@ -48,7 +62,17 @@ function Credits:create()
             x = 0.16 * self.width;
             y = self.height - self.buttonHeight;
         };
+        text_credits = {
+            object = Loveframes.Create("text");
+            x = 15;
+            y = 70;
+        }
     };
+    
+    for i=1, #self.p_staff, 1
+    do
+        self.p_staffString = self.p_staffString .. self.p_staff[i] .. "\n";
+    end
     
     --adjust all elements on this frame
     self.elementsOnFrame.background.object:SetImage(self.directory .."gui_Test_Bg.png");
@@ -56,11 +80,18 @@ function Credits:create()
     self.elementsOnFrame.button_back.object:SetImage(self.directory .. "gui_Test_Button.png")
     self.elementsOnFrame.button_back.object:SizeToImage()
     self.elementsOnFrame.button_back.object:SetText("Back");
+    
+    self.elementsOnFrame.text_credits.object:SetText(self.p_staffString);
+    self.elementsOnFrame.text_credits.object:SetLinksEnabled(true);
+    self.elementsOnFrame.text_credits.object:SetDetectLinks(true);
+    self.elementsOnFrame.text_credits.object:SetShadowColor(150, 210, 255)
 
     --onclick events for all buttons
     self.elementsOnFrame.button_back.object.OnClick = function(object)
         _gui:changeFrame(_gui:getFrames().mainMenu);
     end
+    
+    
 end
 
 ---shows the frame on screen

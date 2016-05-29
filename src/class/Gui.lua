@@ -33,6 +33,8 @@ local Gui = Class {
         };
         self.p_textOutput = "";
     end;
+    
+    levMan = nil;
 };
 
 function Gui:getFrames()
@@ -43,7 +45,7 @@ end
 ---clears all frames and starts at the main menu
 function Gui:start()
     self:clearAll();
-    self:changeFrame(self.p_myFrames.mainMenu);
+    self:changeFrame(self.p_myFrames.mainMenu);    
 end
 
 ---called to draw a new frame
@@ -129,6 +131,24 @@ function Gui:tempTextOutput()
         "Language = " .. tostring(_persTable.config.language) .. "\n" ..
         "\n" ..
         "Money =" .. tostring(_persTable.money);
+end
+
+--- Returns the current game state.
+-- @return Returns the current game state.
+function Gui:getCurrentState()
+    return self.p_states.currentState.name;
+end
+
+--- Returns the reference to the LevelManager object.
+-- @return Returns the reference to the LevelManager object.
+function Gui:getLevelManager()
+    return self.levMan;
+end
+
+--- Set the reference to the LevelManager object.
+-- @param levelManager The reference to the LevelManager object.
+function Gui:setLevelManager(levelManager)
+    self.levMan = levelManager;
 end
 
 return Gui;

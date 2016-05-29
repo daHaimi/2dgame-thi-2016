@@ -50,14 +50,14 @@ describe("Test unit test suite", function()
         }
 
         _G.loveMock = mock(_G.love, true);
-        locInstance = testClass("assets/testbg.png", { 512, 256 }, 1);
+        locInstance = testClass("sewers", "assets/testbg.png", { 512, 256 }, 1);
 
         testClass.caughtThisRound = {};
         testClass.levMan = _G.levMan;
     end)
 
     it("Testing Constructor", function()
-        local myInstance = testClass("assets/testbg.png", { 512, 256 }, 1);
+        local myInstance = testClass("sewers", "assets/testbg.png", { 512, 256 }, 1);
         local lb = myInstance.lowerBoarder;
         local mbb1 = myInstance.mapBreakthroughBonus1;
         local mbb2 = myInstance.mapBreakthroughBonus2;
@@ -65,11 +65,11 @@ describe("Test unit test suite", function()
         assert.spy(loveMock.graphics.newImage).was.called_with("assets/testbg.png");
         
         _persTable.upgrades.mapBreakthrough1 = true;
-        local myInstance = testClass("assets/testbg.png", { 512, 256 }, 1);
+        local myInstance = testClass("sewers", "assets/testbg.png", { 512, 256 }, 1);
         assert.are.same( lb + mbb1, myInstance.lowerBoarder);
         
         _persTable.upgrades.mapBreakthrough2 = true;
-        local myInstance = testClass("assets/testbg.png", { 512, 256 }, 1);
+        local myInstance = testClass("sewers", "assets/testbg.png", { 512, 256 }, 1);
         assert.are.same(lb + mbb1 + mbb2, myInstance.lowerBoarder);
     end)
 
@@ -275,18 +275,18 @@ describe("Test unit test suite", function()
         assert.are.same(5, testClass:getMoved());
     end)
 
-    it("Testing getSwarmFactory()", function ()
-        locInstance.swarmFac = {"some", "objects"};
-        assert.are.same({"some", "objects"}, locInstance:getSwarmFactory());
-    end)
-
     it("Testing getTime()", function()
         _G.os.date = function(...) return "22" end;
-        local myInstance = testClass("assets/testbg.png", { 512, 256 }, 1);
+        local myInstance = testClass("sewers", "assets/testbg.png", { 512, 256 }, 1);
         assert.are.same("day", myInstance:getTime());
             
         _G.os.date = function(...) return "35" end;
-        local myInstance = testClass("assets/testbg.png", { 512, 256 }, 1);
+        local myInstance = testClass("sewers", "assets/testbg.png", { 512, 256 }, 1);
         assert.are.same("night", myInstance:getTime());
+    end)
+
+    it("Testing getLevelName", function()
+        locInstance.p_levelName = "someName";
+        assert.are.same("someName", locInstance:getLevelName());
     end)
 end)
