@@ -19,6 +19,9 @@ _G.math.inf = 1 / 0;
 _G._gui = nil;
 _G._persistence = nil;
 _G.testScore = 0;
+_G._androidConfig = {};
+-- Font for android debugging
+_G.myfont = love.graphics.newFont(30);
 
 -- Game Title
 love.window.setTitle("Simon Hamsters insane trip");
@@ -38,6 +41,7 @@ local levMan;
 --- The bootstrap of the game.
 -- This function is called exactly once at the beginning of the game.
 function love.load()
+    --if arg[#arg] == "-debug" then require("mobdebug").start() end -- enables the debugging
     _G.data = require "data"; -- loading cycle on android requires data to be load on love.load()
     _persistence = Persistence();
     _persistence:resetGame();
@@ -51,9 +55,24 @@ function love.load()
     _G._persTable.scaledDeviceDim = {_G._persTable.winDim[1] * scaleFactor, _G._persTable.winDim[2] * scaleFactor};
     love.window.setMode(_G._persTable.scaledDeviceDim[1], _G._persTable.scaledDeviceDim[2], { centered });
     levMan = LevelManager();
-    levMan:newLevel("assets/testbg.png", 1, _G.data);
+
+    -- Get Accelerometer if android
+    if love.system.getOS() == "Android" then
+        local joy = love.joystick.getJoysticks();
+        for k, js in pairs(joy) do
+            if js:getName() == "Android Accelerometer" then
+                _G._androidConfig.joystick = js;
+            end
+        end
+        if _G._data and _G._data.android then
+            _G._androidConfig.maxTilt = _G._data.android.maxTilt;
+        else 
+            _G._androidConfig.maxTilt = .3;
+        end
+    end
 
     _gui = Gui();
+    _gui:setLevelManager(levMan);
     _gui:tempTextOutput();
     _gui:start();
 end
@@ -84,16 +103,17 @@ function love.draw()
         love.graphics.scale(1/scaleFactor, 1/scaleFactor);
     end
     
-    if love.system.getOS() == "Android" then
-        local js = love.joystick.getJoysticks()[1];
-        local ax = js:getAxis(1);
-        love.graphics.print("Axis: 1, Value: " .. js:getAxis(1) .. "\nAxis: 2, Value: " .. js:getAxis(2) .. "\nAxis: 3, Value: " .. js:getAxis(3), 100, 200);
+    if _G._androidConfig.joyPos then
+        love.graphics.push();
+        love.graphics.setFont(_G.myfont);
+        love.graphics.print(_G._androidConfig.joyPos, 100, 100);
+        love.graphics.pop();
     end
 
-    Loveframes.draw()
+    Loveframes.draw();
     --[[prints the State name and output values.
     This function will be replaced in a later version]] --
-    _gui:tempDrawText()
+    _gui:tempDrawText();
 end
 
 --- This function is called continuously by the love.run().
@@ -108,6 +128,21 @@ function love.update(dt)
         levMan:getCurLevel():update(dt, levMan:getCurPlayer());
         levMan:getCurSwarmFactory():update();
     end
+    -- if love.load had been executed and on android
+    if love.system.getOS() == "Android" then
+        -- shift [-30,30] to [0,60] and scale to windim[1]
+        local joyPos = (_G._androidConfig.joystick:getAxis(1) + _G._androidConfig.maxTilt) * (_G._persTable.winDim[1] / (_G._androidConfig.maxTilt * 2));
+        _G._androidConfig.joyPos = joyPos;
+        if joyPos < (levMan:getCurPlayer():getSize() / 2) then
+            levMan:getCurPlayer():setPosXMouse(0);
+        else
+            if joyPos > _G._persTable.winDim[1] - levMan:getCurPlayer():getSize() then
+                levMan:getCurPlayer():setPosXMouse(_G._persTable.winDim[1] - levMan:getCurPlayer():getSize());
+            else
+                levMan:getCurPlayer():setPosXMouse(joyPos - (levMan:getCurPlayer():getSize() / 2));
+            end
+        end
+    end
     TEsound.cleanup();
 end
 
@@ -115,7 +150,7 @@ end
 -- @param x The mouse position on the x-axis.
 -- @param _ The mouse position on the y-axis. unused
 function love.mousemoved(x, _)
-    if levMan:getCurPlayer() then
+    if levMan:getCurPlayer() and love.system.getOS() ~= "Android" then
         if x < (levMan:getCurPlayer():getSize() / 2) then
             levMan:getCurPlayer():setPosXMouse(0);
         else
@@ -141,7 +176,7 @@ function love.mousepressed(x, y, button)
     Loveframes.mousepressed(x, y, button);
 
     -- activate the god mode when you press the mouse
-    if love.mouse.isDown(1) then
+    if love.mouse.isDown(1) and _gui:getCurrentState() == "InGame" then
       levMan:getCurLevel():activateGodMode();
     end
     
@@ -165,6 +200,8 @@ function love.mousereleased(x, y, button)
     Loveframes.mousereleased(x, y, button);
 
     -- deactivate the god mode when you release the mouse
-    levMan:getCurLevel():deactivateGodMode();
-    levMan:getCurLevel():resetOldPosY();
+    if _gui:getCurrentState() == "InGame" then
+        levMan:getCurLevel():deactivateGodMode();
+        levMan:getCurLevel():resetOldPosY();
+    end
 end

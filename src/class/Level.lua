@@ -9,8 +9,9 @@ _G.math.inf = 1 / 0;
 -- @param direction The y direction (-1 means up and 1 means down)
 -- @param swarmFactory The swarm factory
 local Level = Class {
-    init = function(self, backgroundPath, winDim, direction, levelManager)
+    init = function(self, levelName, backgroundPath, winDim, direction, levelManager)
         self.levMan = levelManager;
+        self.p_levelName = levelName;
         self.bg = love.graphics.newImage(backgroundPath);
         if self.bg ~= nil then -- do not remove this if statement or busted will crash
         self.bg:setWrap("repeat", "repeat");
@@ -42,6 +43,7 @@ local Level = Class {
 
     -- Member variables
     levMan = nil;
+    p_levelName = "";
     levelFinished = 0; -- 0 means the round hasn´t been finished until yet
     gotPayed = 0; -- 0 means the amount of money hasn´t calculated until yet
     roundValue = 0; -- the amount of money fished in this round
@@ -61,7 +63,7 @@ local Level = Class {
     shortGMDist = 0;
     godModeActive = 0;
     moved = 0;
-    time = nil;
+    time = nil; -- day/night
     gMMusicPlaying = false;
 }
 
@@ -346,17 +348,22 @@ function Level:printResult()
     end
 end
 
---- returns the amount of pixels moved in y direction
+--- Returns the amount of pixels moved in y direction.
+-- @return Returns the amount of pixels moved in y direction.
 function Level:getMoved()
     return self.moved;
 end
 
-function Level:getSwarmFactory()
-    return self.swarmFac;
-end
-
+--- Returns the daytime in the game.
+-- @return Returns "day" if the daytime in the game is day otherwise "night".
 function Level:getTime()
     return self.time;
+end
+
+--- Returns the name/type of the level.
+-- @return Returns the name/type of the level.
+function Level:getLevelName()
+    return self.p_levelName;
 end
 
 return Level;

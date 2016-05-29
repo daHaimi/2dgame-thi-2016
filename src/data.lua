@@ -760,6 +760,9 @@ return {
             flagImage = "GermanFlag.png";
         },
         
-    }
+    },
     
+    android = {
+        maxTilt = .3;
+    }
 }

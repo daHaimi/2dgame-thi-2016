@@ -94,4 +94,12 @@ function fakeElement:Remove()
     self.calledRemove = true;
 end
 
+function fakeElement:SetLinksEnabled(...)
+
+end
+
+function fakeElement:SetDetectLinks(...) end
+
+function fakeElement:SetShadowColor(...) end
+
 return fakeElement;

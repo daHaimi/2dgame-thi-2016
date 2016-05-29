@@ -18,12 +18,6 @@ describe("Unit test for UpgradeMenu.lua", function()
         _G.Frame = function(...) return Frame; end;
         _G._persTable = {
             upgrades = {
-                speedUp = 0;
-                moneyMult = 0;
-                moreLife = 0;
-                godMode = 0;
-                mapBreakthrough1 = 0;
-                mapBreakthrough2 = 0;
             };
             money = 0;
             scaledDeviceDim = {
@@ -52,6 +46,14 @@ describe("Unit test for UpgradeMenu.lua", function()
             tempTextOutput = function(...) end;
         };
         
+       local ME = {
+         price = 0;
+         };
+        
+        _G._persistence = {
+          updateSaveFile = function(...) end;
+        };
+        
         spy.on(locInstance, "addAllUpgrades");
         spy.on(locInstance, "loadValuesFromPersTable");
         locInstance:create();
@@ -66,6 +68,8 @@ describe("Unit test for UpgradeMenu.lua", function()
         assert.spy(_gui.tempTextOutput).was.called();
         
         locInstance.elementsOnFrame.chart.object.p_markedElement = locInstance.elementsOnFrame.chart.object.p_elementsOnChart[1];
+       
+        locInstance.elementsOnFrame.chart.object.p_markedElement = ME;
         stub(locInstance, "buyElement");
         locInstance.elementsOnFrame.button_buy.object.OnClick();
         assert.stub(locInstance.buyElement).was.called();
@@ -74,9 +78,10 @@ describe("Unit test for UpgradeMenu.lua", function()
     it("Testing buyElement function", function()
         local KE = {
             disable = function(...) end;
-            price = 50;
-        };
-
+            price = 0;
+        }
+        
+        
         locInstance.elementsOnFrame.chart.object.p_markedElement = KE;
         locInstance.elementsOnFrame.chart.getMarkedElement = function(...) 
             return locInstance.elementsOnFrame.chart.object.p_markedElement; 
@@ -108,7 +113,14 @@ describe("Unit test for UpgradeMenu.lua", function()
                 }
             };
         };
-        locInstance.elementsOnFrame.chart.object.p_markedElement = locInstance.elementsOnFrame.chart.object.p_elementsOnChart[1];
+        --locInstance.elementsOnFrame.chart.object.p_markedElement = locInstance.elementsOnFrame.chart.object.p_elementsOnChart[1];
+        
+        local KE = {
+          price = 10;
+          };
+        
+        locInstance.elementsOnFrame.chart.object.p_markedElement = KE;
+
         
         locInstance:addAllUpgrades();
         locInstance.elementsOnFrame.chart.object.p_elementsOnChart[1].object = {};

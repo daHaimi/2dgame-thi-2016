@@ -86,14 +86,17 @@ function Level:create()
     
     --onclick events for all buttons
     self.elementsOnFrame.button_level1.object.OnClick = function(object)
+        _gui:getLevelManager():newLevel(_gui:getLevelManager():getLevelPropMapByName("sewers"), _G.data);
         _gui:changeFrame(_gui:getFrames().inGame);
     end
     
     self.elementsOnFrame.button_level2.object.OnClick = function(object)
+        _gui:getLevelManager():newLevel(_gui:getLevelManager():getLevelPropMapByName("canyon"), _G.data);
         _gui:changeFrame(_gui:getFrames().inGame);
     end
     
     self.elementsOnFrame.button_level3.object.OnClick = function(object)
+        _gui:getLevelManager():newLevel(_gui:getLevelManager():getLevelPropMapByName("space"), _G.data);
         _gui:changeFrame(_gui:getFrames().inGame);
     end
     
