@@ -24,6 +24,10 @@ describe("Unit test suite for the LevelManager class", function()
             }
         }
 
+        _G._persistence = {
+            resetGame = function(...)  end;
+        };
+       
     
         _G.Bait = function(...) return {checkUpgrades = function(...) return 42 end} end;
         _G.Level = function(...) return {4,5} end;
@@ -52,9 +56,34 @@ describe("Unit test suite for the LevelManager class", function()
     end)
 
     it("Testing newLevel", function()
-        levMan:newLevel("testPfad", 1, "data.lua");
+        local sewers = {
+            levelName = "sewers",
+            direction = 1,
+            bgPath = "assets/testbg.png";
+        }
+        
+        levMan:newLevel(sewers, "data.lua");
         assert.are.same(levMan.curLevel, {4,5});
         assert.are.same(levMan.curSwarmFac, {3});
+    end)
+
+    it("Testing replayLevel", function()
+        levMan.p_levelProperties = {
+            sewers = {
+                levelName = "sewers",
+                direction = 1,
+                bgPath = "assets/testbg.png";
+            }
+        };
+        levMan.curLevel = {445, 79862, getLevelName = function(...) return "sewers" end;};
+        levMan.curPlayer = {2268, -45};
+        levMan.curSwarmFac = {33688};
+        levMan.p_curDataRef = {66823};
+        
+        levMan:replayLevel();
+        assert.are_not.same({445, 79862, getLevelName = function(...) return "sewers" end;}, levMan:getCurLevel());
+        assert.are_not.same({2268, -45}, levMan:getCurPlayer());
+        assert.are_not.same({33688}, levMan:getCurSwarmFactory());
     end)
 
     it("Testing getCurLevel", function()
