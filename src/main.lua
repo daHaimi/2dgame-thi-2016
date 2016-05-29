@@ -33,7 +33,7 @@ local levMan;
 --- The bootstrap of the game.
 -- This function is called exactly once at the beginning of the game.
 function love.load()
-    -- if arg[#arg] == "-debug" then require("mobdebug").start() end -- enables the debugging
+    --if arg[#arg] == "-debug" then require("mobdebug").start() end -- enables the debugging
     _G.data = require "data"; -- loading cycle on android requires data to be load on love.load()
     _persistence = Persistence();
     _persistence:resetGame();
@@ -109,7 +109,6 @@ function love.mousepressed(x, y, button)
     Loveframes.mousepressed(x, y, button);
 
     -- activate the god mode when you press the mouse
-    print(_gui:getCurrentState());
     if love.mouse.isDown(1) and _gui:getCurrentState() == "InGame" then
       levMan:getCurLevel():activateGodMode();
     end

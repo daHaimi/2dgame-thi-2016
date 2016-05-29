@@ -18,6 +18,7 @@ local Bait = Class {
     speed = 200;
     posXMouse = 0;
     posXBait = 0;
+    xPos = 0;
     maxSpeedX = 20;
     winDim = {};
     life = 1;

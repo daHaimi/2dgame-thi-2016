@@ -23,6 +23,7 @@ local SwarmFactory = Class {
         end
         
         -- Start at the lower 75% of the screen to create swarms
+        local addedHeights = 0.0;
         addedHeights = self.levMan:getCurLevel().winDim[2] *0.75;
         while addedHeights <= -self.maxDepth do
             addedHeights = addedHeights + self:createNextSwarm(addedHeights);
@@ -34,6 +35,7 @@ local SwarmFactory = Class {
     currentSwarm = 1;
     fishableObjects = {};
     createdFishables = {};
+    swarmsSewer = {};
 };
 
 --- Draws all fishables
@@ -64,7 +66,7 @@ function SwarmFactory:createNextSwarm(startPosY)
     local amountFishables = math.random(fishable.minAmount, fishable.maxAmount);
  
     for i = 1, amountFishables, 1 do
-        yPos = math.random(fishable.swarmHeight);
+        local yPos = math.random(fishable.swarmHeight);
         
         self.createdFishables[#self.createdFishables + 1] = FishableObject(fishable.name, fishable.image, startPosY + 
             yPos, fishable.minSpeed, fishable.maxSpeed, fishable.value, fishable.hitpoints, fishable.spriteSize, fishable.hitbox);
