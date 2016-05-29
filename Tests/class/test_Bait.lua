@@ -143,9 +143,9 @@ describe("Unit test for Bait.lua", function()
         };
 
         local myInstance = testClass(locWinDim, levMan);
-        local exp = 1;
+        local exp = 0;
         myInstance:checkUpgrades();
-        assert.are.same(myInstance.life, exp);
+        assert.are.same(_G._persTable.upgrades.moreLife, exp);
     end)
 
     it("Test oneMoreLife", function()
@@ -157,37 +157,50 @@ describe("Unit test for Bait.lua", function()
         };
 
         local myInstance = testClass(locWinDim, levMan);
-        local exp = 2;
+        local exp = 1;
         myInstance:checkUpgrades();
-        assert.are.same(myInstance.life, exp);
+        assert.are.same(_G._persTable.upgrades.moreLife, exp);
     end)
   
       it("Test twoMoreLife", function()
         _G._persTable = {};
 
-    _G._persTable.upgrades = {
+        _G._persTable.upgrades = {
             moreLife = 0;
             twoMoreLife = true; --- amount of additional lifes
         };
 
         local myInstance = testClass(locWinDim, levMan);
+        local exp = 0;
+        myInstance:checkUpgrades();
+        assert.are.same(_G._persTable.upgrades.moreLife, exp);
+    end)
+      it("Test twoMoreLife", function()
+        _G._persTable = {};
+          _G._persTable.upgrades = {
+            moreLife = 0;
+            twoMoreLife = true;
+            oneMoreLife = true;--- amount of additional lifes
+        };
+
+        local myInstance = testClass(locWinDim, levMan);
         local exp = 2;
         myInstance:checkUpgrades();
-        assert.are.same(myInstance.life, exp);
-    end)
+        assert.are.same(_G._persTable.upgrades.moreLife, exp);
+      end)
 
     it("Test threeMoreLife", function()
         _G._persTable = {};
 
         _G._persTable.upgrades = {
             moreLife = 0;
-            threeMoreLife = true; --- amount of additional lifes
+            threeMoreLife = true;--- amount of additional lifes
         };
 
         local myInstance = testClass(locWinDim, levMan);
-        local exp = 2;
+        local exp = 0;
         myInstance:checkUpgrades();
-        assert.are.same(myInstance.life, exp);
+        assert.are.same(_G._persTable.upgrades.moreLife, exp);
     end)
   
     it("Test allMoreLife upgrades true", function()
@@ -201,9 +214,9 @@ describe("Unit test for Bait.lua", function()
         };
 
         local myInstance = testClass(locWinDim, levMan);
-        local exp = 4;
+        local exp = 3;
         myInstance:checkUpgrades();
-        assert.are.same(myInstance.life, exp);
+        assert.are.same(_G._persTable.upgrades.moreLife, exp);
     end)
 
     --- test for more speed Upgrade

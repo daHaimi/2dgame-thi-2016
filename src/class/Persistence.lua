@@ -88,7 +88,7 @@ function Persistence:createPersTable()
 
     --- upgrades list in persTable, "0" means unbought
     _G._persTable.upgrades = {
-        firstSpeedUp = false; -- more speed
+        firstSpeedUp = true; -- more speed
         secondSpeedUp = false; -- more speed
         oneMoreLife = true; -- more life
         twoMoreLife = true; -- more life

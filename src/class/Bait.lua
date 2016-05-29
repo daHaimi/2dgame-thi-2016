@@ -40,22 +40,19 @@ local Bait = Class {
     goldenRuleUpperPoint = 0.68;
 };
 
---- TODO need balancing
+--- 
 -- a function to check wich upgrades are active for the bait
 function Bait:checkUpgrades()
+    -- Checks if more life upgrade is availible
+    -- doesnt work if oneMoreLife isnt bought before twoMoreLife
     if _G._persTable.upgrades.oneMoreLife then
-        self.life = self.life + 1;
-        _G._persTable.upgrades.moreLife = _G._persTable.upgrades.moreLife + 1;
-    end
-    
-    if _G._persTable.upgrades.twoMoreLife then
-        self.life = self.life + 1;
-        _G._persTable.upgrades.moreLife = _G._persTable.upgrades.moreLife + 1;
-    end
-    
-    if _G._persTable.upgrades.threeMoreLife then
-        self.life = self.life + 1;
-        _G._persTable.upgrades.moreLife = _G._persTable.upgrades.moreLife + 1;
+        _G._persTable.upgrades.moreLife = 1;
+        if _G._persTable.upgrades.twoMoreLife then
+            _G._persTable.upgrades.moreLife = 2;
+            if _G._persTable.upgrades.threeMoreLife then
+                _G._persTable.upgrades.moreLife = 3;
+            end
+        end
     end
     --- speed up while phase 1 and 2
     if _G._persTable.upgrades.firstSpeedUp then
