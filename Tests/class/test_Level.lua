@@ -22,7 +22,8 @@ describe("Test unit test suite", function()
                 print = function(...) end,
                 Canvas = {
                     setWrap = function(...) end
-                }
+                },
+                draw = function(...) end
             },
             image = {
                 CompressedImageData = {
@@ -288,5 +289,10 @@ describe("Test unit test suite", function()
     it("Testing getLevelName", function()
         locInstance.p_levelName = "someName";
         assert.are.same("someName", locInstance:getLevelName());
+    end)
+
+    it("Testing drawEnviroment", function()
+        locInstance:drawEnviroment();
+        assert.spy(loveMock.graphics.draw).was.called(14);
     end)
 end)
