@@ -50,6 +50,18 @@ function Healthbar:minus()
     end
 end
 
+--- Reset the amount of lives to the start value.
+function Healthbar:resetHearts()
+    self.unlockedHearts = 1 + _persTable.upgrades.moreLife;
+    self.currentHearts = self.unlockedHearts;
+    self.hearts = {};
+    for var1 = 1, self.unlockedHearts do
+        self.hearts[var1] = Loveframes.Create("image");
+        self.hearts[var1]:SetImage(self.redHeartPath);
+    end
+    self:refresh();
+end
+
 ---Function not conform to CC/ implements an interface
 ---Set the visible of the element
 -- @parm visible: true or false

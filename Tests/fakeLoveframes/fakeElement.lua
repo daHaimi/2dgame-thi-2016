@@ -72,6 +72,11 @@ function fakeElement:SetShadow(bool)
     self.shadow = bool;
 end
 
+function fakeElement:GetWidth()
+    return 10;
+end
+
+
 ---imagebutton
 function fakeElement:SetImage(path)
     self.imagepath = path;

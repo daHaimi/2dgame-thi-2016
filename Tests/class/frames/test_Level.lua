@@ -25,6 +25,12 @@ describe("Unit test for Level.lua", function()
                 return fakeElement(typeName);
             end
         }
+        
+        _G.love = {
+            graphics = {
+                newImage = function (...) end;
+            };
+        };
         _G._persTable = {
             scaledDeviceDim = {
                 [1] = 500;

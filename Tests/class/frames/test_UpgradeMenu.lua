@@ -43,7 +43,6 @@ describe("Unit test for UpgradeMenu.lua", function()
         _G._gui = {
             getFrames = function(...) return{}; end;
             changeFrame = function(...) end;
-            tempTextOutput = function(...) end;
         };
         
        local ME = {
@@ -62,10 +61,8 @@ describe("Unit test for UpgradeMenu.lua", function()
         assert.spy(locInstance.loadValuesFromPersTable).was.called();
 
         spy.on(_G._gui, "changeFrame");
-        spy.on(_G._gui, "tempTextOutput");
         locInstance.elementsOnFrame.button_back.object.OnClick();
         assert.spy(_gui.changeFrame).was.called();
-        assert.spy(_gui.tempTextOutput).was.called();
         
         locInstance.elementsOnFrame.chart.object.p_markedElement = locInstance.elementsOnFrame.chart.object.p_elementsOnChart[1];
        

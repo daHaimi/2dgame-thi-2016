@@ -27,6 +27,20 @@ describe("Unit test suite for the LevelManager class", function()
         _G._persistence = {
             resetGame = function(...)  end;
         };
+        
+        _G._gui = {
+            getFrames = function(...) return {
+                inGame = {
+                    elementsOnFrame = {
+                        healthbar = {
+                            object = {
+                                resetHearts = function(...) end;
+                            };
+                        };
+                    };
+                };
+            }end;
+        };
        
     
         _G.Bait = function(...) return {checkUpgrades = function(...) return 42 end} end;
@@ -61,7 +75,7 @@ describe("Unit test suite for the LevelManager class", function()
             direction = 1,
             bgPath = "assets/testbg.png";
         }
-        
+
         levMan:newLevel(sewers, "data.lua");
         assert.are.same(levMan.curLevel, {4,5});
         assert.are.same(levMan.curSwarmFac, {3});

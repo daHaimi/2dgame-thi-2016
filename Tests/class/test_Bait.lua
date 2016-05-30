@@ -1,6 +1,23 @@
 -- Lua 5.1 Hack
 _G.math.inf = 1 / 0
-
+_G.love = {
+    graphics = {
+        newCanvas = function(...)
+            return 0;
+        end;
+        newShader = function(...)
+            return {
+                send = function(...) end;
+            };
+        end;
+        window = 0;
+    };
+    window = {
+        getMode = function(...)
+            return 0, 0, {};
+        end
+    };
+};
 testClass = require "src.class.Bait"
 
 
@@ -14,6 +31,7 @@ describe("Unit test for Bait.lua", function()
         isFinished = function(...) return 0 end;
         getMoved = function() return 4 end;
         getDirection = function() return 1 end;
+        getYPos = function() return 50 end;
     };
     local locImageStub = {
         draw = function(...) end;
@@ -60,6 +78,8 @@ describe("Unit test for Bait.lua", function()
                         send = function(...) end;
                     };
                 end;
+                translate = function(...) end;
+                rotate = function(...) end;
                 polygon = function(...) end;
                 setShader = function(...) end;
             }
@@ -143,9 +163,9 @@ describe("Unit test for Bait.lua", function()
         };
 
         local myInstance = testClass(locWinDim, levMan);
-        local exp = 1;
+        local exp = 0;
         myInstance:checkUpgrades();
-        assert.are.same(myInstance.life, exp);
+        assert.are.same(_G._persTable.upgrades.moreLife, exp);
     end)
 
     it("Test oneMoreLife", function()
@@ -157,23 +177,36 @@ describe("Unit test for Bait.lua", function()
         };
 
         local myInstance = testClass(locWinDim, levMan);
-        local exp = 2;
+        local exp = 1;
         myInstance:checkUpgrades();
-        assert.are.same(myInstance.life, exp);
+        assert.are.same(_G._persTable.upgrades.moreLife, exp);
     end)
-  
-      it("Test twoMoreLife", function()
+
+    it("Test twoMoreLife", function()
         _G._persTable = {};
 
-    _G._persTable.upgrades = {
+        _G._persTable.upgrades = {
             moreLife = 0;
             twoMoreLife = true; --- amount of additional lifes
         };
 
         local myInstance = testClass(locWinDim, levMan);
+        local exp = 0;
+        myInstance:checkUpgrades();
+        assert.are.same(_G._persTable.upgrades.moreLife, exp);
+    end)
+    it("Test twoMoreLife", function()
+        _G._persTable = {};
+        _G._persTable.upgrades = {
+            moreLife = 0;
+            twoMoreLife = true;
+            oneMoreLife = true; --- amount of additional lifes
+        };
+
+        local myInstance = testClass(locWinDim, levMan);
         local exp = 2;
         myInstance:checkUpgrades();
-        assert.are.same(myInstance.life, exp);
+        assert.are.same(_G._persTable.upgrades.moreLife, exp);
     end)
 
     it("Test threeMoreLife", function()
@@ -185,11 +218,11 @@ describe("Unit test for Bait.lua", function()
         };
 
         local myInstance = testClass(locWinDim, levMan);
-        local exp = 2;
+        local exp = 0;
         myInstance:checkUpgrades();
-        assert.are.same(myInstance.life, exp);
+        assert.are.same(_G._persTable.upgrades.moreLife, exp);
     end)
-  
+
     it("Test allMoreLife upgrades true", function()
         _G._persTable = {};
 
@@ -201,9 +234,9 @@ describe("Unit test for Bait.lua", function()
         };
 
         local myInstance = testClass(locWinDim, levMan);
-        local exp = 4;
+        local exp = 3;
         myInstance:checkUpgrades();
-        assert.are.same(myInstance.life, exp);
+        assert.are.same(_G._persTable.upgrades.moreLife, exp);
     end)
 
     --- test for more speed Upgrade
@@ -242,7 +275,7 @@ describe("Unit test for Bait.lua", function()
 
         _G._persTable.upgrades = {
             firstSpeedUp = false; --- "0" no Speedup
-              secondSpeedUp = true;
+            secondSpeedUp = true;
         };
 
         local myInstance = testClass(locWinDim, levMan);
@@ -272,8 +305,8 @@ describe("Unit test for Bait.lua", function()
         _G._persTable = {};
 
         _G._persTable.upgrades = {
-        firstSpeedUp = false; -- more speed
-        secondSpeedUp = false; -- more speed
+            firstSpeedUp = false; -- more speed
+            secondSpeedUp = false; -- more speed
         };
 
         local myInstance = testClass(locWinDim, levMan);
@@ -290,10 +323,10 @@ describe("Unit test for Bait.lua", function()
             isFinished = function() return 0 end;
         }
         myInstance.posXMouse = 70;
-        myInstance.posXBait = 40;
-        local newPos = myInstance.posXBait + myInstance.maxSpeedX;
-        myInstance:setCappedPosX();
-        assert.are.same(myInstance.posXBait, newPos);
+        myInstance.xPos = 40;
+        local newPos = myInstance.xPos + myInstance.maxSpeedX;
+        myInstance.xPos = myInstance.xPos + myInstance:capXMovement();
+        assert.are.same(myInstance.xPos, newPos);
     end)
 
     it("Test x position limited to maxSpeed (negative direction)", function()
@@ -303,10 +336,10 @@ describe("Unit test for Bait.lua", function()
             isFinished = function() return 0 end;
         }
         myInstance.posXMouse = 10;
-        myInstance.posXBait = 40;
-        local newPos = myInstance.posXBait - myInstance.maxSpeedX;
-        myInstance:setCappedPosX();
-        assert.are.same(myInstance.posXBait, newPos);
+        myInstance.xPos = 40;
+        local newPos = myInstance.xPos - myInstance.maxSpeedX;
+        myInstance.xPos = myInstance.xPos + myInstance:capXMovement();
+        assert.are.same(myInstance.xPos, newPos);
     end)
 
     it("Test x position not limited to maxSpeed (positive direction)", function()
@@ -316,10 +349,10 @@ describe("Unit test for Bait.lua", function()
             isFinished = function() return 0 end;
         };
         myInstance.posXMouse = 41;
-        myInstance.posXBait = 40;
+        myInstance.xPos = 40;
         local newPos = myInstance.posXMouse;
-        myInstance:setCappedPosX();
-        assert.are.same(myInstance.posXBait, newPos);
+        myInstance.xPos = myInstance.xPos + myInstance:capXMovement();
+        assert.are.same(myInstance.xPos, newPos);
     end)
 
     it("Test x position not limited to maxSpeed (negative direction)", function()
@@ -329,10 +362,10 @@ describe("Unit test for Bait.lua", function()
             isFinished = function() return 0 end;
         }
         myInstance.posXMouse = 40;
-        myInstance.posXBait = 41;
+        myInstance.xPos = 41;
         local newPos = myInstance.posXMouse;
-        myInstance:setCappedPosX();
-        assert.are.same(myInstance.posXBait, newPos);
+        myInstance.xPos = myInstance.xPos + myInstance:capXMovement();
+        assert.are.same(myInstance.xPos, newPos);
     end)
 
     it("Test x positon with no change", function()
@@ -342,10 +375,10 @@ describe("Unit test for Bait.lua", function()
             isFinished = function() return 0 end;
         }
         myInstance.posXMouse = 40;
-        myInstance.posXBait = 40;
+        myInstance.xPos = 40;
         local newPos = myInstance.posXMouse;
-        myInstance:setCappedPosX();
-        assert.are.same(myInstance.posXBait, newPos);
+        myInstance.xPos = myInstance.xPos + myInstance:capXMovement();
+        assert.are.same(myInstance.xPos, newPos);
     end)
 
     it("Test draw", function()
@@ -365,7 +398,7 @@ describe("Unit test for Bait.lua", function()
     it("Test getXPos", function()
         local myInstance = testClass(locWinDim, levMan);
         myInstance.image = locImageStub;
-        myInstance.posXBait = 0;
+        myInstance.xPos = 0;
         assert.are.same(myInstance:getPosX(), 0);
     end)
 
@@ -400,7 +433,7 @@ describe("Unit test for Bait.lua", function()
             activateShortGM = function(...) end;
             isFinished = function() return 0 end;
             getDirection = function(...) return 1 end;
-          };
+        };
         _G._persTable.upgrades.moreLife = 1;
         _G._persTable.upgrades.oneMoreLife = true;
         myInstance:collisionDetected(fishable, 1);
@@ -471,7 +504,7 @@ describe("Unit test for Bait.lua", function()
         levMan.curLevel = {
             getGodModeStat = function(...) return 0 end;
             moved = 4;
-            activateShortGM = function (...) end;
+            activateShortGM = function(...) end;
             getMoved = function() return 4 end;
             getDirection = function() return 1 end;
             switchToPhase2 = function() end;

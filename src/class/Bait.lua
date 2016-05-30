@@ -1,7 +1,6 @@
 Class = require "lib.hump.class";
 CollisionDetection = require "class.CollisionDetection";
 Level = require "class.Level";
-LevelManager = require "class.LevelManager";
 Animate = require "class.Animate";
 
 --- Class for the Bait swimming for Phase 1 and 2
@@ -9,8 +8,31 @@ Animate = require "class.Animate";
 -- @param levelManager The reference to the level manager object
 local Bait = Class {
     init = function(self, winDim, levelManager)
+        
+        -- Initialize the member variables
+        self.levMan = nil;
+        self.size = 10;
+        self.speed = 200;
+        self.posXMouse = 0;
+        self.xPos = 0;
+        self.maxSpeedX = 20;
+        self.winDim = {};
+        self.life = 1;
+        self.money = 0;
+        self.numberOfHits = 0;
+        self.hitFishable = 0;
+        self.caughtThisRound = {};
+        self.sleepingPillDuration = 0;
+        self.deltaTime = 0;
+        self.modifier = 0.5;
+        self.goldenRuleLowerPoint = 0.32;
+        self.goldenRuleUpperPoint = 0.68;
+        self.image = nil;
+        self.pullIn = false;
+        
+        
         self.winDim = winDim;
-        self.posXBait = (winDim[1] / 2) - (self.size / 2);
+        self.xPos = (winDim[1] / 2) - (self.size / 2);
         self.levMan = levelManager;
         --local yPos = (self.winDim[2] / 2) - (self.size / 2); -- FIXME unused local
         local img = love.graphics.newImage("assets/sprites/sprite_hamster.png");
@@ -19,43 +41,22 @@ local Bait = Class {
         else 
             self.image = Animate(img, 3, 1, .08, Animate.AnimType.bounce);
         end
-    end;
-    levMan = nil;
-    size = 10;
-    speed = 200;
-    posXMouse = 0;
-    posXBait = 0;
-    xPos = 0;
-    maxSpeedX = 20;
-    winDim = {};
-    life = 1;
-    money = 0;
-    numberOfHits = 0;
-    hitFishable = 0;
-    caughtThisRound = {};
-    sleepingPillDuration = 0;
-    deltaTime = 0;
-    modifier = 0.5;
-    goldenRuleLowerPoint = 0.32;
-    goldenRuleUpperPoint = 0.68;
+        self.posXMouse = (winDim[1] / 2) - (self.size / 2);
+    end
 };
-
---- TODO need balancing
+--- 
 -- a function to check wich upgrades are active for the bait
 function Bait:checkUpgrades()
+    -- Checks if more life upgrade is availible
+    -- doesnt work if oneMoreLife isnt bought before twoMoreLife
     if _G._persTable.upgrades.oneMoreLife then
-        self.life = self.life + 1;
-        _G._persTable.upgrades.moreLife = _G._persTable.upgrades.moreLife + 1;
-    end
-    
-    if _G._persTable.upgrades.twoMoreLife then
-        self.life = self.life + 1;
-        _G._persTable.upgrades.moreLife = _G._persTable.upgrades.moreLife + 1;
-    end
-    
-    if _G._persTable.upgrades.threeMoreLife then
-        self.life = self.life + 1;
-        _G._persTable.upgrades.moreLife = _G._persTable.upgrades.moreLife + 1;
+        _G._persTable.upgrades.moreLife = 1;
+        if _G._persTable.upgrades.twoMoreLife then
+            _G._persTable.upgrades.moreLife = 2;
+            if _G._persTable.upgrades.threeMoreLife then
+                _G._persTable.upgrades.moreLife = 3;
+            end
+        end
     end
     --- speed up while phase 1 and 2
     if _G._persTable.upgrades.firstSpeedUp then
@@ -82,15 +83,19 @@ function Bait:update(dt)
     if self.levMan:getCurLevel():getDirection() == 1 then
         self.modifier = self:changeModifierTo(self.goldenRuleLowerPoint);
     elseif self.levMan:getCurLevel():getDirection() == -1 and
-            self.levMan:getCurLevel():getYPos() < self.winDim[2] * self.goldenRuleLowerPoint then
+            self.levMan:getCurLevel():getYPos() < self.winDim[2] * 0.2 then
         self.modifier = self:changeModifierTo(self.goldenRuleUpperPoint);
+    elseif self.levMan:getCurLevel():getDirection() == -1 and
+            self.levMan:getCurLevel():getYPos() > self.winDim[2] * 0.2 then
+        self.pullIn = true;
+        self.modifier = self:changeModifierTo(0.5);
     else
         self.modifier = self:changeModifierTo(0.5);
     end
 
     self.yPos = (self.winDim[2] * self.modifier) - (self.size / 2);
-    self:setCappedPosX();
-    self.xPos = self.posXBait;
+    self.xPos = self.xPos + self:capXMovement();
+    self.xPos = self:capXPosition();
     self.deltaTime = dt;
     self:checkForCollision(self.levMan:getCurSwarmFactory().createdFishables, oldXPos);
 
@@ -102,6 +107,25 @@ function Bait:update(dt)
         for i = 1, #self.levMan:getCurSwarmFactory().createdFishables, 1 do
             self.levMan:getCurSwarmFactory().createdFishables[i]:setSpeedMultiplicator(1);
         end
+    end
+end
+
+function Bait:capXPosition()
+    local leftBound = 58;
+    local rightBound = 422;
+    if self.pullIn then
+        local m = 142 / (self.winDim[2] * 0.2);
+        leftBound = 58 + m * (self.levMan:getCurLevel():getYPos() - self.winDim[2] * 0.23);
+        rightBound = 422 - m * (self.levMan:getCurLevel():getYPos() - self.winDim[2] * 0.23);
+    end
+    if leftBound > rightBound then
+        return self.winDim[2] / 2;
+    elseif self.xPos > rightBound then
+        return rightBound;
+    elseif self.xPos < leftBound then
+        return leftBound;
+    else
+        return self.xPos;
     end
 end
 
@@ -122,9 +146,10 @@ end
 -- @param oldXPos the x position of the bait before the update
 -- @param i the index of the fishable object
 function Bait:checkFishableForCollision(fishable, oldXPos, index)
-    moved = self.levMan:getCurLevel():getMoved();
-    directionOfMovement = 0;
+    local moved = self.levMan:getCurLevel():getMoved();
+    local directionOfMovement = 0;
     yPos = self.yPos
+    
     if oldXPos < self.xPos then
         directionOfMovement = 1;
     elseif oldXPos > self.xPos then
@@ -189,26 +214,48 @@ function Bait:draw()
     if self.levMan:getCurLevel():getGodModeStat() ~= 0 then
         Shaders:hueAjust(0.5);
     end
+    self:drawLine();
     self.image:draw(self.xPos - 32, self.yPos - 39); -- FIXME magic number
-    love.graphics.setColor(200, 200, 255, 64);
-    love.graphics.polygon("fill", self.xPos - 2, self.yPos - 39, self.xPos + 2, self.yPos - 39, self.winDim[1] / 2 + 2, 0, self.winDim[1] / 2 - 2, 0);
     Shaders:clear();
 end
 
---- Determines the capped X position of the Bait (SpeedLimit)
-function Bait:setCappedPosX()
-    if self.levMan:getCurLevel():isFinished() == 0 then
-        local delta = self.posXMouse - self.posXBait;
-        local posX;
-        if delta > self.maxSpeedX then
-            posX = self.posXBait + self.maxSpeedX;
-        elseif delta < self.maxSpeedX * (-1) then
-            posX = self.posXBait - self.maxSpeedX;
-        else
-            posX = self.posXMouse;
+--- draws the line of the Hamster
+function Bait:drawLine()
+    local image = love.graphics.newImage("assets/Line.png");
+    local angle = 0;
+    local length = math.sqrt (self.xPos * self.xPos + self.yPos * self.yPos);
+    
+    angle = math.atan((self.xPos - 0.5 * self.winDim[1]) / (self.levMan:getCurLevel():getYPos() - self.winDim[2] * self.modifier - 100));
+    love.graphics.translate(self.xPos, self.yPos);
+    love.graphics.rotate(angle);
+    love.graphics.translate(- self.xPos, - self.yPos);
+    for i = 1, length, 1 do
+        if not (i * 9 > length) then
+            love.graphics.draw(image, self.xPos, self.yPos - 40 - 9 * i);
         end
-        self.posXBait = posX;
     end
+
+    love.graphics.translate(self.xPos, self.yPos);
+    love.graphics.rotate(-angle);
+    love.graphics.translate(-self.xPos, -self.yPos);
+end
+
+--- Determines the capped X position of the Bait (SpeedLimit)
+function Bait:capXMovement()
+    local result = 0;
+    if self.levMan:getCurLevel():isFinished() == 0 then
+        local delta = self.posXMouse - self.xPos;
+        local posX;
+        
+        if delta > self.maxSpeedX then
+            result = self.maxSpeedX;
+        elseif delta < self.maxSpeedX * (-1) then
+            result =  - self.maxSpeedX;
+        elseif math.abs(delta) < self.maxSpeedX then
+            result =  delta;
+        end
+    end
+    return result;
 end
 
 --- changes the modifier of the height of the bait in small steps
@@ -234,7 +281,7 @@ end
 --- Returns the actual X position of the Bait
 -- @return The actual X position of the Bait
 function Bait:getPosX()
-    return self.posXBait;
+    return self.xPos;
 end
 
 --- Get the size of the player.

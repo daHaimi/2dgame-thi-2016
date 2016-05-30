@@ -22,7 +22,8 @@ describe("Test unit test suite", function()
                 print = function(...) end,
                 Canvas = {
                     setWrap = function(...) end
-                }
+                },
+                draw = function(...) end
             },
             image = {
                 CompressedImageData = {
@@ -89,21 +90,22 @@ describe("Test unit test suite", function()
     end)
 
     it("Testing getYPos", function()
-        assert.are.same(testClass:getYPos(), 0);
+        locInstance.posY = 1
+        assert.are.same(1, locInstance:getYPos());
     end)
 
     it("Testing checkGodMode", function()
-        testClass.godModeActive = 1;
-        testClass.godModeFuel = 20;
-        local sSGMF = spy.on(testClass, "setGodModeFuel");
+        locInstance.godModeActive = 1;
+        locInstance.godModeFuel = 20;
+        local sSGMF = spy.on(locInstance, "setGodModeFuel");
 
         for i = 10, -20, -1
         do
-            testClass.posY = i;
-            testClass:checkGodMode();
+            locInstance.posY = i;
+            locInstance:checkGodMode();
         end
         assert.spy(sSGMF).was.called(20);
-        assert.are.same(testClass.godModeActive, 0);
+        assert.are.same(locInstance.godModeActive, 0);
     end)
 
     it("Testing addToCaught", function()
@@ -130,22 +132,22 @@ describe("Test unit test suite", function()
 
     it("Testing activateGodMode", function()
         _G._persTable.upgrades.godMode = true;
-        testClass.godModeFuel = 500;
-        local sAGM = spy.on(testClass, "activateGodMode");
-        testClass:activateGodMode();
+        locInstance.godModeFuel = 500;
+        local sAGM = spy.on(locInstance, "activateGodMode");
+        locInstance:activateGodMode();
         assert.spy(sAGM).was.called(1);
-        assert.are.same(testClass.godModeActive, 1);
+        assert.are.same(locInstance.godModeActive, 1);
 
-        testClass.godModeFuel = 0;
-        testClass:activateGodMode();
+        locInstance.godModeFuel = 0;
+        locInstance:activateGodMode();
         assert.spy(sAGM).was.called(2);
-        assert.are.same(testClass.godModeActive, 0);
+        assert.are.same(locInstance.godModeActive, 0);
 
         _G._persTable.upgrades.godMode = 0;
-        testClass.godModeFuel = 1000;
-        testClass:activateGodMode();
+        locInstance.godModeFuel = 1000;
+        locInstance:activateGodMode();
         assert.spy(sAGM).was.called(3);
-        assert.are.same(testClass.godModeActive, 0);
+        assert.are.same(locInstance.godModeActive, 0);
     end)
 
     it("Testing deactivateGodMode", function()
@@ -196,9 +198,9 @@ describe("Test unit test suite", function()
     end)
 
     it("Testing isFinished", function()
-        assert.are.same(testClass:isFinished(), 0);
-        testClass.levelFinished = 1;
-        assert.are.same(testClass:isFinished(), 1);
+        assert.are.same(locInstance:isFinished(), 0);
+        locInstance.levelFinished = 1;
+        assert.are.same(locInstance:isFinished(), 1);
     end)
 
     it("Testing printResult with no objects caught", function()
@@ -288,5 +290,10 @@ describe("Test unit test suite", function()
     it("Testing getLevelName", function()
         locInstance.p_levelName = "someName";
         assert.are.same("someName", locInstance:getLevelName());
+    end)
+
+    it("Testing drawEnviroment", function()
+        locInstance:drawEnviroment();
+        assert.spy(loveMock.graphics.draw).was.called(15);
     end)
 end)
