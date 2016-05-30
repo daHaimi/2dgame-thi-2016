@@ -139,10 +139,6 @@ function Level:draw(bait)
     love.graphics.setColor(255, 255, 255);
     love.graphics.draw(self.bg, self.bgq, 0, self.posY);
     bait:draw();
-    if self.levelFinished == 1 then
-        self:printResult();
-    end
-    self.lightWorld.drawShadow();
 end
 
 --- draws the enviroment like borders
@@ -150,7 +146,8 @@ function Level:drawEnviroment()
     topBackground = love.graphics.newImage("assets/toilet_bg.png");
     borderLeft = love.graphics.newImage("assets/left.png");
     borderRight = love.graphics.newImage("assets/right.png");
-
+    toilet = love.graphics.newImage("assets/toilet.png");
+    
     self.enviromentPosition = self.enviromentPosition - self:getMoved();
 
     love.graphics.setColor(255, 255, 255);
@@ -167,6 +164,7 @@ function Level:drawEnviroment()
 
     love.graphics.draw(topBackground, 0, self.posY - 474);
     love.graphics.draw(topBackground, 0, self.posY - 375);
+    love.graphics.draw(toilet, 0, self.posY - 375);
 end
 
 --- Pay the achieved money to the player and multiply it with the

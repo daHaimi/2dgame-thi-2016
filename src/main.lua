@@ -104,6 +104,12 @@ function love.draw()
         love.graphics.scale(1 / scaleFactor, 1 / scaleFactor);
     end
 
+    if levMan:getCurLevel() ~= nil then
+        if levMan:getCurLevel().levelFinished == 1 then
+            levMan:getCurLevel():printResult();
+        end
+    end
+
     if _G._androidConfig.joyPos then
         love.graphics.push();
         love.graphics.setFont(_G.myfont);

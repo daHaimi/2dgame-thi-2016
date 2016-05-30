@@ -38,6 +38,7 @@ local Bait = Class {
     modifier = 0.5;
     goldenRuleLowerPoint = 0.32;
     goldenRuleUpperPoint = 0.68;
+    pullIn = false;
 };
 --- 
 -- a function to check wich upgrades are active for the bait
@@ -78,15 +79,19 @@ function Bait:update(dt)
     if self.levMan:getCurLevel():getDirection() == 1 then
         self.modifier = self:changeModifierTo(self.goldenRuleLowerPoint);
     elseif self.levMan:getCurLevel():getDirection() == -1 and
-            self.levMan:getCurLevel():getYPos() < self.winDim[2] * self.goldenRuleLowerPoint then
+            self.levMan:getCurLevel():getYPos() < self.winDim[2] * 0.2 then
         self.modifier = self:changeModifierTo(self.goldenRuleUpperPoint);
+    elseif self.levMan:getCurLevel():getDirection() == -1 and
+            self.levMan:getCurLevel():getYPos() > self.winDim[2] * 0.2 then
+        self.pullIn = true;
+        self.modifier = self:changeModifierTo(0.5);
     else
         self.modifier = self:changeModifierTo(0.5);
     end
 
     self.yPos = (self.winDim[2] * self.modifier) - (self.size / 2);
     self.xPos = self.xPos + self:capXMovement();
-    self.xPos = self:capLevelBorders();
+    self.xPos = self:capXPosition();
     self.deltaTime = dt;
     self:checkForCollision(self.levMan:getCurSwarmFactory().createdFishables, oldXPos);
 
@@ -101,11 +106,20 @@ function Bait:update(dt)
     end
 end
 
-function Bait:capLevelBorders()
-    if self.xPos > 422 then
-        return 422;
-    elseif self.xPos < 58 then
-        return 58;
+function Bait:capXPosition()
+    local leftBound = 58;
+    local rightBound = 422;
+    if self.pullIn then
+        local m = 142 / (self.winDim[2] * 0.2);
+        leftBound = 58 + m * (self.levMan:getCurLevel():getYPos() - self.winDim[2] * 0.23);
+        rightBound = 422 - m * (self.levMan:getCurLevel():getYPos() - self.winDim[2] * 0.23);
+    end
+    if leftBound > rightBound then
+        return self.winDim[2] / 2;
+    elseif self.xPos > rightBound then
+        return rightBound;
+    elseif self.xPos < leftBound then
+        return leftBound;
     else
         return self.xPos;
     end

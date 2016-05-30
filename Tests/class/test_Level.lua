@@ -293,6 +293,6 @@ describe("Test unit test suite", function()
 
     it("Testing drawEnviroment", function()
         locInstance:drawEnviroment();
-        assert.spy(loveMock.graphics.draw).was.called(14);
+        assert.spy(loveMock.graphics.draw).was.called(15);
     end)
 end)
