@@ -119,9 +119,9 @@ end
 -- @param oldXPos the x position of the bait before the update
 -- @param i the index of the fishable object
 function Bait:checkFishableForCollision(fishable, oldXPos, index)
-    moved = self.levMan:getCurLevel():getMoved();
-    directionOfMovement = 0;
-    yPos = self.yPos
+    local moved = self.levMan:getCurLevel():getMoved();
+    local directionOfMovement = 0;
+    local yPos = self.yPos
     if oldXPos < self.xPos then
         directionOfMovement = 1;
     elseif oldXPos > self.xPos then
@@ -140,7 +140,7 @@ function Bait:checkFishableForCollision(fishable, oldXPos, index)
                 self:collisionDetected(fishable, index);
             end
         end
-        yPos = yPos + moved / math.abs(oldXPos - self.xPos);
+        self.yPos = yPos + moved / math.abs(oldXPos - self.xPos);
     end
 end
 
