@@ -1,7 +1,7 @@
 Class = require "lib.hump.class";
 CollisionDetection = require "class.CollisionDetection";
 Level = require "class.Level";
-LevelManager = require "class.LevelManager";
+--LevelManager = require "class.LevelManager";
 Animate = require "class.Animate";
 
 --- Class for the Bait swimming for Phase 1 and 2
@@ -9,6 +9,29 @@ Animate = require "class.Animate";
 -- @param levelManager The reference to the level manager object
 local Bait = Class {
     init = function(self, winDim, levelManager)
+        
+        -- Initialize the member variables
+        self.levMan = nil;
+        self.size = 10;
+        self.speed = 200;
+        self.posXMouse = 0;
+        self.posXBait = 0;
+        self.xPos = 0;
+        self.maxSpeedX = 20;
+        self.winDim = {};
+        self.life = 1;
+        self.money = 0;
+        self.numberOfHits = 0;
+        self.hitFishable = 0;
+        self.caughtThisRound = {};
+        self.sleepingPillDuration = 0;
+        self.deltaTime = 0;
+        self.modifier = 0.5;
+        self.goldenRuleLowerPoint = 0.32;
+        self.goldenRuleUpperPoint = 0.68;
+        self.image = nil;
+        
+        
         self.winDim = winDim;
         self.posXBait = (winDim[1] / 2) - (self.size / 2);
         self.levMan = levelManager;
@@ -20,25 +43,6 @@ local Bait = Class {
             self.image = Animate(img, 3, 1, .08, Animate.AnimType.bounce);
         end
     end;
-    levMan = nil;
-    size = 10;
-    speed = 200;
-    posXMouse = 0;
-    posXBait = 0;
-    xPos = 0;
-    maxSpeedX = 20;
-    winDim = {};
-    life = 1;
-    money = 0;
-    numberOfHits = 0;
-    hitFishable = 0;
-    caughtThisRound = {};
-    sleepingPillDuration = 0;
-    deltaTime = 0;
-    modifier = 0.5;
-    goldenRuleLowerPoint = 0.32;
-    goldenRuleUpperPoint = 0.68;
-    image = nil;
 };
 
 --- 

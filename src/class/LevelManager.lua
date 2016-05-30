@@ -1,4 +1,7 @@
 Class = require "lib.hump.class";
+Level = require "class.Level";
+Bait = require "class.Bait";
+SwarmFactory = require "class.SwarmFactory";
 
 -- Global variables
 _G.math.inf = 1 / 0;
@@ -43,8 +46,8 @@ function LevelManager:newLevel(levelPropMap, swarmFactoryData)
     self.curPlayer = Bait(_G._persTable.winDim, self);
     self.curPlayer:checkUpgrades();
     self.curSwarmFac = SwarmFactory(swarmFactoryData, self);
-
-        for n in pairs(_G) do print(n) end; -- print global values
+    print(self.curSwarmFac);
+    print(self.curSwarmFac.createdFishables);
 
     return self.curLevel;
 end

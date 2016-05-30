@@ -1,5 +1,5 @@
 Class = require "lib.hump.class";
-LevelManager = require "class.LevelManager";
+--LevelManager = require "class.LevelManager";
 
 _G.math.inf = 1 / 0;
 
@@ -10,6 +10,32 @@ _G.math.inf = 1 / 0;
 -- @param swarmFactory The swarm factory
 local Level = Class {
     init = function(self, levelName, backgroundPath, winDim, direction, levelManager)
+        -- Member variables
+        self.levMan = nil;
+        self.p_levelName = "";
+        self.levelFinished = 0; -- 0 means the round hasn´t been finished until yet
+        self.gotPayed = 0; -- 0 means the amount of money hasn´t calculated until yet
+        self.roundValue = 0; -- the amount of money fished in this round
+        self.posY = 0;
+        self.direction = 1; -- (-1) means up and 1 means down
+        self.bg = nil;
+        self.bgq = nil;
+        self.winDim = {};
+        self.lowerBoarder = -7000; -- if you want deeper you should decrease this value!
+        self.upperBoarder = 1000; -- if you want higher you should increase this value!
+        self.mapBreakthroughBonus1 = -1000;
+        self.mapBreakthroughBonus2 = -1000;
+        -- list for objekts caught at this round
+        self.caughtThisRound = {};
+        self.oldPosY = _G.math.inf;
+        self.godModeFuel = 800;
+        self.shortGMDist = 0;
+        self.godModeActive = 0;
+        self.moved = 0;
+        self.time = nil; -- day/night
+        self.gMMusicPlaying = false;
+        
+        
         self.levMan = levelManager;
         self.p_levelName = levelName;
         self.bg = love.graphics.newImage(backgroundPath);
@@ -40,31 +66,6 @@ local Level = Class {
         -- delete when non persistent table exists
         _G._persTable.phase = 1;
     end,
-
-    -- Member variables
-    levMan = nil;
-    p_levelName = "";
-    levelFinished = 0; -- 0 means the round hasn´t been finished until yet
-    gotPayed = 0; -- 0 means the amount of money hasn´t calculated until yet
-    roundValue = 0; -- the amount of money fished in this round
-    posY = 0;
-    direction = 1; -- (-1) means up and 1 means down
-    bg = nil;
-    bgq = nil;
-    winDim = {};
-    lowerBoarder = -7000; -- if you want deeper you should decrease this value!
-    upperBoarder = 1000; -- if you want higher you should increase this value!
-    mapBreakthroughBonus1 = -1000;
-    mapBreakthroughBonus2 = -1000;
-    -- list for objekts caught at this round
-    caughtThisRound = {};
-    oldPosY = _G.math.inf;
-    godModeFuel = 800;
-    shortGMDist = 0;
-    godModeActive = 0;
-    moved = 0;
-    time = nil; -- day/night
-    gMMusicPlaying = false;
 }
 
 --- Update the game state. Called every frame.
