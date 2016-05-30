@@ -1,6 +1,23 @@
 -- Lua 5.1 Hack
 _G.math.inf = 1 / 0
-
+_G.love = {
+    graphics = {
+        newCanvas = function(...)
+            return 0;
+        end;
+        newShader = function(...)
+            return {
+                send = function(...) end;
+            };
+        end;
+        window = 0;
+    };
+    window = {
+        getMode = function(...)
+            return 0, 0, {};
+        end
+    };
+};
 testClass = require "src.class.Bait"
 
 
@@ -164,8 +181,8 @@ describe("Unit test for Bait.lua", function()
         myInstance:checkUpgrades();
         assert.are.same(_G._persTable.upgrades.moreLife, exp);
     end)
-  
-      it("Test twoMoreLife", function()
+
+    it("Test twoMoreLife", function()
         _G._persTable = {};
 
         _G._persTable.upgrades = {
@@ -178,26 +195,26 @@ describe("Unit test for Bait.lua", function()
         myInstance:checkUpgrades();
         assert.are.same(_G._persTable.upgrades.moreLife, exp);
     end)
-      it("Test twoMoreLife", function()
+    it("Test twoMoreLife", function()
         _G._persTable = {};
-          _G._persTable.upgrades = {
+        _G._persTable.upgrades = {
             moreLife = 0;
             twoMoreLife = true;
-            oneMoreLife = true;--- amount of additional lifes
+            oneMoreLife = true; --- amount of additional lifes
         };
 
         local myInstance = testClass(locWinDim, levMan);
         local exp = 2;
         myInstance:checkUpgrades();
         assert.are.same(_G._persTable.upgrades.moreLife, exp);
-      end)
+    end)
 
     it("Test threeMoreLife", function()
         _G._persTable = {};
 
         _G._persTable.upgrades = {
             moreLife = 0;
-            threeMoreLife = true;--- amount of additional lifes
+            threeMoreLife = true; --- amount of additional lifes
         };
 
         local myInstance = testClass(locWinDim, levMan);
@@ -205,7 +222,7 @@ describe("Unit test for Bait.lua", function()
         myInstance:checkUpgrades();
         assert.are.same(_G._persTable.upgrades.moreLife, exp);
     end)
-  
+
     it("Test allMoreLife upgrades true", function()
         _G._persTable = {};
 
@@ -258,7 +275,7 @@ describe("Unit test for Bait.lua", function()
 
         _G._persTable.upgrades = {
             firstSpeedUp = false; --- "0" no Speedup
-              secondSpeedUp = true;
+            secondSpeedUp = true;
         };
 
         local myInstance = testClass(locWinDim, levMan);
@@ -288,8 +305,8 @@ describe("Unit test for Bait.lua", function()
         _G._persTable = {};
 
         _G._persTable.upgrades = {
-        firstSpeedUp = false; -- more speed
-        secondSpeedUp = false; -- more speed
+            firstSpeedUp = false; -- more speed
+            secondSpeedUp = false; -- more speed
         };
 
         local myInstance = testClass(locWinDim, levMan);
@@ -416,7 +433,7 @@ describe("Unit test for Bait.lua", function()
             activateShortGM = function(...) end;
             isFinished = function() return 0 end;
             getDirection = function(...) return 1 end;
-          };
+        };
         _G._persTable.upgrades.moreLife = 1;
         _G._persTable.upgrades.oneMoreLife = true;
         myInstance:collisionDetected(fishable, 1);
@@ -487,7 +504,7 @@ describe("Unit test for Bait.lua", function()
         levMan.curLevel = {
             getGodModeStat = function(...) return 0 end;
             moved = 4;
-            activateShortGM = function (...) end;
+            activateShortGM = function(...) end;
             getMoved = function() return 4 end;
             getDirection = function() return 1 end;
             switchToPhase2 = function() end;
