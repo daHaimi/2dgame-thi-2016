@@ -36,6 +36,8 @@ local Level = Class {
             self.time = "night";
         end
         
+        
+        
         -- temp bugfix to play the game with persistence 
         -- delete when non persistent table exists
         _G._persTable.phase = 1;
@@ -65,6 +67,7 @@ local Level = Class {
     moved = 0;
     time = nil; -- day/night
     gMMusicPlaying = false;
+    enviromentPosition = 0;
 }
 
 --- Update the game state. Called every frame.
@@ -129,6 +132,30 @@ function Level:draw(bait)
     if self.levelFinished == 1 then
         self:printResult();
     end
+end
+
+--- draws the enviroment like borders
+function Level:drawEnviroment()
+    topBackground = love.graphics.newImage("assets/toilet_bg.png");
+    borderLeft = love.graphics.newImage("assets/left.png");
+    borderRight = love.graphics.newImage("assets/right.png");
+    
+    self.enviromentPosition = self.enviromentPosition - self:getMoved();
+    
+    love.graphics.setColor(255, 255, 255);
+    
+    if self.enviromentPosition < -200 then
+        self.enviromentPosition = self.enviromentPosition + 200;
+    elseif self.enviromentPosition > 200 then
+        self.enviromentPosition = self.enviromentPosition - 200;
+    end
+    for i = 0, 5, 1 do
+        love.graphics.draw(borderLeft, 0, (i - 1) * 200 + self.enviromentPosition);
+        love.graphics.draw(borderRight, 454, (i - 1) * 200 + self.enviromentPosition);
+    end
+    
+    love.graphics.draw(topBackground, 0, self.posY - 474);
+    love.graphics.draw(topBackground, 0, self.posY - 375);
 end
 
 --- Pay the achieved money to the player and multiply it with the

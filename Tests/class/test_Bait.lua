@@ -14,6 +14,7 @@ describe("Unit test for Bait.lua", function()
         isFinished = function(...) return 0 end;
         getMoved = function() return 4 end;
         getDirection = function() return 1 end;
+        getYPos = function() return 50 end;
     };
     local locImageStub = {
         draw = function(...) end;
@@ -60,6 +61,8 @@ describe("Unit test for Bait.lua", function()
                         send = function(...) end;
                     };
                 end;
+                translate = function(...) end;
+                rotate = function(...) end;
                 polygon = function(...) end;
                 setShader = function(...) end;
             }
@@ -303,10 +306,10 @@ describe("Unit test for Bait.lua", function()
             isFinished = function() return 0 end;
         }
         myInstance.posXMouse = 70;
-        myInstance.posXBait = 40;
-        local newPos = myInstance.posXBait + myInstance.maxSpeedX;
-        myInstance:setCappedPosX();
-        assert.are.same(myInstance.posXBait, newPos);
+        myInstance.xPos = 40;
+        local newPos = myInstance.xPos + myInstance.maxSpeedX;
+        myInstance.xPos = myInstance.xPos + myInstance:capXMovement();
+        assert.are.same(myInstance.xPos, newPos);
     end)
 
     it("Test x position limited to maxSpeed (negative direction)", function()
@@ -316,10 +319,10 @@ describe("Unit test for Bait.lua", function()
             isFinished = function() return 0 end;
         }
         myInstance.posXMouse = 10;
-        myInstance.posXBait = 40;
-        local newPos = myInstance.posXBait - myInstance.maxSpeedX;
-        myInstance:setCappedPosX();
-        assert.are.same(myInstance.posXBait, newPos);
+        myInstance.xPos = 40;
+        local newPos = myInstance.xPos - myInstance.maxSpeedX;
+        myInstance.xPos = myInstance.xPos + myInstance:capXMovement();
+        assert.are.same(myInstance.xPos, newPos);
     end)
 
     it("Test x position not limited to maxSpeed (positive direction)", function()
@@ -329,10 +332,10 @@ describe("Unit test for Bait.lua", function()
             isFinished = function() return 0 end;
         };
         myInstance.posXMouse = 41;
-        myInstance.posXBait = 40;
+        myInstance.xPos = 40;
         local newPos = myInstance.posXMouse;
-        myInstance:setCappedPosX();
-        assert.are.same(myInstance.posXBait, newPos);
+        myInstance.xPos = myInstance.xPos + myInstance:capXMovement();
+        assert.are.same(myInstance.xPos, newPos);
     end)
 
     it("Test x position not limited to maxSpeed (negative direction)", function()
@@ -342,10 +345,10 @@ describe("Unit test for Bait.lua", function()
             isFinished = function() return 0 end;
         }
         myInstance.posXMouse = 40;
-        myInstance.posXBait = 41;
+        myInstance.xPos = 41;
         local newPos = myInstance.posXMouse;
-        myInstance:setCappedPosX();
-        assert.are.same(myInstance.posXBait, newPos);
+        myInstance.xPos = myInstance.xPos + myInstance:capXMovement();
+        assert.are.same(myInstance.xPos, newPos);
     end)
 
     it("Test x positon with no change", function()
@@ -355,10 +358,10 @@ describe("Unit test for Bait.lua", function()
             isFinished = function() return 0 end;
         }
         myInstance.posXMouse = 40;
-        myInstance.posXBait = 40;
+        myInstance.xPos = 40;
         local newPos = myInstance.posXMouse;
-        myInstance:setCappedPosX();
-        assert.are.same(myInstance.posXBait, newPos);
+        myInstance.xPos = myInstance.xPos + myInstance:capXMovement();
+        assert.are.same(myInstance.xPos, newPos);
     end)
 
     it("Test draw", function()
@@ -378,7 +381,7 @@ describe("Unit test for Bait.lua", function()
     it("Test getXPos", function()
         local myInstance = testClass(locWinDim, levMan);
         myInstance.image = locImageStub;
-        myInstance.posXBait = 0;
+        myInstance.xPos = 0;
         assert.are.same(myInstance:getPosX(), 0);
     end)
 

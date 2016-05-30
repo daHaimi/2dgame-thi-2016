@@ -97,8 +97,10 @@ end
 function love.draw()
     if _gui:drawGame() then
         love.graphics.scale(scaleFactor, scaleFactor);
+        
         levMan:getCurLevel():draw(levMan:getCurPlayer());
         levMan:getCurSwarmFactory():draw();
+        levMan:getCurLevel():drawEnviroment();
         love.graphics.scale(1/scaleFactor, 1/scaleFactor);
     end
     
