@@ -1,5 +1,7 @@
 Class = require "lib.hump.class";
 LevelManager = require "class.LevelManager";
+require "lib/postshader"
+require "lib/light"
 
 _G.math.inf = 1 / 0;
 
@@ -29,16 +31,22 @@ local Level = Class {
         if _persTable.upgrades.mapBreakthrough2 == true then
             self.lowerBoarder = self.lowerBoarder + self.mapBreakthroughBonus2;
         end
-        
+
+        -- create light world
+        self.lightWorld = love.light.newWorld();
+
         if os.date("%M") < "30" then
             self.time = "day";
+            self.lightWorld.setAmbientColor(191, 191, 191);
         else
             self.time = "night";
+            self.lightWorld.setAmbientColor(63, 63, 63);
         end
-        
-        
-        
-        -- temp bugfix to play the game with persistence 
+
+        self.baitLight = self.lightWorld.newLight(1, 1, 255, 127, 63, 500);
+        self.baitLight.setSmooth(2);
+
+        -- temp bugfix to play the game with persistence
         -- delete when non persistent table exists
         _G._persTable.phase = 1;
     end,
@@ -102,15 +110,17 @@ function Level:update(dt, bait)
 
     self:checkGodMode();
     bait:update(dt);
-    
+
     --Update music
     if self.godModeActive == 1 and not self.gMMusicPlaying then
-        TEsound.playLooping({"assets/sound/godMode.wav"}, 'abc');
+        TEsound.playLooping({ "assets/sound/godMode.wav" }, 'abc');
         self.gMMusicPlaying = true;
     elseif self.godModeActive == 0 then
         TEsound.stop('abc');
         self.gMMusicPlaying = false;
-    end        
+    end
+    self.baitLight.setPosition(self.posY or 0, self.posX or 0);
+    self.lightWorld:update();
 end
 
 --- when the bait hit a object or the boarder is reached, start phase 2
@@ -132,6 +142,7 @@ function Level:draw(bait)
     if self.levelFinished == 1 then
         self:printResult();
     end
+    self.lightWorld.drawShadow();
 end
 
 --- draws the enviroment like borders
@@ -139,11 +150,11 @@ function Level:drawEnviroment()
     topBackground = love.graphics.newImage("assets/toilet_bg.png");
     borderLeft = love.graphics.newImage("assets/left.png");
     borderRight = love.graphics.newImage("assets/right.png");
-    
+
     self.enviromentPosition = self.enviromentPosition - self:getMoved();
-    
+
     love.graphics.setColor(255, 255, 255);
-    
+
     if self.enviromentPosition < -200 then
         self.enviromentPosition = self.enviromentPosition + 200;
     elseif self.enviromentPosition > 200 then
@@ -153,7 +164,7 @@ function Level:drawEnviroment()
         love.graphics.draw(borderLeft, 0, (i - 1) * 200 + self.enviromentPosition);
         love.graphics.draw(borderRight, 454, (i - 1) * 200 + self.enviromentPosition);
     end
-    
+
     love.graphics.draw(topBackground, 0, self.posY - 474);
     love.graphics.draw(topBackground, 0, self.posY - 375);
 end
@@ -199,7 +210,7 @@ function Level:checkGodMode()
 end
 
 --- Activates the god mode after a collision.
--- @param dt Delta time is the amount of seconds since the last time 
+-- @param dt Delta time is the amount of seconds since the last time
 -- the update function was called.
 -- @param speed The speed of the player.
 function Level:activateShortGM(dt, speed)
@@ -209,7 +220,7 @@ function Level:activateShortGM(dt, speed)
     self.godModeActive = 1;
 end
 
---- Reduce the distance of the short god mode 
+--- Reduce the distance of the short god mode
 -- and deactivate it when the distance was moved
 function Level:reduceShortGMDist()
     if self.oldPosY == _G.math.inf then
@@ -218,7 +229,7 @@ function Level:reduceShortGMDist()
         self.shortGMDist = self.shortGMDist - math.abs(self.posY - self.oldPosY);
         self.oldPosY = self.posY;
     end
-    
+
     -- reset the oldPosY for the real god mode when the shortGM ends
     if self.shortGMDist <= 0 then
         self.oldPosY = _G.math.inf;
@@ -230,8 +241,8 @@ end
 --- Try to activate the god Mode.
 -- @return When the god mode was successfully activated it returns 1 otherwise 0.
 function Level:activateGodMode()
-    if _G._persTable.upgrades.godMode == true and self.godModeFuel > 0  
-        and self.godModeActive == 0 and self.direction == 1 then
+    if _G._persTable.upgrades.godMode == true and self.godModeFuel > 0
+            and self.godModeActive == 0 and self.direction == 1 then
         self.godModeActive = 1;
         return 1;
     else
@@ -361,8 +372,8 @@ function Level:printResult()
         local string = "";
         for k, v in pairs(self.caughtThisRound) do
             ypos = ypos + 15;
-            string = k .. ": " .. v .. " x " .. 
-                self.levMan:getCurSwarmFactory():getFishableObjects()[k].value .. " Coins";
+            string = k .. ": " .. v .. " x " ..
+                    self.levMan:getCurSwarmFactory():getFishableObjects()[k].value .. " Coins";
             love.graphics.print(string, xpos, ypos);
         end
         ypos = ypos + 15;

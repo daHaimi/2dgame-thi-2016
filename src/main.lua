@@ -11,7 +11,7 @@ end
 Gui = require "class.Gui";
 LevelManager = require "class.LevelManager";
 Gamestate = require "lib.hump.gamestate";
-Persistence = require"class.Persistence";
+Persistence = require "class.Persistence";
 require "lib.TEsound";
 
 -- Global variables
@@ -26,8 +26,8 @@ _G.myfont = love.graphics.newFont(30);
 love.window.setTitle("Simon Hamsters insane trip");
 
 -- loads all functions from util to the global space
-for k,v in pairs(require "util") do
-  _G[k] = v;
+for k, v in pairs(require "util") do
+    _G[k] = v;
 end
 
 --- Local variables
@@ -44,14 +44,14 @@ function love.load()
     _G.data = require "data"; -- loading cycle on android requires data to be load on love.load()
     _persistence = Persistence();
     _persistence:resetGame();
-    
+
     local _, _, flags = love.window.getMode();
     love.graphics.setBackgroundColor(30, 180, 240);
-    deviceDim = {love.window.getDesktopDimensions(flags.display)};
+    deviceDim = { love.window.getDesktopDimensions(flags.display) };
     --deviceDim = {480, 833};
     _G._persTable.winDim[1], _G._persTable.winDim[2], scaleFactor = getScaledDimension(deviceDim);
-    
-    _G._persTable.scaledDeviceDim = {_G._persTable.winDim[1] * scaleFactor, _G._persTable.winDim[2] * scaleFactor};
+
+    _G._persTable.scaledDeviceDim = { _G._persTable.winDim[1] * scaleFactor, _G._persTable.winDim[2] * scaleFactor };
     love.window.setMode(_G._persTable.scaledDeviceDim[1], _G._persTable.scaledDeviceDim[2], { centered });
     levMan = LevelManager();
 
@@ -65,7 +65,7 @@ function love.load()
         end
         if _G._data and _G._data.android then
             _G._androidConfig.maxTilt = _G._data.android.maxTilt;
-        else 
+        else
             _G._androidConfig.maxTilt = .3;
         end
     end
@@ -76,8 +76,8 @@ function love.load()
     _gui:start();
 end
 
----calculates the dimension of the Level and the factor of the scaling
---@ param deviceDim dimension of the divice
+--- calculates the dimension of the Level and the factor of the scaling
+-- @ param deviceDim dimension of the divice
 function getScaledDimension(deviceDim)
     resultDim = {};
     if deviceDim[1] > deviceDim[2] then
@@ -89,7 +89,7 @@ function getScaledDimension(deviceDim)
         resultDim[2] = deviceDim[2] / deviceDim[1] * 480;
         resultDim[1] = 480;
     end
-        return resultDim[1], resultDim[2], scaleFactor;
+    return resultDim[1], resultDim[2], scaleFactor;
 end
 
 --- The love main draw call, which draws every frame on the screen.
@@ -97,13 +97,13 @@ end
 function love.draw()
     if _gui:drawGame() then
         love.graphics.scale(scaleFactor, scaleFactor);
-        
+
         levMan:getCurLevel():draw(levMan:getCurPlayer());
         levMan:getCurSwarmFactory():draw();
         levMan:getCurLevel():drawEnviroment();
-        love.graphics.scale(1/scaleFactor, 1/scaleFactor);
+        love.graphics.scale(1 / scaleFactor, 1 / scaleFactor);
     end
-    
+
     if _G._androidConfig.joyPos then
         love.graphics.push();
         love.graphics.setFont(_G.myfont);
@@ -178,13 +178,13 @@ function love.mousepressed(x, y, button)
 
     -- activate the god mode when you press the mouse
     if love.mouse.isDown(1) and _gui:getCurrentState() == "InGame" then
-      levMan:getCurLevel():activateGodMode();
+        levMan:getCurLevel():activateGodMode();
     end
-    
+
     -- pause game when when mouse is pressed (right button)
     if love.mouse.isDown(2) and _gui:drawGame() then
-      _gui:changeFrame(_gui:getFrames().pause);
-      setMouseVisibility(levMan:getCurLevel());
+        _gui:changeFrame(_gui:getFrames().pause);
+        setMouseVisibility(levMan:getCurLevel());
     end
 end
 
