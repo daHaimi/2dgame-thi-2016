@@ -37,10 +37,10 @@ local Level = Class {
 
         if os.date("%M") < "30" then
             self.time = "day";
-            self.lightWorld.setAmbientColor(191, 191, 191);
+            self.lightWorld.setAmbientColor(255, 255, 255);
         else
             self.time = "night";
-            self.lightWorld.setAmbientColor(63, 63, 63);
+            self.lightWorld.setAmbientColor(81, 81, 81);
         end
 
         self.baitLight = self.lightWorld.newLight(1, 1, 255, 127, 63, 500);
