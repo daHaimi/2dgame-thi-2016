@@ -1,6 +1,5 @@
 --- The class SwarmFactory creates swarms of fishable objects defined by data.lua
 FishableObject = require "class.FishableObject";
---LevelManager = require "class.LevelManager";
 require "socket" math.randomseed(socket.gettime() * 10000);
 
 local SwarmFactory = Class {
@@ -37,8 +36,6 @@ local SwarmFactory = Class {
             addedHeights = addedHeights + self:createNextSwarm(addedHeights);
         end
     end;
-    
-    
 };
 
 --- Draws all fishables

@@ -48,7 +48,7 @@ describe("Unit test for SwarmFactory.lua", function()
 
     it("Testing constructor", function()
         local myInstance = testClass(require "src.data", levMan);
-        assert.are.same(locInstance, myInstance);
+        assert.are.same(myInstance.maxDepth, locInstance.maxDepth);
     end)
 
     it("Testing draw method", function()

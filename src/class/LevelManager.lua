@@ -46,8 +46,9 @@ function LevelManager:newLevel(levelPropMap, swarmFactoryData)
     self.curPlayer = Bait(_G._persTable.winDim, self);
     self.curPlayer:checkUpgrades();
     self.curSwarmFac = SwarmFactory(swarmFactoryData, self);
-    print(self.curSwarmFac);
-    print(self.curSwarmFac.createdFishables);
+    _gui:getFrames().inGame.elementsOnFrame.healthbar.object:resetHearts();
+    --print(self.curSwarmFac);
+    --print(self.curSwarmFac.createdFishables);
 
     return self.curLevel;
 end

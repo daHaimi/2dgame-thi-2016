@@ -1,7 +1,6 @@
 Class = require "lib.hump.class";
 CollisionDetection = require "class.CollisionDetection";
 Level = require "class.Level";
---LevelManager = require "class.LevelManager";
 Animate = require "class.Animate";
 
 --- Class for the Bait swimming for Phase 1 and 2

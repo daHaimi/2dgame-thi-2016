@@ -1,5 +1,4 @@
 Class = require "lib.hump.class";
---LevelManager = require "class.LevelManager";
 
 _G.math.inf = 1 / 0;
 
