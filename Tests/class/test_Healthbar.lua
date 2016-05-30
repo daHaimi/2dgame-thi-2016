@@ -85,4 +85,12 @@ describe("Unit test for Healthbar.lua", function()
         assert.are.equal(locInstance.hearts[2].imagepath, "assets/heart_grey.png");
         assert.spy(locInstance.refresh).was_called();
     end)
+
+    it("Testing resetHearts function", function()
+        _G._persTable.upgrades.moreLife = 2;
+        
+        locInstance.hearts = {};
+        locInstance:resetHearts();
+        assert.are.equal(3, table.getn(locInstance.hearts));
+    end)
 end)
