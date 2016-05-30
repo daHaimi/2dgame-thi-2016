@@ -88,31 +88,31 @@ function MainMenu:create()
     
     --self.elementsOnFrame.background.object:SetImage(self.directory .. "gui_Test_Bg.png");
     
-    self.elementsOnFrame.button_start.object:SetImage(self.directory .. "gui_Test_Button.png");
+    self.elementsOnFrame.button_start.object:SetImage(self.directory .. "Button.png");
     self.elementsOnFrame.button_start.object:SizeToImage();
     self.elementsOnFrame.button_start.object:SetText("Start");
     
-    self.elementsOnFrame.button_upgradeMenu.object:SetImage(self.directory .. "gui_Test_Button.png");
+    self.elementsOnFrame.button_upgradeMenu.object:SetImage(self.directory .. "Button.png");
     self.elementsOnFrame.button_upgradeMenu.object:SizeToImage();
     self.elementsOnFrame.button_upgradeMenu.object:SetText("Shop");
     
-    self.elementsOnFrame.button_dictionary.object:SetImage(self.directory .. "gui_Test_Button.png");
+    self.elementsOnFrame.button_dictionary.object:SetImage(self.directory .. "Button.png");
     self.elementsOnFrame.button_dictionary.object:SizeToImage();
     self.elementsOnFrame.button_dictionary.object:SetText("Dictionary");
     
-    self.elementsOnFrame.button_achievements.object:SetImage(self.directory .. "gui_Test_Button.png");
+    self.elementsOnFrame.button_achievements.object:SetImage(self.directory .. "Button.png");
     self.elementsOnFrame.button_achievements.object:SizeToImage();
     self.elementsOnFrame.button_achievements.object:SetText("Achievements");
     
-    self.elementsOnFrame.button_options.object:SetImage(self.directory .. "gui_Test_Button.png");
+    self.elementsOnFrame.button_options.object:SetImage(self.directory .. "Button.png");
     self.elementsOnFrame.button_options.object:SizeToImage();
     self.elementsOnFrame.button_options.object:SetText("Options");
     
-    self.elementsOnFrame.button_credits.object:SetImage(self.directory .. "gui_Test_Button.png");
+    self.elementsOnFrame.button_credits.object:SetImage(self.directory .. "Button.png");
     self.elementsOnFrame.button_credits.object:SizeToImage();
     self.elementsOnFrame.button_credits.object:SetText("Credits");
     
-    self.elementsOnFrame.button_close.object:SetImage(self.directory .. "gui_Test_Button.png");
+    self.elementsOnFrame.button_close.object:SetImage(self.directory .. "Button.png");
     self.elementsOnFrame.button_close.object:SizeToImage();
     self.elementsOnFrame.button_close.object:SetText("Close Game");
     

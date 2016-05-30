@@ -68,19 +68,19 @@ function Level:create()
     --adjust all elements on this frame
     self.elementsOnFrame.background.object:SetImage(self.directory .. "gui_Test_Bg.png");
     
-    self.elementsOnFrame.button_level1.object:SetImage(self.directory .. "gui_Test_Button.png");
+    self.elementsOnFrame.button_level1.object:SetImage(self.directory .. "Button.png");
     self.elementsOnFrame.button_level1.object:SizeToImage();
     self.elementsOnFrame.button_level1.object:SetText("Sewers");
     
-    self.elementsOnFrame.button_level2.object:SetImage(self.directory .. "gui_Test_Button.png");
+    self.elementsOnFrame.button_level2.object:SetImage(self.directory .. "Button.png");
     self.elementsOnFrame.button_level2.object:SizeToImage();
     self.elementsOnFrame.button_level2.object:SetText("Canyon");
     
-    self.elementsOnFrame.button_level3.object:SetImage(self.directory .. "gui_Test_Button.png");
+    self.elementsOnFrame.button_level3.object:SetImage(self.directory .. "Button.png");
     self.elementsOnFrame.button_level3.object:SizeToImage();
     self.elementsOnFrame.button_level3.object:SetText("Space");
     
-    self.elementsOnFrame.button_back.object:SetImage(self.directory .. "gui_Test_Button.png");
+    self.elementsOnFrame.button_back.object:SetImage(self.directory .. "Button.png");
     self.elementsOnFrame.button_back.object:SizeToImage();
     self.elementsOnFrame.button_back.object:SetText("Back");
     

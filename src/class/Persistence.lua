@@ -90,8 +90,8 @@ function Persistence:createPersTable()
     _G._persTable.upgrades = {
         firstSpeedUp = false; -- more speed
         secondSpeedUp = false; -- more speed
-        oneMoreLife = true; -- more life
-        twoMoreLife = true; -- more life
+        oneMoreLife = false; -- more life
+        twoMoreLife = false; -- more life
         threeMoreLife = false; -- more life
         moneyMult = false; -- "0" means no additional money
         moreLife = 0; -- needed for calculation in a few classes

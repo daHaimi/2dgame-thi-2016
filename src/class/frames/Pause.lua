@@ -71,19 +71,19 @@ function Pause:create()
     --adjust all elements on this frame
     self.elementsOnFrame.background.object:SetImage(self.directory .. "gui_Test_Bg.png");
     
-    self.elementsOnFrame.button_backToGame.object:SetImage(self.directory .. "gui_Test_Button.png")
+    self.elementsOnFrame.button_backToGame.object:SetImage(self.directory .. "Button.png")
     self.elementsOnFrame.button_backToGame.object:SizeToImage();
     self.elementsOnFrame.button_backToGame.object:SetText("Back to the Game");
     
-    self.elementsOnFrame.button_backToMenu.object:SetImage(self.directory .. "gui_Test_Button.png");
+    self.elementsOnFrame.button_backToMenu.object:SetImage(self.directory .. "Button.png");
     self.elementsOnFrame.button_backToMenu.object:SizeToImage();
     self.elementsOnFrame.button_backToMenu.object:SetText("Back to Menu");
     
-    self.elementsOnFrame.button_restartLevel.object:SetImage(self.directory .. "gui_Test_Button.png");
+    self.elementsOnFrame.button_restartLevel.object:SetImage(self.directory .. "Button.png");
     self.elementsOnFrame.button_restartLevel.object:SizeToImage();
     self.elementsOnFrame.button_restartLevel.object:SetText("Restart Level");
     
-    self.elementsOnFrame.button_options.object:SetImage(self.directory .. "gui_Test_Button.png");
+    self.elementsOnFrame.button_options.object:SetImage(self.directory .. "Button.png");
     self.elementsOnFrame.button_options.object:SizeToImage();
     self.elementsOnFrame.button_options.object:SetText("Options");
     

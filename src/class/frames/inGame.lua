@@ -1,6 +1,5 @@
 Class = require "lib.hump.class";
 Healthbar = require "class.Healthbar";
-ScoreDisplay = require "class.ScoreDisplay";
 
 local InGame = Class {
     init = function(self)if _G._persTable.scaledDeviceDim[1] < 640 then
@@ -29,7 +28,7 @@ local InGame = Class {
             self.flagWidth = 180;
         end
         self.name = "InGame";
-        self.frame = Frame(0, 0, "right", "left", 50, -1000, 0);
+        self.frame = Frame(0, 0, "down", "up", 50, 0, -1000);
         self:create();
     end;
 };
@@ -38,18 +37,50 @@ local InGame = Class {
 function InGame:create()
     --add, create and position all elements on this frame
     self.elementsOnFrame = {
+        fuelBarBackground = {
+            object = Loveframes.Create("image");
+            x = 10;
+            y = 10;
+        },
+        fuelBar = {
+            object = Loveframes.Create("image");
+            x = 10;
+            y = 10;
+        },
+        imageBar = {
+            object = Loveframes.Create("image");
+            x = 0;
+            y = 0;
+        },
         healthbar = {
             object = Healthbar();
             x = 0;
             y = 0;
         },
         score = {
-            object = ScoreDisplay();
-            x = 0;
-            y = 0;
+            object = Loveframes.Create("text");
+            x = 220;
+            y = 20;
         }
-        
     };
+    self.elementsOnFrame.imageBar.object:SetImage(self.directory .. "InGameBar.png");
+    self.elementsOnFrame.fuelBar.object:SetImage(self.directory .. "FuelBar.png");
+    self.elementsOnFrame.fuelBarBackground.object:SetImage(self.directory .. "FuelBarBG.png");
+    
+    self.elementsOnFrame.score.object:SetText("Score: " .. _G.testScore);
+    self.elementsOnFrame.score.object:SetShadow(true);
+end
+
+function InGame:update()
+    --update Fuelbar
+    if self.frame:checkPosition() then
+        _G.testFuel = _G.testFuel - 1;
+        if _G.testFuel >= 0 then
+            self.elementsOnFrame.fuelBar.object:SetX(math.ceil((180 / 2400)*_G.testFuel) - 180);
+        end
+        _G.testScore = _G.testScore + 5;
+        self.elementsOnFrame.score.object:SetText("Score: " .. _G.testScore);
+    end
 end
 
 ---shows the elements on screen

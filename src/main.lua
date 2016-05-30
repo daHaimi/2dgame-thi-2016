@@ -18,7 +18,9 @@ require "lib.TEsound";
 _G.math.inf = 1 / 0;
 _G._gui = nil;
 _G._persistence = nil;
-_G.testScore = 0;
+_G.testFuel = 2400;
+_G.testScore = 0;--score shown in the ingame screen
+_G.testUnlockedAchievements = {};--achievements unlocked in the last round
 _G._androidConfig = {};
 -- Font for android debugging
 _G.myfont = love.graphics.newFont(30);
@@ -36,7 +38,6 @@ local curLevel;
 local player;
 local swarmFactory;
 local levMan;
---local persistence;
 
 --- The bootstrap of the game.
 -- This function is called exactly once at the beginning of the game.
@@ -55,7 +56,7 @@ function love.load()
     _G._persTable.scaledDeviceDim = {_G._persTable.winDim[1] * scaleFactor, _G._persTable.winDim[2] * scaleFactor};
     love.window.setMode(_G._persTable.scaledDeviceDim[1], _G._persTable.scaledDeviceDim[2], { centered });
     levMan = LevelManager();
-
+    
     -- Get Accelerometer if android
     if love.system.getOS() == "Android" then
         local joy = love.joystick.getJoysticks();
@@ -73,7 +74,6 @@ function love.load()
 
     _gui = Gui();
     _gui:setLevelManager(levMan);
-    _gui:tempTextOutput();
     _gui:start();
 end
 
@@ -109,11 +109,7 @@ function love.draw()
         love.graphics.print(_G._androidConfig.joyPos, 100, 100);
         love.graphics.pop();
     end
-
     Loveframes.draw();
-    --[[prints the State name and output values.
-    This function will be replaced in a later version]] --
-    _gui:tempDrawText();
 end
 
 --- This function is called continuously by the love.run().

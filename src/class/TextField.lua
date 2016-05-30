@@ -1,21 +1,27 @@
 Class = require "lib.hump.class";
 
 local Textbox = Class {
-    init = function(self, width, length) --imagepath)
+    init = function(self, width)
+        self.objBackground = Loveframes.Create("image");
+        self.objBackground:SetImage("assets/gui/480px/TextBG.png");
         self.objTopic = Loveframes.Create("text");
         self.objText = Loveframes.Create("text");
-        --self.objBackground = LoveFrames.Create("image"):SetImage(imagepath);
+        self.objPrice = Loveframes.Create("text");
         self.width = width;
-        self.length = length;
     end;
 };
 
 ---change the text on the textfield
 -- @parm newTopic: the new topic of the text
 -- @parm newText: new text
-function Textbox:changeText(newTopic, newText)
+function Textbox:changeText(newTopic, newText, newPrice)
     self.objTopic:SetText(newTopic);
     self.objText:SetText(newText);
+    if newPrice ~= nil then
+        self.objPrice:SetText("Price: " .. newPrice);
+    else
+        self.objPrice:SetText("");
+    end
 end
 
 ---Function not conform to CC/ implements an interface
@@ -24,7 +30,8 @@ end
 function Textbox:SetVisible(visible)
     self.objTopic:SetVisible(visible);
     self.objText:SetVisible(visible);
-    --self.objBackground:SetVisibile(visible);
+    self.objPrice:SetVisible(visible);
+    self.objBackground:SetVisible(visible);
 end
 
 ---Function not conform to CC/ implements an interface
@@ -32,11 +39,12 @@ end
 -- @parm x: x axis position
 -- @parm y: y axis position
 function Textbox:SetPos(x, y)
-    self.objTopic:SetPos(x + 5, y + 5);
+    self.objTopic:SetPos(x + 10, y + 10);
     self.objTopic:SetMaxWidth(self.width);
-    self.objText:SetPos(x + 5, y + 25);
+    self.objText:SetPos(x + 10, y + 30);
     self.objText:SetMaxWidth(self.width);
-    --self.objBackground:SetPos(x, y):SetScale( bla bla);
+    self.objPrice:SetPos(x + 200, y + 10);
+    self.objBackground:SetPos(x, y);
 end
 
 return Textbox;

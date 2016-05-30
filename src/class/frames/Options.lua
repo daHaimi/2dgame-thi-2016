@@ -46,15 +46,25 @@ function Options:create()
             x = 0;
             y = 0;
         };
+        text_bgm = {
+            object = Loveframes.Create("text");
+            x = 30;
+            y = 50;
+        };
         slider_bgm = {
             object = Loveframes.Create("slider");
             x = 64;
-            y = 0;
+            y = 70;
+        };
+        text_music= {
+            object = Loveframes.Create("text");
+            x = 30;
+            y = 100;
         };
         slider_music = {
             object = Loveframes.Create("slider");
             x = 64;
-            y = 50;
+            y = 120;
         };
         button_reset = {
             object = Loveframes.Create("imagebutton");
@@ -71,19 +81,21 @@ function Options:create()
     --adjust all elements on this frame
     self.elementsOnFrame.background.object:SetImage(self.directory .. "StandardBG.png");
     
-    self.elementsOnFrame.slider_bgm.object:SetText("BGM");
+    self.elementsOnFrame.text_bgm.object:SetText("Background Music:");
+    
     self.elementsOnFrame.slider_bgm.object:SetMinMax(0, 100);
     self.elementsOnFrame.slider_bgm.object:SetWidth(self.buttonWidth);
     
-    self.elementsOnFrame.slider_music.object:SetText("Music");
+    self.elementsOnFrame.text_music.object:SetText("In Game Music:");
+    
     self.elementsOnFrame.slider_music.object:SetMinMax(0, 100);
     self.elementsOnFrame.slider_music.object:SetWidth(self.buttonWidth);
     
-    self.elementsOnFrame.button_reset.object:SetImage(self.directory .. "gui_Test_Button.png");
+    self.elementsOnFrame.button_reset.object:SetImage(self.directory .. "Button.png");
     self.elementsOnFrame.button_reset.object:SizeToImage();
     self.elementsOnFrame.button_reset.object:SetText("Reset");
     
-    self.elementsOnFrame.button_back.object:SetImage(self.directory .. "gui_Test_Button.png");
+    self.elementsOnFrame.button_back.object:SetImage(self.directory .. "Button.png");
     self.elementsOnFrame.button_back.object:SizeToImage();
     self.elementsOnFrame.button_back.object:SetText("Back");
     
@@ -102,12 +114,10 @@ function Options:create()
     self.elementsOnFrame.button_reset.object.OnClick = function(object)
         _persistence:resetGame();
         self:loadValuesFromPersTable();
-        _gui:tempTextOutput();
     end
     
     self.elementsOnFrame.button_back.object.OnClick = function(object)
         self:loadValuesInPersTable();
-        _gui:tempTextOutput();
         _gui:changeFrame(_gui:getLastState());
     end
 end

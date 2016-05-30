@@ -60,7 +60,7 @@ function Dictionary:create()
     --adjust all elements on this frame
     self.elementsOnFrame.background.object:SetImage(self.directory .. "StandardBG.png");
     
-    self.elementsOnFrame.button_back.object:SetImage(self.directory .. "gui_Test_Button.png")
+    self.elementsOnFrame.button_back.object:SetImage(self.directory .. "Button.png")
     self.elementsOnFrame.button_back.object:SizeToImage()
     self.elementsOnFrame.button_back.object:SetText("Back");
     
@@ -72,11 +72,16 @@ function Dictionary:create()
     end
 end
 
+function Dictionary:imageExists(name)
+   local f=io.open(name,"r")
+   if f~=nil then io.close(f) return true else return false end
+end
+
 --add all object written in the data.lua into the chart and adds an OnClick event
 function Dictionary:addAllObjects()
     for k, v in pairs(_G.data.fishableObjects) do
         local path = "";
-        if v.name == "angler" then
+        if self:imageExists("assets/gui/480px/dic_" .. v.image) then
             path = "assets/gui/480px/dic_" .. v.image;
         else
             path = "assets/" .. v.image;

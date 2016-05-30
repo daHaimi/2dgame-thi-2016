@@ -73,7 +73,7 @@ function Gui:update()
         end
     end
     if self:drawGame() then
-        self.p_myFrames.inGame.elementsOnFrame.score.object:update();
+        self.p_myFrames.inGame:update();
     end
     
 end
@@ -105,36 +105,6 @@ function Gui:drawGame()
     else
         return true;
     end
-end
-
----print the state-name and values
-function Gui:tempDrawText()
-    --love.graphics.print(self.p_states.currentState.name, 0, 0);
-    if self.p_states.currentState == self.p_myFrames.mainMenu then
-        self:tempTextOutput();
-        love.graphics.print(self.p_textOutput, 0, 20);
-    end
-end
-
----convert all values into drawable text
----this function is called continuously by the love.draw function
----will be replaced in a later version
-function Gui:tempTextOutput()
-    self.p_textOutput = 
-        "_persTable.upgrades:" .. "\n" ..
-        "Speed UP = " .. tostring(_persTable.upgrades.speedUp).. "\n" .. 
-        "Money Mult = " .. tostring(_persTable.upgrades.moneyMult).. "\n" .. 
-        "More Life = " .. tostring(_persTable.upgrades.moreLife).. "\n" .. 
-        "GodMode = " .. tostring(_persTable.upgrades.godMode) .. "\n" ..
-        "Breakthrough 1 = " .. tostring(_persTable.upgrades.mapBreakthrough1) .. "\n" ..
-        "Breakthrough 2 = " .. tostring(_persTable.upgrades.mapBreakthrough2) .. "\n" ..
-        "\n" ..
-        "_persTable.config" .. "\n" .. 
-        "BGM = " .. tostring(_persTable.config.bgm).. "\n" ..
-        "Music = " .. tostring(_persTable.config.music).. "\n" ..
-        "Language = " .. tostring(_persTable.config.language) .. "\n" ..
-        "\n" ..
-        "Money =" .. tostring(_persTable.money);
 end
 
 --- Returns the current game state.

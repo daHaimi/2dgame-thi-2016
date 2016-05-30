@@ -1,4 +1,5 @@
 Class = require "lib.hump.class";
+AchievementDisplay = require "class.AchievementDisplay";
 
 local Score = Class {
     init = function(self)
@@ -28,7 +29,7 @@ local Score = Class {
             speed = 75;
         end
         self.name = "Score";
-       self.frame = Frame((_G._persTable.scaledDeviceDim[1] - 256) / 2, (_G._persTable.scaledDeviceDim[2] - 512) / 2,
+        self.frame = Frame((_G._persTable.scaledDeviceDim[1] - 256) / 2, (_G._persTable.scaledDeviceDim[2] - 512) / 2,
             "down", "down", 50, 0, -1500);
         self:create();
     end;
@@ -53,6 +54,11 @@ function Score:create()
             x = 110;
             y = 90;
         };
+        achievements = {
+            object = AchievementDisplay();
+            x = 0;
+            y = 170;
+        };
         button_retry = {
             object = Loveframes.Create("imagebutton");
             x = 0;
@@ -71,11 +77,11 @@ function Score:create()
     self.elementsOnFrame.scoretext.object:SetText("Your Score:");
     self.elementsOnFrame.scoretext.x = 128 - 0.5 * self.elementsOnFrame.scoretext.object:GetWidth();
     
-    self.elementsOnFrame.button_retry.object:SetImage("assets/gui/gui_Test_Button.png")
+    self.elementsOnFrame.button_retry.object:SetImage("assets/gui/480px/Button.png")
     self.elementsOnFrame.button_retry.object:SizeToImage()
     self.elementsOnFrame.button_retry.object:SetText("Retry");
     
-    self.elementsOnFrame.button_backToMenu.object:SetImage("assets/gui/gui_Test_Button.png")
+    self.elementsOnFrame.button_backToMenu.object:SetImage("assets/gui/480px/Button.png")
     self.elementsOnFrame.button_backToMenu.object:SizeToImage()
     self.elementsOnFrame.button_backToMenu.object:SetText("Back to Menu");
     

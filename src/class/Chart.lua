@@ -80,7 +80,7 @@ function Chart:create()
     end
     self.markFrame:SetVisible(false);
     
-    self.textField = TextField(self.width);
+    self.textField = TextField(self.width - 100);
     
     --onclick events of the buttons
     self.button_up.OnClick = function(object)
@@ -200,7 +200,11 @@ function Chart:markElement(element)
     self.markFrame:SetVisible(true);
     self.markFrame:MoveToTop();
     self.p_markedElement = element;
-    self.textField:changeText(element.name, element.description);
+    if element.price ~= nil then
+        self.textField:changeText(element.name, element.description, element.price);
+    else
+        self.textField:changeText(element.name, element.description);
+    end
 end
 
 return Chart;

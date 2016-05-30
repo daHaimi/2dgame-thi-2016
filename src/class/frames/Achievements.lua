@@ -61,7 +61,7 @@ function Achievements:create()
     --adjust all elements on this frame
     self.elementsOnFrame.background.object:SetImage(self.directory .. "StandardBG.png");
     
-    self.elementsOnFrame.button_back.object:SetImage(self.directory .. "gui_Test_Button.png")
+    self.elementsOnFrame.button_back.object:SetImage(self.directory .. "Button.png")
     self.elementsOnFrame.button_back.object:SizeToImage()
     self.elementsOnFrame.button_back.object:SetText("Back");
     

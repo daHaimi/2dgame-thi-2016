@@ -11,7 +11,7 @@ local UpgradeMenu = Class {
             self.height = 666;
             self.buttonHeight = 75;
             self.buttonOffset = 15;
-            speed = 50;
+            self.speed = 50;
         elseif _G._persTable.scaledDeviceDim[1] < 720 then
             self.widthPx = 640;
             self.directory = "assets/gui/640px/";
@@ -19,7 +19,7 @@ local UpgradeMenu = Class {
             self.height = 888;
             self.buttonOffset = 20;
             self.buttonHeight = 96;
-            speed = 67;
+            self.speed = 67;
         else
             self.widthPx = 720;
             self.directory = "assets/gui/720px/";
@@ -27,11 +27,11 @@ local UpgradeMenu = Class {
             self.height = 1024;
             self.buttonOffset = 30;
             self.buttonHeight = 106;
-            speed = 75;
+            self.speed = 75;
         end
         self.name = "Shop";
        self.frame = Frame((_G._persTable.scaledDeviceDim[1] - self.width) / 2, 
-            (_G._persTable.scaledDeviceDim[2] - self.height) / 2, "down", "down", speed, 0, -1500);
+            (_G._persTable.scaledDeviceDim[2] - self.height) / 2, "down", "down", self.speed, 0, -1500);
         self:create();
     end;
 };
@@ -45,15 +45,20 @@ function UpgradeMenu:create()
             x = 0;
             y = 0;
         };
+        money = {
+            object = Loveframes.Create("text");
+            x = 50;
+            y = 30;
+        };
         chart = {
             object = Chart();
             x = 0.125 * self.width;
-            y = self.buttonOffset;
+            y = self.buttonOffset + 20;
         };
         button_buy = {
             object = Loveframes.Create("imagebutton");
-            x = 0.16 * self.width;
-            y = self.height - 2 * self.buttonHeight;
+            x = 0.5 * self.width;
+            y = self.height - self.buttonHeight;
         };
         button_back = {
             object = Loveframes.Create("imagebutton");
@@ -65,11 +70,11 @@ function UpgradeMenu:create()
     --adjust all elements on this frame
     self.elementsOnFrame.background.object:SetImage(self.directory .. "StandardBG.png");
     
-    self.elementsOnFrame.button_buy.object:SetImage(self.directory .. "gui_Test_Button.png")
+    self.elementsOnFrame.button_buy.object:SetImage(self.directory .. "HalfButton.png")
     self.elementsOnFrame.button_buy.object:SizeToImage()
-    self.elementsOnFrame.button_buy.object:SetText("Buy Upgrade");
+    self.elementsOnFrame.button_buy.object:SetText("Buy");
     
-    self.elementsOnFrame.button_back.object:SetImage(self.directory .. "gui_Test_Button.png")
+    self.elementsOnFrame.button_back.object:SetImage(self.directory .. "HalfButton.png")
     self.elementsOnFrame.button_back.object:SizeToImage()
     self.elementsOnFrame.button_back.object:SetText("Back");
     
@@ -78,7 +83,6 @@ function UpgradeMenu:create()
     
     --onclick events for all buttons
     self.elementsOnFrame.button_back.object.OnClick = function(object)
-        _gui:tempTextOutput();
         _gui:changeFrame(_gui:getFrames().mainMenu);
     end
     
@@ -89,7 +93,11 @@ function UpgradeMenu:create()
             _G._persistence:updateSaveFile();
         end
     end
-    
+end
+
+--updates the money on this frame
+function UpgradeMenu:updateMoney()
+        self.elementsOnFrame.money.object:SetText("Money: " .. _G._persTable.money);
 end
 
 ---called to buy an Item
@@ -97,6 +105,7 @@ function UpgradeMenu:buyElement()
     self.elementsOnFrame.chart.object:getMarkedElement():disable();
     local price = self.elementsOnFrame.chart.object:getMarkedElement().price;
     _G._persTable.money = _G._persTable.money - price;
+    self:updateMoney()
 end
 
 --add all upgrades written in the data.lua into the chart and adds an OnClick event
@@ -114,7 +123,6 @@ end
 
 
 function UpgradeMenu:loadValuesFromPersTable()
-    --[[
     for k, v in pairs(self.elementsOnFrame.chart.object:getAllElements()) do
         local elementName = v.nameOnPersTable;
         if _G._persTable.upgrades[elementName] then
@@ -122,11 +130,12 @@ function UpgradeMenu:loadValuesFromPersTable()
                 v:disable();
             end
         end
-    end]]---
+    end
 end
 
 ---shows the frame on screen
 function UpgradeMenu:draw()
+    self:updateMoney();
     self.frame:draw(self.elementsOnFrame);
 end
 
