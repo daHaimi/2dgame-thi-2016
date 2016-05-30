@@ -79,7 +79,7 @@ end
 ---calculates the dimension of the Level and the factor of the scaling
 --@ param deviceDim dimension of the divice
 function getScaledDimension(deviceDim)
-    resultDim = {};
+    local resultDim = {};
     if deviceDim[1] > deviceDim[2] then
         scaleFactor = (0.9 * deviceDim[2]) / (480 * 16 / 9);
         resultDim[1] = 480;

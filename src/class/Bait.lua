@@ -38,6 +38,7 @@ local Bait = Class {
     modifier = 0.5;
     goldenRuleLowerPoint = 0.32;
     goldenRuleUpperPoint = 0.68;
+    image = nil;
 };
 
 --- 
@@ -122,6 +123,7 @@ function Bait:checkFishableForCollision(fishable, oldXPos, index)
     local moved = self.levMan:getCurLevel():getMoved();
     local directionOfMovement = 0;
     local yPos = self.yPos
+    
     if oldXPos < self.xPos then
         directionOfMovement = 1;
     elseif oldXPos > self.xPos then

@@ -44,6 +44,8 @@ function LevelManager:newLevel(levelPropMap, swarmFactoryData)
     self.curPlayer:checkUpgrades();
     self.curSwarmFac = SwarmFactory(swarmFactoryData, self);
 
+        for n in pairs(_G) do print(n) end; -- print global values
+
     return self.curLevel;
 end
 
