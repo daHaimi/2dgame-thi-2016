@@ -129,9 +129,6 @@ function Level:draw(bait)
     love.graphics.setColor(255, 255, 255);
     love.graphics.draw(self.bg, self.bgq, 0, self.posY);
     bait:draw();
-    if self.levelFinished == 1 then
-        self:printResult();
-    end
 end
 
 --- draws the enviroment like borders
