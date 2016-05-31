@@ -214,10 +214,12 @@ end
 -- the update function was called.
 -- @param speed The speed of the player.
 function Level:activateShortGM(dt, speed)
-    local tempGMTime = 0.8;
-    self.shortGMDist = math.ceil((dt * speed) * (tempGMTime / dt));
-    self.oldPosY = _G.math.inf;
-    self.godModeActive = 1;
+    if self.direction == self.levMan:getLevelPropMapByName(self.p_levelName).direction then
+        local tempGMTime = 0.8;
+        self.shortGMDist = math.ceil((dt * speed) * (tempGMTime / dt));
+        self.oldPosY = _G.math.inf;
+        self.godModeActive = 1;
+    end
 end
 
 --- Reduce the distance of the short god mode
