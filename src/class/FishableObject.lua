@@ -20,7 +20,6 @@ local FishableObject = Class {
             local spriteCols = self.sprite:getWidth() / self.image:getWidth();
             local spriteRows = self.sprite:getHeight() / self.image:getHeight();
             self.animation = Animate(self.sprite, spriteCols, spriteRows);
-            print(spriteFile .. " " .. spriteCols .. " " .. spriteRows);
         end
         
         self.xPosition = math.random(spriteSize + 26, _G._persTable.winDim[1] - 26);
