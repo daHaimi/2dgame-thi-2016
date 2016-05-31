@@ -126,6 +126,10 @@ function love.draw()
     --[[prints the State name and output values.
     This function will be replaced in a later version]] --
     _gui:tempDrawText();
+    
+    -- debug info for memory usage do not remove!
+    love.graphics.print('Memory actually used (in kB): ' .. collectgarbage('count'), 200, 60);
+    love.graphics.print("Current FPS: "..tostring(love.timer.getFPS( )), 200, 75);
 end
 
 --- This function is called continuously by the love.run().
