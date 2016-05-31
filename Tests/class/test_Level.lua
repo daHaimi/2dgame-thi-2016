@@ -245,13 +245,30 @@ describe("Test unit test suite", function()
     end)
 
     it("Testing activateShortGM", function()
-        testClass.shortGMDist = 0;
-        testClass.godModeActive = 0;
-        testClass.oldPosY = 210;
-        testClass:activateShortGM(0.12, 200);
+        levMan.p_levelProperties = {
+            sewers = {
+                levelName = "sewers",
+                direction = 1,
+                bgPath = "assets/testbg.png";
+            };
+        };
         
-        assert.are.same(testClass.godModeActive, 1);
-        assert.are.same(testClass.oldPosY, _G.math.inf);
+        locInstance.shortGMDist = 0;
+        locInstance.godModeActive = 0;
+        locInstance.oldPosY = 210;
+        locInstance:activateShortGM(0.12, 200);
+        
+        assert.are.same(locInstance.godModeActive, 1);
+        assert.are.same(locInstance.oldPosY, _G.math.inf);
+        
+        locInstance.shortGMDist = 0;
+        locInstance.godModeActive = 0;
+        locInstance.oldPosY = 210;
+        locInstance.direction = -1;
+        locInstance:activateShortGM(0.12, 200);
+        
+        assert.are.same(locInstance.godModeActive, 0);
+        
     end)
 
     it("Testing reduceShortGMDist", function()
