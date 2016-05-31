@@ -102,7 +102,6 @@ describe("Unit test suite for the LevelManager class", function()
             direction = 1;
             bgPath = "assets/testbg.png";
         };
-        print(sewers);
         levMan:newLevel(sewers, "data.lua");
         assert.are.same(levMan.curLevel, { 4, 5 });
         assert.are.same(levMan.curSwarmFac, { 3 });
