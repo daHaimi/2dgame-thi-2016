@@ -1,6 +1,71 @@
 -- Lua 5.1 Hack
 _G.math.inf = 1 / 0
 
+_G.levelTestStub = function()
+    _G.TEsound = {
+        playLooping = function(...) end;
+        stop = function(...) end;
+    };
+
+    _G._persTable = {
+        upgrades = {
+            godMode = 1;
+            mapBreakthrough1 = 0;
+            mapBreakthrough2 = 0;
+        };
+        phase = 1;
+    };
+
+    _G.levMan = {
+        curLevel = nil;
+        curPlayer = nil;
+        curSwarmFac = nil;
+        getCurSwarmFactory = function(...) return _G.levMan.curSwarmFac end;
+        getCurPlayer = function(...) return _G.levMan.curPlayer end;
+        getCurLevel = function(...) return _G.levMan.curLevel end;
+    };
+    _G.love = {
+        graphics = {
+            newImage = function(...) end;
+            newQuad = function(...) end;
+            setColor = function(...) end;
+            shader = {
+                send = function(...) end;
+            };
+            Canvas = {
+                setWrap = function(...) end;
+            };
+            print = function(...) end;
+            draw = function(...) end;
+        };
+        image = {
+            CompressedImageData = {
+                getWidth = function(...) return 4 end;
+                getHeight = function(...) return 5 end;
+            };
+        };
+        window = {
+            getMode = function(...) return 0, 0, {}; end;
+        };
+        light = {
+            world = {
+                setAmbientColor = function(...) end;
+                update = function(...) end;
+                drawShadow = function(...) end;
+            };
+            setSmooth = function(...) end;
+            setPosition = function(...) end;
+        };
+    };
+    _G.love.light.world.newLight = function(...) return _G.love.light; end;
+    _G.love.light.newWorld = function(...) return _G.love.light.world; end;
+    _G.love.graphics.newShader = function(...) return _G.love.graphics.shader; end;
+    _G.love.graphics.newCanvas = function(...) return _G.love.graphics.Canvas; end;
+end;
+
+_G.levelTestStub();
+
+
 testClass = require "src.class.Level";
 match = require 'luassert.match';
 
@@ -8,49 +73,9 @@ describe("Test unit test suite", function()
     local locInstance;
 
     before_each(function()
-            
-        _G.TEsound = {
-            playLooping = function (...) end;
-            stop = function (...) end;
-        }
 
-        _G.love = {
-            graphics = {
-                newImage = function(...) end,
-                newQuad = function(...) end,
-                setColor = function(...) end,
-                print = function(...) end,
-                Canvas = {
-                    setWrap = function(...) end
-                },
-                draw = function(...) end
-            },
-            image = {
-                CompressedImageData = {
-                    getWidth = function(...) return 4 end,
-                    getHeight = function(...) return 5 end
-                }
-            }
-        }
-        _G._persTable = {
-            upgrades = {
-                godMode = 1,
-                mapBreakthrough1 = 0,
-                mapBreakthrough2 = 0;
-            },
-            phase = 1;
-        }
-        
-        _G.levMan = {
-            curLevel = nil,
-            curPlayer = nil,
-            curSwarmFac = nil,
-            getCurSwarmFactory = function(...) return _G.levMan.curSwarmFac end,
-            getCurPlayer = function(...) return _G.levMan.curPlayer end,
-            getCurLevel = function(...) return _G.levMan.curLevel end
-        }
+        _G.levelTestStub();
 
-        _G.loveMock = mock(_G.love, true);
         locInstance = testClass("sewers", "assets/testbg.png", { 512, 256 }, 1);
 
         testClass.caughtThisRound = {};
@@ -63,12 +88,11 @@ describe("Test unit test suite", function()
         local mbb1 = myInstance.mapBreakthroughBonus1;
         local mbb2 = myInstance.mapBreakthroughBonus2;
         assert.are.same(locInstance, myInstance);
-        assert.spy(loveMock.graphics.newImage).was.called_with("assets/testbg.png");
-        
+
         _persTable.upgrades.mapBreakthrough1 = true;
         local myInstance = testClass("sewers", "assets/testbg.png", { 512, 256 }, 1);
-        assert.are.same( lb + mbb1, myInstance.lowerBoarder);
-        
+        assert.are.same(lb + mbb1, myInstance.lowerBoarder);
+
         _persTable.upgrades.mapBreakthrough2 = true;
         local myInstance = testClass("sewers", "assets/testbg.png", { 512, 256 }, 1);
         assert.are.same(lb + mbb1 + mbb2, myInstance.lowerBoarder);
@@ -184,7 +208,7 @@ describe("Test unit test suite", function()
                 ["rat"] = { ["value"] = 20 },
                 ["nemo"] = { ["value"] = 10 },
                 ["deadFish"] = { ["value"] = -10 }
-            }
+            };
             end;
         };
         testClass.caughtThisRound = { ["turtle"] = 5, ["rat"] = 0, ["deadFish"] = 5, ["nemo"] = 3 };
@@ -204,6 +228,7 @@ describe("Test unit test suite", function()
     end)
 
     it("Testing printResult with no objects caught", function()
+        local loveMock = mock(_G.love, true);
         testClass.caughtThisRound = {};
         testClass:printResult();
         assert.spy(loveMock.graphics.print).was.called(2);
@@ -215,8 +240,9 @@ describe("Test unit test suite", function()
         testClass.caughtThisRound["cat"] = 1;
         testClass.caughtThisRound["dog"] = 2;
         testClass.levMan.curSwarmFac = {
-            getFishableObjects = function() return { ["cat"] = { ["value"] = 10 }, ["dog"] = { ["value"] = 20 } } end;
+            getFishableObjects = function() return { ["cat"] = { ["value"] = 10 }, ["dog"] = { ["value"] = 20 } }; end;
         };
+        local loveMock = mock(_G.love, true);
         testClass:printResult();
         assert.spy(loveMock.graphics.print).was.called(4);
         assert.spy(loveMock.graphics.print).was.called_with("Caught objects in this round:", match._, match._);
@@ -249,7 +275,7 @@ describe("Test unit test suite", function()
         testClass.godModeActive = 0;
         testClass.oldPosY = 210;
         testClass:activateShortGM(0.12, 200);
-        
+
         assert.are.same(testClass.godModeActive, 1);
         assert.are.same(testClass.oldPosY, _G.math.inf);
     end)
@@ -281,7 +307,7 @@ describe("Test unit test suite", function()
         _G.os.date = function(...) return "22" end;
         local myInstance = testClass("sewers", "assets/testbg.png", { 512, 256 }, 1);
         assert.are.same("day", myInstance:getTime());
-            
+
         _G.os.date = function(...) return "35" end;
         local myInstance = testClass("sewers", "assets/testbg.png", { 512, 256 }, 1);
         assert.are.same("night", myInstance:getTime());
@@ -293,6 +319,7 @@ describe("Test unit test suite", function()
     end)
 
     it("Testing drawEnviroment", function()
+        local loveMock = mock(_G.love, true);
         locInstance:drawEnviroment();
         assert.spy(loveMock.graphics.draw).was.called(15);
     end)
