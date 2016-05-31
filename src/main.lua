@@ -89,6 +89,11 @@ function getScaledDimension(deviceDim)
         resultDim[2] = deviceDim[2] / deviceDim[1] * 480;
         resultDim[1] = 480;
     end
+    
+    if deviceDim [1] < 480 then
+        deviceDim [1] = 480;
+        deviceDim [2] = resultDim[1] * 16 / 9;
+    end
     return resultDim[1], resultDim[2], scaleFactor;
 end
 
