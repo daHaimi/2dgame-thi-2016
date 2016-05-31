@@ -147,7 +147,7 @@ function love.update(dt)
         -- updates the curLevel only in the InGame GUI
         setMouseVisibility(levMan:getCurLevel());
         levMan:getCurLevel():update(dt, levMan:getCurPlayer());
-        levMan:getCurSwarmFactory():update();
+        levMan:getCurSwarmFactory():update(dt);
     end
     -- if love.load had been executed and on android
     if love.system.getOS() == "Android" then
