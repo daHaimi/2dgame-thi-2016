@@ -46,9 +46,10 @@ function SwarmFactory:draw()
 end
 
 --- Updates all fishables
-function SwarmFactory:update()
+-- @param dt Delta time since last update in seconds
+function SwarmFactory:update(dt)
     for i = 1, #self.createdFishables, 1 do
-        self.createdFishables[i]:update();
+        self.createdFishables[i]:update(dt);
     end
 end
 

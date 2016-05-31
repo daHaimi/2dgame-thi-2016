@@ -20,6 +20,10 @@ describe("Unit test for FishableObject.lua", function()
                 newImage = function(...) return "assets/deadFish.png" end;
                 draw = function(...) end;
                 scale = function(...) end;
+            },
+            
+            filesystem = {
+                exists = function(...) return false end;
             }
         }
 

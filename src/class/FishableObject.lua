@@ -1,4 +1,5 @@
 Class = require "lib.hump.class";
+Animate = require "class.Animate";
 require "socket" math.randomseed(socket.gettime() * 10000);
 
 --- FishableObject is the class of all fishable object.
@@ -13,6 +14,15 @@ local FishableObject = Class {
     init = function(self, name, imageSrc, yPosition, minSpeed, maxSpeed, value, hitpoints, spriteSize, hitbox)
         self.name = name;
         self.image = love.graphics.newImage("assets/" .. imageSrc);
+        local spriteFile = "assets/sprites/sprite_" .. imageSrc;
+        if love.filesystem.exists(spriteFile) then
+            self.sprite = love.graphics.newImage(spriteFile);
+            local spriteCols = self.sprite:getWidth() / self.image:getWidth();
+            local spriteRows = self.sprite:getHeight() / self.image:getHeight();
+            self.animation = Animate(self.sprite, spriteCols, spriteRows);
+            print(spriteFile .. " " .. spriteCols .. " " .. spriteRows);
+        end
+        
         self.xPosition = math.random(spriteSize + 26, _G._persTable.winDim[1] - 26);
         self.yPosition = yPosition;
         self.value = value;
@@ -47,17 +57,27 @@ local FishableObject = Class {
     soundPlayed = false;
 };
 
---- draw the object, still no sprite implementet
+--- draw the object
 function FishableObject:draw()
     if not self.caught then
         love.graphics.setColor(255, 255, 255);
         if self.speed <= 0 then
-            love.graphics.draw(self.image, self.xPosition, self.yPosition);
+            if self.animation then
+                self.animation:draw(self.xPosition, self.yPosition);
+            else
+                love.graphics.draw(self.image, self.xPosition, self.yPosition);
+            end
+            
             love.graphics.setColor(0, 0, 0);
         else
             love.graphics.scale(-1, 1);
             love.graphics.setColor(255, 255, 255);
-            love.graphics.draw(self.image, -self.xPosition, self.yPosition);
+            if self.animation then
+                self.animation:draw(-self.xPosition, self.yPosition);
+            else
+                love.graphics.draw(self.image, -self.xPosition, self.yPosition);
+            end
+        
             love.graphics.scale(-1, 1);
         end
 
@@ -95,8 +115,13 @@ function FishableObject:draw()
 end
 
 --- Updates the position of the object depending on its speed
-function FishableObject:update()
+-- @param dt Delta time since last update in seconds
+function FishableObject:update(dt)
     if not self.caught then
+        if self.animation then
+            self.animation:update(dt);
+        end
+        
         if ((self.xPosition - self.hitbox[1].deltaXPos) >= _G._persTable.winDim[1]) and self.speed > 0 then
 
             self.speed = self.speed * -1;
