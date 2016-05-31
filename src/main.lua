@@ -49,7 +49,7 @@ function love.load()
     local _, _, flags = love.window.getMode();
     love.graphics.setBackgroundColor(30, 180, 240);
     deviceDim = { love.window.getDesktopDimensions(flags.display) };
-    --deviceDim = {1366, 768};
+    --deviceDim = {1366, 768}; --for simulating the resulution of a other device
     _G._persTable.winDim[1], _G._persTable.winDim[2], scaleFactor = getScaledDimension(deviceDim);
 
     _G._persTable.scaledDeviceDim = { _G._persTable.winDim[1] * scaleFactor, _G._persTable.winDim[2] * scaleFactor };
@@ -57,6 +57,7 @@ function love.load()
         _G._persTable.scaledDeviceDim = _G._persTable.winDim;
         scaleFactor = 1;
     end
+    print (_G._persTable.scaledDeviceDim[1] .. " " .. _G._persTable.scaledDeviceDim[2]);
     love.window.setMode(_G._persTable.scaledDeviceDim[1], _G._persTable.scaledDeviceDim[2], { centered });
     levMan = LevelManager();
 
@@ -89,6 +90,10 @@ function getScaledDimension(deviceDim)
         scaleFactor = (0.9 * deviceDim[2]) / (480 * 16 / 9);
         resultDim[1] = 480;
         resultDim[2] = resultDim[1] * 16 / 9;
+        if deviceDim[2] < resultDim[2] then
+            print (resultDim[2]);
+            resultDim[2] = deviceDim[2] *0.9
+        end
     else
         scaleFactor = deviceDim[1] / 480;
         resultDim[2] = deviceDim[2] / deviceDim[1] * 480;
@@ -110,7 +115,8 @@ function love.draw()
     end
 
     if levMan:getCurLevel() ~= nil then
-        if levMan:getCurLevel().levelFinished == 1 then
+        if levMan:getCurLevel().levelFinished == 1 and 
+            _gui:getCurrentState() == "InGame" then
             levMan:getCurLevel():printResult();
         end
     end
