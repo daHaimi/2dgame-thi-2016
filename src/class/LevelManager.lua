@@ -41,6 +41,9 @@ local LevelManager = Class {
 -- @param swarmFactory The swarm factory of the level.
 -- @return Returns a reference to the created level object.
 function LevelManager:newLevel(levelPropMap, swarmFactoryData)
+    for k,v in pairs(_G._tmptable) do
+        _G._tmptable[k] = nil
+    end;
     self.p_curDataRef = swarmFactoryData;
     self.curLevel = Level(levelPropMap.levelName, levelPropMap.bgPath, _G._persTable.winDim, levelPropMap.direction, self);
     self.curPlayer = Bait(_G._persTable.winDim, self);
