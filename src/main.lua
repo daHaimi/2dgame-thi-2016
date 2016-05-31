@@ -22,6 +22,7 @@ _G.testFuel = 2400;
 _G.testScore = 0;--score shown in the ingame screen
 _G.testUnlockedAchievements = {};--achievements unlocked in the last round
 _G._androidConfig = {};
+_G._tmptable = {};
 -- Font for android debugging
 _G.myfont = love.graphics.newFont(30);
 
@@ -54,6 +55,11 @@ function love.load()
     _G._persTable.winDim[1], _G._persTable.winDim[2], scaleFactor = getScaledDimension(deviceDim);
 
     _G._persTable.scaledDeviceDim = { _G._persTable.winDim[1] * scaleFactor, _G._persTable.winDim[2] * scaleFactor };
+    if _G._persTable.scaledDeviceDim[1] < 480 then
+        _G._persTable.scaledDeviceDim = _G._persTable.winDim;
+        scaleFactor = 1;
+    end
+    print (_G._persTable.scaledDeviceDim[1] .. " " .. _G._persTable.scaledDeviceDim[2]);
     love.window.setMode(_G._persTable.scaledDeviceDim[1], _G._persTable.scaledDeviceDim[2], { centered });
     levMan = LevelManager();
     
@@ -85,6 +91,10 @@ function getScaledDimension(deviceDim)
         scaleFactor = (0.9 * deviceDim[2]) / (480 * 16 / 9);
         resultDim[1] = 480;
         resultDim[2] = resultDim[1] * 16 / 9;
+        if deviceDim[2] < resultDim[2] then
+            print (resultDim[2]);
+            resultDim[2] = deviceDim[2] *0.9
+        end
     else
         scaleFactor = deviceDim[1] / 480;
         resultDim[2] = deviceDim[2] / deviceDim[1] * 480;
@@ -106,7 +116,8 @@ function love.draw()
     end
 
     if levMan:getCurLevel() ~= nil then
-        if levMan:getCurLevel().levelFinished == 1 then
+        if levMan:getCurLevel().levelFinished == 1 and 
+            _gui:getCurrentState() == "InGame" then
             levMan:getCurLevel():printResult();
         end
     end
@@ -117,7 +128,10 @@ function love.draw()
         love.graphics.print(_G._androidConfig.joyPos, 100, 100);
         love.graphics.pop();
     end
-    Loveframes.draw();
+    Loveframes.draw();    
+    -- debug info for memory usage do not remove!
+    love.graphics.print('Memory actually used (in kB): ' .. collectgarbage('count'), 200, 60);
+    love.graphics.print("Current FPS: "..tostring(love.timer.getFPS( )), 200, 75);
 end
 
 --- This function is called continuously by the love.run().
