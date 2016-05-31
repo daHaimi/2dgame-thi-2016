@@ -51,7 +51,7 @@ return {
         
         rat = {
             name = "rat",
-            image = "ratte.png",
+            image = "rat.png",
             spriteSize = 64,
             minSpeed = 3,
             maxSpeed = 4,

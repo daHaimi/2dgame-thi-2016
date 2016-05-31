@@ -6,12 +6,11 @@ SwarmFactory = require "class.SwarmFactory";
 -- Global variables
 _G.math.inf = 1 / 0;
 
---- The class LevelManager administrate all references to the current level 
+--- The class LevelManager administrate all references to the current level
 -- the current player and swarmfactory objects.
 local LevelManager = Class {
     init = function(self)
     end,
-    
     curLevel = nil;
     curPlayer = nil;
     curSwarmFac = nil;
@@ -41,7 +40,7 @@ local LevelManager = Class {
 -- @param swarmFactory The swarm factory of the level.
 -- @return Returns a reference to the created level object.
 function LevelManager:newLevel(levelPropMap, swarmFactoryData)
-    for k,v in pairs(_G._tmptable) do
+    for k, v in pairs(_G._tmptable) do
         _G._tmptable[k] = nil
     end;
     self.p_curDataRef = swarmFactoryData;

@@ -1,7 +1,5 @@
 testClass = require "src.class.SwarmFactory"
 
-
-
 describe("Unit test for SwarmFactory.lua", function()
     local locInstance;
     
@@ -17,6 +15,10 @@ describe("Unit test for SwarmFactory.lua", function()
                 newImage = function(...) end;
                 draw = function(...) end;
                 scale = function(...) end;
+            },
+            
+            filesystem = {
+                exists = function(...) return false end;
             }
         }
 
