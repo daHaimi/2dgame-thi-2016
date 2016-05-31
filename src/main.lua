@@ -19,6 +19,7 @@ _G.math.inf = 1 / 0;
 _G._gui = nil;
 _G._persistence = nil;
 _G._androidConfig = {};
+_G._tmptable = {};
 -- Font for android debugging
 _G.myfont = love.graphics.newFont(30);
 
