@@ -9,28 +9,34 @@ local Score = Class {
             self.width = 384;
             self.height = 666;
             self.buttonHeight = 75;
-            self.buttonOffset = 15;
+            self.scoreHeight = 170;
+            self.achievementsHeight = 128;
+            self.Offset = 15;
             speed = 50;
         elseif _G._persTable.scaledDeviceDim[1] < 720 then
             self.widthPx = 640;
             self.directory = "assets/gui/640px/";
             self.width = 512;
             self.height = 888;
-            self.buttonOffset = 20;
+            self.scoreHeight = 170;
+            self.achievementsHeight = 128;
+            self.Offset = 20;
             self.buttonHeight = 96;
-            speed = 67;
+            speed = 60;
         else
             self.widthPx = 720;
             self.directory = "assets/gui/720px/";
             self.width = 576;
             self.height = 1024;
-            self.buttonOffset = 30;
+            self.scoreHeight = 170;
+            self.achievementsHeight = 128;
+            self.Offset = 30;
             self.buttonHeight = 106;
             speed = 75;
         end
         self.name = "Score";
-        self.frame = Frame((_G._persTable.scaledDeviceDim[1] - 256) / 2, (_G._persTable.scaledDeviceDim[2] - 512) / 2,
-            "down", "down", 50, 0, -1500);
+        self.frame = Frame((_G._persTable.scaledDeviceDim[1] - self.width) / 2, 
+            (_G._persTable.scaledDeviceDim[2] - self.height) / 2, "down", "down", speed, 0, -1500);
         self:create();
     end;
 };
@@ -55,19 +61,19 @@ function Score:create()
             y = 90;
         };
         achievements = {
-            object = AchievementDisplay();
+            object = AchievementDisplay(self.directory);
             x = 0;
-            y = 170;
+            y = self.scoreHeight + self.Offset;
         };
         button_retry = {
             object = Loveframes.Create("imagebutton");
-            x = 0;
-            y = 300;
+            x = 0.16 * self.width;
+            y = self.scoreHeight + self.achievementsHeight + 2 * self.Offset;
         };
         button_backToMenu = {
             object = Loveframes.Create("imagebutton");
-            x = 0;
-            y = 400;
+            x = 0.16 * self.width;
+            y = self.scoreHeight + self.achievementsHeight + self.buttonHeight + 3 * self.Offset;
         };
     };
     
@@ -75,13 +81,15 @@ function Score:create()
     self.elementsOnFrame.background.object:SetImage(self.directory .. "ScoreScreen.png");
     
     self.elementsOnFrame.scoretext.object:SetText("Your Score:");
-    self.elementsOnFrame.scoretext.x = 128 - 0.5 * self.elementsOnFrame.scoretext.object:GetWidth();
+    self.elementsOnFrame.scoretext.x = 0.5 * self.width - 0.5 * self.elementsOnFrame.scoretext.object:GetWidth();
     
-    self.elementsOnFrame.button_retry.object:SetImage("assets/gui/480px/Button.png")
+    self.elementsOnFrame.score.x = 0.5 * self.width - 30;
+    
+    self.elementsOnFrame.button_retry.object:SetImage(self.directory .. "Button.png")
     self.elementsOnFrame.button_retry.object:SizeToImage()
     self.elementsOnFrame.button_retry.object:SetText("Retry");
     
-    self.elementsOnFrame.button_backToMenu.object:SetImage("assets/gui/480px/Button.png")
+    self.elementsOnFrame.button_backToMenu.object:SetImage(self.directory .. "Button.png")
     self.elementsOnFrame.button_backToMenu.object:SizeToImage()
     self.elementsOnFrame.button_backToMenu.object:SetText("Back to Menu");
     
@@ -98,7 +106,7 @@ end
 
 ---shows the frame on screen
 function Score:draw()
-    self.elementsOnFrame.score.object:SetText(_G.testScore);
+    self.elementsOnFrame.score.object:SetText(_G._tmptable.earnedMoney);
     self.frame:draw(self.elementsOnFrame);
 end
 

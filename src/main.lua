@@ -18,11 +18,15 @@ require "lib.TEsound";
 _G.math.inf = 1 / 0;
 _G._gui = nil;
 _G._persistence = nil;
-_G.testFuel = 2400;
-_G.testScore = 0;--score shown in the ingame screen
-_G.testUnlockedAchievements = {};--achievements unlocked in the last round
 _G._androidConfig = {};
-_G._tmptable = {};
+_G._tmptable = {
+    earnedMoney = nil;
+    currentDepth = nil;
+    roundFuel = 800;
+    unlockedAchievements = {};
+};
+_G.testScale = nil;
+
 -- Font for android debugging
 _G.myfont = love.graphics.newFont(30);
 
@@ -51,7 +55,8 @@ function love.load()
     local _, _, flags = love.window.getMode();
     love.graphics.setBackgroundColor(30, 180, 240);
     deviceDim = { love.window.getDesktopDimensions(flags.display) };
-    --deviceDim = {640, 960};
+    --deviceDim = {640, 1140};
+    --deviceDim = {720, 1080};
     _G._persTable.winDim[1], _G._persTable.winDim[2], scaleFactor = getScaledDimension(deviceDim);
 
     _G._persTable.scaledDeviceDim = { _G._persTable.winDim[1] * scaleFactor, _G._persTable.winDim[2] * scaleFactor };
@@ -77,7 +82,7 @@ function love.load()
             _G._androidConfig.maxTilt = .3;
         end
     end
-
+    _G.testScale = scaleFactor;
     _gui = Gui();
     _gui:setLevelManager(levMan);
     _gui:start();
@@ -138,8 +143,6 @@ end
 -- @param dt Delta time  is the amount of seconds since the
 -- last time this function was called.
 function love.update(dt)
-    _gui:update();
-    Loveframes.update(dt);
     if _gui:drawGame() then
         -- updates the curLevel only in the InGame GUI
         setMouseVisibility(levMan:getCurLevel());
@@ -161,6 +164,8 @@ function love.update(dt)
             end
         end
     end
+    _gui:update();
+    Loveframes.update(dt);
     TEsound.cleanup();
 end
 

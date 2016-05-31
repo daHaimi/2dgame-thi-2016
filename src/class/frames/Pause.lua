@@ -19,7 +19,7 @@ local Pause = Class {
             self.buttonOffset = 20;
             self.buttonHeight = 96;
             self.buttonWidth = 384;
-            speed = 67;
+            speed = 60;
         else
             self.widthPx = 720;
             self.directory = "assets/gui/720px/";

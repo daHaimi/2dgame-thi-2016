@@ -44,6 +44,11 @@ function LevelManager:newLevel(levelPropMap, swarmFactoryData)
     for k,v in pairs(_G._tmptable) do
         _G._tmptable[k] = nil
     end;
+    _G._tmptable = {
+        roundFuel = 800;
+    }
+    
+            
     self.p_curDataRef = swarmFactoryData;
     self.curLevel = Level(levelPropMap.levelName, levelPropMap.bgPath, _G._persTable.winDim, levelPropMap.direction, self);
     self.curPlayer = Bait(_G._persTable.winDim, self);
@@ -52,7 +57,7 @@ function LevelManager:newLevel(levelPropMap, swarmFactoryData)
     _gui:getFrames().inGame.elementsOnFrame.healthbar.object:resetHearts();
     --print(self.curSwarmFac);
     --print(self.curSwarmFac.createdFishables);
-
+    
     return self.curLevel;
 end
 

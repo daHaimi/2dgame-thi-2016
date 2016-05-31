@@ -12,6 +12,7 @@ local MainMenu = Class {
             self.buttonHeight = 75;
             self.buttonOffset = 15;
             self.flagWidth = 120;
+            self.speed = 50;
         elseif _G._persTable.scaledDeviceDim[1] < 720 then
             self.widthPx = 640;
             self.directory = "assets/gui/640px/";
@@ -20,6 +21,7 @@ local MainMenu = Class {
             self.buttonOffset = 20;
             self.buttonHeight = 96;
             self.flagWidth = 165;
+            self.speed = 60;
         else
             self.widthPx = 720;
             self.directory = "assets/gui/720px/";
@@ -28,10 +30,11 @@ local MainMenu = Class {
             self.buttonOffset = 30;
             self.buttonHeight = 106;
             self.flagWidth = 180;
+            self.speed = 75;
         end
         self.name = "Main Menu";
         self.frame = Frame((_G._persTable.scaledDeviceDim[1] - self.width) / 2, (_G._persTable.scaledDeviceDim[2] - self.height) / 2,
-            "down", "down", 50, 0, -1500);
+            "down", "down", self.speed, 0, -1500);
         self:create();
     end;
 };

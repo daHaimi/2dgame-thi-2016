@@ -11,6 +11,8 @@ local UpgradeMenu = Class {
             self.height = 666;
             self.buttonHeight = 75;
             self.buttonOffset = 15;
+            self.buttonLength = 128;
+            self.textFieldLength = 279;
             self.speed = 50;
         elseif _G._persTable.scaledDeviceDim[1] < 720 then
             self.widthPx = 640;
@@ -19,7 +21,9 @@ local UpgradeMenu = Class {
             self.height = 888;
             self.buttonOffset = 20;
             self.buttonHeight = 96;
-            self.speed = 67;
+            self.buttonLength = 174;
+            self.textFieldLength = 384;
+            self.speed = 60;
         else
             self.widthPx = 720;
             self.directory = "assets/gui/720px/";
@@ -27,6 +31,8 @@ local UpgradeMenu = Class {
             self.height = 1024;
             self.buttonOffset = 30;
             self.buttonHeight = 106;
+            self.buttonLength = 196;
+            self.textFieldLength = 432;
             self.speed = 75;
         end
         self.name = "Shop";
@@ -57,12 +63,12 @@ function UpgradeMenu:create()
         };
         button_buy = {
             object = Loveframes.Create("imagebutton");
-            x = 0.5 * self.width;
+            x = 0.125 * self.width + self.textFieldLength - self.buttonLength;
             y = self.height - self.buttonHeight;
         };
         button_back = {
             object = Loveframes.Create("imagebutton");
-           x = 0.16 * self.width;
+           x = 0.125 * self.width;
             y = self.height - self.buttonHeight;
         };
     };

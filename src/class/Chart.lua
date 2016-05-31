@@ -73,14 +73,10 @@ function Chart:create()
     self.button_down:SetText("");
     
     self.markFrame = Loveframes.Create("image");
-    if self.klickableSize == 64 then
-        self.markFrame:SetImage("assets/gui/markFrame.png");
-    else
-        self.markFrame:SetImage(self.directory .. "markFrame.png");
-    end
+    self.markFrame:SetImage(self.directory .. "markFrame.png");
     self.markFrame:SetVisible(false);
     
-    self.textField = TextField(self.width - 100);
+    self.textField = TextField(self.width - 50, self.directory);
     
     --onclick events of the buttons
     self.button_up.OnClick = function(object)
@@ -183,10 +179,9 @@ function Chart:SetPos(x, y)
     self.p_xPos = (_G._persTable.scaledDeviceDim[1] - self.klickableSize * self.p_column) / 2;
     self.p_yPos = y;
     self.button_up:SetPos(buttonXPos, y);
-    
     self.button_down:SetPos(buttonXPos,y + math.min(self.p_row, 3) *self.klickableSize + self.buttonHeight + self.buttonOffset);
     self:setPosOfKlickableElements();
-    self.textField:SetPos(buttonXPos, y + self.height * 0.68);
+    self.textField:SetPos(x, y + self.height * 0.68);
     if self.p_markedElement ~= nil then
         self.markFrame:SetPos(self.p_markedElement.object:GetX(), self.p_markedElement.object:GetY());
     end

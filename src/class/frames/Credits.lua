@@ -17,7 +17,7 @@ local Credits = Class {
             self.height = 888;
             self.buttonOffset = 20;
             self.buttonHeight = 96;
-            speed = 67;
+            speed = 60;
         else
             self.widthPx = 720;
             self.directory = "assets/gui/720px/";

@@ -47,9 +47,19 @@ function InGame:create()
             x = 10;
             y = 10;
         },
-        imageBar = {
+        barFuel = {
             object = Loveframes.Create("image");
             x = 0;
+            y = 0;
+        },
+        barLife = {
+            object = Loveframes.Create("image");
+            x = _G._persTable.winDim[1];-- - 256 * _G.testScale;
+            y = 0;
+        },
+        barMiddle = {
+            object = Loveframes.Create("image");
+            x = 256;
             y = 0;
         },
         healthbar = {
@@ -63,23 +73,24 @@ function InGame:create()
             y = 20;
         }
     };
-    self.elementsOnFrame.imageBar.object:SetImage(self.directory .. "InGameBar.png");
+    
+    self.elementsOnFrame.barMiddle.object:SetImage(self.directory .. "BarMiddle.png");
+    --self.elementsOnFrame.barMiddle.object:SetScaleX((_G._persTable.winDim[1] - 256)/64);
+    self.elementsOnFrame.barLife.object:SetImage(self.directory .. "BarLife.png");
+    self.elementsOnFrame.barFuel.object:SetImage(self.directory .. "BarFuel.png");
     self.elementsOnFrame.fuelBar.object:SetImage(self.directory .. "FuelBar.png");
     self.elementsOnFrame.fuelBarBackground.object:SetImage(self.directory .. "FuelBarBG.png");
     
-    self.elementsOnFrame.score.object:SetText("Score: " .. _G.testScore);
     self.elementsOnFrame.score.object:SetShadow(true);
 end
 
 function InGame:update()
     --update Fuelbar
     if self.frame:checkPosition() then
-        _G.testFuel = _G.testFuel - 1;
-        if _G.testFuel >= 0 then
-            self.elementsOnFrame.fuelBar.object:SetX(math.ceil((180 / 2400)*_G.testFuel) - 180);
+        if _G._tmptable.roundFuel >= 0 then
+            self.elementsOnFrame.fuelBar.object:SetX(math.ceil((180 / 2400)*_G._tmptable.roundFuel) - 180);
         end
-        _G.testScore = _G.testScore + 5;
-        self.elementsOnFrame.score.object:SetText("Score: " .. _G.testScore);
+        self.elementsOnFrame.score.object:SetText("Depth: " .. math.ceil(_G._tmptable.currentDepth) .. "Px");
     end
 end
 

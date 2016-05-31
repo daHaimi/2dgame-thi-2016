@@ -1,9 +1,9 @@
 Class = require "lib.hump.class";
 
 local Textbox = Class {
-    init = function(self, width)
+    init = function(self, width, directory)
         self.objBackground = Loveframes.Create("image");
-        self.objBackground:SetImage("assets/gui/480px/TextBG.png");
+        self.objBackground:SetImage(directory .. "TextBG.png");
         self.objTopic = Loveframes.Create("text");
         self.objText = Loveframes.Create("text");
         self.objPrice = Loveframes.Create("text");

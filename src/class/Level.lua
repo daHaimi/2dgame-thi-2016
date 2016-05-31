@@ -121,6 +121,7 @@ function Level:update(dt, bait)
     end
     self.baitLight.setPosition(self.posY or 0, self.posX or 0);
     self.lightWorld:update();
+    _G._tmptable.currentDepth = self.posY;
 end
 
 --- when the bait hit a object or the boarder is reached, start phase 2
@@ -210,6 +211,7 @@ function Level:checkGodMode()
                 self.oldPosY = self.posY;
             end
         end
+        _G._tmptable.roundFuel = self.godModeFuel;
     end
 end
 
@@ -272,6 +274,7 @@ function Level:calcFishedValue()
             fishedVal = fishedVal + self.levMan:getCurSwarmFactory():getFishableObjects()[name].value * amount;
         end
     end
+    _G._tmptable.earnedMoney = fishedVal;
     return fishedVal;
 end
 

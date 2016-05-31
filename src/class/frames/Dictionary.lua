@@ -19,7 +19,7 @@ local Dictionary = Class {
             self.height = 888;
             self.buttonOffset = 20;
             self.buttonHeight = 96;
-            speed = 67;
+            speed = 60;
         else
             self.widthPx = 720;
             self.directory = "assets/gui/720px/";
@@ -81,8 +81,8 @@ end
 function Dictionary:addAllObjects()
     for k, v in pairs(_G.data.fishableObjects) do
         local path = "";
-        if self:imageExists("assets/gui/480px/dic_" .. v.image) then
-            path = "assets/gui/480px/dic_" .. v.image;
+        if self:imageExists(self.directory .. "dic_" .. v.image) then
+            path = self.directory.. "dic_" .. v.image;
         else
             path = "assets/" .. v.image;
         end
