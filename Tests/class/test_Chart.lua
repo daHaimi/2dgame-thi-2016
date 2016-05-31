@@ -12,7 +12,6 @@ describe("Unit test for Chart.lua", function()
         _G.Loveframes = {
             Create = function(...) return fakeElement(); end,
         }
-        
         _G._persTable = {
             scaledDeviceDim = {480, 833};
         };
@@ -30,9 +29,6 @@ describe("Unit test for Chart.lua", function()
             self.x = x; 
             self.y = y; 
         end;
-        
-        
-        
         locInstance = testClass();
     end)
     
