@@ -48,10 +48,14 @@ function love.load()
     local _, _, flags = love.window.getMode();
     love.graphics.setBackgroundColor(30, 180, 240);
     deviceDim = { love.window.getDesktopDimensions(flags.display) };
-    --deviceDim = {480, 833};
+    --deviceDim = {1366, 768};
     _G._persTable.winDim[1], _G._persTable.winDim[2], scaleFactor = getScaledDimension(deviceDim);
 
     _G._persTable.scaledDeviceDim = { _G._persTable.winDim[1] * scaleFactor, _G._persTable.winDim[2] * scaleFactor };
+    if _G._persTable.scaledDeviceDim[1] < 480 then
+        _G._persTable.scaledDeviceDim = _G._persTable.winDim;
+        scaleFactor = 1;
+    end
     love.window.setMode(_G._persTable.scaledDeviceDim[1], _G._persTable.scaledDeviceDim[2], { centered });
     levMan = LevelManager();
 
@@ -88,11 +92,6 @@ function getScaledDimension(deviceDim)
         scaleFactor = deviceDim[1] / 480;
         resultDim[2] = deviceDim[2] / deviceDim[1] * 480;
         resultDim[1] = 480;
-    end
-    
-    if deviceDim [1] < 480 then
-        deviceDim [1] = 480;
-        deviceDim [2] = resultDim[1] * 16 / 9;
     end
     return resultDim[1], resultDim[2], scaleFactor;
 end
