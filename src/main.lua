@@ -25,7 +25,6 @@ _G._tmptable = {
     roundFuel = 800;
     unlockedAchievements = {};
 };
-_G.testScale = nil;
 
 -- Font for android debugging
 _G.myfont = love.graphics.newFont(30);

@@ -19,6 +19,7 @@ describe("Unit test for Level.lua", function()
             getCurPlayer = function(...) return _G.levMan.curPlayer end,
             getCurLevel = function(...) return _G.levMan.curLevel end
         };
+        
             
         _G.Loveframes = {
             Create = function(typeName) 

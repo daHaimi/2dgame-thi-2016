@@ -22,6 +22,9 @@ describe("Unit test for Score.lua", function()
                 [2] = 500;
             };
         };
+        _G._tmptable = {
+            earnedMoney = 0;
+        }
         
         _G.Frame = function(...) return Frame; end;
         locInstance = testClass();

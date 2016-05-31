@@ -24,6 +24,7 @@ describe("Unit test for inGame.lua", function()
                 [1] = 500;
                 [2] = 500;
             };
+            winDim = {1, 2};
         };
         _G.Frame = function(...) return Frame; end;
 
