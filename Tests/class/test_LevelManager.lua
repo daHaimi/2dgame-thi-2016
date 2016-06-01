@@ -88,7 +88,13 @@ describe("Unit test suite for the LevelManager class", function()
         --_G.playerMock = mock(_G.Bait, true);
         --_G.swarmFacMock = mock(_G.SwarmFactory, true);
     end)
-
+        _G._tmpTable = {
+            caughtThisRound = {};
+            earnedMoney = nil;
+            currentDepth = nil;
+            roundFuel = 800;
+            unlockedAchievements = {};
+        };
     it("Testing Constructor", function()
         local const = spy.on(LevelManager, "init");
         local myInstance = LevelManager();
