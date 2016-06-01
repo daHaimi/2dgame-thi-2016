@@ -25,7 +25,7 @@ _G.levelTestStub = function()
         curPlayer = nil;
         curSwarmFac = nil;
         getLevelPropMapByName = function(...) return {
-            direction = nil;
+            direction = 1;
         }
         end;
         getCurSwarmFactory = function(...) return _G.levMan.curSwarmFac end;
@@ -90,18 +90,18 @@ describe("Test unit test suite", function()
     end)
 
     it("Testing Constructor", function()
-        local myInstance = testClass("sewers", "assets/testbg.png", { 512, 256 }, 1);
+        local myInstance = testClass("sewers", "assets/testbg.png", { 512, 256 }, 1, _G.levMan);
         local lb = myInstance.lowerBoarder;
         local mbb1 = myInstance.mapBreakthroughBonus1;
         local mbb2 = myInstance.mapBreakthroughBonus2;
         assert.are.same(locInstance, myInstance);
 
         _persTable.upgrades.mapBreakthrough1 = true;
-        local myInstance = testClass("sewers", "assets/testbg.png", { 512, 256 }, 1);
+        local myInstance = testClass("sewers", "assets/testbg.png", { 512, 256 }, 1, _G.levMan);
         assert.are.same(lb + mbb1, myInstance.lowerBoarder);
 
         _persTable.upgrades.mapBreakthrough2 = true;
-        local myInstance = testClass("sewers", "assets/testbg.png", { 512, 256 }, 1);
+        local myInstance = testClass("sewers", "assets/testbg.png", { 512, 256 }, 1, _G.levMan);
         assert.are.same(lb + mbb1 + mbb2, myInstance.lowerBoarder);
     end)
 
@@ -141,28 +141,28 @@ describe("Test unit test suite", function()
 
     it("Testing addToCaught", function()
         local name = "nemo";
-        testClass:addToCaught(name);
-        assert.are.same(testClass.caughtThisRound.nemo, 1);
+        locInstance:addToCaught(name);
+        assert.are.same(locInstance.caughtThisRound.nemo, 1);
     end)
 
     it("Testing addToCaught twice to test IF", function()
         local name = "nemo";
-        testClass:addToCaught(name);
-        testClass:addToCaught(name); --- now it is not nil
-        assert.are.same(testClass.caughtThisRound.nemo, 2);
+        locInstance:addToCaught(name);
+        locInstance:addToCaught(name); --- now it is not nil
+        assert.are.same(locInstance.caughtThisRound.nemo, 2);
     end)
 
     it("Testing addToCaught for two diffrent ", function()
         local name1 = "nemo";
         local name2 = "hans";
-        testClass:addToCaught(name1);
-        testClass:addToCaught(name2);
-        assert.are.same(testClass.caughtThisRound.nemo, 1);
-        assert.are.same(testClass.caughtThisRound.hans, 1);
+        locInstance:addToCaught(name1);
+        locInstance:addToCaught(name2);
+        assert.are.same(locInstance.caughtThisRound.nemo, 1);
+        assert.are.same(locInstance.caughtThisRound.hans, 1);
     end)
 
     it("Testing activateGodMode", function()
-        _G._persTable.upgrades.godMode = true;
+        _G._persTable.upgrades.godMode = 1;
         locInstance.godModeFuel = 500;
         local sAGM = spy.on(locInstance, "activateGodMode");
         locInstance:activateGodMode();
@@ -209,7 +209,7 @@ describe("Test unit test suite", function()
     end)
 
     it("Testing calcFishedValue", function()
-        testClass.levMan.curSwarmFac = {
+        locInstance.levMan.curSwarmFac = {
             getFishableObjects = function() return {
                 ["turtle"] = { ["value"] = 10 },
                 ["rat"] = { ["value"] = 20 },
@@ -218,8 +218,8 @@ describe("Test unit test suite", function()
             };
             end;
         };
-        testClass.caughtThisRound = { ["turtle"] = 5, ["rat"] = 0, ["deadFish"] = 5, ["nemo"] = 3 };
-        assert.are.same(testClass:calcFishedValue(), 30);
+        locInstance.caughtThisRound = { ["turtle"] = 5, ["rat"] = 0, ["deadFish"] = 5, ["nemo"] = 3 };
+        assert.are.same(locInstance:calcFishedValue(), 30);
     end)
 
     it("Testing multiplyFishedValue", function()
@@ -244,13 +244,13 @@ describe("Test unit test suite", function()
     end)
 
     it("Testing printResult with caught objects", function()
-        testClass.caughtThisRound["cat"] = 1;
-        testClass.caughtThisRound["dog"] = 2;
-        testClass.levMan.curSwarmFac = {
+        locInstance.caughtThisRound["cat"] = 1;
+        locInstance.caughtThisRound["dog"] = 2;
+        locInstance.levMan.curSwarmFac = {
             getFishableObjects = function() return { ["cat"] = { ["value"] = 10 }, ["dog"] = { ["value"] = 20 } }; end;
         };
         local loveMock = mock(_G.love, true);
-        testClass:printResult();
+        locInstance:printResult();
         assert.spy(loveMock.graphics.print).was.called(4);
         assert.spy(loveMock.graphics.print).was.called_with("Caught objects in this round:", match._, match._);
         assert.spy(loveMock.graphics.print).was.called_with("cat: 1 x 10 Coins", match._, match._);
