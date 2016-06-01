@@ -40,10 +40,10 @@ local LevelManager = Class {
 -- @param swarmFactory The swarm factory of the level.
 -- @return Returns a reference to the created level object.
 function LevelManager:newLevel(levelPropMap, swarmFactoryData)
-    for k, v in pairs(_G._tmptable) do
-        _G._tmptable[k] = nil
+    for k, v in pairs(_G._tmpTable) do
+        _G._tmpTable[k] = nil
     end;
-    _G._tmptable = {
+    _G._tmpTable = {
         roundFuel = 800;
     }
     
