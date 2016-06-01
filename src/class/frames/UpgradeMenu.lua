@@ -119,6 +119,7 @@ function UpgradeMenu:addAllUpgrades()
     for k, v in pairs(_G.data.upgrades) do
         local newKlickableElement = KlickableElement(v.name, self.directory .. v.image, 
             self. directory .. v.image_disable, v.description, v.price, v.nameOnPersTable);
+        
         --add OnClick event
         newKlickableElement.object.OnClick = function(object)
             self.elementsOnFrame.chart.object:markElement(newKlickableElement);

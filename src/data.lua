@@ -660,7 +660,7 @@ return {
     --- Date for all upgrades
     upgrades = {
         oneMoreLife = {
-            nameOnPersTable = "moreLife";--Name of parameter in persTable. Unlock change this parameter to true
+            nameOnPersTable = "oneMoreLife";--Name of parameter in persTable. Unlock change this parameter to true
             name = "One more life";--Name shown on the Textfield on the shop
             description = "add one more life to your healthbar.";--shown on the shop
             price = 100;--price of this item
@@ -668,7 +668,7 @@ return {
             image_disable = "gui_Test_klickableElement_disable.png";
         },
         twoMoreLife = {
-            nameOnPersTable = "moreLife";
+            nameOnPersTable = "twoMoreLife";
             name = "Two more life";
             description = "add a third life to your healthbar.";
             price = 200;
@@ -676,7 +676,7 @@ return {
             image_disable = "gui_Test_klickableElement_disable.png";
         },
         threeMoreLife = {
-            nameOnPersTable = "moreLife";
+            nameOnPersTable = "threeMoreLife";
             name = "Three more life";
             description = "upgrade your healthbar up to four lifes.";
             price = 300;
@@ -727,6 +727,22 @@ return {
             nameOnPersTable = "mapBreakthrough2";
             name = "MB2";
             description = "blablabla";
+            price = 300;
+            image = "gui_Test_klickableElement.png";
+            image_disable = "gui_Test_klickableElement_disable.png";
+        },
+        moreFuel1 = {
+            nameOnPersTable = "moreFuel1";
+            name = "Need more Fuel?";
+            description = "Upgrade your Fuel to 1600";
+            price = 300;
+            image = "gui_Test_klickableElement.png";
+            image_disable = "gui_Test_klickableElement_disable.png";
+        },
+        moreFuel2 = {
+            nameOnPersTable = "moreFuel2";
+            name = "Need more Fuel?";
+            description = "Upgrade your Fuel to 2400";
             price = 300;
             image = "gui_Test_klickableElement.png";
             image_disable = "gui_Test_klickableElement_disable.png";

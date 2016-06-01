@@ -95,9 +95,11 @@ function Persistence:createPersTable()
         threeMoreLife = false; -- more life
         moneyMult = false; -- "0" means no additional money
         moreLife = 0; -- needed for calculation in a few classes
-        godMode = true; -- indicates if the god mode is available or not
+        godMode = false; -- indicates if the god mode is available or not
         mapBreakthrough1 = false; -- can you access the first map limit? 0 = no, 1 = yes
         mapBreakthrough2 = false; -- can you access the second map limit? 0 = no, 1 = yes
+        moreFuel1 = false;
+        moreFuel2 = false;
         sleepingPillDuration = 600; -- duration of the effect of the sleeping pill
         sleepingPillSlow = 0.25; -- sets the slow factor of the sleeping pill 0.25 = 25% of the usual movement
     };

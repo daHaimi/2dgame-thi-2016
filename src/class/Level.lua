@@ -27,7 +27,7 @@ local Level = Class {
         self.mapBreakthroughBonus2 = -1000;
         -- list for objekts caught at this round
         self.oldPosY = _G.math.inf;
-        self.godModeFuel = 800;
+        self.godModeFuel = 0;
         self.shortGMDist = 0;
         self.godModeActive = 0;
         self.moved = 0;
@@ -55,6 +55,17 @@ local Level = Class {
         if _persTable.upgrades.mapBreakthrough2 == true then
             self.lowerBoarder = self.lowerBoarder + self.mapBreakthroughBonus2;
         end
+        if _persTable.upgrades.godMode == true then
+            self.godModeFuel = 800;
+            if _persTable.upgrades.moreFuel1 == true then
+                self.godModeFuel = 1600;
+                if _persTable.upgrades.moreFuel2 == true then
+                    self.godModeFuel = 2400;
+                end
+            end
+        end
+        _G._tmpTable.roundFuel = self.godModeFuel;
+
         
         --Animation parameters
         self.animationStart = false;
@@ -292,11 +303,12 @@ function Level:checkGodMode()
             if self.oldPosY == _G.math.inf then
                 self.oldPosY = self.posY;
             else
-                self:setGodModeFuel(self:getGodModeFuel() - math.abs(self.posY - self.oldPosY));
+                local fuel = self:getGodModeFuel() - math.abs(self.posY - self.oldPosY)
+                self:setGodModeFuel(fuel);
+                _G._tmpTable.roundFuel = fuel;
                 self.oldPosY = self.posY;
             end
         end
-        _G._tmpTable.roundFuel = self.godModeFuel;
     end
 end
 

@@ -26,18 +26,18 @@ function AchievementDisplay:SetVisible(visible)
         --look for new achievements
         if _G._tmpTable.unlockedAchievements ~= nil then
             --new achievements
-            for k, v in ipairs(_G.testUnlockedAchievements) do
+            for k, v in ipairs(_G._tmpTable.unlockedAchievements) do
                 local image = Loveframes.Create("image");
                 image:SetImage("assets/gui/" .. v.image_unlock);
                 self.unlockedAchievements[k] = image;
             end
-            _G._tmpTable.unlockedAchievements = {}; 
+            _G._tmpTable.unlockedAchievements = nil; 
         else
             --no new achievements
             self.defaultText:SetVisible(visible);
         end
     else
-        if self.unlockedAchievements ~= {} then
+        if self.unlockedAchievements[1] ~= nil then
             for k, v in pairs (self.unlockedAchievements) do
                 v:Remove();
             end

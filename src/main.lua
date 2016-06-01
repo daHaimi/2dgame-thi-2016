@@ -23,7 +23,7 @@ _G._tmpTable = {
     caughtThisRound = {};
     earnedMoney = nil;
     currentDepth = nil;
-    roundFuel = 800;
+    roundFuel = nil;
     unlockedAchievements = {};
 };
 
@@ -82,10 +82,8 @@ function love.load()
             _G._androidConfig.maxTilt = .3;
         end
     end
-    _G.testScale = scaleFactor;
     _G._gui = Gui();
     _gui:setLevelManager(levMan);
-    --_gui:tempTextOutput();
     _gui:start();
 end
 
@@ -138,6 +136,18 @@ function love.draw()
     -- debug info for memory usage do not remove!
     love.graphics.print('Memory actually used (in kB): ' .. collectgarbage('count'), 200, 60);
     love.graphics.print("Current FPS: " .. tostring(love.timer.getFPS()), 200, 75);
+    --[[
+    love.graphics.print(
+        "1speedUp " .. tostring(_G._persTable.upgrades.firstSpeedUp) .. "\n" ..
+        "2speedUp " .. tostring(_G._persTable.upgrades.secondSpeedUp) .. "\n" ..
+        "1moreLife " .. tostring(_G._persTable.upgrades.oneMoreLife) .. "\n" ..
+        "2moreLife " .. tostring(_G._persTable.upgrades.twoMoreLife) .. "\n" ..
+        "3moreLife " .. tostring(_G._persTable.upgrades.threeMoreLife) .. "\n" ..
+        "moneyMult " .. tostring(_G._persTable.upgrades.moneyMult) .. "\n" ..
+        "godMode " .. tostring(_G._persTable.upgrades.godMode) .. "\n" ..
+        "MB1 " .. tostring(_G._persTable.upgrades.mapBreakthrough1) .. "\n" ..
+        "MB2 " .. tostring(_G._persTable.upgrades.mapBreakthrough2),
+        0, 0)]]--
 end
 
 --- This function is called continuously by the love.run().

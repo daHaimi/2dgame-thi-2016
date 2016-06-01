@@ -43,10 +43,7 @@ function LevelManager:newLevel(levelPropMap, swarmFactoryData)
     for k, v in pairs(_G._tmpTable) do
         _G._tmpTable[k] = nil
     end;
-    _G._tmpTable = {
-        roundFuel = 800;
-    }
-    
+
     if self.curSwarmFac ~= nil then
         self.curSwarmFac:destructSF();
         self.curSwarmFac = nil;
@@ -70,7 +67,7 @@ function LevelManager:newLevel(levelPropMap, swarmFactoryData)
     self.curPlayer:checkUpgrades();
     self.curSwarmFac = SwarmFactory(swarmFactoryData, self);
     _gui:getFrames().inGame.elementsOnFrame.healthbar.object:resetHearts();
-    
+        
     return self.curLevel;
 end
 
