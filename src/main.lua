@@ -214,8 +214,8 @@ function love.mousepressed(x, y, button)
     Loveframes.mousepressed(x, y, button);
 
     -- activate the god mode when you press the mouse
-    if love.mouse.isDown(1) and _gui:getCurrentState() == "InGame" then--and
-    --levMan:getCurLevel():getStartAnimationFinished() then
+    if love.mouse.isDown(1) and _gui:getCurrentState() == "InGame" and
+    levMan:getCurLevel():getStartAnimationFinished() then
         levMan:getCurLevel():activateGodMode();
     end
     

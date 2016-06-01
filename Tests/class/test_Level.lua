@@ -106,6 +106,32 @@ describe("Test unit test suite", function()
         assert.are.same(lb + mbb1 + mbb2, myInstance.lowerBoarder);
     end)
 
+    it("Testing destructLevel", function()
+        local testInstance = testClass("sewers", "assets/testbg.png", { 512, 256 }, 1, _G.levMan);
+        testInstance:destructLevel();
+        
+        assert.are.same(testInstance.levMan, nil);
+        assert.are.same(testInstance.p_levelName, nil);
+        assert.are.same(testInstance.levelFinished, nil);
+        assert.are.same(testInstance.gotPayed, nil);
+        assert.are.same(testInstance.roundValue, nil);
+        assert.are.same(testInstance.posY, nil);
+        assert.are.same(testInstance.direction, nil);
+        assert.are.same(testInstance.bg, nil);
+        assert.are.same(testInstance.bgq, nil);
+        assert.are.same(testInstance.winDim, nil);
+        assert.are.same(testInstance.lowerBoarder, nil);
+        assert.are.same(testInstance.upperBoarder, nil);
+        assert.are.same(testInstance.mapBreakthroughBonus1, nil);
+        assert.are.same(testInstance.mapBreakthroughBonus2, nil);
+        assert.are.same(testInstance.oldPosY, nil);
+        assert.are.same(testInstance.godModeFuel, nil);
+        assert.are.same(testInstance.shortGMDist, nil);
+        assert.are.same(testInstance.godModeActive, nil);
+        assert.are.same(testInstance.moved, nil);
+        assert.are.same(testInstance.time, nil);
+    end)
+
     it("Testing setLowerBoarder and getLowerBoarder", function()
         testClass:setLowerBoarder(100);
         assert.are.same(testClass:getLowerBoarder(), 100);

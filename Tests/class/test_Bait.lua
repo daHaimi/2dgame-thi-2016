@@ -116,6 +116,31 @@ describe("Unit test for Bait.lua", function()
         assert.are.same(locInstance, myInstance);
     end)
 
+    it("Testing destructBait", function()
+        local testInstance = testClass(locWinDim, levMan);
+        testInstance:destructBait();
+        
+        assert.are.same(testInstance.levMan ,nil);
+        assert.are.same(testInstance.size ,nil);
+        assert.are.same(testInstance.speed ,nil);
+        assert.are.same(testInstance.posXMouse ,nil);
+        assert.are.same(testInstance.xPos ,nil);
+        assert.are.same(testInstance.maxSpeedX ,nil);
+        assert.are.same(testInstance.winDim ,nil);
+        assert.are.same(testInstance.life ,nil);
+        assert.are.same(testInstance.money ,nil);
+        assert.are.same(testInstance.numberOfHits ,nil);
+        assert.are.same(testInstance.hitFishable ,nil);
+        assert.are.same(testInstance.caughtThisRound ,nil);
+        assert.are.same(testInstance.sleepingPillDuration ,nil);
+        assert.are.same(testInstance.deltaTime ,nil);
+        assert.are.same(testInstance.modifier ,nil);
+        assert.are.same(testInstance.goldenRuleLowerPoint ,nil);
+        assert.are.same(testInstance.goldenRuleUpperPoint ,nil);
+        assert.are.same(testInstance.image, nil);
+        assert.are.same(testInstance.pullIn ,nil);
+    end)
+
     it("Testing Update", function()
         local myInstance = testClass(locWinDim, levMan);
         myInstance.image = locImageStub;

@@ -53,6 +53,18 @@ describe("Unit test for SwarmFactory.lua", function()
         assert.are.same(myInstance.maxDepth, locInstance.maxDepth);
     end)
 
+    it("Testing destructSF", function()
+        local testInstance = testClass(require "src.data", levMan);
+        testInstance:destructSF();
+        
+        assert.are.same(testInstance.levMan, nil);
+        assert.are.same(testInstance.maxDepth, nil);
+        assert.are.same(testInstance.currentSwarm, nil);
+        assert.are.same(testInstance.fishableObjects, nil);
+        assert.are.same(testInstance.createdFishables, nil);
+        assert.are.same(testInstance.swarmsSewer, nil);
+    end)
+
     it("Testing draw method", function()
         local loveMock = mock(_G.love, true);
         locInstance:draw();
