@@ -84,10 +84,9 @@ describe("Test unit test suite", function()
 
         _G.levelTestStub();
 
-        locInstance = testClass("sewers", "assets/testbg.png", { 512, 256 }, 1);
-
-        testClass.caughtThisRound = {};
-        testClass.levMan = _G.levMan;
+        locInstance = testClass("sewers", "assets/testbg.png", { 512, 256 }, 1, _G.levMan);
+        locInstance.levMan = _G.levMan;
+        locInstance.caughtThisRound = {};
     end)
 
     it("Testing Constructor", function()
@@ -287,6 +286,8 @@ describe("Test unit test suite", function()
             };
         };
 
+        locInstance.p_levelName = "sewers";
+        locInstance.direction = 1;
         locInstance.shortGMDist = 0;
         locInstance.godModeActive = 0;
         locInstance.oldPosY = 210;
@@ -306,21 +307,22 @@ describe("Test unit test suite", function()
     end)
 
     it("Testing reduceShortGMDist", function()
-        testClass.godModeActive = 0;
-        testClass.godModeFuel = 250;
-        testClass:activateShortGM(0.12, 200);
-        local sRSGM = spy.on(testClass, "reduceShortGMDist");
+        locInstance.oldPosY = _G.math.inf;
+        locInstance.godModeActive = 0;
+        locInstance.godModeFuel = 250;
+        locInstance:activateShortGM(0.12, 200);
+        local sRSGM = spy.on(locInstance, "reduceShortGMDist");
 
         for i = 10, -250, -1
         do
-            testClass.posY = i;
-            testClass:checkGodMode();
+            locInstance.posY = i;
+            locInstance:checkGodMode();
         end
         assert.spy(sRSGM).was.called(161);
-        assert.are.same(testClass.godModeActive, 0);
-        assert.are.same(testClass.shortGMDist, 0);
-        assert.are.same(testClass.oldPosY, _G.math.inf);
-        assert.are.same(testClass.godModeFuel, 250);
+        assert.are.same(locInstance.godModeActive, 0);
+        assert.are.same(locInstance.shortGMDist, 0);
+        assert.are.same(locInstance.oldPosY, _G.math.inf);
+        assert.are.same(locInstance.godModeFuel, 250);
     end)
 
     it("Testing getMoved()", function()
