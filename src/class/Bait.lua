@@ -34,7 +34,7 @@ local Bait = Class {
         self.winDim = winDim;
         self.xPos = (winDim[1] / 2) - (self.size / 2);
         self.levMan = levelManager;
-        --local yPos = (self.winDim[2] / 2) - (self.size / 2); -- FIXME unused local
+        self.yPos = (self.winDim[2] / 2) - (self.size / 2); -- FIXME unused local
         local img = love.graphics.newImage("assets/sprites/sprite_hamster.png");
         if img == 0 then
             self.image = nil;
@@ -85,10 +85,6 @@ function Bait:update(dt)
     elseif self.levMan:getCurLevel():getDirection() == -1 and
             self.levMan:getCurLevel():getYPos() < self.winDim[2] * 0.2 then
         self.modifier = self:changeModifierTo(self.goldenRuleUpperPoint);
-    elseif self.levMan:getCurLevel():getDirection() == -1 and
-            self.levMan:getCurLevel():getYPos() > self.winDim[2] * 0.2 then
-        self.pullIn = true;
-        self.modifier = self:changeModifierTo(0.5);
     else
         self.modifier = self:changeModifierTo(0.5);
     end
@@ -113,7 +109,7 @@ end
 function Bait:capXPosition()
     local leftBound = 58;
     local rightBound = 422;
-    if self.pullIn then
+    if self.levMan:getCurLevel():getYPos() > self.winDim[2] * 0.2  then
         local m = 142 / (self.winDim[2] * 0.2);
         leftBound = 58 + m * (self.levMan:getCurLevel():getYPos() - self.winDim[2] * 0.23);
         rightBound = 422 - m * (self.levMan:getCurLevel():getYPos() - self.winDim[2] * 0.23);

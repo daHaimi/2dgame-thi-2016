@@ -36,7 +36,7 @@ local curLevel;
 local player;
 local swarmFactory;
 local levMan;
---local persistence;
+--local persistence
 
 --- The bootstrap of the game.
 -- This function is called exactly once at the beginning of the game.
@@ -45,19 +45,21 @@ function love.load()
     _G.data = require "data"; -- loading cycle on android requires data to be load on love.load()
     _persistence = Persistence();
     _persistence:resetGame();
-
+    
     local _, _, flags = love.window.getMode();
     love.graphics.setBackgroundColor(30, 180, 240);
     deviceDim = { love.window.getDesktopDimensions(flags.display) };
     --deviceDim = {1366, 768}; --for simulating the resulution of a other device
-    _G._persTable.winDim[1], _G._persTable.winDim[2], scaleFactor = getScaledDimension(deviceDim);
+    
 
-    _G._persTable.scaledDeviceDim = { _G._persTable.winDim[1] * scaleFactor, _G._persTable.winDim[2] * scaleFactor };
+    _G._persTable.winDim[1], _G._persTable.winDim[2], _G._persTable.scaleFactor = getScaledDimension(deviceDim);
+
+    _G._persTable.scaledDeviceDim = { _G._persTable.winDim[1] * _G._persTable.scaleFactor, 
+        _G._persTable.winDim[2] * _G._persTable.scaleFactor };
     if _G._persTable.scaledDeviceDim[1] < 480 then
         _G._persTable.scaledDeviceDim = _G._persTable.winDim;
-        scaleFactor = 1;
+        _G._persTable.scaleFactor = 1;
     end
-    print (_G._persTable.scaledDeviceDim[1] .. " " .. _G._persTable.scaledDeviceDim[2]);
     love.window.setMode(_G._persTable.scaledDeviceDim[1], _G._persTable.scaledDeviceDim[2], { centered });
     levMan = LevelManager();
 
@@ -86,12 +88,12 @@ end
 -- @ param deviceDim dimension of the divice
 function getScaledDimension(deviceDim)
     local resultDim = {};
+    local scaleFactor = 1;
     if deviceDim[1] > deviceDim[2] then
         scaleFactor = (0.9 * deviceDim[2]) / (480 * 16 / 9);
         resultDim[1] = 480;
         resultDim[2] = resultDim[1] * 16 / 9;
         if deviceDim[2] < resultDim[2] then
-            print (resultDim[2]);
             resultDim[2] = deviceDim[2] *0.9
         end
     else
@@ -106,12 +108,12 @@ end
 -- This function is called continuously by the love.run().
 function love.draw()
     if _gui:drawGame() then
-        love.graphics.scale(scaleFactor, scaleFactor);
+        love.graphics.scale(_G._persTable.scaleFactor, _G._persTable.scaleFactor);
 
         levMan:getCurLevel():draw(levMan:getCurPlayer());
         levMan:getCurSwarmFactory():draw();
         levMan:getCurLevel():drawEnviroment();
-        love.graphics.scale(1 / scaleFactor, 1 / scaleFactor);
+        love.graphics.scale(1 / _G._persTable.scaleFactor, 1 / _G._persTable.scaleFactor);
     end
 
     if levMan:getCurLevel() ~= nil then
@@ -179,7 +181,7 @@ function love.mousemoved(x, _)
             if x > _G._persTable.winDim[1] - levMan:getCurPlayer():getSize() then
                 levMan:getCurPlayer():setPosXMouse(_G._persTable.winDim[1] - levMan:getCurPlayer():getSize());
             else
-                levMan:getCurPlayer():setPosXMouse(x - (levMan:getCurPlayer():getSize() / 2));
+                levMan:getCurPlayer():setPosXMouse(x);
             end
         end
     end
@@ -198,8 +200,14 @@ function love.mousepressed(x, y, button)
     Loveframes.mousepressed(x, y, button);
 
     -- activate the god mode when you press the mouse
-    if love.mouse.isDown(1) and _gui:getCurrentState() == "InGame" then
+    if love.mouse.isDown(1) and _gui:getCurrentState() == "InGame" and
+    levMan:getCurLevel():getStartAnimationFinished() then
         levMan:getCurLevel():activateGodMode();
+    end
+    
+    if love.mouse.isDown(1) and _gui:getCurrentState() == "InGame" and
+    not levMan:getCurLevel():getStartAnimationRunning() then
+        levMan:getCurLevel():startStartAnimation();
     end
 
     -- pause game when when mouse is pressed (right button)

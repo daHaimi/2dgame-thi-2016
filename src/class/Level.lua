@@ -37,7 +37,6 @@ local Level = Class {
         self.gMMusicPlaying = false;
         self.enviromentPosition = 0;
         
-        
         self.levMan = levelManager;
         self.p_levelName = levelName;
         self.bg = love.graphics.newImage(backgroundPath);
@@ -57,6 +56,15 @@ local Level = Class {
         if _persTable.upgrades.mapBreakthrough2 == true then
             self.lowerBoarder = self.lowerBoarder + self.mapBreakthroughBonus2;
         end
+        
+        --Animation parameters
+        self.animationStart = false;
+        self.animationStartFinished = false;
+        self.failedStart = false;
+        self.hamsterYPos = 0;
+        self.animationStartPoint = self.winDim[2] / 2 - 300;
+        self.hamsterYPos = self.animationStartPoint
+        self.hamsterLockedXPos = 0;
 
         -- create light world
         self.lightWorld = love.light.newWorld();
@@ -83,25 +91,27 @@ local Level = Class {
 -- last time this function was called.
 -- @param bait The bait object, which stands for the user.
 function Level:update(dt, bait)
+    self.moved = 0;
     --set the direction in relation of the yPosition
     if self.posY <= self.lowerBoarder then
         self:switchToPhase2();
     elseif self.posY >= (self.winDim[2] * 0.5) and self.direction == -1 then
         self.direction = 0;
+        self.animationEnd = true;
         self.levelFinished = 1;
         self:payPlayer();
     end
 
     --set the movement in relation of the direction
-    self.moved = 0;
-    if self.direction == 1 then
+    if not self.animationStartFinished  then
+        self.moved = 0;
+    elseif self.direction == 1 then
         self.moved = math.ceil(dt * bait.speed);
-    end
-    if self.direction == -1 then
+    elseif self.direction == -1 then
         self.moved = -math.ceil(dt * bait.speed);
     end
 
-    --do the movement
+    --do the ingame movement
     if not (FishableObject == nil) then
         FishableObject:setYMovement(self.moved);
     end
@@ -110,6 +120,30 @@ function Level:update(dt, bait)
 
     self:checkGodMode();
     bait:update(dt);
+    
+    --do the animation movement
+    if self.animationStart then
+        if  self.hamsterLockedXPos < 120 and self.hamsterLockedXPos > 65 or 
+            self.hamsterLockedXPos < 355 and self.hamsterLockedXPos > 300 then
+            if self.hamsterYPos < _G._persTable.winDim[2] * 0.5 - 230 then
+                self.hamsterYPos = self.hamsterYPos + 0.5 * math.ceil(dt * bait.speed);
+                self.failedStart = true;
+            end
+        else
+            if self.hamsterYPos < self.winDim[2] * 0.4 then
+                self.hamsterYPos = self.hamsterYPos + 0.5 * math.ceil(dt * bait.speed);
+                if self.hamsterLockedXPos < 130 or self.hamsterLockedXPos > 286 then
+                    self.failedStart = true;
+                end
+            else
+                if self.hamsterLockedXPos > 130 and self.hamsterLockedXPos < 286 then
+                    self.animationStartFinished = true;
+                end
+            end
+        end
+    end
+    self.hamsterYPos = self.hamsterYPos + self.moved;
+    self.animationStartPoint = self.animationStartPoint - self:getMoved();
 
     --Update music
     if self.godModeActive == 1 and not self.gMMusicPlaying then
@@ -121,6 +155,7 @@ function Level:update(dt, bait)
     end
     self.baitLight.setPosition(self.posY or 0, self.posX or 0);
     self.lightWorld:update();
+    
 end
 
 --- when the bait hit a object or the boarder is reached, start phase 2
@@ -143,10 +178,14 @@ end
 
 --- draws the enviroment like borders
 function Level:drawEnviroment()
-    topBackground = love.graphics.newImage("assets/toilet_bg.png");
-    borderLeft = love.graphics.newImage("assets/left.png");
-    borderRight = love.graphics.newImage("assets/right.png");
-    toilet = love.graphics.newImage("assets/toilet.png");
+    local topBackground = love.graphics.newImage("assets/toilet_bg.png");
+    local borderLeft = love.graphics.newImage("assets/left.png");
+    local borderRight = love.graphics.newImage("assets/right.png");
+    local toilet = love.graphics.newImage("assets/toilet.png");
+    local hamster = love.graphics.newImage("assets/hamster_noLine.png");
+    local line = love.graphics.newImage("assets/line.png");
+    local toiletLowerHalf = love.graphics.newImage("assets/toilet_LowerHalf.png");
+    local toiletBowl = love.graphics.newImage("assets/toilet_bowl.png");
 
     self.enviromentPosition = self.enviromentPosition - self:getMoved();
 
@@ -165,7 +204,27 @@ function Level:drawEnviroment()
     love.graphics.draw(topBackground, 0, self.posY - 474);
     love.graphics.draw(topBackground, 0, self.posY - 375);
     love.graphics.draw(toilet, 0, self.posY - 375);
+    
+    --animation
+    if not self.animationStart then
+        love.graphics.draw(hamster, self.levMan:getCurPlayer():getPosXMouse() - 32, self.hamsterYPos);
+    else
+        if self.hamsterYPos < self.animationStartPoint + 150 or self.failedStart then
+            love.graphics.draw(hamster, self.hamsterLockedXPos, self.hamsterYPos);
+        end
+        for i = 9, self.hamsterYPos - (self.winDim[2] / 2 - 300), 9 do
+            if i < 150 then
+                love.graphics.draw(line, self.hamsterLockedXPos + 30, self.animationStartPoint + i);
+            end
+        end
+    end
 
+    if self.failedStart then
+        love.graphics.draw(toiletBowl, 0, self.posY - 153);
+    else
+        love.graphics.draw(toiletLowerHalf, 0, self.posY - 180);
+    end
+    
     self.lightWorld.drawShadow();
 end
 
@@ -402,6 +461,20 @@ end
 -- @return Returns the name/type of the level.
 function Level:getLevelName()
     return self.p_levelName;
+end
+
+--- Returns true if a animation for the start or the end of the level is running
+function Level:getStartAnimationRunning()
+    return self.animationStart and not self.animationStartFinished;
+end
+
+function Level:getStartAnimationFinished()
+    return self.animationStartFinished;
+end
+
+function Level:startStartAnimation()
+    self.animationStart = true;
+    self.hamsterLockedXPos = self.levMan:getCurPlayer():getPosXMouse() - 32;
 end
 
 return Level;

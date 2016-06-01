@@ -18,7 +18,9 @@ _G.levelTestStub = function()
 
     _G.levMan = {
         curLevel = nil;
-        curPlayer = nil;
+        curPlayer = {
+            getPosXMouse = function (...) return 50 end;
+        };
         curSwarmFac = nil;
         getLevelPropMapByName = function(...) return {
             direction = nil;
@@ -342,6 +344,26 @@ describe("Test unit test suite", function()
     it("Testing drawEnviroment", function()
         local loveMock = mock(_G.love, true);
         locInstance:drawEnviroment();
-        assert.spy(loveMock.graphics.draw).was.called(15);
+        assert.spy(loveMock.graphics.draw).was.called(17);
     end)
+    
+    it("Testing getStartAnimationRunning", function()
+        locInstance.animationStart = true;
+        locInstance.animationStartFinished = false;
+        assert.are.same(true, locInstance:getStartAnimationRunning());
+    end)
+
+    it("Testing getStartAnimationFinished", function()
+        locInstance.animationStartFinished = true;
+        assert.are.same(true, locInstance:getStartAnimationFinished());
+    end)
+
+    it("Testing startStartAnimation", function()
+        locInstance.animationStart = false;
+        locInstance:startStartAnimation();
+        assert.are.same(true, locInstance.animationStart);
+    end)
+
+
+
 end)
