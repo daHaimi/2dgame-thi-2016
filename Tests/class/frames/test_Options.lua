@@ -68,6 +68,43 @@ describe("Unit test for Options.lua", function()
         assert.spy(locInstance.loadValuesInPersTable).was.called(1);
     end)
 
+    it("Testing Constructor", function()
+        local myInstance = testClass();
+        locInstance.elementsOnFrame = {};
+        myInstance.elementsOnFrame = {};
+        assert.are.same(locInstance, myInstance);
+    end)
+
+it("Testing Constructor", function()
+        _G._persTable = {
+            config = {
+                bgm = 50;
+                music = 50;
+            },
+            scaledDeviceDim = {640, 950};
+        };
+        locInstance = testClass();
+        local myInstance = testClass();
+        locInstance.elementsOnFrame = {};
+        myInstance.elementsOnFrame = {};
+        assert.are.same(locInstance, myInstance);
+    end)
+
+it("Testing Constructor", function()
+        _G._persTable = {
+            config = {
+                bgm = 50;
+                music = 50;
+            },
+            scaledDeviceDim = {720, 1024};
+        };
+        locInstance = testClass();
+        local myInstance = testClass();
+        locInstance.elementsOnFrame = {};
+        myInstance.elementsOnFrame = {};
+        assert.are.same(locInstance, myInstance);
+    end)
+
     it("Testing loadValuesInPersTable function", function()
         _persTable.config.bgm = 0;
         _persTable.config.music = 0;

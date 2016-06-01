@@ -44,6 +44,41 @@ describe("Unit test for MainMenu.lua", function()
         locInstance = testClass();
     end)
 
+    it("Testing Constructor", function()
+        local myInstance = testClass();
+        locInstance.elementsOnFrame = {};
+        myInstance.elementsOnFrame = {};
+        assert.are.same(locInstance, myInstance);
+    end)
+
+it("Testing Constructor", function()
+        _G._persTable = {
+            config = {
+                language = "english";
+            },
+            scaledDeviceDim = {640, 950};
+        };
+        locInstance = testClass();
+        local myInstance = testClass();
+        locInstance.elementsOnFrame = {};
+        myInstance.elementsOnFrame = {};
+        assert.are.same(locInstance, myInstance);
+    end)
+
+it("Testing Constructor", function()
+        _G._persTable = {
+            config = {
+                language = "english";
+            },
+            scaledDeviceDim = {720, 1024};
+        };
+        locInstance = testClass();
+        local myInstance = testClass();
+        locInstance.elementsOnFrame = {};
+        myInstance.elementsOnFrame = {};
+        assert.are.same(locInstance, myInstance);
+    end)
+
     it("Testing create function", function()
         _G._gui = {
             getFrames = function(...) return{}; end;
