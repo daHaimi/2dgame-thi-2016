@@ -118,6 +118,7 @@ end
 
 ---called in the "fly in" state 
 function Pause:appear()
+    love.mouse.setVisible(true);
     self.frame:appear(self.elementsOnFrame);
 end
 
