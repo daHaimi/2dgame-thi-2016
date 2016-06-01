@@ -20,6 +20,7 @@ local fakeElement = Class {
         self.xScale = nil;
         self.yScale = nil;
         self.calledRemove = false;
+        self.movedToTop = false;
         
         --slider
         self.min = nil;
@@ -101,6 +102,10 @@ end
 
 function fakeElement:Remove()
     self.calledRemove = true;
+end
+
+function fakeElement:MoveToTop()
+    self.movedToTop = true;
 end
 
 function fakeElement:SetLinksEnabled(...)

@@ -72,9 +72,9 @@ function Chart:create()
     self.button_down:SizeToImage();
     self.button_down:SetText("");
     
-    self.markFrame = Loveframes.Create("image");
-    self.markFrame:SetImage(self.directory .. "markFrame.png");
-    self.markFrame:SetVisible(false);
+    self.p_markFrame = Loveframes.Create("image");
+    self.p_markFrame:SetImage(self.directory .. "markFrame.png");
+    self.p_markFrame:SetVisible(false);
     
     self.textField = TextField(self.width - 50, self.directory);
     
@@ -92,7 +92,7 @@ end
 function Chart:scrollUp()
     if (self.p_toprow > 0) then
         self.p_toprow = self.p_toprow - 1;
-        self:drawChart(true);
+        self:drawChart();
         self:resetMarkedFrame();
     end
 end
@@ -101,7 +101,7 @@ end
 function Chart:scrollDown()
     if self.p_toprow + 3 < self.p_row then
         self.p_toprow = self.p_toprow + 1;
-        self:drawChart(true);
+        self:drawChart();
         self:resetMarkedFrame();
     end
 end
@@ -113,11 +113,11 @@ end
 
 ---reset the markedFrame visible to false
 function Chart:resetMarkedFrame()
-    self.markFrame:SetVisible(false);
+    self.p_markFrame:SetVisible(false);
 end
 
 ---draws the elements shown in the table
-function Chart:drawChart(visible)
+function Chart:drawChart()
     --clear
     for k, v in pairs(self.p_elementsOnChart) do
         v:SetVisible(false);
@@ -125,7 +125,7 @@ function Chart:drawChart(visible)
     --draw new elements
     for var1 = 1 + (self.p_column * self.p_toprow), 9 + (self.p_column * self.p_toprow) do
         if self.p_elementsOnChart[var1] ~= nil then
-            self.p_elementsOnChart[var1]:SetVisible(visible);
+            self.p_elementsOnChart[var1]:SetVisible(true);
         end
     end
     self:setPosOfKlickableElements()
@@ -157,17 +157,17 @@ end
 ---Set the visible of all elements
 -- @parm visible: true or false
 function Chart:SetVisible(visible)
-    self.button_up:SetVisible(visible);--:MoveToTop();
-    self.button_down:SetVisible(visible);--:MoveToTop();
+    self.button_up:SetVisible(visible);
+    self.button_down:SetVisible(visible);
     self.textField:SetVisible(visible);
     if visible then
-        self:drawChart(visible);
+        self:drawChart();
     else
         for k, v in pairs(self.p_elementsOnChart) do
             v:SetVisible(visible);
         end
     end
-    self.markFrame:SetVisible(false);
+    self.p_markFrame:SetVisible(false);
 end
 
 ---Function not conform to CC/ implements an interface
@@ -175,15 +175,15 @@ end
 -- @parm x: x axis position
 -- @parm y: y axis position
 function Chart:SetPos(x, y)
-    local buttonXPos = (_G._persTable.scaledDeviceDim[1] - self.width) /2 + self.width * 0.16
+    local buttonXPos = (_G._persTable.scaledDeviceDim[1] - self.width) /2 + self.width * 0.16;
     self.p_xPos = (_G._persTable.scaledDeviceDim[1] - self.klickableSize * self.p_column) / 2;
     self.p_yPos = y;
     self.button_up:SetPos(buttonXPos, y);
     self.button_down:SetPos(buttonXPos,y + math.min(self.p_row, 3) *self.klickableSize + self.buttonHeight + self.buttonOffset);
     self:setPosOfKlickableElements();
-    self.textField:SetPos(x, y + self.height * 0.68);
+    self.textField:SetPos(x, math.ceil(y + self.height * 0.68));
     if self.p_markedElement ~= nil then
-        self.markFrame:SetPos(self.p_markedElement.object:GetX(), self.p_markedElement.object:GetY());
+        self.p_markFrame:SetPos(self.p_markedElement.object:GetX(), self.p_markedElement.object:GetY());
     end
 end
 
@@ -191,9 +191,9 @@ end
 -- @parm element: selected element
 function Chart:markElement(element)
     local x, y = element.object:GetPos();
-    self.markFrame:SetPos(x, y);
-    self.markFrame:SetVisible(true);
-    self.markFrame:MoveToTop();
+    self.p_markFrame:SetPos(x, y);
+    self.p_markFrame:SetVisible(true);
+    self.p_markFrame:MoveToTop();
     self.p_markedElement = element;
     if element.price ~= nil then
         self.textField:changeText(element.name, element.description, element.price);
