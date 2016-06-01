@@ -247,7 +247,7 @@ end
 --- Try to activate the god Mode.
 -- @return When the god mode was successfully activated it returns 1 otherwise 0.
 function Level:activateGodMode()
-    if _G._persTable.upgrades.godMode == true and self.godModeFuel > 0
+    if (_G._persTable.upgrades.godMode == 1 or true) and self.godModeFuel > 0
             and self.godModeActive == 0 and self.direction == 1 then
         self.godModeActive = 1;
         return 1;
@@ -256,6 +256,7 @@ function Level:activateGodMode()
         self.godModeFuel = 0; -- remove negativ fuel values
         return 0;
     end
+    
 end
 
 --- Deactivates the god mode.

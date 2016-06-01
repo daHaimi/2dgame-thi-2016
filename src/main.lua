@@ -192,6 +192,10 @@ end
 -- @param y The mouse position on the y-axis.
 -- @param button The pressed mousebutton.
 function love.mousepressed(x, y, button)
+    -- activate the god mode when you press the mouse
+    if love.mouse.isDown(1) and _gui:getCurrentState() == "InGame" then
+        levMan:getCurLevel():activateGodMode();
+    end
     --[[Loveframes needs 'l' to detect the left mousebutton.
     It's necessary to convert the received "1" value]] --
     if button == 1 then
@@ -199,10 +203,7 @@ function love.mousepressed(x, y, button)
     end
     Loveframes.mousepressed(x, y, button);
 
-    -- activate the god mode when you press the mouse
-    if love.mouse.isDown(1) and _gui:getCurrentState() == "InGame" then
-        levMan:getCurLevel():activateGodMode();
-    end
+    
 
     -- pause game when when mouse is pressed (right button)
     if love.mouse.isDown(2) and _gui:drawGame() then
