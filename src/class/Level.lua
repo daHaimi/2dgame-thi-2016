@@ -26,7 +26,6 @@ local Level = Class {
         self.mapBreakthroughBonus1 = -1000;
         self.mapBreakthroughBonus2 = -1000;
         -- list for objekts caught at this round
-        self.caughtThisRound = {};
         self.oldPosY = _G.math.inf;
         self.godModeFuel = 800;
         self.shortGMDist = 0;
@@ -268,7 +267,7 @@ end
 -- @return Returns the value of all fished objects.
 function Level:calcFishedValue()
     local fishedVal = 0;
-    for name, amount in pairs(self.caughtThisRound) do
+    for name, amount in pairs(_G._tmpTable.caughtThisRound) do
         if amount > 0 then
             fishedVal = fishedVal + self.levMan:getCurSwarmFactory():getFishableObjects()[name].value * amount;
         end
@@ -359,10 +358,10 @@ end
 -- @param name The name of the fishable object.
 function Level:addToCaught(name)
     -- add the first
-    if self.caughtThisRound[name] == nil then
-        self.caughtThisRound[name] = 0;
+    if _G._tmpTable.caughtThisRound[name] == nil then
+        _G._tmpTable.caughtThisRound[name] = 0;
     end;
-    self.caughtThisRound[name] = self.caughtThisRound[name] + 1;
+    _G._tmpTable.caughtThisRound[name] = _G._tmpTable.caughtThisRound[name] + 1;
 end
 
 --- Call this function to make known that the player has stopped the god mode
@@ -376,9 +375,9 @@ function Level:printResult()
     local ypos = 120;
     love.graphics.setColor(0, 0, 0, 255);
     love.graphics.print("Caught objects in this round:", xpos, ypos);
-    if next(self.caughtThisRound) ~= nil then
+    if next(_G._tmpTable.caughtThisRound) ~= nil then
         local string;
-        for k, v in pairs(self.caughtThisRound) do
+        for k, v in pairs(_G._tmpTable.caughtThisRound) do
             ypos = ypos + 15;
             string = k .. ": " .. v .. " x " ..
                     self.levMan:getCurSwarmFactory():getFishableObjects()[k].value .. " Coins";
