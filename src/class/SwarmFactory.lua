@@ -7,7 +7,7 @@ local SwarmFactory = Class {
     -- @param data The path and name of the data file
     -- @param levelManager Reference to the level manager object
     init = function(self, data, levelManager)
-        --initializing of the member variables
+        --initializing of the member variables. Please add all new variables in the destructor!
         self.levMan = nil;
         self.maxDepth = -5000;
         self.currentSwarm = 1;
@@ -37,6 +37,15 @@ local SwarmFactory = Class {
         end
     end;
 };
+
+function SwarmFactory:destructSF()
+    self.levMan = nil;
+    self.maxDepth = nil;
+    self.currentSwarm = nil;
+    self.fishableObjects = nil;
+    self.createdFishables = nil;
+    self.swarmsSewer = nil;
+end
 
 --- Draws all fishables
 function SwarmFactory:draw()

@@ -63,7 +63,26 @@ end
 --- Creates a new level with the same leveltype as the current level.
 -- @return Returns a reference to the created level object.
 function LevelManager:replayLevel()
-    return self:newLevel(self:getLevelPropMapByName(self.curLevel:getLevelName()), self.p_curDataRef);
+    local currentLevelType = self.curLevel:getLevelName();
+    
+    if self.curSwarmFac ~= nil then
+        self.curSwarmFac:destructSF();
+        self.curSwarmFac = nil;
+    end
+
+    if self.curPlayer ~= nil then
+        self.curPlayer:destructBait();
+        self.curPlayer = nil;
+    end
+
+    if self.curLevel ~= nil then
+        self.curLevel:destructLevel();
+        self.curLevel = nil;
+    end
+    
+    --collectgarbage();
+    
+    return self:newLevel(self:getLevelPropMapByName(currentLevelType), self.p_curDataRef);
 end
 
 --- Get the the current level object.

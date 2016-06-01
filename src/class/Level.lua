@@ -76,6 +76,32 @@ local Level = Class {
     end
 }
 
+function Level:destructLevel()
+    self.levMan = nil;
+    self.p_levelName = nil;
+    self.levelFinished = nil;
+    self.gotPayed = nil;
+    self.roundValue = nil;
+    self.posY = nil;
+    self.direction = nil;
+    self.bg = nil;
+    self.bgq = nil;
+    self.winDim = nil;
+    self.lowerBoarder = nil;
+    self.upperBoarder = nil;
+    self.mapBreakthroughBonus1 = nil;
+    self.mapBreakthroughBonus2 = nil;
+    self.caughtThisRound = nil;
+    self.oldPosY = nil;
+    self.godModeFuel = nil;
+    self.shortGMDist = nil;
+    self.godModeActive = nil;
+    self.moved = nil;
+    self.time = nil;
+    self.gMMusicPlaying = nil;
+    self.enviromentPosition = nil;
+end
+
 --- Update the game state. Called every frame.
 -- @param dt Delta time is the amount of seconds since the
 -- last time this function was called.
