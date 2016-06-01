@@ -85,7 +85,7 @@ function love.load()
     _G.testScale = scaleFactor;
     _G._gui = Gui();
     _gui:setLevelManager(levMan);
-    _gui:tempTextOutput();
+    --_gui:tempTextOutput();
     _gui:start();
 end
 
@@ -113,12 +113,12 @@ end
 -- This function is called continuously by the love.run().
 function love.draw()
     if _gui:drawGame() then
-        love.graphics.scale(_G._persTable.scaleFactor, _G._persTable.scaleFactor);
+        love.graphics.scale(scaleFactor, scaleFactor);
 
         levMan:getCurLevel():draw(levMan:getCurPlayer());
         levMan:getCurSwarmFactory():draw();
         levMan:getCurLevel():drawEnviroment();
-        love.graphics.scale(1 / _G._persTable.scaleFactor, 1 / _G._persTable.scaleFactor);
+        love.graphics.scale(1 / scaleFactor, 1 / scaleFactor);
     end
 
     if levMan:getCurLevel() ~= nil then
