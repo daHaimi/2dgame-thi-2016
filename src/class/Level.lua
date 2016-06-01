@@ -101,7 +101,7 @@ local Level = Class {
         self.toilet = love.graphics.newImage("assets/toilet.png");
         self.hamster = love.graphics.newImage("assets/hamster_noLine.png");
         self.line = love.graphics.newImage("assets/line.png");
-        self.toiletLowerHalf = love.graphics.newImage("assets/toilet_LowerHalf.png");
+        self.toiletLowerHalf = love.graphics.newImage("assets/toilet_lowerHalf.png");
         self.toiletBowl = love.graphics.newImage("assets/toilet_bowl.png");
     end
 }
@@ -122,7 +122,6 @@ function Level:destructLevel()
     self.upperBoarder = nil;
     self.mapBreakthroughBonus1 = nil;
     self.mapBreakthroughBonus2 = nil;
-    self.caughtThisRound = nil;
     self.oldPosY = nil;
     self.godModeFuel = nil;
     self.shortGMDist = nil;
@@ -346,7 +345,7 @@ end
 --- Try to activate the god Mode.
 -- @return When the god mode was successfully activated it returns 1 otherwise 0.
 function Level:activateGodMode()
-    if (_G._persTable.upgrades.godMode == 1 or true) and self.godModeFuel > 0
+    if _G._persTable.upgrades.godMode == 1 and self.godModeFuel > 0
     and self.godModeActive == 0 
     and self.direction == self.levMan:getLevelPropMapByName(self.p_levelName).direction then
         self.godModeActive = 1;

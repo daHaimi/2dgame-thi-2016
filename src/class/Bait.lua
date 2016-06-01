@@ -240,7 +240,7 @@ end
 
 --- draws the line of the Hamster
 function Bait:drawLine()
-    local image = love.graphics.newImage("assets/Line.png");
+    local image = love.graphics.newImage("assets/line.png");
     local angle = 0;
     local length = math.sqrt (self.xPos * self.xPos + self.yPos * self.yPos);
     

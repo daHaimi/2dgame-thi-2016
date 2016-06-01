@@ -25,16 +25,21 @@ describe("Unit test for Score.lua", function()
         _G._tmpTable = {
             earnedMoney = 0;
         }
-        
         _G.Frame = function(...) return Frame; end;
         locInstance = testClass();
     end)
 
     it("Testing create function", function()
+        local table = {
+            replayLevel = function(...) end;
+        }
         _G._gui = {
             getFrames = function(...) return{}; end;
             changeFrame = function(...) end;
+            getLevelManager = function(...) return table end;
         };
+        
+        stub(table, "replayLevel");
         
         locInstance:create();
         
@@ -42,6 +47,7 @@ describe("Unit test for Score.lua", function()
         locInstance.elementsOnFrame.button_retry.object.OnClick();
         locInstance.elementsOnFrame.button_backToMenu.object.OnClick();
         assert.spy(_gui.changeFrame).was.called(2);
+        assert.stub(table.replayLevel).was.called();
     end)
 
     it("Testing draw function", function()

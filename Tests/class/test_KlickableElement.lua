@@ -56,6 +56,6 @@ describe("Unit test for KlickableElement.lua", function()
         locInstance:disable();
         assert.are.equal(locInstance.enable, false);
         assert.stub(locInstance.object.SetImage).was.called();
-        assert.are.equal(_G._persTable.upgrades[locInstance.nameOnPersTable], 1);
+        assert.are.equal(_G._persTable.upgrades[locInstance.nameOnPersTable], true);
     end)
 end)

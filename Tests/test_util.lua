@@ -45,6 +45,9 @@ _G.testUtilStub = function()
     _G._gui = {
         drawGame = function(...) return true end;
     };
+    _G._tmpTable = {
+        caughtThisRound = {};
+    };
     _G._persTable = {
         upgrades = {
             godMode = 1;
