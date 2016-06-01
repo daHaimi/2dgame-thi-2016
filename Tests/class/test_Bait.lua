@@ -61,7 +61,15 @@ describe("Unit test for Bait.lua", function()
             getCurPlayer = function(...) return _G.levMan.curPlayer end,
             getCurLevel = function(...) return _G.levMan.curLevel end
         }
-
+        
+        _G._tmpTable = {
+            caughtThisRound = {};
+            earnedMoney = nil;
+            currentDepth = nil;
+            roundFuel = 800;
+            unlockedAchievements = {};
+        };
+        
         _G.love = {
             mouse = {
                 setPosition = function(...) end
@@ -98,7 +106,6 @@ describe("Unit test for Bait.lua", function()
             };
         };
         _G._gui.getFrames = function(...) return _G._gui.myFrames; end;
-
         locInstance = testClass(locWinDim, levMan);
         locInstance.image = locImageStub;
     end)
