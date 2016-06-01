@@ -11,6 +11,12 @@ describe("Unit test for Score.lua", function()
 
 
     before_each(function()
+        _G.love = {
+            mouse = {
+                setVisible = function(...) end;
+            };
+        };
+        
         _G.Loveframes = {
             Create = function(typeName) 
                 return fakeElement(typeName);

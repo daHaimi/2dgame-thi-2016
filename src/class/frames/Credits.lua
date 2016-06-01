@@ -101,17 +101,18 @@ end
 
 ---called to "delete" this frame
 function Credits:clear()
-    self.frame:clear(self.elementsOnFrame)
+    self.frame:clear(self.elementsOnFrame);
 end
 
 ---called in the "fly in" state 
 function Credits:appear()
-    self.frame:appear(self.elementsOnFrame)
+    love.mouse.setVisible(true);
+    self.frame:appear(self.elementsOnFrame);
 end
 
 ---called in the "fly out" state
 function Credits:disappear()
-    self.frame:disappear(self.elementsOnFrame)
+    self.frame:disappear(self.elementsOnFrame);
 end
 
 ---return true if the frame is on position /fly in move is finished

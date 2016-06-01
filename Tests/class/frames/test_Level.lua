@@ -31,7 +31,11 @@ describe("Unit test for Level.lua", function()
             graphics = {
                 newImage = function (...) end;
             };
+            mouse = {
+                setVisible = function(...) end;
+            };
         };
+
         _G._persTable = {
             scaledDeviceDim = {
                 [1] = 500;

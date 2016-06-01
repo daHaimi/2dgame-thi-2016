@@ -106,17 +106,18 @@ end
 
 ---called to "delete" this frame
 function Achievements:clear()
-    self.frame:clear(self.elementsOnFrame)
+    self.frame:clear(self.elementsOnFrame);
 end
 
 ---called in the "fly in" state 
 function Achievements:appear()
-    self.frame:appear(self.elementsOnFrame)
+    love.mouse.setVisible(true);
+    self.frame:appear(self.elementsOnFrame);
 end
 
 ---called in the "fly out" state
 function Achievements:disappear()
-    self.frame:disappear(self.elementsOnFrame)
+    self.frame:disappear(self.elementsOnFrame);
 end
 
 ---return true if the frame is on position /fly in move is finished
