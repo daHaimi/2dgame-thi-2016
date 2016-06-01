@@ -42,6 +42,32 @@ describe("Unit test for Chart.lua", function()
         assert.are.same(locInstance, myInstance);
     end)
 
+it("Testing Constructor", function()
+        _G._persTable = {
+            scaledDeviceDim = {640, 950};
+        };
+        locInstance = testClass();
+        local myInstance = testClass();
+        myInstance.button_up.OnClick = {"onClick function"};
+        myInstance.button_down.OnClick = {"onClick function"};
+        locInstance.button_up.OnClick = {"onClick function"};
+        locInstance.button_down.OnClick = {"onClick function"};
+        assert.are.same(locInstance, myInstance);
+    end)
+
+it("Testing Constructor", function()
+        _G._persTable = {
+            scaledDeviceDim = {720, 1024};
+        };
+        locInstance = testClass();
+        local myInstance = testClass();
+        myInstance.button_up.OnClick = {"onClick function"};
+        myInstance.button_down.OnClick = {"onClick function"};
+        locInstance.button_up.OnClick = {"onClick function"};
+        locInstance.button_down.OnClick = {"onClick function"};
+        assert.are.same(locInstance, myInstance);
+    end)
+
     it("Testing getAllElements function", function()
         locInstance.p_elementsOnChart = "test";
         assert.are.equal(locInstance:getAllElements(), "test");

@@ -50,6 +50,27 @@ describe("Unit test for Credits.lua", function()
         locInstance.elementsOnFrame.button_back.object.OnClick = {};
         assert.are.same(locInstance, myInstance);
     end)
+it("Testing Constructor", function()
+        _G._persTable = {
+            scaledDeviceDim = {640, 950};
+        };
+        locInstance = testClass();
+        local myInstance = testClass();
+        myInstance.elementsOnFrame.button_back.object.OnClick = {};
+        locInstance.elementsOnFrame.button_back.object.OnClick = {};
+        assert.are.same(locInstance, myInstance);
+    end)
+
+it("Testing Constructor", function()
+        _G._persTable = {
+            scaledDeviceDim = {720, 1024};
+        };
+        locInstance = testClass();
+        local myInstance = testClass();
+        myInstance.elementsOnFrame.button_back.object.OnClick = {};
+        locInstance.elementsOnFrame.button_back.object.OnClick = {};
+        assert.are.same(locInstance, myInstance);
+    end)
 
     it("Testing draw function", function()
         stub(locInstance.frame, "draw");
