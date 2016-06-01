@@ -10,7 +10,7 @@ _G.math.inf = 1 / 0;
 -- @param direction The y direction (-1 means up and 1 means down)
 -- @param swarmFactory The swarm factory
 local Level = Class {
-    init = function(self, levelName, backgroundPath, winDim, direction, levelManager)
+    init = function(self, levelName, backgroundPath, winDim, _, levelManager)
         -- Member variables
         self.levMan = nil;
         self.p_levelName = "";
@@ -36,8 +36,8 @@ local Level = Class {
         self.time = nil; -- day/night
         self.gMMusicPlaying = false;
         self.enviromentPosition = 0;
-        
-        
+
+
         self.levMan = levelManager;
         self.p_levelName = levelName;
         self.bg = love.graphics.newImage(backgroundPath);
@@ -148,10 +148,10 @@ end
 
 --- draws the enviroment like borders
 function Level:drawEnviroment()
-    topBackground = love.graphics.newImage("assets/toilet_bg.png");
-    borderLeft = love.graphics.newImage("assets/left.png");
-    borderRight = love.graphics.newImage("assets/right.png");
-    toilet = love.graphics.newImage("assets/toilet.png");
+    local topBackground = love.graphics.newImage("assets/toilet_bg.png");
+    local borderLeft = love.graphics.newImage("assets/left.png");
+    local borderRight = love.graphics.newImage("assets/right.png");
+    local toilet = love.graphics.newImage("assets/toilet.png");
 
     self.enviromentPosition = self.enviromentPosition - self:getMoved();
 
@@ -378,7 +378,7 @@ function Level:printResult()
     love.graphics.setColor(0, 0, 0, 255);
     love.graphics.print("Caught objects in this round:", xpos, ypos);
     if next(self.caughtThisRound) ~= nil then
-        local string = "";
+        local string;
         for k, v in pairs(self.caughtThisRound) do
             ypos = ypos + 15;
             string = k .. ": " .. v .. " x " ..
