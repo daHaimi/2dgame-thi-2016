@@ -215,7 +215,7 @@ function Level:drawEnviroment()
             love.graphics.draw(hamster, self.hamsterLockedXPos, self.hamsterYPos);
         end
         for i = 9, self.hamsterYPos - (self.winDim[2] / 2 - 300), 9 do
-            if i < 150 then
+            if i < 150  or self.failedStart then
                 love.graphics.draw(line, self.hamsterLockedXPos + 30, self.animationStartPoint + i);
             end
         end
