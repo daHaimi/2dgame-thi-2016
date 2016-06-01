@@ -19,6 +19,7 @@ _G.levelTestStub = function()
         earnedMoney = nil;
         currentDepth = nil;
         roundFuel = nil;
+        caughtThisRound  = {};
     };
     _G.levMan = {
         curLevel = nil;
@@ -87,8 +88,6 @@ describe("Test unit test suite", function()
         _G.levelTestStub();
 
         locInstance = testClass("sewers", "assets/testbg.png", { 512, 256 }, 1, _G.levMan);
-        locInstance.levMan = _G.levMan;
-        locInstance.caughtThisRound = {};
     end)
 
     it("Testing Constructor", function()
@@ -144,14 +143,14 @@ describe("Test unit test suite", function()
     it("Testing addToCaught", function()
         local name = "nemo";
         locInstance:addToCaught(name);
-        assert.are.same(locInstance.caughtThisRound.nemo, 1);
+        assert.are.same(_G._tmpTable.caughtThisRound[name], 1);
     end)
 
     it("Testing addToCaught twice to test IF", function()
         local name = "nemo";
         locInstance:addToCaught(name);
         locInstance:addToCaught(name); --- now it is not nil
-        assert.are.same(locInstance.caughtThisRound.nemo, 2);
+        assert.are.same(_G._tmpTable.caughtThisRound.nemo, 2);
     end)
 
     it("Testing addToCaught for two diffrent ", function()
@@ -159,8 +158,8 @@ describe("Test unit test suite", function()
         local name2 = "hans";
         locInstance:addToCaught(name1);
         locInstance:addToCaught(name2);
-        assert.are.same(locInstance.caughtThisRound.nemo, 1);
-        assert.are.same(locInstance.caughtThisRound.hans, 1);
+        assert.are.same(_G._tmpTable.caughtThisRound.nemo, 1);
+        assert.are.same(_G._tmpTable.caughtThisRound.hans, 1);
     end)
 
     it("Testing activateGodMode", function()
@@ -221,7 +220,7 @@ describe("Test unit test suite", function()
             end;
         };
 
-        locInstance.caughtThisRound = { ["turtle"] = 5, ["rat"] = 0, ["deadFish"] = 5, ["nemo"] = 3 };
+        _G._tmpTable.caughtThisRound = { ["turtle"] = 5, ["rat"] = 0, ["deadFish"] = 5, ["nemo"] = 3 };
         assert.are.same(locInstance:calcFishedValue(), 30);
     end)
 
@@ -247,8 +246,8 @@ describe("Test unit test suite", function()
     end)
 
     it("Testing printResult with caught objects", function()
-        locInstance.caughtThisRound["cat"] = 1;
-        locInstance.caughtThisRound["dog"] = 2;
+        _G._tmpTable.caughtThisRound["cat"] = 1;
+        _G._tmpTable.caughtThisRound["dog"] = 2;
         locInstance.levMan.curSwarmFac = {
             getFishableObjects = function() return { ["cat"] = { ["value"] = 10 }, ["dog"] = { ["value"] = 20 } }; end;
         };

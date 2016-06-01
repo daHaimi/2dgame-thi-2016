@@ -34,7 +34,6 @@ local Level = Class {
         self.time = nil; -- day/night
         self.gMMusicPlaying = false;
         self.enviromentPosition = 0;
-        self.caughtThisRound = {};
         
         self.levMan = levelManager;
         self.direction = direction;
@@ -112,7 +111,6 @@ function Level:destructLevel()
     self.upperBoarder = nil;
     self.mapBreakthroughBonus1 = nil;
     self.mapBreakthroughBonus2 = nil;
-    self.caughtThisRound = nil;
     self.oldPosY = nil;
     self.godModeFuel = nil;
     self.shortGMDist = nil;
