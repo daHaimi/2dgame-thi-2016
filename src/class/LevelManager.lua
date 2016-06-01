@@ -47,24 +47,6 @@ function LevelManager:newLevel(levelPropMap, swarmFactoryData)
         roundFuel = 800;
     }
     
-            
-    self.p_curDataRef = swarmFactoryData;
-    self.curLevel = Level(levelPropMap.levelName, levelPropMap.bgPath, _G._persTable.winDim, levelPropMap.direction, self);
-    self.curPlayer = Bait(_G._persTable.winDim, self);
-    self.curPlayer:checkUpgrades();
-    self.curSwarmFac = SwarmFactory(swarmFactoryData, self);
-    _gui:getFrames().inGame.elementsOnFrame.healthbar.object:resetHearts();
-    --print(self.curSwarmFac);
-    --print(self.curSwarmFac.createdFishables);
-    
-    return self.curLevel;
-end
-
---- Creates a new level with the same leveltype as the current level.
--- @return Returns a reference to the created level object.
-function LevelManager:replayLevel()
-    local currentLevelType = self.curLevel:getLevelName();
-    
     if self.curSwarmFac ~= nil then
         self.curSwarmFac:destructSF();
         self.curSwarmFac = nil;
@@ -80,7 +62,22 @@ function LevelManager:replayLevel()
         self.curLevel = nil;
     end
     
-    --collectgarbage();
+    collectgarbage("collect");
+    
+    self.p_curDataRef = swarmFactoryData;
+    self.curLevel = Level(levelPropMap.levelName, levelPropMap.bgPath, _G._persTable.winDim, levelPropMap.direction, self);
+    self.curPlayer = Bait(_G._persTable.winDim, self);
+    self.curPlayer:checkUpgrades();
+    self.curSwarmFac = SwarmFactory(swarmFactoryData, self);
+    _gui:getFrames().inGame.elementsOnFrame.healthbar.object:resetHearts();
+    
+    return self.curLevel;
+end
+
+--- Creates a new level with the same leveltype as the current level.
+-- @return Returns a reference to the created level object.
+function LevelManager:replayLevel()
+    local currentLevelType = self.curLevel:getLevelName();
     
     return self:newLevel(self:getLevelPropMapByName(currentLevelType), self.p_curDataRef);
 end
