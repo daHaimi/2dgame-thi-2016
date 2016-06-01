@@ -96,6 +96,7 @@ function Score:create()
     
     --onclick events for all buttons
     self.elementsOnFrame.button_retry.object.OnClick = function(object)
+        _gui:getLevelManager():replayLevel();
         _gui:changeFrame(_gui:getFrames().inGame);
     end
     
