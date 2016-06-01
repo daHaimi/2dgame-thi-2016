@@ -77,6 +77,7 @@ local Level = Class {
     end
 }
 
+--- Marks the member variables for the garbage collector
 function Level:destructLevel()
     self.levMan = nil;
     self.p_levelName = nil;

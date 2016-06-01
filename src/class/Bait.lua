@@ -45,6 +45,7 @@ local Bait = Class {
     end
 };
 
+--- Marks the member variables for the garbage collector
 function Bait:destructBait()
     self.levMan = nil;
     self.size = nil;

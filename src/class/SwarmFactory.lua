@@ -38,6 +38,7 @@ local SwarmFactory = Class {
     end;
 };
 
+--- Marks the member variables for the garbage collector
 function SwarmFactory:destructSF()
     self.levMan = nil;
     self.maxDepth = nil;
