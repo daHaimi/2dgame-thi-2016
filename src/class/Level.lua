@@ -1,5 +1,4 @@
 Class = require "lib.hump.class";
-require "lib/postshader"
 require "lib/light"
 
 _G.math.inf = 1 / 0;
@@ -36,7 +35,6 @@ local Level = Class {
         self.time = nil; -- day/night
         self.gMMusicPlaying = false;
         self.enviromentPosition = 0;
-
 
         self.levMan = levelManager;
         self.p_levelName = levelName;
