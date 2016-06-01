@@ -34,6 +34,7 @@ local Level = Class {
         self.time = nil; -- day/night
         self.gMMusicPlaying = false;
         self.enviromentPosition = 0;
+        self.caughtThisRound = {};
         
         self.levMan = levelManager;
         self.direction = direction;
@@ -90,7 +91,7 @@ local Level = Class {
         self.toilet = love.graphics.newImage("assets/toilet.png");
         self.hamster = love.graphics.newImage("assets/hamster_noLine.png");
         self.line = love.graphics.newImage("assets/line.png");
-        self.toiletLowerHalf = love.graphics.newImage("assets/toilet_LowerHalf.png");
+        self.toiletLowerHalf = love.graphics.newImage("assets/toilet_lowerHalf.png");
         self.toiletBowl = love.graphics.newImage("assets/toilet_bowl.png");
     end
 }
