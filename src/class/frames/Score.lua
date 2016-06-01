@@ -106,7 +106,7 @@ end
 
 ---shows the frame on screen
 function Score:draw()
-    self.elementsOnFrame.score.object:SetText(_G._tmptable.earnedMoney);
+    self.elementsOnFrame.score.object:SetText(_G._tmpTable.earnedMoney);
     self.frame:draw(self.elementsOnFrame);
 end
 

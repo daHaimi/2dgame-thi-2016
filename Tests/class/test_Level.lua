@@ -15,7 +15,7 @@ _G.levelTestStub = function()
         };
         phase = 1;
     };
-    _G._tmptable = {
+    _G._tmpTable = {
         earnedMoney = nil;
         currentDepth = nil;
         roundFuel = nil;

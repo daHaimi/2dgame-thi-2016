@@ -95,6 +95,10 @@ function fakeElement:SetScale(x, y)
     self.yScale = y;
 end
 
+function fakeElement:SetScaleX(x)
+    self.xScale = x;
+end
+
 function fakeElement:Remove()
     self.calledRemove = true;
 end
