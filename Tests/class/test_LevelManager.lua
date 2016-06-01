@@ -63,6 +63,7 @@ _G.testLevelManagerStub = function(...)
     _G.Bait = function(...) return { checkUpgrades = function(...) return 42; end }; end;
     _G.Level = function(...) return { 4, 5 }; end;
     _G.SwarmFactory = function(...) return { 3 }; end;
+    
 
     _G._persTable = {
         winDim = { 930, 523.125 };
@@ -103,6 +104,10 @@ describe("Unit test suite for the LevelManager class", function()
     end)
 
     it("Testing newLevel", function()
+        _G._tmptable = {
+            1, 2 , 3
+        };
+        
         local sewers = {
             levelName = "sewers";
             direction = 1;
@@ -121,9 +126,15 @@ describe("Unit test suite for the LevelManager class", function()
                 bgPath = "assets/testbg.png";
             }
         };
-        levMan.curLevel = { 445, 79862, getLevelName = function(...) return "sewers" end; };
-        levMan.curPlayer = { 2268, -45 };
-        levMan.curSwarmFac = { 33688 };
+        
+        _G._tmptable = {
+            1, 2 , 3
+        };
+        
+
+        levMan.curLevel = { 445, 79862, getLevelName = function(...) return "sewers" end, destructLevel = function(...) end; };
+        levMan.curPlayer = { 2268, -45, destructBait = function(...) end; };
+        levMan.curSwarmFac = { 33688, destructSF = function(...) end};
         levMan.p_curDataRef = { 66823 };
 
         levMan:replayLevel();

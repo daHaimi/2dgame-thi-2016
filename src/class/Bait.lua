@@ -44,8 +44,31 @@ local Bait = Class {
         self.posXMouse = (winDim[1] / 2) - (self.size / 2);
     end
 };
---- 
--- a function to check wich upgrades are active for the bait
+
+--- Marks the member variables for the garbage collector
+function Bait:destructBait()
+    self.levMan = nil;
+    self.size = nil;
+    self.speed = nil;
+    self.posXMouse = nil;
+    self.xPos = nil;
+    self.maxSpeedX = nil;
+    self.winDim = nil;
+    self.life = nil;
+    self.money = nil;
+    self.numberOfHits = nil;
+    self.hitFishable = nil;
+    self.caughtThisRound = nil;
+    self.sleepingPillDuration = nil;
+    self.deltaTime = nil;
+    self.modifier = nil;
+    self.goldenRuleLowerPoint = nil;
+    self.goldenRuleUpperPoint = nil;
+    self.image = nil;
+    self.pullIn = nil;
+end
+
+--- a function to check wich upgrades are active for the bait
 function Bait:checkUpgrades()
     -- Checks if more life upgrade is availible
     -- doesnt work if oneMoreLife isnt bought before twoMoreLife

@@ -36,6 +36,7 @@ local Level = Class {
         self.enviromentPosition = 0;
         
         self.levMan = levelManager;
+        self.direction = direction;
         self.p_levelName = levelName;
         self.bg = love.graphics.newImage(backgroundPath);
         if self.bg ~= nil then -- do not remove this if statement or busted will crash
@@ -93,6 +94,33 @@ local Level = Class {
         self.toiletBowl = love.graphics.newImage("assets/toilet_bowl.png");
     end
 }
+
+--- Marks the member variables for the garbage collector
+function Level:destructLevel()
+    self.levMan = nil;
+    self.p_levelName = nil;
+    self.levelFinished = nil;
+    self.gotPayed = nil;
+    self.roundValue = nil;
+    self.posY = nil;
+    self.direction = nil;
+    self.bg = nil;
+    self.bgq = nil;
+    self.winDim = nil;
+    self.lowerBoarder = nil;
+    self.upperBoarder = nil;
+    self.mapBreakthroughBonus1 = nil;
+    self.mapBreakthroughBonus2 = nil;
+    self.caughtThisRound = nil;
+    self.oldPosY = nil;
+    self.godModeFuel = nil;
+    self.shortGMDist = nil;
+    self.godModeActive = nil;
+    self.moved = nil;
+    self.time = nil;
+    self.gMMusicPlaying = nil;
+    self.enviromentPosition = nil;
+end
 
 --- Update the game state. Called every frame.
 -- @param dt Delta time is the amount of seconds since the
@@ -307,12 +335,12 @@ end
 -- @return When the god mode was successfully activated it returns 1 otherwise 0.
 function Level:activateGodMode()
     if (_G._persTable.upgrades.godMode == 1 or true) and self.godModeFuel > 0
-            and self.godModeActive == 0 and self.direction == 1 then
+    and self.godModeActive == 0 
+    and self.direction == self.levMan:getLevelPropMapByName(self.p_levelName).direction then
         self.godModeActive = 1;
         return 1;
     else
         self.godModeActive = 0;
-        self.godModeFuel = 0; -- remove negativ fuel values
         return 0;
     end
     

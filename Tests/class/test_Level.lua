@@ -27,7 +27,7 @@ _G.levelTestStub = function()
         };
         curSwarmFac = nil;
         getLevelPropMapByName = function(...) return {
-            direction = nil;
+            direction = 1;
         }
         end;
         getCurSwarmFactory = function(...) return _G.levMan.curSwarmFac end;
@@ -86,25 +86,24 @@ describe("Test unit test suite", function()
 
         _G.levelTestStub();
 
-        locInstance = testClass("sewers", "assets/testbg.png", { 512, 256 }, 1);
-
-        _G._tmpTable.caughtThisRound = {};
-        testClass.levMan = _G.levMan;
+        locInstance = testClass("sewers", "assets/testbg.png", { 512, 256 }, 1, _G.levMan);
+        locInstance.levMan = _G.levMan;
+        locInstance.caughtThisRound = {};
     end)
 
     it("Testing Constructor", function()
-        local myInstance = testClass("sewers", "assets/testbg.png", { 512, 256 }, 1);
+        local myInstance = testClass("sewers", "assets/testbg.png", { 512, 256 }, 1, _G.levMan);
         local lb = myInstance.lowerBoarder;
         local mbb1 = myInstance.mapBreakthroughBonus1;
         local mbb2 = myInstance.mapBreakthroughBonus2;
         assert.are.same(locInstance, myInstance);
 
         _persTable.upgrades.mapBreakthrough1 = true;
-        local myInstance = testClass("sewers", "assets/testbg.png", { 512, 256 }, 1);
+        local myInstance = testClass("sewers", "assets/testbg.png", { 512, 256 }, 1, _G.levMan);
         assert.are.same(lb + mbb1, myInstance.lowerBoarder);
 
         _persTable.upgrades.mapBreakthrough2 = true;
-        local myInstance = testClass("sewers", "assets/testbg.png", { 512, 256 }, 1);
+        local myInstance = testClass("sewers", "assets/testbg.png", { 512, 256 }, 1, _G.levMan);
         assert.are.same(lb + mbb1 + mbb2, myInstance.lowerBoarder);
     end)
 
@@ -144,28 +143,28 @@ describe("Test unit test suite", function()
 
     it("Testing addToCaught", function()
         local name = "nemo";
-        testClass:addToCaught(name);
-        assert.are.same(_G._tmpTable.caughtThisRound.nemo, 1);
+        locInstance:addToCaught(name);
+        assert.are.same(locInstance.caughtThisRound.nemo, 1);
     end)
 
     it("Testing addToCaught twice to test IF", function()
         local name = "nemo";
-        testClass:addToCaught(name);
-        testClass:addToCaught(name); --- now it is not nil
-        assert.are.same(_G._tmpTable.caughtThisRound.nemo, 2);
+        locInstance:addToCaught(name);
+        locInstance:addToCaught(name); --- now it is not nil
+        assert.are.same(locInstance.caughtThisRound.nemo, 2);
     end)
 
     it("Testing addToCaught for two diffrent ", function()
         local name1 = "nemo";
         local name2 = "hans";
-        testClass:addToCaught(name1);
-        testClass:addToCaught(name2);
-        assert.are.same(_G._tmpTable.caughtThisRound.nemo, 1);
-        assert.are.same(_G._tmpTable.caughtThisRound.hans, 1);
+        locInstance:addToCaught(name1);
+        locInstance:addToCaught(name2);
+        assert.are.same(locInstance.caughtThisRound.nemo, 1);
+        assert.are.same(locInstance.caughtThisRound.hans, 1);
     end)
 
     it("Testing activateGodMode", function()
-        _G._persTable.upgrades.godMode = true;
+        _G._persTable.upgrades.godMode = 1;
         locInstance.godModeFuel = 500;
         local sAGM = spy.on(locInstance, "activateGodMode");
         locInstance:activateGodMode();
@@ -212,7 +211,7 @@ describe("Test unit test suite", function()
     end)
 
     it("Testing calcFishedValue", function()
-        testClass.levMan.curSwarmFac = {
+        locInstance.levMan.curSwarmFac = {
             getFishableObjects = function() return {
                 ["turtle"] = { ["value"] = 10 },
                 ["rat"] = { ["value"] = 20 },
@@ -221,8 +220,9 @@ describe("Test unit test suite", function()
             };
             end;
         };
-        _G._tmpTable.caughtThisRound = { ["turtle"] = 5, ["rat"] = 0, ["deadFish"] = 5, ["nemo"] = 3 };
-        assert.are.same(testClass:calcFishedValue(), 30);
+
+        locInstance.caughtThisRound = { ["turtle"] = 5, ["rat"] = 0, ["deadFish"] = 5, ["nemo"] = 3 };
+        assert.are.same(locInstance:calcFishedValue(), 30);
     end)
 
     it("Testing multiplyFishedValue", function()
@@ -247,13 +247,13 @@ describe("Test unit test suite", function()
     end)
 
     it("Testing printResult with caught objects", function()
-        _G._tmpTable.caughtThisRound["cat"] = 1;
-        _G._tmpTable.caughtThisRound["dog"] = 2;
-        testClass.levMan.curSwarmFac = {
+        locInstance.caughtThisRound["cat"] = 1;
+        locInstance.caughtThisRound["dog"] = 2;
+        locInstance.levMan.curSwarmFac = {
             getFishableObjects = function() return { ["cat"] = { ["value"] = 10 }, ["dog"] = { ["value"] = 20 } }; end;
         };
         local loveMock = mock(_G.love, true);
-        testClass:printResult();
+        locInstance:printResult();
         assert.spy(loveMock.graphics.print).was.called(4);
         assert.spy(loveMock.graphics.print).was.called_with("Caught objects in this round:", match._, match._);
         assert.spy(loveMock.graphics.print).was.called_with("cat: 1 x 10 Coins", match._, match._);
@@ -289,6 +289,8 @@ describe("Test unit test suite", function()
             };
         };
 
+        locInstance.p_levelName = "sewers";
+        locInstance.direction = 1;
         locInstance.shortGMDist = 0;
         locInstance.godModeActive = 0;
         locInstance.oldPosY = 210;
@@ -308,21 +310,22 @@ describe("Test unit test suite", function()
     end)
 
     it("Testing reduceShortGMDist", function()
-        testClass.godModeActive = 0;
-        testClass.godModeFuel = 250;
-        testClass:activateShortGM(0.12, 200);
-        local sRSGM = spy.on(testClass, "reduceShortGMDist");
+        locInstance.oldPosY = _G.math.inf;
+        locInstance.godModeActive = 0;
+        locInstance.godModeFuel = 250;
+        locInstance:activateShortGM(0.12, 200);
+        local sRSGM = spy.on(locInstance, "reduceShortGMDist");
 
         for i = 10, -250, -1
         do
-            testClass.posY = i;
-            testClass:checkGodMode();
+            locInstance.posY = i;
+            locInstance:checkGodMode();
         end
         assert.spy(sRSGM).was.called(161);
-        assert.are.same(testClass.godModeActive, 0);
-        assert.are.same(testClass.shortGMDist, 0);
-        assert.are.same(testClass.oldPosY, _G.math.inf);
-        assert.are.same(testClass.godModeFuel, 250);
+        assert.are.same(locInstance.godModeActive, 0);
+        assert.are.same(locInstance.shortGMDist, 0);
+        assert.are.same(locInstance.oldPosY, _G.math.inf);
+        assert.are.same(locInstance.godModeFuel, 250);
     end)
 
     it("Testing getMoved()", function()
