@@ -53,7 +53,7 @@ describe("Unit test for Achievements.lua", function()
         assert.are.same(locInstance, myInstance);
     end)
 
-it("Testing Constructor", function()
+    it("Testing Constructor", function()
         _G._persTable = {
             scaledDeviceDim = {640, 950};
         };
@@ -64,7 +64,7 @@ it("Testing Constructor", function()
         assert.are.same(locInstance, myInstance);
     end)
 
-it("Testing Constructor", function()
+    it("Testing Constructor", function()
         _G._persTable = {
             scaledDeviceDim = {720, 1024};
         };

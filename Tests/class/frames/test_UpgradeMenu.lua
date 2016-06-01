@@ -52,7 +52,7 @@ end)
         assert.are.same(locInstance, myInstance);
     end)
 
-it("Testing Constructor", function()
+    it("Testing Constructor", function()
         _G._persTable = {
             scaledDeviceDim = {640, 950};
         };
@@ -63,7 +63,7 @@ it("Testing Constructor", function()
         assert.are.same(locInstance, myInstance);
     end)
 
-it("Testing Constructor", function()
+    it("Testing Constructor", function()
         _G._persTable = {
             scaledDeviceDim = {720, 1024};
         };
@@ -145,8 +145,7 @@ it("Testing Constructor", function()
                 }
             };
         };
-        --locInstance.elementsOnFrame.chart.object.p_markedElement = locInstance.elementsOnFrame.chart.object.p_elementsOnChart[1];
-        
+
         local KE = {
           price = 10;
           };
@@ -193,6 +192,39 @@ it("Testing Constructor", function()
         stub(locInstance.frame, "checkPosition");
         locInstance:checkPosition();
         assert.stub(locInstance.frame.checkPosition).was_called(1);
+    end)
+
+    it("Testing loadValuesFromPersTable function", function()
+        _G._persTable = {
+            upgrades = {
+                testUp1 = true;
+                testUp2 = false;
+            };
+        };
+        _G.data = {
+            upgrades = {
+                testUp1 = {
+                    nameOnPersTable = "testUp1";
+                    name = "test1";
+                    description = "test1";
+                    price = 1;
+                    image = "path1";
+                    image_disable = "path2";
+                },
+                testUp2 = {
+                    nameOnPersTable = "testUp2";
+                    name = "test2";
+                    description = "test2";
+                    price = 1;
+                    image = "path3";
+                    image_disable = "path4";
+                }
+            };
+        };
+        locInstance:addAllUpgrades();
+        locInstance:loadValuesFromPersTable();
+        assert.equal(locInstance.elementsOnFrame.chart.object.p_elementsOnChart[1].enable, true);
+        assert.equal(locInstance.elementsOnFrame.chart.object.p_elementsOnChart[2].enable, false);
     end)
 
 end)
