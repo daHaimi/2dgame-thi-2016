@@ -81,6 +81,16 @@ local Level = Class {
         -- temp bugfix to play the game with persistence
         -- delete when non persistent table exists
         _G._persTable.phase = 1;
+        
+        --elements to draw
+        self.topBackground = love.graphics.newImage("assets/toilet_bg.png");
+        self.borderLeft = love.graphics.newImage("assets/left.png");
+        self.borderRight = love.graphics.newImage("assets/right.png");
+        self.toilet = love.graphics.newImage("assets/toilet.png");
+        self.hamster = love.graphics.newImage("assets/hamster_noLine.png");
+        self.line = love.graphics.newImage("assets/line.png");
+        self.toiletLowerHalf = love.graphics.newImage("assets/toilet_LowerHalf.png");
+        self.toiletBowl = love.graphics.newImage("assets/toilet_bowl.png");
     end
 }
 
@@ -180,15 +190,6 @@ end
 
 --- draws the enviroment like borders
 function Level:drawEnviroment()
-    local topBackground = love.graphics.newImage("assets/toilet_bg.png");
-    local borderLeft = love.graphics.newImage("assets/left.png");
-    local borderRight = love.graphics.newImage("assets/right.png");
-    local toilet = love.graphics.newImage("assets/toilet.png");
-    local hamster = love.graphics.newImage("assets/hamster_noLine.png");
-    local line = love.graphics.newImage("assets/line.png");
-    local toiletLowerHalf = love.graphics.newImage("assets/toilet_LowerHalf.png");
-    local toiletBowl = love.graphics.newImage("assets/toilet_bowl.png");
-
     self.enviromentPosition = self.enviromentPosition - self:getMoved();
 
     love.graphics.setColor(255, 255, 255);
@@ -199,32 +200,32 @@ function Level:drawEnviroment()
         self.enviromentPosition = self.enviromentPosition - 200;
     end
     for i = 0, 5, 1 do
-        love.graphics.draw(borderLeft, 0, (i - 1) * 200 + self.enviromentPosition);
-        love.graphics.draw(borderRight, 454, (i - 1) * 200 + self.enviromentPosition);
+        love.graphics.draw(self.borderLeft, 0, (i - 1) * 200 + self.enviromentPosition);
+        love.graphics.draw(self.borderRight, 454, (i - 1) * 200 + self.enviromentPosition);
     end
 
-    love.graphics.draw(topBackground, 0, self.posY - 474);
-    love.graphics.draw(topBackground, 0, self.posY - 375);
-    love.graphics.draw(toilet, 0, self.posY - 375);
+    love.graphics.draw(self.topBackground, 0, self.posY - 474);
+    love.graphics.draw(self.topBackground, 0, self.posY - 375);
+    love.graphics.draw(self.toilet, 0, self.posY - 375);
     
     --animation
     if not self.animationStart then
-        love.graphics.draw(hamster, self.levMan:getCurPlayer():getPosXMouse() - 32, self.hamsterYPos);
+        love.graphics.draw(self.hamster, self.levMan:getCurPlayer():getPosXMouse() - 32, self.hamsterYPos);
     else
         if self.hamsterYPos < self.animationStartPoint + 150 or self.failedStart then
-            love.graphics.draw(hamster, self.hamsterLockedXPos, self.hamsterYPos);
+            love.graphics.draw(self.hamster, self.hamsterLockedXPos, self.hamsterYPos);
         end
         for i = 9, self.hamsterYPos - (self.winDim[2] / 2 - 300), 9 do
             if i < 150  or self.failedStart then
-                love.graphics.draw(line, self.hamsterLockedXPos + 30, self.animationStartPoint + i);
+                love.graphics.draw(self.line, self.hamsterLockedXPos + 30, self.animationStartPoint + i);
             end
         end
     end
 
     if self.failedStart then
-        love.graphics.draw(toiletBowl, 0, self.posY - 153);
+        love.graphics.draw(self.toiletBowl, 0, self.posY - 153);
     else
-        love.graphics.draw(toiletLowerHalf, 0, self.posY - 180);
+        love.graphics.draw(self.toiletLowerHalf, 0, self.posY - 180);
     end
     
     self.lightWorld.drawShadow();
