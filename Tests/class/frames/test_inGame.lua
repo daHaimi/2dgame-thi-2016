@@ -9,13 +9,13 @@ Frame = require "class.Frame";
 describe("Unit test for inGame.lua", function()
     local locInstance;
 
-
     before_each(function()
         _G.Loveframes = {
             Create = function(typeName) 
                 return fakeElement(typeName);
             end
         }
+        _G.testScore = 0;
         _G._persTable = {
             upgrades = {
                 moreLife = 1;
@@ -24,6 +24,7 @@ describe("Unit test for inGame.lua", function()
                 [1] = 500;
                 [2] = 500;
             };
+            winDim = {1, 2};
         };
         _G.Frame = function(...) return Frame; end;
 
@@ -37,10 +38,6 @@ describe("Unit test for inGame.lua", function()
         };
         
         locInstance:create();
-
-        spy.on(_G._gui, "changeFrame");
-        locInstance.elementsOnFrame.button_pause.object.OnClick();
-        assert.spy(_gui.changeFrame).was.called();
     end)
 
     it("Testing draw function", function()

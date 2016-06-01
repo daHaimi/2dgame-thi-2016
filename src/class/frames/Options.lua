@@ -10,7 +10,7 @@ local Options = Class {
             self.buttonHeight = 75;
             self.buttonOffset = 15;
             self.buttonWidth = 261;
-            speed = 50;
+            self.speed = 50;
         elseif _G._persTable.scaledDeviceDim[1] < 720 then
             self.widthPx = 640;
             self.directory = "assets/gui/640px/";
@@ -19,7 +19,7 @@ local Options = Class {
             self.buttonOffset = 20;
             self.buttonHeight = 96;
             self.buttonWidth = 384;
-            speed = 67;
+            self.speed = 60;
         else
             self.widthPx = 720;
             self.directory = "assets/gui/720px/";
@@ -28,11 +28,11 @@ local Options = Class {
             self.buttonOffset = 30;
             self.buttonHeight = 106;
             self.buttonWidth = 392;
-            speed = 75;
+            self.speed = 75;
         end
         self.name = "Options";
         self.frame = Frame((_G._persTable.scaledDeviceDim[1] - self.width) / 2, 
-            (_G._persTable.scaledDeviceDim[2] - self.height) / 2, "down", "down", speed, 0, -1500);
+            (_G._persTable.scaledDeviceDim[2] - self.height) / 2, "down", "down", self.speed, 0, -1500);
         self:create();
     end;
 };
@@ -46,15 +46,25 @@ function Options:create()
             x = 0;
             y = 0;
         };
+        text_bgm = {
+            object = Loveframes.Create("text");
+            x = 30;
+            y = 50;
+        };
         slider_bgm = {
             object = Loveframes.Create("slider");
             x = 64;
-            y = 0;
+            y = 70;
+        };
+        text_music= {
+            object = Loveframes.Create("text");
+            x = 30;
+            y = 100;
         };
         slider_music = {
             object = Loveframes.Create("slider");
             x = 64;
-            y = 50;
+            y = 120;
         };
         button_reset = {
             object = Loveframes.Create("imagebutton");
@@ -69,21 +79,23 @@ function Options:create()
     };
 
     --adjust all elements on this frame
-    self.elementsOnFrame.background.object:SetImage(self.directory .. "gui_Test_Bg.png");
+    self.elementsOnFrame.background.object:SetImage(self.directory .. "StandardBG.png");
     
-    self.elementsOnFrame.slider_bgm.object:SetText("BGM");
+    self.elementsOnFrame.text_bgm.object:SetText("Background Music:");
+    
     self.elementsOnFrame.slider_bgm.object:SetMinMax(0, 100);
     self.elementsOnFrame.slider_bgm.object:SetWidth(self.buttonWidth);
     
-    self.elementsOnFrame.slider_music.object:SetText("Music");
+    self.elementsOnFrame.text_music.object:SetText("In Game Music:");
+    
     self.elementsOnFrame.slider_music.object:SetMinMax(0, 100);
     self.elementsOnFrame.slider_music.object:SetWidth(self.buttonWidth);
     
-    self.elementsOnFrame.button_reset.object:SetImage(self.directory .. "gui_Test_Button.png");
+    self.elementsOnFrame.button_reset.object:SetImage(self.directory .. "Button.png");
     self.elementsOnFrame.button_reset.object:SizeToImage();
     self.elementsOnFrame.button_reset.object:SetText("Reset");
     
-    self.elementsOnFrame.button_back.object:SetImage(self.directory .. "gui_Test_Button.png");
+    self.elementsOnFrame.button_back.object:SetImage(self.directory .. "Button.png");
     self.elementsOnFrame.button_back.object:SizeToImage();
     self.elementsOnFrame.button_back.object:SetText("Back");
     
@@ -102,12 +114,10 @@ function Options:create()
     self.elementsOnFrame.button_reset.object.OnClick = function(object)
         _persistence:resetGame();
         self:loadValuesFromPersTable();
-        _gui:tempTextOutput();
     end
     
     self.elementsOnFrame.button_back.object.OnClick = function(object)
         self:loadValuesInPersTable();
-        _gui:tempTextOutput();
         _gui:changeFrame(_gui:getLastState());
     end
 end

@@ -76,7 +76,7 @@ function Persistence:createPersTable()
         achievements = {};
         config = {};
         fishCaught = {};
-        money = 0;
+        money = 1000;
         lastLevel = 1;
         winDim = {};
         phase = 1;
@@ -90,8 +90,8 @@ function Persistence:createPersTable()
     _G._persTable.upgrades = {
         firstSpeedUp = true; -- more speed
         secondSpeedUp = false; -- more speed
-        oneMoreLife = true; -- more life
-        twoMoreLife = true; -- more life
+        oneMoreLife = false; -- more life
+        twoMoreLife = false; -- more life
         threeMoreLife = false; -- more life
         moneyMult = false; -- "0" means no additional money
         moreLife = 0; -- needed for calculation in a few classes

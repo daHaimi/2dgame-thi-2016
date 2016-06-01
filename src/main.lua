@@ -19,7 +19,14 @@ _G.math.inf = 1 / 0;
 _G._gui = nil;
 _G._persistence = nil;
 _G._androidConfig = {};
-_G._tmptable = {};
+_G._tmpTable = {
+    caughtThisRound = {};
+    earnedMoney = nil;
+    currentDepth = nil;
+    roundFuel = 800;
+    unlockedAchievements = {};
+};
+
 -- Font for android debugging
 _G.myfont = love.graphics.newFont(30);
 
@@ -36,26 +43,24 @@ local curLevel;
 local player;
 local swarmFactory;
 local levMan;
---local persistence
 
 --- The bootstrap of the game.
 -- This function is called exactly once at the beginning of the game.
 function love.load()
     --if arg[#arg] == "-debug" then require("mobdebug").start() end -- enables the debugging
     _G.data = require "data"; -- loading cycle on android requires data to be load on love.load()
-    _persistence = Persistence();
-    _persistence:resetGame();
-    
+    _G._persistence = Persistence();
+    _G._persistence:resetGame();
+
     local _, _, flags = love.window.getMode();
     love.graphics.setBackgroundColor(30, 180, 240);
-    deviceDim = { love.window.getDesktopDimensions(flags.display) };
-    --deviceDim = {1366, 768}; --for simulating the resulution of a other device
-    
+    local deviceDim = { love.window.getDesktopDimensions(flags.display) };
+    --deviceDim = {640, 1140};
+    --deviceDim = {720, 1080};
+    local scaleFactor;
+    _G._persTable.winDim[1], _G._persTable.winDim[2], scaleFactor = getScaledDimension(deviceDim);
 
-    _G._persTable.winDim[1], _G._persTable.winDim[2], _G._persTable.scaleFactor = getScaledDimension(deviceDim);
-
-    _G._persTable.scaledDeviceDim = { _G._persTable.winDim[1] * _G._persTable.scaleFactor, 
-        _G._persTable.winDim[2] * _G._persTable.scaleFactor };
+    _G._persTable.scaledDeviceDim = { _G._persTable.winDim[1] * scaleFactor, _G._persTable.winDim[2] * scaleFactor };
     if _G._persTable.scaledDeviceDim[1] < 480 then
         _G._persTable.scaledDeviceDim = _G._persTable.winDim;
         _G._persTable.scaleFactor = 1;
@@ -77,8 +82,8 @@ function love.load()
             _G._androidConfig.maxTilt = .3;
         end
     end
-
-    _gui = Gui();
+    _G.testScale = scaleFactor;
+    _G._gui = Gui();
     _gui:setLevelManager(levMan);
     _gui:tempTextOutput();
     _gui:start();
@@ -117,8 +122,8 @@ function love.draw()
     end
 
     if levMan:getCurLevel() ~= nil then
-        if levMan:getCurLevel().levelFinished == 1 and 
-            _gui:getCurrentState() == "InGame" then
+        if levMan:getCurLevel().levelFinished == 1 and
+                _gui:getCurrentState() == "InGame" then
             levMan:getCurLevel():printResult();
         end
     end
@@ -129,23 +134,16 @@ function love.draw()
         love.graphics.print(_G._androidConfig.joyPos, 100, 100);
         love.graphics.pop();
     end
-
     Loveframes.draw();
-    --[[prints the State name and output values.
-    This function will be replaced in a later version]] --
-    _gui:tempDrawText();
-    
     -- debug info for memory usage do not remove!
     love.graphics.print('Memory actually used (in kB): ' .. collectgarbage('count'), 200, 60);
-    love.graphics.print("Current FPS: "..tostring(love.timer.getFPS( )), 200, 75);
+    love.graphics.print("Current FPS: " .. tostring(love.timer.getFPS()), 200, 75);
 end
 
 --- This function is called continuously by the love.run().
 -- @param dt Delta time  is the amount of seconds since the
 -- last time this function was called.
 function love.update(dt)
-    _gui:update();
-    Loveframes.update(dt);
     if _gui:drawGame() then
         -- updates the curLevel only in the InGame GUI
         setMouseVisibility(levMan:getCurLevel());
@@ -167,6 +165,8 @@ function love.update(dt)
             end
         end
     end
+    _gui:update();
+    Loveframes.update(dt);
     TEsound.cleanup();
 end
 
@@ -192,6 +192,10 @@ end
 -- @param y The mouse position on the y-axis.
 -- @param button The pressed mousebutton.
 function love.mousepressed(x, y, button)
+    -- activate the god mode when you press the mouse
+    if love.mouse.isDown(1) and _gui:getCurrentState() == "InGame" then
+        levMan:getCurLevel():activateGodMode();
+    end
     --[[Loveframes needs 'l' to detect the left mousebutton.
     It's necessary to convert the received "1" value]] --
     if button == 1 then

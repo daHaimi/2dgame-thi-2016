@@ -28,7 +28,7 @@ local InGame = Class {
             self.flagWidth = 180;
         end
         self.name = "InGame";
-        self.frame = Frame(0, 0, "right", "left", 50, -1000, 0);
+        self.frame = Frame(0, 0, "down", "up", 50, 0, -1000);
         self:create();
     end;
 };
@@ -37,26 +37,60 @@ local InGame = Class {
 function InGame:create()
     --add, create and position all elements on this frame
     self.elementsOnFrame = {
-        button_pause = {
-            object = Loveframes.Create("imagebutton");
+        fuelBarBackground = {
+            object = Loveframes.Create("image");
             x = 10;
             y = 10;
-        };
+        },
+        fuelBar = {
+            object = Loveframes.Create("image");
+            x = 10;
+            y = 10;
+        },
+        barFuel = {
+            object = Loveframes.Create("image");
+            x = 0;
+            y = 0;
+        },
+        barLife = {
+            object = Loveframes.Create("image");
+            x = _G._persTable.scaledDeviceDim[1] - 256;
+            y = 0;
+        },
+        barMiddle = {
+            object = Loveframes.Create("image");
+            x = 256;
+            y = 0;
+        },
         healthbar = {
             object = Healthbar();
             x = 0;
             y = 0;
+        },
+        score = {
+            object = Loveframes.Create("text");
+            x = 220;
+            y = 20;
         }
     };
     
-    --adjust all elements on this frame
-    self.elementsOnFrame.button_pause.object:SetImage("assets/gui/gui_Test_Button.png")
-    self.elementsOnFrame.button_pause.object:SizeToImage()
-    self.elementsOnFrame.button_pause.object:SetText("Pause");
+    self.elementsOnFrame.barMiddle.object:SetImage(self.directory .. "BarMiddle.png");
+    self.elementsOnFrame.barMiddle.object:SetScaleX((_G._persTable.scaledDeviceDim[1] - 512)/64);
+    self.elementsOnFrame.barLife.object:SetImage(self.directory .. "BarLife.png");
+    self.elementsOnFrame.barFuel.object:SetImage(self.directory .. "BarFuel.png");
+    self.elementsOnFrame.fuelBar.object:SetImage(self.directory .. "FuelBar.png");
+    self.elementsOnFrame.fuelBarBackground.object:SetImage(self.directory .. "FuelBarBG.png");
     
-    --onclick events for all buttons
-    self.elementsOnFrame.button_pause.object.OnClick = function(object)
-        _gui:changeFrame(_gui:getFrames().pause);
+    self.elementsOnFrame.score.object:SetShadow(true);
+end
+
+function InGame:update()
+    --update Fuelbar
+    if self.frame:checkPosition() then
+        if _G._tmpTable.roundFuel >= 0 then
+            self.elementsOnFrame.fuelBar.object:SetX(math.ceil((180 / 2400)*_G._tmpTable.roundFuel) - 180);
+        end
+        self.elementsOnFrame.score.object:SetText("Depth: " .. math.ceil(_G._tmpTable.currentDepth) .. "Px");
     end
 end
 

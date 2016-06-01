@@ -35,7 +35,6 @@ describe("Unit test for Options.lua", function()
         _G._gui = {
             getFrames = function(...) return{}; end;
             changeFrame = function(...) end;
-            tempTextOutput = function(...) end;
             getLastState = function(...) return {}; end;
         };
         _G._persistence = {
@@ -44,7 +43,6 @@ describe("Unit test for Options.lua", function()
         
         spy.on(locInstance, "loadValuesFromPersTable");
         spy.on(locInstance, "loadValuesInPersTable");
-        spy.on(_G._gui, "tempTextOutput");
         spy.on(_G._gui, "changeFrame");
         spy.on(_G._persistence, "resetGame");
         
@@ -58,13 +56,11 @@ describe("Unit test for Options.lua", function()
         
         locInstance.elementsOnFrame.button_reset.object.OnClick();
         assert.spy(_G._persistence.resetGame).was.called();
-        assert.spy(_gui.tempTextOutput).was.called();
         assert.spy(locInstance.loadValuesFromPersTable).was.called(2);
         
         locInstance.elementsOnFrame.button_back.object.OnClick();
         assert.spy(_gui.changeFrame).was.called();
         assert.spy(locInstance.loadValuesInPersTable).was.called(1);
-        assert.spy(_gui.tempTextOutput).was.called();
     end)
 
     it("Testing loadValuesInPersTable function", function()

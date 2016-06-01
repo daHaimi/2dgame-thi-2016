@@ -43,7 +43,6 @@ describe("Unit test for UpgradeMenu.lua", function()
         _G._gui = {
             getFrames = function(...) return{}; end;
             changeFrame = function(...) end;
-            tempTextOutput = function(...) end;
         };
         
        local ME = {
@@ -62,24 +61,29 @@ describe("Unit test for UpgradeMenu.lua", function()
         assert.spy(locInstance.loadValuesFromPersTable).was.called();
 
         spy.on(_G._gui, "changeFrame");
-        spy.on(_G._gui, "tempTextOutput");
         locInstance.elementsOnFrame.button_back.object.OnClick();
         assert.spy(_gui.changeFrame).was.called();
-        assert.spy(_gui.tempTextOutput).was.called();
+        
+        locInstance.elementsOnFrame.chart.object.p_markedElement = locInstance.elementsOnFrame.chart.object.p_elementsOnChart[1];
        
         locInstance.elementsOnFrame.chart.object.p_markedElement = ME;
         stub(locInstance, "buyElement");
         locInstance.elementsOnFrame.button_buy.object.OnClick();
-        assert.spy(locInstance.buyElement).was.called();
+        assert.stub(locInstance.buyElement).was.called();
     end)
 
     it("Testing buyElement function", function()
         local KE = {
             disable = function(...) end;
             price = 0;
-        };
+        }
+        
         
         locInstance.elementsOnFrame.chart.object.p_markedElement = KE;
+        locInstance.elementsOnFrame.chart.getMarkedElement = function(...) 
+            return locInstance.elementsOnFrame.chart.object.p_markedElement; 
+        end;
+        
         stub(locInstance.elementsOnFrame.chart.object.p_markedElement, "disable");
         locInstance:buyElement();
         assert.stub(locInstance.elementsOnFrame.chart.object.p_markedElement.disable).was.called();
@@ -106,12 +110,14 @@ describe("Unit test for UpgradeMenu.lua", function()
                 }
             };
         };
+        --locInstance.elementsOnFrame.chart.object.p_markedElement = locInstance.elementsOnFrame.chart.object.p_elementsOnChart[1];
         
         local KE = {
           price = 10;
           };
         
         locInstance.elementsOnFrame.chart.object.p_markedElement = KE;
+
         
         locInstance:addAllUpgrades();
         locInstance.elementsOnFrame.chart.object.p_elementsOnChart[1].object = {};

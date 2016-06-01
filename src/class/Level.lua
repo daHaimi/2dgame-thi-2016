@@ -1,5 +1,4 @@
 Class = require "lib.hump.class";
-require "lib/postshader"
 require "lib/light"
 
 _G.math.inf = 1 / 0;
@@ -27,7 +26,6 @@ local Level = Class {
         self.mapBreakthroughBonus1 = -1000;
         self.mapBreakthroughBonus2 = -1000;
         -- list for objekts caught at this round
-        self.caughtThisRound = {};
         self.oldPosY = _G.math.inf;
         self.godModeFuel = 800;
         self.shortGMDist = 0;
@@ -155,7 +153,7 @@ function Level:update(dt, bait)
     end
     self.baitLight.setPosition(self.posY or 0, self.posX or 0);
     self.lightWorld:update();
-    
+    _G._tmpTable.currentDepth = self.posY;
 end
 
 --- when the bait hit a object or the boarder is reached, start phase 2
@@ -174,6 +172,10 @@ function Level:draw(bait)
     love.graphics.setColor(255, 255, 255);
     love.graphics.draw(self.bg, self.bgq, 0, self.posY);
     bait:draw();
+    if self.levelFinished == 1 then
+        _gui:changeFrame(_gui:getFrames().score);
+        --self:printResult();
+    end
 end
 
 --- draws the enviroment like borders
@@ -265,6 +267,7 @@ function Level:checkGodMode()
                 self.oldPosY = self.posY;
             end
         end
+        _G._tmpTable.roundFuel = self.godModeFuel;
     end
 end
 
@@ -302,7 +305,7 @@ end
 --- Try to activate the god Mode.
 -- @return When the god mode was successfully activated it returns 1 otherwise 0.
 function Level:activateGodMode()
-    if _G._persTable.upgrades.godMode == true and self.godModeFuel > 0
+    if (_G._persTable.upgrades.godMode == 1 or true) and self.godModeFuel > 0
             and self.godModeActive == 0 and self.direction == 1 then
         self.godModeActive = 1;
         return 1;
@@ -311,6 +314,7 @@ function Level:activateGodMode()
         self.godModeFuel = 0; -- remove negativ fuel values
         return 0;
     end
+    
 end
 
 --- Deactivates the god mode.
@@ -322,11 +326,12 @@ end
 -- @return Returns the value of all fished objects.
 function Level:calcFishedValue()
     local fishedVal = 0;
-    for name, amount in pairs(self.caughtThisRound) do
+    for name, amount in pairs(_G._tmpTable.caughtThisRound) do
         if amount > 0 then
             fishedVal = fishedVal + self.levMan:getCurSwarmFactory():getFishableObjects()[name].value * amount;
         end
     end
+    _G._tmpTable.earnedMoney = fishedVal;
     return fishedVal;
 end
 
@@ -412,10 +417,10 @@ end
 -- @param name The name of the fishable object.
 function Level:addToCaught(name)
     -- add the first
-    if self.caughtThisRound[name] == nil then
-        self.caughtThisRound[name] = 0;
+    if _G._tmpTable.caughtThisRound[name] == nil then
+        _G._tmpTable.caughtThisRound[name] = 0;
     end;
-    self.caughtThisRound[name] = self.caughtThisRound[name] + 1;
+    _G._tmpTable.caughtThisRound[name] = _G._tmpTable.caughtThisRound[name] + 1;
 end
 
 --- Call this function to make known that the player has stopped the god mode
@@ -429,9 +434,9 @@ function Level:printResult()
     local ypos = 120;
     love.graphics.setColor(0, 0, 0, 255);
     love.graphics.print("Caught objects in this round:", xpos, ypos);
-    if next(self.caughtThisRound) ~= nil then
-        local string = "";
-        for k, v in pairs(self.caughtThisRound) do
+    if next(_G._tmpTable.caughtThisRound) ~= nil then
+        local string;
+        for k, v in pairs(_G._tmpTable.caughtThisRound) do
             ypos = ypos + 15;
             string = k .. ": " .. v .. " x " ..
                     self.levMan:getCurSwarmFactory():getFishableObjects()[k].value .. " Coins";
@@ -439,6 +444,7 @@ function Level:printResult()
         end
         ypos = ypos + 15;
         love.graphics.print("Earned: " .. self:calcFishedValue() .. " Coins", xpos, ypos);
+        _G.testScore = self:calcFishedValue();
     else
         ypos = ypos + 15;
         love.graphics.print("Nothing caught", xpos, ypos);

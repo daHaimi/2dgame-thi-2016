@@ -63,24 +63,20 @@ end
 ---function called in the constructor of this class. creates backround and buttons
 function Chart:create()
     self.button_up = Loveframes.Create("imagebutton");
-    self.button_up:SetImage(self.directory .. "gui_Up_Button.png");
+    self.button_up:SetImage(self.directory .. "UpButton.png");
     self.button_up:SizeToImage();
     self.button_up:SetText("");
     
     self.button_down = Loveframes.Create("imagebutton");
-    self.button_down:SetImage(self.directory .. "gui_Down_Button.png");
+    self.button_down:SetImage(self.directory .. "DownButton.png");
     self.button_down:SizeToImage();
     self.button_down:SetText("");
     
     self.markFrame = Loveframes.Create("image");
-    if self.klickableSize == 64 then
-        self.markFrame:SetImage("assets/gui/markFrame.png");
-    else
-        self.markFrame:SetImage(self.directory .. "markFrame.png");
-    end
+    self.markFrame:SetImage(self.directory .. "markFrame.png");
     self.markFrame:SetVisible(false);
     
-    self.textField = TextField(self.width);
+    self.textField = TextField(self.width - 50, self.directory);
     
     --onclick events of the buttons
     self.button_up.OnClick = function(object)
@@ -127,7 +123,7 @@ function Chart:drawChart(visible)
         v:SetVisible(false);
     end
     --draw new elements
-    for var1 = 1 + (self.p_row * self.p_toprow - 1), 9 + (self.p_row * self.p_toprow) do
+    for var1 = 1 + (self.p_column * self.p_toprow), 9 + (self.p_column * self.p_toprow) do
         if self.p_elementsOnChart[var1] ~= nil then
             self.p_elementsOnChart[var1]:SetVisible(visible);
         end
@@ -138,17 +134,12 @@ end
 ---set the position of all elements in the table
 function Chart:setPosOfKlickableElements()
     local row = 0;
-    for var1 = 1, self.p_row do
-        for var2 = 1, self.p_column do
-
-            if self.p_elementsOnChart[var2 + self.p_row * self.p_column] ~= nil then
-                self.p_elementsOnChart[var2 + self.p_row * self.p_column]:SetPos(
-                    self.p_xPos + self.klickableSize * (var2 - 1) + self.buttonHeight, 
-                    (self.p_yPos + self.buttonHeight + self.klickableSize * self.p_row) - self.klickableSize * self.p_toprow);
-            end
+    for var1 = 1, self.p_row + 1 do
+        for var2 = 1, self.p_column + 1 do
             if self.p_elementsOnChart[var2 + row * self.p_column] ~= nil then
-                self.p_elementsOnChart[var2 + row * self.p_column]:SetPos(self.p_xPos + self.klickableSize * (var2 - 1), 
-                    (self.p_yPos + self.klickableSize * row) - self.klickableSize * self.p_toprow +  self.buttonHeight);
+                self.p_elementsOnChart[var2 + row * self.p_column]:SetPos(
+                    self.p_xPos + self.klickableSize * (var2 - 1),
+                    (self.p_yPos + self.klickableSize * row) - (self.klickableSize * self.p_toprow) +  self.buttonHeight);
             end
         end
         row = row + 1;
@@ -184,14 +175,13 @@ end
 -- @parm x: x axis position
 -- @parm y: y axis position
 function Chart:SetPos(x, y)
-    buttonXPos = (_G._persTable.scaledDeviceDim[1] - self.width) /2 + self.width * 0.16
+    local buttonXPos = (_G._persTable.scaledDeviceDim[1] - self.width) /2 + self.width * 0.16
     self.p_xPos = (_G._persTable.scaledDeviceDim[1] - self.klickableSize * self.p_column) / 2;
     self.p_yPos = y;
     self.button_up:SetPos(buttonXPos, y);
-    
     self.button_down:SetPos(buttonXPos,y + math.min(self.p_row, 3) *self.klickableSize + self.buttonHeight + self.buttonOffset);
     self:setPosOfKlickableElements();
-    self.textField:SetPos(buttonXPos, y + self.height * 0.68);
+    self.textField:SetPos(x, y + self.height * 0.68);
     if self.p_markedElement ~= nil then
         self.markFrame:SetPos(self.p_markedElement.object:GetX(), self.p_markedElement.object:GetY());
     end
@@ -205,7 +195,11 @@ function Chart:markElement(element)
     self.markFrame:SetVisible(true);
     self.markFrame:MoveToTop();
     self.p_markedElement = element;
-    self.textField:changeText(element.name, element.description);
+    if element.price ~= nil then
+        self.textField:changeText(element.name, element.description, element.price);
+    else
+        self.textField:changeText(element.name, element.description);
+    end
 end
 
 return Chart;

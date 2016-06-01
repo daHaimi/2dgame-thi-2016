@@ -35,10 +35,10 @@ describe("Unit test for TextField.lua", function()
 
     it("Testing SetPos function", function()
         locInstance:SetPos(50, 50);
-        assert.are.equal(locInstance.objTopic.x, 55);
-        assert.are.equal(locInstance.objTopic.y, 55);
-        assert.are.equal(locInstance.objText.x, 55);
-        assert.are.equal(locInstance.objText.y, 75);
+        assert.are.equal(locInstance.objTopic.x, 60);
+        assert.are.equal(locInstance.objTopic.y, 60);
+        assert.are.equal(locInstance.objText.x, 60);
+        assert.are.equal(locInstance.objText.y, 80);
         assert.are.equal(locInstance.objTopic.maxWidth, 3);
         assert.are.equal(locInstance.objText.maxWidth, 3);
     end)
