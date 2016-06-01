@@ -54,7 +54,7 @@ function InGame:create()
         },
         barLife = {
             object = Loveframes.Create("image");
-            x = _G._persTable.winDim[1];-- - 256 * _G.testScale;
+            x = _G._persTable.scaledDeviceDim[1] - 256;
             y = 0;
         },
         barMiddle = {
@@ -75,7 +75,7 @@ function InGame:create()
     };
     
     self.elementsOnFrame.barMiddle.object:SetImage(self.directory .. "BarMiddle.png");
-    --self.elementsOnFrame.barMiddle.object:SetScaleX((_G._persTable.winDim[1] - 256)/64);
+    self.elementsOnFrame.barMiddle.object:SetScaleX((_G._persTable.scaledDeviceDim[1] - 512)/64);
     self.elementsOnFrame.barLife.object:SetImage(self.directory .. "BarLife.png");
     self.elementsOnFrame.barFuel.object:SetImage(self.directory .. "BarFuel.png");
     self.elementsOnFrame.fuelBar.object:SetImage(self.directory .. "FuelBar.png");
