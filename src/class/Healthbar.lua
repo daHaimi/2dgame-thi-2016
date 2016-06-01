@@ -83,9 +83,9 @@ function Healthbar:SetPos(x, y)
     self.basic.xPos = x;
     self.basic.yPos = y;
     for k, v in ipairs(self.hearts) do
-        v:SetPos(_persTable.winDim[1] - 32 * k, 16);
+        v:SetPos(_persTable.scaledDeviceDim[1] - 32 * k, 16);
     end
-    self.icon:SetPos(_persTable.winDim[1] - (32 * self.unlockedHearts + 64), 0);
+    self.icon:SetPos(_persTable.scaledDeviceDim[1] - (32 * self.unlockedHearts + 64), 0);
 end
 
 return Healthbar;

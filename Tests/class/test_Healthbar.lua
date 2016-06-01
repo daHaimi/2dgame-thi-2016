@@ -14,8 +14,8 @@ describe("Unit test for Healthbar.lua", function()
             Create = function(...) return fakeElement(); end
         }
         _G._persTable = {
-            winDim = {
-                [1] = 500;
+            scaledDeviceDim = {
+                [1] = 480;
                 [2] = 900;
             };
             upgrades = {
@@ -53,11 +53,11 @@ describe("Unit test for Healthbar.lua", function()
         locInstance:SetPos(5, 5);
         assert.are.equal(locInstance.basic.xPos, 5);
         assert.are.equal(locInstance.basic.yPos, 5);
-        assert.are.equal(locInstance.hearts[1].x, 468);
+        assert.are.equal(locInstance.hearts[1].x, 448);
         assert.are.equal(locInstance.hearts[1].y, 16);
-        assert.are.equal(locInstance.hearts[2].x, 436);
+        assert.are.equal(locInstance.hearts[2].x, 416);
         assert.are.equal(locInstance.hearts[2].y, 16);
-        assert.are.equal(locInstance.icon.x, 372);
+        assert.are.equal(locInstance.icon.x, 352);
         assert.are.equal(locInstance.icon.y, 0);
     end)
 
