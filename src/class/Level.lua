@@ -275,13 +275,14 @@ end
 --- Try to activate the god Mode.
 -- @return When the god mode was successfully activated it returns 1 otherwise 0.
 function Level:activateGodMode()
-    if _G._persTable.upgrades.godMode == true and self.godModeFuel > 0
-            and self.godModeActive == 0 and self.direction == 1 then
+    if _G._persTable.upgrades.godMode == 1 and self.godModeFuel > 0
+    and self.godModeActive == 0 
+    and self.direction == self.levMan:getLevelPropMapByName(self.p_levelName).direction then
         self.godModeActive = 1;
         return 1;
     else
         self.godModeActive = 0;
-        self.godModeFuel = 0; -- remove negativ fuel values
+        --self.godModeFuel = 0; -- remove negativ fuel values
         return 0;
     end
 end

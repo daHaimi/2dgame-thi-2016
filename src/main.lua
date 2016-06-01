@@ -200,9 +200,9 @@ function love.mousepressed(x, y, button)
     Loveframes.mousepressed(x, y, button);
 
     -- activate the god mode when you press the mouse
-    print(_gui:getCurrentState());
+    
     if love.mouse.isDown(1) and _gui:getCurrentState() == "InGame" then
-        levMan:getCurLevel():activateGodMode();
+        local agmRes = levMan:getCurLevel():activateGodMode();
     end
 
     -- pause game when when mouse is pressed (right button)
