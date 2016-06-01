@@ -14,7 +14,7 @@ describe("Unit test for AchievementDisplay.lua", function()
             Create = function(typeName) return fakeElement(typeName); end
         }
         _G.testUnlockedAchievements = {};
-        _G._tmptable = {
+        _G._tmpTable = {
             unlockedAchievements = {};
         }
         

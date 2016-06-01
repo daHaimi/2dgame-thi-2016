@@ -15,7 +15,7 @@ _G.levelTestStub = function()
         };
         phase = 1;
     };
-    _G._tmptable = {
+    _G._tmpTable = {
         earnedMoney = nil;
         currentDepth = nil;
         roundFuel = nil;
@@ -86,7 +86,7 @@ describe("Test unit test suite", function()
 
         locInstance = testClass("sewers", "assets/testbg.png", { 512, 256 }, 1);
 
-        testClass.caughtThisRound = {};
+        _G._tmpTable.caughtThisRound = {};
         testClass.levMan = _G.levMan;
     end)
 
@@ -143,14 +143,14 @@ describe("Test unit test suite", function()
     it("Testing addToCaught", function()
         local name = "nemo";
         testClass:addToCaught(name);
-        assert.are.same(testClass.caughtThisRound.nemo, 1);
+        assert.are.same(_G._tmpTable.caughtThisRound.nemo, 1);
     end)
 
     it("Testing addToCaught twice to test IF", function()
         local name = "nemo";
         testClass:addToCaught(name);
         testClass:addToCaught(name); --- now it is not nil
-        assert.are.same(testClass.caughtThisRound.nemo, 2);
+        assert.are.same(_G._tmpTable.caughtThisRound.nemo, 2);
     end)
 
     it("Testing addToCaught for two diffrent ", function()
@@ -158,8 +158,8 @@ describe("Test unit test suite", function()
         local name2 = "hans";
         testClass:addToCaught(name1);
         testClass:addToCaught(name2);
-        assert.are.same(testClass.caughtThisRound.nemo, 1);
-        assert.are.same(testClass.caughtThisRound.hans, 1);
+        assert.are.same(_G._tmpTable.caughtThisRound.nemo, 1);
+        assert.are.same(_G._tmpTable.caughtThisRound.hans, 1);
     end)
 
     it("Testing activateGodMode", function()
@@ -219,7 +219,7 @@ describe("Test unit test suite", function()
             };
             end;
         };
-        testClass.caughtThisRound = { ["turtle"] = 5, ["rat"] = 0, ["deadFish"] = 5, ["nemo"] = 3 };
+        _G._tmpTable.caughtThisRound = { ["turtle"] = 5, ["rat"] = 0, ["deadFish"] = 5, ["nemo"] = 3 };
         assert.are.same(testClass:calcFishedValue(), 30);
     end)
 
@@ -237,7 +237,7 @@ describe("Test unit test suite", function()
 
     it("Testing printResult with no objects caught", function()
         local loveMock = mock(_G.love, true);
-        testClass.caughtThisRound = {};
+        _G._tmpTable.caughtThisRound = {};
         testClass:printResult();
         assert.spy(loveMock.graphics.print).was.called(2);
         assert.spy(loveMock.graphics.print).was.called_with("Caught objects in this round:", match._, match._);
@@ -245,8 +245,8 @@ describe("Test unit test suite", function()
     end)
 
     it("Testing printResult with caught objects", function()
-        testClass.caughtThisRound["cat"] = 1;
-        testClass.caughtThisRound["dog"] = 2;
+        _G._tmpTable.caughtThisRound["cat"] = 1;
+        _G._tmpTable.caughtThisRound["dog"] = 2;
         testClass.levMan.curSwarmFac = {
             getFishableObjects = function() return { ["cat"] = { ["value"] = 10 }, ["dog"] = { ["value"] = 20 } }; end;
         };

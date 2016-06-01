@@ -20,6 +20,7 @@ _G._gui = nil;
 _G._persistence = nil;
 _G._androidConfig = {};
 _G._tmpTable = {
+    caughtThisRound = {};
     earnedMoney = nil;
     currentDepth = nil;
     roundFuel = 800;

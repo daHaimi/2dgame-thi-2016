@@ -22,7 +22,7 @@ describe("Unit test for Score.lua", function()
                 [2] = 500;
             };
         };
-        _G._tmptable = {
+        _G._tmpTable = {
             earnedMoney = 0;
         }
         
