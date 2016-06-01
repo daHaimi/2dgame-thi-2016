@@ -9,7 +9,7 @@ _G.math.inf = 1 / 0;
 -- @param direction The y direction (-1 means up and 1 means down)
 -- @param swarmFactory The swarm factory
 local Level = Class {
-    init = function(self, levelName, backgroundPath, winDim, _, levelManager)
+    init = function(self, levelName, backgroundPath, winDim, direction, levelManager)
         -- Member variables
         self.levMan = nil;
         self.p_levelName = "";
@@ -37,6 +37,7 @@ local Level = Class {
         self.enviromentPosition = 0;
 
         self.levMan = levelManager;
+        self.direction = direction;
         self.p_levelName = levelName;
         self.bg = love.graphics.newImage(backgroundPath);
         if self.bg ~= nil then -- do not remove this if statement or busted will crash
