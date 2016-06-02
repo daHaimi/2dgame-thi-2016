@@ -141,9 +141,6 @@ function MainMenu:create()
     end
     
     self.elementsOnFrame.button_credits.object.OnClick = function(object)
-        _gui.notifiction:newNotification("assets/balloon.png", "hallo hallo");
-        
-        _gui.notifiction:newNotification("assets/balloon.png", "lululululu");
         _gui:changeFrame(_gui:getFrames().credits);
     end
     

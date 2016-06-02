@@ -36,6 +36,7 @@ local Bait = Class {
         self.levMan = levelManager;
         self.yPos = (self.winDim[2] / 2) - (self.size / 2); -- FIXME unused local
         local img = love.graphics.newImage("assets/sprites/sprite_hamster.png");
+        self.line = love.graphics.newImage("assets/line.png");
         if img == 0 then
             self.image = nil;
         else 
@@ -240,7 +241,6 @@ end
 
 --- draws the line of the Hamster
 function Bait:drawLine()
-    local image = love.graphics.newImage("assets/line.png");
     local angle = 0;
     local length = math.sqrt (self.xPos * self.xPos + self.yPos * self.yPos);
     
@@ -250,7 +250,7 @@ function Bait:drawLine()
     love.graphics.translate(- self.xPos, - self.yPos);
     for i = 1, length, 1 do
         if not (i * 9 > length) then
-            love.graphics.draw(image, self.xPos, self.yPos - 40 - 9 * i);
+            love.graphics.draw(self.line, self.xPos, self.yPos - 40 - 9 * i);
         end
     end
 

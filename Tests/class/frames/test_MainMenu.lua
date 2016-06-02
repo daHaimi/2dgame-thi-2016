@@ -8,8 +8,6 @@ Frame = require "class.Frame";
 
 describe("Unit test for MainMenu.lua", function()
     local locInstance;
-
-
     before_each(function()
         _G.love = {
             mouse = {

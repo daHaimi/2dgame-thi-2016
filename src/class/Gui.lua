@@ -1,5 +1,4 @@
 Class = require "lib.hump.class";
-Loveframes = require "lib.LoveFrames";
 
 Mainmenu = require "class.frames.MainMenu";
 Achievements = require "class.frames.Achievements";
@@ -33,13 +32,19 @@ local Gui = Class {
             lastState = nil;
         };
         self.p_textOutput = "";
-        self.notifiction = Notification();
+        self.notification = Notification();
     end;
     levMan = nil;
 };
 
+---return all frames
 function Gui:getFrames()
     return self.p_myFrames;
+end
+
+---creates new notification
+function Gui:newNotification(image, text)
+    self.notification:newNotification(image, text);
 end
 
 ---called in the load function
@@ -76,7 +81,7 @@ function Gui:update()
     if self:drawGame() then
         self.p_myFrames.inGame:update();
     end
-    self.notifiction:update();
+    self.notification:update();
 end
 
 ---Set to start the flyIn/Out of the frames

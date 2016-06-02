@@ -3,25 +3,34 @@ return {
     fishableObjects = {
         nemo = {
             -- definition of the object
-            name = "nemo",      -- The name
-            image = "nemo.png", -- The image file
-            spriteSize = 64,    -- width of the image
-            minSpeed = 4,       -- Min movement speed
-            maxSpeed = 7,       -- Max movement speed
-            value = 30,         -- The worth of the object
-            hitpoints = 10,      -- The HP of the object
-            minAmount = 3,            -- min amount of objects per swarm
-            maxAmount = 5,            -- max amount of objects per swarm
-            swarmHeight = 300,       -- height of the swarm of this object
-            enabled = true,      -- Whether the object is enabled
-            description = "Nemo´s description";    --Description of the object. shown in the dictionary
-            -- definition of the hitbox
+            name = "nemo",         -- The name
+            image = "nemo.png",    -- The image file
+            spriteSize = 64,       -- width of the image
+            minSpeed = 4,          -- Min movement speed
+            maxSpeed = 7,          -- Max movement speed
+            value = 30,            -- The worth of the object
+            hitpoints = 10,        -- The HP of the object
+            animTimeoutMin = 0.05, -- The min animation timeout
+            animTimeoutMax = 0.15, -- The max animation timeout
+            
+            -- The animation type of the enum Animate.AnimType
+            animType = Animate.AnimType.bounce,
+            
+            minAmount = 3,         -- min amount of objects per swarm
+            maxAmount = 5,         -- max amount of objects per swarm
+            swarmHeight = 300,     -- height of the swarm of this object
+            enabled = true,        -- Whether the object is enabled
+            
+            -- Description of the object. Shown in the dictionary
+            description = "Nemo´s description";    
+            
+            -- Definition of the hitbox
             hitbox = {
                 {
-                    width = 40,       -- Hitbox width
-                    height = 30,       -- Hitbox height
-                    deltaXPos= 12,   -- The hitbox X adjustment 
-                    deltaYPos = 17   -- The hitbox Y adjustment 
+                    width = 40,    -- Hitbox width
+                    height = 30,   -- Hitbox height
+                    deltaXPos= 12, -- The hitbox X adjustment 
+                    deltaYPos = 17 -- The hitbox Y adjustment 
                 }
             }
         },
@@ -55,7 +64,10 @@ return {
             spriteSize = 64,
             minSpeed = 3,
             maxSpeed = 4,
-            hitpoints = 5,        
+            hitpoints = 5,
+            animTimeoutMin = 0.01,
+            animTimeoutMax = 0.2,
+            animType = Animate.AnimType.bounce,
             value = -10,
             minAmount = 3,
             maxAmount = 3,
@@ -80,6 +92,8 @@ return {
             maxSpeed = 1,
             hitpoints = 5,        
             value = 20,
+            animTimeoutMin = 0.1,
+            animTimeoutMax = 0.3,
             minAmount = 1,
             maxAmount = 2,
             swarmHeight = 125,
@@ -92,7 +106,7 @@ return {
                     deltaXPos = 0,
                     deltaYPos = 20
                 }
-            } 
+            }
         },
         
         angler = {
@@ -101,7 +115,10 @@ return {
             spriteSize = 64,
             minSpeed = 1,
             maxSpeed = 5,
-            hitpoints = 20,        
+            hitpoints = 20,
+            animTimeoutMin = 0.05,
+            animTimeoutMax = 0.2,
+            animType = Animate.AnimType.bounce,
             value = 40,
             minAmount = 1,
             maxAmount = 4,
@@ -225,6 +242,8 @@ return {
             maxSpeed = 5,
             hitpoints = 60,        
             value = 60,
+            animTimeoutMin = 0.3,
+            animTimeoutMax = 1.5,
             minAmount = 1,
             maxAmount = 3,
             swarmHeight = 200,
@@ -434,6 +453,8 @@ return {
             maxSpeed = 4,
             hitpoints = 10,        
             value = 40,
+            animTimeoutMin = 0.1,
+            animTimeoutMax = 1,
             minAmount = 1,
             maxAmount = 3,
             swarmHeight = 200,
@@ -761,6 +782,13 @@ return {
             nameOnPersTable = "getSecondObject";
             name = "Second object";
             description = "You caught your second object";
+            image_lock = "gui_Test_klickableElement_disable.png";
+            image_unlock = "gui_Test_klickableElement.png";
+        },
+        failedStart = {
+            nameOnPersTable = "failedStart";
+            name = "Failed from the beginning";
+            description = "Gratulation! You failed to start the game";
             image_lock = "gui_Test_klickableElement_disable.png";
             image_unlock = "gui_Test_klickableElement.png";
         },
