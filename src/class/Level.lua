@@ -72,8 +72,8 @@ local Level = Class {
         self.animationStartFinished = false;
         self.failedStart = false;
         self.hamsterYPos = 0;
-        self.animationStartPoint = self.winDim[2] / 2 - 300;
-        self.hamsterYPos = self.animationStartPoint
+        self.animationStartPoint = self.winDim[2] / 2 - 270;
+        self.hamsterYPos = self.animationStartPoint - 30;
         self.hamsterLockedXPos = 0;
 
         -- create light world
@@ -103,6 +103,7 @@ local Level = Class {
         self.line = love.graphics.newImage("assets/line.png");
         self.toiletLowerHalf = love.graphics.newImage("assets/toilet_lowerHalf.png");
         self.toiletBowl = love.graphics.newImage("assets/toilet_bowl.png");
+        self.hand = love.graphics.newImage("assets/hand.png");
     end
 }
 
@@ -220,7 +221,8 @@ function Level:doAnimationMovement(bait, dt)
         end
     end
     self.hamsterYPos = self.hamsterYPos + self.moved;
-    self.animationStartPoint = self.animationStartPoint - self:getMoved();
+    self.animationStartPoint = self.animationStartPoint - self.moved;
+    
 end
 
 --- when the bait hit a object or the boarder is reached, start phase 2
@@ -268,14 +270,13 @@ function Level:drawEnviroment()
     --animation
     if not self.animationStart then
         love.graphics.draw(self.hamster, self.levMan:getCurPlayer():getPosXMouse() - 32, self.hamsterYPos);
+        self:drawLine(self.levMan:getCurPlayer():getPosXMouse() - 32);
+        love.graphics.draw(self.hand, self.levMan:getCurPlayer():getPosXMouse() - 48, self.animationStartPoint - 220);
     else
+        love.graphics.draw(self.hand, self.hamsterLockedXPos - 16, self.animationStartPoint - 220);
+        self:drawLine(self.hamsterLockedXPos);
         if self.hamsterYPos < self.animationStartPoint + 150 or self.failedStart then
             love.graphics.draw(self.hamster, self.hamsterLockedXPos, self.hamsterYPos);
-        end
-        for i = 9, self.hamsterYPos - (self.winDim[2] / 2 - 300), 9 do
-            if i < 150  or self.failedStart then
-                love.graphics.draw(self.line, self.hamsterLockedXPos + 30, self.animationStartPoint + i);
-            end
         end
     end
 
@@ -288,6 +289,18 @@ function Level:drawEnviroment()
     self.lightWorld.drawShadow();
 end
 
+--- Draws the line
+function Level:drawLine(position)
+    local p_dist = (self.hamsterYPos - (self.animationStartPoint - 40));
+    local p_toMuch = 0;
+    while p_dist > 300 do
+        p_dist = p_dist - 9;
+        p_toMuch = p_toMuch + 9
+    end
+    for i = 9, p_dist, 9 do
+        love.graphics.draw(self.line, position + 30, self.hamsterYPos - p_toMuch - i);
+    end
+end
 --- Pay the achieved money to the player and multiply it with the
 -- bonus value (when activated) at the end of each round. Remove the money multi when it was activated.
 function Level:payPlayer()
