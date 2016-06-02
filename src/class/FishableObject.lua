@@ -2,16 +2,22 @@ Class = require "lib.hump.class";
 Animate = require "class.Animate";
 require "socket" math.randomseed(socket.gettime() * 10000);
 
---- FishableObject is the class of all fishable object.
--- @param xPosition: x-position of the object
--- @param yPosition: y-position of the object
--- @param xHitbox: width of the hitbox
--- @param yHitbox: height of the hitbox
--- @param speed: number of the pixels moved per step (can be negativ)
--- @param value: value of the object
--- @param hitpoints: amoung of the hitpoints of the object
+--- FishableObject is the class of all fishable objects
+-- @param name The name of the fishable object
+-- @param imageSrc The name of the image and sprite suffix
+-- @param yPosition y-position of the object
+-- @param minSpeed The minimum speed of the object
+-- @param maxSpeed The maximum speed of the object
+-- @param value value of the object
+-- @param hitpoints amount of the hitpoints of the object
+-- @param spriteSize Size of the sprite in pixels
+-- @param hitbox The hitbox table for this object
+-- @param animTimeoutMin The min timeout between the images in seconds
+-- @param animTimeoutMax The max timeout between the images in seconds
+-- @param animType (Animate.AnimType.linear) The animation type of the enum Animate.AnimType
 local FishableObject = Class {
-    init = function(self, name, imageSrc, yPosition, minSpeed, maxSpeed, value, hitpoints, spriteSize, hitbox)
+    init = function(self, name, imageSrc, yPosition, minSpeed, maxSpeed, value, hitpoints, 
+            spriteSize, hitbox, animTimeoutMin, animTimeoutMax, animType)
         self.name = name;
         self.image = love.graphics.newImage("assets/" .. imageSrc);
         local spriteFile = "assets/sprites/sprite_" .. imageSrc;
@@ -19,7 +25,12 @@ local FishableObject = Class {
             self.sprite = love.graphics.newImage(spriteFile);
             local spriteCols = self.sprite:getWidth() / self.image:getWidth();
             local spriteRows = self.sprite:getHeight() / self.image:getHeight();
-            self.animation = Animate(self.sprite, spriteCols, spriteRows);
+            local animTimeout = nil;
+            if animTimeoutMin and animTimeoutMax then
+                animTimeout = math.random() * (animTimeoutMax - animTimeoutMin) + animTimeoutMin;
+            end
+            
+            self.animation = Animate(self.sprite, spriteCols, spriteRows, animTimeout, animType);
         end
         
         self.xPosition = math.random(spriteSize + 26, _G._persTable.winDim[1] - 26);
