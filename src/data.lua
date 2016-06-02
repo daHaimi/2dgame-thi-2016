@@ -764,6 +764,13 @@ return {
             image_lock = "gui_Test_klickableElement_disable.png";
             image_unlock = "gui_Test_klickableElement.png";
         },
+        failedStart = {
+            nameOnPersTable = "failedStart";
+            name = "Failed from the beginning";
+            description = "Gratulation! You failed to start the game";
+            image_lock = "gui_Test_klickableElement_disable.png";
+            image_unlock = "gui_Test_klickableElement.png";
+        },
     },
     
     languages = {

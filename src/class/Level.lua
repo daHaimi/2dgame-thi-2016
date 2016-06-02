@@ -168,6 +168,37 @@ function Level:update(dt, bait)
     bait:update(dt);
     
     --do the animation movement
+    self:doAnimationMovement(bait, dt)
+    
+    --Update music
+    if self.godModeActive == 1 and not self.gMMusicPlaying then
+        TEsound.playLooping({ "assets/sound/godMode.wav" }, 'abc');
+        self.gMMusicPlaying = true;
+    elseif self.godModeActive == 0 then
+        TEsound.stop('abc');
+        self.gMMusicPlaying = false;
+    end
+    
+    --Update the light
+    self.baitLight.setPosition(self.posY or 0, self.posX or 0);
+    self.lightWorld:update();
+    
+    -- update the currentDepth
+    _G._tmpTable.currentDepth = math.abs(self.posY);
+    
+    
+    if self:isFinished() then
+        self:checkForAchievments()
+    end
+end
+
+function Level:checkForAchievments()
+    if self.failedStart and not _G._persTable.achievements.failedStart then
+         
+    end
+end
+
+function Level:doAnimationMovement(bait, dt)
     if self.animationStart then
         if  self.hamsterLockedXPos < 120 and self.hamsterLockedXPos > 65 or 
             self.hamsterLockedXPos < 355 and self.hamsterLockedXPos > 300 then
@@ -190,18 +221,6 @@ function Level:update(dt, bait)
     end
     self.hamsterYPos = self.hamsterYPos + self.moved;
     self.animationStartPoint = self.animationStartPoint - self:getMoved();
-
-    --Update music
-    if self.godModeActive == 1 and not self.gMMusicPlaying then
-        TEsound.playLooping({ "assets/sound/godMode.wav" }, 'abc');
-        self.gMMusicPlaying = true;
-    elseif self.godModeActive == 0 then
-        TEsound.stop('abc');
-        self.gMMusicPlaying = false;
-    end
-    self.baitLight.setPosition(self.posY or 0, self.posX or 0);
-    self.lightWorld:update();
-    _G._tmpTable.currentDepth = self.posY;
 end
 
 --- when the bait hit a object or the boarder is reached, start phase 2
@@ -509,15 +528,17 @@ function Level:getLevelName()
     return self.p_levelName;
 end
 
---- Returns true if a animation for the start or the end of the level is running
+--- Returns true if the start animation is running (started and not finished)
 function Level:getStartAnimationRunning()
     return self.animationStart and not self.animationStartFinished;
 end
 
+--- returns true if the start animation is Finished
 function Level:getStartAnimationFinished()
     return self.animationStartFinished;
 end
 
+--- starts the Start Animation
 function Level:startStartAnimation()
     self.animationStart = true;
     self.hamsterLockedXPos = self.levMan:getCurPlayer():getPosXMouse() - 32;

@@ -43,6 +43,7 @@ local curLevel;
 local player;
 local swarmFactory;
 local levMan;
+local p_scaleFactor
 
 --- The bootstrap of the game.
 -- This function is called exactly once at the beginning of the game.
@@ -57,14 +58,12 @@ function love.load()
     local deviceDim = { love.window.getDesktopDimensions(flags.display) };
     --deviceDim = {640, 1140};
     --deviceDim = {720, 1080};
-    local scaleFactor;
-    _G._persTable.winDim[1], _G._persTable.winDim[2], scaleFactor = getScaledDimension(deviceDim);
+    deviceDim = {1366,768};
+    _G._persTable.winDim[1], _G._persTable.winDim[2], p_scaleFactor = getScaledDimension(deviceDim);
 
-    _G._persTable.scaledDeviceDim = { _G._persTable.winDim[1] * scaleFactor, _G._persTable.winDim[2] * scaleFactor };
-    if _G._persTable.scaledDeviceDim[1] < 480 then
-        _G._persTable.scaledDeviceDim = _G._persTable.winDim;
-        _G._persTable.scaleFactor = 1;
-    end
+
+    _G._persTable.scaledDeviceDim = {_G._persTable.winDim[1] * p_scaleFactor, _G._persTable.winDim[2] * p_scaleFactor };
+
     love.window.setMode(_G._persTable.scaledDeviceDim[1], _G._persTable.scaledDeviceDim[2], { centered });
     levMan = LevelManager();
 
@@ -98,6 +97,7 @@ function getScaledDimension(deviceDim)
         resultDim[2] = resultDim[1] * 16 / 9;
         if deviceDim[2] < resultDim[2] then
             resultDim[2] = deviceDim[2] *0.9
+            scaleFactor = 1;
         end
     else
         scaleFactor = deviceDim[1] / 480;
@@ -111,12 +111,12 @@ end
 -- This function is called continuously by the love.run().
 function love.draw()
     if _gui:drawGame() then
-        love.graphics.scale(scaleFactor, scaleFactor);
+        love.graphics.scale(p_scaleFactor, p_scaleFactor);
 
         levMan:getCurLevel():draw(levMan:getCurPlayer());
         levMan:getCurSwarmFactory():draw();
         levMan:getCurLevel():drawEnviroment();
-        love.graphics.scale(1 / scaleFactor, 1 / scaleFactor);
+        love.graphics.scale(1 / p_scaleFactor, 1 / p_scaleFactor);
     end
 
     if levMan:getCurLevel() ~= nil then

@@ -107,6 +107,7 @@ function Persistence:createPersTable()
     _G._persTable.achievements = {
         getFirstObject = true;
         getSecondObject = false;
+        failedStart = true;
     };
 
     --- config options
