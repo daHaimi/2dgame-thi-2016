@@ -373,10 +373,42 @@ describe("Test unit test suite", function()
         assert.are.same("someName", locInstance:getLevelName());
     end)
 
-    it("Testing drawEnviroment", function()
+    it("Testing drawEnviroment before start Animation", function()
         local loveMock = mock(_G.love, true);
+        locInstance.enviromentPosition = -250;
+        locInstance.animationStart = false;
         locInstance:drawEnviroment();
-        assert.spy(loveMock.graphics.draw).was.called(17);
+        assert.spy(loveMock.graphics.draw).was.called(19);
+        assert.are.same(-50, locInstance.enviromentPosition);
+    end)
+
+    it("Testing drawEnviroment while start Animation", function()
+        local loveMock = mock(_G.love, true);
+        locInstance.animationStart = true;
+        locInstance.enviromentPosition = 250;
+        locInstance:drawEnviroment();
+        assert.spy(loveMock.graphics.draw).was.called(19);
+        assert.are.same(50, locInstance.enviromentPosition);
+    end)
+
+    it("Testing drawEnviroment: drawing Walls", function()
+        local loveMock = mock(_G.love, true);
+        locInstance.animationStart = true;
+        locInstance.enviromentPosition = 250;
+        locInstance:drawEnviroment();
+        assert.are.same(50, locInstance.enviromentPosition);
+        
+        locInstance.enviromentPosition = -250;
+        locInstance:drawEnviroment();
+        assert.are.same(-50, locInstance.enviromentPosition);
+    end)
+
+    it("Testing drawEnviroment while failed start", function()
+        local loveMock = mock(_G.love, true);
+        locInstance.animationStart = true;
+        locInstance.failedStart = true;
+        locInstance:drawEnviroment();
+        assert.spy(loveMock.graphics.draw).was.called(19);
     end)
     
     it("Testing getStartAnimationRunning", function()
@@ -396,6 +428,12 @@ describe("Test unit test suite", function()
         assert.are.same(true, locInstance.animationStart);
     end)
 
-
+    it("Testing drawLine", function()
+        local loveMock = mock(_G.love, true);
+        locInstance.hamsterYPos = 400;
+        locInstance.animationStartPoint = 0;
+        locInstance:drawLine(0)
+        assert.spy(loveMock.graphics.draw).was.called(32);
+    end)
 
 end)
