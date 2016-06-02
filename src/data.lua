@@ -657,7 +657,7 @@ return {
         }
     },
 
-    --- Date for all upgrades
+    --- Data for all upgrades
     upgrades = {
         oneMoreLife = {
             nameOnPersTable = "oneMoreLife";--Name of parameter in persTable. Unlock change this parameter to true

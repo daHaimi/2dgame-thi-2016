@@ -11,6 +11,7 @@ Score = require "class.frames.Score";
 Pause = require "class.frames.Pause";
 ChooseLevel = require "class.frames.Level";
 InGame = require "class.frames.inGame";
+Notification = require "class.Notification";
 
 local Gui = Class {
     init = function(self)
@@ -32,8 +33,8 @@ local Gui = Class {
             lastState = nil;
         };
         self.p_textOutput = "";
+        self.notifiction = Notification();
     end;
-    
     levMan = nil;
 };
 
@@ -75,7 +76,7 @@ function Gui:update()
     if self:drawGame() then
         self.p_myFrames.inGame:update();
     end
-    
+    self.notifiction:update();
 end
 
 ---Set to start the flyIn/Out of the frames
