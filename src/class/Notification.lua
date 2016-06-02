@@ -42,6 +42,7 @@ local Notification = Class {
     end;
 };
 
+---called to create and buffer a new notification 
 function Notification:newNotification(imagepath, text)
     local newNotification = {
         image = Loveframes.Create("image");
@@ -56,20 +57,25 @@ function Notification:newNotification(imagepath, text)
     table.insert(self.notificationBuffer, newNotification);
 end
 
+---removes already shown notifications
 function Notification:removeNotification()
     table.remove(self.notificationBuffer, 1);
 end
 
+---called in the fly in state
 function Notification:flyIn()
     self.x = self.x - self.speed;
     self:SetPos(self.x, self.yPos);
 end
 
+---called in the fly out state
 function Notification:flyOut()
     self.x = self.x + self.speed;
     self:SetPos(self.x, self.yPos);
 end
 
+---function checks the position of the notification frame
+--@parm pos: position "in" or "out" is reached
 function Notification:checkPosition(pos)
     if pos == "in" then
         if self.x <= self.defaultX - self.length then
@@ -87,6 +93,7 @@ function Notification:checkPosition(pos)
     end
 end
 
+---sets position of the notification frame
 function Notification:SetPos(x, y)
     self.background:SetPos(x,y);
     if self.notificationBuffer[1] ~= nil then
@@ -95,6 +102,7 @@ function Notification:SetPos(x, y)
     end
 end
 
+---sets the visible of the notification frame
 function Notification:SetVisible(visible)
     self.background:SetVisible(visible);
     if self.notificationBuffer[1] then
@@ -103,33 +111,26 @@ function Notification:SetVisible(visible)
     end
 end
 
+---called in the love.update function/ state machine for notification frame
 function Notification:update()
     if self.notificationBuffer[1] ~= nil then
         if self.state == 0 then
             self:SetVisible(true);
             self.state = 1;
         end;
-        
         if self.state == 1 then
-            print"a"
             if self:checkPosition("in") then
                 self.state = 2;
             else
                 self:flyIn();
             end;
-            
-            
         end;
-        
         if self.state == 2 then
-            print(self.time)
             self.time = self.time + 1;
             if self.time >= self.waitingTime then
                 self.state = 3;
             end;
-            
         end;
-        
         if self.state == 3 then
             if self:checkPosition("out") then
                 self:SetVisible(false);
@@ -140,9 +141,7 @@ function Notification:update()
             else
                 self:flyOut();
             end;
-            
         end;
-        
     end;
 end;
 
