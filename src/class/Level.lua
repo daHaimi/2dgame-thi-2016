@@ -67,7 +67,6 @@ local Level = Class {
         --Animation parameters
         self.animationStart = false;
         self.animationStartFinished = false;
-        self.failedStart = false;
         self.hamsterYPos = 0;
         self.animationStartPoint = self.winDim[2] / 2 - 270;
         self.hamsterYPos = self.animationStartPoint - 30;
@@ -105,6 +104,10 @@ local Level = Class {
         self.borderBottom = love.graphics.newImage("assets/border.png");
         self.lowerBorderPosition = math.abs(self.lowerBoarder) + self.winDim[2] * 0.68 + 130;
         
+        --parameters for achievements
+        self.failedStart = false;
+        self.achievementsChecked = false;
+        --parameter for loading the game
         self.gameLoaded = true;
     end
 }
@@ -193,8 +196,9 @@ function Level:update(dt, bait)
     _G._tmpTable.currentDepth = math.abs(self.posY);
     
     
-    if self:isFinished() then
+    if self:isFinished() and not self.achievementsChecked then
         self:checkForAchievments()
+        self.achievementsChecked = true;
     end
 end
 
