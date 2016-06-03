@@ -29,7 +29,7 @@ local Level = Class {
         self.oldPosY = _G.math.inf;
         self.godModeFuel = 0;
         self.shortGMDist = 0;
-        self.godModeActive = 0;
+        self.godModeActive = false;
         self.moved = 0;
         self.gMMusicPlaying = false;
         
@@ -63,7 +63,6 @@ local Level = Class {
             end
         end
         _G._tmpTable.roundFuel = self.godModeFuel;
-
         
         --Animation parameters
         self.animationStart = false;
@@ -141,6 +140,8 @@ end
 -- last time this function was called.
 -- @param bait The bait object, which stands for the user.
 function Level:update(dt, bait)
+    if self.godModeActive then
+    end
     self.moved = 0;
     --set the direction in relation of the yPosition
     if self.posY <= self.lowerBoarder then
@@ -176,11 +177,11 @@ function Level:update(dt, bait)
     self:doAnimationMovement(bait, dt)
     
     --Update music
-    if self.godModeActive == 1 and not self.gMMusicPlaying then
-        TEsound.playLooping({ "assets/sound/godMode.wav" }, 'abc');
+    if self.godModeActive and not self.gMMusicPlaying then
+        TEsound.playLooping({ "assets/sound/godMode.wav" }, 'godmode');
         self.gMMusicPlaying = true;
-    elseif self.godModeActive == 0 then
-        TEsound.stop('abc');
+    elseif not self.godModeActive then
+        TEsound.stop('godmode');
         self.gMMusicPlaying = false;
     end
     
@@ -204,7 +205,7 @@ function Level:checkForAchievments()
 end
 
 function Level:doAnimationMovement(bait, dt)
-    if self.animationStart then
+    if self.animationStart and not self.animationStartFinished then
         if  self.hamsterLockedXPos < 120 and self.hamsterLockedXPos > 65 or 
             self.hamsterLockedXPos < 355 and self.hamsterLockedXPos > 300 then
             if self.hamsterYPos < _G._persTable.winDim[2] * 0.5 - 230 then
@@ -343,17 +344,18 @@ end
 
 --- Check the state of the god mode and updates the god mode fuel and shortGMDist value.
 function Level:checkGodMode()
-    if self.godModeActive == 1 then
+    if self.godModeActive then
         if self.shortGMDist > 0 then
             self:reduceShortGMDist();
         else
             if self.oldPosY == _G.math.inf then
                 self.oldPosY = self.posY;
             else
-                local fuel = self:getGodModeFuel() - math.abs(self.posY - self.oldPosY)
-                self:setGodModeFuel(fuel);
-                _G._tmpTable.roundFuel = fuel;
-                self.oldPosY = self.posY;
+                self.godModeFuel = self.godModeFuel - math.abs(self.moved);
+                _G._tmpTable.roundFuel = self.godModeFuel;
+                if self.godModeFuel < 0 then
+                    self:deactivateGodMode();
+                end
             end
         end
     end
@@ -368,7 +370,7 @@ function Level:activateShortGM(dt, speed)
         local tempGMTime = 0.8;
         self.shortGMDist = math.ceil((dt * speed) * (tempGMTime / dt));
         self.oldPosY = _G.math.inf;
-        self.godModeActive = 1;
+        self.godModeActive = true;
     end
 end
 
@@ -386,28 +388,25 @@ function Level:reduceShortGMDist()
     if self.shortGMDist <= 0 then
         self.oldPosY = _G.math.inf;
         self.shortGMDist = 0;
-        self.godModeActive = 0;
+        self:deactivateGodMode();
     end
 end
 
 --- Try to activate the god Mode.
 -- @return When the god mode was successfully activated it returns 1 otherwise 0.
 function Level:activateGodMode()
-    if _G._persTable.upgrades.godMode == 1 and self.godModeFuel > 0
-    and self.godModeActive == 0 
-    and self.direction == self.levMan:getLevelPropMapByName(self.p_levelName).direction then
-        self.godModeActive = 1;
-        return 1;
-    else
-        self.godModeActive = 0;
-        return 0;
+    if _G._persTable.upgrades.godMode and not self.godModeActive and
+    self.direction == self.levMan:getLevelPropMapByName(self.p_levelName).direction then
+        if self.godModeFuel > 0 then
+            self.godModeActive = true;
+        end
     end
-    
+
 end
 
 --- Deactivates the god mode.
 function Level:deactivateGodMode()
-    self.godModeActive = 0;
+    self.godModeActive = false;
 end
 
 --- Calculates the value of the fished objects.
@@ -442,7 +441,7 @@ end
 function Level:setGodModeFuel(newFuel)
     self.godModeFuel = newFuel;
     if self.godModeFuel <= 0 then
-        self.godModeActive = 0;
+        self.godModeActive = false;
     end
 end
 

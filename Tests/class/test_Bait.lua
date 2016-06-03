@@ -461,9 +461,9 @@ describe("Unit test for Bait.lua", function()
         myInstance.image = locImageStub;
         local fishable = { getName = function() return "deadFish" end };
         myInstance.levMan.curLevel = {
-            getGodModeStat = function(...) return 0 end;
+            getGodModeStat = function(...) return false end;
             activateShortGM = function(...) end;
-            isFinished = function() return 0 end;
+            isFinished = function() return false end;
             getDirection = function(...) return 1 end;
         };
         _G._persTable.upgrades.moreLife = 1;
@@ -477,9 +477,9 @@ describe("Unit test for Bait.lua", function()
         myInstance.image = locImageStub;
         local fishable = { getName = function() return "deadFish" end };
         myInstance.levMan.curLevel = {
-            getGodModeStat = function(...) return 0 end;
+            getGodModeStat = function(...) return false end;
             activateShortGM = function(...) end;
-            isFinished = function() return 0 end;
+            isFinished = function() return false end;
             getDirection = function(...) return 1 end;
             switchToPhase2 = function(...) end;
         };

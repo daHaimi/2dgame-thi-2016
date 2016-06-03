@@ -153,17 +153,15 @@ describe("Test unit test suite", function()
     end)
 
     it("Testing checkGodMode", function()
-        locInstance.godModeActive = 1;
+        locInstance.godModeActive = true;
         locInstance.godModeFuel = 20;
-        local sSGMF = spy.on(locInstance, "setGodModeFuel");
+        locInstance.moved = 2;
 
-        for i = 10, -20, -1
+        for i = 1, 20, 1
         do
-            locInstance.posY = i;
             locInstance:checkGodMode();
         end
-        assert.spy(sSGMF).was.called(20);
-        assert.are.same(locInstance.godModeActive, 0);
+        assert.are.same(locInstance.godModeActive, false);
     end)
 
     it("Testing addToCaught", function()
@@ -194,39 +192,39 @@ describe("Test unit test suite", function()
         local sAGM = spy.on(locInstance, "activateGodMode");
         locInstance:activateGodMode();
         assert.spy(sAGM).was.called(1);
-        assert.are.same(locInstance.godModeActive, 1);
+        assert.are.same(locInstance.godModeActive, true);
 
         locInstance.godModeFuel = 0;
         locInstance:activateGodMode();
         assert.spy(sAGM).was.called(2);
-        assert.are.same(locInstance.godModeActive, 0);
+        assert.are.same(locInstance.godModeActive, true);
 
         _G._persTable.upgrades.godMode = 0;
         locInstance.godModeFuel = 1000;
         locInstance:activateGodMode();
         assert.spy(sAGM).was.called(3);
-        assert.are.same(locInstance.godModeActive, 0);
+        assert.are.same(locInstance.godModeActive, true);
     end)
 
     it("Testing deactivateGodMode", function()
-        testClass.godModeActive = 1;
+        testClass.godModeActive = true;
         local sDGM = spy.on(testClass, "deactivateGodMode");
         testClass:deactivateGodMode();
         assert.spy(sDGM).was.called(1);
-        assert.are.same(testClass.godModeActive, 0);
+        assert.are.same(testClass.godModeActive, false);
     end)
 
     it("Testing getGodModeStat", function()
-        assert.are.same(testClass:getGodModeStat(), 0);
+        assert.are.same(testClass:getGodModeStat(), false);
     end)
 
     it("Testing setGodModeFuel and getGodModeFuel", function()
-        testClass.godModeActive = 1;
+        testClass.godModeActive = true;
         testClass:setGodModeFuel(1000);
         assert.are.same(testClass:getGodModeFuel(), 1000);
         testClass:setGodModeFuel(0);
         assert.are.same(testClass:getGodModeFuel(), 0);
-        assert.are.same(testClass.godModeActive, 0);
+        assert.are.same(testClass.godModeActive, false);
     end)
 
     it("Testing resetOldPosY", function()
@@ -317,26 +315,26 @@ describe("Test unit test suite", function()
         locInstance.p_levelName = "sewers";
         locInstance.direction = 1;
         locInstance.shortGMDist = 0;
-        locInstance.godModeActive = 0;
+        locInstance.godModeActive = false;
         locInstance.oldPosY = 210;
         locInstance:activateShortGM(0.12, 200);
 
-        assert.are.same(locInstance.godModeActive, 1);
+        assert.are.same(locInstance.godModeActive, true);
         assert.are.same(locInstance.oldPosY, _G.math.inf);
 
         locInstance.shortGMDist = 0;
-        locInstance.godModeActive = 0;
+        locInstance.godModeActive = false;
         locInstance.oldPosY = 210;
         locInstance.direction = -1;
         locInstance:activateShortGM(0.12, 200);
 
-        assert.are.same(locInstance.godModeActive, 0);
+        assert.are.same(locInstance.godModeActive, false);
 
     end)
 
     it("Testing reduceShortGMDist", function()
         locInstance.oldPosY = _G.math.inf;
-        locInstance.godModeActive = 0;
+        locInstance.godModeActive = false;
         locInstance.godModeFuel = 250;
         locInstance:activateShortGM(0.12, 200);
         local sRSGM = spy.on(locInstance, "reduceShortGMDist");
@@ -347,7 +345,7 @@ describe("Test unit test suite", function()
             locInstance:checkGodMode();
         end
         assert.spy(sRSGM).was.called(161);
-        assert.are.same(locInstance.godModeActive, 0);
+        assert.are.same(locInstance.godModeActive, false);
         assert.are.same(locInstance.shortGMDist, 0);
         assert.are.same(locInstance.oldPosY, _G.math.inf);
         assert.are.same(locInstance.godModeFuel, 250);

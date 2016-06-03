@@ -201,7 +201,7 @@ function Bait:collisionDetected(fishable, index)
         self:sleepingPillHit();
         self.levMan:getCurSwarmFactory().createdFishables[index]:setToCaught();
         -- other fishable object hit and no godMode active
-    elseif self.levMan:getCurLevel():getGodModeStat() == 0 then
+    elseif not self.levMan:getCurLevel():getGodModeStat()then
         -- still lifes left
         if self.numberOfHits <= _G._persTable.upgrades.moreLife then
             self.numberOfHits = self.numberOfHits + 1;

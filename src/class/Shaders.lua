@@ -1,4 +1,5 @@
 Class = require "lib.hump.class";
+Class = require "lib.hump.class";
 
 --- Class containing Funcions to add shaders
 local Shaders = Class {
