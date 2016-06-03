@@ -426,4 +426,10 @@ describe("Test unit test suite", function()
         assert.spy(loveMock.graphics.draw).was.called(32);
     end)
 
+    it("Testing isLoaded", function()
+        assert.are.same(locInstance:isLoaded(), true);
+        locInstance.gameLoaded = nil;
+        assert.are.same(locInstance:isLoaded(), false);
+    end)
+
 end)

@@ -103,6 +103,8 @@ local Level = Class {
         self.toiletLowerHalf = love.graphics.newImage("assets/toilet_lowerHalf.png");
         self.toiletBowl = love.graphics.newImage("assets/toilet_bowl.png");
         self.hand = love.graphics.newImage("assets/hand.png");
+        
+        self.gameLoaded = true;
     end
 }
 
@@ -539,7 +541,7 @@ end
 --- Returns the daytime in the game.
 -- @return Returns "day" if the daytime in the game is day otherwise "night".
 function Level:getTime()
-    return self.time;
+    return self.time;   
 end
 
 --- Returns the name/type of the level.
@@ -567,6 +569,15 @@ end
 --- click once to go to the score screen
 function Level:confirmLevelEnd()
     self.confirmEnd = true;
+end
+
+--- returns true if the level is fully loaded
+function Level:isLoaded()
+    if self.gameLoaded ~= nil then
+        return self.gameLoaded;
+    else
+        return false;
+    end
 end
 
 return Level;
