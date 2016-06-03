@@ -10,7 +10,7 @@ return {
             maxSpeed = 7,          -- Max movement speed
             value = 30,            -- The worth of the object
             hitpoints = 10,        -- The HP of the object
-            animTimeoutMin = 0.05, -- The min animation timeout
+            animTimeoutMin = 0.1, -- The min animation timeout
             animTimeoutMax = 0.15, -- The max animation timeout
             
             -- The animation type of the enum Animate.AnimType
@@ -43,8 +43,8 @@ return {
             maxSpeed = 2,
             hitpoints = 20,        
             value = 30,
-            animTimeoutMin = 0.1,
-            animTimeoutMax = 0.3,
+            animTimeoutMin = 0.15,
+            animTimeoutMax = 0.25,
             animType = Animate.AnimType.bounce,
             minAmount = 2,
             maxAmount = 4,
@@ -69,8 +69,8 @@ return {
             maxSpeed = 4,
             hitpoints = 5,
             value = -10,
-            animTimeoutMin = 0.01,
-            animTimeoutMax = 0.2,
+            animTimeoutMin = 0.08,
+            animTimeoutMax = 0.15,
             animType = Animate.AnimType.bounce,
             minAmount = 3,
             maxAmount = 3,
@@ -95,7 +95,7 @@ return {
             maxSpeed = 1,
             hitpoints = 5,        
             value = 20,
-            animTimeoutMin = 0.1,
+            animTimeoutMin = 0.2,
             animTimeoutMax = 0.3,
             minAmount = 1,
             maxAmount = 2,
@@ -119,7 +119,7 @@ return {
             minSpeed = 1,
             maxSpeed = 5,
             hitpoints = 20,
-            animTimeoutMin = 0.05,
+            animTimeoutMin = 0.15,
             animTimeoutMax = 0.2,
             animType = Animate.AnimType.bounce,
             value = 40,
@@ -221,8 +221,8 @@ return {
             minSpeed = 2,
             maxSpeed = 5,
             hitpoints = 20,
-            animTimeoutMin = 0.1,
-            animTimeoutMax = 1,
+            animTimeoutMin = 0.15,
+            animTimeoutMax = 0.25,
             value = 50,
             minAmount = 2,
             maxAmount = 3,
@@ -247,8 +247,8 @@ return {
             maxSpeed = 5,
             hitpoints = 60,        
             value = 60,
-            animTimeoutMin = 0.3,
-            animTimeoutMax = 1.5,
+            animTimeoutMin = 0.8,
+            animTimeoutMax = 1,
             minAmount = 1,
             maxAmount = 3,
             swarmHeight = 200,
@@ -458,8 +458,8 @@ return {
             maxSpeed = 4,
             hitpoints = 10,        
             value = 40,
-            animTimeoutMin = 0.1,
-            animTimeoutMax = 1,
+            animTimeoutMin = 0.3,
+            animTimeoutMax = 0.5,
             minAmount = 1,
             maxAmount = 3,
             swarmHeight = 200,
