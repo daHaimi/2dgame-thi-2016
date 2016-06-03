@@ -358,16 +358,6 @@ describe("Test unit test suite", function()
         assert.are.same(5, testClass:getMoved());
     end)
 
-    it("Testing getTime()", function()
-        _G.os.date = function(...) return "22" end;
-        local myInstance = testClass("sewers", "assets/testbg.png", { 512, 256 }, 1);
-        assert.are.same("day", myInstance:getTime());
-
-        _G.os.date = function(...) return "35" end;
-        local myInstance = testClass("sewers", "assets/testbg.png", { 512, 256 }, 1);
-        assert.are.same("night", myInstance:getTime());
-    end)
-
     it("Testing getLevelName", function()
         locInstance.p_levelName = "someName";
         assert.are.same("someName", locInstance:getLevelName());

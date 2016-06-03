@@ -31,7 +31,6 @@ local Level = Class {
         self.shortGMDist = 0;
         self.godModeActive = 0;
         self.moved = 0;
-        self.time = nil; -- day/night
         self.gMMusicPlaying = false;
         
         self.levMan = levelManager;
@@ -80,13 +79,12 @@ local Level = Class {
         -- create light world
         self.lightWorld = love.light.newWorld();
 
-        if os.date("%M") < "30" then
-            self.time = "day";
-            self.lightWorld.setAmbientColor(255, 255, 255);
-        else
-            self.time = "night";
-            self.lightWorld.setAmbientColor(81, 81, 81);
-        end
+        local time = tonumber(os.date("%M"));
+        local minLightLevel = 81;
+        local maxLightLevel = 174;
+        local lightLevel = ((math.abs(30 - time)) / 30) * maxLightLevel + minLightLevel;
+        
+        self.lightWorld.setAmbientColor(lightLevel, lightLevel, lightLevel);
 
         self.baitLight = self.lightWorld.newLight(1, 1, 255, 127, 63, 500);
         self.baitLight.setSmooth(2);
