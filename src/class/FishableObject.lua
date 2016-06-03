@@ -20,7 +20,8 @@ local FishableObject = Class {
             spriteSize, hitbox, animTimeoutMin, animTimeoutMax, animType)
         self.name = name;
         self.image = love.graphics.newImage("assets/" .. imageSrc);
-        self.xPosition = math.random(spriteSize + 26, _G._persTable.winDim[1] - 26);
+        self.xPosition = math.random(spriteSize + 26, _G._persTable.winDim[1] - 58 - self.spriteSize);
+        -- 58 = 26 (width of level wall) + 32 (0.5 * width of hamster)
         self.yPosition = yPosition;
         self.value = value;
         self.hitpoints = hitpoints;
