@@ -103,6 +103,8 @@ local Level = Class {
         self.toiletLowerHalf = love.graphics.newImage("assets/toilet_lowerHalf.png");
         self.toiletBowl = love.graphics.newImage("assets/toilet_bowl.png");
         self.hand = love.graphics.newImage("assets/hand.png");
+        self.borderBottom = love.graphics.newImage("assets/border.png");
+        self.lowerBorderPosition = math.abs(self.lowerBoarder) + self.winDim[2] * 0.68 + 130;
         
         self.gameLoaded = true;
     end
@@ -165,6 +167,7 @@ function Level:update(dt, bait)
     end
     self.sizeY = self.winDim[2] + self.moved;
     self.posY = self.posY - self.moved;
+    self.lowerBorderPosition = self.lowerBorderPosition - self.moved;
 
     self:checkGodMode();
     bait:update(dt);
@@ -232,6 +235,7 @@ end
 
 --- when the bait hit a object or the boarder is reached, start phase 2
 function Level:switchToPhase2()
+    print (self.posY)
     if _G._persTable.phase == 1 then
         self.direction = -1;
         _G._persTable.phase = 2;
@@ -258,6 +262,10 @@ function Level:drawEnviroment()
 
     love.graphics.setColor(255, 255, 255);
 
+    --border bottom
+    love.graphics.draw(self.borderBottom, 0, self.lowerBorderPosition);
+
+
     if self.enviromentPosition < -200 then
         self.enviromentPosition = self.enviromentPosition + 200;
     elseif self.enviromentPosition > 200 then
@@ -271,7 +279,7 @@ function Level:drawEnviroment()
     love.graphics.draw(self.topBackground, 0, self.posY - 474);
     love.graphics.draw(self.topBackground, 0, self.posY - 375);
     love.graphics.draw(self.toilet, 0, self.posY - 375);
-    
+
     --animation
     if not self.animationStart then
         love.graphics.draw(self.hamster, self.levMan:getCurPlayer():getPosXMouse() - 32, self.hamsterYPos);
