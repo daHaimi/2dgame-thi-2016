@@ -199,7 +199,9 @@ end
 
 function Level:checkForAchievments()
     if self.failedStart and not _G._persTable.achievements.failedStart then
-         
+        print"got it"
+        table.insert(_G._unlockedAchievements, _G.data.achievements.failedStart);
+        _gui:newNotification("assets/gui/480px/" .. _G.data.achievements.failedStart.image_unlock, _G.data.achievements.failedStart.name);
     end
 end
 

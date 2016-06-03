@@ -49,7 +49,7 @@ function Notification:newNotification(imagepath, text)
         text = Loveframes.Create("text");
     };
     newNotification.image:SetImage(imagepath);
-    local x, y = newNotification.image:GetImageSize()
+    local x, y = newNotification.image:GetImageSize();
     newNotification.image:SetScale(self.imageWidth / x, self.imageLength / y);
     newNotification.image:SetVisible(false);
     newNotification.text:SetText(text);
