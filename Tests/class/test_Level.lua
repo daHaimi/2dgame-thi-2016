@@ -257,9 +257,9 @@ describe("Test unit test suite", function()
     end)
 
     it("Testing isFinished", function()
-        assert.are.same(locInstance:isFinished(), 0);
-        locInstance.levelFinished = 1;
-        assert.are.same(locInstance:isFinished(), 1);
+        assert.are.same(locInstance:isFinished(), false);
+        locInstance.levelFinished = true;
+        assert.are.same(locInstance:isFinished(), true);
     end)
 
     it("Testing printResult with no objects caught", function()

@@ -217,9 +217,16 @@ function love.mousepressed(x, y, button)
         levMan:getCurLevel():activateGodMode();
     end
     
+    -- starts the starting sequence of the game
     if love.mouse.isDown(1) and _gui:getCurrentState() == "InGame" and
     not levMan:getCurLevel():getStartAnimationRunning() then
         levMan:getCurLevel():startStartAnimation();
+    end
+    
+    -- after the level is finished one click switches to score screen
+    if love.mouse.isDown(1) and _gui:getCurrentState() == "InGame" and
+    levMan:getCurLevel():isFinished() then
+        levMan:getCurLevel():confirmLevelEnd();
     end
 
     -- pause game when when mouse is pressed (right button)
@@ -227,6 +234,7 @@ function love.mousepressed(x, y, button)
         _gui:changeFrame(_gui:getFrames().pause);
         setMouseVisibility(levMan:getCurLevel());
     end
+    
 end
 
 --- Callback function triggered wehen the mouse is released.
