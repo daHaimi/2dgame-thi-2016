@@ -7,7 +7,6 @@ local AchievementDisplay = Class {
         self.unlockedAchievements = {};
         self.directory = directory;
         self:create();
-        
     end;
 };
 
@@ -24,14 +23,14 @@ end
 function AchievementDisplay:SetVisible(visible)
     if visible == true then
         --look for new achievements
-        if _G._tmpTable.unlockedAchievements ~= nil then
+        if _G._unlockedAchievements[1] ~= nil then
             --new achievements
-            for k, v in ipairs(_G._tmpTable.unlockedAchievements) do
+            for k, v in ipairs(_G._unlockedAchievements) do
                 local image = Loveframes.Create("image");
-                image:SetImage("assets/gui/" .. v.image_unlock);
+                image:SetImage(self.directory .. v.image_unlock);
                 self.unlockedAchievements[k] = image;
             end
-            _G._tmpTable.unlockedAchievements = nil; 
+            _G._unlockedAchievements = {}; 
         else
             --no new achievements
             self.defaultText:SetVisible(visible);

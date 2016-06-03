@@ -24,9 +24,9 @@ _G._tmpTable = {
     earnedMoney = nil;
     currentDepth = nil;
     roundFuel = nil;
-    unlockedAchievements = {};
+    
 };
-
+_G._unlockedAchievements = {};
 -- Font for android debugging
 _G.myfont = love.graphics.newFont(30);
 
