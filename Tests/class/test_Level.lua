@@ -368,7 +368,7 @@ describe("Test unit test suite", function()
         locInstance.enviromentPosition = -250;
         locInstance.animationStart = false;
         locInstance:drawEnviroment();
-        assert.spy(loveMock.graphics.draw).was.called(19);
+        assert.spy(loveMock.graphics.draw).was.called(20);
         assert.are.same(-50, locInstance.enviromentPosition);
     end)
 
@@ -377,8 +377,7 @@ describe("Test unit test suite", function()
         locInstance.animationStart = true;
         locInstance.enviromentPosition = 250;
         locInstance:drawEnviroment();
-        assert.spy(loveMock.graphics.draw).was.called(19);
-        assert.are.same(50, locInstance.enviromentPosition);
+        assert.spy(loveMock.graphics.draw).was.called(20);
     end)
 
     it("Testing drawEnviroment: drawing Walls", function()
@@ -398,7 +397,7 @@ describe("Test unit test suite", function()
         locInstance.animationStart = true;
         locInstance.failedStart = true;
         locInstance:drawEnviroment();
-        assert.spy(loveMock.graphics.draw).was.called(19);
+        assert.spy(loveMock.graphics.draw).was.called(20);
     end)
     
     it("Testing getStartAnimationRunning", function()

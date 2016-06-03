@@ -235,7 +235,6 @@ end
 
 --- when the bait hit a object or the boarder is reached, start phase 2
 function Level:switchToPhase2()
-    print (self.posY)
     if _G._persTable.phase == 1 then
         self.direction = -1;
         _G._persTable.phase = 2;
