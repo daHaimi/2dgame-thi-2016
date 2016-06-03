@@ -13,7 +13,7 @@ local Level = Class {
         -- Member variables
         self.levMan = nil;
         self.p_levelName = "";
-        self.levelFinished = 0; -- 0 means the round hasn´t been finished until yet
+        self.levelFinished = false; -- 0 means the round hasn´t been finished until yet
         self.gotPayed = 0; -- 0 means the amount of money hasn´t calculated until yet
         self.roundValue = 0; -- the amount of money fished in this round
         self.posY = 0;
@@ -33,7 +33,6 @@ local Level = Class {
         self.moved = 0;
         self.time = nil; -- day/night
         self.gMMusicPlaying = false;
-        self.enviromentPosition = 0;
         
         self.levMan = levelManager;
         self.direction = direction;
@@ -75,6 +74,8 @@ local Level = Class {
         self.animationStartPoint = self.winDim[2] / 2 - 270;
         self.hamsterYPos = self.animationStartPoint - 30;
         self.hamsterLockedXPos = 0;
+        self.enviromentPosition = 0;
+        self.confirmEnd = false;
 
         -- create light world
         self.lightWorld = love.light.newWorld();
@@ -145,7 +146,7 @@ function Level:update(dt, bait)
     elseif self.posY >= (self.winDim[2] * 0.5) and self.direction == -1 then
         self.direction = 0;
         self.animationEnd = true;
-        self.levelFinished = 1;
+        self.levelFinished = true;
         self:payPlayer();
     end
 
@@ -206,6 +207,8 @@ function Level:doAnimationMovement(bait, dt)
             if self.hamsterYPos < _G._persTable.winDim[2] * 0.5 - 230 then
                 self.hamsterYPos = self.hamsterYPos + 0.5 * math.ceil(dt * bait.speed);
                 self.failedStart = true;
+            else
+                self.levelFinished = true;
             end
         else
             if self.hamsterYPos < self.winDim[2] * 0.4 then
@@ -216,6 +219,8 @@ function Level:doAnimationMovement(bait, dt)
             else
                 if self.hamsterLockedXPos > 130 and self.hamsterLockedXPos < 286 then
                     self.animationStartFinished = true;
+                else
+                    self.levelFinished = true;
                 end
             end
         end
@@ -241,7 +246,7 @@ function Level:draw(bait)
     love.graphics.setColor(255, 255, 255);
     love.graphics.draw(self.bg, self.bgq, 0, self.posY);
     bait:draw();
-    if self.levelFinished == 1 then
+    if self.levelFinished and self.confirmEnd then
         _gui:changeFrame(_gui:getFrames().score);
         --self:printResult();
     end
@@ -305,7 +310,7 @@ end
 -- bonus value (when activated) at the end of each round. Remove the money multi when it was activated.
 function Level:payPlayer()
     -- check if the round has been finished
-    if self.levelFinished == 1 and self.levMan:getCurSwarmFactory() ~= nil then
+    if self.levelFinished and self.levMan:getCurSwarmFactory() ~= nil then
         if self.gotPayed == 0 then -- check if the earned money was already payed
         local fishedVal = self:calcFishedValue();
         if _G._persTable.upgrades.moneyMult == true then
@@ -555,6 +560,11 @@ end
 function Level:startStartAnimation()
     self.animationStart = true;
     self.hamsterLockedXPos = self.levMan:getCurPlayer():getPosXMouse() - 32;
+end
+
+--- click once to go to the score screen
+function Level:confirmLevelEnd()
+    self.confirmEnd = true;
 end
 
 return Level;

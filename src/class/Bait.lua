@@ -262,7 +262,7 @@ end
 --- Determines the capped X position of the Bait (SpeedLimit)
 function Bait:capXMovement()
     local result = 0;
-    if self.levMan:getCurLevel():isFinished() == 0 then
+    if not self.levMan:getCurLevel():isFinished() then
         local delta = self.posXMouse - self.xPos;
         local posX;
         

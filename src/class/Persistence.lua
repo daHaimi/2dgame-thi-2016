@@ -41,17 +41,22 @@ function Persistence:resetGame()
 end
 
 function getScaledDimension(deviceDim)
-    resultDim = {};
+    local resultDim = {};
+    local scaleFactor = 1;
     if deviceDim[1] > deviceDim[2] then
         scaleFactor = (0.9 * deviceDim[2]) / (480 * 16 / 9);
         resultDim[1] = 480;
         resultDim[2] = resultDim[1] * 16 / 9;
+        if deviceDim[2] < resultDim[2] then
+            resultDim[2] = deviceDim[2] * 0.975
+            scaleFactor = 1;
+        end
     else
         scaleFactor = deviceDim[1] / 480;
         resultDim[2] = deviceDim[2] / deviceDim[1] * 480;
         resultDim[1] = 480;
     end
-        return resultDim[1], resultDim[2], scaleFactor;
+    return resultDim[1], resultDim[2], scaleFactor;
 end
 
 --- Save the persTable data at saveFile
