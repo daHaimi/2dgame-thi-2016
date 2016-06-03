@@ -257,9 +257,9 @@ describe("Test unit test suite", function()
     end)
 
     it("Testing isFinished", function()
-        assert.are.same(locInstance:isFinished(), 0);
-        locInstance.levelFinished = 1;
-        assert.are.same(locInstance:isFinished(), 1);
+        assert.are.same(locInstance:isFinished(), false);
+        locInstance.levelFinished = true;
+        assert.are.same(locInstance:isFinished(), true);
     end)
 
     it("Testing printResult with no objects caught", function()
@@ -358,16 +358,6 @@ describe("Test unit test suite", function()
         assert.are.same(5, testClass:getMoved());
     end)
 
-    it("Testing getTime()", function()
-        _G.os.date = function(...) return "22" end;
-        local myInstance = testClass("sewers", "assets/testbg.png", { 512, 256 }, 1);
-        assert.are.same("day", myInstance:getTime());
-
-        _G.os.date = function(...) return "35" end;
-        local myInstance = testClass("sewers", "assets/testbg.png", { 512, 256 }, 1);
-        assert.are.same("night", myInstance:getTime());
-    end)
-
     it("Testing getLevelName", function()
         locInstance.p_levelName = "someName";
         assert.are.same("someName", locInstance:getLevelName());
@@ -378,7 +368,7 @@ describe("Test unit test suite", function()
         locInstance.enviromentPosition = -250;
         locInstance.animationStart = false;
         locInstance:drawEnviroment();
-        assert.spy(loveMock.graphics.draw).was.called(19);
+        assert.spy(loveMock.graphics.draw).was.called(20);
         assert.are.same(-50, locInstance.enviromentPosition);
     end)
 
@@ -387,8 +377,7 @@ describe("Test unit test suite", function()
         locInstance.animationStart = true;
         locInstance.enviromentPosition = 250;
         locInstance:drawEnviroment();
-        assert.spy(loveMock.graphics.draw).was.called(19);
-        assert.are.same(50, locInstance.enviromentPosition);
+        assert.spy(loveMock.graphics.draw).was.called(20);
     end)
 
     it("Testing drawEnviroment: drawing Walls", function()
@@ -408,7 +397,7 @@ describe("Test unit test suite", function()
         locInstance.animationStart = true;
         locInstance.failedStart = true;
         locInstance:drawEnviroment();
-        assert.spy(loveMock.graphics.draw).was.called(19);
+        assert.spy(loveMock.graphics.draw).was.called(20);
     end)
     
     it("Testing getStartAnimationRunning", function()
@@ -432,8 +421,14 @@ describe("Test unit test suite", function()
         local loveMock = mock(_G.love, true);
         locInstance.hamsterYPos = 400;
         locInstance.animationStartPoint = 0;
-        locInstance:drawLine(0)
+        locInstance:drawLine(0,300)
         assert.spy(loveMock.graphics.draw).was.called(32);
+    end)
+
+    it("Testing isLoaded", function()
+        assert.are.same(locInstance:isLoaded(), true);
+        locInstance.gameLoaded = nil;
+        assert.are.same(locInstance:isLoaded(), false);
     end)
 
 end)

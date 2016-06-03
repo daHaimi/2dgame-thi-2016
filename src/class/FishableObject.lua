@@ -20,20 +20,8 @@ local FishableObject = Class {
             spriteSize, hitbox, animTimeoutMin, animTimeoutMax, animType)
         self.name = name;
         self.image = love.graphics.newImage("assets/" .. imageSrc);
-        local spriteFile = "assets/sprites/sprite_" .. imageSrc;
-        if love.filesystem.exists(spriteFile) then
-            self.sprite = love.graphics.newImage(spriteFile);
-            local spriteCols = self.sprite:getWidth() / self.image:getWidth();
-            local spriteRows = self.sprite:getHeight() / self.image:getHeight();
-            local animTimeout = nil;
-            if animTimeoutMin and animTimeoutMax then
-                animTimeout = math.random() * (animTimeoutMax - animTimeoutMin) + animTimeoutMin;
-            end
-            
-            self.animation = Animate(self.sprite, spriteCols, spriteRows, animTimeout, animType);
-        end
-        
-        self.xPosition = math.random(spriteSize + 26, _G._persTable.winDim[1] - 26);
+        self.xPosition = math.random(spriteSize + 26, _G._persTable.winDim[1] - 58 - self.spriteSize);
+        -- 58 = 26 (width of level wall) + 32 (0.5 * width of hamster)
         self.yPosition = yPosition;
         self.value = value;
         self.hitpoints = hitpoints;
@@ -45,6 +33,20 @@ local FishableObject = Class {
             self.speed = math.random() * (maxSpeed - minSpeed) + minSpeed;
         else
             self.speed = -(math.random() * (maxSpeed - minSpeed) + minSpeed);
+        end
+        
+        local spriteFile = "assets/sprites/sprite_" .. imageSrc;
+        if love.filesystem.exists(spriteFile) then
+            self.sprite = love.graphics.newImage(spriteFile);
+            local spriteCols = self.sprite:getWidth() / self.image:getWidth();
+            local spriteRows = self.sprite:getHeight() / self.image:getHeight();
+            local animTimeout = nil;
+            if animTimeoutMin and animTimeoutMax then
+                animTimeout = math.random() * (animTimeoutMax - animTimeoutMin) + animTimeoutMin - 
+                              math.abs(self.speed / 100); -- animation speed also depended on move speed
+            end
+            
+            self.animation = Animate(self.sprite, spriteCols, spriteRows, animTimeout, animType);
         end
     end;
 

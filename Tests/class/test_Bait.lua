@@ -352,7 +352,7 @@ describe("Unit test for Bait.lua", function()
         local myInstance = testClass(locWinDim, levMan);
         myInstance.image = locImageStub;
         myInstance.levMan.curLevel = {
-            isFinished = function() return 0 end;
+            isFinished = function() return false end;
         }
         myInstance.posXMouse = 70;
         myInstance.xPos = 40;
@@ -365,7 +365,7 @@ describe("Unit test for Bait.lua", function()
         local myInstance = testClass(locWinDim, levMan);
         myInstance.image = locImageStub;
         myInstance.levMan.curLevel = {
-            isFinished = function() return 0 end;
+            isFinished = function() return false end;
         }
         myInstance.posXMouse = 10;
         myInstance.xPos = 40;
@@ -378,7 +378,7 @@ describe("Unit test for Bait.lua", function()
         local myInstance = testClass(locWinDim, levMan);
         myInstance.image = locImageStub;
         myInstance.levMan.curLevel = {
-            isFinished = function() return 0 end;
+            isFinished = function() return false end;
         };
         myInstance.posXMouse = 41;
         myInstance.xPos = 40;
@@ -391,7 +391,7 @@ describe("Unit test for Bait.lua", function()
         local myInstance = testClass(locWinDim, levMan);
         myInstance.image = locImageStub;
         myInstance.levMan.curLevel = {
-            isFinished = function() return 0 end;
+            isFinished = function() return false end;
         }
         myInstance.posXMouse = 40;
         myInstance.xPos = 41;

@@ -13,7 +13,7 @@ local Level = Class {
         -- Member variables
         self.levMan = nil;
         self.p_levelName = "";
-        self.levelFinished = 0; -- 0 means the round hasn´t been finished until yet
+        self.levelFinished = false; -- 0 means the round hasn´t been finished until yet
         self.gotPayed = 0; -- 0 means the amount of money hasn´t calculated until yet
         self.roundValue = 0; -- the amount of money fished in this round
         self.posY = 0;
@@ -31,9 +31,7 @@ local Level = Class {
         self.shortGMDist = 0;
         self.godModeActive = 0;
         self.moved = 0;
-        self.time = nil; -- day/night
         self.gMMusicPlaying = false;
-        self.enviromentPosition = 0;
         
         self.levMan = levelManager;
         self.direction = direction;
@@ -75,17 +73,18 @@ local Level = Class {
         self.animationStartPoint = self.winDim[2] / 2 - 270;
         self.hamsterYPos = self.animationStartPoint - 30;
         self.hamsterLockedXPos = 0;
+        self.enviromentPosition = 0;
+        self.confirmEnd = false;
 
         -- create light world
         self.lightWorld = love.light.newWorld();
 
-        if os.date("%M") < "30" then
-            self.time = "day";
-            self.lightWorld.setAmbientColor(255, 255, 255);
-        else
-            self.time = "night";
-            self.lightWorld.setAmbientColor(81, 81, 81);
-        end
+        local time = tonumber(os.date("%M"));
+        local minLightLevel = 81;
+        local maxLightLevel = 174;
+        local lightLevel = ((math.abs(30 - time)) / 30) * maxLightLevel + minLightLevel;
+        
+        self.lightWorld.setAmbientColor(lightLevel, lightLevel, lightLevel);
 
         self.baitLight = self.lightWorld.newLight(1, 1, 255, 127, 63, 500);
         self.baitLight.setSmooth(2);
@@ -104,6 +103,10 @@ local Level = Class {
         self.toiletLowerHalf = love.graphics.newImage("assets/toilet_lowerHalf.png");
         self.toiletBowl = love.graphics.newImage("assets/toilet_bowl.png");
         self.hand = love.graphics.newImage("assets/hand.png");
+        self.borderBottom = love.graphics.newImage("assets/border.png");
+        self.lowerBorderPosition = math.abs(self.lowerBoarder) + self.winDim[2] * 0.68 + 130;
+        
+        self.gameLoaded = true;
     end
 }
 
@@ -145,7 +148,7 @@ function Level:update(dt, bait)
     elseif self.posY >= (self.winDim[2] * 0.5) and self.direction == -1 then
         self.direction = 0;
         self.animationEnd = true;
-        self.levelFinished = 1;
+        self.levelFinished = true;
         self:payPlayer();
     end
 
@@ -164,6 +167,7 @@ function Level:update(dt, bait)
     end
     self.sizeY = self.winDim[2] + self.moved;
     self.posY = self.posY - self.moved;
+    self.lowerBorderPosition = self.lowerBorderPosition - self.moved;
 
     self:checkGodMode();
     bait:update(dt);
@@ -206,16 +210,20 @@ function Level:doAnimationMovement(bait, dt)
             if self.hamsterYPos < _G._persTable.winDim[2] * 0.5 - 230 then
                 self.hamsterYPos = self.hamsterYPos + 0.5 * math.ceil(dt * bait.speed);
                 self.failedStart = true;
+            else
+                self.levelFinished = true;
             end
         else
             if self.hamsterYPos < self.winDim[2] * 0.4 then
                 self.hamsterYPos = self.hamsterYPos + 0.5 * math.ceil(dt * bait.speed);
-                if self.hamsterLockedXPos < 130 or self.hamsterLockedXPos > 286 then
+                if self.hamsterLockedXPos < 120 or self.hamsterLockedXPos > 286 then
                     self.failedStart = true;
                 end
             else
-                if self.hamsterLockedXPos > 130 and self.hamsterLockedXPos < 286 then
+                if self.hamsterLockedXPos > 130 and self.hamsterLockedXPos < 300 then
                     self.animationStartFinished = true;
+                else
+                    self.levelFinished = true;
                 end
             end
         end
@@ -241,7 +249,7 @@ function Level:draw(bait)
     love.graphics.setColor(255, 255, 255);
     love.graphics.draw(self.bg, self.bgq, 0, self.posY);
     bait:draw();
-    if self.levelFinished == 1 then
+    if self.levelFinished and self.confirmEnd then
         _gui:changeFrame(_gui:getFrames().score);
         --self:printResult();
     end
@@ -252,6 +260,10 @@ function Level:drawEnviroment()
     self.enviromentPosition = self.enviromentPosition - self:getMoved();
 
     love.graphics.setColor(255, 255, 255);
+
+    --border bottom
+    love.graphics.draw(self.borderBottom, 0, self.lowerBorderPosition);
+
 
     if self.enviromentPosition < -200 then
         self.enviromentPosition = self.enviromentPosition + 200;
@@ -266,16 +278,20 @@ function Level:drawEnviroment()
     love.graphics.draw(self.topBackground, 0, self.posY - 474);
     love.graphics.draw(self.topBackground, 0, self.posY - 375);
     love.graphics.draw(self.toilet, 0, self.posY - 375);
-    
+
     --animation
     if not self.animationStart then
         love.graphics.draw(self.hamster, self.levMan:getCurPlayer():getPosXMouse() - 32, self.hamsterYPos);
-        self:drawLine(self.levMan:getCurPlayer():getPosXMouse() - 32);
+        self:drawLine(self.levMan:getCurPlayer():getPosXMouse() - 32, 100);
         love.graphics.draw(self.hand, self.levMan:getCurPlayer():getPosXMouse() - 48, self.animationStartPoint - 220);
     else
         love.graphics.draw(self.hand, self.hamsterLockedXPos - 16, self.animationStartPoint - 220);
-        self:drawLine(self.hamsterLockedXPos);
-        if self.hamsterYPos < self.animationStartPoint + 150 or self.failedStart then
+        if self.failedStart then
+            self:drawLine(self.hamsterLockedXPos, 300);
+        else
+            self:drawLine(self.hamsterLockedXPos, 150);
+        end
+        if self.hamsterYPos < self.animationStartPoint + 130 or self.failedStart then
             love.graphics.draw(self.hamster, self.hamsterLockedXPos, self.hamsterYPos);
         end
     end
@@ -290,10 +306,10 @@ function Level:drawEnviroment()
 end
 
 --- Draws the line
-function Level:drawLine(position)
+function Level:drawLine(position, length)
     local p_dist = (self.hamsterYPos - (self.animationStartPoint - 40));
     local p_toMuch = 0;
-    while p_dist > 300 do
+    while p_dist > length do
         p_dist = p_dist - 9;
         p_toMuch = p_toMuch + 9
     end
@@ -305,7 +321,7 @@ end
 -- bonus value (when activated) at the end of each round. Remove the money multi when it was activated.
 function Level:payPlayer()
     -- check if the round has been finished
-    if self.levelFinished == 1 and self.levMan:getCurSwarmFactory() ~= nil then
+    if self.levelFinished and self.levMan:getCurSwarmFactory() ~= nil then
         if self.gotPayed == 0 then -- check if the earned money was already payed
         local fishedVal = self:calcFishedValue();
         if _G._persTable.upgrades.moneyMult == true then
@@ -532,7 +548,7 @@ end
 --- Returns the daytime in the game.
 -- @return Returns "day" if the daytime in the game is day otherwise "night".
 function Level:getTime()
-    return self.time;
+    return self.time;   
 end
 
 --- Returns the name/type of the level.
@@ -555,6 +571,20 @@ end
 function Level:startStartAnimation()
     self.animationStart = true;
     self.hamsterLockedXPos = self.levMan:getCurPlayer():getPosXMouse() - 32;
+end
+
+--- click once to go to the score screen
+function Level:confirmLevelEnd()
+    self.confirmEnd = true;
+end
+
+--- returns true if the level is fully loaded
+function Level:isLoaded()
+    if self.gameLoaded ~= nil then
+        return self.gameLoaded;
+    else
+        return false;
+    end
 end
 
 return Level;
