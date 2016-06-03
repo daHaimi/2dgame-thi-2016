@@ -432,7 +432,7 @@ describe("Test unit test suite", function()
         local loveMock = mock(_G.love, true);
         locInstance.hamsterYPos = 400;
         locInstance.animationStartPoint = 0;
-        locInstance:drawLine(0)
+        locInstance:drawLine(0,300)
         assert.spy(loveMock.graphics.draw).was.called(32);
     end)
 

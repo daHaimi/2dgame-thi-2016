@@ -213,11 +213,11 @@ function Level:doAnimationMovement(bait, dt)
         else
             if self.hamsterYPos < self.winDim[2] * 0.4 then
                 self.hamsterYPos = self.hamsterYPos + 0.5 * math.ceil(dt * bait.speed);
-                if self.hamsterLockedXPos < 130 or self.hamsterLockedXPos > 286 then
+                if self.hamsterLockedXPos < 120 or self.hamsterLockedXPos > 286 then
                     self.failedStart = true;
                 end
             else
-                if self.hamsterLockedXPos > 130 and self.hamsterLockedXPos < 286 then
+                if self.hamsterLockedXPos > 130 and self.hamsterLockedXPos < 300 then
                     self.animationStartFinished = true;
                 else
                     self.levelFinished = true;
@@ -275,12 +275,16 @@ function Level:drawEnviroment()
     --animation
     if not self.animationStart then
         love.graphics.draw(self.hamster, self.levMan:getCurPlayer():getPosXMouse() - 32, self.hamsterYPos);
-        self:drawLine(self.levMan:getCurPlayer():getPosXMouse() - 32);
+        self:drawLine(self.levMan:getCurPlayer():getPosXMouse() - 32, 100);
         love.graphics.draw(self.hand, self.levMan:getCurPlayer():getPosXMouse() - 48, self.animationStartPoint - 220);
     else
         love.graphics.draw(self.hand, self.hamsterLockedXPos - 16, self.animationStartPoint - 220);
-        self:drawLine(self.hamsterLockedXPos);
-        if self.hamsterYPos < self.animationStartPoint + 150 or self.failedStart then
+        if self.failedStart then
+            self:drawLine(self.hamsterLockedXPos, 300);
+        else
+            self:drawLine(self.hamsterLockedXPos, 150);
+        end
+        if self.hamsterYPos < self.animationStartPoint + 130 or self.failedStart then
             love.graphics.draw(self.hamster, self.hamsterLockedXPos, self.hamsterYPos);
         end
     end
@@ -295,10 +299,10 @@ function Level:drawEnviroment()
 end
 
 --- Draws the line
-function Level:drawLine(position)
+function Level:drawLine(position, length)
     local p_dist = (self.hamsterYPos - (self.animationStartPoint - 40));
     local p_toMuch = 0;
-    while p_dist > 300 do
+    while p_dist > length do
         p_dist = p_dist - 9;
         p_toMuch = p_toMuch + 9
     end
