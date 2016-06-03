@@ -45,7 +45,7 @@ local FishableObject = Class {
                               math.abs(self.speed / 100); -- animation speed also depended on move speed
             end
             
-            self.animation = Animate(self.sprite, spriteCols, spriteRows, animTimeout , animType);
+            self.animation = Animate(self.sprite, spriteCols, spriteRows, animTimeout, animType);
         end
     end;
 
