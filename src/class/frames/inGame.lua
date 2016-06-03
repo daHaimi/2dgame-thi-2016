@@ -89,12 +89,10 @@ end
 
 function InGame:update()
     --update Fuelbar
-    if self.frame:checkPosition() then
-        if _G._tmpTable.roundFuel >= 0 then
-            self.elementsOnFrame.fuelBar.object:SetX(math.ceil((180 / 2400)*_G._tmpTable.roundFuel) - 170);
-        end
-        self.elementsOnFrame.score.object:SetText("Depth: " .. math.ceil(_G._tmpTable.currentDepth) .. "Px");
+    if _G._tmpTable.roundFuel >= 0 then
+        self.elementsOnFrame.fuelBar.object:SetX(math.ceil((180 / 2400)*_G._tmpTable.roundFuel) - 170);
     end
+    self.elementsOnFrame.score.object:SetText("Depth: " .. math.ceil(_G._tmpTable.currentDepth) .. "Px");
 end
 
 ---shows the elements on screen
