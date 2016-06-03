@@ -12,7 +12,7 @@ local Score = Class {
             self.scoreHeight = 170;
             self.achievementsHeight = 128;
             self.Offset = 15;
-            speed = 50;
+            self.speed = 50;
         elseif _G._persTable.scaledDeviceDim[1] < 720 then
             self.widthPx = 640;
             self.directory = "assets/gui/640px/";
@@ -22,7 +22,7 @@ local Score = Class {
             self.achievementsHeight = 128;
             self.Offset = 20;
             self.buttonHeight = 96;
-            speed = 60;
+            self.speed = 60;
         else
             self.widthPx = 720;
             self.directory = "assets/gui/720px/";
@@ -32,11 +32,11 @@ local Score = Class {
             self.achievementsHeight = 128;
             self.Offset = 30;
             self.buttonHeight = 106;
-            speed = 75;
+            self.speed = 75;
         end
         self.name = "Score";
         self.frame = Frame((_G._persTable.scaledDeviceDim[1] - self.width) / 2, 
-            (_G._persTable.scaledDeviceDim[2] - self.height) / 2, "down", "down", speed, 0, -1500);
+            (_G._persTable.scaledDeviceDim[2] - self.height) / 2 - self.speed, "down", "down", self.speed, 0, -1500);
         self:create();
     end;
 };

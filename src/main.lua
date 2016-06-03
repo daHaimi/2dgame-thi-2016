@@ -54,12 +54,11 @@ function love.load()
     _G._persistence:resetGame();
 
     local _, _, flags = love.window.getMode();
-    love.graphics.setBackgroundColor(30, 180, 240);
+    love.graphics.setBackgroundColor(55, 80, 100);
     local deviceDim = { love.window.getDesktopDimensions(flags.display) };
     --deviceDim = {640, 1140};
     --deviceDim = {1366,768};
     _G._persTable.winDim[1], _G._persTable.winDim[2], p_scaleFactor = getScaledDimension(deviceDim);
-
 
     _G._persTable.scaledDeviceDim = {_G._persTable.winDim[1] * p_scaleFactor, _G._persTable.winDim[2] * p_scaleFactor };
     love.window.setMode(_G._persTable.scaledDeviceDim[1], _G._persTable.scaledDeviceDim[2], { centered });
@@ -210,7 +209,11 @@ function love.mousepressed(x, y, button)
         button = 'l';
     end
     Loveframes.mousepressed(x, y, button);
-
+    
+    if _gui:getCurrentState() == "start" then
+        _gui:changeFrame(_gui:getFrames().mainMenu);
+    end
+    
     -- activate the god mode when you press the mouse
     if love.mouse.isDown(1) and _gui:getCurrentState() == "InGame" and
     levMan:getCurLevel():getStartAnimationFinished() then

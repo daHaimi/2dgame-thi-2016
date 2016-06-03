@@ -9,7 +9,7 @@ local Level = Class {
             self.height = 666;
             self.buttonHeight = 75;
             self.buttonOffset = 15;
-            speed = 50;
+            self.speed = 50;
         elseif _G._persTable.scaledDeviceDim[1] < 720 then
             self.widthPx = 640;
             self.directory = "assets/gui/640px/";
@@ -17,7 +17,7 @@ local Level = Class {
             self.height = 888;
             self.buttonOffset = 20;
             self.buttonHeight = 96;
-            speed = 60;
+            self.speed = 60;
         else
             self.widthPx = 720;
             self.directory = "assets/gui/720px/";
@@ -25,11 +25,11 @@ local Level = Class {
             self.height = 1024;
             self.buttonOffset = 30;
             self.buttonHeight = 106;
-            speed = 75;
+            self.speed = 75;
         end
         self.name = "Level";
         self.frame = Frame((_G._persTable.scaledDeviceDim[1] - self.width) / 2, 
-            (_G._persTable.scaledDeviceDim[2] - self.height) / 2, "down", "down", speed, 0, -1500);
+            (_G._persTable.scaledDeviceDim[2] - self.height) / 2 - self.speed, "down", "down", self.speed, 0, -1500);
         self:create();
     end;
 };

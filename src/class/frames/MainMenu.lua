@@ -33,7 +33,7 @@ local MainMenu = Class {
             self.speed = 75;
         end
         self.name = "Main Menu";
-        self.frame = Frame((_G._persTable.scaledDeviceDim[1] - self.width) / 2, (_G._persTable.scaledDeviceDim[2] - self.height) / 2,
+        self.frame = Frame((_G._persTable.scaledDeviceDim[1] - self.width) / 2, (_G._persTable.scaledDeviceDim[2] - self.height) / 2 - self.speed,
             "down", "down", self.speed, 0, -1500);
         self:create();
     end;

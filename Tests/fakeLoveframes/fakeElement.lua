@@ -108,6 +108,10 @@ function fakeElement:MoveToTop()
     self.movedToTop = true;
 end
 
+function fakeElement:GetVisible()
+    return self.visible;
+end
+
 function fakeElement:SetLinksEnabled(...)
 
 end

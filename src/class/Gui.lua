@@ -10,6 +10,7 @@ Score = require "class.frames.Score";
 Pause = require "class.frames.Pause";
 ChooseLevel = require "class.frames.Level";
 InGame = require "class.frames.inGame";
+Start = require "class.frames.Start";
 Notification = require "class.Notification";
 
 local Gui = Class {
@@ -25,6 +26,7 @@ local Gui = Class {
             pause = Pause();
             level = ChooseLevel();
             inGame = InGame();
+            start = Start();
         };
         self.p_frameChangeActiv = false;--true if a frame change is activ
         self.p_states = {
@@ -51,7 +53,7 @@ end
 ---clears all frames and starts at the main menu
 function Gui:start()
     self:clearAll();
-    self:changeFrame(self.p_myFrames.mainMenu);    
+    self:changeFrame(self.p_myFrames.start);    
 end
 
 ---called to draw a new frame
@@ -72,12 +74,17 @@ function Gui:update()
                 self.p_states.lastState:disappear();
             end
         else
+            self.p_states.currentState:appear();
+            self:setFrameChangeActivity(false);
             if self.p_states.lastState ~= nil then
                 self.p_states.lastState:clear();
-                self:setFrameChangeActivity(false);
             end
         end
     end
+    if self.p_states.currentState == self.p_myFrames.start then
+        self.p_myFrames.start:blink();
+    end
+    
     if self:drawGame() then
         self.p_myFrames.inGame:update();
     end
