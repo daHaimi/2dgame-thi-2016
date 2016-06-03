@@ -10,6 +10,7 @@ local InGame = Class {
             self.buttonHeight = 75;
             self.buttonOffset = 15;
             self.flagWidth = 120;
+            self.speed = 50;
         elseif _G._persTable.scaledDeviceDim[1] < 720 then
             self.widthPx = 640;
             self.directory = "assets/gui/640px/";
@@ -18,6 +19,7 @@ local InGame = Class {
             self.buttonOffset = 20;
             self.buttonHeight = 96;
             self.flagWidth = 165;
+            self.speed = 60;
         else
             self.widthPx = 720;
             self.directory = "assets/gui/720px/";
@@ -26,9 +28,10 @@ local InGame = Class {
             self.buttonOffset = 30;
             self.buttonHeight = 106;
             self.flagWidth = 180;
+            self.speed = 75;
         end
         self.name = "InGame";
-        self.frame = Frame(0, 0, "down", "up", 50, 0, -1000);
+        self.frame = Frame(0, - self.speed, "down", "up", 50, 0, -1000);
         self:create();
     end;
 };
