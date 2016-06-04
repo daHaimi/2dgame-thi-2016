@@ -10,3 +10,5 @@ luacov.*.out
 **/*.swp
 .idea/
 lib/hump
+lib/LoveFrames
+lib/LoveFrames
