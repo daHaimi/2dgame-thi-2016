@@ -112,6 +112,10 @@ function fakeElement:GetVisible()
     return self.visible;
 end
 
+function fakeElement:GetImageSize()
+    return 10, 20;
+end
+
 function fakeElement:SetLinksEnabled(...)
 
 end
