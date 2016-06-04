@@ -157,6 +157,12 @@ return {
                     height = 30,
                     deltaXPos = 17,
                     deltaYPos = 2
+                },
+                {
+                    width = 6,
+                    height = 40,
+                    deltaXPos = 29,
+                    deltaYPos = 24
                 }
             }
         },
