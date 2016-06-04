@@ -78,6 +78,7 @@ function love.load()
             _G._androidConfig.maxTilt = .3;
         end
     end
+    
     _G._gui = Gui();
     _gui:setLevelManager(levMan);
     _gui:start();
