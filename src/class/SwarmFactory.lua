@@ -21,7 +21,7 @@ local SwarmFactory = Class {
         self.fishableObjects = data.fishableObjects;
         if self.levMan:getCurLevel():getLevelName() == "sewers" then
             self.actualSwarm = data.swarmsSewer;
-        else
+        elseif self.levMan:getCurLevel():getLevelName() == "canyon" then
             self.actualSwarm = data.swarmsCanyon;
         end
         
