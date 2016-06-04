@@ -13,13 +13,17 @@ local SwarmFactory = Class {
         self.currentSwarm = 1;
         self.fishableObjects = {};
         self.createdFishables = {};
-        self.swarmsSewer = {};
+        self.actualSwarm = {};
         
         self.levMan = levelManager;
         
         self.maxDepth = self.levMan:getCurLevel():getLowerBoarder() - 2 * _G._persTable.winDim[2];        
         self.fishableObjects = data.fishableObjects;
-        self.swarmsSewer = data.swarmsSewer;
+        if self.levMan:getCurLevel():getLevelName() == "sewers" then
+            self.actualSwarm = data.swarmsSewer;
+        else
+            self.actualSwarm = data.swarmsCanyon;
+        end
         
         for k,v in pairs(self.fishableObjects) do
             if _G._persTable.enabled[k] == nil then
@@ -45,7 +49,7 @@ function SwarmFactory:destructSF()
     self.currentSwarm = nil;
     self.fishableObjects = nil;
     self.createdFishables = nil;
-    self.swarmsSewer = nil;
+    self.actualSwarm = nil;
 end
 
 --- Draws all fishables
@@ -67,11 +71,11 @@ end
 -- @param startPosY Start y position of the swarm
 -- @return Returns a random value.
 function SwarmFactory:createNextSwarm(startPosY)
-    if self.swarmsSewer[self.currentSwarm].maxSwarmHeight < startPosY then
+    if self.actualSwarm[self.currentSwarm].maxSwarmHeight < startPosY then
         self.currentSwarm = self.currentSwarm + 1;
     end
     
-    local newSwarm = self.swarmsSewer[self.currentSwarm];
+    local newSwarm = self.actualSwarm[self.currentSwarm];
     local fishable = self:determineFishable(newSwarm.allowedFishables, newSwarm.fishablesProbability);
     
     local amountFishables = math.random(fishable.minAmount, fishable.maxAmount);
