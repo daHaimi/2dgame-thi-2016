@@ -78,7 +78,8 @@ function love.load()
             _G._androidConfig.maxTilt = .3;
         end
     end
-    
+
+    Loveframes.basicfont = love.graphics.newFont("font/8bitOperatorPlus-Regular.ttf", 18);
     _G._gui = Gui();
     _gui:setLevelManager(levMan);
     _gui:start();

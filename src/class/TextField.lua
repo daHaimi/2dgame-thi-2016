@@ -5,11 +5,11 @@ local Textbox = Class {
         self.objBackground = Loveframes.Create("image");
         self.objBackground:SetImage(directory .. "TextBG.png");
         self.objTopic = Loveframes.Create("text");
-        self.objTopic:SetFont(love.graphics.newFont("font/8bitOperatorPlus-Bold.ttf", 20));
+        --self.objTopic:SetFont(love.graphics.newFont("font/8bitOperatorPlus-Bold.ttf", 20));
         self.objText = Loveframes.Create("text");
-        self.objText:SetFont(love.graphics.newFont("font/8bitOperatorPlus-Regular.ttf", 15));
+        --self.objText:SetFont(love.graphics.newFont("font/8bitOperatorPlus-Regular.ttf", 15));
         self.objPrice = Loveframes.Create("text");
-        self.objPrice:SetFont(love.graphics.newFont("font/8bitOperatorPlus-Bold.ttf", 15));
+        --self.objPrice:SetFont(love.graphics.newFont("font/8bitOperatorPlus-Bold.ttf", 15));
         self.width = width;
     end;
 };
