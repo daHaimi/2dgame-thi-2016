@@ -12,7 +12,7 @@ _G.math.inf = 1 / 0
         InGame = require "class.frames.inGame";
         Notification = require "class.Notification";
         
-        FakeElement = require "Tests.fakeLoveframes.FakeElement";
+        FakeElement = require "Tests.fakeLoveframes.fakeElement";
 
         testClass = require "class.Gui";
 describe("Test Gui", function()

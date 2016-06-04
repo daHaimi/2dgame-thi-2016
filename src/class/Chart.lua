@@ -37,12 +37,7 @@ local Chart = Class {
         self.p_toprow = 0;--top visible row. needed to scroll up and down
         self.p_xPos = 0;
         self.p_yPos = 0;
-        
-        if size ~= nil then
-            self.klickableSize = size;
-            self.p_column = 4;
-        end
-        
+
         self.p_elementsOnChart = {};--elements in the table
         self.p_markedElement = nil;
         

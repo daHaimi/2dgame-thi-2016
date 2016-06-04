@@ -22,9 +22,10 @@ describe("Unit test for TextField.lua", function()
     end)
 
     it("Testing changeText function", function()
-        locInstance:changeText("test topic", "test text");
+        locInstance:changeText("test topic", "test text", 10);
         assert.are.equal(locInstance.objTopic.text, "test topic");
         assert.are.equal(locInstance.objText.text, "test text");
+        assert.are.equal(locInstance.objPrice.text, "Price: 10");
     end)
 
     it("Testing SetVisible function", function()
