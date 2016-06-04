@@ -72,6 +72,7 @@ local Level = Class {
         self.hamsterYPos = self.animationStartPoint - 30;
         self.hamsterLockedXPos = 0;
         self.enviromentPosition = 0;
+        self.borderHeight = 200;
         self.confirmEnd = false;
 
         -- create light world
@@ -93,8 +94,13 @@ local Level = Class {
         
         --elements to draw
         self.topBackground = love.graphics.newImage("assets/toilet_bg.png");
-        self.borderLeft = love.graphics.newImage("assets/left.png");
-        self.borderRight = love.graphics.newImage("assets/right.png");
+        if self.p_levelName == "sewers" then
+            self.borderLeft = love.graphics.newImage("assets/left.png");
+            self.borderRight = love.graphics.newImage("assets/right.png");
+        elseif self.p_levelName == "canyon" then
+            self.borderLeft = love.graphics.newImage("assets/canyon_left.png");
+            self.borderRight = love.graphics.newImage("assets/canyon_right.png");
+        end
         self.toilet = love.graphics.newImage("assets/toilet.png");
         self.hamster = love.graphics.newImage("assets/hamster_noLine.png");
         self.line = love.graphics.newImage("assets/line.png");
@@ -273,14 +279,14 @@ function Level:drawEnviroment()
     love.graphics.draw(self.borderBottom, 0, self.lowerBorderPosition);
 
 
-    if self.enviromentPosition < -200 then
-        self.enviromentPosition = self.enviromentPosition + 200;
-    elseif self.enviromentPosition > 200 then
-        self.enviromentPosition = self.enviromentPosition - 200;
+    if self.enviromentPosition < -self.borderHeight then
+        self.enviromentPosition = self.enviromentPosition + self.borderHeight;
+    elseif self.enviromentPosition > self.borderHeight then
+        self.enviromentPosition = self.enviromentPosition - self.borderHeight;
     end
-    for i = 0, 5, 1 do
-        love.graphics.draw(self.borderLeft, 0, (i - 1) * 200 + self.enviromentPosition);
-        love.graphics.draw(self.borderRight, 454, (i - 1) * 200 + self.enviromentPosition);
+    for i = 0, self.winDim[2] / self.borderHeight + 2, 1 do
+        love.graphics.draw(self.borderLeft, 0, (i - 1) * self.borderHeight + self.enviromentPosition);
+        love.graphics.draw(self.borderRight, 454, (i - 1) * self.borderHeight + self.enviromentPosition);
     end
 
     love.graphics.draw(self.topBackground, 0, self.posY - 474);

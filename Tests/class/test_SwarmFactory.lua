@@ -35,6 +35,7 @@ describe("Unit test for SwarmFactory.lua", function()
                 lowerBoarder = -7000;
                 winDim = {500, 1000};
                 getLowerBoarder = function(...) return _G.levMan.curLevel.lowerBoarder end;
+                getLevelName = function(...) return "sewers" end;
             },
             curPlayer = nil,
             curSwarmFac = nil,

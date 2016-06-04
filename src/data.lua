@@ -9,7 +9,6 @@ return {
             minSpeed = 4,          -- Min movement speed
             maxSpeed = 7,          -- Max movement speed
             value = 30,            -- The worth of the object
-            hitpoints = 10,        -- The HP of the object
             animTimeoutMin = 0.1, -- The min animation timeout
             animTimeoutMax = 0.15, -- The max animation timeout
             
@@ -41,7 +40,6 @@ return {
             spriteSize = 64,
             minSpeed = 1,
             maxSpeed = 2,
-            hitpoints = 20,        
             value = 30,
             animTimeoutMin = 0.15,
             animTimeoutMax = 0.25,
@@ -67,7 +65,6 @@ return {
             spriteSize = 64,
             minSpeed = 3,
             maxSpeed = 4,
-            hitpoints = 5,
             value = -10,
             animTimeoutMin = 0.08,
             animTimeoutMax = 0.15,
@@ -93,7 +90,6 @@ return {
             spriteSize = 64,
             minSpeed = 0,
             maxSpeed = 1,
-            hitpoints = 5,        
             value = 20,
             animTimeoutMin = 0.2,
             animTimeoutMax = 0.3,
@@ -118,7 +114,6 @@ return {
             spriteSize = 64,
             minSpeed = 1,
             maxSpeed = 5,
-            hitpoints = 20,
             animTimeoutMin = 0.15,
             animTimeoutMax = 0.2,
             animType = Animate.AnimType.bounce,
@@ -144,7 +139,6 @@ return {
             spriteSize = 64,
             minSpeed = 0,
             maxSpeed = 2,
-            hitpoints = 5,        
             value = 10,
             minAmount = 1,
             maxAmount = 1,
@@ -157,6 +151,12 @@ return {
                     height = 30,
                     deltaXPos = 17,
                     deltaYPos = 2
+                },
+                {
+                    width = 6,
+                    height = 40,
+                    deltaXPos = 29,
+                    deltaYPos = 24
                 }
             }
         },
@@ -167,7 +167,6 @@ return {
             spriteSize = 64,
             minSpeed = 0,
             maxSpeed = 5,
-            hitpoints = 40,        
             value = 100,
             minAmount = 1,
             maxAmount = 1,
@@ -190,7 +189,6 @@ return {
             spriteSize = 64,
             minSpeed = 0,
             maxSpeed = 0,
-            hitpoints = 20,        
             value = -20,
             minAmount = 1,
             maxAmount = 1,
@@ -220,7 +218,6 @@ return {
             spriteSize = 64,
             minSpeed = 2,
             maxSpeed = 5,
-            hitpoints = 20,
             animTimeoutMin = 0.15,
             animTimeoutMax = 0.25,
             value = 50,
@@ -245,7 +242,6 @@ return {
             spriteSize = 128,
             minSpeed = 1,
             maxSpeed = 5,
-            hitpoints = 60,        
             value = 60,
             animTimeoutMin = 0.8,
             animTimeoutMax = 1,
@@ -270,7 +266,6 @@ return {
             spriteSize = 32,
             minSpeed = 0,
             maxSpeed = 0,
-            hitpoints = 0,        
             value = 0,
             minAmount = 1,
             maxAmount = 1,
@@ -303,12 +298,11 @@ return {
             name = "squirrel",
             image = "squirrel.png",
             spriteSize = 64,
-            minSpeed = 3,
-            maxSpeed = 8,
-            hitpoints = 20,        
+            minSpeed = 4,
+            maxSpeed = 6,
             value = 50,
             minAmount = 1,
-            maxAmount = 5,
+            maxAmount = 2,
             swarmHeight = 300,
             enabled = true,
             description = "Squirrel´s description";
@@ -340,17 +334,16 @@ return {
             spriteSize = 64,
             minSpeed = 0,
             maxSpeed = 0,
-            hitpoints = 50,        
             value = 100,
             minAmount = 1,
             maxAmount = 3,
-            swarmHeight = 500,
+            swarmHeight = 200,
             enabled = true,
             description = "A nice backpack someone seems to have lost";
             hitbox = {
                 {
-                    width = 50,
-                    height = 56,
+                    width = 52,
+                    height = 54,
                     deltaXPos = 6,
                     deltaYPos = 6
                 }
@@ -363,7 +356,6 @@ return {
             spriteSize = 64,
             minSpeed = 0,
             maxSpeed = 0,
-            hitpoints = 20,        
             value = 30,
             minAmount = 0,
             maxAmount = 1,
@@ -372,22 +364,22 @@ return {
             description = "A delicious drink";
             hitbox = {
                 {
-                    width = 22,
-                    height = 10,
-                    deltaXPos = 10,
-                    deltaYPos = 3
+                    width = 49,
+                    height = 17,
+                    deltaXPos = 9,
+                    deltaYPos = 13
                 },
                 {
-                    width = 44,
-                    height = 20,
-                    deltaXPos = 8,
-                    deltaYPos = 20
-                },
-                {
-                    width = 30,
-                    height = 20,
+                    width = 36,
+                    height = 19,
                     deltaXPos = 16,
-                    deltaYPos = 40
+                    deltaYPos = 30
+                },
+                {
+                    width = 23,
+                    height = 10,
+                    deltaXPos = 22,
+                    deltaYPos = 49
                 }
             }
         },
@@ -398,11 +390,10 @@ return {
             spriteSize = 64,
             minSpeed = 0,
             maxSpeed = 0,
-            hitpoints = 50,        
             value = 80,
             minAmount = 1,
-            maxAmount = 5,
-            swarmHeight = 50,
+            maxAmount = 3,
+            swarmHeight = 100,
             enabled = true,
             description = "A dinosaur egg. Better sell it fast";
             hitbox = {
@@ -427,7 +418,6 @@ return {
             spriteSize = 64,
             minSpeed = 0,
             maxSpeed = 0,
-            hitpoints = 20,        
             value = 100,
             minAmount = 1,
             maxAmount = 1,
@@ -456,7 +446,6 @@ return {
             spriteSize = 64,
             minSpeed = 1,
             maxSpeed = 4,
-            hitpoints = 10,        
             value = 40,
             animTimeoutMin = 0.3,
             animTimeoutMax = 0.5,
@@ -481,11 +470,10 @@ return {
             spriteSize = 64,
             minSpeed = 0,
             maxSpeed = 0,
-            hitpoints = 50,        
             value = -30,
-            minAmount = 3,
-            maxAmount = 8,
-            swarmHeight = 200,
+            minAmount = 1,
+            maxAmount = 2,
+            swarmHeight = 100,
             enabled = true,
             description = "Very prickly";
             hitbox = {
@@ -521,12 +509,11 @@ return {
             image = "leaf.png",
             spriteSize = 64,
             minSpeed = 0,
-            maxSpeed = 5,
-            hitpoints = -10,        
+            maxSpeed = 4,
             value = 20,
-            minAmount = 3,
-            maxAmount = 10,
-            swarmHeight = 20,
+            minAmount = 2,
+            maxAmount = 3,
+            swarmHeight = 150,
             enabled = true,
             description = "Simply leaf";
             hitbox = {
@@ -557,7 +544,6 @@ return {
             spriteSize = 64,
             minSpeed = 2,
             maxSpeed = 8,
-            hitpoints = 10,        
             value = 20,
             minAmount = 1,
             maxAmount = 6,
@@ -591,12 +577,11 @@ return {
             image = "balloon.png",
             spriteSize = 64,
             minSpeed = 2,
-            maxSpeed = 5,
-            hitpoints = 5,        
-            value = -5,
-            minAmount = 1,
-            maxAmount = 10,
-            swarmHeight = 300,
+            maxSpeed = 4,
+            value = 10,
+            minAmount = 2,
+            maxAmount = 3,
+            swarmHeight = 200,
             enabled = true,
             description = "A balloon";
             hitbox = {
@@ -627,7 +612,6 @@ return {
             spriteSize = 64,
             minSpeed = 1,
             maxSpeed = 4,
-            hitpoints = 100,        
             value = 60,
             minAmount = 1,
             maxAmount = 1,
@@ -679,6 +663,24 @@ return {
         {
             allowedFishables = { "ring", "shoe", "snake", "crocodile", "sleepingPill"},
             fishablesProbability = { 5, 30, 55, 90, 100}, --(3, 25, 25, 35, 10)
+            maxSwarmHeight = 9000
+        }
+    },
+    
+    swarmsCanyon = {
+        {
+            allowedFishables = { "balloon", "camera", "drink", "egg", "sleepingPill"},
+            fishablesProbability = {25, 45, 75, 95, 100}, 
+            maxSwarmHeight = 3000
+        },
+        {
+            allowedFishables = { "balloon", "cactus", "leaf", "canyonSnake", "sleepingPill"},
+            fishablesProbability = {25, 45, 75, 95, 100}, 
+            maxSwarmHeight = 6000
+        },
+        {
+            allowedFishables = { "backpack", "balloon", "bird", "squirrel", "sleepingPill"},
+            fishablesProbability = {25, 45, 75, 95, 100}, 
             maxSwarmHeight = 9000
         }
     },
