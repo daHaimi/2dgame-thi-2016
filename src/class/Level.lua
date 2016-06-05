@@ -166,9 +166,9 @@ function Level:update(dt, bait)
     if not self.animationStartFinished  then
         self.moved = 0;
     elseif self.direction == 1 then
-        self.moved = math.ceil(dt * bait.speed);
+        self.moved = math.ceil(dt * bait:getSpeed());
     elseif self.direction == -1 then
-        self.moved = -math.ceil(dt * bait.speed);
+        self.moved = -math.ceil(dt * bait:getSpeed());
     end
 
     --do the ingame movement

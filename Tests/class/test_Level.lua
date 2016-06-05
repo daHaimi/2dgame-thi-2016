@@ -296,7 +296,7 @@ describe("Test unit test suite", function()
         local dt = 4;
         local bait = {
             update = function(...) end;
-            speed = 200;
+            getSpeed = function(...) return 200 end;
         };
         locInstance.posY = -7500;
         locInstance:update(dt, bait);
@@ -304,6 +304,21 @@ describe("Test unit test suite", function()
         locInstance.posY = 1200;
         locInstance:update(dt, bait);
         assert.are.same(0, locInstance:getDirection());
+    end)
+
+    it("Testing Update for animationStart", function()
+        local dt = 4;
+        local bait = {
+            update = function(...) end;
+            getSpeed = function(...) return 200 end;
+        };
+        locInstance.animationStartFinished = true;
+        locInstance.direction = 1;
+        locInstance:update(dt, bait);
+        assert.are.same(800, locInstance.moved);
+        locInstance.direction = -1;
+        locInstance:update(dt, bait);
+        assert.are.same(-800, locInstance.moved);
     end)
 
     it("Testing activateShortGM", function()
@@ -451,9 +466,9 @@ describe("Test unit test suite", function()
         assert.are.same(locInstance.failedStart, true);
     end) 
     
-    it("Testing doAnimation failed start 2", function()
+    it("Testing doAnimation failed start 3", function()
         locInstance.hamsterLockedXPos = 50;
-        locInstance.hamsterYPos = 500;
+        locInstance.hamsterYPos = 1000;
         locInstance.animationStart = true;
         locInstance.animationStartFinished = false;
         locInstance.winDim = {480, 833};
@@ -461,13 +476,40 @@ describe("Test unit test suite", function()
         assert.are.same(locInstance.levelFinished, true);
     end)
     
-    it("Testing doAnimation failed start 3", function()
+    it("Testing doAnimation failed start 4", function()
         locInstance.hamsterLockedXPos = 150;
+        locInstance.hamsterYPos = 1000;
+        locInstance.animationStart = true;
+        locInstance.animationStartFinished = false;
+        locInstance.winDim = {480, 833};
+        locInstance:doAnimationMovement(_G.levMan.curPlayer, 5);
+        assert.are.same(locInstance.animationStartFinished, true);
+    end)
+
+    it("Testing doAnimation failed start 5", function()
+        locInstance.hamsterLockedXPos = 75;
+        locInstance.hamsterYPos = 1000;
+        locInstance.animationStart = true;
+        locInstance.animationStartFinished = false;
+        locInstance.winDim = {480, 833};
+        locInstance:doAnimationMovement(_G.levMan.curPlayer, 5);
+        assert.are.same(locInstance.levelFinished, true);
+    end)
+    
+    it("Testing doAnimation failed start 6", function()
+        locInstance.hamsterLockedXPos = 150;
+        locInstance.hamsterYPos = 1000;
         locInstance.animationStart = true;
         locInstance.animationStartFinished = false;
         locInstance.winDim = {480, 833};
         locInstance:doAnimationMovement(_G.levMan.curPlayer, 5);
         assert.are.same(locInstance.failedStart, false);
+    end)
+
+    it("testing Constructor for canyon", function()
+        local loveMock = mock(_G.love.graphics, true);
+        local myTestInstance = testClass("canyon", "assets/testbg.png", { 512, 256 }, 1, _G.levMan);
+        assert.spy(loveMock.newImage).was.called_with ("assets/canyon_right.png");
     end)
 
 end)
