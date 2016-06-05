@@ -799,6 +799,13 @@ return {
             image_lock = "ach_drop_hamster_locked.png";
             image_unlock = "ach_drop_hamster.png";
         },
+        caughtTwoBoots = {
+            nameOnPersTable = "caughtTwoBoots";
+            name = "One for each foot";
+            description = "You've got two almost new shoes. At least they used to be new before somebody flushed them down";
+            image_lock = "gui_Test_klickableElement_disable.png";
+            image_unlock = "ach_two_shoes.png";
+        },
     },
     
     languages = {

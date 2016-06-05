@@ -112,7 +112,6 @@ local Level = Class {
         
         --parameters for achievements
         self.failedStart = false;
-        self.achievementsChecked = false;
         --parameter for loading the game
         self.gameLoaded = true;
     end
@@ -201,22 +200,30 @@ function Level:update(dt, bait)
     -- update the currentDepth
     _G._tmpTable.currentDepth = self.posY;
     
-    
-    if self:isFinished() and not self.achievementsChecked then
-        self:checkForAchievments()
-        self.achievementsChecked = true;
-    end
+    self:checkForAchievments()
 end
 
+--- checks if a new achievement is unlocked
 function Level:checkForAchievments()
-    if self.failedStart and not _G._persTable.achievements.failedStart then
+    if self.failedStart and self.levelFinished and not _G._persTable.achievements.failedStart then
         table.insert(_G._unlockedAchievements, _G.data.achievements.failedStart);
         _gui:newNotification("assets/gui/480px/" .. _G.data.achievements.failedStart.image_unlock, 
             _G.data.achievements.failedStart.name);
         _G._persTable.achievements.failedStart = true;
     end
+    if self.levelFinished and _G._tmpTable.caughtThisRound.shoe == 2 
+    and not _G._persTable.achievements.caughtTwoBoots 
+    and self:calcFishedValue() == self.levMan:getCurSwarmFactory():getFishableObjects().shoe.value * 2 then
+        table.insert(_G._unlockedAchievements, _G.data.achievements.caughtTwoBoots);
+        _gui:newNotification("assets/gui/480px/" .. _G.data.achievements.caughtTwoBoots.image_unlock, 
+            _G.data.achievements.caughtTwoBoots.name);
+        _G._persTable.achievements.caughtTwoBoots = true;
+    end
 end
 
+--- calculates the momement an positioning of all elements needed for the animation
+--@param bai curBait
+--@param dt delta time
 function Level:doAnimationMovement(bait, dt)
     if self.animationStart and not self.animationStartFinished then
         if  self.hamsterLockedXPos < 120 and self.hamsterLockedXPos > 65 or 
