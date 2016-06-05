@@ -110,6 +110,7 @@ describe("Test Gui", function()
             disappear = function(...) end;
             clear = function(...) end;
             update = function(...) end;
+            blink = function(...) end;
         };
         function state:checkPosition() 
             return self.onPos; 
@@ -119,9 +120,12 @@ describe("Test Gui", function()
         stub(state, "appear");
         stub(state, "disappear");
         stub(state, "clear");
+        stub(state, "blink");
+        stub(state, "update");
         stub(locInstance, "setFrameChangeActivity");
         stub(locInstance.notification, "update");
         spy.on(state, "checkPosition");
+        spy.on(locInstance, "drawGame");
         
         locInstance.p_frameChangeActiv = true;
         locInstance.p_states.currentState = state;
@@ -131,8 +135,31 @@ describe("Test Gui", function()
         assert.spy(state.checkPosition).was_called();
         assert.stub(state.appear).was_called();
         assert.stub(locInstance.notification.update).was_called();
-        ---coming soon
+        
+        state.onPos = true;
+        locInstance:update();
+        assert.stub(state.appear).was_called();
+        assert.stub(locInstance.setFrameChangeActivity).was_called();
+        assert.stub(state.clear).was_called();
+        
+        
+        locInstance.p_myFrames.inGame = state;
+        locInstance.p_states.currentState = state;
+        assert.spy(locInstance.drawGame).was_called();
+        assert.stub(state.update).was_called();
     end)
+
+    it("testing function setFrameChangeActivity ", function()
+        locInstance.p_frameChangeActiv = nil;
+        locInstance:setFrameChangeActivity"test";
+        assert.are.equal(locInstance.p_frameChangeActiv, "test");
+    end);
+    
+    it("testing function getLastState ", function()
+        locInstance.p_states.lastState = "test";
+        assert.are.equal(locInstance:getLastState(), "test");
+    end)
+
     it("testing function clearAll ", function()
         local frame = {
             clear = function(...) end;

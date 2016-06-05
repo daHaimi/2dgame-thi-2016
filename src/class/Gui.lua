@@ -37,7 +37,7 @@ local Gui = Class {
         self.notification = Notification();
     end;
     levMan = nil;
-};
+}
 
 ---return all frames
 function Gui:getFrames()
