@@ -585,4 +585,10 @@ describe("Unit test for Bait.lua", function()
         myInstance.modifier = myInstance:changeModifierTo(0.5);
         assert.are.same(0.305, myInstance.modifier);
     end)
+
+    it("Test getSpeed", function()
+        local myInstance = testClass(locWinDim, levMan);
+        myInstance.speed = 30;
+        assert.are.same(myInstance:getSpeed(), 30);
+    end)
 end)

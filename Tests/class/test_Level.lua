@@ -9,7 +9,9 @@ _G.levelTestStub = function()
 
     _G._persTable = {
         upgrades = {
-            godMode = 1;
+            godMode = true;
+            moreFuel1 = true;
+            moreFuel2 = true;
             mapBreakthrough1 = 0;
             mapBreakthrough2 = 0;
         };
@@ -25,6 +27,7 @@ _G.levelTestStub = function()
         curLevel = nil;
         curPlayer = {
             getPosXMouse = function (...) return 50 end;
+            getSpeed = function (...) return 200 end;
         };
         curSwarmFac = nil;
         getLevelPropMapByName = function(...) return {
@@ -427,6 +430,44 @@ describe("Test unit test suite", function()
         assert.are.same(locInstance:isLoaded(), true);
         locInstance.gameLoaded = nil;
         assert.are.same(locInstance:isLoaded(), false);
+    end)
+
+    it("Testing doAnimation failed start 1", function()
+        locInstance.hamsterLockedXPos = 70;
+        locInstance.animationStart = true;
+        locInstance.animationStartFinished = false;
+        locInstance.winDim = {480, 833};
+        locInstance:doAnimationMovement(_G.levMan.curPlayer, 5);
+        assert.are.same(locInstance.failedStart, true);
+    end)
+
+    it("Testing doAnimation failed start 2", function()
+        locInstance.hamsterLockedXPos = 50;
+        locInstance.hamsterYPos = 0;
+        locInstance.animationStart = true;
+        locInstance.animationStartFinished = false;
+        locInstance.winDim = {480, 833};
+        locInstance:doAnimationMovement(_G.levMan.curPlayer, 5);
+        assert.are.same(locInstance.failedStart, true);
+    end) 
+    
+    it("Testing doAnimation failed start 2", function()
+        locInstance.hamsterLockedXPos = 50;
+        locInstance.hamsterYPos = 500;
+        locInstance.animationStart = true;
+        locInstance.animationStartFinished = false;
+        locInstance.winDim = {480, 833};
+        locInstance:doAnimationMovement(_G.levMan.curPlayer, 5);
+        assert.are.same(locInstance.levelFinished, true);
+    end)
+    
+    it("Testing doAnimation failed start 3", function()
+        locInstance.hamsterLockedXPos = 150;
+        locInstance.animationStart = true;
+        locInstance.animationStartFinished = false;
+        locInstance.winDim = {480, 833};
+        locInstance:doAnimationMovement(_G.levMan.curPlayer, 5);
+        assert.are.same(locInstance.failedStart, false);
     end)
 
 end)

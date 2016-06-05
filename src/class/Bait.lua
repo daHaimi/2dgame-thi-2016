@@ -325,4 +325,8 @@ function Bait:getGoldenRule()
     return self.goldenRuleLowerPoint, self.goldenRuleUpperPoint;
 end
 
+function Bait:getSpeed()
+    return self.speed;
+end
+
 return Bait;

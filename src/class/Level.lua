@@ -221,20 +221,20 @@ function Level:doAnimationMovement(bait, dt)
     if self.animationStart and not self.animationStartFinished then
         if  self.hamsterLockedXPos < 120 and self.hamsterLockedXPos > 65 or 
             self.hamsterLockedXPos < 355 and self.hamsterLockedXPos > 300 then
-            if self.hamsterYPos < _G._persTable.winDim[2] * 0.5 - 230 then
-                self.hamsterYPos = self.hamsterYPos + 0.5 * math.ceil(dt * bait.speed);
+            if self.hamsterYPos < self.winDim[2] * 0.5 - 230 then
+                self.hamsterYPos = self.hamsterYPos + 0.5 * math.ceil(dt * bait:getSpeed());
                 self.failedStart = true;
             else
                 self.levelFinished = true;
             end
         else
             if self.hamsterYPos < self.winDim[2] * 0.4 then
-                self.hamsterYPos = self.hamsterYPos + 0.5 * math.ceil(dt * bait.speed);
-                if self.hamsterLockedXPos < 120 or self.hamsterLockedXPos > 286 then
+                self.hamsterYPos = self.hamsterYPos + 0.5 * math.ceil(dt * bait:getSpeed());
+                if self.hamsterLockedXPos < 120 or self.hamsterLockedXPos > 300 then
                     self.failedStart = true;
                 end
             else
-                if self.hamsterLockedXPos > 130 and self.hamsterLockedXPos < 300 then
+                if self.hamsterLockedXPos > 120 and self.hamsterLockedXPos < 300 then
                     self.animationStartFinished = true;
                 else
                     self.levelFinished = true;
