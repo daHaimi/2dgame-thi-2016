@@ -231,7 +231,7 @@ end
 --- implements drawing interface
 function Bait:draw()
     local Shaders = require "class.Shaders";
-    if self.levMan:getCurLevel():getGodModeStat() ~= 0 then
+    if self.levMan:getCurLevel():getGodModeStat() then
         Shaders:hueAjust(0.5);
     end
     self:drawLine();
