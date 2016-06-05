@@ -25,7 +25,8 @@ local InGame = Class {
             self.speed = 75;
         end
         self.name = "InGame";
-        self.frame = Frame(0, - self.speed, "down", "up", 50, 0, -1000);
+        self.offsetY = -1000;
+        self.frame = Frame(0, - self.speed, "down", "up", 50, 0, self.offsetY);
         self:create();
     end;
 };
@@ -95,6 +96,7 @@ function InGame:draw()
         self.elementsOnFrame.healthbar.object = Healthbar();
     end
     self.frame:draw(self.elementsOnFrame);
+    self.elementsOnFrame.healthbar.object:SetVisible(false);
 end
 
 ---called to "delete" this frame
@@ -106,10 +108,14 @@ end
 function InGame:appear()
     love.mouse.setVisible(false);
     self.frame:appear(self.elementsOnFrame);
+    if self:checkPosition() then
+        self.elementsOnFrame.healthbar.object:SetVisible(true);
+    end
 end
 
 ---called in the "fly out" state
 function InGame:disappear()
+    self.elementsOnFrame.healthbar.object:SetVisible(false);
     self.frame:disappear(self.elementsOnFrame);
 end
 
