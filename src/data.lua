@@ -813,6 +813,27 @@ return {
             image_lock = "ach_secondTimeGame_locked.png";
             image_unlock = "ach_secondTimeGame.png";
         },
+        bronzeCaughtOneRound = {
+            nameOnPersTable = "bronzeCaughtOneRound";
+            name = "Nice catch!";
+            description = "Caught more than 10 fishes in a single Round";
+            image_lock = "ach_objectsOneRound_locked.png";
+            image_unlock = "ach_objectsOneRound.png";
+        },
+        silverCaughtOneRound = {
+            nameOnPersTable = "silverCaughtOneRound";
+            name = "Nicer catch!";
+            description = "Caught more than 20 fishes in a single Round";
+            image_lock = "ach_objectsOneRound_locked.png";
+            image_unlock = "ach_objectsOneRound.png";
+        },
+        goldCaughtOneRound = {
+            nameOnPersTable = "goldCaughtOneRound";
+            name = "Nicesest catch!";
+            description = "Caught more than 30 fishes in a single Round";
+            image_lock = "ach_objectsOneRound_locked.png";
+            image_unlock = "ach_objectsOneRound.png";
+        },
     },
     
     languages = {

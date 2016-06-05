@@ -12,6 +12,7 @@ Gui = require "class.Gui";
 LevelManager = require "class.LevelManager";
 Gamestate = require "lib.hump.gamestate";
 Persistence = require "class.Persistence";
+Achievement = require "class.Achievement";
 require "lib.TEsound";
 
 -- Global variables
@@ -44,6 +45,7 @@ local player;
 local swarmFactory;
 local levMan;
 local p_scaleFactor
+local achiev;
 
 --- The bootstrap of the game.
 -- This function is called exactly once at the beginning of the game.
@@ -51,7 +53,7 @@ function love.load()
     --if arg[#arg] == "-debug" then require("mobdebug").start() end -- enables the debugging
     _G.data = require "data"; -- loading cycle on android requires data to be load on love.load()
     _G._persistence = Persistence();
-    _G._persistence:resetGame();
+    --_G._persistence:resetGame();
 
     local _, _, flags = love.window.getMode();
     love.graphics.setBackgroundColor(55, 80, 100);
@@ -80,9 +82,12 @@ function love.load()
     end
 
     Loveframes.basicfont = love.graphics.newFont("font/8bitOperatorPlus-Regular.ttf", 18);
+    
     _G._gui = Gui();
     _gui:setLevelManager(levMan);
     _gui:start();
+    achiev = Achievement();
+    achiev:checkAchievements();
 end
 
 --- calculates the dimension of the Level and the factor of the scaling

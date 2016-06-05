@@ -86,8 +86,7 @@ function Persistence:createPersTable()
         lastLevel = 1;
         winDim = {};
         phase = 1;
-        fishCaughtTotal = 0;
-        fishCaught = {}; -- table of caughtable fishes with amount
+        fish = {};
         enabled = {
             ring = true;
             sleepingPill = true;
@@ -118,6 +117,9 @@ function Persistence:createPersTable()
         failedStart = false;
         caughtTwoBoots = false;
         secondStart = false;
+        bronzeCaughtOneRound = false;
+        silverCaughtOneRound = false;
+        goldCaughtOneRound = false;
     };
 
     --- config options
@@ -127,9 +129,14 @@ function Persistence:createPersTable()
         language = "english";
     };
     
+    _G._persTable.fish = {
+        caughtInOneRound = 0; 
+        caughtTotal = 0; 
+        caught = {}; -- table of caughtable fishes with amount caught
+    };
     -- adds caughtable fishes to perstable
     for name in pairs(data.fishableObjects) do
-        _G._persTable.fishCaught[name] = 0;
+        _G._persTable.fish.caught[name] = 0;
     end
 
   

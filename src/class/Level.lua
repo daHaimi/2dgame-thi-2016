@@ -433,14 +433,21 @@ end
 -- @return Returns the value of all fished objects.
 function Level:calcFishedValue()
     local fishedVal = 0;
+    local fishedAmount = 0;
     for name, amount in pairs(_G._tmpTable.caughtThisRound) do
         if amount > 0 then
             fishedVal = fishedVal + self.levMan:getCurSwarmFactory():getFishableObjects()[name].value * amount;
-            _G._persTable.fishCaught[name] = _G._persTable.fishCaught[name] + amount;
-            _G._persTable.fishCaughtTotal = _G._persTable.fishCaughtTotal + amount;
+            -- for achivements
+            _G._persTable.fish.caught[name] = _G._persTable.fish.caught[name] + amount;
+            _G._persTable.fish.caughtTotal = _G._persTable.fish.caughtTotal + amount;
+            fishedAmount = fishedAmount + amount
         end
     end
+    -- for achivement x caught in one round
     _G._tmpTable.earnedMoney = fishedVal;
+    if fishedAmount > _G._persTable.fish.caughtInOneRound then
+        _G._persTable.fish.caughtInOneRound = fishedAmount;
+    end
     return fishedVal;
 end
 
