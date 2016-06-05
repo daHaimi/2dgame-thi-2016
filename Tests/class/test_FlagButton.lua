@@ -24,6 +24,9 @@ describe("Unit test for FlagButton.lua", function()
             };
             
         };
+        _G._gui = {
+            setLanguage = function(...) end;
+        };
         _G._persTable = {
             config = {
                 language = "english";
@@ -53,6 +56,7 @@ describe("Unit test for FlagButton.lua", function()
     end)
 
     it("Testing changeLanguage function", function()
+        stub(_G._gui, "setLanguage");
         locInstance:changeLanguage();
         assert.are.equal(_G._persTable.config.language, "german");
         assert.are.equal(locInstance.object.imagepath, "assets/gui/480px/path2");
@@ -60,6 +64,7 @@ describe("Unit test for FlagButton.lua", function()
         locInstance:changeLanguage();
         assert.are.equal(_G._persTable.config.language, "english");
         assert.are.equal(locInstance.object.imagepath, "assets/gui/480px/path1");
+        assert.stub(_G._gui.setLanguage).was_called();
     end)
 
     it("Testing SetVisible function", function()

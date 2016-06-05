@@ -39,6 +39,14 @@ local Gui = Class {
     levMan = nil;
 }
 
+function Gui:setLanguage()
+    local language = _G._persTable.config.language;
+    self.p_myFrames.mainMenu:setLanguage(language);
+    --for k, v in pairs(self.p_myFrames) do
+    --    v:setLanguage(language);
+    --end
+end
+
 ---return all frames
 function Gui:getFrames()
     return self.p_myFrames;
@@ -53,6 +61,7 @@ end
 ---clears all frames and starts at the main menu
 function Gui:start()
     self:clearAll();
+    self:setLanguage();
     self:changeFrame(self.p_myFrames.start);    
 end
 

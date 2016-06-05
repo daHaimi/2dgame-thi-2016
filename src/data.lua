@@ -812,10 +812,29 @@ return {
         english = {
             language = "english";
             flagImage = "BritishFlag.png";
+            package = {
+                buttonStart = "Start Game";
+                buttonShop = "Shop";
+                buttonDictionary = "Dictionary";
+                buttonAchievements = "Achievements";
+                buttonOptions = "Options";
+                buttonCredits = "Credits";
+                buttonClose = "Close Game"
+            };
+            
         },
         german = {
             language = "german";
             flagImage = "GermanFlag.png";
+            package = {
+                buttonStart = "Starte Spiel";
+                buttonShop = "Shop";
+                buttonDictionary = "Lexikon";
+                buttonAchievements = "Errungenschaften";
+                buttonOptions = "Optionen";
+                buttonCredits = "Credits";
+                buttonClose = "Spiel beenden"
+            };
         },
         
     },

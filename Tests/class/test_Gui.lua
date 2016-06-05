@@ -49,6 +49,8 @@ describe("Test Gui", function()
                english = {
                     language = "english";
                     flagImage = "testimage";
+                    package = {
+                    };
                 };
             };
        };

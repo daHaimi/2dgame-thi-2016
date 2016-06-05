@@ -93,31 +93,25 @@ function MainMenu:create()
     
     self.elementsOnFrame.button_start.object:SetImage(self.directory .. "Button.png");
     self.elementsOnFrame.button_start.object:SizeToImage();
-    self.elementsOnFrame.button_start.object:SetText("Start");
+    
     
     self.elementsOnFrame.button_upgradeMenu.object:SetImage(self.directory .. "Button.png");
     self.elementsOnFrame.button_upgradeMenu.object:SizeToImage();
-    self.elementsOnFrame.button_upgradeMenu.object:SetText("Shop");
     
     self.elementsOnFrame.button_dictionary.object:SetImage(self.directory .. "Button.png");
     self.elementsOnFrame.button_dictionary.object:SizeToImage();
-    self.elementsOnFrame.button_dictionary.object:SetText("Dictionary");
     
     self.elementsOnFrame.button_achievements.object:SetImage(self.directory .. "Button.png");
     self.elementsOnFrame.button_achievements.object:SizeToImage();
-    self.elementsOnFrame.button_achievements.object:SetText("Achievements");
     
     self.elementsOnFrame.button_options.object:SetImage(self.directory .. "Button.png");
     self.elementsOnFrame.button_options.object:SizeToImage();
-    self.elementsOnFrame.button_options.object:SetText("Options");
     
     self.elementsOnFrame.button_credits.object:SetImage(self.directory .. "Button.png");
     self.elementsOnFrame.button_credits.object:SizeToImage();
-    self.elementsOnFrame.button_credits.object:SetText("Credits");
     
     self.elementsOnFrame.button_close.object:SetImage(self.directory .. "Button.png");
     self.elementsOnFrame.button_close.object:SizeToImage();
-    self.elementsOnFrame.button_close.object:SetText("Close Game");
     
     --onclick events for all buttons
     self.elementsOnFrame.button_start.object.OnClick = function(object)
@@ -173,6 +167,17 @@ end
 ---return true if the frame is on position /fly in move is finished
 function MainMenu:checkPosition()
     return self.frame:checkPosition();
+end
+
+---changes the language of this frame
+function MainMenu:setLanguage(language)
+    self.elementsOnFrame.button_close.object:SetText(_G.data.languages[language].package.buttonClose);
+    self.elementsOnFrame.button_credits.object:SetText(_G.data.languages[language].package.buttonCredits);
+    self.elementsOnFrame.button_options.object:SetText(_G.data.languages[language].package.buttonOptions);
+    self.elementsOnFrame.button_achievements.object:SetText(_G.data.languages[language].package.buttonAchievements);
+    self.elementsOnFrame.button_dictionary.object:SetText(_G.data.languages[language].package.buttonDictionary);
+    self.elementsOnFrame.button_upgradeMenu.object:SetText(_G.data.languages[language].package.buttonShop);
+    self.elementsOnFrame.button_start.object:SetText(_G.data.languages[language].package.buttonStart);
 end
 
 return MainMenu;
