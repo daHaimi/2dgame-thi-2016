@@ -8,7 +8,7 @@ Animate = require "class.Animate";
 -- @param levelManager The reference to the level manager object
 local Bait = Class {
     init = function(self, winDim, levelManager)
-        
+
         -- Initialize the member variables
         self.levMan = nil;
         self.size = 10;
@@ -29,8 +29,8 @@ local Bait = Class {
         self.goldenRuleUpperPoint = 0.68;
         self.image = nil;
         self.pullIn = false;
-        
-        
+
+
         self.winDim = winDim;
         self.xPos = (winDim[1] / 2) - (self.size / 2);
         self.levMan = levelManager;
@@ -39,7 +39,7 @@ local Bait = Class {
         self.line = love.graphics.newImage("assets/line.png");
         if img == 0 then
             self.image = nil;
-        else 
+        else
             self.image = Animate(img, 3, 1, .08, Animate.AnimType.bounce);
         end
         self.posXMouse = (winDim[1] / 2) - (self.size / 2);
@@ -86,11 +86,10 @@ function Bait:checkUpgrades()
     if _G._persTable.upgrades.firstSpeedUp then
         self.speed = self.speed + 200;
     end
-    
+
     if _G._persTable.upgrades.secondSpeedUp then
         self.speed = self.speed + 200;
     end
-    
 end
 
 --- updates the bait and checks for collisions
@@ -133,7 +132,7 @@ end
 function Bait:capXPosition()
     local leftBound = 58;
     local rightBound = 422;
-    if self.levMan:getCurLevel():getYPos() > self.winDim[2] * 0.2  then
+    if self.levMan:getCurLevel():getYPos() > self.winDim[2] * 0.2 then
         local m = 142 / (self.winDim[2] * 0.2);
         leftBound = 58 + m * (self.levMan:getCurLevel():getYPos() - self.winDim[2] * 0.23);
         rightBound = 422 - m * (self.levMan:getCurLevel():getYPos() - self.winDim[2] * 0.23);
@@ -169,7 +168,7 @@ function Bait:checkFishableForCollision(fishable, oldXPos, index)
     local moved = self.levMan:getCurLevel():getMoved();
     local directionOfMovement = 0;
     yPos = self.yPos
-    
+
     if oldXPos < self.xPos then
         directionOfMovement = 1;
     elseif oldXPos > self.xPos then
@@ -201,7 +200,7 @@ function Bait:collisionDetected(fishable, index)
         self:sleepingPillHit();
         self.levMan:getCurSwarmFactory().createdFishables[index]:setToCaught();
         -- other fishable object hit and no godMode active
-    elseif not self.levMan:getCurLevel():getGodModeStat()then
+    elseif not self.levMan:getCurLevel():getGodModeStat() then
         -- still lifes left
         if self.numberOfHits <= _G._persTable.upgrades.moreLife then
             self.numberOfHits = self.numberOfHits + 1;
@@ -242,12 +241,12 @@ end
 --- draws the line of the Hamster
 function Bait:drawLine()
     local angle = 0;
-    local length = math.sqrt (self.xPos * self.xPos + self.yPos * self.yPos);
-    
+    local length = math.sqrt(self.xPos * self.xPos + self.yPos * self.yPos);
+
     angle = math.atan((self.xPos - 0.5 * self.winDim[1]) / (self.levMan:getCurLevel():getYPos() - self.winDim[2] * self.modifier - 100));
     love.graphics.translate(self.xPos, self.yPos);
     love.graphics.rotate(angle);
-    love.graphics.translate(- self.xPos, - self.yPos);
+    love.graphics.translate(-self.xPos, -self.yPos);
     for i = 1, length, 1 do
         if not (i * 9 > length) then
             love.graphics.draw(self.line, self.xPos, self.yPos - 40 - 9 * i);
@@ -265,13 +264,13 @@ function Bait:capXMovement()
     if not self.levMan:getCurLevel():isFinished() then
         local delta = self.posXMouse - self.xPos;
         local posX;
-        
+
         if delta > self.maxSpeedX then
             result = self.maxSpeedX;
         elseif delta < self.maxSpeedX * (-1) then
-            result =  - self.maxSpeedX;
+            result = -self.maxSpeedX;
         elseif math.abs(delta) < self.maxSpeedX then
-            result =  delta;
+            result = delta;
         end
     end
     return result;
