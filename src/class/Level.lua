@@ -199,7 +199,7 @@ function Level:update(dt, bait)
     self.lightWorld:update();
     
     -- update the currentDepth
-    _G._tmpTable.currentDepth = math.abs(self.posY);
+    _G._tmpTable.currentDepth = self.posY;
     
     
     if self:isFinished() and not self.achievementsChecked then
