@@ -796,7 +796,7 @@ return {
             nameOnPersTable = "failedStart";
             name = "Failed from the beginning";
             description = "Gratulation! You failed to start the game";
-            image_lock = "gui_Test_klickableElement_disable.png";
+            image_lock = "ach_drop_hamster_locked.png";
             image_unlock = "ach_drop_hamster.png";
         },
     },
