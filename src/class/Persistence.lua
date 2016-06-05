@@ -114,6 +114,7 @@ function Persistence:createPersTable()
         getFirstObject = true;
         getSecondObject = false;
         failedStart = false;
+        caughtTwoBoots = false;
     };
 
     --- config options
