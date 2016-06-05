@@ -53,7 +53,7 @@ function love.load()
     --if arg[#arg] == "-debug" then require("mobdebug").start() end -- enables the debugging
     _G.data = require "data"; -- loading cycle on android requires data to be load on love.load()
     _G._persistence = Persistence();
-    --_G._persistence:resetGame();
+    _G._persistence:resetGame();
 
     local _, _, flags = love.window.getMode();
     love.graphics.setBackgroundColor(55, 80, 100);
