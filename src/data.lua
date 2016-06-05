@@ -806,6 +806,13 @@ return {
             image_lock = "gui_Test_klickableElement_disable.png";
             image_unlock = "ach_two_shoes.png";
         },
+        secondStart = {
+            nameOnPersTable = "secondStart";
+            name = "Welcome again!";
+            description = "It's nice to see you again";
+            image_lock = "ach_secondTimeGame_locked.png";
+            image_unlock = "ach_secondTimeGame.png";
+        },
     },
     
     languages = {
