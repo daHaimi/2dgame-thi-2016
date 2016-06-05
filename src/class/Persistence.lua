@@ -82,11 +82,12 @@ function Persistence:createPersTable()
         statistic = {};
         achievements = {};
         config = {};
-        fishCaught = {};
         money = 1000;
         lastLevel = 1;
         winDim = {};
         phase = 1;
+        fishCaughtTotal = 0;
+        fishCaught = {}; -- table of caughtable fishes with amount
         enabled = {
             ring = true;
             sleepingPill = true;
@@ -125,6 +126,13 @@ function Persistence:createPersTable()
         music = 100;
         language = "english";
     };
+    
+    -- adds caughtable fishes to perstable
+    for name in pairs(data.fishableObjects) do
+        _G._persTable.fishCaught[name] = 0;
+    end
+
+  
 end
 
 return Persistence;

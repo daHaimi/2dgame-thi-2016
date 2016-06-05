@@ -429,13 +429,15 @@ function Level:deactivateGodMode()
     self.godModeActive = false;
 end
 
---- Calculates the value of the fished objects.
+--- Calculates the value of the fished objects and adds amount to persTable.
 -- @return Returns the value of all fished objects.
 function Level:calcFishedValue()
     local fishedVal = 0;
     for name, amount in pairs(_G._tmpTable.caughtThisRound) do
         if amount > 0 then
             fishedVal = fishedVal + self.levMan:getCurSwarmFactory():getFishableObjects()[name].value * amount;
+            _G._persTable.fishCaught[name] = _G._persTable.fishCaught[name] + amount;
+            _G._persTable.fishCaughtTotal = _G._persTable.fishCaughtTotal + amount;
         end
     end
     _G._tmpTable.earnedMoney = fishedVal;
