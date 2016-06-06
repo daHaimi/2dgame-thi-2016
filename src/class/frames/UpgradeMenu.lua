@@ -108,10 +108,13 @@ end
 
 ---called to buy an Item
 function UpgradeMenu:buyElement()
-    self.elementsOnFrame.chart.object:getMarkedElement():disable();
-    local price = self.elementsOnFrame.chart.object:getMarkedElement().price;
-    _G._persTable.money = _G._persTable.money - price;
-    self:updateMoney()
+    local markedElement = self.elementsOnFrame.chart.object:getMarkedElement();
+    if not _G._persTable.upgrades[markedElement.nameOnPersTable] then
+        markedElement:disable();
+        local price = self.elementsOnFrame.chart.object:getMarkedElement().price;
+        _G._persTable.money = _G._persTable.money - price;
+        self:updateMoney()
+    end
 end
 
 --add all upgrades written in the data.lua into the chart and adds an OnClick event
