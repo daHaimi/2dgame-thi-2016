@@ -97,9 +97,6 @@ function UpgradeMenu:create()
             if _G._persTable.money >= self.elementsOnFrame.chart.object:getMarkedElement().price then
                 self:buyElement();
                 _G._persistence:updateSaveFile();
-                if not _G._persTable.achievements.shoppingQueen then
-                    self:checkForAchievement();
-                end
             else
                 _gui:newNotification(self.directory .. "ach_nothingCaught.png", "Not enough Money!");
             end
@@ -110,13 +107,15 @@ end
 function UpgradeMenu:checkForAchievement()
     local boughtAll = true;
     for k, v in pairs(_G._persTable.upgrades) do
-        if not v then
-            boughtAll = false;
+        if type(v) == "boolean" then
+            if not v then
+                boughtAll = false;
+            end
         end
     end
     if boughtAll then
         _G._persTable.achievements.shoppingQueen = true;
-        _gui.newNotification(self.directory .. _G.data.achievements.boughtAllItems.image_unlock,
+        _gui:newNotification(self.directory .. _G.data.achievements.boughtAllItems.image_unlock,
             _G.data.achievements.boughtAllItems.name);
     end
 end
@@ -134,6 +133,9 @@ function UpgradeMenu:buyElement()
         local price = self.elementsOnFrame.chart.object:getMarkedElement().price;
         _G._persTable.money = _G._persTable.money - price;
         self:updateMoney()
+    end
+    if not _G._persTable.achievements.shoppingQueen then
+        self:checkForAchievement();
     end
 end
 

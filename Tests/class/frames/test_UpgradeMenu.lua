@@ -24,16 +24,28 @@ describe("Unit test for UpgradeMenu.lua", function()
         _G.Frame = function(...) return Frame; end;
         _G._persTable = {
             upgrades = {
+                test1 = false;
             };
             money = 0;
             scaledDeviceDim = {
                 [1] = 500;
                 [2] = 500;
             };
+            achievements = {
+                shoppingQueen = false;
+            };
         };
-        
+        _G._gui = {
+            newNotification = function(...) end;
+        };
         _G.data = {
             upgrades = {};
+            achievements = {
+                boughtAllItems = {
+                    image_unlock = "";
+                    name = "";
+                }
+            }
         };
         
         _G.element ={
@@ -72,6 +84,15 @@ end)
         locInstance.elementsOnFrame = {};
         myInstance.elementsOnFrame = {};
         assert.are.same(locInstance, myInstance);
+    end)
+
+    it("Testing checkForAchievement function", function()
+        stub(_G._gui, "newNotification");
+        locInstance:checkForAchievement();
+        assert.are.equal(_G._persTable.achievements.shoppingQueen, false);
+        _G._persTable.upgrades.test1 = true;
+        locInstance:checkForAchievement();
+        assert.are.equal(_G._persTable.achievements.shoppingQueen, true);
     end)
 
     it("Testing create function", function()
@@ -119,9 +140,11 @@ end)
             return locInstance.elementsOnFrame.chart.object.p_markedElement; 
         end;
         
+        stub(locInstance, "checkForAchievement");
         stub(locInstance.elementsOnFrame.chart.object.p_markedElement, "disable");
         locInstance:buyElement();
         assert.stub(locInstance.elementsOnFrame.chart.object.p_markedElement.disable).was.called();
+        assert.stub(locInstance.checkForAchievement).was_called();
     end)
 
     it("Testing addAllUpgrades function", function()
