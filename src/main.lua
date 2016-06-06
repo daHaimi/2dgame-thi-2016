@@ -60,10 +60,12 @@ function love.load()
     local deviceDim = { love.window.getDesktopDimensions(flags.display) };
     --deviceDim = {640, 1140};
     --deviceDim = {1366,768};
+    --deviceDim = {1600,900};
     _G._persTable.winDim[1], _G._persTable.winDim[2], p_scaleFactor = getScaledDimension(deviceDim);
 
     _G._persTable.scaledDeviceDim = {_G._persTable.winDim[1] * p_scaleFactor, _G._persTable.winDim[2] * p_scaleFactor };
-    love.window.setMode(_G._persTable.scaledDeviceDim[1], _G._persTable.scaledDeviceDim[2], { centered });
+    love.window.setMode(_G._persTable.scaledDeviceDim[1], _G._persTable.scaledDeviceDim[2], 
+        {x = (_G._persTable.deviceDim[1] - _G._persTable.scaledDeviceDim[1]) / 2, y = 25});
     levMan = LevelManager();
 
     -- Get Accelerometer if android
@@ -96,12 +98,12 @@ function getScaledDimension(deviceDim)
     local resultDim = {};
     local scaleFactor = 1;
     if deviceDim[1] > deviceDim[2] then
-        scaleFactor = (0.9 * deviceDim[2]) / (480 * 16 / 9);
         resultDim[1] = 480;
-        resultDim[2] = resultDim[1] * 16 / 9;
-        if deviceDim[2] < resultDim[2] then
-            resultDim[2] = deviceDim[2] * 0.975
-            scaleFactor = 1;
+        resultDim[2] = 853; -- 480 * 16 /9
+        if resultDim[2] > 0.93 * deviceDim[2] then
+            resultDim[2] = 0.93 * deviceDim[2]
+        else 
+            scaleFactor = (deviceDim[2] * 0.93) / 853
         end
     else
         scaleFactor = deviceDim[1] / 480;
