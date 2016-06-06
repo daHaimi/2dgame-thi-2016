@@ -125,12 +125,16 @@ function Persistence:createPersTable()
         silverCoinsOneRound = false;
         goldCoinsOneRound = false;
         negativCoins = false;
+        bMoneyEarnedTotal = false;
+        sMoneyEarnedTotal = false;
+        gMoneyEarnedTotal = false;
     };
 
 
     _G._persTable.statistic = {
         maxCoinOneRound = 0;
         minCoinOneRound = 0;
+        moneyEarnedTotal = 0;
     };
     
     --- config options

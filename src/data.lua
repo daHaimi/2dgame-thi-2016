@@ -843,8 +843,8 @@ return {
             image_unlock = "ach_shitcoin.png";
         },
         
-        goldCoinsOneRound = {
-            nameOnPersTable = "goldCoinsOneRound";
+        silverCoinsOneRound = {
+            nameOnPersTable = "silverCoinsOneRound";
             name = "Your getting better ;)";
             description = "600 Coins in one Round";
             image_lock = "ach_shitcoin_locked.png";
@@ -859,6 +859,29 @@ return {
             image_unlock = "ach_shitcoin.png";
         },
         
+        bMoneyEarnedTotal = {
+            nameOnPersTable = "bMoneyEarnedTotal";
+            name = "slumdog millionaire";
+            description = "2000 Coins Total";
+            image_lock = "ach_shitcoin_locked.png";
+            image_unlock = "ach_shitcoin.png";
+        },
+        
+        sMoneyEarnedTotal = {
+            nameOnPersTable = "sMoneyEarnedTotal";
+            name = "Rich Boy";
+            description = "5000 Coins Total";
+            image_lock = "ach_shitcoin_locked.png";
+            image_unlock = "ach_shitcoin.png";
+        },
+        
+        gMoneyEarnedTotal = {
+            nameOnPersTable = "gMoneyEarnedTotal";
+            name = "OVER 9000!";
+            description = "Earned 9000 Coins Total";
+            image_lock = "ach_shitcoin_locked.png";
+            image_unlock = "ach_shitcoin.png";
+        },
         negativCoins = {
             nameOnPersTable = "negativCoins";
             name = "Your doing it wrong!";
@@ -873,6 +896,28 @@ return {
             description = "You bought all Items in the Shop";
             image_lock = "ach_shoppingQueen_locked.png";
             image_unlock = "ach_shoppingQueen.png";
+        },
+        
+        bFishCaughtTotal = {
+            nameOnPersTable = "bFishCaugtTotal";
+            name = "Apprentice Fisher";
+            description = "50 Fishes Total";
+            image_lock = "ach_objectsOverTime_locked.png";
+            image_unlock = "ach_objectsOverTime.png";
+        },
+        sFishCaughtTotal = {
+            nameOnPersTable = "sFishCaugtTotal";
+            name = "Master Fisher";
+            description = "200 Fishes Total";
+            image_lock = "ach_objectsOverTime_locked.png";
+            image_unlock = "ach_objectsOverTime.png";
+        },
+        gFishCaughtTotal = {
+            nameOnPersTable = "gFishCaugtTotal";
+            name = "Godlike Fisher";
+            description = "500 Fishes Total";
+            image_lock = "ach_objectsOverTime_locked.png";
+            image_unlock = "ach_objectsOverTime.png";
         },
     },
     

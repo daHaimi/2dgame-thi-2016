@@ -456,6 +456,7 @@ function Level:calcFishedValue()
     if fishedAmount > _G._persTable.fish.caughtInOneRound then
         _G._persTable.fish.caughtInOneRound = fishedAmount;
     end
+    _G._persTable.statistic.moneyEarnedTotal = _G._persTable.statistic.moneyEarnedTotal + fishedAmount;
     return fishedVal;
 end
 
