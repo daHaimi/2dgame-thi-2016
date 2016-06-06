@@ -818,7 +818,7 @@ return {
             name = "Nice catch!";
             description = "Caught more than 10 fishes in a single Round";
             image_lock = "ach_objectsOneRound_locked.png";
-            image_unlock = "ach_objectsOneRound.png";
+            image_unlock = "ach_objectsOneRoundBronze.png";
         },
         silverCaughtOneRound = {
             nameOnPersTable = "silverCaughtOneRound";
@@ -832,8 +832,33 @@ return {
             name = "Nicesest catch!";
             description = "Caught more than 30 fishes in a single Round";
             image_lock = "ach_objectsOneRound_locked.png";
-            image_unlock = "ach_objectsOneRound.png";
+            image_unlock = "ach_objectsOneRoundGold.png";
         },
+        
+        bronzeCoinsOneRound = {
+            nameOnPersTable = "bronzeCoinsOneRound";
+            name = "200";
+            description = "200 Coins in one Round";
+            image_lock = "ach_shitcoin_locked.png";
+            image_unlock = "ach_shitcoin.png";
+        },
+        
+        goldCoinsOneRound = {
+            nameOnPersTable = "goldCoinsOneRound";
+            name = "Your getting better ;)";
+            description = "600 Coins in one Round";
+            image_lock = "ach_shitcoin_locked.png";
+            image_unlock = "ach_shitcoin.png";
+        },
+        
+        goldCoinsOneRound = {
+            nameOnPersTable = "goldCoinsOneRound";
+            name = "Amazing!";
+            description = "1000 Coins in one Round o.O";
+            image_lock = "ach_shitcoin_locked.png";
+            image_unlock = "ach_shitcoin.png";
+        },
+        
         boughtAllItems = {
             nameOnPersTable = "shoppingQueen";
             name = "Shopping Queen";

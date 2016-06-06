@@ -445,6 +445,9 @@ function Level:calcFishedValue()
     end
     -- for achivement x caught in one round
     _G._tmpTable.earnedMoney = fishedVal;
+    if fishedVal > _G._persTable.statistic.maxCoinOneRound then
+        _G._persTable.statistic.maxCoinOneRound = fishedVal;
+    end
     if fishedAmount > _G._persTable.fish.caughtInOneRound then
         _G._persTable.fish.caughtInOneRound = fishedAmount;
     end

@@ -121,8 +121,17 @@ function Persistence:createPersTable()
         silverCaughtOneRound = false;
         goldCaughtOneRound = false;
         shoppingQueen = false;
+        bronzeCoinsOneRound = false;
+        silverCoinsOneRound = false;
+        goldCoinsOneRound = false;
+        
     };
 
+
+    _G._persTable.statistic = {
+        maxCoinOneRound = 0;
+        
+        };
     --- config options
     _G._persTable.config = {
         bgm = 100;
