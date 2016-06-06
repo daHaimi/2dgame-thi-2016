@@ -448,6 +448,11 @@ function Level:calcFishedValue()
     if fishedVal > _G._persTable.statistic.maxCoinOneRound then
         _G._persTable.statistic.maxCoinOneRound = fishedVal;
     end
+    
+    if fishedVal < _G._persTable.statistic.minCoinOneRound then
+        _G._persTable.statistic.minCoinOneRound = fishedVal;
+    end
+    
     if fishedAmount > _G._persTable.fish.caughtInOneRound then
         _G._persTable.fish.caughtInOneRound = fishedAmount;
     end

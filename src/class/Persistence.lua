@@ -124,14 +124,15 @@ function Persistence:createPersTable()
         bronzeCoinsOneRound = false;
         silverCoinsOneRound = false;
         goldCoinsOneRound = false;
-        
+        negativCoins = false;
     };
 
 
     _G._persTable.statistic = {
         maxCoinOneRound = 0;
-        
-        };
+        minCoinOneRound = 0;
+    };
+    
     --- config options
     _G._persTable.config = {
         bgm = 100;

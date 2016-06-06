@@ -7,6 +7,7 @@ local Achievement = Class {
 function Achievement:checkAchievements()
     self:caughtOneRound();
     self:moneyOneRound();
+    self:negativCoins();
 end
 
 function Achievement:caughtOneRound()
@@ -23,14 +24,20 @@ function Achievement:caughtOneRound()
 end
 
 function Achievement:moneyOneRound()
-    if _G._persTable.statistic.maxCoinOneRound > 200 then
+    if _G._persTable.statistic.maxCoinOneRound > 199 then
         _G._persTable.achievements.bronzeCoinsOneRound = true;
     end
-    if _G._persTable.statistic.maxCoinOneRound > 600 then
+    if _G._persTable.statistic.maxCoinOneRound > 599 then
         _G._persTable.achievements.silverCoinsOneRound = true;
     end
-    if _G._persTable.statistic.maxCoinOneRound > 1000 then
+    if _G._persTable.statistic.maxCoinOneRound > 999 then
         _G._persTable.achievements.goldCoinsOneRound = true;
     end  
+end
+
+function Achievement:negativCoins()
+    if _G._persTable.statistic.minCoinOneRound < -199 then
+        _G._persTable.achievements.negativCoins = true;
+    end
 end
 return Achievement;

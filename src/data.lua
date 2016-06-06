@@ -859,6 +859,14 @@ return {
             image_unlock = "ach_shitcoin.png";
         },
         
+        negativCoins = {
+            nameOnPersTable = "negativCoins";
+            name = "Your doing it wrong!";
+            description = "-200 in one Round ... noob";
+            image_lock = "ach_negativeShitcoin_locked.png";
+            image_unlock = "ach_negativeShitcoin.png";
+        },
+        
         boughtAllItems = {
             nameOnPersTable = "shoppingQueen";
             name = "Shopping Queen";
