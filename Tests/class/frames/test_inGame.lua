@@ -13,7 +13,10 @@ describe("Unit test for inGame.lua", function()
         _G.love = {
             mouse = {
                 setVisible = function(...) end;
-            };
+            },
+            system = {
+                getOS = function(...) return ""; end;
+            }
         };
         _G.Loveframes = {
             Create = function(typeName) 
