@@ -61,11 +61,11 @@ function love.load()
     --deviceDim = {640, 1140};
     --deviceDim = {1366,768};
     --deviceDim = {1600,900};
-    _G._persTable.winDim[1], _G._persTable.winDim[2], p_scaleFactor = getScaledDimension(deviceDim);
+    _G._persTable.winDim[1], _G._persTable.winDim[2], p_scaleFactor, titleHeight = getScaledDimension(deviceDim);
 
     _G._persTable.scaledDeviceDim = {_G._persTable.winDim[1] * p_scaleFactor, _G._persTable.winDim[2] * p_scaleFactor };
     love.window.setMode(_G._persTable.scaledDeviceDim[1], _G._persTable.scaledDeviceDim[2], 
-        {x = (_G._persTable.deviceDim[1] - _G._persTable.scaledDeviceDim[1]) / 2, y = 25});
+        {x = (_G._persTable.deviceDim[1] - _G._persTable.scaledDeviceDim[1]) / 2, y = titleHeight});
     levMan = LevelManager();
 
     -- Get Accelerometer if android
@@ -97,9 +97,11 @@ end
 function getScaledDimension(deviceDim)
     local resultDim = {};
     local scaleFactor = 1;
+    local titleHeight = 0;
     if deviceDim[1] > deviceDim[2] then
         resultDim[1] = 480;
         resultDim[2] = 853; -- 480 * 16 /9
+        titleHeight = 25
         if resultDim[2] > 0.93 * deviceDim[2] then
             resultDim[2] = 0.93 * deviceDim[2]
         else 
@@ -110,7 +112,7 @@ function getScaledDimension(deviceDim)
         resultDim[2] = deviceDim[2] / deviceDim[1] * 480;
         resultDim[1] = 480;
     end
-    return resultDim[1], resultDim[2], scaleFactor;
+    return resultDim[1], resultDim[2], scaleFactor, titleHeight;
 end
 
 --- The love main draw call, which draws every frame on the screen.
