@@ -120,6 +120,7 @@ function Persistence:createPersTable()
         bronzeCaughtOneRound = false;
         silverCaughtOneRound = false;
         goldCaughtOneRound = false;
+        shoppingQueen = false;
     };
 
     --- config options

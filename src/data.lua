@@ -834,6 +834,13 @@ return {
             image_lock = "ach_objectsOneRound_locked.png";
             image_unlock = "ach_objectsOneRound.png";
         },
+        boughtAllItems = {
+            nameOnPersTable = "shoppingQueen";
+            name = "Shopping Queen";
+            description = "You bought all Items in the Shop";
+            image_lock = "ach_shoppingQueen_locked.png";
+            image_unlock = "ach_shoppingQueen.png";
+        },
     },
     
     languages = {
