@@ -60,6 +60,11 @@ function InGame:create()
             x = 0;
             y = 0;
         },
+        pause = {
+            object = Loveframes.Create("imagebutton");
+            x = 0;
+            y = _G._persTable.scaledDeviceDim[2] - 128;
+        };
         score = {
             object = Loveframes.Create("text");
             x = 220 * self.scaleFactor;
@@ -74,6 +79,18 @@ function InGame:create()
     self.elementsOnFrame.fuelBarBackground.object:SetImage(self.directory .. "FuelBarBG.png");
     
     self.elementsOnFrame.score.object:SetShadow(true);
+    
+    --set image of pause button only on mobile version
+    if love.system.getOS() == "Android" or love.system.getOS() == "iOS" then
+        self.elementsOnFrame.pause.object:SetImage(self.directory .. "Pause.png");
+    end
+    self.elementsOnFrame.pause.object:SetText("");
+    self.elementsOnFrame.pause.object:SizeToImage();
+    
+    self.elementsOnFrame.pause.object.OnClick = function(object)
+        _gui:changeFrame(_gui:getFrames().pause);
+    end
+    
 end
 
 function InGame:update()
@@ -97,6 +114,7 @@ function InGame:draw()
     end
     self.frame:draw(self.elementsOnFrame);
     self.elementsOnFrame.healthbar.object:SetVisible(false);
+    self.elementsOnFrame.pause.object:SetVisible(false);
 end
 
 ---called to "delete" this frame
@@ -110,12 +128,14 @@ function InGame:appear()
     self.frame:appear(self.elementsOnFrame);
     if self:checkPosition() then
         self.elementsOnFrame.healthbar.object:SetVisible(true);
+        self.elementsOnFrame.pause.object:SetVisible(true);
     end
 end
 
 ---called in the "fly out" state
 function InGame:disappear()
     self.elementsOnFrame.healthbar.object:SetVisible(false);
+    self.elementsOnFrame.pause.object:SetVisible(false);
     self.frame:disappear(self.elementsOnFrame);
 end
 

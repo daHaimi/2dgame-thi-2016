@@ -345,8 +345,14 @@ function Level:payPlayer()
     if self.levelFinished and self.levMan:getCurSwarmFactory() ~= nil then
         if self.gotPayed == 0 then -- check if the earned money was already payed
         local fishedVal = self:calcFishedValue();
+        if _G._persTable.upgrades.firstPermanentMoneyMult == true then
+            self.roundValue = self:multiplyFishedValue(1.2, fishedVal);
+        end
+        if _G._persTable.upgrades.secondPermanentMoneyMult == true then
+            self.roundValue = self:multiplyFishedValue(1.25, fishedVal);
+        end
         if _G._persTable.upgrades.moneyMult == true then
-            self.roundValue = self:multiplyFishedValue(2.5, fishedVal);
+            self.roundValue = self:multiplyFishedValue(2, fishedVal);
             self.gotPayed = 1;
             _G._persTable.upgrades.moneyMult = false;
         else
@@ -445,9 +451,18 @@ function Level:calcFishedValue()
     end
     -- for achivement x caught in one round
     _G._tmpTable.earnedMoney = fishedVal;
+    if fishedVal > _G._persTable.statistic.maxCoinOneRound then
+        _G._persTable.statistic.maxCoinOneRound = fishedVal;
+    end
+    
+    if fishedVal < _G._persTable.statistic.minCoinOneRound then
+        _G._persTable.statistic.minCoinOneRound = fishedVal;
+    end
+    
     if fishedAmount > _G._persTable.fish.caughtInOneRound then
         _G._persTable.fish.caughtInOneRound = fishedAmount;
     end
+    _G._persTable.statistic.moneyEarnedTotal = _G._persTable.statistic.moneyEarnedTotal + fishedAmount;
     return fishedVal;
 end
 

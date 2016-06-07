@@ -100,7 +100,7 @@ function Persistence:createPersTable()
         oneMoreLife = false; -- more life
         twoMoreLife = false; -- more life
         threeMoreLife = false; -- more life
-        moneyMult = false; -- "0" means no additional money
+        moneyMult = false; -- false means no additional money
         moreLife = 0; -- needed for calculation in a few classes
         godMode = false; -- indicates if the god mode is available or not
         mapBreakthrough1 = false; -- can you access the first map limit? 0 = no, 1 = yes
@@ -109,6 +109,8 @@ function Persistence:createPersTable()
         moreFuel2 = false;
         sleepingPillDuration = 600; -- duration of the effect of the sleeping pill
         sleepingPillSlow = 0.25; -- sets the slow factor of the sleeping pill 0.25 = 25% of the usual movement
+        firstPermanentMoneyMult = false; -- false means no additional money
+        secondPermanentMoneyMult = false; -- false means no additional money
     };
 
     _G._persTable.achievements = {
@@ -120,8 +122,23 @@ function Persistence:createPersTable()
         bronzeCaughtOneRound = false;
         silverCaughtOneRound = false;
         goldCaughtOneRound = false;
+        shoppingQueen = false;
+        bronzeCoinsOneRound = false;
+        silverCoinsOneRound = false;
+        goldCoinsOneRound = false;
+        negativCoins = false;
+        bMoneyEarnedTotal = false;
+        sMoneyEarnedTotal = false;
+        gMoneyEarnedTotal = false;
     };
 
+
+    _G._persTable.statistic = {
+        maxCoinOneRound = 0;
+        minCoinOneRound = 0;
+        moneyEarnedTotal = 0;
+    };
+    
     --- config options
     _G._persTable.config = {
         bgm = 100;
