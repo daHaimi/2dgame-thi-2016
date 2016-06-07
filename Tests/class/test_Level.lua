@@ -116,11 +116,11 @@ describe("Test unit test suite", function()
         assert.are.same(locInstance, myInstance);
 
         _persTable.upgrades.mapBreakthrough1 = true;
-        local myInstance = testClass("sewers", "assets/testbg.png", { 512, 256 }, 1, _G.levMan);
+        myInstance = testClass("sewers", "assets/testbg.png", { 512, 256 }, 1, _G.levMan);
         assert.are.same(lb + mbb1, myInstance.lowerBoarder);
 
         _persTable.upgrades.mapBreakthrough2 = true;
-        local myInstance = testClass("sewers", "assets/testbg.png", { 512, 256 }, 1, _G.levMan);
+        myInstance = testClass("sewers", "assets/testbg.png", { 512, 256 }, 1, _G.levMan);
         assert.are.same(lb + mbb1 + mbb2, myInstance.lowerBoarder);
     end)
 

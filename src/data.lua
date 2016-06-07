@@ -953,7 +953,7 @@ return {
             nameOnPersTable = "allPillsAtLeastOnce";
             name = "Addict";
             description = "Caught every type of pills";
-            image_lock = "ach_allPillsAtLeastOnce_locked.png";
+            image_lock = "gui_Test_klickableElement.png";
             image_unlock = "ach_allPillsAtLeastOnce.png";
         },
         nothingCaught = {
