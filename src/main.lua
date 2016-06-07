@@ -176,7 +176,7 @@ function love.update(dt)
       if love.system.getOS() == "Android" then
           -- shift [-30,30] to [0,60] and scale to windim[1]
           _G._androidConfig.lastPos[_G._androidConfig.rrPos] = (_G._androidConfig.joystick:getAxis(1) + _G._androidConfig.maxTilt) * (_G._persTable.winDim[1] / (_G._androidConfig.maxTilt * 2));
-          rrPos = (rrPos % rrLen) + 1;
+          _G._androidConfig.rrPos = (_G._androidConfig.rrPos % _G._androidConfig.rrLen) + 1;
           local joyPos = 0;
           for _,v in pairs(_G._androidConfig.lastPos) do
             joyPos = joyPos + v;
