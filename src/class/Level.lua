@@ -200,6 +200,10 @@ function Level:update(dt, bait)
     -- update the currentDepth
     _G._tmpTable.currentDepth = self.posY;
     
+    -- calc fished Value
+    if self.levelFinished then
+        _G._tmpTable.earnedMoney = self:calcFishedValue();
+    end
     self:checkForAchievments()
 end
 
@@ -457,7 +461,6 @@ function Level:calcFishedValue()
         end
     end
     -- for achivement x caught in one round
-    _G._tmpTable.earnedMoney = fishedVal;
     if fishedVal > _G._persTable.statistic.maxCoinOneRound then
         _G._persTable.statistic.maxCoinOneRound = fishedVal;
     end
@@ -470,7 +473,7 @@ function Level:calcFishedValue()
         _G._persTable.fish.caughtInOneRound = fishedAmount;
     end
     _G._persTable.statistic.moneyEarnedTotal = _G._persTable.statistic.moneyEarnedTotal + fishedAmount;
-    return fishedVal;
+    return (fishedVal);
 end
 
 --- Calculate the amount of money with the given multiply bonus (round up).
