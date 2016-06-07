@@ -132,7 +132,8 @@ function Persistence:createPersTable()
         gMoneyEarnedTotal = false;
         onlyOneCaught = false;
         onlyNegativeFishesCaught = false;
-        allFishesAtLeastOnce = false;
+        allObjectsAtLeastOnce = false;
+        allPillsAtLeastOnce = false;
     };
 
 

@@ -949,8 +949,15 @@ return {
             image_lock = "ach_negativeShitcoin_locked.png";
             image_unlock = "ach_negativeShitcoin.png";
         },
---        allFishesAtLeastOnce = {
---            nameOnPersTable = "allFishesAtLeastOnce";
+        allPillsAtLeastOnce = {
+            nameOnPersTable = "allPillsAtLeastOnce";
+            name = "Addict";
+            description = "Caught every type of pills";
+            image_lock = "ach_allPillsAtLeastOnce_locked.png";
+            image_unlock = "ach_allPillsAtLeastOnce.png";
+        },
+--        allObjectsAtLeastOnce = {
+--            nameOnPersTable = "allObjectsAtLeastOnce";
 --            name = "Collector";
 --            description = "Every object caught at least once";
 --            image_lock = "ach_allFishesAtLeastOnce_locked.png";
