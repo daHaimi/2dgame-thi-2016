@@ -240,7 +240,8 @@ function love.mousepressed(x, y, button)
     
     -- starts the starting sequence of the game
     if love.mouse.isDown(1) and _gui:getCurrentState() == "InGame" and
-    not levMan:getCurLevel():getStartAnimationRunning() then
+    not levMan:getCurLevel():getStartAnimationRunning() and
+    not levMan:getCurLevel():getStartAnimationFinished() then
         levMan:getCurLevel():startStartAnimation();
     end
     
