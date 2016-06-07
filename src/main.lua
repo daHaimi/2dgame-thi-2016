@@ -181,7 +181,7 @@ function love.update(dt)
           for _,v in pairs(_G._androidConfig.lastPos) do
             joyPos = joyPos + v;
           end
-          joyPos = joyPos / #joyPos;
+          joyPos = joyPos / #_G._androidConfig.lastPos;
           _G._androidConfig.joyPos = joyPos;
           if joyPos < (levMan:getCurPlayer():getSize() / 2) then
               levMan:getCurPlayer():setPosXMouse(0);
