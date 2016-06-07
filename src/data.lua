@@ -662,7 +662,7 @@ return {
         
         {
             allowedFishables = { "ring", "shoe", "snake", "crocodile", "sleepingPill"},
-            fishablesProbability = { 5, 30, 55, 90, 100}, --(3, 25, 25, 35, 10)
+            fishablesProbability = { 5, 30, 55, 90, 100},
             maxSwarmHeight = 9000
         }
     },
