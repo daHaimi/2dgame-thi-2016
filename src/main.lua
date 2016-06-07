@@ -21,7 +21,7 @@ _G._gui = nil;
 _G._persistence = nil;
 _G._androidConfig = {
   lastPos = {};
-  rrLen = 9;
+  rrLen = 15;
   rrPos = 1;
 };
 _G._tmpTable = {
