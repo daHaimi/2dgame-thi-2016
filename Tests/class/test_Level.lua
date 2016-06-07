@@ -17,6 +17,21 @@ _G.levelTestStub = function()
         };
         phase = 1;
     };
+    _G._persTable.fish = {
+          caught = {
+            turtle = 0;
+            rat = 0;
+            deadFish = 0;
+            nemo = 0;
+          },
+          caughtTotal = 0;
+          caughtInOneRound = 0;
+    };
+    _G._persTable.statistic = {
+          maxCoinOneRound = 0;
+          minCoinOneRound = 0;
+          moneyEarnedTotal = 0;
+    };
     _G._tmpTable = {
         earnedMoney = nil;
         currentDepth = nil;
@@ -246,7 +261,7 @@ describe("Test unit test suite", function()
             };
             end;
         };
-
+       
         _G._tmpTable.caughtThisRound = { ["turtle"] = 5, ["rat"] = 0, ["deadFish"] = 5, ["nemo"] = 3 };
         assert.are.same(locInstance:calcFishedValue(), 30);
     end)
@@ -273,17 +288,17 @@ describe("Test unit test suite", function()
     end)
 
     it("Testing printResult with caught objects", function()
-        _G._tmpTable.caughtThisRound["cat"] = 1;
-        _G._tmpTable.caughtThisRound["dog"] = 2;
+        _G._tmpTable.caughtThisRound["turtle"] = 1;
+        _G._tmpTable.caughtThisRound["nemo"] = 2;
         locInstance.levMan.curSwarmFac = {
-            getFishableObjects = function() return { ["cat"] = { ["value"] = 10 }, ["dog"] = { ["value"] = 20 } }; end;
+            getFishableObjects = function() return { ["turtle"] = { ["value"] = 10 }, ["nemo"] = { ["value"] = 20 } }; end;
         };
         local loveMock = mock(_G.love, true);
         locInstance:printResult();
         assert.spy(loveMock.graphics.print).was.called(4);
         assert.spy(loveMock.graphics.print).was.called_with("Caught objects in this round:", match._, match._);
-        assert.spy(loveMock.graphics.print).was.called_with("cat: 1 x 10 Coins", match._, match._);
-        assert.spy(loveMock.graphics.print).was.called_with("dog: 2 x 20 Coins", match._, match._);
+        assert.spy(loveMock.graphics.print).was.called_with("turtle: 1 x 10 Coins", match._, match._);
+        assert.spy(loveMock.graphics.print).was.called_with("nemo: 2 x 20 Coins", match._, match._);
         assert.spy(loveMock.graphics.print).was.called_with("Earned: 50 Coins", match._, match._);
     end)
 

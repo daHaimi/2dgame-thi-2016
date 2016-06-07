@@ -691,7 +691,7 @@ return {
             nameOnPersTable = "oneMoreLife";--Name of parameter in persTable. Unlock change this parameter to true
             name = "One more life";--Name shown on the Textfield on the shop
             description = "add one more life to your healthbar.";--shown on the shop
-            price = 100;--price of this item
+            price = 500;--price of this item
             image = "gui_Test_klickableElement.png";
             image_disable = "gui_Test_klickableElement_disable.png";
         },
@@ -699,7 +699,7 @@ return {
             nameOnPersTable = "twoMoreLife";
             name = "Two more life";
             description = "add a third life to your healthbar.";
-            price = 200;
+            price = 1000;
             image = "gui_Test_klickableElement.png";
             image_disable = "gui_Test_klickableElement_disable.png";
         },
@@ -707,7 +707,7 @@ return {
             nameOnPersTable = "threeMoreLife";
             name = "Three more life";
             description = "upgrade your healthbar up to four lifes.";
-            price = 300;
+            price = 1500;
             image = "gui_Test_klickableElement.png";
             image_disable = "gui_Test_klickableElement_disable.png";
         },
@@ -730,7 +730,7 @@ return {
         moneyMulitplier = {
             nameOnPersTable = "moneyMultiplier";
             name = "Money Multiplier";
-            description = "the value of your caught object are multiplied by 2.5.";
+            description = "the value of your caught object are doubled";
             price = 300;
             image = "gui_Test_klickableElement.png";
             image_disable = "gui_Test_klickableElement_disable.png";
@@ -739,23 +739,23 @@ return {
             nameOnPersTable = "godMode";
             name = "God Mode";
             description = "unlock godMode";
-            price = 300;
+            price = 1000;
             image = "gui_Test_klickableElement.png";
             image_disable = "gui_Test_klickableElement_disable.png";
         },
         mapBreakthrough1 = {
             nameOnPersTable = "mapBreakthrough1";
-            name = "MB1";
-            description = "blablabla";
-            price = 300;
+            name = "Who put this in my way?";
+            description = "Smash that barrier";
+            price = 2500;
             image = "gui_Test_klickableElement.png";
             image_disable = "gui_Test_klickableElement_disable.png";
         },
         mapBreakthrough2 = {
             nameOnPersTable = "mapBreakthrough2";
-            name = "MB2";
-            description = "blablabla";
-            price = 300;
+            name = "Not again";
+            description = "Smash another barrier";
+            price = 5000;
             image = "gui_Test_klickableElement.png";
             image_disable = "gui_Test_klickableElement_disable.png";
         },
@@ -763,7 +763,7 @@ return {
             nameOnPersTable = "moreFuel1";
             name = "Need more Fuel?";
             description = "Upgrade your Fuel to 1600";
-            price = 300;
+            price = 1000;
             image = "gui_Test_klickableElement.png";
             image_disable = "gui_Test_klickableElement_disable.png";
         },
@@ -771,10 +771,26 @@ return {
             nameOnPersTable = "moreFuel2";
             name = "Need more Fuel?";
             description = "Upgrade your Fuel to 2400";
-            price = 300;
+            price = 1500;
             image = "gui_Test_klickableElement.png";
             image_disable = "gui_Test_klickableElement_disable.png";
-        }
+        },
+        firstPermanentMoneyMulitplier = {
+            nameOnPersTable = "firstPermanentMoneyMult";
+            name = "Negotiation Novice";
+            description = "earn 20% more money";
+            price = 1000;
+            image = "gui_Test_klickableElement.png";
+            image_disable = "gui_Test_klickableElement_disable.png";
+        },
+        secondPermanentMoneyMulitplier = {
+            nameOnPersTable = "secondPermanentMoneyMult";
+            name = "Negotiation Expert";
+            description = "earn 25% more money";
+            price = 2500;
+            image = "gui_Test_klickableElement.png";
+            image_disable = "gui_Test_klickableElement_disable.png";
+        },
     },
     
     achievements = {
