@@ -82,7 +82,7 @@ function Persistence:createPersTable()
         statistic = {};
         achievements = {};
         config = {};
-        money = 1000;
+        money = 5000;
         lastLevel = 1;
         winDim = {};
         phase = 1;
@@ -130,6 +130,9 @@ function Persistence:createPersTable()
         bMoneyEarnedTotal = false;
         sMoneyEarnedTotal = false;
         gMoneyEarnedTotal = false;
+        onlyOneCaught = false;
+        onlyNegativeFishesCaught = false;
+        allFishesAtLeastOnce = false;
     };
 
 
@@ -147,9 +150,10 @@ function Persistence:createPersTable()
     };
     
     _G._persTable.fish = {
-        caughtInOneRound = 0; 
-        caughtTotal = 0; 
+        caughtInOneRound = 0;
+        caughtTotal = 0;
         caught = {}; -- table of caughtable fishes with amount caught
+        postiveFishCaught = false; -- no fish with positive value caught
     };
     -- adds caughtable fishes to perstable
     for name in pairs(data.fishableObjects) do

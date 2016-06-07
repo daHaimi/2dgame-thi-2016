@@ -14,6 +14,9 @@ end
 
 function Achievement:caughtOneRound()
   
+    if _G._persTable.fish.caughtInOneRound == 1 then
+        _G._persTable.achievements.onlyOneCaught = true;
+    end
     if _G._persTable.fish.caughtInOneRound > 9 then
         _G._persTable.achievements.bronzeCaughtOneRound = true;
     end
@@ -66,4 +69,26 @@ function Achievement:negativCoins()
         _G._persTable.achievements.negativCoins = true;
     end
 end
+
+function Achievement:onlyNegativeFishesCaught()
+    if _G._persTable.fish.postiveFishCaught == false and _G._persTable.fish.caughtInOneRound > 2 then
+        _G._persTable.achievements.onlyNegativeFishesCaught = true;
+    end
+end
+
+function Achievement:allFishesAtLeastOnce()
+    if _G._persTable.fish.caught.turtle > 0 and _G._persTable.fish.caught.rat > 0 and
+        _G._persTable.fish.caught.deadFish > 0 and _G._persTable.fish.caught.nemo > 0 and
+        _G._persTable.fish.caught.lollipop > 0 and _G._persTable.fish.caught.angler > 0 and
+        _G._persTable.fish.caught.ring > 0 and _G._persTable.fish.caught.shoe > 0 and
+        _G._persTable.fish.caught.snake > 0 and _G._persTable.fish.caught.crocodile > 0 and
+        _G._persTable.fish.caught.balloon > 0 and _G._persTable.fish.caught.camera > 0 and
+        _G._persTable.fish.caught.drink > 0 and _G._persTable.fish.caught.egg > 0 and
+        _G._persTable.fish.caught.cactus > 0 and _G._persTable.fish.caught.leaf > 0 and
+        _G._persTable.fish.caught.canyonSnake > 0 and _G._persTable.fish.caught.backpack > 0 and
+        _G._persTable.fish.caught.bird > 0 and _G._persTable.fish.caught.squirrel > 0 then
+        _G._persTable.achievements.allFishesAtLeastOnce = true;
+    end
+end
+
 return Achievement;

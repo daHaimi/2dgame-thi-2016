@@ -900,7 +900,7 @@ return {
         },
         negativCoins = {
             nameOnPersTable = "negativCoins";
-            name = "Your doing it wrong!";
+            name = "You're doing it wrong!";
             description = "-200 in one Round ... noob";
             image_lock = "ach_negativeShitcoin_locked.png";
             image_unlock = "ach_negativeShitcoin.png";
@@ -935,6 +935,34 @@ return {
             image_lock = "ach_objectsOverTime_locked.png";
             image_unlock = "ach_objectsOverTime.png";
         },
+        firstBorderRemoved = {
+            nameOnPersTable = "firstBorderRemoved";
+            name = "Out of my way";
+            description = "Now I can dive further";
+            image_lock = "ach_noLvlBorder_locked.png";
+            image_unlock = "ach_noLvlBorder.png";
+        },
+        onlyNegativeFishesCaught = {
+            nameOnPersTable = "onlyNegativeFishesCaught";
+            name = "Was that on purpose?";
+            description = "Caught only negative objects";
+            image_lock = "ach_negativeShitcoin_locked.png";
+            image_unlock = "ach_negativeShitcoin.png";
+        },
+--        allFishesAtLeastOnce = {
+--            nameOnPersTable = "allFishesAtLeastOnce";
+--            name = "Collector";
+--            description = "Every object caught at least once";
+--            image_lock = "ach_allFishesAtLeastOnce_locked.png";
+--            image_unlock = "ach_allFishesAtLeastOnce.png";
+--        },
+--        onlyOneCaught = {
+--            nameOnPersTable = "onlyOneCaught";
+--            name = "I wanted that one";
+--            description = "Only one fish caught";
+--             image_lock = "ach_onlyOneCaught_locked.png";
+--            image_unlock = "ach_onlyOneCaught.png";
+--        },
     },
     
     languages = {

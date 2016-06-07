@@ -104,6 +104,7 @@ function FishableObject:draw()
         if math.abs(self.caughtAt - self.yPosition) < 50 then
             if self.value > 0 then
                 love.graphics.setColor (0, 255, 0);
+                _G._persTable.fish.postiveFishCaught = true;
                 if not self.soundPlayed then
                     TEsound.play("assets/sound/collectedPositivValue.wav");
                     self.soundPlayed = true;
