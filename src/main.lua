@@ -19,7 +19,11 @@ require "lib.TEsound";
 _G.math.inf = 1 / 0;
 _G._gui = nil;
 _G._persistence = nil;
-_G._androidConfig = {};
+_G._androidConfig = {
+  lastPos = {};
+  rrLen = 15;
+  rrPos = 1;
+};
 _G._tmpTable = {
     caughtThisRound = {};
     earnedMoney = nil;
@@ -167,21 +171,28 @@ function love.update(dt)
         setMouseVisibility(levMan:getCurLevel());
         levMan:getCurLevel():update(dt, levMan:getCurPlayer());
         levMan:getCurSwarmFactory():update(dt);
-    end
-    -- if love.load had been executed and on android
-    if love.system.getOS() == "Android" then
-        -- shift [-30,30] to [0,60] and scale to windim[1]
-        local joyPos = (_G._androidConfig.joystick:getAxis(1) + _G._androidConfig.maxTilt) * (_G._persTable.winDim[1] / (_G._androidConfig.maxTilt * 2));
-        _G._androidConfig.joyPos = joyPos;
-        if joyPos < (levMan:getCurPlayer():getSize() / 2) then
-            levMan:getCurPlayer():setPosXMouse(0);
-        else
-            if joyPos > _G._persTable.winDim[1] - levMan:getCurPlayer():getSize() then
-                levMan:getCurPlayer():setPosXMouse(_G._persTable.winDim[1] - levMan:getCurPlayer():getSize());
-            else
-                levMan:getCurPlayer():setPosXMouse(joyPos - (levMan:getCurPlayer():getSize() / 2));
-            end
-        end
+        
+      -- if love.load had been executed and on android
+      if love.system.getOS() == "Android" then
+          -- shift [-30,30] to [0,60] and scale to windim[1]
+          _G._androidConfig.lastPos[_G._androidConfig.rrPos] = (_G._androidConfig.joystick:getAxis(1) + _G._androidConfig.maxTilt) * (_G._persTable.winDim[1] / (_G._androidConfig.maxTilt * 2));
+          _G._androidConfig.rrPos = (_G._androidConfig.rrPos % _G._androidConfig.rrLen) + 1;
+          local joyPos = 0;
+          for _,v in pairs(_G._androidConfig.lastPos) do
+            joyPos = joyPos + v;
+          end
+          joyPos = joyPos / #_G._androidConfig.lastPos;
+          _G._androidConfig.joyPos = joyPos;
+          if joyPos < (levMan:getCurPlayer():getSize() / 2) then
+              levMan:getCurPlayer():setPosXMouse(0);
+          else
+              if joyPos > _G._persTable.winDim[1] - levMan:getCurPlayer():getSize() then
+                  levMan:getCurPlayer():setPosXMouse(_G._persTable.winDim[1] - levMan:getCurPlayer():getSize());
+              else
+                  levMan:getCurPlayer():setPosXMouse(joyPos - (levMan:getCurPlayer():getSize() / 2));
+              end
+          end
+      end
     end
     _gui:update();
     Loveframes.update(dt);
