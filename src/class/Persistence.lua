@@ -134,6 +134,7 @@ function Persistence:createPersTable()
         onlyNegativeFishesCaught = false;
         allObjectsAtLeastOnce = false;
         allPillsAtLeastOnce = false;
+        nothingCaught = false;
     };
 
 

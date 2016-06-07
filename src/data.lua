@@ -956,6 +956,13 @@ return {
             image_lock = "ach_allPillsAtLeastOnce_locked.png";
             image_unlock = "ach_allPillsAtLeastOnce.png";
         },
+        nothingCaught = {
+            nameOnPersTable = "nothingCaught";
+            name = "Misadventure";
+            description = "Don't catch one thing";
+            image_lock = "ach_nothingCaught_locked.png";
+            image_unlock = "ach_nothingCaught.png";
+        },
 --        allObjectsAtLeastOnce = {
 --            nameOnPersTable = "allObjectsAtLeastOnce";
 --            name = "Collector";

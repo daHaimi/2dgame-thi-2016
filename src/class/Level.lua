@@ -219,6 +219,13 @@ function Level:checkForAchievments()
             _G.data.achievements.caughtTwoBoots.name);
         _G._persTable.achievements.caughtTwoBoots = true;
     end
+    if self.levelFinished and next(_G._tmpTable.caughtThisRound) == nil and not self.failedStart
+    and not _G._persTable.achievements.nothingCaught then
+      table.insert(_G._unlockedAchievements, _G.data.achievements.nothingCaught);
+      _gui:newNotification("assets/gui/480px/" .. _G.data.achievements.nothingCaught.image_unlock, 
+            _G.data.achievements.nothingCaught.name);
+      _G._persTable.achievements.nothingCaught = true;
+    end
 end
 
 --- calculates the momement an positioning of all elements needed for the animation
