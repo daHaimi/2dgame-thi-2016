@@ -582,7 +582,6 @@ function Level:printResult()
         end
         ypos = ypos + 15;
         love.graphics.print("Earned: " .. self:calcFishedValue() .. " Coins", xpos, ypos);
-        _G.testScore = self:calcFishedValue();
     else
         ypos = ypos + 15;
         love.graphics.print("Nothing caught", xpos, ypos);
