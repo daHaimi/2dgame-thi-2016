@@ -73,7 +73,6 @@ local Level = Class {
         self.hamsterLockedXPos = 0;
         self.enviromentPosition = 0;
         self.borderHeight = 200;
-        self.confirmEnd = false;
 
         -- create light world
         self.lightWorld = love.light.newWorld();
@@ -281,7 +280,7 @@ function Level:draw(bait)
     love.graphics.setColor(255, 255, 255);
     love.graphics.draw(self.bg, self.bgq, 0, self.posY);
     bait:draw();
-    if self.levelFinished and self.confirmEnd then
+    if self.levelFinished then
         _gui:changeFrame(_gui:getFrames().score);
         --self:printResult();
     end
@@ -624,11 +623,6 @@ end
 function Level:startStartAnimation()
     self.animationStart = true;
     self.hamsterLockedXPos = self.levMan:getCurPlayer():getPosXMouse() - 32;
-end
-
---- click once to go to the score screen
-function Level:confirmLevelEnd()
-    self.confirmEnd = true;
 end
 
 --- returns true if the level is fully loaded
