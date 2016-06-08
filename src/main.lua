@@ -200,8 +200,8 @@ function love.update(dt)
     TEsound.cleanup();
     
     -- free unused memory
+    frameCounter = frameCounter + 1;
     if _gui:getCurrentState() ~= "InGame" or levMan:getCurLevel():isFinished() == 1 then
-        frameCounter = frameCounter + 1;
         if (frameCounter % 60) == 0 then
             collectgarbage("collect");
             frameCounter = 0;

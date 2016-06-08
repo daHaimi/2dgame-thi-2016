@@ -153,7 +153,7 @@ describe("Unit test suite for the LevelManager class", function()
         localInstance.p_curDataRef = {13874};
         
         local levelSpy = spy.on(localInstance.curLevel, "destructLevel");
-        local playerSpy = spy.on(localInstance.curBait, "destructBait");
+        local playerSpy = spy.on(localInstance.curPlayer, "destructBait");
         local swSpy = spy.on(localInstance.curSwarmFac, "destructSF");
         
         localInstance:freeManagedObjects();
