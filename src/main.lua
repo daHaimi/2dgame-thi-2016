@@ -50,6 +50,7 @@ local swarmFactory;
 local levMan;
 local p_scaleFactor
 local achiev;
+local frameCounter = 0;
 
 --- The bootstrap of the game.
 -- This function is called exactly once at the beginning of the game.
@@ -197,6 +198,15 @@ function love.update(dt)
     _gui:update();
     Loveframes.update(dt);
     TEsound.cleanup();
+    
+    -- free unused memory
+    frameCounter = frameCounter + 1;
+    if _gui:getCurrentState() ~= "InGame" or levMan:getCurLevel():isFinished() == 1 then
+        if (frameCounter % 60) == 0 then
+            collectgarbage("collect");
+            frameCounter = 0;
+        end
+    end
 end
 
 --- Callback function triggered when the mouse is moved.
@@ -240,7 +250,8 @@ function love.mousepressed(x, y, button)
     
     -- starts the starting sequence of the game
     if love.mouse.isDown(1) and _gui:getCurrentState() == "InGame" and
-    not levMan:getCurLevel():getStartAnimationRunning() then
+    not levMan:getCurLevel():getStartAnimationRunning() and
+    not levMan:getCurLevel():getStartAnimationFinished() then
         levMan:getCurLevel():startStartAnimation();
     end
     

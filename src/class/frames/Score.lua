@@ -101,6 +101,7 @@ function Score:create()
     end
     
     self.elementsOnFrame.button_backToMenu.object.OnClick = function(object)
+        _gui:getLevelManager():freeManagedObjects();
         _gui:changeFrame(_gui:getFrames().mainMenu);
     end
 end

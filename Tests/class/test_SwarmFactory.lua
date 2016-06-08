@@ -83,7 +83,7 @@ describe("Unit test for SwarmFactory.lua", function()
         testInstance.currentSwarm = 1;
         testInstance.createdFishables = {};
         
-        testInstance:createNextSwarm(20);
+        testInstance:createNextSwarm(20, 0);
         local testSwarmheight = 100;
         local testSwarmMaxYPos = 100 + testSwarmheight;
         local swarm = testInstance.createdFishables;

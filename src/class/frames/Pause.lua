@@ -93,6 +93,7 @@ function Pause:create()
     end
     
     self.elementsOnFrame.button_backToMenu.object.OnClick = function(object)
+        _gui:getLevelManager():freeManagedObjects(); -- cleanup level, bait and swarmfactory
         _gui:changeFrame(_gui:getFrames().mainMenu);
     end
     

@@ -302,6 +302,12 @@ function Bait:getPosX()
     return self.xPos;
 end
 
+--- Returns the actual Y position of the Bait
+-- @return The actual Y position of the Bait
+function Bait:getPosY()
+    return self.yPos;
+end
+
 --- Get the size of the player.
 -- @return Returns the size of the player.
 function Bait:getSize()

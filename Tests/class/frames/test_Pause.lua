@@ -64,6 +64,10 @@ it("Testing Constructor", function()
         _G._gui = {
             getFrames = function(...) return{}; end;
             changeFrame = function(...) end;
+            getLevelManager = function(...) return {
+                freeManagedObjects = function(...) end;
+                
+            } end;
         };
 
         locInstance:create();

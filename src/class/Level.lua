@@ -148,8 +148,6 @@ end
 -- last time this function was called.
 -- @param bait The bait object, which stands for the user.
 function Level:update(dt, bait)
-    if self.godModeActive then
-    end
     self.moved = 0;
     --set the direction in relation of the yPosition
     if self.posY <= self.lowerBoarder then
@@ -160,6 +158,8 @@ function Level:update(dt, bait)
         self.levelFinished = true;
         self:payPlayer();
     end
+    --dynamic creation of swarms
+    self.levMan:getCurSwarmFactory():createMoreSwarms( - (self.posY - self.winDim[2] * 0.5));
 
     --set the movement in relation of the direction
     if not self.animationStartFinished  then

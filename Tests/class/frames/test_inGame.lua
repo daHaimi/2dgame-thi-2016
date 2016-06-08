@@ -13,6 +13,7 @@ describe("Unit test for inGame.lua", function()
         _G.love = {
             mouse = {
                 setVisible = function(...) end;
+                setGrabbed = function(...) end;
             },
             system = {
                 getOS = function(...) return ""; end;
@@ -105,14 +106,20 @@ it("Testing Constructor", function()
 
     it("Testing appear function", function()
         stub(locInstance.frame, "appear");
+        stub(love.mouse, "setVisible");
+
         locInstance:appear();
         assert.stub(locInstance.frame.appear).was_called(1);
+        assert.stub(love.mouse.setVisible).was_called(1);
     end)
 
     it("Testing disappear function", function()
         stub(locInstance.frame, "disappear");
+        stub(love.mouse, "setGrabbed");
+        
         locInstance:disappear();
         assert.stub(locInstance.frame.disappear).was_called(1);
+        assert.stub(love.mouse.setGrabbed).was_called(1);
     end)
 
     it("Testing checkPosition function", function()

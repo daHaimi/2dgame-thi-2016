@@ -44,22 +44,7 @@ function LevelManager:newLevel(levelPropMap, swarmFactoryData)
         _G._tmpTable[k] = nil
     end;
 
-    if self.curSwarmFac ~= nil then
-        self.curSwarmFac:destructSF();
-        self.curSwarmFac = nil;
-    end
-
-    if self.curPlayer ~= nil then
-        self.curPlayer:destructBait();
-        self.curPlayer = nil;
-    end
-
-    if self.curLevel ~= nil then
-        self.curLevel:destructLevel();
-        self.curLevel = nil;
-    end
-    
-    collectgarbage("collect");
+    self:freeManagedObjects();
     
     self.p_curDataRef = swarmFactoryData;
     self.curLevel = Level(levelPropMap.levelName, levelPropMap.bgPath, _G._persTable.winDim, levelPropMap.direction, self);
@@ -77,6 +62,26 @@ function LevelManager:replayLevel()
     local currentLevelType = self.curLevel:getLevelName();
     
     return self:newLevel(self:getLevelPropMapByName(currentLevelType), self.p_curDataRef);
+end
+
+--- Destroys all form the level manager managed objects.
+function LevelManager:freeManagedObjects()
+    if self.curSwarmFac ~= nil then
+        self.curSwarmFac:destructSF();
+        self.curSwarmFac = nil;
+    end
+
+    if self.curPlayer ~= nil then
+        self.curPlayer:destructBait();
+        self.curPlayer = nil;
+    end
+
+    if self.curLevel ~= nil then
+        self.curLevel:destructLevel();
+        self.curLevel = nil;
+    end
+    
+    collectgarbage("collect");
 end
 
 --- Get the the current level object.

@@ -40,8 +40,24 @@ describe("Unit test for FishableObject.lua", function()
                 deltaYPos = 20
             }
         }
+        _G.levMan = {
+        curLevel = {
+            winDim = {500, 500};
+        };
+        curPlayer = {
+            getPosY = function (...) return 5 end;
+        };
+        curSwarmFac = nil;
+        getLevelPropMapByName = function(...) return {
+            direction = 1;
+        }
+        end;
+        getCurSwarmFactory = function(...) return _G.levMan.curSwarmFac end;
+        getCurPlayer = function(...) return _G.levMan.curPlayer end;
+        getCurLevel = function(...) return _G.levMan.curLevel end;
+    };
 
-        _G.locInstance = testClass("deadFish", "assets/deadFish.png", 50, 30, 35, 50, 5, 64, hitbox);
+        _G.locInstance = testClass("deadFish", "assets/deadFish.png", 50, 30, 35, 50, 5, 64, hitbox, _,_,_, _G.levMan);
     end)
 
     it("Testing Constructor", function()
