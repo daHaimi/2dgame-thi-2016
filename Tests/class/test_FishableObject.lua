@@ -57,16 +57,21 @@ describe("Unit test for FishableObject.lua", function()
         getCurLevel = function(...) return _G.levMan.curLevel end;
     };
 
-        _G.locInstance = testClass("deadFish", "assets/deadFish.png", 50, 30, 35, 50, 5, 64, hitbox, _,_,_, _G.levMan);
+        _G.locInstance = testClass("deadFish", "assets/deadFish.png", 50, 30, 35, 50, 5, 64, hitbox, _,_,_, 0, _G.levMan);
     end)
 
     it("Testing Constructor", function()
-        local myInstance = testClass("deadFish", "assets/deadFish.png", 50, 30, 35, 50, 5, 64, hitbox);
+        local myInstance = testClass("deadFish", "assets/deadFish.png", 50, 30, 35, 50, 5, 64, hitbox, _,_,_, 0, _G.levMan);
         assert.are.equal(locInstance.yPosition, myInstance.yPosition);
         assert.are.equal(locInstance.xHitbox, myInstance.xHitbox);
         assert.are.equal(locInstance.yHitbox, myInstance.yHitbox);
         assert.are.equal(locInstance.value, myInstance.value);
         assert.are.equal(locInstance.hitpoints, myInstance.hitpoints);
+    end)
+
+    it("Testing Contructor with fallSpeed", function()
+        local myInstance = testClass("deadFish", "assets/deadFish.png", 50, 30, 35, 50, 5, 64, hitbox, _,_,_, 5, _G.levMan);
+        assert.are.equal(myInstance.fallSpeed, 5);
     end)
 
     it("Testing setToCaught Function", function()

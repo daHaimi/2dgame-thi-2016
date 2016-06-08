@@ -73,7 +73,7 @@ describe("Unit test for util.lua", function()
 
     it("Test set mouse visible true", function()
         local loveMock = mock(_G.love, true);
-        curLevel.levelFinished = 1;
+        curLevel.levelFinished = true;
         setMouseVisibility(curLevel);
         assert.spy(loveMock.mouse.setVisible).was.called(1);
         assert.spy(loveMock.mouse.setVisible).was.called_with(true);
@@ -81,7 +81,7 @@ describe("Unit test for util.lua", function()
 
     it("Test set mouse visible false", function()
         local loveMock = mock(_G.love, true);
-        curLevel.levelFinished = 0;
+        curLevel.levelFinished = false;
         setMouseVisibility(curLevel);
         assert.spy(loveMock.mouse.setVisible).was.called(1);
         assert.spy(loveMock.mouse.setVisible).was.called_with(false);

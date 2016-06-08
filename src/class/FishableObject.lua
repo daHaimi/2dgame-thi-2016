@@ -17,15 +17,20 @@ require "socket" math.randomseed(socket.gettime() * 10000);
 -- @param animType (Animate.AnimType.linear) The animation type of the enum Animate.AnimType
 local FishableObject = Class {
     init = function(self, name, imageSrc, yPosition, minSpeed, maxSpeed, value, hitpoints, 
-            spriteSize, hitbox, animTimeoutMin, animTimeoutMax, animType, levMan)
+            spriteSize, hitbox, animTimeoutMin, animTimeoutMax, animType, fallSpeed, levMan)
         self.name = name;
         self.image = love.graphics.newImage("assets/" .. imageSrc);
         self.xPosition = math.random(spriteSize + 26, _G._persTable.winDim[1] - 58 - self.spriteSize);
         -- 58 = 26 (width of level wall) + 32 (0.5 * width of hamster)
-        self.yPosition = yPosition;
+        if fallSpeed > 0 then
+            self.yPosition = - math.random(100);
+        else
+            self.yPosition = yPosition;
+        end
         self.value = value;
         self.hitpoints = hitpoints;
         self.spriteSize = spriteSize;
+        self.fallSpeed = fallSpeed;
         self.levMan = levMan;
         self.hitbox = hitbox;
         self.outOfArea = false;
@@ -156,7 +161,7 @@ function FishableObject:update(dt)
                 self.xPosition = self.xPosition + self.speed * self.speedMulitplicator;
             end
         end
-        self.yPosition = self.yPosition - self.yMovement;
+        self.yPosition = self.yPosition - self.yMovement + self.fallSpeed;
     else
         self.yPosition = self.yPosition + 0.5 * self.yMovement;
     end

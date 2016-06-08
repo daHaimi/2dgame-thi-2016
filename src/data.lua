@@ -21,7 +21,7 @@ return {
             enabled = true,        -- Whether the object is enabled
             
             -- Description of the object. Shown in the dictionary
-            description = "Nemo´s description";    
+            description = "Seems like you have found nemo";    
             
             -- Definition of the hitbox
             hitbox = {
@@ -48,7 +48,7 @@ return {
             maxAmount = 4,
             swarmHeight = 225,
             enabled = true,
-            description = "Turtle´s description";
+            description = "Its house is his shell";
             hitbox = {
                 {
                     width = 50,
@@ -73,7 +73,7 @@ return {
             maxAmount = 3,
             swarmHeight = 350,
             enabled = true,
-            description = "Rat´s description";
+            description = "Easy to attract with cheese";
             hitbox = {
                 {
                     width = 60,
@@ -97,7 +97,7 @@ return {
             maxAmount = 2,
             swarmHeight = 125,
             enabled = true,
-            description = "deadFish´s description";
+            description = "It was a good fish throughout his whole life";
             hitbox = {
                 {
                     width = 64,
@@ -122,7 +122,7 @@ return {
             maxAmount = 4,
             swarmHeight = 200,
             enabled = true,
-            description = "Angler´s description";
+            description = "Very useful if you need some light";
             hitbox = {
                 {
                     width = 40,
@@ -144,7 +144,7 @@ return {
             maxAmount = 1,
             swarmHeight = 100,
             enabled = true,
-            description = "Lollipop´s description";
+            description = "You know you want it";
             hitbox = {
                 {
                     width = 30,
@@ -172,7 +172,7 @@ return {
             maxAmount = 1,
             swarmHeight = 100,
 --            enabled = _G._persTable.enabled.ring,
-            description = "Ring´s description";
+            description = "One ring to rule them all";
             hitbox = {
                 {
                     width = 40,
@@ -194,7 +194,7 @@ return {
             maxAmount = 1,
             swarmHeight = 100,
             enabled = true,
-            description = "Shoe´s description";
+            description = "One shoe is not enough";
             hitbox = {
                 {
                     width = 55,
@@ -225,7 +225,7 @@ return {
             maxAmount = 3,
             swarmHeight = 200,
             enabled = true,
-            description = "Snake´s description";
+            description = "(T)his is a really dangerous snake";
             hitbox = {
                 {
                     width = 54,
@@ -249,7 +249,7 @@ return {
             maxAmount = 3,
             swarmHeight = 200,
             enabled = true,
-            description = "Crododile´s description";
+            description = "He just wants to cuddle, I promise";
             hitbox = {
                 {
                     width = 128,
@@ -271,7 +271,7 @@ return {
             maxAmount = 1,
             swarmHeight = 50,
 --            enabled = _G._persTable.enabled.sleepingPill,
-            description = "SleepingPill´s description";
+            description = "Makes sea dwellers drowsy";
             hitbox = {
                 {
                     width = 15,
@@ -306,9 +306,9 @@ return {
             animType = Animate.AnimType.bounce,
             minAmount = 1,
             maxAmount = 2,
-            swarmHeight = 300,
+            swarmHeight = 200,
             enabled = true,
-            description = "Squirrel´s description";
+            description = "Give him a nut and it goes nuts!";
             hitbox = {
                 {
                     width = 62,
@@ -337,12 +337,13 @@ return {
             spriteSize = 64,
             minSpeed = 0,
             maxSpeed = 0,
-            value = 100,
+            downSpeed = 15;
+            value = -100,
             minAmount = 1,
-            maxAmount = 3,
-            swarmHeight = 200,
+            maxAmount = 0,
+            swarmHeight = 50,
             enabled = true,
-            description = "A nice backpack someone seems to have lost";
+            description = "Please don't leave your luggage unattended";
             hitbox = {
                 {
                     width = 52,
@@ -359,15 +360,16 @@ return {
             spriteSize = 64,
             minSpeed = 0,
             maxSpeed = 0,
-            value = 30,
+            downSpeed = 10;
+            value = -30,
             animTimeoutMin = 0.2,
             animTimeoutMax = 0.4,
             animType = Animate.AnimType.bounce,
-            minAmount = 0,
+            minAmount = 1,
             maxAmount = 1,
-            swarmHeight = 100,
+            swarmHeight = 50,
             enabled = true,
-            description = "A delicious drink";
+            description = "Thank god it is sealed";
             hitbox = {
                 {
                     width = 49,
@@ -401,7 +403,7 @@ return {
             maxAmount = 3,
             swarmHeight = 100,
             enabled = true,
-            description = "A dinosaur egg. Better sell it fast";
+            description = "What kind of animal will hatch from that egg?";
             hitbox = {
                 {
                     width = 22,
@@ -424,15 +426,16 @@ return {
             spriteSize = 64,
             minSpeed = 0,
             maxSpeed = 0,
-            value = 100,
+            downSpeed = 13;
+            value = -100,
             animTimeoutMin = 0.15,
             animTimeoutMax = 0.2,
             animType = Animate.AnimType.bounce,
             minAmount = 1,
             maxAmount = 1,
-            swarmHeight = 100,
+            swarmHeight = 50,
             enabled = true,
-            description = "High-Tech 40 MP Camera";
+            description = "Smile, you are getting photographed";
             hitbox = {
                 {
                     width = 10,
@@ -462,7 +465,7 @@ return {
             maxAmount = 3,
             swarmHeight = 200,
             enabled = true,
-            description = "Canyon Snake´s description";
+            description = "Wow, it managed to catch its own tail";
             hitbox = {
                 {
                     width = 54,
@@ -483,11 +486,11 @@ return {
             animTimeoutMin = 0.3,
             animTimeoutMax = 0.5,
             animType = Animate.AnimType.bounce,
-            minAmount = 1,
+            minAmount = 2,
             maxAmount = 2,
-            swarmHeight = 100,
+            swarmHeight = 150,
             enabled = true,
-            description = "Very prickly";
+            description = "Thinking about giving it a hug?";
             hitbox = {
                 {
                     width = 16,
@@ -521,7 +524,7 @@ return {
             image = "leaf.png",
             spriteSize = 64,
             minSpeed = 0,
-            maxSpeed = 4,
+            maxSpeed = 2,
             value = 20,
             animTimeoutMin = 0.25,
             animTimeoutMax = 0.3,
@@ -530,7 +533,7 @@ return {
             maxAmount = 3,
             swarmHeight = 150,
             enabled = true,
-            description = "Simply leaf";
+            description = "Leaf it right here please";
             hitbox = {
                 {
                     width = 3,
@@ -558,16 +561,16 @@ return {
             image = "bird.png",
             spriteSize = 64,
             minSpeed = 2,
-            maxSpeed = 8,
+            maxSpeed = 4,
             value = 20,
             animTimeoutMin = 0.1,
             animTimeoutMax = 0.15,
             animType = Animate.AnimType.bounce,
             minAmount = 1,
-            maxAmount = 6,
-            swarmHeight = 200,
+            maxAmount = 3,
+            swarmHeight = 250,
             enabled = true,
-            description = "A hungry bird";
+            description = "It is literally free like a bird";
             hitbox = {
                 {
                     width = 60,
@@ -601,7 +604,7 @@ return {
             maxAmount = 3,
             swarmHeight = 200,
             enabled = true,
-            description = "A balloon";
+            description = "Let it go like your dreams";
             hitbox = {
                 {
                     width = 20,
@@ -635,7 +638,7 @@ return {
             maxAmount = 1,
             swarmHeight = 100,
             enabled = true,
-            description = "A mysterious UFO";
+            description = "Wanna get examined?";
             hitbox = {
                 {
                     width = 30,
@@ -687,18 +690,33 @@ return {
     
     swarmsCanyon = {
         {
-            allowedFishables = { "balloon", "camera", "drink", "egg", "sleepingPill"},
+            allowedFishables = { "balloon", "leaf", "bird", "squirrel", "sleepingPill"},
             fishablesProbability = {25, 45, 75, 95, 100}, 
-            maxSwarmHeight = 3000
+            maxSwarmHeight = 1500
         },
         {
-            allowedFishables = { "balloon", "cactus", "leaf", "canyonSnake", "sleepingPill"},
-            fishablesProbability = {25, 45, 75, 95, 100}, 
-            maxSwarmHeight = 6000
+            allowedFishables = { "cactus"},
+            fishablesProbability = {100}, 
+            maxSwarmHeight = 1800
         },
         {
-            allowedFishables = { "backpack", "balloon", "bird", "squirrel", "sleepingPill"},
-            fishablesProbability = {25, 45, 75, 95, 100}, 
+            allowedFishables = { "camera", "drink", "backpack", "cactus"},
+            fishablesProbability = {10, 20, 30, 100}, 
+            maxSwarmHeight = 5500
+        }, 
+        {
+            allowedFishables = { "cactus"},
+            fishablesProbability = {100}, 
+            maxSwarmHeight = 5800
+        },
+        {
+            allowedFishables = { "egg", "bird", "cactus", "sleepingPill"},
+            fishablesProbability = {30, 50, 95, 100}, 
+            maxSwarmHeight = 9000
+        },
+        {
+            allowedFishables = { "backpack", "camera", "bird", "egg", "sleepingPill"},
+            fishablesProbability = {10, 20, 50, 95, 100}, 
             maxSwarmHeight = 90000
         }
     },
