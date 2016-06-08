@@ -45,6 +45,9 @@ function Frame:appear(elements)
     end
     for k, v in pairs(elements) do
         v.object:SetPos(v.x + self.p_xPos + self.p_xOffset, v.y + self.p_yPos + self.p_yOffset);
+        if (v.object.SetClickable ~= nil) then 
+            v.object:SetClickable(true);
+        end
     end
 end
 
@@ -61,6 +64,9 @@ function Frame:disappear(elements)
     end
     for k, v in pairs(elements) do
         v.object:SetPos(self.p_xPos + v.x + self.p_xOffset, self.p_yPos + v.y + self.p_yOffset);
+        if (v.object.SetClickable ~= nil) then 
+            v.object:SetClickable(false);
+        end
     end
 end
 
