@@ -9,15 +9,15 @@ local SwarmFactory = Class {
     init = function(self, data, levelManager)
         --initializing of the member variables. Please add all new variables in the destructor!
         self.levMan = nil;
-        self.maxDepth = -5000;
         self.currentSwarm = 1;
         self.fishableObjects = {};
         self.createdFishables = {};
         self.actualSwarm = {};
         
         self.levMan = levelManager;
-        
-        self.maxDepth = self.levMan:getCurLevel():getLowerBoarder() - 2 * _G._persTable.winDim[2];        
+        -- Start at the lower 75% of the screen to create swarms
+        self.addedHeights = self.levMan:getCurLevel().winDim[2] *0.75;
+           
         self.fishableObjects = data.fishableObjects;
         if self.levMan:getCurLevel():getLevelName() == "sewers" then
             self.actualSwarm = data.swarmsSewer;
@@ -33,19 +33,19 @@ local SwarmFactory = Class {
             end
         end
         
-        -- Start at the lower 75% of the screen to create swarms
-        local addedHeights = 0.0;
-        addedHeights = self.levMan:getCurLevel().winDim[2] *0.75;
-        while addedHeights <= -self.maxDepth do
-            addedHeights = addedHeights + self:createNextSwarm(addedHeights);
-        end
     end;
 };
+
+--- creates more Swarms
+function SwarmFactory:createMoreSwarms(depth)
+        while self.addedHeights <= depth + self.levMan:getCurLevel().winDim[2] do
+            self.addedHeights = self.addedHeights + self:createNextSwarm(self.addedHeights, depth);
+        end
+end
 
 --- Marks the member variables for the garbage collector
 function SwarmFactory:destructSF()
     self.levMan = nil;
-    self.maxDepth = nil;
     self.currentSwarm = nil;
     self.fishableObjects = nil;
     self.createdFishables = nil;
@@ -70,7 +70,7 @@ end
 --- Creates the next swarm
 -- @param startPosY Start y position of the swarm
 -- @return Returns a random value.
-function SwarmFactory:createNextSwarm(startPosY)
+function SwarmFactory:createNextSwarm(startPosY, depth)
     if self.actualSwarm[self.currentSwarm].maxSwarmHeight < startPosY then
         self.currentSwarm = self.currentSwarm + 1;
     end
@@ -81,10 +81,11 @@ function SwarmFactory:createNextSwarm(startPosY)
     local amountFishables = math.random(fishable.minAmount, fishable.maxAmount);
  
     for i = 1, amountFishables, 1 do
-        local yPos = math.random(fishable.swarmHeight);
+        local yPos = math.random(fishable.swarmHeight) + startPosY - depth;
         
-        self.createdFishables[#self.createdFishables + 1] = FishableObject(fishable.name, fishable.image, startPosY + 
-            yPos, fishable.minSpeed, fishable.maxSpeed, fishable.value, fishable.hitpoints, fishable.spriteSize,            fishable.hitbox, fishable.animTimeoutMin, fishable.animTimeoutMax, fishable.animType);
+        self.createdFishables[#self.createdFishables + 1] = FishableObject(fishable.name, fishable.image, yPos, 
+            fishable.minSpeed, fishable.maxSpeed, fishable.value, fishable.hitpoints, fishable.spriteSize,
+            fishable.hitbox, fishable.animTimeoutMin, fishable.animTimeoutMax, fishable.animType, self.levMan);
     end
     
     return math.random(fishable.swarmHeight * 0.9 , fishable.swarmHeight); -- to enable 2 swarms to overlap

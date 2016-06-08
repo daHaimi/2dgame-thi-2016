@@ -591,4 +591,10 @@ describe("Unit test for Bait.lua", function()
         myInstance.speed = 30;
         assert.are.same(myInstance:getSpeed(), 30);
     end)
+
+    it("Test getPosY", function()
+        local myInstance = testClass(locWinDim, levMan);
+        myInstance.yPos = 5;
+        assert.are.same(myInstance:getPosY(), 5);
+    end)
 end)
