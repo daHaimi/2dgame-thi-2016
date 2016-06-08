@@ -17,7 +17,7 @@ require "socket" math.randomseed(socket.gettime() * 10000);
 -- @param animType (Animate.AnimType.linear) The animation type of the enum Animate.AnimType
 local FishableObject = Class {
     init = function(self, name, imageSrc, yPosition, minSpeed, maxSpeed, value, hitpoints, 
-            spriteSize, hitbox, animTimeoutMin, animTimeoutMax, animType)
+            spriteSize, hitbox, animTimeoutMin, animTimeoutMax, animType, levMan)
         self.name = name;
         self.image = love.graphics.newImage("assets/" .. imageSrc);
         self.xPosition = math.random(spriteSize + 26, _G._persTable.winDim[1] - 58 - self.spriteSize);
@@ -26,8 +26,9 @@ local FishableObject = Class {
         self.value = value;
         self.hitpoints = hitpoints;
         self.spriteSize = spriteSize;
-        
+        self.levMan = levMan;
         self.hitbox = hitbox;
+        self.outOfArea = false;
 
         if (math.random() > 0.5) then
             self.speed = math.random() * (maxSpeed - minSpeed) + minSpeed;
@@ -71,7 +72,7 @@ local FishableObject = Class {
 
 --- draw the object
 function FishableObject:draw()
-    if not self.caught then
+    if not self.caught and not self.outOfArea then
         love.graphics.setColor(255, 255, 255);
         if self.speed <= 0 then
             if self.animation then
@@ -100,7 +101,7 @@ function FishableObject:draw()
             self:getHitboxWidth(i), self:getHitboxHeight(i));
         end]]
         
-    else
+    elseif self.caught then
         if math.abs(self.caughtAt - self.yPosition) < 50 then
             if self.value > 0 then
                 love.graphics.setColor (0, 255, 0);
@@ -130,23 +131,30 @@ end
 --- Updates the position of the object depending on its speed
 -- @param dt Delta time since last update in seconds
 function FishableObject:update(dt)
+    if math.abs(self.yPosition - self.levMan:getCurPlayer():getPosY()) > self.levMan:getCurLevel().winDim[2] then
+        self.outOfArea = true;
+    else
+        self.outOfArea = false;
+    end
+    
     if not self.caught then
-        if self.animation then
-            self.animation:update(dt);
-        end
-        
-        if ((self.xPosition - self.hitbox[1].deltaXPos) >= _G._persTable.winDim[1]) and self.speed > 0 then
+        if not self.outOfArea then
+            if self.animation then
+                self.animation:update(dt);
+            end
+            
+            if ((self.xPosition - self.hitbox[1].deltaXPos) >= _G._persTable.winDim[1]) and self.speed > 0 then
+                self.speed = self.speed * -1;
+                self.xPosition = _G._persTable.winDim[1] - self:getHitboxWidth(1) - self.hitbox[1].deltaXPos + 
+                    self.speed * self.speedMulitplicator;
 
-            self.speed = self.speed * -1;
-            self.xPosition = _G._persTable.winDim[1] - self:getHitboxWidth(1) - self.hitbox[1].deltaXPos + 
-                self.speed * self.speedMulitplicator;
-
-        elseif (self.xPosition + self.hitbox[1].deltaXPos) <= 0 then
-            self.speed = self.speed * -1;
-            self.xPosition = math.abs(self:getHitboxWidth(1) + self.hitbox[1].deltaXPos + self.speed * self.speedMulitplicator);
-        else
-
-            self.xPosition = self.xPosition + self.speed * self.speedMulitplicator;
+            elseif (self.xPosition + self.hitbox[1].deltaXPos) <= 0 then
+                self.speed = self.speed * -1;
+                self.xPosition = math.abs(self:getHitboxWidth(1) + self.hitbox[1].deltaXPos + self.speed * self.speedMulitplicator);
+                
+            else
+                self.xPosition = self.xPosition + self.speed * self.speedMulitplicator;
+            end
         end
         self.yPosition = self.yPosition - self.yMovement;
     else
