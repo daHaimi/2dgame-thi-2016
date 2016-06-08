@@ -30,6 +30,9 @@ describe("Unit test for FishableObject.lua", function()
         _G._persTable = {
             winDim = { 500; 500 };
             moved = 0;
+            fish = {
+                postiveFishCaught = true;
+            }
         }
         
         local hitbox = {
