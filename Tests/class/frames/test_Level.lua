@@ -95,11 +95,10 @@ it("Testing Constructor", function()
         locInstance:create();
 
         spy.on(_G._gui, "changeFrame");
-        locInstance.elementsOnFrame.button_back.object.OnClick();
-        locInstance.elementsOnFrame.button_level1.object.OnClick();
-        locInstance.elementsOnFrame.button_level2.object.OnClick();
-        locInstance.elementsOnFrame.button_level3.object.OnClick();
-        assert.spy(_gui.changeFrame).was.called(4);
+        locInstance.elementsOnFrame.buttonBack.object.OnClick();
+        locInstance.elementsOnFrame.buttonHouse.object.OnClick();
+        locInstance.elementsOnFrame.buttonCanyon.object.OnClick();
+        assert.spy(_gui.changeFrame).was.called(3);
     end)
 
     it("Testing draw function", function()

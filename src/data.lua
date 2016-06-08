@@ -1033,7 +1033,17 @@ return {
                 buttonAchievements = "Achievements";
                 buttonOptions = "Options";
                 buttonCredits = "Credits";
-                buttonClose = "Close Game"
+                buttonClose = "Close Game";
+                buttonBack = "Back";
+                textDepth = "Depth: ";
+                buttonReset = "Reset";
+                textMusic = "In Game Music:";
+                textBGM = "Background Music:";
+                buttonRestart = "Restart";
+                buttonBTG = "Back to game";
+                buttonBTM = "Back to menu";
+                textScore = "Your Score:";
+                textStart = "Click to start!";
             };
             
         },
@@ -1047,8 +1057,18 @@ return {
                 buttonAchievements = "Errungenschaften";
                 buttonOptions = "Optionen";
                 buttonCredits = "Credits";
-                buttonClose = "Spiel beenden"
-            };
+                buttonClose = "Spiel beenden";
+                buttonBack = "Zurück";
+                textDepth = "Tiefe: ";
+                buttonReset = "Zurücksetzten";
+                textMusic = "In Game Musik:";
+                textBGM = "Hintergrund Musik:";
+                buttonRestart = "Neustarten";
+                buttonBTG = "Zurück zum Spiel";
+                buttonBTM = "Zurück zum Menü";
+                textScore = "Punktestand:";
+                textStart = "Klicken zum Starten!";
+            }
         },
         
     },

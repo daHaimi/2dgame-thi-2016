@@ -67,7 +67,7 @@ function InGame:create()
         };
         score = {
             object = Loveframes.Create("text");
-            x = 220 * self.scaleFactor;
+            x = 150 * self.scaleFactor;
             y = 10 * self.scaleFactor;
         }
     };
@@ -96,13 +96,13 @@ end
 function InGame:update()
     --update Fuelbar
     if _G._tmpTable.roundFuel >= 0 then
-        self.elementsOnFrame.fuelBar.object:SetX((math.ceil((180 / 2400)*_G._tmpTable.roundFuel) - 170) * self.scaleFactor);
+        self.elementsOnFrame.fuelBar.object:SetX((math.ceil((100 / 2400)*_G._tmpTable.roundFuel) - 90) * self.scaleFactor);
     end
     local depth = math.ceil(_G._tmpTable.currentDepth / 300);
     if depth <= 0 then
-        self.elementsOnFrame.score.object:SetText("Depth: " .. math.abs(depth) .. "m");
+        self.elementsOnFrame.score.object:SetText(_G.data.languages[_G._persTable.config.language].package.textDepth .. math.abs(depth) .. "m");
     else
-        self.elementsOnFrame.score.object:SetText("Depth: 0m");
+        self.elementsOnFrame.score.object:SetText(_G.data.languages[_G._persTable.config.language].package.textDepth .. "0m");
     end
 end
 

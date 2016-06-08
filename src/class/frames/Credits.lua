@@ -89,7 +89,6 @@ function Credits:create()
     
     self.elementsOnFrame.button_back.object:SetImage(self.directory .. "Button.png")
     self.elementsOnFrame.button_back.object:SizeToImage()
-    self.elementsOnFrame.button_back.object:SetText("Back");
     
     self.elementsOnFrame.text_credits.object:SetText(self.p_staffString);
     self.elementsOnFrame.text_credits.object:SetLinksEnabled(true);
@@ -100,8 +99,11 @@ function Credits:create()
     self.elementsOnFrame.button_back.object.OnClick = function(object)
         _gui:changeFrame(_gui:getFrames().mainMenu);
     end
-    
-    
+end
+
+---changes the language of this frame
+function Credits:setLanguage(language)
+    self.elementsOnFrame.button_back.object:SetText(_G.data.languages[language].package.buttonBack);
 end
 
 ---shows the frame on screen

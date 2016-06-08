@@ -54,38 +54,34 @@ function Pause:create()
         button_backToMenu = {
             object = Loveframes.Create("imagebutton");
             x = 0.16 * self.width;
-            y = self.buttonOffset + 1 * self.buttonHeight;
+            y = self.height - self.buttonHeight;
         };
         button_restartLevel = {
             object = Loveframes.Create("imagebutton");
             x = 0.16 * self.width;
-            y = self.buttonOffset + 2 * self.buttonHeight;
+            y = self.buttonOffset + self.buttonHeight;
         };        
         button_options = {
             object = Loveframes.Create("imagebutton");
             x = 0.16 * self.width;
-            y = self.buttonOffset + 3 * self.buttonHeight;
+            y = self.buttonOffset + 2 * self.buttonHeight;
         };
     };
     
     --adjust all elements on this frame
-    self.elementsOnFrame.background.object:SetImage(self.directory .. "gui_Test_Bg.png");
+    self.elementsOnFrame.background.object:SetImage(self.directory .. "StandardBG.png");
     
     self.elementsOnFrame.button_backToGame.object:SetImage(self.directory .. "Button.png")
     self.elementsOnFrame.button_backToGame.object:SizeToImage();
-    self.elementsOnFrame.button_backToGame.object:SetText("Back to the Game");
     
     self.elementsOnFrame.button_backToMenu.object:SetImage(self.directory .. "Button.png");
     self.elementsOnFrame.button_backToMenu.object:SizeToImage();
-    self.elementsOnFrame.button_backToMenu.object:SetText("Back to Menu");
     
     self.elementsOnFrame.button_restartLevel.object:SetImage(self.directory .. "Button.png");
     self.elementsOnFrame.button_restartLevel.object:SizeToImage();
-    self.elementsOnFrame.button_restartLevel.object:SetText("Restart Level");
     
     self.elementsOnFrame.button_options.object:SetImage(self.directory .. "Button.png");
     self.elementsOnFrame.button_options.object:SizeToImage();
-    self.elementsOnFrame.button_options.object:SetText("Options");
     
     --onclick events for all buttons
     self.elementsOnFrame.button_backToGame.object.OnClick = function(object)
@@ -105,6 +101,14 @@ function Pause:create()
     self.elementsOnFrame.button_options.object.OnClick = function(object)
         _gui:changeFrame(_gui:getFrames().options);
     end
+end
+
+---changes the language of this frame
+function Pause:setLanguage(language)
+    self.elementsOnFrame.button_options.object:SetText(_G.data.languages[language].package.buttonOptions);
+    self.elementsOnFrame.button_restartLevel.object:SetText(_G.data.languages[language].package.buttonRestart);
+    self.elementsOnFrame.button_backToMenu.object:SetText(_G.data.languages[language].package.buttonBTM);
+    self.elementsOnFrame.button_backToGame.object:SetText(_G.data.languages[language].package.buttonBTG);
 end
 
 ---shows the frame on screen

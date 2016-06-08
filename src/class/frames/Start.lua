@@ -28,10 +28,14 @@ function Start:create()
     self.elementsOnFrame.hamster:SetImage("assets/gui/hamster.png");
     self.elementsOnFrame.hamster:SetScale(0.9 * _persTable.scaledDeviceDim[1] / 256, 0.9 * _persTable.scaledDeviceDim[1] / 256);
     
-    self.elementsOnFrame.text:SetText("Click to start!");
     self.elementsOnFrame.text:SetShadow(true);
     self.elementsOnFrame.text:SetShadowColor(255, 255, 255);
     self.elementsOnFrame.text:SetPos(0.5 * _persTable.scaledDeviceDim[1] - 0.5 * self.elementsOnFrame.text:GetWidth(), 0.8 * _persTable.scaledDeviceDim[2]);
+end
+
+---changes the language of this frame
+function Start:setLanguage(language)
+    self.elementsOnFrame.text:SetText(_G.data.languages[language].package.textStart);
 end
 
 ---just called frequenzly in the start state

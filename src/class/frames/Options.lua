@@ -81,23 +81,17 @@ function Options:create()
     --adjust all elements on this frame
     self.elementsOnFrame.background.object:SetImage(self.directory .. "StandardBG.png");
     
-    self.elementsOnFrame.text_bgm.object:SetText("Background Music:");
-    
     self.elementsOnFrame.slider_bgm.object:SetMinMax(0, 100);
     self.elementsOnFrame.slider_bgm.object:SetWidth(self.buttonWidth);
-    
-    self.elementsOnFrame.text_music.object:SetText("In Game Music:");
     
     self.elementsOnFrame.slider_music.object:SetMinMax(0, 100);
     self.elementsOnFrame.slider_music.object:SetWidth(self.buttonWidth);
     
     self.elementsOnFrame.button_reset.object:SetImage(self.directory .. "Button.png");
     self.elementsOnFrame.button_reset.object:SizeToImage();
-    self.elementsOnFrame.button_reset.object:SetText("Reset");
     
     self.elementsOnFrame.button_back.object:SetImage(self.directory .. "Button.png");
     self.elementsOnFrame.button_back.object:SizeToImage();
-    self.elementsOnFrame.button_back.object:SetText("Back");
     
     --load values out of persTable into the chart
     self:loadValuesFromPersTable();
@@ -120,6 +114,15 @@ function Options:create()
         self:loadValuesInPersTable();
         _gui:changeFrame(_gui:getLastState());
     end
+end
+
+---changes the language of this frame
+function Options:setLanguage(language)
+    self.elementsOnFrame.button_back.object:SetText(_G.data.languages[language].package.buttonBack);
+    self.elementsOnFrame.button_reset.object:SetText(_G.data.languages[language].package.buttonReset);
+    
+    self.elementsOnFrame.text_bgm.object:SetText(_G.data.languages[language].package.textMusic);
+    self.elementsOnFrame.text_music.object:SetText(_G.data.languages[language].package.textBGM);
 end
 
 function Options:loadValuesInPersTable()

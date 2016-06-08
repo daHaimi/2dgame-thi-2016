@@ -24,7 +24,6 @@ describe("Unit test for inGame.lua", function()
                 return fakeElement(typeName);
             end
         }
-        _G.testScore = 0;
         _G._persTable = {
             upgrades = {
                 moreLife = 1;

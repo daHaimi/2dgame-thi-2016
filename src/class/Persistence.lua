@@ -90,7 +90,8 @@ function Persistence:createPersTable()
         enabled = {
             ring = true;
             sleepingPill = true;
-        }
+        };
+        unlockedLevel = 2;
     };
 
     --- upgrades list in persTable, "0" means unbought
