@@ -306,7 +306,7 @@ return {
             animType = Animate.AnimType.bounce,
             minAmount = 1,
             maxAmount = 2,
-            swarmHeight = 300,
+            swarmHeight = 200,
             enabled = true,
             description = "Squirrel´s description";
             hitbox = {
@@ -337,10 +337,11 @@ return {
             spriteSize = 64,
             minSpeed = 0,
             maxSpeed = 0,
-            value = 100,
+            downSpeed = 15;
+            value = -100,
             minAmount = 1,
-            maxAmount = 3,
-            swarmHeight = 200,
+            maxAmount = 0,
+            swarmHeight = 50,
             enabled = true,
             description = "A nice backpack someone seems to have lost";
             hitbox = {
@@ -359,13 +360,14 @@ return {
             spriteSize = 64,
             minSpeed = 0,
             maxSpeed = 0,
-            value = 30,
+            downSpeed = 10;
+            value = -30,
             animTimeoutMin = 0.2,
             animTimeoutMax = 0.4,
             animType = Animate.AnimType.bounce,
-            minAmount = 0,
+            minAmount = 1,
             maxAmount = 1,
-            swarmHeight = 100,
+            swarmHeight = 50,
             enabled = true,
             description = "A delicious drink";
             hitbox = {
@@ -424,13 +426,14 @@ return {
             spriteSize = 64,
             minSpeed = 0,
             maxSpeed = 0,
-            value = 100,
+            downSpeed = 13;
+            value = -100,
             animTimeoutMin = 0.15,
             animTimeoutMax = 0.2,
             animType = Animate.AnimType.bounce,
             minAmount = 1,
             maxAmount = 1,
-            swarmHeight = 100,
+            swarmHeight = 50,
             enabled = true,
             description = "High-Tech 40 MP Camera";
             hitbox = {
@@ -483,9 +486,9 @@ return {
             animTimeoutMin = 0.3,
             animTimeoutMax = 0.5,
             animType = Animate.AnimType.bounce,
-            minAmount = 1,
+            minAmount = 2,
             maxAmount = 2,
-            swarmHeight = 100,
+            swarmHeight = 150,
             enabled = true,
             description = "Very prickly";
             hitbox = {
@@ -521,7 +524,7 @@ return {
             image = "leaf.png",
             spriteSize = 64,
             minSpeed = 0,
-            maxSpeed = 4,
+            maxSpeed = 2,
             value = 20,
             animTimeoutMin = 0.25,
             animTimeoutMax = 0.3,
@@ -558,14 +561,14 @@ return {
             image = "bird.png",
             spriteSize = 64,
             minSpeed = 2,
-            maxSpeed = 8,
+            maxSpeed = 4,
             value = 20,
             animTimeoutMin = 0.1,
             animTimeoutMax = 0.15,
             animType = Animate.AnimType.bounce,
             minAmount = 1,
-            maxAmount = 6,
-            swarmHeight = 200,
+            maxAmount = 3,
+            swarmHeight = 250,
             enabled = true,
             description = "A hungry bird";
             hitbox = {
@@ -687,18 +690,33 @@ return {
     
     swarmsCanyon = {
         {
-            allowedFishables = { "balloon", "camera", "drink", "egg", "sleepingPill"},
+            allowedFishables = { "balloon", "leaf", "bird", "squirrel", "sleepingPill"},
             fishablesProbability = {25, 45, 75, 95, 100}, 
-            maxSwarmHeight = 3000
+            maxSwarmHeight = 1500
         },
         {
-            allowedFishables = { "balloon", "cactus", "leaf", "canyonSnake", "sleepingPill"},
-            fishablesProbability = {25, 45, 75, 95, 100}, 
-            maxSwarmHeight = 6000
+            allowedFishables = { "cactus"},
+            fishablesProbability = {100}, 
+            maxSwarmHeight = 1800
         },
         {
-            allowedFishables = { "backpack", "balloon", "bird", "squirrel", "sleepingPill"},
-            fishablesProbability = {25, 45, 75, 95, 100}, 
+            allowedFishables = { "camera", "drink", "backpack", "cactus"},
+            fishablesProbability = {10, 20, 30, 100}, 
+            maxSwarmHeight = 5500
+        }, 
+        {
+            allowedFishables = { "cactus"},
+            fishablesProbability = {100}, 
+            maxSwarmHeight = 5800
+        },
+        {
+            allowedFishables = { "egg", "bird", "cactus", "sleepingPill"},
+            fishablesProbability = {30, 50, 95, 100}, 
+            maxSwarmHeight = 9000
+        },
+        {
+            allowedFishables = { "backpack", "camera", "bird", "egg", "sleepingPill"},
+            fishablesProbability = {10, 20, 50, 95, 100}, 
             maxSwarmHeight = 90000
         }
     },
