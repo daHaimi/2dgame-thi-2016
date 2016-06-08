@@ -54,22 +54,22 @@ function Pause:create()
         button_backToMenu = {
             object = Loveframes.Create("imagebutton");
             x = 0.16 * self.width;
-            y = self.buttonOffset + 1 * self.buttonHeight;
+            y = self.height - self.buttonHeight;
         };
         button_restartLevel = {
             object = Loveframes.Create("imagebutton");
             x = 0.16 * self.width;
-            y = self.buttonOffset + 2 * self.buttonHeight;
+            y = self.buttonOffset + self.buttonHeight;
         };        
         button_options = {
             object = Loveframes.Create("imagebutton");
             x = 0.16 * self.width;
-            y = self.buttonOffset + 3 * self.buttonHeight;
+            y = self.buttonOffset + 2 * self.buttonHeight;
         };
     };
     
     --adjust all elements on this frame
-    self.elementsOnFrame.background.object:SetImage(self.directory .. "gui_Test_Bg.png");
+    self.elementsOnFrame.background.object:SetImage(self.directory .. "StandardBG.png");
     
     self.elementsOnFrame.button_backToGame.object:SetImage(self.directory .. "Button.png")
     self.elementsOnFrame.button_backToGame.object:SizeToImage();

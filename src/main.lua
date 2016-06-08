@@ -63,7 +63,7 @@ function love.load()
     local _, _, flags = love.window.getMode();
     love.graphics.setBackgroundColor(55, 80, 100);
     local deviceDim = { love.window.getDesktopDimensions(flags.display) };
-    --deviceDim = {640, 1140};
+    --deviceDim = {720, 1080};
     --deviceDim = {1366,768};
     --deviceDim = {1600,900};
     _G._persTable.winDim[1], _G._persTable.winDim[2], p_scaleFactor, titleHeight = getScaledDimension(deviceDim);
