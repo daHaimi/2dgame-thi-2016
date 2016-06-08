@@ -101,6 +101,11 @@ function Level:create()
     end
 end
 
+---changes the language of this frame
+function Level:setLanguage(language)
+    self.elementsOnFrame.buttonBack.object:SetText(_G.data.languages[language].package.buttonBack);
+end
+
 ---call to unlock the second level
 function Level:unlockCanyon()
     _G._persTable.unlockLevel = 2;

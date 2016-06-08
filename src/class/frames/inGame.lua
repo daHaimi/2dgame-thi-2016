@@ -100,9 +100,9 @@ function InGame:update()
     end
     local depth = math.ceil(_G._tmpTable.currentDepth / 300);
     if depth <= 0 then
-        self.elementsOnFrame.score.object:SetText("Depth: " .. math.abs(depth) .. "m");
+        self.elementsOnFrame.score.object:SetText(_G.data.languages[_G._persTable.config.language].package.textDepth .. math.abs(depth) .. "m");
     else
-        self.elementsOnFrame.score.object:SetText("Depth: 0m");
+        self.elementsOnFrame.score.object:SetText(_G.data.languages[_G._persTable.config.language].package.textDepth .. "0m");
     end
 end
 

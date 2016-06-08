@@ -51,7 +51,6 @@ describe("Unit test for Start.lua", function()
         assert.are.equal(locInstance.elementsOnFrame.hamster.imagepath, "assets/gui/hamster.png");
         
         assert.are.equal(locInstance.elementsOnFrame.text.type, "text");
-        assert.are.equal(locInstance.elementsOnFrame.text.text, "Click to start!");
     end)
 
     it("testing blink function", function()
