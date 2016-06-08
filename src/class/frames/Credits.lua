@@ -36,7 +36,8 @@ local Credits = Class {
     end;
     
     p_staffString = "";
-    p_staff = {"Marco Egner",
+    p_staff = {"Staff:",
+        "Marco Egner",
         "Samson Groß",
         "Mathias Haimerl",
         "Anna Käfferlein",
@@ -44,7 +45,16 @@ local Credits = Class {
         "Burak Kutlu",
         "Martin Lechner",
         "Daniel Plank",
-        "Daniel Zistl"
+        "Daniel Zistl",
+        " ",
+        "Libs:",
+        "hump, Matthias Richter",
+        "light, Marcus Ihde",
+        "LoveFrames, Kenny Shields",
+        "table_serializer, Mathias Haimerl",
+        "TEsound, Ensayia and Taehl",
+        " ",
+        "No hamsters were harmed!",
     };
 };
 
@@ -65,7 +75,7 @@ function Credits:create()
         text_credits = {
             object = Loveframes.Create("text");
             x = 15;
-            y = 70;
+            y = 30;
         }
     };
     
