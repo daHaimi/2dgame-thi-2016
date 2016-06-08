@@ -32,6 +32,7 @@ local Level = Class {
         self.godModeActive = false;
         self.moved = 0;
         self.gMMusicPlaying = false;
+        self.reachedDepth = 0;
         
         self.levMan = levelManager;
         self.direction = direction;
@@ -113,6 +114,7 @@ local Level = Class {
         self.failedStart = false;
         --parameter for loading the game
         self.gameLoaded = true;
+
     end
 }
 
@@ -140,6 +142,7 @@ function Level:destructLevel()
     self.time = nil;
     self.gMMusicPlaying = nil;
     self.enviromentPosition = nil;
+    self.reachedDepth = nil;
 end
 
 --- Update the game state. Called every frame.
@@ -229,6 +232,14 @@ function Level:checkForAchievments()
             _G.data.achievements.nothingCaught.name);
       _G._persTable.achievements.nothingCaught = true;
     end
+    if self.levelFinished and not _G._persTable.achievements.allLevelBoardersPassed 
+    and _persTable.upgrades.mapBreakthrough1 == true and _persTable.upgrades.mapBreakthrough2 == true 
+    and self.reachedDepth <= self.lowerBoarder then
+        table.insert(_G._unlockedAchievements, _G.data.achievements.allLevelBoardersPassed);
+        _gui:newNotification("assets/gui/480px/" .. _G.data.achievements.allLevelBoardersPassed.image_unlock, 
+            _G.data.achievements.allLevelBoardersPassed.name);
+        _G._persTable.achievements.allLevelBoardersPassed = true;
+    end
 end
 
 --- calculates the momement an positioning of all elements needed for the animation
@@ -269,6 +280,7 @@ function Level:switchToPhase2()
     if _G._persTable.phase == 1 then
         self.direction = -1;
         _G._persTable.phase = 2;
+        self.reachedDepth = self.posY;
         self:deactivateGodMode();
     end
 end
