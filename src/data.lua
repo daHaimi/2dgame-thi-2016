@@ -21,7 +21,7 @@ return {
             enabled = true,        -- Whether the object is enabled
             
             -- Description of the object. Shown in the dictionary
-            description = "Nemo´s description";    
+            description = "Seems like you have found nemo";    
             
             -- Definition of the hitbox
             hitbox = {
@@ -48,7 +48,7 @@ return {
             maxAmount = 4,
             swarmHeight = 225,
             enabled = true,
-            description = "Turtle´s description";
+            description = "Its house is his shell";
             hitbox = {
                 {
                     width = 50,
@@ -73,7 +73,7 @@ return {
             maxAmount = 3,
             swarmHeight = 350,
             enabled = true,
-            description = "Rat´s description";
+            description = "Easy to attract with cheese";
             hitbox = {
                 {
                     width = 60,
@@ -97,7 +97,7 @@ return {
             maxAmount = 2,
             swarmHeight = 125,
             enabled = true,
-            description = "deadFish´s description";
+            description = "It was a good fish throughout his whole life";
             hitbox = {
                 {
                     width = 64,
@@ -122,7 +122,7 @@ return {
             maxAmount = 4,
             swarmHeight = 200,
             enabled = true,
-            description = "Angler´s description";
+            description = "Very useful if you need some light";
             hitbox = {
                 {
                     width = 40,
@@ -144,7 +144,7 @@ return {
             maxAmount = 1,
             swarmHeight = 100,
             enabled = true,
-            description = "Lollipop´s description";
+            description = "You know you want it";
             hitbox = {
                 {
                     width = 30,
@@ -172,7 +172,7 @@ return {
             maxAmount = 1,
             swarmHeight = 100,
 --            enabled = _G._persTable.enabled.ring,
-            description = "Ring´s description";
+            description = "One ring to rule them all";
             hitbox = {
                 {
                     width = 40,
@@ -194,7 +194,7 @@ return {
             maxAmount = 1,
             swarmHeight = 100,
             enabled = true,
-            description = "Shoe´s description";
+            description = "One shoe is not enough";
             hitbox = {
                 {
                     width = 55,
@@ -225,7 +225,7 @@ return {
             maxAmount = 3,
             swarmHeight = 200,
             enabled = true,
-            description = "Snake´s description";
+            description = "(T)his is a really dangerous snake";
             hitbox = {
                 {
                     width = 54,
@@ -249,7 +249,7 @@ return {
             maxAmount = 3,
             swarmHeight = 200,
             enabled = true,
-            description = "Crododile´s description";
+            description = "He just wants to cuddle, I promise";
             hitbox = {
                 {
                     width = 128,
@@ -271,7 +271,7 @@ return {
             maxAmount = 1,
             swarmHeight = 50,
 --            enabled = _G._persTable.enabled.sleepingPill,
-            description = "SleepingPill´s description";
+            description = "Makes sea dwellers drowsy";
             hitbox = {
                 {
                     width = 15,
@@ -308,7 +308,7 @@ return {
             maxAmount = 2,
             swarmHeight = 200,
             enabled = true,
-            description = "Squirrel´s description";
+            description = "Give him a nut and it goes nuts!";
             hitbox = {
                 {
                     width = 62,
@@ -343,7 +343,7 @@ return {
             maxAmount = 0,
             swarmHeight = 50,
             enabled = true,
-            description = "A nice backpack someone seems to have lost";
+            description = "Please don't leave your luggage unattended";
             hitbox = {
                 {
                     width = 52,
@@ -369,7 +369,7 @@ return {
             maxAmount = 1,
             swarmHeight = 50,
             enabled = true,
-            description = "A delicious drink";
+            description = "Thank god it is sealed";
             hitbox = {
                 {
                     width = 49,
@@ -403,7 +403,7 @@ return {
             maxAmount = 3,
             swarmHeight = 100,
             enabled = true,
-            description = "A dinosaur egg. Better sell it fast";
+            description = "What kind of animal will hatch from that egg?";
             hitbox = {
                 {
                     width = 22,
@@ -435,7 +435,7 @@ return {
             maxAmount = 1,
             swarmHeight = 50,
             enabled = true,
-            description = "High-Tech 40 MP Camera";
+            description = "Smile, you are getting photographed";
             hitbox = {
                 {
                     width = 10,
@@ -465,7 +465,7 @@ return {
             maxAmount = 3,
             swarmHeight = 200,
             enabled = true,
-            description = "Canyon Snake´s description";
+            description = "Wow, it managed to catch its own tail";
             hitbox = {
                 {
                     width = 54,
@@ -490,7 +490,7 @@ return {
             maxAmount = 2,
             swarmHeight = 150,
             enabled = true,
-            description = "Very prickly";
+            description = "Thinking about giving it a hug?";
             hitbox = {
                 {
                     width = 16,
@@ -533,7 +533,7 @@ return {
             maxAmount = 3,
             swarmHeight = 150,
             enabled = true,
-            description = "Simply leaf";
+            description = "Leaf it right here please";
             hitbox = {
                 {
                     width = 3,
@@ -570,7 +570,7 @@ return {
             maxAmount = 3,
             swarmHeight = 250,
             enabled = true,
-            description = "A hungry bird";
+            description = "It is literally free like a bird";
             hitbox = {
                 {
                     width = 60,
@@ -604,7 +604,7 @@ return {
             maxAmount = 3,
             swarmHeight = 200,
             enabled = true,
-            description = "A balloon";
+            description = "Let it go like your dreams";
             hitbox = {
                 {
                     width = 20,
@@ -638,7 +638,7 @@ return {
             maxAmount = 1,
             swarmHeight = 100,
             enabled = true,
-            description = "A mysterious UFO";
+            description = "Wanna get examined?";
             hitbox = {
                 {
                     width = 30,
