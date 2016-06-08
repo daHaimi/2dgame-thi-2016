@@ -143,6 +143,31 @@ describe("Unit test suite for the LevelManager class", function()
         assert.are_not.same({ 33688 }, levMan:getCurSwarmFactory());
     end)
 
+    it("Testing freeManagedObjects", function()
+        local localInstance = LevelManager();
+        
+        localInstance.curLevel = {25, 864, 74, 
+            getLevelName = function(...) return "sewers" end, destructLevel = function(...) end;};
+        localInstance.curPlayer = {1325, 86, 6326, destructBait = function(...) end;};
+        localInstance.curSwarmFac = {4965, 2255, destructSF = function(...) end};
+        localInstance.p_curDataRef = {13874};
+        
+        local levelSpy = spy.on(localInstance.curLevel, "destructLevel");
+        local playerSpy = spy.on(localInstance.curBait, "destructBait");
+        local swSpy = spy.on(localInstance.curSwarmFac, "destructSF");
+        
+        localInstance:freeManagedObjects();
+        
+        assert.spy(levelSpy).was.called(1);
+        assert.spy(playerSpy).was.called(1);
+        assert.spy(swSpy).was.called(1);
+        
+        assert.are.same(localInstance.curLevel, nil);
+        assert.are.same(localInstance.curBait, nil);
+        assert.are.same(localInstance.curSwarmFac, nil);
+        assert.are_not.same(localInstance.p_curDataRef, nil);
+    end)
+
     it("Testing getCurLevel", function()
         levMan.curLevel = { 1, 2, 4 };
         assert.are.same(levMan.curLevel, levMan:getCurLevel());
