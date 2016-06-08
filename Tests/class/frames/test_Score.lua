@@ -67,6 +67,7 @@ it("Testing Constructor", function()
     it("Testing create function", function()
         local table = {
             replayLevel = function(...) end;
+            freeManagedObjects = function(...) end;
         }
         _G._gui = {
             getFrames = function(...) return{}; end;
