@@ -124,6 +124,7 @@ end
 
 ---called in the "fly in" state 
 function InGame:appear()
+    love.mouse.setGrabbed(true);
     love.mouse.setVisible(false);
     self.frame:appear(self.elementsOnFrame);
     if self:checkPosition() then
@@ -134,6 +135,7 @@ end
 
 ---called in the "fly out" state
 function InGame:disappear()
+    love.mouse.setGrabbed(false);
     self.elementsOnFrame.healthbar.object:SetVisible(false);
     self.elementsOnFrame.pause.object:SetVisible(false);
     self.frame:disappear(self.elementsOnFrame);
