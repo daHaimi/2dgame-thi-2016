@@ -44,7 +44,9 @@ _G.levelTestStub = function()
             getPosXMouse = function (...) return 50 end;
             getSpeed = function (...) return 200 end;
         };
-        curSwarmFac = nil;
+        curSwarmFac = {
+            createMoreSwarms = function (...) end;
+        };
         getLevelPropMapByName = function(...) return {
             direction = 1;
         }
@@ -317,7 +319,9 @@ describe("Test unit test suite", function()
         locInstance:update(dt, bait);
         assert.are.same(-1, locInstance:getDirection());
         locInstance.posY = 1200;
+        locInstance.payPlayer = function (...) end;
         locInstance:update(dt, bait);
+        
         assert.are.same(0, locInstance:getDirection());
     end)
 
