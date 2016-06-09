@@ -442,10 +442,12 @@ describe("Test unit test suite", function()
     it("Testing drawEnviroment while ending animation sewer", function()
         local loveMock = mock(_G.love, true);
         locInstance.animationStart = true;
-        locInstance.failedStart = false;
-        locInstance.animationEnd = true;
+        locInstance.direction = -1;
+        locInstance.pumpingWay = 100;
+        locInstance.animationEnd= true;
+        locInstance.levelFinished = true;
         locInstance:drawEnviroment();
-        assert.spy(loveMock.graphics.draw).was.called(15);
+        assert.spy(loveMock.graphics.draw).was.called(14);
     end)
     
     it("Testing getStartAnimationRunning", function()
