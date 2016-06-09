@@ -1003,7 +1003,7 @@ return {
             nameOnPersTable = "allLevelBoardersPassed";
             name = "The great breakthrough";
             description = "Pass all boarders in a level";
-            image_lock = "gui_Test_klickableElement.png"; -- replace that value with the right picture
+            image_lock = "ach_noLvlBorderInfinity_locked.png";
             image_unlock = "ach_noLvlBorderInfinity.png";
         },
 --        allObjectsAtLeastOnce = {
