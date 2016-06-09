@@ -2,6 +2,7 @@ Class = require "lib.hump.class";
 
 local Credits = Class {
     init = function(self)
+        self.startTime = 0;
         if _G._persTable.scaledDeviceDim[1] < 640 then
             self.directory = "assets/gui/480px/";
             self.widthPx = 480;
@@ -120,16 +121,34 @@ end
 function Credits:appear()
     love.mouse.setVisible(true);
     self.frame:appear(self.elementsOnFrame);
+    self:createStartTime();
 end
 
 ---called in the "fly out" state
 function Credits:disappear()
     self.frame:disappear(self.elementsOnFrame);
+    if self:calcTimeSpent() >= 10 then
+        if not _G._persTable.achievements.creditsRed then
+            table.insert(_G._unlockedAchievements, _G.data.achievements.creditsRed);
+            _gui:newNotification("assets/gui/480px/" .. _G.data.achievements.creditsRed.image_unlock, 
+            _G.data.achievements.creditsRed.name);
+            _G._persTable.achievements.creditsRed = true;
+        end
+    end
 end
 
 ---return true if the frame is on position /fly in move is finished
 function Credits:checkPosition()
     return self.frame:checkPosition();
+end
+
+function Credits:createStartTime()
+    self.startTime = os.clock();
+end
+
+function Credits:calcTimeSpent()
+    local now = os.clock();
+    return now - self.startTime;
 end
 
 return Credits;

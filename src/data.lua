@@ -855,7 +855,7 @@ return {
             nameOnPersTable = "caughtTwoBoots";
             name = "One for each foot";
             description = "You've got two almost new shoes. At least they used to be new before somebody flushed them down";
-            image_lock = "gui_Test_klickableElement_disable.png";
+            image_lock = "ach_two_shoes_locked.png";
             image_unlock = "ach_two_shoes.png";
         },
         secondStart = {
@@ -989,8 +989,8 @@ return {
             nameOnPersTable = "allPillsAtLeastOnce";
             name = "Addict";
             description = "Caught every type of pills";
-            image_lock = "gui_Test_klickableElement.png";
-            image_unlock = "ach_allPillsAtLeastOnce.png";
+            image_lock = "ach_suchti_locked.png";
+            image_unlock = "ach_suchti.png";
         },
         nothingCaught = {
             nameOnPersTable = "nothingCaught";
@@ -1005,6 +1005,13 @@ return {
             description = "Pass all boarders in a level";
             image_lock = "ach_noLvlBorderInfinity_locked.png";
             image_unlock = "ach_noLvlBorderInfinity.png";
+        },
+        creditsRed = {
+            nameOnPersTable = "creditsRed";
+            name = "Respect our work";
+            description = "Read the credits";
+            image_lock = "ach_playtime_locked.png";
+            image_unlock = "ach_playtime.png";
         },
 --        allObjectsAtLeastOnce = {
 --            nameOnPersTable = "allObjectsAtLeastOnce";

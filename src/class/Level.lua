@@ -212,10 +212,7 @@ end
 --- checks if a new achievement is unlocked
 function Level:checkForAchievments()
     if self.failedStart and self.levelFinished and not _G._persTable.achievements.failedStart then
-        table.insert(_G._unlockedAchievements, _G.data.achievements.failedStart);
-        _gui:newNotification("assets/gui/480px/" .. _G.data.achievements.failedStart.image_unlock, 
-            _G.data.achievements.failedStart.name);
-        _G._persTable.achievements.failedStart = true;
+        self:unlockAchievement("failedStart");
     end
     if self.levelFinished and _G._tmpTable.caughtThisRound.shoe == 2 
     and not _G._persTable.achievements.caughtTwoBoots 
@@ -235,11 +232,21 @@ function Level:checkForAchievments()
     if self.levelFinished and not _G._persTable.achievements.allLevelBoardersPassed 
     and _persTable.upgrades.mapBreakthrough1 == true and _persTable.upgrades.mapBreakthrough2 == true 
     and self.reachedDepth <= self.lowerBoarder then
-        table.insert(_G._unlockedAchievements, _G.data.achievements.allLevelBoardersPassed);
-        _gui:newNotification("assets/gui/480px/" .. _G.data.achievements.allLevelBoardersPassed.image_unlock, 
-            _G.data.achievements.allLevelBoardersPassed.name);
-        _G._persTable.achievements.allLevelBoardersPassed = true;
+        self:unlockAchievement("allLevelBoardersPassed");
     end
+    if self.levelFinished and not _G._persTable.achievements.getFirtsObject 
+    and next(_G._tmpTable.caughtThisRound) ~= nil then
+        self:unlockAchievement("getFirtsObject");
+    end
+end
+
+--- Unlocks the given achievement.
+-- @param achName The name of the achievement.
+function Level:unlockAchievement(achName)
+    table.insert(_G._unlockedAchievements, _G.data.achievements[achName]);
+    _gui:newNotification("assets/gui/480px/" .. _G.data.achievements[achName].image_unlock, 
+        _G.data.achievements[achName].name);
+    _G._persTable.achievements[achName] = true;
 end
 
 --- calculates the momement an positioning of all elements needed for the animation
