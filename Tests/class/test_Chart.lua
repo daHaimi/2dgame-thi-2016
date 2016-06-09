@@ -3,6 +3,7 @@ _G.math.inf = 1 / 0
 
 testClass = require "class.Chart";
 fakeElement = require "Tests.fakeLoveframes.fakeElement";
+Data = require "data";
 
 describe("Unit test for Chart.lua", function()
     local locInstance;
@@ -14,7 +15,11 @@ describe("Unit test for Chart.lua", function()
         }
         _G._persTable = {
             scaledDeviceDim = {480, 833};
+            config = {
+                language = "english";
+            }
         };
+        _G.data = Data;
         
         Element = {
             object = {

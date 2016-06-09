@@ -114,7 +114,9 @@ function Bait:update(dt)
 
     self.yPos = (self.winDim[2] * self.modifier) - (self.size / 2);
     self.xPos = self.xPos + self:capXMovement();
-    self.xPos = self:capXPosition();
+    if self.levMan:getCurLevel():getLevelName() == "sewers" then
+        self.xPos = self:capXPosition();
+    end
     self.deltaTime = dt;
     self:checkForCollision(self.levMan:getCurSwarmFactory().createdFishables, oldXPos);
 
@@ -233,13 +235,27 @@ function Bait:draw()
     if self.levMan:getCurLevel():getGodModeStat() then
         Shaders:hueAjust(0.5);
     end
-    self:drawLine();
+    if self.levMan:getCurLevel():getLevelName() == "sewers" then
+        self:drawLineDiagonal();
+    else
+        self:drawLIneStraight();
+    end
     self.image:draw(self.xPos - 32, self.yPos - 39); -- FIXME magic number
     Shaders:clear();
 end
 
---- draws the line of the Hamster
-function Bait:drawLine()
+--- draws the line of the Hamster in the canyon
+function Bait:drawLIneStraight()
+    local length = self.yPos
+    for i = 1, length, 1 do
+        if not (i * 9 > length) then
+            love.graphics.draw(self.line, self.xPos, self.yPos - 40 - 9 * i);
+        end
+    end
+end
+
+--- draws the line of the Hamster in the sewers
+function Bait:drawLineDiagonal()
     local angle = 0;
     local length = math.sqrt(self.xPos * self.xPos + self.yPos * self.yPos);
 

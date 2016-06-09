@@ -11,6 +11,7 @@ _G.math.inf = 1 / 0;
 local Level = Class {
     init = function(self, levelName, backgroundPath, winDim, direction, levelManager)
         -- Member variables
+        self.playTime = 0;
         self.levMan = nil;
         self.p_levelName = "";
         self.levelFinished = false; -- 0 means the round hasn´t been finished until yet
@@ -100,12 +101,14 @@ local Level = Class {
             self.background = love.graphics.newImage("assets/toilet_whole.png");
             self.background2 = love.graphics.newImage("assets/toilet_bg.png");
             self.front = love.graphics.newImage("assets/toilet_lowerHalf.png");
+            self.frontOffset = 180;
         elseif self.p_levelName == "canyon" then
             self.borderLeft = love.graphics.newImage("assets/canyon_left.png");
             self.borderRight = love.graphics.newImage("assets/canyon_right.png");
             self.background = love.graphics.newImage("assets/canyon_back.png");
             self.background2 = love.graphics.newImage("assets/canyon_back.png");
             self.front = love.graphics.newImage("assets/canyon_front.png");
+            self.frontOffset = 375;
         end
         
         self.hamster = love.graphics.newImage("assets/hamster_noLine.png");
@@ -172,8 +175,10 @@ function Level:update(dt, bait)
         self.moved = 0;
     elseif self.direction == 1 then
         self.moved = math.ceil(dt * bait:getSpeed());
+        self.playTime = self.playTime + dt;
     elseif self.direction == -1 then
         self.moved = -math.ceil(dt * bait:getSpeed());
+        self.playTime = self.playTime + dt;
     end
 
     --do the ingame movement
@@ -209,6 +214,7 @@ function Level:update(dt, bait)
     -- calc fished Value
     if self.levelFinished then
         _G._tmpTable.earnedMoney = self:calcFishedValue();
+        _G._persTable.playedTime = _G._persTable.playedTime + self.playTime;
     end
     self:checkForAchievments()
 end
@@ -216,34 +222,39 @@ end
 --- checks if a new achievement is unlocked
 function Level:checkForAchievments()
     if self.failedStart and self.levelFinished and not _G._persTable.achievements.failedStart then
-        table.insert(_G._unlockedAchievements, _G.data.achievements.failedStart);
-        _gui:newNotification("assets/gui/480px/" .. _G.data.achievements.failedStart.image_unlock, 
-            _G.data.achievements.failedStart.name);
-        _G._persTable.achievements.failedStart = true;
+        self:unlockAchievement("failedStart");
     end
     if self.levelFinished and _G._tmpTable.caughtThisRound.shoe == 2 
     and not _G._persTable.achievements.caughtTwoBoots 
     and self:calcFishedValue() == self.levMan:getCurSwarmFactory():getFishableObjects().shoe.value * 2 then
-        table.insert(_G._unlockedAchievements, _G.data.achievements.caughtTwoBoots);
-        _gui:newNotification("assets/gui/480px/" .. _G.data.achievements.caughtTwoBoots.image_unlock, 
-            _G.data.achievements.caughtTwoBoots.name);
-        _G._persTable.achievements.caughtTwoBoots = true;
+         self:unlockAchievement("caughtTwoBoots");
     end
     if self.levelFinished and next(_G._tmpTable.caughtThisRound) == nil and not self.failedStart
     and not _G._persTable.achievements.nothingCaught then
-      table.insert(_G._unlockedAchievements, _G.data.achievements.nothingCaught);
-      _gui:newNotification("assets/gui/480px/" .. _G.data.achievements.nothingCaught.image_unlock, 
-            _G.data.achievements.nothingCaught.name);
-      _G._persTable.achievements.nothingCaught = true;
+        self:unlockAchievement("nothingCaught");
     end
     if self.levelFinished and not _G._persTable.achievements.allLevelBoardersPassed 
     and _persTable.upgrades.mapBreakthrough1 == true and _persTable.upgrades.mapBreakthrough2 == true 
     and self.reachedDepth <= self.lowerBoarder then
-        table.insert(_G._unlockedAchievements, _G.data.achievements.allLevelBoardersPassed);
-        _gui:newNotification("assets/gui/480px/" .. _G.data.achievements.allLevelBoardersPassed.image_unlock, 
-            _G.data.achievements.allLevelBoardersPassed.name);
-        _G._persTable.achievements.allLevelBoardersPassed = true;
+        self:unlockAchievement("allLevelBoardersPassed");
     end
+    if self.levelFinished and not _G._persTable.achievements.getFirtsObject 
+    and next(_G._tmpTable.caughtThisRound) ~= nil then
+        self:unlockAchievement("getFirtsObject");
+    end
+    if self.levelFinished and not _G._persTable.achievements.playedTime 
+    and _G._persTable.playedTime > (2*60*60) then
+        self:unlockAchievement("playedTime");
+    end
+end
+
+--- Unlocks the given achievement.
+-- @param achName The name of the achievement.
+function Level:unlockAchievement(achName)
+    table.insert(_G._unlockedAchievements, _G.data.achievements[achName]);
+    _gui:newNotification("assets/gui/480px/" .. _G.data.achievements[achName].image_unlock, 
+        _G.data.achievements[achName].name);
+    _G._persTable.achievements[achName] = true;
 end
 
 --- calculates the momement an positioning of all elements needed for the animation
@@ -251,26 +262,34 @@ end
 --@param dt delta time
 function Level:doAnimationMovement(bait, dt)
     if self.animationStart and not self.animationStartFinished then
-        if  self.hamsterLockedXPos < 120 and self.hamsterLockedXPos > 65 or 
-            self.hamsterLockedXPos < 355 and self.hamsterLockedXPos > 300 then
-            if self.hamsterYPos < self.winDim[2] * 0.5 - 230 then
-                self.hamsterYPos = self.hamsterYPos + 0.5 * math.ceil(dt * bait:getSpeed());
-                self.failedStart = true;
-            else
-                self.levelFinished = true;
-            end
-        else
-            if self.hamsterYPos < self.winDim[2] * 0.4 then
-                self.hamsterYPos = self.hamsterYPos + 0.5 * math.ceil(dt * bait:getSpeed());
-                if self.hamsterLockedXPos < 120 or self.hamsterLockedXPos > 300 then
+        if self.p_levelName == "sewers" then
+            if  self.hamsterLockedXPos < 120 and self.hamsterLockedXPos > 65 or 
+                self.hamsterLockedXPos < 355 and self.hamsterLockedXPos > 300 then
+                if self.hamsterYPos < self.winDim[2] * 0.5 - 230 then
+                    self.hamsterYPos = self.hamsterYPos + 0.5 * math.ceil(dt * bait:getSpeed());
                     self.failedStart = true;
-                end
-            else
-                if self.hamsterLockedXPos > 120 and self.hamsterLockedXPos < 300 then
-                    self.animationStartFinished = true;
                 else
                     self.levelFinished = true;
                 end
+            else
+                if self.hamsterYPos < self.winDim[2] * 0.4 then
+                    self.hamsterYPos = self.hamsterYPos + 0.5 * math.ceil(dt * bait:getSpeed());
+                    if self.hamsterLockedXPos < 120 or self.hamsterLockedXPos > 300 then
+                        self.failedStart = true;
+                    end
+                else
+                    if self.hamsterLockedXPos > 120 and self.hamsterLockedXPos < 300 then
+                        self.animationStartFinished = true;
+                    else
+                        self.levelFinished = true;
+                    end
+                end
+            end
+        else
+           if self.hamsterYPos < self.winDim[2] * 0.55 then
+                self.hamsterYPos = self.hamsterYPos + 0.5 * math.ceil(dt * bait:getSpeed());
+            else
+                self.animationStartFinished = true;
             end
         end
     end
@@ -304,6 +323,7 @@ end
 
 --- draws the enviroment like borders
 function Level:drawEnviroment()
+    local xPosHamster = 0;
     self.enviromentPosition = self.enviromentPosition - self:getMoved();
 
     self.lightWorld.drawShadow();
@@ -336,18 +356,23 @@ function Level:drawEnviroment()
         self:drawLine(self.levMan:getCurPlayer():getPosXMouse() - 32, 100);
         love.graphics.draw(self.hand, self.levMan:getCurPlayer():getPosXMouse() - 48, self.animationStartPoint - 220);
     else
-        love.graphics.draw(self.hand, self.hamsterLockedXPos - 16, self.animationStartPoint - 220);
-        if self.failedStart then
-            self:drawLine(self.hamsterLockedXPos, 300);
+        if self.p_levelName == "sewers" then
+            xPosHamster = self.hamsterLockedXPos;
         else
-            self:drawLine(self.hamsterLockedXPos, 150);
+            xPosHamster = self.levMan:getCurPlayer():getPosXMouse() - 32;
         end
-        if self.hamsterYPos < self.animationStartPoint + 130 or self.failedStart then
-            love.graphics.draw(self.hamster, self.hamsterLockedXPos, self.hamsterYPos);
+        love.graphics.draw(self.hand, xPosHamster - 16, self.animationStartPoint - 220);
+        if self.failedStart then
+            self:drawLine(xPosHamster, 300);
+        else
+            self:drawLine(xPosHamster, 300);
+        end
+        if self.hamsterYPos < self.animationStartPoint + 200 or self.failedStart then
+            love.graphics.draw(self.hamster, xPosHamster, self.hamsterYPos);
         end
     end
     
-    love.graphics.draw(self.front, 0, self.posY - 180);
+    love.graphics.draw(self.front, 0, self.posY - self.frontOffset);
     
 
 end

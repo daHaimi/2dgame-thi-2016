@@ -85,6 +85,7 @@ function Persistence:createPersTable()
         money = 5000;
         lastLevel = 1;
         winDim = {};
+        playedTime = 0;
         phase = 1;
         fish = {};
         enabled = {
@@ -136,6 +137,7 @@ function Persistence:createPersTable()
         allObjectsAtLeastOnce = false;
         allPillsAtLeastOnce = false;
         nothingCaught = false;
+        playedTime = false;
     };
 
 
