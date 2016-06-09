@@ -331,6 +331,7 @@ function Level:switchToPhase2()
         _G._persTable.phase = 2;
         self.reachedDepth = self.posY;
         self:deactivateGodMode();
+        self.levMan:getCurPlayer():changeSprite();
     end
 end
 
