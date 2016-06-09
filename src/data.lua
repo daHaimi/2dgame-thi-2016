@@ -964,6 +964,7 @@ return {
             image_lock = "ach_objectsOverTime_locked.png";
             image_unlock = "ach_objectsOverTime.png";
         },
+        
         gFishCaughtTotal = {
             nameOnPersTable = "gFishCaugtTotal";
             name = "Godlike Fisher";
@@ -971,6 +972,7 @@ return {
             image_lock = "ach_objectsOverTime_locked.png";
             image_unlock = "ach_objectsOverTime.png";
         },
+        
         firstBorderRemoved = {
             nameOnPersTable = "firstBorderRemoved";
             name = "Out of my way";
@@ -985,6 +987,7 @@ return {
             image_lock = "ach_negativeShitcoin_locked.png";
             image_unlock = "ach_negativeShitcoin.png";
         },
+        
         allPillsAtLeastOnce = {
             nameOnPersTable = "allPillsAtLeastOnce";
             name = "Addict";
@@ -992,6 +995,7 @@ return {
             image_lock = "ach_suchti_locked.png";
             image_unlock = "ach_suchti.png";
         },
+        
         nothingCaught = {
             nameOnPersTable = "nothingCaught";
             name = "Misadventure";
@@ -999,6 +1003,7 @@ return {
             image_lock = "ach_nothingCaught_locked.png";
             image_unlock = "ach_nothingCaught.png";
         },
+        
         allLevelBoardersPassed = {
             nameOnPersTable = "allLevelBoardersPassed";
             name = "The great breakthrough";
@@ -1008,10 +1013,8 @@ return {
         },
         creditsRed = {
             nameOnPersTable = "creditsRed";
-            name = "Respect our work";
-            description = "Read the credits";
-            image_lock = "ach_playtime_locked.png";
-            image_unlock = "ach_playtime.png";
+            image_lock = "ach_credits_locked.png";
+            image_unlock = "ach_credits.png";
         },
 --        allObjectsAtLeastOnce = {
 --            nameOnPersTable = "allObjectsAtLeastOnce";
@@ -1051,6 +1054,110 @@ return {
                 buttonBTM = "Back to menu";
                 textScore = "Your Score:";
                 textStart = "Click to start!";
+                creditsRed = {
+                    name = "Respect our Work";
+                    description = "Read the credits";
+                };
+                allLevelBoardersPassed = {
+                    name = "";
+                    description = "";
+                };
+                nothingCaught = {
+                    name = "";
+                    description = "";
+                };
+                allPillsAtLeastOnce = {
+                    name = "";
+                    description = "";
+                };
+                onlyNegativeFishesCaught = {
+                    name = "";
+                    description = "";
+                };
+                firstBorderRemoved = {
+                    name = "";
+                    description = "";
+                };
+                gFishCaugtTotal = {
+                    name = "";
+                    description = "";
+                };
+                sFishCaugtTotal = {
+                    name = "";
+                    description = "";
+                };
+                bFishCaugtTotal = {
+                    name = "";
+                    description = "";
+                };
+                shoppingQueen = {
+                    name = "";
+                    description = "";
+                };
+                negativCoins = {
+                    name = "";
+                    description = "";
+                };
+                gMoneyEarnedTotal = {
+                    name = "";
+                    description = "";
+                };
+                sMoneyEarnedTotal = {
+                    name = "";
+                    description = "";
+                };
+                bMoneyEarnedTotal = {
+                    name = "";
+                    description = "";
+                };
+                goldCoinsOneRound = {
+                    name = "";
+                    description = "";
+                };
+                silverCoinsOneRound = {
+                    name = "";
+                    description = "";
+                };
+                bronzeCoinsOneRound = {
+                    name = "";
+                    description = "";
+                };
+                bronzeCaughtOneRound = {
+                    name = "";
+                    description = "";
+                };
+                silverCaughtOneRound = {
+                    name = "";
+                    description = "";
+                };
+                goldCaughtOneRound = {
+                    name = "";
+                    description = "";
+                };
+                secondStart = {
+                    name = "";
+                    description = "";
+                };
+                caughtTwoBoots = {
+                    name = "";
+                    description = "";
+                };
+                failedStart = {
+                    name = "";
+                    description = "";
+                };
+                threeMoreLife = {
+                    name = "";
+                    description = "";
+                };
+                twoMoreLife = {
+                    name = "";
+                    description = "";
+                };
+                oneMoreLife = {
+                    name = "";
+                    description = "";
+                }
             };
             
         },
@@ -1075,6 +1182,110 @@ return {
                 buttonBTM = "Zurück zum Menü";
                 textScore = "Punktestand:";
                 textStart = "Klicken zum Starten!";
+                creditsRed = {
+                    name = "Respektiere unsere Arbeit";
+                    description = "Lese die Credits";
+                };
+                allLevelBoardersPassed = {
+                    name = "";
+                    description = "";
+                };
+                nothingCaught = {
+                    name = "";
+                    description = "";
+                };
+                allPillsAtLeastOnce = {
+                    name = "";
+                    description = "";
+                };
+                onlyNegativeFishesCaught = {
+                    name = "";
+                    description = "";
+                };
+                firstBorderRemoved = {
+                    name = "";
+                    description = "";
+                };
+                gFishCaugtTotal = {
+                    name = "";
+                    description = "";
+                };
+                sFishCaugtTotal = {
+                    name = "";
+                    description = "";
+                };
+                bFishCaugtTotal = {
+                    name = "";
+                    description = "";
+                };
+                shoppingQueen = {
+                    name = "";
+                    description = "";
+                };
+                negativCoins = {
+                    name = "";
+                    description = "";
+                };
+                gMoneyEarnedTotal = {
+                    name = "";
+                    description = "";
+                };
+                sMoneyEarnedTotal = {
+                    name = "";
+                    description = "";
+                };
+                bMoneyEarnedTotal = {
+                    name = "";
+                    description = "";
+                };
+                goldCoinsOneRound = {
+                    name = "";
+                    description = "";
+                };
+                silverCoinsOneRound = {
+                    name = "";
+                    description = "";
+                };
+                bronzeCoinsOneRound = {
+                    name = "";
+                    description = "";
+                };
+                bronzeCaughtOneRound = {
+                    name = "";
+                    description = "";
+                };
+                silverCaughtOneRound = {
+                    name = "";
+                    description = "";
+                };
+                goldCaughtOneRound = {
+                    name = "";
+                    description = "";
+                };
+                secondStart = {
+                    name = "";
+                    description = "";
+                };
+                caughtTwoBoots = {
+                    name = "";
+                    description = "";
+                };
+                failedStart = {
+                    name = "";
+                    description = "";
+                };
+                threeMoreLife = {
+                    name = "";
+                    description = "";
+                };
+                twoMoreLife = {
+                    name = "";
+                    description = "";
+                };
+                oneMoreLife = {
+                    name = "";
+                    description = "";
+                }
             }
         },
         
