@@ -38,11 +38,6 @@ _G.myfont = love.graphics.newFont(30);
 -- Game Title
 love.window.setTitle("Simon Hamsters insane trip");
 
--- loads all functions from util to the global space
-for k, v in pairs(require "util") do
-    _G[k] = v;
-end
-
 --- Local variables
 local curLevel;
 local player;
@@ -169,7 +164,6 @@ end
 function love.update(dt)
     if _gui:drawGame() then
         -- updates the curLevel only in the InGame GUI
-        setMouseVisibility(levMan:getCurLevel());
         levMan:getCurLevel():update(dt, levMan:getCurPlayer());
         levMan:getCurSwarmFactory():update(dt);
         
@@ -258,7 +252,6 @@ function love.mousepressed(x, y, button)
     -- pause game when when mouse is pressed (right button)
     if love.mouse.isDown(2) and _gui:drawGame() and levMan:getCurLevel():isLoaded() then
         _gui:changeFrame(_gui:getFrames().pause);
-        setMouseVisibility(levMan:getCurLevel());
     end
     
 end
