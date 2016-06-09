@@ -69,12 +69,15 @@ local Level = Class {
         --Animation parameters
         self.animationStart = false;
         self.animationStartFinished = false;
+        self.animationEnd = false;
+        self.animationEndFinished = false;
         self.hamsterYPos = 0;
         self.animationStartPoint = self.winDim[2] / 2 - 270;
         self.hamsterYPos = self.animationStartPoint - 30;
         self.hamsterLockedXPos = 0;
         self.enviromentPosition = 0;
         self.borderHeight = 200;
+        self.waitTillSwitch = 0.5;
 
         -- create light world
         self.lightWorld = love.light.newWorld();
@@ -163,7 +166,6 @@ function Level:update(dt, bait)
         self:switchToPhase2();
     elseif self.posY >= (self.winDim[2] * 0.5) and self.direction == -1 then
         self.direction = 0;
-        self.animationEnd = true;
         self.levelFinished = true;
         self:payPlayer();
     end
@@ -193,7 +195,12 @@ function Level:update(dt, bait)
     bait:update(dt);
     
     --do the animation movement
-    self:doAnimationMovement(bait, dt)
+    self:doStartAnimationMovement(bait, dt);
+    self:startEndAnimation();
+    self:doEndAnimationMovement(bait, dt);
+    if self.animationEndFinished then
+        self.waitTillSwitch = self.waitTillSwitch - dt;
+    end
     
     --Update music
     if self.godModeActive and not self.gMMusicPlaying then
@@ -257,10 +264,27 @@ function Level:unlockAchievement(achName)
     _G._persTable.achievements[achName] = true;
 end
 
---- calculates the momement an positioning of all elements needed for the animation
+--- calculates the momement an positioning of all elements needed for the ending animation
 --@param bai curBait
 --@param dt delta time
-function Level:doAnimationMovement(bait, dt)
+function Level:doEndAnimationMovement(bait, dt)
+    if self.levelFinished then
+        if self.p_levelName == "sewers" then
+            self.animationEndFinished = true;
+        else
+            if self.winDim[2] / 2 - 300 < self.hamsterYPos then
+                self.hamsterYPos = self.hamsterYPos - math.ceil(dt * bait:getSpeed());
+            else
+                self.animationEndFinished = true;
+            end
+        end
+    end
+end
+
+--- calculates the momement an positioning of all elements needed for the starting animation
+--@param bai curBait
+--@param dt delta time
+function Level:doStartAnimationMovement(bait, dt)
     if self.animationStart and not self.animationStartFinished then
         if self.p_levelName == "sewers" then
             if  self.hamsterLockedXPos < 120 and self.hamsterLockedXPos > 65 or 
@@ -293,9 +317,11 @@ function Level:doAnimationMovement(bait, dt)
             end
         end
     end
-    self.hamsterYPos = self.hamsterYPos + self.moved;
-    self.animationStartPoint = self.animationStartPoint - self.moved;
-    
+    if not self.levelFinished then
+        self.hamsterYPos = self.hamsterYPos - self:getMoved();
+        self.animationStartPoint = self.animationStartPoint - self:getMoved();
+        --print(self.hamsterYPos);
+    end
 end
 
 --- when the bait hit a object or the boarder is reached, start phase 2
@@ -315,7 +341,7 @@ function Level:draw(bait)
     love.graphics.setColor(255, 255, 255);
     love.graphics.draw(self.bg, self.bgq, 0, self.posY);
     bait:draw();
-    if self.levelFinished then
+    if self.levelFinished and self.waitTillSwitch < 0 then
         _gui:changeFrame(_gui:getFrames().score);
         --self:printResult();
     end
@@ -663,6 +689,17 @@ end
 function Level:startStartAnimation()
     self.animationStart = true;
     self.hamsterLockedXPos = self.levMan:getCurPlayer():getPosXMouse() - 32;
+end
+
+function Level:startEndAnimation()
+    if self.levelFinished and not self.animationEnd and not self.failedStart then
+        self.animationEnd = true;
+        self.hamsterYPos = self.winDim[2] * 0.55;
+    end
+    if self.levelFinished and self.failedStart then
+        self.animationEnd = true;
+        self.animationEndFinished = true;
+    end
 end
 
 --- returns true if the level is fully loaded

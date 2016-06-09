@@ -474,7 +474,7 @@ describe("Test unit test suite", function()
         locInstance.animationStart = true;
         locInstance.animationStartFinished = false;
         locInstance.winDim = {480, 833};
-        locInstance:doAnimationMovement(_G.levMan.curPlayer, 5);
+        locInstance:doStartAnimationMovement(_G.levMan.curPlayer, 5);
         assert.are.same(locInstance.failedStart, true);
     end)
 
@@ -484,7 +484,7 @@ describe("Test unit test suite", function()
         locInstance.animationStart = true;
         locInstance.animationStartFinished = false;
         locInstance.winDim = {480, 833};
-        locInstance:doAnimationMovement(_G.levMan.curPlayer, 5);
+        locInstance:doStartAnimationMovement(_G.levMan.curPlayer, 5);
         assert.are.same(locInstance.failedStart, true);
     end) 
     
@@ -494,7 +494,7 @@ describe("Test unit test suite", function()
         locInstance.animationStart = true;
         locInstance.animationStartFinished = false;
         locInstance.winDim = {480, 833};
-        locInstance:doAnimationMovement(_G.levMan.curPlayer, 5);
+        locInstance:doStartAnimationMovement(_G.levMan.curPlayer, 5);
         assert.are.same(locInstance.levelFinished, true);
     end)
     
@@ -504,7 +504,7 @@ describe("Test unit test suite", function()
         locInstance.animationStart = true;
         locInstance.animationStartFinished = false;
         locInstance.winDim = {480, 833};
-        locInstance:doAnimationMovement(_G.levMan.curPlayer, 5);
+        locInstance:doStartAnimationMovement(_G.levMan.curPlayer, 5);
         assert.are.same(locInstance.animationStartFinished, true);
     end)
 
@@ -514,7 +514,7 @@ describe("Test unit test suite", function()
         locInstance.animationStart = true;
         locInstance.animationStartFinished = false;
         locInstance.winDim = {480, 833};
-        locInstance:doAnimationMovement(_G.levMan.curPlayer, 5);
+        locInstance:doStartAnimationMovement(_G.levMan.curPlayer, 5);
         assert.are.same(locInstance.levelFinished, true);
     end)
     
@@ -524,7 +524,7 @@ describe("Test unit test suite", function()
         locInstance.animationStart = true;
         locInstance.animationStartFinished = false;
         locInstance.winDim = {480, 833};
-        locInstance:doAnimationMovement(_G.levMan.curPlayer, 5);
+        locInstance:doStartAnimationMovement(_G.levMan.curPlayer, 5);
         assert.are.same(locInstance.failedStart, false);
     end)
 
