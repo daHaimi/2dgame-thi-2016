@@ -217,17 +217,11 @@ function Level:checkForAchievments()
     if self.levelFinished and _G._tmpTable.caughtThisRound.shoe == 2 
     and not _G._persTable.achievements.caughtTwoBoots 
     and self:calcFishedValue() == self.levMan:getCurSwarmFactory():getFishableObjects().shoe.value * 2 then
-        table.insert(_G._unlockedAchievements, _G.data.achievements.caughtTwoBoots);
-        _gui:newNotification("assets/gui/480px/" .. _G.data.achievements.caughtTwoBoots.image_unlock, 
-            _G.data.achievements.caughtTwoBoots.name);
-        _G._persTable.achievements.caughtTwoBoots = true;
+         self:unlockAchievement("caughtTwoBoots");
     end
     if self.levelFinished and next(_G._tmpTable.caughtThisRound) == nil and not self.failedStart
     and not _G._persTable.achievements.nothingCaught then
-      table.insert(_G._unlockedAchievements, _G.data.achievements.nothingCaught);
-      _gui:newNotification("assets/gui/480px/" .. _G.data.achievements.nothingCaught.image_unlock, 
-            _G.data.achievements.nothingCaught.name);
-      _G._persTable.achievements.nothingCaught = true;
+        self:unlockAchievement("nothingCaught");
     end
     if self.levelFinished and not _G._persTable.achievements.allLevelBoardersPassed 
     and _persTable.upgrades.mapBreakthrough1 == true and _persTable.upgrades.mapBreakthrough2 == true 
