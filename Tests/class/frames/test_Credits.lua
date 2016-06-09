@@ -103,4 +103,21 @@ it("Testing Constructor", function()
         assert.stub(locInstance.frame.checkPosition).was_called(1);
     end)
 
+    it("Testing createStartTime function", function()
+        local timeWasSet = false;
+        locInstance:createStartTime();
+        
+        if locInstance.startTime > 0 then
+            timeWasSet = true
+        end
+        
+        assert.are.equal(timeWasSet, true);
+    end)
+
+    it("Testing calcTimeSpent function", function()
+        locInstance.startTime = 10;
+        local diffTime = locInstance:calcTimeSpent();
+        
+        assert.are_not.equals(diffTime, nil);
+    end)
 end)
