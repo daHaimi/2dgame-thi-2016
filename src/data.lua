@@ -834,15 +834,8 @@ return {
             nameOnPersTable = "getFirstObject";
             name = "First object";
             description = "You caught your first object";
-            image_lock = "gui_Test_klickableElement_disable.png";
-            image_unlock = "gui_Test_klickableElement.png";
-        },
-        getSecondObject = {
-            nameOnPersTable = "getSecondObject";
-            name = "Second object";
-            description = "You caught your second object";
-            image_lock = "gui_Test_klickableElement_disable.png";
-            image_unlock = "gui_Test_klickableElement.png";
+            image_lock = "ach_firstObject_locked.png";
+            image_unlock = "ach_firstObject.png";
         },
         failedStart = {
             nameOnPersTable = "failedStart";
