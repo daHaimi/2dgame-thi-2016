@@ -1006,6 +1006,13 @@ return {
             image_lock = "ach_playtime_locked.png";
             image_unlock = "ach_playtime.png";
         },
+        playedTime = {
+            nameOnPersTable = "playedTime";
+            name = "Play Time";
+            description = "Congratulations! You played over 2 hours";
+            image_lock = "ach_playtime_locked.png";
+            image_unlock = "ach_playtime.png";
+        },
 --        allObjectsAtLeastOnce = {
 --            nameOnPersTable = "allObjectsAtLeastOnce";
 --            name = "Collector";

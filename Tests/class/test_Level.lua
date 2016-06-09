@@ -15,6 +15,7 @@ _G.levelTestStub = function()
             mapBreakthrough1 = 0;
             mapBreakthrough2 = 0;
         };
+        playedTime = 0;
         phase = 1;
     };
     _G._persTable.fish = {

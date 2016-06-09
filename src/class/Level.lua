@@ -11,6 +11,7 @@ _G.math.inf = 1 / 0;
 local Level = Class {
     init = function(self, levelName, backgroundPath, winDim, direction, levelManager)
         -- Member variables
+        self.playTime = 0;
         self.levMan = nil;
         self.p_levelName = "";
         self.levelFinished = false; -- 0 means the round hasn´t been finished until yet
@@ -168,8 +169,10 @@ function Level:update(dt, bait)
         self.moved = 0;
     elseif self.direction == 1 then
         self.moved = math.ceil(dt * bait:getSpeed());
+        self.playTime = self.playTime + dt;
     elseif self.direction == -1 then
         self.moved = -math.ceil(dt * bait:getSpeed());
+        self.playTime = self.playTime + dt;
     end
 
     --do the ingame movement
@@ -205,6 +208,7 @@ function Level:update(dt, bait)
     -- calc fished Value
     if self.levelFinished then
         _G._tmpTable.earnedMoney = self:calcFishedValue();
+        _G._persTable.playedTime = _G._persTable.playedTime + self.playTime;
     end
     self:checkForAchievments()
 end
@@ -231,6 +235,10 @@ function Level:checkForAchievments()
     if self.levelFinished and not _G._persTable.achievements.getFirtsObject 
     and next(_G._tmpTable.caughtThisRound) ~= nil then
         self:unlockAchievement("getFirtsObject");
+    end
+    if self.levelFinished and not _G._persTable.achievements.playedTime 
+    and _G._persTable.playedTime > (2*60*60) then
+        self:unlockAchievement("playedTime");
     end
 end
 
