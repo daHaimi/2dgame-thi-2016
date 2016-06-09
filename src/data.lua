@@ -1157,6 +1157,10 @@ return {
                 oneMoreLife = {
                     name = "";
                     description = "";
+                };
+                playedTime = {
+                    name = "";
+                    description = "";
                 }
             };
             
@@ -1285,7 +1289,11 @@ return {
                 oneMoreLife = {
                     name = "";
                     description = "";
-                }
+                };
+                playedTime = {
+                    name = "";
+                    description = "";
+                };
             }
         },
         

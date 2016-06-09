@@ -28,6 +28,8 @@ local Bait = Class {
         self.goldenRuleLowerPoint = 0.32;
         self.goldenRuleUpperPoint = 0.68;
         self.image = nil;
+        self.imageCheeks = nil;
+        self.quadCheeks = nil;
         self.pullIn = false;
 
 
@@ -36,6 +38,7 @@ local Bait = Class {
         self.levMan = levelManager;
         self.yPos = (self.winDim[2] / 2) - (self.size / 2); -- FIXME unused local
         local img = love.graphics.newImage("assets/sprites/sprite_hamster.png");
+        self.imageCheeks = love.graphics.newImage("assets/sprites/sprite_cheeks.png");
         self.line = love.graphics.newImage("assets/line.png");
         if img == 0 then
             self.image = nil;
@@ -67,6 +70,8 @@ function Bait:destructBait()
     self.goldenRuleUpperPoint = nil;
     self.image = nil;
     self.pullIn = nil;
+    self.imageCheeks = nil;
+    self.quadCheeks = nil;
 end
 
 --- a function to check wich upgrades are active for the bait
@@ -100,6 +105,18 @@ function Bait:update(dt)
     -- update animation
     if self.image ~= nil then
         self.image:update(dt);
+    end
+    
+    -- update Bait cheeks
+    if self.hitFishable ~= nil then
+      local dimX, dimY = self.imageCheeks:getDimensions();
+      if  self.hitFishable > 20 then
+          self.quadCheeks = love.graphics.newQuad(2*dimX/3, 0, dimX/3, dimY, dimX, dimY);
+      elseif self.hitFishable > 15 then
+          self.quadCheeks = love.graphics.newQuad(dimX/3, 0, dimX/3, dimY, dimX, dimY);
+      elseif self.hitFishable > 5 then
+          self.quadCheeks = love.graphics.newQuad(0, 0, dimX/3, dimY, dimX, dimY);
+      end
     end
 
     -- calculate modifier for the golden rule
@@ -217,6 +234,7 @@ function Bait:collisionDetected(fishable, index)
     if self.levMan:getCurLevel():getDirection() == -1 and not fishable.caught then
         self.levMan:getCurSwarmFactory().createdFishables[index]:setToCaught();
         self.levMan:getCurLevel():addToCaught(fishable.name);
+        self.hitFishable = self.hitFishable + 1;
     end
 end
 
@@ -240,6 +258,9 @@ function Bait:draw()
         self:drawLIneStraight();
     end
     self.image:draw(self.xPos - 32, self.yPos - 39); -- FIXME magic number
+    if self.quadCheeks ~= nil then
+    love.graphics.draw(self.imageCheeks, self.quadCheeks, self.xPos - 32, self.yPos - 39);
+    end
     Shaders:clear();
 end
 
