@@ -11,6 +11,7 @@ _G.love = {
             };
         end;
         window = 0;
+        newQuad = function(...) end;
     };
     window = {
         getMode = function(...)
@@ -76,6 +77,7 @@ describe("Unit test for Bait.lua", function()
             },
             graphics = {
                 setColor = function(...) end;
+                newQuad = function(...) end;
                 draw = function(...) end;
                 rectangle = function(...) end;
                 newImage = function(...)
@@ -142,8 +144,13 @@ describe("Unit test for Bait.lua", function()
     end)
 
     it("Testing Update", function()
+        --_G.imageCheeks = nil;
         local myInstance = testClass(locWinDim, levMan);
         myInstance.image = locImageStub;
+        myInstance.imageCheeks = locImageStub;
+        myInstance.imageCheeks = {
+          getDimensions = function(...) end,
+        };
         myInstance:update();
         assert.are.same(0.495, myInstance.modifier);
 
@@ -175,6 +182,10 @@ describe("Unit test for Bait.lua", function()
         local myInstance = testClass(locWinDim, levMan);
         myInstance.image = locImageStub;
         myInstance.sleepingPillDuration = 10;
+        myInstance.imageCheeks = locImageStub;
+        myInstance.imageCheeks = {
+          getDimensions = function(...) end,
+        };
         myInstance:update();
         assert.are.same(6, myInstance.sleepingPillDuration);
     end)
@@ -596,5 +607,18 @@ describe("Unit test for Bait.lua", function()
         local myInstance = testClass(locWinDim, levMan);
         myInstance.yPos = 5;
         assert.are.same(myInstance:getPosY(), 5);
+    end)
+  
+    it("Test growing cheeks", function()
+        local myInstance = testClass(locWinDim, levMan);
+        myInstance.image = locImageStub;
+        local loveMock = mock(_G.love, true);
+        myInstance.imageCheeks = locImageStub;
+        myInstance.imageCheeks = {
+          getDimensions = function(...) return 0, 0 end;
+        };
+        myInstance.hitFishable = 100;
+        myInstance:update();
+        assert.spy(loveMock.graphics.newQuad).called(1);
     end)
 end)
