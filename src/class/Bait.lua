@@ -114,9 +114,7 @@ function Bait:update(dt)
 
     self.yPos = (self.winDim[2] * self.modifier) - (self.size / 2);
     self.xPos = self.xPos + self:capXMovement();
-    if self.levMan:getCurLevel():getLevelName() == "sewers" then
-        self.xPos = self:capXPosition();
-    end
+    self.xPos = self:capXPosition();
     self.deltaTime = dt;
     self:checkForCollision(self.levMan:getCurSwarmFactory().createdFishables, oldXPos);
 
@@ -134,7 +132,8 @@ end
 function Bait:capXPosition()
     local leftBound = 58;
     local rightBound = 422;
-    if self.levMan:getCurLevel():getYPos() > self.winDim[2] * 0.2 then
+    if self.levMan:getCurLevel():getYPos() > self.winDim[2] * 0.2 
+    and self.levMan:getCurLevel():getLevelName() == "sewers" then
         local m = 142 / (self.winDim[2] * 0.2);
         leftBound = 58 + m * (self.levMan:getCurLevel():getYPos() - self.winDim[2] * 0.23);
         rightBound = 422 - m * (self.levMan:getCurLevel():getYPos() - self.winDim[2] * 0.23);
@@ -333,7 +332,7 @@ end
 --- sets the x position of the mouse
 -- @param XPosMouse: x position the mouse position will be set to
 function Bait:setPosXMouse(XPosMouse)
-    self.posXMouse = XPosMouse;
+    self.posXMouse = math.min(422, math.max(58, XPosMouse));
 end
 
 --- returns the x position of the mouse
