@@ -287,6 +287,7 @@ end
 function Level:doStartAnimationMovement(bait, dt)
     if self.animationStart and not self.animationStartFinished then
         if self.p_levelName == "sewers" then
+            -- hamster dropped on frame of toilet
             if  self.hamsterLockedXPos < 120 and self.hamsterLockedXPos > 65 or 
                 self.hamsterLockedXPos < 355 and self.hamsterLockedXPos > 300 then
                 if self.hamsterYPos < self.winDim[2] * 0.5 - 230 then
@@ -296,12 +297,15 @@ function Level:doStartAnimationMovement(bait, dt)
                     self.levelFinished = true;
                 end
             else
+                --hamster not dropped on frame of the toilet
                 if self.hamsterYPos < self.winDim[2] * 0.4 then
                     self.hamsterYPos = self.hamsterYPos + 0.5 * math.ceil(dt * bait:getSpeed());
+                    -- hamster dropped next to toilet
                     if self.hamsterLockedXPos < 120 or self.hamsterLockedXPos > 300 then
                         self.failedStart = true;
                     end
                 else
+                    --hamster dropped in toilet
                     if self.hamsterLockedXPos > 120 and self.hamsterLockedXPos < 300 then
                         self.animationStartFinished = true;
                     else
@@ -310,6 +314,7 @@ function Level:doStartAnimationMovement(bait, dt)
                 end
             end
         else
+            --canyon
            if self.hamsterYPos < self.winDim[2] * 0.55 then
                 self.hamsterYPos = self.hamsterYPos + 0.5 * math.ceil(dt * bait:getSpeed());
             else
@@ -394,7 +399,8 @@ function Level:drawEnviroment()
         else
             self:drawLine(xPosHamster, 300);
         end
-        if self.hamsterYPos < self.animationStartPoint + 200 or self.failedStart then
+        if self.hamsterYPos < self.animationStartPoint + 130 or self.failedStart 
+            or self.hamsterYPos < self.animationStartPoint + 200 and self.p_levelName == "canyon" then
             love.graphics.draw(self.hamster, xPosHamster, self.hamsterYPos);
         end
     end
