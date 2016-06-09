@@ -56,15 +56,20 @@ function Pause:create()
             x = 0.16 * self.width;
             y = self.height - self.buttonHeight;
         };
+        button_changeLevel = {
+            object = Loveframes.Create("imagebutton");
+            x = 0.16 * self.width;
+            y = self.buttonOffset + self.buttonHeight
+        };
         button_restartLevel = {
             object = Loveframes.Create("imagebutton");
             x = 0.16 * self.width;
-            y = self.buttonOffset + self.buttonHeight;
+            y = self.buttonOffset + 2 * self.buttonHeight;
         };        
         button_options = {
             object = Loveframes.Create("imagebutton");
             x = 0.16 * self.width;
-            y = self.buttonOffset + 2 * self.buttonHeight;
+            y = self.buttonOffset + 3 * self.buttonHeight;
         };
     };
     
@@ -73,6 +78,9 @@ function Pause:create()
     
     self.elementsOnFrame.button_backToGame.object:SetImage(self.directory .. "Button.png")
     self.elementsOnFrame.button_backToGame.object:SizeToImage();
+    
+    self.elementsOnFrame.button_changeLevel.object:SetImage(self.directory .. "Button.png")
+    self.elementsOnFrame.button_changeLevel.object:SizeToImage();
     
     self.elementsOnFrame.button_backToMenu.object:SetImage(self.directory .. "Button.png");
     self.elementsOnFrame.button_backToMenu.object:SizeToImage();
@@ -86,6 +94,10 @@ function Pause:create()
     --onclick events for all buttons
     self.elementsOnFrame.button_backToGame.object.OnClick = function(object)
         _gui:changeFrame(_gui:getFrames().inGame);
+    end
+    
+    self.elementsOnFrame.button_changeLevel.object.OnClick = function(object)
+        _gui:changeFrame(_gui:getFrames().level);
     end
     
     self.elementsOnFrame.button_backToMenu.object.OnClick = function(object)
@@ -109,6 +121,7 @@ function Pause:setLanguage(language)
     self.elementsOnFrame.button_restartLevel.object:SetText(_G.data.languages[language].package.buttonRestart);
     self.elementsOnFrame.button_backToMenu.object:SetText(_G.data.languages[language].package.buttonBTM);
     self.elementsOnFrame.button_backToGame.object:SetText(_G.data.languages[language].package.buttonBTG);
+    self.elementsOnFrame.button_changeLevel.object:SetText(_G.data.languages[language].package.buttonChangeLevel);
 end
 
 ---shows the frame on screen

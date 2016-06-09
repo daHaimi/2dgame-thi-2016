@@ -75,8 +75,9 @@ it("Testing Constructor", function()
         spy.on(_G._gui, "changeFrame");
         locInstance.elementsOnFrame.button_backToGame.object.OnClick();
         locInstance.elementsOnFrame.button_backToMenu.object.OnClick();
+        locInstance.elementsOnFrame.button_changeLevel.object.OnClick();
         locInstance.elementsOnFrame.button_options.object.OnClick();
-        assert.spy(_gui.changeFrame).was.called(3);
+        assert.spy(_gui.changeFrame).was.called(4);
     end)
 
     it("Testing draw function", function()

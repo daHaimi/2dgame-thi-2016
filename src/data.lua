@@ -1054,6 +1054,7 @@ return {
                 buttonBTM = "Back to menu";
                 textScore = "Your Score:";
                 textStart = "Click to start!";
+                buttonChangeLevel = "Change level";
                 creditsRed = {
                     name = "Respect our Work";
                     description = "Read the credits";
@@ -1186,6 +1187,7 @@ return {
                 buttonBTM = "Zurück zum Menü";
                 textScore = "Punktestand:";
                 textStart = "Klicken zum Starten!";
+                buttonChangeLevel = "Levelauswahl";
                 creditsRed = {
                     name = "Respektiere unsere Arbeit";
                     description = "Lese die Credits";
