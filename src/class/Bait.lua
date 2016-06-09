@@ -38,6 +38,7 @@ local Bait = Class {
         self.levMan = levelManager;
         self.yPos = (self.winDim[2] / 2) - (self.size / 2); -- FIXME unused local
         local img = love.graphics.newImage("assets/sprites/sprite_hamster.png");
+        self.imgUp = love.graphics.newImage("assets/sprites/sprite_hamster_up.png");
         self.imageCheeks = love.graphics.newImage("assets/sprites/sprite_cheeks.png");
         self.line = love.graphics.newImage("assets/line.png");
         if img == 0 then
@@ -369,6 +370,10 @@ end
 
 function Bait:getSpeed()
     return self.speed;
+end
+
+function Bait:changeSprite()
+  self.image = Animate(self.imgUp, 3, 1, .08, Animate.AnimType.bounce);
 end
 
 return Bait;
