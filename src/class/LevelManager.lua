@@ -24,7 +24,7 @@ local LevelManager = Class {
         canyon = {
             levelName = "canyon",
             direction = 1,
-            bgPath = "assets/testbg.png";
+            bgPath = "assets/canyonBG.png";   
         },
         space = {
             levelName = "space",

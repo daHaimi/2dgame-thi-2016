@@ -94,19 +94,25 @@ local Level = Class {
         _G._persTable.phase = 1;
         
         --elements to draw
-        self.topBackground = love.graphics.newImage("assets/toilet_bg.png");
+        
         if self.p_levelName == "sewers" then
             self.borderLeft = love.graphics.newImage("assets/left.png");
             self.borderRight = love.graphics.newImage("assets/right.png");
+            self.background = love.graphics.newImage("assets/toilet_whole.png");
+            self.background2 = love.graphics.newImage("assets/toilet_bg.png");
+            self.front = love.graphics.newImage("assets/toilet_lowerHalf.png");
+            self.frontOffset = 180;
         elseif self.p_levelName == "canyon" then
             self.borderLeft = love.graphics.newImage("assets/canyon_left.png");
             self.borderRight = love.graphics.newImage("assets/canyon_right.png");
+            self.background = love.graphics.newImage("assets/canyon_back.png");
+            self.background2 = love.graphics.newImage("assets/canyon_back.png");
+            self.front = love.graphics.newImage("assets/canyon_front.png");
+            self.frontOffset = 375;
         end
-        self.toilet = love.graphics.newImage("assets/toilet.png");
+        
         self.hamster = love.graphics.newImage("assets/hamster_noLine.png");
         self.line = love.graphics.newImage("assets/line.png");
-        self.toiletLowerHalf = love.graphics.newImage("assets/toilet_lowerHalf.png");
-        self.toiletBowl = love.graphics.newImage("assets/toilet_bowl.png");
         self.hand = love.graphics.newImage("assets/hand.png");
         self.borderBottom = love.graphics.newImage("assets/border.png");
         self.lowerBorderPosition = math.abs(self.lowerBoarder) + self.winDim[2] * 0.68 + 130;
@@ -256,26 +262,34 @@ end
 --@param dt delta time
 function Level:doAnimationMovement(bait, dt)
     if self.animationStart and not self.animationStartFinished then
-        if  self.hamsterLockedXPos < 120 and self.hamsterLockedXPos > 65 or 
-            self.hamsterLockedXPos < 355 and self.hamsterLockedXPos > 300 then
-            if self.hamsterYPos < self.winDim[2] * 0.5 - 230 then
-                self.hamsterYPos = self.hamsterYPos + 0.5 * math.ceil(dt * bait:getSpeed());
-                self.failedStart = true;
-            else
-                self.levelFinished = true;
-            end
-        else
-            if self.hamsterYPos < self.winDim[2] * 0.4 then
-                self.hamsterYPos = self.hamsterYPos + 0.5 * math.ceil(dt * bait:getSpeed());
-                if self.hamsterLockedXPos < 120 or self.hamsterLockedXPos > 300 then
+        if self.p_levelName == "sewers" then
+            if  self.hamsterLockedXPos < 120 and self.hamsterLockedXPos > 65 or 
+                self.hamsterLockedXPos < 355 and self.hamsterLockedXPos > 300 then
+                if self.hamsterYPos < self.winDim[2] * 0.5 - 230 then
+                    self.hamsterYPos = self.hamsterYPos + 0.5 * math.ceil(dt * bait:getSpeed());
                     self.failedStart = true;
-                end
-            else
-                if self.hamsterLockedXPos > 120 and self.hamsterLockedXPos < 300 then
-                    self.animationStartFinished = true;
                 else
                     self.levelFinished = true;
                 end
+            else
+                if self.hamsterYPos < self.winDim[2] * 0.4 then
+                    self.hamsterYPos = self.hamsterYPos + 0.5 * math.ceil(dt * bait:getSpeed());
+                    if self.hamsterLockedXPos < 120 or self.hamsterLockedXPos > 300 then
+                        self.failedStart = true;
+                    end
+                else
+                    if self.hamsterLockedXPos > 120 and self.hamsterLockedXPos < 300 then
+                        self.animationStartFinished = true;
+                    else
+                        self.levelFinished = true;
+                    end
+                end
+            end
+        else
+           if self.hamsterYPos < self.winDim[2] * 0.55 then
+                self.hamsterYPos = self.hamsterYPos + 0.5 * math.ceil(dt * bait:getSpeed());
+            else
+                self.animationStartFinished = true;
             end
         end
     end
@@ -309,8 +323,11 @@ end
 
 --- draws the enviroment like borders
 function Level:drawEnviroment()
+    local xPosHamster = 0;
     self.enviromentPosition = self.enviromentPosition - self:getMoved();
 
+    self.lightWorld.drawShadow();
+    
     love.graphics.setColor(255, 255, 255);
 
     --border bottom
@@ -327,9 +344,11 @@ function Level:drawEnviroment()
         love.graphics.draw(self.borderRight, 454, (i - 1) * self.borderHeight + self.enviromentPosition);
     end
 
-    love.graphics.draw(self.topBackground, 0, self.posY - 474);
-    love.graphics.draw(self.topBackground, 0, self.posY - 375);
-    love.graphics.draw(self.toilet, 0, self.posY - 375);
+    love.graphics.draw(self.background2, 0, self.posY - 474);
+    love.graphics.draw(self.background, 0, self.posY - 375);
+    if self.failedStart then
+        self.front = love.graphics.newImage("assets/toilet_bowl.png");
+    end
 
     --animation
     if not self.animationStart then
@@ -337,24 +356,25 @@ function Level:drawEnviroment()
         self:drawLine(self.levMan:getCurPlayer():getPosXMouse() - 32, 100);
         love.graphics.draw(self.hand, self.levMan:getCurPlayer():getPosXMouse() - 48, self.animationStartPoint - 220);
     else
-        love.graphics.draw(self.hand, self.hamsterLockedXPos - 16, self.animationStartPoint - 220);
-        if self.failedStart then
-            self:drawLine(self.hamsterLockedXPos, 300);
+        if self.p_levelName == "sewers" then
+            xPosHamster = self.hamsterLockedXPos;
         else
-            self:drawLine(self.hamsterLockedXPos, 150);
+            xPosHamster = self.levMan:getCurPlayer():getPosXMouse() - 32;
         end
-        if self.hamsterYPos < self.animationStartPoint + 130 or self.failedStart then
-            love.graphics.draw(self.hamster, self.hamsterLockedXPos, self.hamsterYPos);
+        love.graphics.draw(self.hand, xPosHamster - 16, self.animationStartPoint - 220);
+        if self.failedStart then
+            self:drawLine(xPosHamster, 300);
+        else
+            self:drawLine(xPosHamster, 300);
         end
-    end
-
-    if self.failedStart then
-        love.graphics.draw(self.toiletBowl, 0, self.posY - 153);
-    else
-        love.graphics.draw(self.toiletLowerHalf, 0, self.posY - 180);
+        if self.hamsterYPos < self.animationStartPoint + 200 or self.failedStart then
+            love.graphics.draw(self.hamster, xPosHamster, self.hamsterYPos);
+        end
     end
     
-    self.lightWorld.drawShadow();
+    love.graphics.draw(self.front, 0, self.posY - self.frontOffset);
+    
+
 end
 
 --- Draws the line
