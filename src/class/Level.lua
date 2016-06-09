@@ -283,12 +283,12 @@ function Level:doEndAnimationMovement(bait, dt)
                     self.pumpingWay = self.pumpingWay + 10;
                     if self.pumpingWay == 100 then
                         self.pumpDirection = true;
-                        self.pumpCounter = self.pumpCounter + 1
+                        self.pumpCounter = self.pumpCounter + 1;
                     end
                 end
             else
                 if self.pumpingWay < 200 then
-                    self.pumpingWay = self.pumpingWay + 15
+                    self.pumpingWay = self.pumpingWay + 15;
                 else
                     self.animationEndFinished = true;
                 end
