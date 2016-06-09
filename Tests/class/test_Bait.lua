@@ -32,6 +32,7 @@ describe("Unit test for Bait.lua", function()
         getMoved = function() return 4 end;
         getDirection = function() return 1 end;
         getYPos = function() return 50 end;
+        getLevelName = function() return "sewers" end;
     };
     local locImageStub = {
         draw = function(...) end;
@@ -148,6 +149,7 @@ describe("Unit test for Bait.lua", function()
         assert.are.same(0.495, myInstance.modifier);
 
         myInstance.levMan.curLevel = {
+            getLevelName = function (...) return "sewers" end;
             getMoved = function(...) return -4 end;
             isFinished = function(...) return 0 end;
             getDirection = function() return -1; end;
