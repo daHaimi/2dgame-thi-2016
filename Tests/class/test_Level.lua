@@ -44,6 +44,7 @@ _G.levelTestStub = function()
         curPlayer = {
             getPosXMouse = function (...) return 50 end;
             getSpeed = function (...) return 200 end;
+            changeSprite = function (...) end;
         };
         curSwarmFac = {
             createMoreSwarms = function (...) end;
