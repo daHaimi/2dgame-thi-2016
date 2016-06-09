@@ -78,6 +78,8 @@ local Level = Class {
         self.enviromentPosition = 0;
         self.borderHeight = 200;
         self.waitTillSwitch = 0.5;
+        self.pumpCounter = 0;
+        self.pumpDirection = true; -- true = down
 
         -- create light world
         self.lightWorld = love.light.newWorld();
@@ -104,6 +106,7 @@ local Level = Class {
             self.background = love.graphics.newImage("assets/toilet_whole.png");
             self.background2 = love.graphics.newImage("assets/toilet_bg.png");
             self.front = love.graphics.newImage("assets/toilet_lowerHalf.png");
+            self.plunger = love.graphics.newImage("assets/poempel.png");
             self.frontOffset = 180;
         elseif self.p_levelName == "canyon" then
             self.borderLeft = love.graphics.newImage("assets/canyon_left.png");
@@ -268,9 +271,28 @@ end
 --@param bai curBait
 --@param dt delta time
 function Level:doEndAnimationMovement(bait, dt)
-    if self.levelFinished then
+    if self.levelFinished and not self.failedStart then
         if self.p_levelName == "sewers" then
-            self.animationEndFinished = true;
+            if self.pumpCounter < 4 then
+                if self.pumpDirection then
+                    self.pumpingWay = self.pumpingWay - 5;
+                    if self.pumpingWay == 0 then
+                        self.pumpDirection = false;
+                    end
+                else
+                    self.pumpingWay = self.pumpingWay + 10;
+                    if self.pumpingWay == 100 then
+                        self.pumpDirection = true;
+                        self.pumpCounter = self.pumpCounter + 1
+                    end
+                end
+            else
+                if self.pumpingWay < 200 then
+                    self.pumpingWay = self.pumpingWay + 15
+                else
+                    self.animationEndFinished = true;
+                end
+            end
         else
             if self.winDim[2] / 2 - 300 < self.hamsterYPos then
                 self.hamsterYPos = self.hamsterYPos - math.ceil(dt * bait:getSpeed());
@@ -337,6 +359,12 @@ function Level:switchToPhase2()
         self.reachedDepth = self.posY;
         self:deactivateGodMode();
         self.levMan:getCurPlayer():changeSprite();
+        
+        -- for ending animation in sewers
+        if self.p_levelName == "sewers" then
+            self.hamsterLockedXPos = 208;
+            self.pumpingWay = 100;
+        end
     end
 end
 
@@ -383,31 +411,32 @@ function Level:drawEnviroment()
     end
 
     --animation
+    if self.p_levelName == "sewers" and self.animationStart then
+        xPosHamster = self.hamsterLockedXPos;
+    else
+        xPosHamster = self.levMan:getCurPlayer():getPosXMouse() - 32;
+    end
+    -- befor starting a animation
     if not self.animationStart then
         love.graphics.draw(self.hamster, self.levMan:getCurPlayer():getPosXMouse() - 32, self.hamsterYPos);
         self:drawLine(self.levMan:getCurPlayer():getPosXMouse() - 32, 100);
         love.graphics.draw(self.hand, self.levMan:getCurPlayer():getPosXMouse() - 48, self.animationStartPoint - 220);
-    else
-        if self.p_levelName == "sewers" then
-            xPosHamster = self.hamsterLockedXPos;
-        else
-            xPosHamster = self.levMan:getCurPlayer():getPosXMouse() - 32;
-        end
+    -- while starting animation in sewers or while playing canyon
+    elseif self.direction == 1 or self.p_levelName == "canyon" then
         love.graphics.draw(self.hand, xPosHamster - 16, self.animationStartPoint - 220);
-        if self.failedStart then
-            self:drawLine(xPosHamster, 300);
-        else
-            self:drawLine(xPosHamster, 300);
-        end
+        self:drawLine(xPosHamster, 300);
         if self.hamsterYPos < self.animationStartPoint + 130 or self.failedStart 
             or self.hamsterYPos < self.animationStartPoint + 200 and self.p_levelName == "canyon" then
             love.graphics.draw(self.hamster, xPosHamster, self.hamsterYPos);
         end
+        --ending animation for sewer
+    elseif (self.direction == -1 or self.levelFinished) and self.p_levelName == "sewers" then
+        love.graphics.draw(self.hamster, xPosHamster, self.hamsterYPos - self.pumpingWay);
+        love.graphics.draw(self.plunger, xPosHamster - 32, self.hamsterYPos - 170 - self.pumpingWay);
     end
     
     love.graphics.draw(self.front, 0, self.posY - self.frontOffset);
     
-
 end
 
 --- Draws the line
@@ -701,7 +730,6 @@ end
 function Level:startEndAnimation()
     if self.levelFinished and not self.animationEnd and not self.failedStart then
         self.animationEnd = true;
-        self.hamsterYPos = self.winDim[2] * 0.55;
     end
     if self.levelFinished and self.failedStart then
         self.animationEnd = true;
