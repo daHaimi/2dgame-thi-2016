@@ -576,8 +576,12 @@ describe("Unit test for Bait.lua", function()
 
     it("Test setPosXMouse", function()
         local myInstance = testClass(locWinDim, levMan);
-        myInstance:setPosXMouse("new mouse position");
-        assert.are.same("new mouse position", myInstance.posXMouse);
+        myInstance:setPosXMouse(5);
+        assert.are.same(58, myInstance.posXMouse);
+        myInstance:setPosXMouse(159);
+        assert.are.same(159, myInstance.posXMouse);
+        myInstance:setPosXMouse(700);
+        assert.are.same(422, myInstance.posXMouse);
     end)
 
     it("Test getPosXMouse", function()

@@ -832,175 +832,129 @@ return {
     achievements = {
         getFirtsObject = {
             nameOnPersTable = "getFirstObject";
-            name = "First object";
-            description = "You caught your first object";
             image_lock = "ach_firstObject_locked.png";
             image_unlock = "ach_firstObject.png";
         },
         failedStart = {
             nameOnPersTable = "failedStart";
-            name = "Failed from the beginning";
-            description = "Gratulation! You failed to start the game";
             image_lock = "ach_drop_hamster_locked.png";
             image_unlock = "ach_drop_hamster.png";
         },
         caughtTwoBoots = {
             nameOnPersTable = "caughtTwoBoots";
-            name = "One for each foot";
-            description = "You've got two almost new shoes. At least they used to be new before somebody flushed them down";
             image_lock = "ach_two_shoes_locked.png";
             image_unlock = "ach_two_shoes.png";
         },
         secondStart = {
             nameOnPersTable = "secondStart";
-            name = "Welcome again!";
-            description = "It's nice to see you again";
             image_lock = "ach_secondTimeGame_locked.png";
             image_unlock = "ach_secondTimeGame.png";
         },
         bronzeCaughtOneRound = {
             nameOnPersTable = "bronzeCaughtOneRound";
-            name = "Nice catch!";
-            description = "Caught more than 10 fishes in a single Round";
             image_lock = "ach_objectsOneRound_locked.png";
             image_unlock = "ach_objectsOneRoundBronze.png";
         },
         silverCaughtOneRound = {
             nameOnPersTable = "silverCaughtOneRound";
-            name = "Nicer catch!";
-            description = "Caught more than 20 fishes in a single Round";
             image_lock = "ach_objectsOneRound_locked.png";
             image_unlock = "ach_objectsOneRound.png";
         },
         goldCaughtOneRound = {
             nameOnPersTable = "goldCaughtOneRound";
-            name = "Nicesest catch!";
-            description = "Caught more than 30 fishes in a single Round";
             image_lock = "ach_objectsOneRound_locked.png";
             image_unlock = "ach_objectsOneRoundGold.png";
         },
         
         bronzeCoinsOneRound = {
             nameOnPersTable = "bronzeCoinsOneRound";
-            name = "200";
-            description = "200 Coins in one Round";
             image_lock = "ach_shitcoin_locked.png";
             image_unlock = "ach_shitcoin.png";
         },
         
         silverCoinsOneRound = {
             nameOnPersTable = "silverCoinsOneRound";
-            name = "Your getting better ;)";
-            description = "600 Coins in one Round";
             image_lock = "ach_shitcoin_locked.png";
             image_unlock = "ach_shitcoin.png";
         },
         
         goldCoinsOneRound = {
             nameOnPersTable = "goldCoinsOneRound";
-            name = "Amazing!";
-            description = "1000 Coins in one Round o.O";
             image_lock = "ach_shitcoin_locked.png";
             image_unlock = "ach_shitcoin.png";
         },
         
         bMoneyEarnedTotal = {
             nameOnPersTable = "bMoneyEarnedTotal";
-            name = "slumdog millionaire";
-            description = "2000 Coins Total";
             image_lock = "ach_shitcoin_locked.png";
             image_unlock = "ach_shitcoin.png";
         },
         
         sMoneyEarnedTotal = {
             nameOnPersTable = "sMoneyEarnedTotal";
-            name = "Rich Boy";
-            description = "5000 Coins Total";
             image_lock = "ach_shitcoin_locked.png";
             image_unlock = "ach_shitcoin.png";
         },
         
         gMoneyEarnedTotal = {
             nameOnPersTable = "gMoneyEarnedTotal";
-            name = "OVER 9000!";
-            description = "Earned 9000 Coins Total";
             image_lock = "ach_shitcoin_locked.png";
             image_unlock = "ach_shitcoin.png";
         },
         negativCoins = {
             nameOnPersTable = "negativCoins";
-            name = "You're doing it wrong!";
-            description = "-200 in one Round ... noob";
             image_lock = "ach_negativeShitcoin_locked.png";
             image_unlock = "ach_negativeShitcoin.png";
         },
         
         boughtAllItems = {
             nameOnPersTable = "shoppingQueen";
-            name = "Shopping Queen";
-            description = "You bought all Items in the Shop";
             image_lock = "ach_shoppingQueen_locked.png";
             image_unlock = "ach_shoppingQueen.png";
         },
         
         bFishCaughtTotal = {
             nameOnPersTable = "bFishCaugtTotal";
-            name = "Apprentice Fisher";
-            description = "50 Fishes Total";
             image_lock = "ach_objectsOverTime_locked.png";
             image_unlock = "ach_objectsOverTime.png";
         },
         sFishCaughtTotal = {
             nameOnPersTable = "sFishCaugtTotal";
-            name = "Master Fisher";
-            description = "200 Fishes Total";
             image_lock = "ach_objectsOverTime_locked.png";
             image_unlock = "ach_objectsOverTime.png";
         },
         
         gFishCaughtTotal = {
             nameOnPersTable = "gFishCaugtTotal";
-            name = "Godlike Fisher";
-            description = "500 Fishes Total";
             image_lock = "ach_objectsOverTime_locked.png";
             image_unlock = "ach_objectsOverTime.png";
         },
         
         firstBorderRemoved = {
             nameOnPersTable = "firstBorderRemoved";
-            name = "Out of my way";
-            description = "Now I can dive further";
             image_lock = "ach_noLvlBorder_locked.png";
             image_unlock = "ach_noLvlBorder.png";
         },
         onlyNegativeFishesCaught = {
             nameOnPersTable = "onlyNegativeFishesCaught";
-            name = "Was that on purpose?";
-            description = "Caught only negative objects";
             image_lock = "ach_negativeShitcoin_locked.png";
             image_unlock = "ach_negativeShitcoin.png";
         },
         
         allPillsAtLeastOnce = {
             nameOnPersTable = "allPillsAtLeastOnce";
-            name = "Addict";
-            description = "Caught every type of pills";
             image_lock = "ach_suchti_locked.png";
             image_unlock = "ach_suchti.png";
         },
         
         nothingCaught = {
             nameOnPersTable = "nothingCaught";
-            name = "Misadventure";
-            description = "Don't catch one thing";
             image_lock = "ach_nothingCaught_locked.png";
             image_unlock = "ach_nothingCaught.png";
         },
         
         allLevelBoardersPassed = {
             nameOnPersTable = "allLevelBoardersPassed";
-            name = "The great breakthrough";
-            description = "Pass all boarders in a level";
             image_lock = "ach_noLvlBorderInfinity_locked.png";
             image_unlock = "ach_noLvlBorderInfinity.png";
         },
@@ -1011,8 +965,6 @@ return {
         },
         playedTime = {
             nameOnPersTable = "playedTime";
-            name = "Play Time";
-            description = "Congratulations! You played over 2 hours";
             image_lock = "ach_playtime_locked.png";
             image_unlock = "ach_playtime.png";
         },
@@ -1054,114 +1006,108 @@ return {
                 buttonBTM = "Back to menu";
                 textScore = "Your Score:";
                 textStart = "Click to start!";
+                buttonChangeLevel = "Change level";
                 creditsRed = {
                     name = "Respect our Work";
                     description = "Read the credits";
                 };
                 allLevelBoardersPassed = {
-                    name = "";
-                    description = "";
+                    name = "The great breakthrough";
+                    description = "Pass all boarders in a level";
                 };
                 nothingCaught = {
-                    name = "";
-                    description = "";
+                    name = "Misadventure";
+                    description = "Don't catch one thing";
                 };
                 allPillsAtLeastOnce = {
-                    name = "";
-                    description = "";
+                    name = "Addict";
+                    description = "Caught every type of pills";
                 };
                 onlyNegativeFishesCaught = {
-                    name = "";
-                    description = "";
+                    name = "Was that on purpose?";
+                    description = "Caught only negative objects";
                 };
                 firstBorderRemoved = {
-                    name = "";
-                    description = "";
+                    name = "Out of my way";
+                    description = "Now I can dive further";
                 };
                 gFishCaugtTotal = {
-                    name = "";
-                    description = "";
+                    name = "Godlike Fisher";
+                    description = "500 Fishes Total";
                 };
                 sFishCaugtTotal = {
-                    name = "";
-                    description = "";
+                    name = "Master Fisher";
+                    description = "200 Fishes Total";
                 };
                 bFishCaugtTotal = {
-                    name = "";
-                    description = "";
+                    name = "Apprentice Fisher";
+                    description = "50 Fishes Total";
                 };
                 shoppingQueen = {
-                    name = "";
-                    description = "";
+                    name = "Shopping Queen";
+                    description = "You bought all Items in the Shop";
                 };
                 negativCoins = {
-                    name = "";
-                    description = "";
+                    name = "You're doing it wrong!";
+                    description = "-200 in one Round ... noob";
                 };
                 gMoneyEarnedTotal = {
-                    name = "";
-                    description = "";
+                    name = "OVER 9000!";
+                    description = "Earned 9000 Coins Total";
                 };
                 sMoneyEarnedTotal = {
-                    name = "";
-                    description = "";
+                    name = "Rich Boy";
+                    description = "5000 Coins Total";
                 };
                 bMoneyEarnedTotal = {
-                    name = "";
-                    description = "";
+                    name = "slumdog millionaire";
+                    description = "2000 Coins Total";
                 };
                 goldCoinsOneRound = {
-                    name = "";
-                    description = "";
+                    name = "Amazing!";
+                    description = "1000 Coins in one Round o.O";
                 };
                 silverCoinsOneRound = {
-                    name = "";
-                    description = "";
+                    name = "Your getting better ;)";
+                    description = "600 Coins in one Round";
                 };
                 bronzeCoinsOneRound = {
-                    name = "";
-                    description = "";
+                    name = "200";
+                    description = "200 Coins in one Round";
                 };
                 bronzeCaughtOneRound = {
-                    name = "";
-                    description = "";
+                    name = "Nice catch!";
+                    description = "Caught more than 10 fishes in a single Round";
                 };
                 silverCaughtOneRound = {
-                    name = "";
-                    description = "";
+                    name = "Nicer catch!";
+                    description = "Caught more than 20 fishes in a single Round";
                 };
                 goldCaughtOneRound = {
-                    name = "";
-                    description = "";
+                    name = "Nicesest catch!";
+                    description = "Caught more than 30 fishes in a single Round";
                 };
                 secondStart = {
-                    name = "";
-                    description = "";
+                    name = "Welcome again!";
+                    description = "It's nice to see you again";
                 };
                 caughtTwoBoots = {
-                    name = "";
-                    description = "";
+                    name = "One for each foot";
+                    description = "You've got two almost new shoes. At least they used to be new before somebody flushed them down";
                 };
                 failedStart = {
-                    name = "";
-                    description = "";
+                    name = "Failed from the beginning";
+                    description = "Gratulation! You failed to start the game";
                 };
-                threeMoreLife = {
-                    name = "";
-                    description = "";
-                };
-                twoMoreLife = {
-                    name = "";
-                    description = "";
-                };
-                oneMoreLife = {
-                    name = "";
-                    description = "";
-                };
+
                 playedTime = {
-                    name = "";
-                    description = "";
-                }
+                    name = "Play Time";
+                    description = "Congratulations! You played over 2 hours";
+                },
+                getFirstObject = {
+                    name = "First object";
+                    description = "You caught your first object";
+                },
             };
             
         },
@@ -1186,114 +1132,108 @@ return {
                 buttonBTM = "Zurück zum Menü";
                 textScore = "Punktestand:";
                 textStart = "Klicken zum Starten!";
+                buttonChangeLevel = "Levelauswahl";
                 creditsRed = {
                     name = "Respektiere unsere Arbeit";
                     description = "Lese die Credits";
                 };
                 allLevelBoardersPassed = {
-                    name = "";
-                    description = "";
+                    name = "DThe great breakthrough";
+                    description = "Pass all boarders in a level";
                 };
                 nothingCaught = {
-                    name = "";
-                    description = "";
+                    name = "DMisadventure";
+                    description = "Don't catch one thing";
                 };
                 allPillsAtLeastOnce = {
-                    name = "";
-                    description = "";
+                    name = "DAddict";
+                    description = "Caught every type of pills";
                 };
                 onlyNegativeFishesCaught = {
-                    name = "";
-                    description = "";
+                    name = "DWas that on purpose?";
+                    description = "Caught only negative objects";
                 };
                 firstBorderRemoved = {
-                    name = "";
-                    description = "";
+                    name = "DOut of my way";
+                    description = "Now I can dive further";
                 };
                 gFishCaugtTotal = {
-                    name = "";
-                    description = "";
+                    name = "DGodlike Fisher";
+                    description = "500 Fishes Total";
                 };
                 sFishCaugtTotal = {
-                    name = "";
-                    description = "";
+                    name = "DMaster Fisher";
+                    description = "200 Fishes Total";
                 };
                 bFishCaugtTotal = {
-                    name = "";
-                    description = "";
+                    name = "DApprentice Fisher";
+                    description = "50 Fishes Total";
                 };
                 shoppingQueen = {
-                    name = "";
-                    description = "";
+                    name = "DShopping Queen";
+                    description = "You bought all Items in the Shop";
                 };
                 negativCoins = {
-                    name = "";
-                    description = "";
+                    name = "DYou're doing it wrong!";
+                    description = "-200 in one Round ... noob";
                 };
                 gMoneyEarnedTotal = {
-                    name = "";
-                    description = "";
+                    name = "DOVER 9000!";
+                    description = "Earned 9000 Coins Total";
                 };
                 sMoneyEarnedTotal = {
-                    name = "";
-                    description = "";
+                    name = "DRich Boy";
+                    description = "5000 Coins Total";
                 };
                 bMoneyEarnedTotal = {
-                    name = "";
-                    description = "";
+                    name = "Dslumdog millionaire";
+                    description = "2000 Coins Total";
                 };
                 goldCoinsOneRound = {
-                    name = "";
-                    description = "";
+                    name = "DAmazing!";
+                    description = "1000 Coins in one Round o.O";
                 };
                 silverCoinsOneRound = {
-                    name = "";
-                    description = "";
+                    name = "DYour getting better ;)";
+                    description = "600 Coins in one Round";
                 };
                 bronzeCoinsOneRound = {
-                    name = "";
-                    description = "";
+                    name = "D200";
+                    description = "200 Coins in one Round";
                 };
                 bronzeCaughtOneRound = {
-                    name = "";
-                    description = "";
+                    name = "DNice catch!";
+                    description = "Caught more than 10 fishes in a single Round";
                 };
                 silverCaughtOneRound = {
-                    name = "";
-                    description = "";
+                    name = "DNicer catch!";
+                    description = "Caught more than 20 fishes in a single Round";
                 };
                 goldCaughtOneRound = {
-                    name = "";
-                    description = "";
+                    name = "DNicesest catch!";
+                    description = "Caught more than 30 fishes in a single Round";
                 };
                 secondStart = {
-                    name = "";
-                    description = "";
+                    name = "DWelcome again!";
+                    description = "It's nice to see you again";
                 };
                 caughtTwoBoots = {
-                    name = "";
-                    description = "";
+                    name = "DOne for each foot";
+                    description = "You've got two almost new shoes. At least they used to be new before somebody flushed them down";
                 };
                 failedStart = {
-                    name = "";
-                    description = "";
+                    name = "DFailed from the beginning";
+                    description = "Gratulation! You failed to start the game";
                 };
-                threeMoreLife = {
-                    name = "";
-                    description = "";
-                };
-                twoMoreLife = {
-                    name = "";
-                    description = "";
-                };
-                oneMoreLife = {
-                    name = "";
-                    description = "";
-                };
+
                 playedTime = {
-                    name = "";
-                    description = "";
-                };
+                    name = "DPlay Time";
+                    description = "Congratulations! You played over 2 hours";
+                },
+                getFirstObject = {
+                    name = "DFirst object";
+                    description = "You caught your first object";
+                },
             }
         },
         
