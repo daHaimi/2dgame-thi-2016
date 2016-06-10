@@ -224,7 +224,10 @@ function Level:update(dt, bait)
     -- calc fished Value
     if self.levelFinished then
         _G._tmpTable.earnedMoney = self:calcFishedValue();
+        if self.playTime ~= 0 then
         _G._persTable.playedTime = _G._persTable.playedTime + self.playTime;
+        self.playTime = 0;
+        end
     end
     self:checkForAchievments()
 end
