@@ -177,7 +177,12 @@ function Level:update(dt, bait)
     --dynamic creation of swarms of fishable objects
     self.levMan:getCurSwarmFactory():createMoreSwarms( - (self.posY - self.winDim[2] * 0.5));
     --dynamic creation of sleepingPills
-    self.levMan:getCurSwarmFactory():createSleepingpill( - (self.posY - self.winDim[2] * 0.5), 500, 1500);
+    self.levMan:getCurSwarmFactory():createSleepingpill( - (self.posY - self.winDim[2] * 0.5), 300, 700);
+    --dynamic creation of falling litter in the canyon
+    if self.p_levelName == "canyon" then
+        self.levMan:getCurSwarmFactory():createFallingLitter( - (self.posY + self.winDim[2] * 0.5), 
+            500, 1500, self.direction);
+    end
     
     --set the movement in relation of the direction
     if not self.animationStartFinished  then

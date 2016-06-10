@@ -15,6 +15,7 @@ local SwarmFactory = Class {
         self.actualSwarm = {};
         self.speedMulitplicator = 1;
         self.positionOfLastPill = 0;
+        self.positionOfLastLitter = 0;
         
         self.levMan = levelManager;
         -- Start at the lower 75% of the screen to create swarms
@@ -61,6 +62,19 @@ function SwarmFactory:createSleepingpill(depth, minDistance, maxDistance)
     end
 end
 
+function SwarmFactory:createFallingLitter(depth, minDistance, maxDistance, direction)
+    -- while moving down
+    if math.abs(depth - self.positionOfLastLitter) > math.random(maxDistance - minDistance) + minDistance 
+        and self.actualSwarm[self.currentSwarm].typ == "static" then
+        self.positionOfLastLitter = depth;
+        local fishable = self:determineFishable({"camera", "backpack", "drink"},{33, 67, 100});
+         self.createdFishables[#self.createdFishables + 1] = FishableObject(fishable.name, fishable.image, 
+            depth, fishable.minSpeed, fishable.maxSpeed, fishable.value, 
+            fishable.hitpoints, fishable.spriteSize, fishable.hitbox, fishable.animTimeoutMin, fishable.animTimeoutMax,
+            fishable.animType, fishable.downSpeed, self.levMan);
+    end
+end
+
 --- Marks the member variables for the garbage collector
 function SwarmFactory:destructSF()
     self.levMan = nil;
@@ -81,7 +95,14 @@ end
 -- @param dt Delta time since last update in seconds
 function SwarmFactory:update(dt)
     for i = 1, #self.createdFishables, 1 do
-        self.createdFishables[i]:update(dt, self.speedMulitplicator);
+        self.createdFishables[i]:update(dt, self.speedMulitplicator, depth);
+    end
+ 
+    if self.currentSwarm > 1 and self.levMan:getCurLevel():getDirection() == -1 then
+        if - self.levMan:getCurLevel():getYPos() - self.actualSwarm[self.currentSwarm-1].maxSwarmHeight 
+        + self.levMan:getCurLevel().winDim[2] * 0.5 < 0 then
+            self.currentSwarm = self.currentSwarm - 1;
+        end
     end
 end
 

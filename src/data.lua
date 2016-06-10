@@ -337,7 +337,7 @@ return {
             spriteSize = 64,
             minSpeed = 0,
             maxSpeed = 0,
-            downSpeed = 15;
+            downSpeed = 7;
             value = -100,
             minAmount = 1,
             maxAmount = 0,
@@ -360,7 +360,7 @@ return {
             spriteSize = 64,
             minSpeed = 0,
             maxSpeed = 0,
-            downSpeed = 10;
+            downSpeed = 6;
             value = -30,
             animTimeoutMin = 0.2,
             animTimeoutMax = 0.4,
@@ -426,7 +426,7 @@ return {
             spriteSize = 64,
             minSpeed = 0,
             maxSpeed = 0,
-            downSpeed = 13;
+            downSpeed = 5;
             value = -100,
             animTimeoutMin = 0.15,
             animTimeoutMax = 0.2,
@@ -700,15 +700,11 @@ return {
             maxSwarmHeight = 1800
         },
         {
-            allowedFishables = { "camera", "drink", "backpack", "cactus"},
-            fishablesProbability = {10, 20, 30, 100}, 
-            maxSwarmHeight = 5500
-        }, 
-        {
-            allowedFishables = { "cactus"},
+            allowedFishables = {"cactus"},
             fishablesProbability = {100}, 
-            maxSwarmHeight = 5800
-        },
+            maxSwarmHeight = 5500,
+            typ = "static"
+        }, 
         {
             allowedFishables = { "egg", "bird", "cactus"},
             fishablesProbability = {30, 50, 100}, 

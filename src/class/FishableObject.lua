@@ -161,7 +161,15 @@ function FishableObject:update(dt, speedMulitplicator)
                 self.xPosition = self.xPosition + self.speed * speedMulitplicator;
             end
         end
-        self.yPosition = self.yPosition - self.yMovement + self.fallSpeed;
+        if self.fallSpeed == 0 then
+            self.yPosition = self.yPosition - self.yMovement;
+        else
+            if self.levMan:getCurLevel():getDirection() == 1 then
+                self.yPosition = self.yPosition + self.fallSpeed * speedMulitplicator;
+            else
+                self.yPosition = self.yPosition + self.fallSpeed * speedMulitplicator - self.yMovement;
+            end
+        end
     else
         self.yPosition = self.yPosition + 0.5 * self.yMovement;
     end
