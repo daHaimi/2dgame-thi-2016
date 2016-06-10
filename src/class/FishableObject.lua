@@ -135,7 +135,7 @@ end
 
 --- Updates the position of the object depending on its speed
 -- @param dt Delta time since last update in seconds
-function FishableObject:update(dt)
+function FishableObject:update(dt, speedMulitplicator)
     if math.abs(self.yPosition - self.levMan:getCurPlayer():getPosY()) > self.levMan:getCurLevel().winDim[2] then
         self.outOfArea = true;
     else
@@ -151,14 +151,14 @@ function FishableObject:update(dt)
             if ((self.xPosition - self.hitbox[1].deltaXPos) >= _G._persTable.winDim[1]) and self.speed > 0 then
                 self.speed = self.speed * -1;
                 self.xPosition = _G._persTable.winDim[1] - self:getHitboxWidth(1) - self.hitbox[1].deltaXPos + 
-                    self.speed * self.speedMulitplicator;
+                    self.speed * speedMulitplicator;
 
             elseif (self.xPosition + self.hitbox[1].deltaXPos) <= 0 then
                 self.speed = self.speed * -1;
-                self.xPosition = math.abs(self:getHitboxWidth(1) + self.hitbox[1].deltaXPos + self.speed * self.speedMulitplicator);
+                self.xPosition = math.abs(self:getHitboxWidth(1) + self.hitbox[1].deltaXPos + self.speed * speedMulitplicator);
                 
             else
-                self.xPosition = self.xPosition + self.speed * self.speedMulitplicator;
+                self.xPosition = self.xPosition + self.speed * speedMulitplicator;
             end
         end
         self.yPosition = self.yPosition - self.yMovement + self.fallSpeed;
@@ -235,12 +235,6 @@ end
 -- @return Returns the name of the fishable object.
 function FishableObject:getName()
     return self.name;
-end
-
---- sets the speed multiplicator to a certain amount
---@param amount prozentage of the slow. 0.25 for slow to 25%
-function FishableObject:setSpeedMultiplicator(amount)
-    self.speedMulitplicator = amount;
 end
 
 --- sets the objects to caught some functions behave in a different way now

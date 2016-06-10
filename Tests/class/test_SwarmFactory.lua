@@ -123,4 +123,9 @@ describe("Unit test for SwarmFactory.lua", function()
         locInstance.fishableObjects = {"fish1", "fish2", "fish3"};
         assert.are.same({"fish1", "fish2", "fish3"}, locInstance:getFishableObjects());
     end)
+
+    it("Testing setMovementMultiplicator Function", function()
+        locInstance:setSpeedMultiplicator(0.3);
+        assert.are.same(0.3, locInstance.speedMulitplicator);
+    end)
 end)

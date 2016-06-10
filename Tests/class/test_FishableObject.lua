@@ -119,16 +119,16 @@ describe("Unit test for FishableObject.lua", function()
         locInstance.speed = 300;
         locInstance:setXPosition(250);
         locInstance.speed = 300;
-        locInstance:update();
+        locInstance:update(0.04, 1);
         assert.are.equal(550, locInstance.xPosition);
-        locInstance:update();
+        locInstance:update(0.04, 1);
         assert.are.equal(136, locInstance.xPosition);
-        locInstance:update();
+        locInstance:update(0.04, 1);
         assert.are.equal(-164, locInstance.xPosition);
-        locInstance:update();
+        locInstance:update(0.04, 1);
         assert.are.equal(364, locInstance.xPosition);
         locInstance:setToCaught();
-        locInstance:update();
+        locInstance:update(0.04, 1);
         assert.are.equal(364, locInstance.xPosition);
     end)
 
@@ -168,11 +168,6 @@ describe("Unit test for FishableObject.lua", function()
 
     it("Testing getName Function", function()        
         assert.are.same("deadFish", locInstance:getName());
-    end)
-
-    it("Testing setMovementMultiplicator Function", function()
-        locInstance:setSpeedMultiplicator(0.3);
-        assert.are.same(0.3, locInstance.speedMulitplicator);
     end)
 
     it("Testing getYMovement Function", function ()

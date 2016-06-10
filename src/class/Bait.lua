@@ -142,7 +142,7 @@ function Bait:update(dt)
     else
         self.sleepingPillDuration = 0;
         for i = 1, #self.levMan:getCurSwarmFactory().createdFishables, 1 do
-            self.levMan:getCurSwarmFactory().createdFishables[i]:setSpeedMultiplicator(1);
+            self.levMan:getCurSwarmFactory():setSpeedMultiplicator(1);
         end
     end
 end
@@ -241,9 +241,7 @@ end
 
 --- is called everytime the bait hits a sleeping pill
 function Bait:sleepingPillHit()
-    for i = 1, #self.levMan:getCurSwarmFactory().createdFishables, 1 do
-        self.levMan:getCurSwarmFactory().createdFishables[i]:setSpeedMultiplicator(_G._persTable.upgrades.sleepingPillSlow);
-    end
+    self.levMan:getCurSwarmFactory():setSpeedMultiplicator(_G._persTable.upgrades.sleepingPillSlow);
     self.sleepingPillDuration = self.sleepingPillDuration + _G._persTable.upgrades.sleepingPillDuration;
 end
 

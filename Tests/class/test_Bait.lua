@@ -58,6 +58,7 @@ describe("Unit test for Bait.lua", function()
                     }
                 },
                 getCreatedFishables = function(...) return _G.levMan.curSwarmFac.createdFishables end;
+                setSpeedMultiplicator = function(...) end;
             },
             getCurSwarmFactory = function(...) return _G.levMan.curSwarmFac end,
             getCurPlayer = function(...) return _G.levMan.curPlayer end,

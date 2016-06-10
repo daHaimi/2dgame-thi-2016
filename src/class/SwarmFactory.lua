@@ -13,6 +13,7 @@ local SwarmFactory = Class {
         self.fishableObjects = {};
         self.createdFishables = {};
         self.actualSwarm = {};
+        self.speedMulitplicator = 1;
         
         self.levMan = levelManager;
         -- Start at the lower 75% of the screen to create swarms
@@ -63,7 +64,7 @@ end
 -- @param dt Delta time since last update in seconds
 function SwarmFactory:update(dt)
     for i = 1, #self.createdFishables, 1 do
-        self.createdFishables[i]:update(dt);
+        self.createdFishables[i]:update(dt, self.speedMulitplicator);
     end
 end
 
@@ -113,6 +114,12 @@ function SwarmFactory:determineFishable(allowedFishables, fishablesProbability)
             end
         end
     end
+end
+
+--- sets the speed multiplicator to a certain amount
+--@param amount prozentage of the slow. 0.25 for slow to 25%
+function SwarmFactory:setSpeedMultiplicator(amount)
+    self.speedMulitplicator = amount;
 end
 
 --- Returns the table of the fishable objects.
