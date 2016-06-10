@@ -62,8 +62,11 @@ function SwarmFactory:createSleepingpill(depth, minDistance, maxDistance)
     end
 end
 
-function SwarmFactory:createFallingLitter(depth, minDistance, maxDistance, direction)
-    -- while moving down
+--- creats falling litter
+--@param depth depth where the pill should be spawned
+--@param minDistance minimal distance between two peaces of litter
+--@param maxDistance maximal distance between two peaces of litter
+function SwarmFactory:createFallingLitter(depth, minDistance, maxDistance)
     if math.abs(depth - self.positionOfLastLitter) > math.random(maxDistance - minDistance) + minDistance 
         and self.actualSwarm[self.currentSwarm].typ == "static" then
         self.positionOfLastLitter = depth;

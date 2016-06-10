@@ -180,8 +180,7 @@ function Level:update(dt, bait)
     self.levMan:getCurSwarmFactory():createSleepingpill( - (self.posY - self.winDim[2] * 0.5), 300, 700);
     --dynamic creation of falling litter in the canyon
     if self.p_levelName == "canyon" then
-        self.levMan:getCurSwarmFactory():createFallingLitter( - (self.posY + self.winDim[2] * 0.5), 
-            500, 1500, self.direction);
+        self.levMan:getCurSwarmFactory():createFallingLitter( - (self.posY + self.winDim[2] * 0.5), 500, 1500);
     end
     
     --set the movement in relation of the direction
