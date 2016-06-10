@@ -49,6 +49,7 @@ local Level = Class {
         if self.bg ~= nil then -- do not remove this if statement or busted will crash
         self.bgq = love.graphics.newQuad(0, 0, winDim[1], 20000, self.bg:getWidth(), self.bg:getHeight());
         end
+
         if _persTable.upgrades.mapBreakthrough1 == true then
             self.lowerBoarder = self.lowerBoarder + self.mapBreakthroughBonus1;
         end
@@ -121,6 +122,7 @@ local Level = Class {
         self.line = love.graphics.newImage("assets/line.png");
         self.hand = love.graphics.newImage("assets/hand.png");
         self.borderBottom = love.graphics.newImage("assets/border.png");
+        self.borderBottomDestroyed = love.graphics.newImage("assets/border_destroyed.png");
         self.lowerBorderPosition = math.abs(self.lowerBoarder) + self.winDim[2] * 0.68 + 130;
         
         --parameters for achievements
@@ -394,6 +396,13 @@ function Level:drawEnviroment()
     love.graphics.setColor(255, 255, 255);
 
     --border bottom
+    if _persTable.upgrades.mapBreakthrough1 and not _persTable.upgrades.mapBreakthrough2 then
+        love.graphics.draw(self.borderBottomDestroyed, 0, self.lowerBorderPosition + self.mapBreakthroughBonus1);
+    elseif _persTable.upgrades.mapBreakthrough1 and _persTable.upgrades.mapBreakthrough2 then
+        love.graphics.draw(self.borderBottomDestroyed, 0, self.lowerBorderPosition + self.mapBreakthroughBonus1);
+        love.graphics.draw(self.borderBottomDestroyed, 0, self.lowerBorderPosition + 
+            self.mapBreakthroughBonus1 + self.mapBreakthroughBonus2);
+    end
     love.graphics.draw(self.borderBottom, 0, self.lowerBorderPosition);
 
 
