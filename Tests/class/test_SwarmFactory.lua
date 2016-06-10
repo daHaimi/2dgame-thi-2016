@@ -128,4 +128,10 @@ describe("Unit test for SwarmFactory.lua", function()
         locInstance:setSpeedMultiplicator(0.3);
         assert.are.same(0.3, locInstance.speedMulitplicator);
     end)
+
+    it("Testing createSleepingpill", function()
+        locInstance.createdFishables = {};
+        locInstance:createSleepingpill(400, 200, 400);
+        assert.are.same(1, #locInstance.createdFishables);
+    end)
 end)

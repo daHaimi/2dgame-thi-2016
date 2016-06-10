@@ -174,9 +174,11 @@ function Level:update(dt, bait)
         self.levelFinished = true;
         self:payPlayer();
     end
-    --dynamic creation of swarms
+    --dynamic creation of swarms of fishable objects
     self.levMan:getCurSwarmFactory():createMoreSwarms( - (self.posY - self.winDim[2] * 0.5));
-
+    --dynamic creation of sleepingPills
+    self.levMan:getCurSwarmFactory():createSleepingpill( - (self.posY - self.winDim[2] * 0.5), 500, 1500);
+    
     --set the movement in relation of the direction
     if not self.animationStartFinished  then
         self.moved = 0;

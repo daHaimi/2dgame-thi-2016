@@ -14,6 +14,7 @@ local SwarmFactory = Class {
         self.createdFishables = {};
         self.actualSwarm = {};
         self.speedMulitplicator = 1;
+        self.positionOfLastPill = 0;
         
         self.levMan = levelManager;
         -- Start at the lower 75% of the screen to create swarms
@@ -38,10 +39,26 @@ local SwarmFactory = Class {
 };
 
 --- creates more Swarms
+--@param depth depth where the swarm should spawned
 function SwarmFactory:createMoreSwarms(depth)
-        while self.addedHeights <= depth + self.levMan:getCurLevel().winDim[2] do
-            self.addedHeights = self.addedHeights + self:createNextSwarm(self.addedHeights, depth);
-        end
+    while self.addedHeights <= depth + self.levMan:getCurLevel().winDim[2] do
+        self.addedHeights = self.addedHeights + self:createNextSwarm(self.addedHeights, depth);
+    end
+end
+
+--- creats a sleepingpill
+--@param depth depth where the pill should be spawned
+--@param minDistance minimal distance between two pills
+--@param maxDistance maximal distance between two pills
+function SwarmFactory:createSleepingpill(depth, minDistance, maxDistance)
+    if  depth > self.positionOfLastPill + math.random(maxDistance - minDistance) + minDistance then
+        local fishable = self:determineFishable({"sleepingPill"},{100});
+        self.createdFishables[#self.createdFishables + 1] = FishableObject(fishable.name, fishable.image, 
+            depth + self.levMan:getCurLevel().winDim[2], fishable.minSpeed, fishable.maxSpeed, fishable.value, 
+            fishable.hitpoints, fishable.spriteSize, fishable.hitbox, fishable.animTimeoutMin, fishable.animTimeoutMax,
+            fishable.animType, 0, self.levMan);
+        self.positionOfLastPill = depth;
+    end
 end
 
 --- Marks the member variables for the garbage collector

@@ -141,9 +141,7 @@ function Bait:update(dt)
         self.sleepingPillDuration = self.sleepingPillDuration - math.abs(self.levMan:getCurLevel():getMoved());
     else
         self.sleepingPillDuration = 0;
-        for i = 1, #self.levMan:getCurSwarmFactory().createdFishables, 1 do
-            self.levMan:getCurSwarmFactory():setSpeedMultiplicator(1);
-        end
+        self.levMan:getCurSwarmFactory():setSpeedMultiplicator(1);
     end
 end
 

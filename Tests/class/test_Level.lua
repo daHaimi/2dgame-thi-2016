@@ -48,6 +48,7 @@ _G.levelTestStub = function()
         };
         curSwarmFac = {
             createMoreSwarms = function (...) end;
+            createSleepingpill = function (...) end;
         };
         getLevelPropMapByName = function(...) return {
             direction = 1;
