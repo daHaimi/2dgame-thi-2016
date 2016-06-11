@@ -1111,7 +1111,7 @@ return {
                 },
                 squirrel = {
                     name = "Squirrel";
-                    description = "Give him a nut and it goes nuts!";
+                    description = "Give him a nut and he goes nuts!";
                 },
                 backpack = {
                     name = "Backpack";
@@ -1338,91 +1338,91 @@ return {
                                 --objects
                 nemo = {
                     name = "Nemo";
-                    description = "Seems like you have found nemo";
+                    description = "Anscheinend hast du Nemo gefunden";
                 },
                 turtle = {
-                    name = "Turtle";
-                    description = "Its house is his shell";
+                    name = "Schildkröte";
+                    description = "Sein Panzer ist sein Haus";
                 },
                 rat = {
-                    name = "rat";
-                    description = "Easy to attract with cheese";
+                    name = "Ratte";
+                    description = "Lässt sich leicht mit Käse anlocken";
                 },
                 deadFish = {
-                    name = "Dead Fish";
-                    description = "It was a good fish throughout his whole life";
+                    name = "Toter Fisch";
+                    description = "Er war zu Lebzeiten ein guter Fisch";
                 },
                 angler = {
-                    name = "Angler";
-                    description = "Very useful if you need some light";
+                    name = "Anglerfisch";
+                    description = "Sehr nützlich, wenn du eine Lichtquelle benötigst";
                 },
                 lollipop = {
-                    name = "Lollipop";
-                    description = "You know you want it";
+                    name = "Lutscher";
+                    description = "Du weißt du willst ihn";
                 },
                 ring = {
                     name = "Ring";
-                    description = "One ring to rule them all";
+                    description = "Ein Ring um über alle zu herrschen";
                 },
                 shoe = {
-                    name = "Shoe";
-                    description = "One shoe is not enough";
+                    name = "Schuh";
+                    description = "Ein Schuh reicht nicht aus";
                 },
                 snake = {
-                    name = "Snake";
-                    description = "(T)his is a really dangerous snake";
+                    name = "Schlange";
+                    description = "Eine sehr gefährliche Schlange";
                 },
                 crocodile = {
-                    name = "Crocodile";
-                    description = "He just wants to cuddle, I promise";
+                    name = "Krokodil";
+                    description = "Er will nur kuscheln, versprochen!";
                 },
                 sleepingPill = {
-                    name = "Sleeping Pill";
-                    description = "Makes sea dwellers drowsy";
+                    name = "Schlafpille";
+                    description = "Macht Meeresbewohner schläfrig";
                 },
                 squirrel = {
-                    name = "Squirrel";
-                    description = "Give him a nut and it goes nuts!";
+                    name = "Eichhörnchen";
+                    description = "Gib ihm eine Nuss und er flippt aus";
                 },
                 backpack = {
-                    name = "Backpack";
-                    description = "Please don't leave your luggage unattended";
+                    name = "Rucksack";
+                    description = "Bitte lassen Sie Ihr Reisegepäck nicht unbeaufsichtigt";
                 },
                 drink = {
-                    name = "Drink";
-                    description = "Thank god it is sealed";
+                    name = "Getränk";
+                    description = "Zum Glück ist es versiegelt";
                 },
                 egg = {
-                    name = "Egg";
-                    description = "What kind of animal will hatch from that egg?";
+                    name = "Ei";
+                    description = "Welches Tier wird wohl aus diesem Ei schlüpfen?";
                 },
                 camera = {
-                    name = "Camera";
-                    description = "Smile, you are getting photographed";
+                    name = "Kamera";
+                    description = "Lächle, du wirst gerade fotografiert";
                 },
                 canyonSnake = {
-                    name = "Canyon Snake";
-                    description = "Wow, it managed to catch its own tail";
+                    name = "Canyon Schlange";
+                    description = "Beeindruckend, sie hat ihren eigenen Schwanz gefangen";
                 },
                 cactus = {
-                    name = "Cactus";
-                    description = "Thinking about giving it a hug?";
+                    name = "Kaktus";
+                    description = "Möchtest du ihn vielleicht umarmen?";
                 },
                 leaf = {
-                    name = "Leaf";
-                    description = "Leaf it right here please";
+                    name = "Blatt";
+                    description = "Mitnahme nicht gestattet";
                 },
                 bird = {
-                    name = "Bird";
-                    description = "It is literally free like a bird";
+                    name = "Vogel";
+                    description = "Er ist tatsächlich frei wie ein Vogel";
                 },
                 balloon = {
-                    name = "Ballon";
-                    description = "Let it go like your dreams";
+                    name = "Luftballon";
+                    description = "Lass ihn mit deinen Träumen aufsteigen";
                 },
                 ufo = {
                     name = "Ufo";
-                    description = "Wanna get examined?";
+                    description = "Willst du verhört werden?";
                 },
                 --upgrades
                 oneMoreLife = {
