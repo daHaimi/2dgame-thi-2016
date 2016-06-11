@@ -5,11 +5,8 @@ local Textbox = Class {
         self.objBackground = Loveframes.Create("image");
         self.objBackground:SetImage(directory .. "TextBG.png");
         self.objTopic = Loveframes.Create("text");
-        --self.objTopic:SetFont(love.graphics.newFont("font/8bitOperatorPlus-Bold.ttf", 20));
         self.objText = Loveframes.Create("text");
-        --self.objText:SetFont(love.graphics.newFont("font/8bitOperatorPlus-Regular.ttf", 15));
         self.objPrice = Loveframes.Create("text");
-        --self.objPrice:SetFont(love.graphics.newFont("font/8bitOperatorPlus-Bold.ttf", 15));
         self.width = width;
     end;
 };
@@ -18,7 +15,9 @@ local Textbox = Class {
 -- @parm newTopic: the new topic of the text
 -- @parm newText: new text
 function Textbox:changeText(newTopic, newText, newPrice)
+    self.objTopic:SetFont(love.graphics.newFont("font/8bitOperatorPlus-Bold.ttf", 20));
     self.objTopic:SetText(newTopic);
+    self.objText:SetFont(love.graphics.newFont("font/8bitOperatorPlus-Regular.ttf", 15));
     self.objText:SetText(newText);
     if newPrice ~= nil then
         self.objPrice:SetText("Price: " .. newPrice);
@@ -46,7 +45,7 @@ function Textbox:SetPos(x, y)
     self.objTopic:SetMaxWidth(self.width);
     self.objText:SetPos(x + 10, y + 30);
     self.objText:SetMaxWidth(self.width);
-    self.objPrice:SetPos(x + 200, y + 10);
+    self.objPrice:SetPos(x, y - 25);
     self.objBackground:SetPos(x, y);
 end
 

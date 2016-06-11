@@ -12,7 +12,7 @@ local Chart = Class {
             self.buttonHeight = 75;
             self.buttonOffset = 15;
             self.klickableSize = 96;
-            speed = 50;
+            self.textfieldSize = 250;
         elseif _G._persTable.scaledDeviceDim[1] < 720 then
             self.widthPx = 640;
             self.directory = "assets/gui/640px/";
@@ -21,7 +21,7 @@ local Chart = Class {
             self.buttonOffset = 20;
             self.buttonHeight = 96;
             self.klickableSize = 128;
-            speed = 67;
+            self.textfieldSize = 325;
         else
             self.widthPx = 720;
             self.directory = "assets/gui/720px/";
@@ -30,7 +30,7 @@ local Chart = Class {
             self.buttonOffset = 30;
             self.buttonHeight = 106;
             self.klickableSize = 144;
-            speed = 75;
+            self.textfieldSize = 400;
         end
         self.p_column = 3;--amount of the columns of the table
         self.p_row = 0;--automatically calculated value of the amount of rows in the table
@@ -71,7 +71,7 @@ function Chart:create()
     self.p_markFrame:SetImage(self.directory .. "markFrame.png");
     self.p_markFrame:SetVisible(false);
     
-    self.textField = TextField(self.width - 50, self.directory);
+    self.textField = TextField(self.textfieldSize, self.directory);
     
     --onclick events of the buttons
     self.button_up.OnClick = function(object)

@@ -20,7 +20,11 @@ describe("Unit test for Chart.lua", function()
             }
         };
         _G.data = Data;
-        
+        _G.love = {
+            graphics = {
+                newFont = function(...) return {}; end;
+            }
+        }
         Element = {
             object = {
                 GetPos = function(...) return 40, 60; end;};

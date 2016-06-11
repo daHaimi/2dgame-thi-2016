@@ -12,6 +12,11 @@ describe("Unit test for TextField.lua", function()
         _G.Loveframes = {
             Create = function(...) return fakeElement(); end
         }
+        _G.love = {
+            graphics = {
+                newFont = function(...) return {}; end;
+            }
+        }
         locInstance = testClass(3, 4);
     end)
     
