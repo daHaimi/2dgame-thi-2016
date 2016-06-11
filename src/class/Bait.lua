@@ -138,7 +138,7 @@ function Bait:update(dt)
 
     -- decrease or deativate sleeping pill
     if self.sleepingPillDuration > 0 then
-        self.sleepingPillDuration = self.sleepingPillDuration - math.abs(self.levMan:getCurLevel():getMoved());
+        self.sleepingPillDuration = self.sleepingPillDuration - dt;
     else
         self.sleepingPillDuration = 0;
         self.levMan:getCurSwarmFactory():setSpeedMultiplicator(1);
@@ -240,7 +240,7 @@ end
 --- is called everytime the bait hits a sleeping pill
 function Bait:sleepingPillHit()
     self.levMan:getCurSwarmFactory():setSpeedMultiplicator(_G._persTable.upgrades.sleepingPillSlow);
-    self.sleepingPillDuration = self.sleepingPillDuration + _G._persTable.upgrades.sleepingPillDuration;
+    self.sleepingPillDuration =  _G._persTable.upgrades.sleepingPillDuration;
 end
 
 --- implements drawing interface
