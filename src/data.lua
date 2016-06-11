@@ -968,6 +968,11 @@ return {
             image_lock = "ach_playtime_locked.png";
             image_unlock = "ach_playtime.png";
         },
+        rageQuit = {
+            nameOnPersTable = "rageQuit";
+            image_lock = "ach_ragequit_locked.png";
+            image_unlock = "ach_ragequit.png";
+        },
 --        allObjectsAtLeastOnce = {
 --            nameOnPersTable = "allObjectsAtLeastOnce";
 --            name = "Collector";
@@ -1104,6 +1109,10 @@ return {
                     name = "Play Time";
                     description = "Congratulations! You played over 2 hours";
                 },
+                rageQuit = {
+                    name = "Rage Quit";
+                    description = "Quit the game after a short distance";
+                },
                 getFirstObject = {
                     name = "First object";
                     description = "You caught your first object";
@@ -1229,6 +1238,10 @@ return {
                 playedTime = {
                     name = "DPlay Time";
                     description = "Congratulations! You played over 2 hours";
+                },
+                rageQuit = {
+                    name = "Rage Quit";
+                    description = "Quit the game after a short distance";
                 },
                 getFirstObject = {
                     name = "DFirst object";
