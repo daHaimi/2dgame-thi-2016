@@ -624,4 +624,10 @@ describe("Test unit test suite", function()
         locInstance:doEndAnimationMovement(_G.levMan.getCurPlayer(), 0.05);
         assert.are.same(locInstance.animationEndFinished, true);
     end)
+
+    it("Testing getReachedDepth function", function()
+        locInstance.reachedDepth = -356;
+        
+        assert.are.same(-356, locInstance:getReachedDepth());
+    end)
 end)
