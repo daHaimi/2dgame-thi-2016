@@ -764,4 +764,10 @@ function Level:isLoaded()
     end
 end
 
+--- Returns the reached depth before phase 2 was activated.
+-- @return Returns the reached depth.
+function Level:getReachedDepth()
+    return self.reachedDepth;
+end
+
 return Level;

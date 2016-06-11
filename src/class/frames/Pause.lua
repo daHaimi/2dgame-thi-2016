@@ -101,11 +101,13 @@ function Pause:create()
     end
     
     self.elementsOnFrame.button_backToMenu.object.OnClick = function(object)
+        self:checkAchRageQuit();
         _gui:getLevelManager():freeManagedObjects(); -- cleanup level, bait and swarmfactory
         _gui:changeFrame(_gui:getFrames().mainMenu);
     end
     
     self.elementsOnFrame.button_restartLevel.object.OnClick = function(object)
+        self:checkAchRageQuit();
         _gui:getLevelManager():replayLevel();
         _gui:changeFrame(_gui:getFrames().inGame);
     end
@@ -148,6 +150,14 @@ end
 ---return true if the frame is on position /fly in move is finished
 function Pause:checkPosition()
     return self.frame:checkPosition();
+end
+
+--- Unlocks the rage quit achievement.
+function Pause:checkAchRageQuit()
+     if _G._persTable.phase == 2 
+     and math.ceil(math.abs(_gui:getLevelManager():getCurLevel():getReachedDepth() / 300)) <= 2 then
+        _gui:getLevelManager():getCurLevel():unlockAchievement("rageQuit");
+    end
 end
 
 return Pause;
