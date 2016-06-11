@@ -69,7 +69,7 @@ it("Testing Constructor", function()
                 
             } end;
         };
-
+        stub(locInstance, "checkAchRageQuit");
         locInstance:create();
 
         spy.on(_G._gui, "changeFrame");
@@ -78,6 +78,7 @@ it("Testing Constructor", function()
         locInstance.elementsOnFrame.button_changeLevel.object.OnClick();
         locInstance.elementsOnFrame.button_options.object.OnClick();
         assert.spy(_gui.changeFrame).was.called(4);
+        assert.stub(locInstance.checkAchRageQuit).was.called(1);
     end)
 
     it("Testing draw function", function()
@@ -111,4 +112,20 @@ it("Testing Constructor", function()
         assert.stub(locInstance.frame.checkPosition).was_called(1);
     end)
 
+    it("Testing checkAchRageQuit function", function()
+        local res = false;
+        _G._persTable.achievements = {};
+        _G._persTable.phase = 2;
+        _G._gui = {
+            getLevelManager = function(...) return {
+                getCurLevel = function(...) return {
+                    getReachedDepth = function(...) return -500 end;
+                    unlockAchievement = function(...) res = true end;
+                } end;
+            } end;
+        };
+
+        locInstance:checkAchRageQuit();
+        assert.are.same(true, res);
+    end)
 end)
