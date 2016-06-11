@@ -46,6 +46,7 @@ describe("Unit test for FishableObject.lua", function()
         _G.levMan = {
         curLevel = {
             winDim = {500, 500};
+            getMoved = function (...) return 4 end;
         };
         curPlayer = {
             getPosY = function (...) return 5 end;
@@ -173,18 +174,8 @@ describe("Unit test for FishableObject.lua", function()
         assert.are.same(70, locInstance:getHitboxYPosition(1));
     end)
 
-    it("Testing setYMovement Function", function()
-        locInstance:setYMovement(30);
-        assert.are.same(30, locInstance.yMovement);
-    end)
-
     it("Testing getName Function", function()        
         assert.are.same("deadFish", locInstance:getName());
-    end)
-
-    it("Testing getYMovement Function", function ()
-        locInstance:setYMovement(4);
-        assert.are.same(4, locInstance:getYMovement());
     end)
 
     it("Testing outOfArea", function()
@@ -199,7 +190,8 @@ describe("Unit test for FishableObject.lua", function()
         locInstance.levMan.getCurLevel = function(...) return 
             {
                 getDirection = function (...) return 1 end;
-                winDim = {480, 833}
+                winDim = {480, 833};
+                getMoved = function (...) return 4 end;
             }
         end;
         locInstance:update(1, 1);
@@ -213,7 +205,8 @@ describe("Unit test for FishableObject.lua", function()
         locInstance.levMan.getCurLevel = function(...) return 
             {
                 getDirection = function (...) return -1 end;
-                winDim = {480, 833}
+                winDim = {480, 833};
+                getMoved = function (...) return 10 end;
             }
         end;
         locInstance:update(1, 1);

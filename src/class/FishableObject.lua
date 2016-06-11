@@ -67,8 +67,6 @@ local FishableObject = Class {
     
     hitbox = {};
     
-    yMovement = 0;
-    
     caught = false;
     caughtAt = nil;
     
@@ -162,16 +160,17 @@ function FishableObject:update(dt, speedMulitplicator)
             end
         end
         if self.fallSpeed == 0 then
-            self.yPosition = self.yPosition - self.yMovement;
+            self.yPosition = self.yPosition - self.levMan:getCurLevel():getMoved();
         else
             if self.levMan:getCurLevel():getDirection() == 1 then
                 self.yPosition = self.yPosition + self.fallSpeed * speedMulitplicator;
             else
-                self.yPosition = self.yPosition + self.fallSpeed * speedMulitplicator - self.yMovement;
+                self.yPosition = self.yPosition + self.fallSpeed * speedMulitplicator 
+                    - self.levMan:getCurLevel():getMoved();
             end
         end
     else
-        self.yPosition = self.yPosition + 0.5 * self.yMovement;
+        self.yPosition = self.yPosition + 0.5 * self.levMan:getCurLevel():getMoved();
     end
 end
 
@@ -225,18 +224,6 @@ end
 -- @return Returns y the position of the object.
 function FishableObject:getHitboxYPosition(i)
     return self.yPosition + self.hitbox[i].deltaYPos;
-end
-
---- sets the amount of pixls to move upwards to match the baits movement
--- @param movement The movement in y direction.
-function FishableObject:setYMovement(movement)
-    self.yMovement = movement;
-end
-
---- Returns the movement.
--- @return Returns the movement.
-function FishableObject:getYMovement()
-    return self.yMovement;
 end
 
 --- Returns the name of the fishable object.

@@ -194,10 +194,6 @@ function Level:update(dt, bait)
         self.playTime = self.playTime + dt;
     end
 
-    --do the ingame movement
-    if not (FishableObject == nil) then
-        FishableObject:setYMovement(self.moved);
-    end
     self.sizeY = self.winDim[2] + self.moved;
     self.posY = self.posY - self.moved;
     self.lowerBorderPosition = self.lowerBorderPosition - self.moved;
@@ -715,12 +711,6 @@ end
 -- @return Returns the amount of pixels moved in y direction.
 function Level:getMoved()
     return self.moved;
-end
-
---- Returns the daytime in the game.
--- @return Returns "day" if the daytime in the game is day otherwise "night".
-function Level:getTime()
-    return self.time;   
 end
 
 --- Returns the name/type of the level.

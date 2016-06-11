@@ -18,6 +18,31 @@ _G.levelTestStub = function()
         playedTime = 0;
         phase = 1;
     };
+    
+    _G._persTable.achievements = {
+         getFirstObject = true;
+        getSecondObject = false;
+        failedStart = false;
+        caughtTwoBoots = false;
+        secondStart = false;
+        bronzeCaughtOneRound = false;
+        silverCaughtOneRound = false;
+        goldCaughtOneRound = false;
+        shoppingQueen = false;
+        bronzeCoinsOneRound = false;
+        silverCoinsOneRound = false;
+        goldCoinsOneRound = false;
+        negativCoins = false;
+        bMoneyEarnedTotal = false;
+        sMoneyEarnedTotal = false;
+        gMoneyEarnedTotal = false;
+        onlyOneCaught = false;
+        onlyNegativeFishesCaught = false;
+        allObjectsAtLeastOnce = false;
+        allPillsAtLeastOnce = false;
+        nothingCaught = false;
+        playedTime = false;
+    }
     _G._persTable.fish = {
           caught = {
             turtle = 0;
@@ -49,6 +74,7 @@ _G.levelTestStub = function()
         curSwarmFac = {
             createMoreSwarms = function (...) end;
             createSleepingpill = function (...) end;
+            createFallingLitter = function (...) end;
         };
         getLevelPropMapByName = function(...) return {
             direction = 1;
@@ -547,6 +573,19 @@ describe("Test unit test suite", function()
         assert.spy(loveMock.newImage).was.called_with ("assets/canyon_right.png");
     end)
     
+    it("testing Update for canyon", function()
+        local mock = mock(levMan.curSwarmFac, true);
+        local myTestInstance = testClass("canyon", "assets/testbg.png", { 512, 256 }, 1, _G.levMan);
+        local bait = {
+            update = function(...) end;
+            getSpeed = function(...) return 200 end;
+        };
+        myTestInstance:update(0.05, bait);
+        myTestInstance.posY = -500;
+        myTestInstance.winDim[2] = 500;
+        assert.spy(mock.createFallingLitter).was.called(1);
+    end)
+    
     it("testing waiting time", function()
         local dt = 0.004;
         local bait = {
@@ -630,4 +669,29 @@ describe("Test unit test suite", function()
         
         assert.are.same(-356, locInstance:getReachedDepth());
     end)
+
+    it("Testing update playing godMode music", function()
+        locInstance.godModeActive = true;
+        locInstance.godModeFuel = 1000;
+        local bait = {
+            update = function(...) end;
+            getSpeed = function(...) return 200 end;
+        };
+        locInstance:update(0.05, bait);
+        assert.are.same(locInstance.gMMusicPlaying, true);
+    end)
+        
+    it("Testing update playTime", function()
+        locInstance.unlockAchievement = function (...) end;
+        locInstance.playTime = 1000;
+        _G._persTable.playedTime = 1000;
+        locInstance.pumpingWay = 0;
+        locInstance.levelFinished = true;
+        local bait = {
+            update = function(...) end;
+            getSpeed = function(...) return 200 end;
+        };
+        locInstance:update(1, bait);
+        assert.are.same(_G._persTable.playedTime, 2000);
+    end)    
 end)
