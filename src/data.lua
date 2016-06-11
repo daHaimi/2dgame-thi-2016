@@ -20,9 +20,6 @@ return {
             swarmHeight = 300,     -- height of the swarm of this object
             enabled = true,        -- Whether the object is enabled
             
-            -- Description of the object. Shown in the dictionary
-            description = "Seems like you have found nemo";    
-            
             -- Definition of the hitbox
             hitbox = {
                 {
@@ -48,7 +45,6 @@ return {
             maxAmount = 4,
             swarmHeight = 225,
             enabled = true,
-            description = "Its house is his shell";
             hitbox = {
                 {
                     width = 50,
@@ -73,7 +69,6 @@ return {
             maxAmount = 3,
             swarmHeight = 350,
             enabled = true,
-            description = "Easy to attract with cheese";
             hitbox = {
                 {
                     width = 60,
@@ -97,7 +92,6 @@ return {
             maxAmount = 2,
             swarmHeight = 125,
             enabled = true,
-            description = "It was a good fish throughout his whole life";
             hitbox = {
                 {
                     width = 64,
@@ -122,7 +116,6 @@ return {
             maxAmount = 4,
             swarmHeight = 200,
             enabled = true,
-            description = "Very useful if you need some light";
             hitbox = {
                 {
                     width = 40,
@@ -144,7 +137,6 @@ return {
             maxAmount = 1,
             swarmHeight = 100,
             enabled = true,
-            description = "You know you want it";
             hitbox = {
                 {
                     width = 30,
@@ -172,7 +164,6 @@ return {
             maxAmount = 1,
             swarmHeight = 100,
 --            enabled = _G._persTable.enabled.ring,
-            description = "One ring to rule them all";
             hitbox = {
                 {
                     width = 40,
@@ -194,7 +185,6 @@ return {
             maxAmount = 1,
             swarmHeight = 100,
             enabled = true,
-            description = "One shoe is not enough";
             hitbox = {
                 {
                     width = 55,
@@ -225,7 +215,6 @@ return {
             maxAmount = 3,
             swarmHeight = 200,
             enabled = true,
-            description = "(T)his is a really dangerous snake";
             hitbox = {
                 {
                     width = 54,
@@ -249,7 +238,6 @@ return {
             maxAmount = 3,
             swarmHeight = 200,
             enabled = true,
-            description = "He just wants to cuddle, I promise";
             hitbox = {
                 {
                     width = 128,
@@ -271,7 +259,6 @@ return {
             maxAmount = 1,
             swarmHeight = 50,
 --            enabled = _G._persTable.enabled.sleepingPill,
-            description = "Makes sea dwellers drowsy";
             hitbox = {
                 {
                     width = 15,
@@ -308,7 +295,6 @@ return {
             maxAmount = 2,
             swarmHeight = 200,
             enabled = true,
-            description = "Give him a nut and it goes nuts!";
             hitbox = {
                 {
                     width = 62,
@@ -343,7 +329,6 @@ return {
             maxAmount = 0,
             swarmHeight = 50,
             enabled = true,
-            description = "Please don't leave your luggage unattended";
             hitbox = {
                 {
                     width = 52,
@@ -369,7 +354,6 @@ return {
             maxAmount = 1,
             swarmHeight = 50,
             enabled = true,
-            description = "Thank god it is sealed";
             hitbox = {
                 {
                     width = 49,
@@ -403,7 +387,6 @@ return {
             maxAmount = 3,
             swarmHeight = 100,
             enabled = true,
-            description = "What kind of animal will hatch from that egg?";
             hitbox = {
                 {
                     width = 22,
@@ -435,7 +418,6 @@ return {
             maxAmount = 1,
             swarmHeight = 50,
             enabled = true,
-            description = "Smile, you are getting photographed";
             hitbox = {
                 {
                     width = 10,
@@ -465,7 +447,6 @@ return {
             maxAmount = 3,
             swarmHeight = 200,
             enabled = true,
-            description = "Wow, it managed to catch its own tail";
             hitbox = {
                 {
                     width = 54,
@@ -490,7 +471,6 @@ return {
             maxAmount = 2,
             swarmHeight = 150,
             enabled = true,
-            description = "Thinking about giving it a hug?";
             hitbox = {
                 {
                     width = 16,
@@ -533,7 +513,6 @@ return {
             maxAmount = 3,
             swarmHeight = 150,
             enabled = true,
-            description = "Leaf it right here please";
             hitbox = {
                 {
                     width = 3,
@@ -570,7 +549,6 @@ return {
             maxAmount = 3,
             swarmHeight = 250,
             enabled = true,
-            description = "It is literally free like a bird";
             hitbox = {
                 {
                     width = 60,
@@ -604,7 +582,6 @@ return {
             maxAmount = 3,
             swarmHeight = 200,
             enabled = true,
-            description = "Let it go like your dreams";
             hitbox = {
                 {
                     width = 20,
@@ -638,7 +615,6 @@ return {
             maxAmount = 1,
             swarmHeight = 100,
             enabled = true,
-            description = "Wanna get examined?";
             hitbox = {
                 {
                     width = 30,
@@ -721,104 +697,78 @@ return {
     upgrades = {
         oneMoreLife = {
             nameOnPersTable = "oneMoreLife";--Name of parameter in persTable. Unlock change this parameter to true
-            name = "One more life";--Name shown on the Textfield on the shop
-            description = "add one more life to your healthbar.";--shown on the shop
             price = 500;--price of this item
             image = "gui_Test_klickableElement.png";
             image_disable = "gui_Test_klickableElement_disable.png";
         },
         twoMoreLife = {
             nameOnPersTable = "twoMoreLife";
-            name = "Two more life";
-            description = "add a third life to your healthbar.";
             price = 1000;
             image = "gui_Test_klickableElement.png";
             image_disable = "gui_Test_klickableElement_disable.png";
         },
         threeMoreLife = {
             nameOnPersTable = "threeMoreLife";
-            name = "Three more life";
-            description = "upgrade your healthbar up to four lifes.";
             price = 1500;
             image = "gui_Test_klickableElement.png";
             image_disable = "gui_Test_klickableElement_disable.png";
         },
         firstSpeedUp = {
             nameOnPersTable = "firstSpeedUp";
-            name = "1st Speed Update";
-            description = "raise your speed.";
             price = 300;
             image = "gui_Test_klickableElement.png";
             image_disable = "gui_Test_klickableElement_disable.png";
         },
         secondSpeedUp = {
             nameOnPersTable = "secondSpeedUp";
-            name = "2nd Speed Update";
-            description = "raise your speed again.";
             price = 300;
             image = "gui_Test_klickableElement.png";
             image_disable = "gui_Test_klickableElement_disable.png";
         },
         moneyMulitplier = {
             nameOnPersTable = "moneyMultiplier";
-            name = "Money Multiplier";
-            description = "the value of your caught object are doubled";
             price = 300;
             image = "gui_Test_klickableElement.png";
             image_disable = "gui_Test_klickableElement_disable.png";
         },
         godMode = {
             nameOnPersTable = "godMode";
-            name = "God Mode";
-            description = "unlock godMode";
             price = 1000;
             image = "gui_Test_klickableElement.png";
             image_disable = "gui_Test_klickableElement_disable.png";
         },
         mapBreakthrough1 = {
             nameOnPersTable = "mapBreakthrough1";
-            name = "Who put this in my way?";
-            description = "Smash that barrier";
             price = 2500;
             image = "gui_Test_klickableElement.png";
             image_disable = "gui_Test_klickableElement_disable.png";
         },
         mapBreakthrough2 = {
             nameOnPersTable = "mapBreakthrough2";
-            name = "Not again";
-            description = "Smash another barrier";
             price = 5000;
             image = "gui_Test_klickableElement.png";
             image_disable = "gui_Test_klickableElement_disable.png";
         },
         moreFuel1 = {
             nameOnPersTable = "moreFuel1";
-            name = "Need more Fuel?";
-            description = "Upgrade your Fuel to 1600";
             price = 1000;
             image = "gui_Test_klickableElement.png";
             image_disable = "gui_Test_klickableElement_disable.png";
         },
         moreFuel2 = {
             nameOnPersTable = "moreFuel2";
-            name = "Need more Fuel?";
-            description = "Upgrade your Fuel to 2400";
             price = 1500;
             image = "gui_Test_klickableElement.png";
             image_disable = "gui_Test_klickableElement_disable.png";
         },
         firstPermanentMoneyMulitplier = {
             nameOnPersTable = "firstPermanentMoneyMult";
-            name = "Negotiation Novice";
-            description = "earn 20% more money";
             price = 1000;
             image = "gui_Test_klickableElement.png";
             image_disable = "gui_Test_klickableElement_disable.png";
         },
         secondPermanentMoneyMulitplier = {
             nameOnPersTable = "secondPermanentMoneyMult";
-            name = "Negotiation Expert";
-            description = "earn 25% more money";
             price = 2500;
             image = "gui_Test_klickableElement.png";
             image_disable = "gui_Test_klickableElement_disable.png";
@@ -1008,6 +958,7 @@ return {
                 textScore = "Your Score:";
                 textStart = "Click to start!";
                 buttonChangeLevel = "Change level";
+                --achievements
                 creditsRed = {
                     name = "Respect our Work";
                     description = "Read the credits";
@@ -1113,8 +1064,149 @@ return {
                     name = "First object";
                     description = "You caught your first object";
                 },
+                --objects
+                nemo = {
+                    name = "Nemo";
+                    description = "Seems like you have found nemo";
+                },
+                turtle = {
+                    name = "Turtle";
+                    description = "Its house is his shell";
+                },
+                rat = {
+                    name = "rat";
+                    description = "Easy to attract with cheese";
+                },
+                deadFish = {
+                    name = "Dead Fish";
+                    description = "It was a good fish throughout his whole life";
+                },
+                angler = {
+                    name = "Angler";
+                    description = "Very useful if you need some light";
+                },
+                lollipop = {
+                    name = "Lollipop";
+                    description = "You know you want it";
+                },
+                ring = {
+                    name = "Ring";
+                    description = "One ring to rule them all";
+                },
+                shoe = {
+                    name = "Shoe";
+                    description = "One shoe is not enough";
+                },
+                snake = {
+                    name = "Snake";
+                    description = "(T)his is a really dangerous snake";
+                },
+                crocodile = {
+                    name = "Crocodile";
+                    description = "He just wants to cuddle, I promise";
+                },
+                sleepingPill = {
+                    name = "Sleeping Pill";
+                    description = "Makes sea dwellers drowsy";
+                },
+                squirrel = {
+                    name = "Squirrel";
+                    description = "Give him a nut and it goes nuts!";
+                },
+                backpack = {
+                    name = "Backpack";
+                    description = "Please don't leave your luggage unattended";
+                },
+                drink = {
+                    name = "Drink";
+                    description = "Thank god it is sealed";
+                },
+                egg = {
+                    name = "Egg";
+                    description = "What kind of animal will hatch from that egg?";
+                },
+                camera = {
+                    name = "Camera";
+                    description = "Smile, you are getting photographed";
+                },
+                canyonSnake = {
+                    name = "Canyon Snake";
+                    description = "Wow, it managed to catch its own tail";
+                },
+                cactus = {
+                    name = "Cactus";
+                    description = "Thinking about giving it a hug?";
+                },
+                leaf = {
+                    name = "Leaf";
+                    description = "Leaf it right here please";
+                },
+                bird = {
+                    name = "Bird";
+                    description = "It is literally free like a bird";
+                },
+                balloon = {
+                    name = "Ballon";
+                    description = "Let it go like your dreams";
+                },
+                ufo = {
+                    name = "Ufo";
+                    description = "Wanna get examined?";
+                },
+                --upgrades
+                oneMoreLife = {
+                    name = "One more life";--Name shown on the Textfield on the shop
+                    description = "add one more life to your healthbar.";--shown on the shop
+                },
+                twoMoreLife = {
+                    name = "Two more life";
+                    description = "add a third life to your healthbar.";
+                },
+                threeMoreLife = {
+                    name = "Three more life";
+                    description = "upgrade your healthbar up to four lifes.";
+                },
+                firstSpeedUp = {
+                    name = "1st Speed Update";
+                    description = "raise your speed.";
+                },
+                secondSpeedUp = {
+                    name = "2nd Speed Update";
+                    description = "raise your speed again.";
+                },
+                moneyMultiplier = {
+                    name = "Money Multiplier";
+                    description = "the value of your caught object are doubled";
+                },
+                godMode = {
+                    name = "God Mode";
+                    description = "unlock godMode";
+                },
+                mapBreakthrough1 = {
+                    name = "Who put this in my way?";
+                    description = "Smash that barrier";
+                },
+                mapBreakthrough2 = {
+                    name = "Not again";
+                    description = "Smash another barrier";
+                },
+                moreFuel1 = {
+                    name = "Need more Fuel?";
+                    description = "Upgrade your Fuel to 1600";
+                },
+                moreFuel2 = {
+                    name = "Need more Fuel?";
+                    description = "Upgrade your Fuel to 2400";
+                },
+                firstPermanentMoneyMult = {
+                    name = "Negotiation Novice";
+                    description = "earn 20% more money";
+                },
+                secondPermanentMoneyMult = {
+                    name = "Negotiation Expert";
+                    description = "earn 25% more money";
+                }
             };
-            
         },
         german = {
             language = "german";
@@ -1243,6 +1335,148 @@ return {
                     name = "DFirst object";
                     description = "You caught your first object";
                 },
+                                --objects
+                nemo = {
+                    name = "Nemo";
+                    description = "Seems like you have found nemo";
+                },
+                turtle = {
+                    name = "Turtle";
+                    description = "Its house is his shell";
+                },
+                rat = {
+                    name = "rat";
+                    description = "Easy to attract with cheese";
+                },
+                deadFish = {
+                    name = "Dead Fish";
+                    description = "It was a good fish throughout his whole life";
+                },
+                angler = {
+                    name = "Angler";
+                    description = "Very useful if you need some light";
+                },
+                lollipop = {
+                    name = "Lollipop";
+                    description = "You know you want it";
+                },
+                ring = {
+                    name = "Ring";
+                    description = "One ring to rule them all";
+                },
+                shoe = {
+                    name = "Shoe";
+                    description = "One shoe is not enough";
+                },
+                snake = {
+                    name = "Snake";
+                    description = "(T)his is a really dangerous snake";
+                },
+                crocodile = {
+                    name = "Crocodile";
+                    description = "He just wants to cuddle, I promise";
+                },
+                sleepingPill = {
+                    name = "Sleeping Pill";
+                    description = "Makes sea dwellers drowsy";
+                },
+                squirrel = {
+                    name = "Squirrel";
+                    description = "Give him a nut and it goes nuts!";
+                },
+                backpack = {
+                    name = "Backpack";
+                    description = "Please don't leave your luggage unattended";
+                },
+                drink = {
+                    name = "Drink";
+                    description = "Thank god it is sealed";
+                },
+                egg = {
+                    name = "Egg";
+                    description = "What kind of animal will hatch from that egg?";
+                },
+                camera = {
+                    name = "Camera";
+                    description = "Smile, you are getting photographed";
+                },
+                canyonSnake = {
+                    name = "Canyon Snake";
+                    description = "Wow, it managed to catch its own tail";
+                },
+                cactus = {
+                    name = "Cactus";
+                    description = "Thinking about giving it a hug?";
+                },
+                leaf = {
+                    name = "Leaf";
+                    description = "Leaf it right here please";
+                },
+                bird = {
+                    name = "Bird";
+                    description = "It is literally free like a bird";
+                },
+                balloon = {
+                    name = "Ballon";
+                    description = "Let it go like your dreams";
+                },
+                ufo = {
+                    name = "Ufo";
+                    description = "Wanna get examined?";
+                },
+                --upgrades
+                oneMoreLife = {
+                    name = "One more life";--Name shown on the Textfield on the shop
+                    description = "add one more life to your healthbar.";--shown on the shop
+                },
+                twoMoreLife = {
+                    name = "Two more life";
+                    description = "add a third life to your healthbar.";
+                },
+                threeMoreLife = {
+                    name = "Three more life";
+                    description = "upgrade your healthbar up to four lifes.";
+                },
+                firstSpeedUp = {
+                    name = "1st Speed Update";
+                    description = "raise your speed.";
+                },
+                secondSpeedUp = {
+                    name = "2nd Speed Update";
+                    description = "raise your speed again.";
+                },
+                moneyMultiplier = {
+                    name = "Money Multiplier";
+                    description = "the value of your caught object are doubled";
+                },
+                godMode = {
+                    name = "God Mode";
+                    description = "unlock godMode";
+                },
+                mapBreakthrough1 = {
+                    name = "Who put this in my way?";
+                    description = "Smash that barrier";
+                },
+                mapBreakthrough2 = {
+                    name = "Not again";
+                    description = "Smash another barrier";
+                },
+                moreFuel1 = {
+                    name = "Need more Fuel?";
+                    description = "Upgrade your Fuel to 1600";
+                },
+                moreFuel2 = {
+                    name = "Need more Fuel?";
+                    description = "Upgrade your Fuel to 2400";
+                },
+                firstPermanentMoneyMult = {
+                    name = "Negotiation Novice";
+                    description = "earn 20% more money";
+                },
+                secondPermanentMoneyMult = {
+                    name = "Negotiation Expert";
+                    description = "earn 25% more money";
+                }
             }
         },
         

@@ -191,7 +191,13 @@ function Chart:markElement(element)
     self.p_markFrame:MoveToTop();
     self.p_markedElement = element;
     if element.price ~= nil then
-        self.textField:changeText(element.name, element.description, element.price);
+        if element.name ~= nil then
+            self.textField:changeText(_G.data.languages[_G._persTable.config.language].package[element.name].name,
+                _G.data.languages[_G._persTable.config.language].package[element.name].description, element.price);
+        else
+            self.textField:changeText(_G.data.languages[_G._persTable.config.language].package[element.nameOnPersTable].name,
+                _G.data.languages[_G._persTable.config.language].package[element.nameOnPersTable].description, element.price);
+        end
     else
         self.textField:changeText(_G.data.languages[_G._persTable.config.language].package[element.nameOnPersTable].name,
             _G.data.languages[_G._persTable.config.language].package[element.nameOnPersTable].description);
