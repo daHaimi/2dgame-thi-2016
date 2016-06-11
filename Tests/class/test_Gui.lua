@@ -60,7 +60,10 @@ describe("Test Gui", function()
             }
         };
        _G.Loveframes = {
-           Create = function(typeName) return FakeElement(typeName); end;
+            Create = function(typeName) return FakeElement(typeName); end;
+            util = {
+               SetActiveSkin = function(...) end;
+            }
        }
         locInstance = testClass();
     end)
