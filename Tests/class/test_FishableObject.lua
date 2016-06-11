@@ -115,6 +115,16 @@ describe("Unit test for FishableObject.lua", function()
         assert.spy(loveMock.graphics.print).was_called_with(50, 50, 100);
     end)
 
+    it("Testing draw Function when caught", function()
+        local loveMock = mock(_G.love, true);
+        locInstance.xPosition = 50;
+        locInstance.yPosition = 100;
+        locInstance.value = -50;
+        locInstance:setToCaught();
+        locInstance:draw();
+        assert.spy(loveMock.graphics.print).was_called_with(50, 50, 100);
+    end)
+
     it("Testing Update Function", function()
         locInstance.speed = 300;
         locInstance:setXPosition(250);
@@ -155,6 +165,8 @@ describe("Unit test for FishableObject.lua", function()
         locInstance:setXPosition(450);
         locInstance.speed = 30;
         assert.are.same(386, locInstance:getHitboxXPosition(1));
+        locInstance.speed = 0;
+        assert.are.same(450, locInstance:getHitboxXPosition(1));
     end)
 
     it("Testing getHitboxYPosition Function", function()
@@ -173,6 +185,39 @@ describe("Unit test for FishableObject.lua", function()
     it("Testing getYMovement Function", function ()
         locInstance:setYMovement(4);
         assert.are.same(4, locInstance:getYMovement());
+    end)
+
+    it("Testing outOfArea", function()
+        locInstance.yPosition = 10000;
+        locInstance:update();
+        assert.are.same(true, locInstance.outOfArea);
+    end)
+    
+    it("Testing falling Objekt", function()
+        locInstance.yPosition = 100;
+        locInstance.fallSpeed = 1;
+        locInstance.levMan.getCurLevel = function(...) return 
+            {
+                getDirection = function (...) return 1 end;
+                winDim = {480, 833}
+            }
+        end;
+        locInstance:update(1, 1);
+        assert.are.same(101, locInstance.yPosition);
+    end)
+
+    it("Testing falling Objekt", function()
+        locInstance.yPosition = 100;
+        locInstance.fallSpeed = 1;
+        locInstance.yMovement = 10;
+        locInstance.levMan.getCurLevel = function(...) return 
+            {
+                getDirection = function (...) return -1 end;
+                winDim = {480, 833}
+            }
+        end;
+        locInstance:update(1, 1);
+        assert.are.same(91, locInstance.yPosition);
     end)
 
 end)
