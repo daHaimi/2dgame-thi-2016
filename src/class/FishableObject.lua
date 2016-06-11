@@ -51,7 +51,7 @@ local FishableObject = Class {
                 animTimeout = math.random() * (animTimeoutMax - animTimeoutMin) + animTimeoutMin - 
                               math.abs(self.speed / 100); -- animation speed also depended on move speed
             end
-            
+            animType = Animate.AnimType[animType];
             self.animation = Animate(self.sprite, spriteCols, spriteRows, animTimeout, animType);
         end
     end;

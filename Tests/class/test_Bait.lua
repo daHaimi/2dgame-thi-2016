@@ -184,13 +184,13 @@ describe("Unit test for Bait.lua", function()
     it("Test sleeping pill duration", function()
         local myInstance = testClass(locWinDim, levMan);
         myInstance.image = locImageStub;
-        myInstance.sleepingPillDuration = 10;
+        myInstance.sleepingPillDuration = 2;
         myInstance.imageCheeks = locImageStub;
         myInstance.imageCheeks = {
           getDimensions = function(...) end,
         };
-        myInstance:update();
-        assert.are.same(6, myInstance.sleepingPillDuration);
+        myInstance:update(0.1);
+        assert.are.same(1.9, myInstance.sleepingPillDuration);
     end)
 
     it("Test getGoldenRule", function()

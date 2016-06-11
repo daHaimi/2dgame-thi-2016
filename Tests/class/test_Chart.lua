@@ -27,6 +27,7 @@ describe("Unit test for Chart.lua", function()
             visible = nil;
             x = nil;
             y = nil;
+            nameOnPersTable = "something";
         };
         function Element:SetVisible(visible) 
             self.visible = visible; 
@@ -183,7 +184,7 @@ it("Testing Constructor", function()
 
     it("Testing markElement function", function()
         spy.on(locInstance.textField, "changeText");
-        
+        Element.nameOnPersTable = "rageQuit";
         locInstance:markElement(Element);
         assert.are.equal(locInstance.p_markFrame.x, 40);
         assert.are.equal(locInstance.p_markFrame.y, 60);
