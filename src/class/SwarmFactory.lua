@@ -53,7 +53,7 @@ end
 --@param maxDistance maximal distance between two pills
 function SwarmFactory:createSleepingpill(depth, minDistance, maxDistance)
     if  depth > self.positionOfLastPill + math.random(maxDistance - minDistance) + minDistance then
-        local fishable = self:determineFishable({"sleepingPill"},{100});
+        local fishable = self.fishableObjects["sleepingPill"];
         self.createdFishables[#self.createdFishables + 1] = FishableObject(fishable.name, fishable.image, 
             depth + self.levMan:getCurLevel().winDim[2], fishable.minSpeed, fishable.maxSpeed, fishable.value, 
             fishable.hitpoints, fishable.spriteSize, fishable.hitbox, fishable.animTimeoutMin, fishable.animTimeoutMax,
