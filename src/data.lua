@@ -690,7 +690,7 @@ return {
     
     swarmsCanyon = {
         {
-            allowedFishables = { "balloon", "leaf", "bird", "squirrel"},
+            allowedFishables = { "canyonSnake", "leaf", "bird", "squirrel"},
             fishablesProbability = {25, 45, 75, 100}, 
             maxSwarmHeight = 1500
         },
