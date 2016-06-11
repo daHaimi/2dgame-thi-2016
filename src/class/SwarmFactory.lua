@@ -13,6 +13,9 @@ local SwarmFactory = Class {
         self.fishableObjects = {};
         self.createdFishables = {};
         self.actualSwarm = {};
+        self.speedMulitplicator = 1;
+        self.positionOfLastPill = 0;
+        self.positionOfLastLitter = 0;
         
         self.levMan = levelManager;
         -- Start at the lower 75% of the screen to create swarms
@@ -37,10 +40,42 @@ local SwarmFactory = Class {
 };
 
 --- creates more Swarms
+--@param depth depth where the swarm should spawned
 function SwarmFactory:createMoreSwarms(depth)
-        while self.addedHeights <= depth + self.levMan:getCurLevel().winDim[2] do
-            self.addedHeights = self.addedHeights + self:createNextSwarm(self.addedHeights, depth);
-        end
+    while self.addedHeights <= depth + self.levMan:getCurLevel().winDim[2] do
+        self.addedHeights = self.addedHeights + self:createNextSwarm(self.addedHeights, depth);
+    end
+end
+
+--- creats a sleepingpill
+--@param depth depth where the pill should be spawned
+--@param minDistance minimal distance between two pills
+--@param maxDistance maximal distance between two pills
+function SwarmFactory:createSleepingpill(depth, minDistance, maxDistance)
+    if  depth > self.positionOfLastPill + math.random(maxDistance - minDistance) + minDistance then
+        local fishable = self:determineFishable({"sleepingPill"},{100});
+        self.createdFishables[#self.createdFishables + 1] = FishableObject(fishable.name, fishable.image, 
+            depth + self.levMan:getCurLevel().winDim[2], fishable.minSpeed, fishable.maxSpeed, fishable.value, 
+            fishable.hitpoints, fishable.spriteSize, fishable.hitbox, fishable.animTimeoutMin, fishable.animTimeoutMax,
+            fishable.animType, 0, self.levMan);
+        self.positionOfLastPill = depth;
+    end
+end
+
+--- creats falling litter
+--@param depth depth where the pill should be spawned
+--@param minDistance minimal distance between two peaces of litter
+--@param maxDistance maximal distance between two peaces of litter
+function SwarmFactory:createFallingLitter(depth, minDistance, maxDistance)
+    if math.abs(depth - self.positionOfLastLitter) > math.random(maxDistance - minDistance) + minDistance 
+        and self.actualSwarm[self.currentSwarm].typ == "static" then
+        self.positionOfLastLitter = depth;
+        local fishable = self:determineFishable({"camera", "backpack", "drink"},{33, 67, 100});
+         self.createdFishables[#self.createdFishables + 1] = FishableObject(fishable.name, fishable.image, 
+            depth, fishable.minSpeed, fishable.maxSpeed, fishable.value, 
+            fishable.hitpoints, fishable.spriteSize, fishable.hitbox, fishable.animTimeoutMin, fishable.animTimeoutMax,
+            fishable.animType, fishable.downSpeed, self.levMan);
+    end
 end
 
 --- Marks the member variables for the garbage collector
@@ -63,7 +98,14 @@ end
 -- @param dt Delta time since last update in seconds
 function SwarmFactory:update(dt)
     for i = 1, #self.createdFishables, 1 do
-        self.createdFishables[i]:update(dt);
+        self.createdFishables[i]:update(dt, self.speedMulitplicator, depth);
+    end
+ 
+    if self.currentSwarm > 1 and self.levMan:getCurLevel():getDirection() == -1 then
+        if - self.levMan:getCurLevel():getYPos() - self.actualSwarm[self.currentSwarm-1].maxSwarmHeight 
+        + self.levMan:getCurLevel().winDim[2] * 0.5 < 0 then
+            self.currentSwarm = self.currentSwarm - 1;
+        end
     end
 end
 
@@ -113,6 +155,12 @@ function SwarmFactory:determineFishable(allowedFishables, fishablesProbability)
             end
         end
     end
+end
+
+--- sets the speed multiplicator to a certain amount
+--@param amount prozentage of the slow. 0.25 for slow to 25%
+function SwarmFactory:setSpeedMultiplicator(amount)
+    self.speedMulitplicator = amount;
 end
 
 --- Returns the table of the fishable objects.

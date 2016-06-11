@@ -82,7 +82,7 @@ function Persistence:createPersTable()
         statistic = {};
         achievements = {};
         config = {};
-        money = 5000;
+        money = 50000;
         lastLevel = 1;
         winDim = {};
         playedTime = 0;

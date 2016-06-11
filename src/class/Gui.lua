@@ -15,6 +15,8 @@ Notification = require "class.Notification";
 
 local Gui = Class {
     init = function(self)
+        --Loveframes.config["ACTIVESKIN"] = "ShitSkin"
+        Loveframes.util.SetActiveSkin("ShitSkin");
         self.p_myFrames = {
             achievements = Achievements();
             mainMenu = Mainmenu();
@@ -35,6 +37,7 @@ local Gui = Class {
         };
         self.p_textOutput = "";
         self.notification = Notification();
+
     end;
     levMan = nil;
 }

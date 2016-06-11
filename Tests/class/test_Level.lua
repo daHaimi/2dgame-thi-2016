@@ -48,6 +48,7 @@ _G.levelTestStub = function()
         };
         curSwarmFac = {
             createMoreSwarms = function (...) end;
+            createSleepingpill = function (...) end;
         };
         getLevelPropMapByName = function(...) return {
             direction = 1;
@@ -407,7 +408,7 @@ describe("Test unit test suite", function()
         locInstance.enviromentPosition = -250;
         locInstance.animationStart = false;
         locInstance:drawEnviroment();
-        assert.spy(loveMock.graphics.draw).was.called(15);
+        assert.spy(loveMock.graphics.draw).was.called(17);
         assert.are.same(-50, locInstance.enviromentPosition);
     end)
 
@@ -416,7 +417,7 @@ describe("Test unit test suite", function()
         locInstance.animationStart = true;
         locInstance.enviromentPosition = 250;
         locInstance:drawEnviroment();
-        assert.spy(loveMock.graphics.draw).was.called(15);
+        assert.spy(loveMock.graphics.draw).was.called(17);
     end)
 
     it("Testing drawEnviroment: drawing Walls", function()
@@ -436,7 +437,18 @@ describe("Test unit test suite", function()
         locInstance.animationStart = true;
         locInstance.failedStart = true;
         locInstance:drawEnviroment();
-        assert.spy(loveMock.graphics.draw).was.called(15);
+        assert.spy(loveMock.graphics.draw).was.called(17);
+    end)
+
+    it("Testing drawEnviroment while ending animation sewer", function()
+        local loveMock = mock(_G.love, true);
+        locInstance.animationStart = true;
+        locInstance.direction = -1;
+        locInstance.pumpingWay = 100;
+        locInstance.animationEnd= true;
+        locInstance.levelFinished = true;
+        locInstance:drawEnviroment();
+        assert.spy(loveMock.graphics.draw).was.called(16);
     end)
     
     it("Testing getStartAnimationRunning", function()
@@ -534,5 +546,82 @@ describe("Test unit test suite", function()
         local myTestInstance = testClass("canyon", "assets/testbg.png", { 512, 256 }, 1, _G.levMan);
         assert.spy(loveMock.newImage).was.called_with ("assets/canyon_right.png");
     end)
+    
+    it("testing waiting time", function()
+        local dt = 0.004;
+        local bait = {
+            update = function(...) end;
+            getSpeed = function(...) return 200 end;
+        };
+        locInstance.animationEndFinished = true;
+        locInstance:update(dt ,bait);
+        assert.are.same(locInstance.waitTillSwitch, .496);
+    end)
 
+    it("testing startanimation for canyon 1", function()
+        local myTestInstance = testClass("canyon", "assets/testbg.png", { 512, 256 }, 1, _G.levMan);
+        myTestInstance.hamsterYPos = 0;
+        myTestInstance.animationStart = true;
+        myTestInstance.animationStartFinished = false;
+        myTestInstance:doStartAnimationMovement(_G.levMan.getCurPlayer(), 0.05);
+        assert.are.same(myTestInstance.hamsterYPos, 5);
+    end)
+    
+    it("testing startanimation for canyon 2", function()
+        local myTestInstance = testClass("canyon", "assets/testbg.png", { 512, 256 }, 1, _G.levMan);
+        myTestInstance.hamsterYPos = 1000;
+        myTestInstance.animationStart = true;
+        myTestInstance.animationStartFinished = false;
+        myTestInstance:doStartAnimationMovement(_G.levMan.getCurPlayer(), 0.05);
+        assert.are.same(myTestInstance.animationStartFinished, true);
+    end)
+
+    it("Testing doEndAnimationMovement for canyon", function()
+        local myTestInstance = testClass("canyon", "assets/testbg.png", { 512, 256 }, 1, _G.levMan);
+        myTestInstance.hamsterYPos = 1000;
+        myTestInstance.levelFinished = true;
+        myTestInstance:doEndAnimationMovement(_G.levMan.getCurPlayer(), 0.05);
+        assert.are.same(myTestInstance.hamsterYPos, 990);
+        myTestInstance.hamsterYPos = -1000;
+        myTestInstance:doEndAnimationMovement(_G.levMan.getCurPlayer(), 0.05);
+        assert.are.same(myTestInstance.animationEndFinished, true);
+    end)
+
+    it("Testing doEndAnimationMovement for sewers", function()
+        locInstance.levelFinished = true;
+        locInstance.failedStart = false;
+        locInstance.pumpCounter = 0;
+        locInstance.pumpDirection = true;
+        locInstance.pumpingWay = 5;
+        locInstance:doEndAnimationMovement(_G.levMan.getCurPlayer(), 0.05);
+        assert.are.same(locInstance.pumpDirection, false);
+    end)
+    it("Testing doEndAnimationMovement for sewers", function()
+        locInstance.levelFinished = true;
+        locInstance.failedStart = false;
+        locInstance.pumpCounter = 0;
+        locInstance.pumpDirection = false;
+        locInstance.pumpingWay = 90;
+        locInstance:doEndAnimationMovement(_G.levMan.getCurPlayer(), 0.05);
+        assert.are.same(locInstance.pumpDirection, true);
+        assert.are.same(locInstance.pumpCounter, 1);
+    end)
+    
+    it("Testing doEndAnimationMovement for sewers", function()
+        locInstance.levelFinished = true;
+        locInstance.failedStart = false;
+        locInstance.pumpCounter = 6;
+        locInstance.pumpingWay = 100;
+        locInstance:doEndAnimationMovement(_G.levMan.getCurPlayer(), 0.05);
+        assert.are.same(locInstance.pumpingWay, 115);
+    end)
+
+    it("Testing doEndAnimationMovement for sewers", function()
+        locInstance.levelFinished = true;
+        locInstance.failedStart = false;
+        locInstance.pumpCounter = 6;
+        locInstance.pumpingWay = 250;
+        locInstance:doEndAnimationMovement(_G.levMan.getCurPlayer(), 0.05);
+        assert.are.same(locInstance.animationEndFinished, true);
+    end)
 end)

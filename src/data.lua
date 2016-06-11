@@ -337,7 +337,7 @@ return {
             spriteSize = 64,
             minSpeed = 0,
             maxSpeed = 0,
-            downSpeed = 15;
+            downSpeed = 7;
             value = -100,
             minAmount = 1,
             maxAmount = 0,
@@ -360,7 +360,7 @@ return {
             spriteSize = 64,
             minSpeed = 0,
             maxSpeed = 0,
-            downSpeed = 10;
+            downSpeed = 6;
             value = -30,
             animTimeoutMin = 0.2,
             animTimeoutMax = 0.4,
@@ -426,7 +426,7 @@ return {
             spriteSize = 64,
             minSpeed = 0,
             maxSpeed = 0,
-            downSpeed = 13;
+            downSpeed = 5;
             value = -100,
             animTimeoutMin = 0.15,
             animTimeoutMax = 0.2,
@@ -666,32 +666,32 @@ return {
     swarmsSewer = {
         {
             -- Fishables allowed to appear in this swarm 
-            allowedFishables = { "turtle", "rat", "deadFish", "sleepingPill"}, 
+            allowedFishables = { "turtle", "rat", "deadFish"}, 
             
             -- The odds of allowedFishables allready added up(10, 40, 40, 10)
-            fishablesProbability = {10, 50, 90, 100},  
+            fishablesProbability = {10, 50, 100},  
 
             -- The deepest possible height of this swarm
             maxSwarmHeight = 3000;                                  
         },
         
         {
-            allowedFishables = { "nemo", "lollipop", "deadFish", "angler", "sleepingPill"},
-            fishablesProbability = {5, 45, 75, 90, 100 }, --(5, 40, 30, 15, 10)
+            allowedFishables = { "nemo", "lollipop", "deadFish", "angler",},
+            fishablesProbability = {5, 45, 75, 100 }, --(5, 40, 30, 15, 10)
             maxSwarmHeight = 6000
         },
         
         {
-            allowedFishables = { "ring", "shoe", "snake", "crocodile", "sleepingPill"},
-            fishablesProbability = { 5, 30, 55, 90, 100},
+            allowedFishables = { "ring", "shoe", "snake", "crocodile"},
+            fishablesProbability = { 5, 30, 55, 100},
             maxSwarmHeight = 90000
         }
     },
     
     swarmsCanyon = {
         {
-            allowedFishables = { "balloon", "leaf", "bird", "squirrel", "sleepingPill"},
-            fishablesProbability = {25, 45, 75, 95, 100}, 
+            allowedFishables = { "balloon", "leaf", "bird", "squirrel"},
+            fishablesProbability = {25, 45, 75, 100}, 
             maxSwarmHeight = 1500
         },
         {
@@ -700,23 +700,19 @@ return {
             maxSwarmHeight = 1800
         },
         {
-            allowedFishables = { "camera", "drink", "backpack", "cactus"},
-            fishablesProbability = {10, 20, 30, 100}, 
-            maxSwarmHeight = 5500
+            allowedFishables = {"cactus"},
+            fishablesProbability = {100}, 
+            maxSwarmHeight = 5500,
+            typ = "static"
         }, 
         {
-            allowedFishables = { "cactus"},
-            fishablesProbability = {100}, 
-            maxSwarmHeight = 5800
-        },
-        {
-            allowedFishables = { "egg", "bird", "cactus", "sleepingPill"},
-            fishablesProbability = {30, 50, 95, 100}, 
+            allowedFishables = { "egg", "bird", "cactus"},
+            fishablesProbability = {30, 50, 100}, 
             maxSwarmHeight = 9000
         },
         {
-            allowedFishables = { "backpack", "camera", "bird", "egg", "sleepingPill"},
-            fishablesProbability = {10, 20, 50, 95, 100}, 
+            allowedFishables = { "backpack", "camera", "bird", "egg"},
+            fishablesProbability = {10, 20, 50, 100}, 
             maxSwarmHeight = 90000
         }
     },

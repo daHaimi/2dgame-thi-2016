@@ -49,6 +49,7 @@ local Level = Class {
         if self.bg ~= nil then -- do not remove this if statement or busted will crash
         self.bgq = love.graphics.newQuad(0, 0, winDim[1], 20000, self.bg:getWidth(), self.bg:getHeight());
         end
+
         if _persTable.upgrades.mapBreakthrough1 == true then
             self.lowerBoarder = self.lowerBoarder + self.mapBreakthroughBonus1;
         end
@@ -121,6 +122,7 @@ local Level = Class {
         self.line = love.graphics.newImage("assets/line.png");
         self.hand = love.graphics.newImage("assets/hand.png");
         self.borderBottom = love.graphics.newImage("assets/border.png");
+        self.borderBottomDestroyed = love.graphics.newImage("assets/border_destroyed.png");
         self.lowerBorderPosition = math.abs(self.lowerBoarder) + self.winDim[2] * 0.68 + 130;
         
         --parameters for achievements
@@ -172,9 +174,15 @@ function Level:update(dt, bait)
         self.levelFinished = true;
         self:payPlayer();
     end
-    --dynamic creation of swarms
+    --dynamic creation of swarms of fishable objects
     self.levMan:getCurSwarmFactory():createMoreSwarms( - (self.posY - self.winDim[2] * 0.5));
-
+    --dynamic creation of sleepingPills
+    self.levMan:getCurSwarmFactory():createSleepingpill( - (self.posY - self.winDim[2] * 0.5), 300, 700);
+    --dynamic creation of falling litter in the canyon
+    if self.p_levelName == "canyon" then
+        self.levMan:getCurSwarmFactory():createFallingLitter( - (self.posY + self.winDim[2] * 0.5), 500, 1500);
+    end
+    
     --set the movement in relation of the direction
     if not self.animationStartFinished  then
         self.moved = 0;
@@ -224,7 +232,10 @@ function Level:update(dt, bait)
     -- calc fished Value
     if self.levelFinished then
         _G._tmpTable.earnedMoney = self:calcFishedValue();
+        if self.playTime ~= 0 then
         _G._persTable.playedTime = _G._persTable.playedTime + self.playTime;
+        self.playTime = 0;
+        end
     end
     self:checkForAchievments()
 end
@@ -283,12 +294,12 @@ function Level:doEndAnimationMovement(bait, dt)
                     self.pumpingWay = self.pumpingWay + 10;
                     if self.pumpingWay == 100 then
                         self.pumpDirection = true;
-                        self.pumpCounter = self.pumpCounter + 1
+                        self.pumpCounter = self.pumpCounter + 1;
                     end
                 end
             else
                 if self.pumpingWay < 200 then
-                    self.pumpingWay = self.pumpingWay + 15
+                    self.pumpingWay = self.pumpingWay + 15;
                 else
                     self.animationEndFinished = true;
                 end
@@ -391,6 +402,13 @@ function Level:drawEnviroment()
     love.graphics.setColor(255, 255, 255);
 
     --border bottom
+    if _persTable.upgrades.mapBreakthrough1 and not _persTable.upgrades.mapBreakthrough2 then
+        love.graphics.draw(self.borderBottomDestroyed, 0, self.lowerBorderPosition + self.mapBreakthroughBonus1);
+    elseif _persTable.upgrades.mapBreakthrough1 and _persTable.upgrades.mapBreakthrough2 then
+        love.graphics.draw(self.borderBottomDestroyed, 0, self.lowerBorderPosition + self.mapBreakthroughBonus1);
+        love.graphics.draw(self.borderBottomDestroyed, 0, self.lowerBorderPosition + 
+            self.mapBreakthroughBonus1 + self.mapBreakthroughBonus2);
+    end
     love.graphics.draw(self.borderBottom, 0, self.lowerBorderPosition);
 
 

@@ -49,9 +49,16 @@ describe("Unit test for SwarmFactory.lua", function()
         locInstance = testClass(data, levMan);
     end)
 
-    it("Testing constructor", function()
+    it("Testing constructor for sewers", function()
         local myInstance = testClass(require "src.data", levMan);
         assert.are.same(myInstance.maxDepth, locInstance.maxDepth);
+    end)
+
+    it("Testing constructor for canyon", function()
+        levMan.curLevel.getLevelName = function(...) return "canyon" end;
+        data = require "src.data"
+        local myInstance = testClass(data, levMan);
+        assert.are.same(myInstance.actualSwarm, data.swarmsCanyon);
     end)
 
     it("Testing destructSF", function()
@@ -76,6 +83,15 @@ describe("Unit test for SwarmFactory.lua", function()
         local s = spy.on(FishableObject, "update");
         locInstance:update();
         assert.spy(s).was.called(#locInstance.createdFishables);
+    end)
+
+    it("Testing update method", function()
+        levMan.curLevel.getDirection = function (...) return -1 end;
+        levMan.curLevel.getYPos = function (...) return 50 end;
+        local myInstance = testClass(require "src.data", levMan);
+        myInstance.currentSwarm = 2;
+        myInstance:update(0.004);
+        assert.are.same(1, myInstance.currentSwarm);
     end)
 
     it("Testing createNextSwarm method", function()
@@ -122,5 +138,76 @@ describe("Unit test for SwarmFactory.lua", function()
     it("Testing getFishableObjects method", function()
         locInstance.fishableObjects = {"fish1", "fish2", "fish3"};
         assert.are.same({"fish1", "fish2", "fish3"}, locInstance:getFishableObjects());
+    end)
+
+    it("Testing setMovementMultiplicator Function", function()
+        locInstance:setSpeedMultiplicator(0.3);
+        assert.are.same(0.3, locInstance.speedMulitplicator);
+    end)
+
+    it("Testing createSleepingpill", function()
+        locInstance.createdFishables = {};
+        locInstance:createSleepingpill(400, 200, 400);
+        assert.are.same(1, #locInstance.createdFishables);
+    end)
+
+    it("Testing createMoreSwarms", function()
+        local locData = {
+            fishableObjects = {
+                balloon = {
+                name = "balloon",
+                image = "balloon.png",
+                spriteSize = 64,
+                minSpeed = 2,
+                maxSpeed = 4,
+                value = 10,
+                minAmount = 2,
+                maxAmount = 3,
+                swarmHeight = 200,
+                enabled = true,
+                description = "Let it go like your dreams";
+                hitbox = {
+                    {
+                        width = 20,
+                        height = 40,
+                        deltaXPos = 22,
+                        deltaYPos = 4
+                    },
+                    {
+                        width = 30,
+                        height = 14,
+                        deltaXPos = 18,
+                        deltaYPos = 14
+                    },
+                    {
+                        width = 6,
+                        height = 20,
+                        deltaXPos = 34,
+                        deltaYPos = 44
+                    }
+                }
+            }
+            },
+            swarmsSewer = {
+                {
+                    allowedFishables = { "balloon"},
+                    fishablesProbability = {100}, 
+                    maxSwarmHeight = 90000
+                }
+            }
+        }
+        local myInstance = testClass(locData, levMan);
+        myInstance.addedHeights = 0;
+        myInstance:createMoreSwarms(10);
+        assert.are.not_same(myInstance.addedHeights, 0);
+    end)
+
+    it("Testing creatFallingLitter", function()
+        levMan.curLevel.getLevelName = function(...) return "canyon" end
+        local myInstance = testClass(require "src.data", levMan);
+        myInstance.positionOfLastLitter = 0;
+        myInstance.actualSwarm[myInstance.currentSwarm].typ = "static";
+        myInstance:createFallingLitter(1000, 200, 300);
+        assert.are.same(myInstance.positionOfLastLitter, 1000);
     end)
 end)
