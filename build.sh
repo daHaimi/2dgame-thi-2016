@@ -7,6 +7,10 @@ GAME_NAME="$1"
 BUILD_NR="$2"
 STUB_DIR=/var/lib/love/stubs
 
+# Submodules auf aktuellen Stand bringen
+/usr/bin/git submodule sync
+/usr/bin/git submodule update
+
 # Dokumentation
 mkdir -p doc/
 /usr/local/bin/luadoc -d doc src/
