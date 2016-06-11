@@ -57,7 +57,11 @@ describe("Test Gui", function()
        _G.love = {
            system = {
                 getOS = function(...) return ""; end;
+            },
+            graphics = {
+                newFont = function(...) return {}; end;
             }
+            
         };
        _G.Loveframes = {
             Create = function(typeName) return FakeElement(typeName); end;

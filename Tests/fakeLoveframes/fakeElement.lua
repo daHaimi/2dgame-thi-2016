@@ -12,6 +12,7 @@ local fakeElement = Class {
         --text
         self.maxWidth = nil;
         self.shadow = false;
+        self.font = "";
         
         --imagebutton and image
         self.imagepath = nil;
@@ -76,6 +77,11 @@ end
 function fakeElement:GetWidth()
     return 10;
 end
+
+function fakeElement:SetFont(font)
+    self.font = font
+end
+
 
 
 ---imagebutton

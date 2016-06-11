@@ -16,6 +16,27 @@ describe("Unit test for Start.lua", function()
         _G._persTable = {
             scaledDeviceDim = {500, 500};
         };
+        _G.love = {
+            graphics = {
+                newFont = function(...) end;
+            }
+        }
+        _G.data = {
+            languages= {
+                english = {
+                    package = {
+                        textStart = "";
+                    }
+                }
+            }
+        }
+        _G._persTable = {
+            scaledDeviceDim = {480, 800},
+            config = {
+                language = "english";
+            }
+        }
+        
         locInstance = testClass();
     end)
 
@@ -28,6 +49,9 @@ describe("Unit test for Start.lua", function()
     it("Testing Constructor", function()
         _G._persTable = {
             scaledDeviceDim = {640, 950};
+            config = {
+                language = "english";
+            }
         };
         locInstance = testClass();
         local myInstance = testClass();
@@ -37,6 +61,9 @@ describe("Unit test for Start.lua", function()
     it("Testing Constructor", function()
         _G._persTable = {
             scaledDeviceDim = {720, 1024};
+            config = {
+                language = "english";
+            }
         };
         locInstance = testClass();
         local myInstance = testClass();
@@ -88,8 +115,8 @@ describe("Unit test for Start.lua", function()
         
         assert.are.equal(locInstance.elementsOnFrame.title.x, 45);
         assert.are.equal(locInstance.elementsOnFrame.title.y, 60);
-        assert.are.equal(locInstance.elementsOnFrame.hamster.x, 355);
-        assert.are.equal(locInstance.elementsOnFrame.hamster.y, 10);
+        assert.are.equal(locInstance.elementsOnFrame.hamster.x, 343);
+        assert.are.equal(locInstance.elementsOnFrame.hamster.y, -20);
         assert.are.equal(locInstance.offset, 4);
     end)
 
@@ -103,8 +130,8 @@ describe("Unit test for Start.lua", function()
         
         assert.are.equal(locInstance.elementsOnFrame.title.x, 55);
         assert.are.equal(locInstance.elementsOnFrame.title.y, 60);
-        assert.are.equal(locInstance.elementsOnFrame.hamster.x, 295);
-        assert.are.equal(locInstance.elementsOnFrame.hamster.y, 10);
+        assert.are.equal(locInstance.elementsOnFrame.hamster.x, 285);
+        assert.are.equal(locInstance.elementsOnFrame.hamster.y, -20);
         assert.are.equal(locInstance.offset, 4);
     end)
 
