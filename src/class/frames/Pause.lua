@@ -154,7 +154,7 @@ end
 
 --- Unlocks the rage quit achievement.
 function Pause:checkAchRageQuit()
-     if _G._persTable.phase == 2 
+     if not _G._persTable.achievements.rageQuit and _G._persTable.phase == 2 
      and math.ceil(math.abs(_gui:getLevelManager():getCurLevel():getReachedDepth() / 300)) <= 2 then
         _gui:getLevelManager():getCurLevel():unlockAchievement("rageQuit");
     end
