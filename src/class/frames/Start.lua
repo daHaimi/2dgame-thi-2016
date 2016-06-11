@@ -28,14 +28,9 @@ function Start:create()
     self.elementsOnFrame.hamster:SetImage("assets/gui/hamster.png");
     self.elementsOnFrame.hamster:SetScale(0.9 * _persTable.scaledDeviceDim[1] / 256, 0.9 * _persTable.scaledDeviceDim[1] / 256);
     
-    self.elementsOnFrame.text:SetShadow(true);
-    self.elementsOnFrame.text:SetShadowColor(255, 255, 255);
-    self.elementsOnFrame.text:SetPos(0.5 * _persTable.scaledDeviceDim[1] - 0.5 * self.elementsOnFrame.text:GetWidth(), 0.8 * _persTable.scaledDeviceDim[2]);
-end
-
----changes the language of this frame
-function Start:setLanguage(language)
-    self.elementsOnFrame.text:SetText(_G.data.languages[language].package.textStart);
+    self.elementsOnFrame.text:SetFont( love.graphics.newFont("font/8bitOperatorPlus-Bold.ttf", 35));
+    self.elementsOnFrame.text:SetText({ {color = {255, 255, 255, 255}}, _G.data.languages[_G._persTable.config.language].package.textStart})
+    self.elementsOnFrame.text:SetPos(0.5 * _persTable.scaledDeviceDim[1] - 0.5 * self.elementsOnFrame.text:GetWidth(), 0.75 * _persTable.scaledDeviceDim[2]);
 end
 
 ---just called frequenzly in the start state
