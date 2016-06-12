@@ -734,20 +734,20 @@ return {
         godMode = {
             nameOnPersTable = "godMode";
             price = 1000;
-            image = "gui_Test_klickableElement.png";
-            image_disable = "gui_Test_klickableElement_disable.png";
+            image = "shop_godmode.png";
+            image_disable = "shop_godmode_locked.png";
         },
         mapBreakthrough1 = {
             nameOnPersTable = "mapBreakthrough1";
             price = 2500;
-            image = "gui_Test_klickableElement.png";
-            image_disable = "gui_Test_klickableElement_disable.png";
+            image = "shop_barrier.png";
+            image_disable = "shop_barrier_locked.png";
         },
         mapBreakthrough2 = {
             nameOnPersTable = "mapBreakthrough2";
             price = 5000;
-            image = "gui_Test_klickableElement.png";
-            image_disable = "gui_Test_klickableElement_disable.png";
+            image = "shop_barrier.png";
+            image_disable = "shop_barrier_locked.png";
         },
         moreFuel1 = {
             nameOnPersTable = "moreFuel1";
