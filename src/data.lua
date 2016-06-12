@@ -728,8 +728,8 @@ return {
         moneyMulitplier = {
             nameOnPersTable = "moneyMultiplier";
             price = 300;
-            image = "gui_Test_klickableElement.png";
-            image_disable = "gui_Test_klickableElement_disable.png";
+            image = "shop_doubleScore.png";
+            image_disable = "shop_doubleScore_locked.png";
         },
         godMode = {
             nameOnPersTable = "godMode";
@@ -764,14 +764,14 @@ return {
         firstPermanentMoneyMulitplier = {
             nameOnPersTable = "firstPermanentMoneyMult";
             price = 1000;
-            image = "gui_Test_klickableElement.png";
-            image_disable = "gui_Test_klickableElement_disable.png";
+            image = "shop_moreMoney1.png";
+            image_disable = "shop_moreMoney1_locked.png";
         },
         secondPermanentMoneyMulitplier = {
             nameOnPersTable = "secondPermanentMoneyMult";
             price = 2500;
-            image = "gui_Test_klickableElement.png";
-            image_disable = "gui_Test_klickableElement_disable.png";
+            image = "shop_moreMoney2.png";
+            image_disable = "shop_moreMoney2_locked.png";
         },
     },
     
