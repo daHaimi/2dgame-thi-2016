@@ -229,6 +229,10 @@ function Bait:collisionDetected(fishable, index)
             self.levMan:getCurLevel():switchToPhase2();
         end
     end
+    
+    if self.levMan:getCurLevel():getGodModeStat() then
+        self.levMan:getCurSwarmFactory().createdFishables[index]:setDestroyed();
+    end
     -- while phase 2
     if self.levMan:getCurLevel():getDirection() == -1 and not fishable.caught then
         self.levMan:getCurSwarmFactory().createdFishables[index]:setToCaught();
