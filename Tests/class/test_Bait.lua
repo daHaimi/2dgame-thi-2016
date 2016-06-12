@@ -52,6 +52,7 @@ describe("Unit test for Bait.lua", function()
                         getHitboxXPosition = function(...) return 15; end;
                         getHitboxYPosition = function(...) return 20; end;
                         setToCaught = function(...) end;
+                        setDestroyed = function(...) end;
                         setSpeedMultiplicator = function(...) end;
                         caught = false;
                         hitbox = {};

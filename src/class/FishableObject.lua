@@ -56,8 +56,10 @@ local FishableObject = Class {
             self.animation = Animate(self.sprite, spriteCols, spriteRows, animTimeout, animType);
         end
         
+        if love.filesystem.exists("assets/sprites/sprite_explosion.png") then
         self.spriteDestroy = love.graphics.newImage("assets/sprites/sprite_explosion.png");
-        self.animDestroy = Animate(self.spriteDestroy, 3, 1, Animate.AnimType.linear, 1, 3);
+        self.animDestroy = Animate(self.spriteDestroy, 3, 1, .08, Animate.AnimType.linear);
+        end
     end;
 
     name = "no name";
@@ -133,7 +135,7 @@ function FishableObject:draw()
             end
       end
       elseif self.caught and self.destroyed then
-            if math.abs(self.yPosition - self.caughtAt) < 50 
+            if math.abs(self.yPosition - self.caughtAt) < 150 
             and self.levMan:getCurLevel():getDirection() == 1 then
               self.animDestroy:draw(self.xPosition, self.yPosition);
             end
@@ -254,6 +256,7 @@ function FishableObject:setToCaught()
     self.caughtAt = self.yPosition;
 end
 
+--- set flags to destroy all fishables which were hitted by GodMode
 function FishableObject:setDestroyed()
   self:setToCaught();
   self.destroyed = true;

@@ -229,7 +229,7 @@ function Bait:collisionDetected(fishable, index)
             self.levMan:getCurLevel():switchToPhase2();
         end
     end
-    
+    -- removes fishable (explosion animation)
     if self.levMan:getCurLevel():getGodModeStat() then
         self.levMan:getCurSwarmFactory().createdFishables[index]:setDestroyed();
     end
