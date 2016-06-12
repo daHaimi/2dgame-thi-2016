@@ -752,14 +752,14 @@ return {
         moreFuel1 = {
             nameOnPersTable = "moreFuel1";
             price = 1000;
-            image = "gui_Test_klickableElement.png";
-            image_disable = "gui_Test_klickableElement_disable.png";
+            image = "shop_fuel1.png";
+            image_disable = "shop_fuel1_locked.png";
         },
         moreFuel2 = {
-            nameOnPersTable = "moreFuel2";
+            nameOnPersTable = "";
             price = 1500;
-            image = "gui_Test_klickableElement.png";
-            image_disable = "gui_Test_klickableElement_disable.png";
+            image = "shop_fuel2.png";
+            image_disable = "shop_fuel2_locked.png";
         },
         firstPermanentMoneyMulitplier = {
             nameOnPersTable = "firstPermanentMoneyMult";
