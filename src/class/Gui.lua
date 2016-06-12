@@ -57,8 +57,14 @@ function Gui:getFrames()
 end
 
 ---creates new notification
-function Gui:newNotification(image, text)
-    self.notification:newNotification(image, text);
+-- @param image The image of the unlocked achievement.
+-- @param achName The name in the persistence table of the achivement.
+function Gui:newNotification(image, achName)
+    if _G._persTable.config.language == "german" then
+        self.notification:newNotification(image, _G.data.languages.german.package[achName].name);
+    else
+        self.notification:newNotification(image, _G.data.languages.english.package[achName].name);
+    end
 end
 
 ---called in the load function

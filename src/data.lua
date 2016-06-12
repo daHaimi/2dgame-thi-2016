@@ -963,6 +963,10 @@ return {
                     name = "Respect our Work";
                     description = "Read the credits";
                 };
+                getFirtsObject = {
+                    name = "First object";
+                    description = "You caught your first object!";
+                };
                 allLevelBoardersPassed = {
                     name = "The great breakthrough";
                     description = "Pass all boarders in a level";
@@ -1230,12 +1234,16 @@ return {
                 textScore = "Punktestand:";
                 textStart = "Klicken zum Starten!";
                 buttonChangeLevel = "Levelauswahl";
+                getFirtsObject = {
+                    name = "Der erste Fang";
+                    description = "Du hast den ersten Fang gemacht";
+                };
                 creditsRed = {
                     name = "Respektiere unsere Arbeit";
                     description = "Lese die Credits";
                 };
                 allLevelBoardersPassed = {
-                    name = "DThe great breakthrough";
+                    name = "The great breakthrough";
                     description = "Pass all boarders in a level";
                 };
                 nothingCaught = {
@@ -1331,11 +1339,6 @@ return {
                     name = "Rage Quit";
                     description = "Quit the game after a short distance";
                 },
-                getFirstObject = {
-                    name = "DFirst object";
-                    description = "You caught your first object";
-                },
-                                --objects
                 nemo = {
                     name = "Nemo";
                     description = "Anscheinend hast du Nemo gefunden";

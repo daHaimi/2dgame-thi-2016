@@ -270,7 +270,7 @@ end
 function Level:unlockAchievement(achName)
     table.insert(_G._unlockedAchievements, _G.data.achievements[achName]);
     _gui:newNotification("assets/gui/480px/" .. _G.data.achievements[achName].image_unlock, 
-        _G.data.achievements[achName].name);
+        achName);
     _G._persTable.achievements[achName] = true;
 end
 
