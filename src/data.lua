@@ -698,20 +698,20 @@ return {
         oneMoreLife = {
             nameOnPersTable = "oneMoreLife";--Name of parameter in persTable. Unlock change this parameter to true
             price = 500;--price of this item
-            image = "gui_Test_klickableElement.png";
-            image_disable = "gui_Test_klickableElement_disable.png";
+            image = "shop_extraLife1.png";
+            image_disable = "shop_extraLife1_locked.png";
         },
         twoMoreLife = {
             nameOnPersTable = "twoMoreLife";
             price = 1000;
-            image = "gui_Test_klickableElement.png";
-            image_disable = "gui_Test_klickableElement_disable.png";
+            image = "shop_extraLife2.png";
+            image_disable = "shop_extraLife2_locked.png";
         },
         threeMoreLife = {
             nameOnPersTable = "threeMoreLife";
             price = 1500;
-            image = "gui_Test_klickableElement.png";
-            image_disable = "gui_Test_klickableElement_disable.png";
+            image = "shop_extraLife3.png";
+            image_disable = "shop_extraLife3_locked.png";
         },
         firstSpeedUp = {
             nameOnPersTable = "firstSpeedUp";
