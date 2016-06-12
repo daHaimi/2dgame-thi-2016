@@ -716,14 +716,14 @@ return {
         firstSpeedUp = {
             nameOnPersTable = "firstSpeedUp";
             price = 300;
-            image = "gui_Test_klickableElement.png";
-            image_disable = "gui_Test_klickableElement_disable.png";
+            image = "shop_speedup1.png";
+            image_disable = "shop_speedup1_locked.png";
         },
         secondSpeedUp = {
             nameOnPersTable = "secondSpeedUp";
             price = 300;
-            image = "gui_Test_klickableElement.png";
-            image_disable = "gui_Test_klickableElement_disable.png";
+            image = "shop_speedup2.png";
+            image_disable = "shop_speedup2_locked.png";
         },
         moneyMulitplier = {
             nameOnPersTable = "moneyMultiplier";
