@@ -73,6 +73,13 @@ _G.levelTestStub = function()
         roundFuel = nil;
         caughtThisRound = {};
     };
+    
+    local fishables = {
+        shoe = {
+            value = -50;
+        };
+    };
+    
     _G.levMan = {
         curLevel = nil;
         curPlayer = {
@@ -85,6 +92,7 @@ _G.levelTestStub = function()
             createSleepingpill = function(...) end;
             createFallingLitter = function(...) end;
             createBubbles = function(...) end;
+            getFishableObjects = function(...) return fishables end;
         };
         getLevelPropMapByName = function(...) return {
             direction = 1;
@@ -747,6 +755,59 @@ describe("Test unit test suite", function()
         stub(_gui, "newNotification");
         locInstance:unlockAchievement("getFirtsObject");
         assert.are.same(true, _G._persTable.achievements.getFirtsObject);
+        assert.stub(_gui.newNotification).was.called(1);
+    end)
+
+    it("Testing unlock FailedStart", function()
+        _G._gui = {
+            newNotification = function(...) end;
+        };
+        _G._unlockedAchievements = {};
+        _G.data = {
+            achievements = {
+                failedStart = {
+                    nameOnPersTable = "failedStart";
+                    image_lock = "ach_drop_hamster_locked.png";
+                    image_unlock = "ach_drop_hamster.png";
+                };
+            };
+        };
+
+        stub(_gui, "newNotification");
+        locInstance.failedStart = true;
+        locInstance.levelFinished = true;
+        _G._persTable.achievements.failedStart = false;
+        locInstance:checkForAchievments();
+        assert.are.same(true, _G._persTable.achievements.failedStart);
+        assert.stub(_gui.newNotification).was.called(1);
+    end)
+
+    it("Testing unlock twoBoots", function()
+        _G._gui = {
+            newNotification = function(...) end;
+        };
+        _G._unlockedAchievements = {};
+        _G.data = {
+            achievements = {
+                caughtTwoBoots = {
+                    nameOnPersTable = "caughtTwoBoots";
+                    image_lock = "ach_two_shoes_locked.png";
+                    image_unlock = "ach_two_shoes.png";
+                };
+            };
+        };
+
+        stub(_gui, "newNotification");
+        _G._tmpTable.caughtThisRound = {
+            shoe = 2;
+        }
+        _G._persTable.fish.caught = {
+            shoe = 2;
+        }
+        locInstance.levelFinished = true;
+        _G._persTable.achievements.caughtTwoBoots = false;
+        locInstance:checkForAchievments();
+        assert.are.same(true, _G._persTable.achievements.caughtTwoBoots);
         assert.stub(_gui.newNotification).was.called(1);
     end)
 end)
