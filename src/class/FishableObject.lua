@@ -58,7 +58,7 @@ local FishableObject = Class {
         
         if love.filesystem.exists("assets/sprites/sprite_explosion.png") then
         self.spriteDestroy = love.graphics.newImage("assets/sprites/sprite_explosion.png");
-        self.animDestroy = Animate(self.spriteDestroy, 3, 1, .08, Animate.AnimType.linear);
+        self.animDestroy = Animate(self.spriteDestroy, 3, 1, .08, Animate.AnimType.random);
         end
     end;
 
@@ -135,7 +135,7 @@ function FishableObject:draw()
             end
       end
       elseif self.caught and self.destroyed then
-            if math.abs(self.yPosition - self.caughtAt) < 150 
+            if math.abs(self.yPosition - self.caughtAt) < 100 
             and self.levMan:getCurLevel():getDirection() == 1 then
               self.animDestroy:draw(self.xPosition, self.yPosition);
             end
@@ -153,7 +153,9 @@ function FishableObject:update(dt, speedMulitplicator)
     end
     
     if self.destroyed then
-      self.animDestroy:update(dt);
+      if math.abs(self.yPosition - self.caughtAt) < 100  then
+        self.animDestroy:update(dt);
+      end
     end
     
     if not self.caught then
