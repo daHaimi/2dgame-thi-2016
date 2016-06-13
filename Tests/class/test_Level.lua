@@ -76,6 +76,7 @@ _G.levelTestStub = function()
             createMoreSwarms = function (...) end;
             createSleepingpill = function (...) end;
             createFallingLitter = function (...) end;
+            createBubbles = function (...) end;
         };
         getLevelPropMapByName = function(...) return {
             direction = 1;

@@ -15,7 +15,8 @@ local SwarmFactory = Class {
         self.actualSwarm = {};
         self.speedMulitplicator = 1;
         self.positionOfLastPill = 0;
-        self.positionOfLastLitter = 0;
+        self.positionOfLastLitter = 0;        
+        self.positionOfLastBubbles = 0;
         
         self.levMan = levelManager;
         -- Start at the lower 75% of the screen to create swarms
@@ -59,6 +60,29 @@ function SwarmFactory:createSleepingpill(depth, minDistance, maxDistance)
             fishable.hitpoints, fishable.spriteSize, fishable.hitbox, fishable.animTimeoutMin, fishable.animTimeoutMax,
             fishable.animType, 0, self.levMan);
         self.positionOfLastPill = depth;
+    end
+end
+
+--- creats some bubbles
+--@param depth depth where the bubble should be spawned
+--@param minDistance minimal distance between two "swarms" of bubbles
+--@param maxDistance maximal distance between two "swarms" of bubbles
+function SwarmFactory:createBubbles(depth, minDistance, maxDistance)
+    if   math.abs(depth - self.positionOfLastBubbles) > math.random(maxDistance - minDistance) + minDistance then
+        local fishable = self.fishableObjects["bubble"];
+        local amount = math.random(fishable.minAmount, fishable.maxAmount);
+        local xPosition = math.random(fishable.spriteSize + 26, 
+            self.levMan:getCurLevel().winDim[1] - 58 - fishable.spriteSize);
+        for i = 1, amount, 1 do 
+            self.createdFishables[#self.createdFishables + 1] = FishableObject(fishable.name, fishable.image, 
+                depth + self.levMan:getCurLevel().winDim[2], fishable.minSpeed, fishable.maxSpeed, fishable.value, 
+                fishable.hitpoints, fishable.spriteSize, fishable.hitbox, fishable.animTimeoutMin, 
+                fishable.animTimeoutMax, fishable.animType, fishable.downSpeed, self.levMan);
+            self.positionOfLastBubbles = depth;
+            self.createdFishables[#self.createdFishables]:setYPosition(self.levMan:getCurLevel().winDim[2]
+                - math.random(100));
+            self.createdFishables[#self.createdFishables]:setXPosition(xPosition + math.random(-50, 50));
+        end
     end
 end
 

@@ -178,6 +178,10 @@ function Level:update(dt, bait)
     self.levMan:getCurSwarmFactory():createMoreSwarms( - (self.posY - self.winDim[2] * 0.5));
     --dynamic creation of sleepingPills
     self.levMan:getCurSwarmFactory():createSleepingpill( - (self.posY - self.winDim[2] * 0.5), 300, 700);
+    --dynamic creation of swarms of bubbles
+    if self.p_levelName == "sewers" then
+    self.levMan:getCurSwarmFactory():createBubbles( - (self.posY - self.winDim[2] * 0.5), 100, 150);
+    end
     --dynamic creation of falling litter in the canyon
     if self.p_levelName == "canyon" then
         self.levMan:getCurSwarmFactory():createFallingLitter( - (self.posY + self.winDim[2] * 0.5), 500, 1500);

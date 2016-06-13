@@ -635,6 +635,24 @@ return {
                     deltaYPos = 40
                 }
             }
+        },
+        bubble = {
+            name = "bubble",
+            image = "bubble.png",
+            spriteSize = 64,
+            minSpeed = 0,
+            maxSpeed = 0,
+            downSpeed = -10,
+            value = 0,
+            minAmount = 3,
+            maxAmount = 5,
+            swarmHeight = 0,
+            hitbox = { {
+                    width = 0,
+                    height = 0,
+                    deltaXPos = 0,
+                    deltaYPos = 0
+                }}
         }
     },
 
