@@ -1,6 +1,6 @@
 -- Lua 5.1 Hack
 _G.math.inf = 1 / 0
-
+_G.Animate = require "class.Animate";
 _G.levelTestStub = function()
     _G.TEsound = {
         playLooping = function(...) end;
@@ -18,8 +18,16 @@ _G.levelTestStub = function()
         achievements = {};
         playedTime = 0;
         phase = 1;
-    };
+    };    
     
+    _G.Animate.init = function (...) end;
+    _G.Animate.AnimType = {
+        linear = 1;
+        bounce = 2;
+        random = 3;
+    }
+    _G.Animate.p_quads = {};
+
     _G._persTable.achievements = {
          getFirstObject = true;
         getSecondObject = false;
@@ -436,7 +444,7 @@ describe("Test unit test suite", function()
         locInstance.enviromentPosition = -250;
         locInstance.animationStart = false;
         locInstance:drawEnviroment();
-        assert.spy(loveMock.graphics.draw).was.called(17);
+        assert.spy(loveMock.graphics.draw).was.called(20);
         assert.are.same(-50, locInstance.enviromentPosition);
     end)
 
@@ -445,7 +453,7 @@ describe("Test unit test suite", function()
         locInstance.animationStart = true;
         locInstance.enviromentPosition = 250;
         locInstance:drawEnviroment();
-        assert.spy(loveMock.graphics.draw).was.called(17);
+        assert.spy(loveMock.graphics.draw).was.called(20);
     end)
 
     it("Testing drawEnviroment: drawing Walls", function()
@@ -465,7 +473,7 @@ describe("Test unit test suite", function()
         locInstance.animationStart = true;
         locInstance.failedStart = true;
         locInstance:drawEnviroment();
-        assert.spy(loveMock.graphics.draw).was.called(17);
+        assert.spy(loveMock.graphics.draw).was.called(20);
     end)
 
     it("Testing drawEnviroment while ending animation sewer", function()
@@ -501,7 +509,7 @@ describe("Test unit test suite", function()
         locInstance.hamsterYPos = 400;
         locInstance.animationStartPoint = 0;
         locInstance:drawLine(0,300)
-        assert.spy(loveMock.graphics.draw).was.called(32);
+        assert.spy(loveMock.graphics.draw).was.called(34);
     end)
 
     it("Testing isLoaded", function()
