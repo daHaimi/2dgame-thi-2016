@@ -158,6 +158,11 @@ function Level:destructLevel()
     self.gMMusicPlaying = nil;
     self.enviromentPosition = nil;
     self.reachedDepth = nil;
+    self.hamster = nil;
+    self.line = nil;
+    self.hand = nil;
+    self.failedStart = nil;
+    self.gameLoaded = nil;
 end
 
 --- Update the game state. Called every frame.
