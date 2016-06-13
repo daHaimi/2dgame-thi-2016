@@ -12,3 +12,4 @@ luacov.*.out
 lib/hump
 lib/LoveFrames
 *.iml
+tmp/
