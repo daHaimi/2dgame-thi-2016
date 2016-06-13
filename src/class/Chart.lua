@@ -88,7 +88,11 @@ function Chart:scrollUp()
     if (self.p_toprow > 0) then
         self.p_toprow = self.p_toprow - 1;
         self:drawChart();
-        self:resetMarkedFrame();
+        if self.p_markedElement.object:GetVisible() == true then
+            self:markElement(self.p_markedElement);
+        else
+            self:resetMarkedFrame();
+        end
     end
 end
 
@@ -97,7 +101,11 @@ function Chart:scrollDown()
     if self.p_toprow + 3 < self.p_row then
         self.p_toprow = self.p_toprow + 1;
         self:drawChart();
-        self:resetMarkedFrame();
+        if self.p_markedElement.object:GetVisible() == true then
+            self:markElement(self.p_markedElement);
+        else
+            self:resetMarkedFrame();
+        end
     end
 end
 

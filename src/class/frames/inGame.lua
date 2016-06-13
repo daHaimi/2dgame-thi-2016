@@ -112,9 +112,12 @@ function InGame:draw()
     if _gui:getLastState() ~= _gui:getFrames().pause then
         self.elementsOnFrame.healthbar.object = Healthbar();
     end
-    self.frame:draw(self.elementsOnFrame);
     self.elementsOnFrame.healthbar.object:SetVisible(false);
     self.elementsOnFrame.pause.object:SetVisible(false);
+end
+
+function InGame:activate()
+    self.frame:draw(self.elementsOnFrame);
 end
 
 ---called to "delete" this frame
