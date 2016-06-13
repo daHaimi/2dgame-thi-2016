@@ -36,13 +36,13 @@ local UpgradeMenu = Class {
             self.speed = 75;
         end
         self.name = "Shop";
-       self.frame = Frame((_G._persTable.scaledDeviceDim[1] - self.width) / 2, 
+        self.frame = Frame((_G._persTable.scaledDeviceDim[1] - self.width) / 2,
             (_G._persTable.scaledDeviceDim[2] - self.height) / 2 - self.speed, "down", "down", self.speed, 0, -1500);
         self:create();
     end;
 };
 
----creates the shop frame
+--- creates the shop frame
 function UpgradeMenu:create()
     --add, create and position all elements on this frame
     self.elementsOnFrame = {
@@ -68,32 +68,32 @@ function UpgradeMenu:create()
         };
         button_back = {
             object = Loveframes.Create("imagebutton");
-           x = 0.125 * self.width;
+            x = 0.125 * self.width;
             y = self.height - self.buttonHeight;
         };
     };
-    
+
     --adjust all elements on this frame
     self.elementsOnFrame.background.object:SetImage(self.directory .. "StandardBG.png");
-    
+
     self.elementsOnFrame.button_buy.object:SetImage(self.directory .. "HalfButton.png")
     self.elementsOnFrame.button_buy.object:SizeToImage()
     self.elementsOnFrame.button_buy.object:SetText("Buy");
-    
+
     self.elementsOnFrame.button_back.object:SetImage(self.directory .. "HalfButton.png")
     self.elementsOnFrame.button_back.object:SizeToImage()
     self.elementsOnFrame.button_back.object:SetText("Back");
-    
+
     self:addAllUpgrades();
     self:loadValuesFromPersTable();
-    
+
     --onclick events for all buttons
-    self.elementsOnFrame.button_back.object.OnClick = function(object)
+    self.elementsOnFrame.button_back.object.OnClick = function(_)
         _gui:changeFrame(_gui:getFrames().mainMenu);
     end
-    
-    self.elementsOnFrame.button_buy.object.OnClick = function(object)
-        if self.elementsOnFrame.chart.object:getMarkedElement() ~= nil then 
+
+    self.elementsOnFrame.button_buy.object.OnClick = function(_)
+        if self.elementsOnFrame.chart.object:getMarkedElement() ~= nil then
             if _G._persTable.money >= self.elementsOnFrame.chart.object:getMarkedElement().price then
                 self:buyElement();
                 _G._persistence:updateSaveFile();
@@ -107,7 +107,7 @@ end
 
 function UpgradeMenu:checkForAchievement()
     local boughtAll = true;
-    for k, v in pairs(_G._persTable.upgrades) do
+    for _, v in pairs(_G._persTable.upgrades) do
         if type(v) == "boolean" then
             if not v then
                 boughtAll = false;
@@ -123,10 +123,10 @@ end
 
 --updates the money on this frame
 function UpgradeMenu:updateMoney()
-        self.elementsOnFrame.money.object:SetText("Money: " .. _G._persTable.money);
+    self.elementsOnFrame.money.object:SetText("Money: " .. _G._persTable.money);
 end
 
----called to buy an Item
+--- called to buy an Item
 function UpgradeMenu:buyElement()
     local markedElement = self.elementsOnFrame.chart.object:getMarkedElement();
     if not _G._persTable.upgrades[markedElement.nameOnPersTable] then
@@ -144,12 +144,12 @@ end
 
 --add all upgrades written in the data.lua into the chart and adds an OnClick event
 function UpgradeMenu:addAllUpgrades()
-    for k, v in pairs(_G.data.upgrades) do
-        local newKlickableElement = KlickableElement(v.name, self.directory .. v.image, 
-            self. directory .. v.image_disable, v.description, v.price, v.nameOnPersTable);
-        
+    for _, v in pairs(_G.data.upgrades) do
+        local newKlickableElement = KlickableElement(v.name, self.directory .. v.image,
+            self.directory .. v.image_disable, v.description, v.price, v.nameOnPersTable);
+
         --add OnClick event
-        newKlickableElement.object.OnClick = function(object)
+        newKlickableElement.object.OnClick = function(_)
             self.elementsOnFrame.chart.object:markElement(newKlickableElement);
         end
         self.elementsOnFrame.chart.object:addKlickableElement(newKlickableElement);
@@ -158,7 +158,7 @@ end
 
 
 function UpgradeMenu:loadValuesFromPersTable()
-    for k, v in pairs(self.elementsOnFrame.chart.object:getAllElements()) do
+    for _, v in pairs(self.elementsOnFrame.chart.object:getAllElements()) do
         local elementName = v.nameOnPersTable;
         if _G._persTable.upgrades[elementName] then
             if _G._persTable.upgrades[elementName] == true then
@@ -168,29 +168,29 @@ function UpgradeMenu:loadValuesFromPersTable()
     end
 end
 
----shows the frame on screen
+--- shows the frame on screen
 function UpgradeMenu:draw()
     self:updateMoney();
     self.frame:draw(self.elementsOnFrame);
 end
 
----called to "delete" this frame
+--- called to "delete" this frame
 function UpgradeMenu:clear()
     self.frame:clear(self.elementsOnFrame);
 end
 
----called in the "fly in" state 
+--- called in the "fly in" state
 function UpgradeMenu:appear()
     love.mouse.setVisible(true);
     self.frame:appear(self.elementsOnFrame);
 end
 
----called in the "fly out" state
+--- called in the "fly out" state
 function UpgradeMenu:disappear()
     self.frame:disappear(self.elementsOnFrame);
 end
 
----return true if the frame is on position /fly in move is finished
+--- return true if the frame is on position /fly in move is finished
 function UpgradeMenu:checkPosition()
     return self.frame:checkPosition();
 end

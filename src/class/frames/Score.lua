@@ -35,13 +35,13 @@ local Score = Class {
             self.speed = 75;
         end
         self.name = "Score";
-        self.frame = Frame((_G._persTable.scaledDeviceDim[1] - self.width) / 2, 
+        self.frame = Frame((_G._persTable.scaledDeviceDim[1] - self.width) / 2,
             (_G._persTable.scaledDeviceDim[2] - self.height) / 2 - self.speed, "down", "down", self.speed, 0, -1500);
         self:create();
     end;
 };
 
----creates the Score frame
+--- creates the Score frame
 function Score:create()
     --add, create and position all elements on this frame
     self.elementsOnFrame = {
@@ -76,59 +76,59 @@ function Score:create()
             y = self.scoreHeight + self.achievementsHeight + self.buttonHeight + 3 * self.Offset;
         };
     };
-    
+
     --adjust all elements on this frame
     self.elementsOnFrame.background.object:SetImage(self.directory .. "ScoreScreen.png");
-    
+
     self.elementsOnFrame.scoretext.object:SetText("Your Score:");
     self.elementsOnFrame.scoretext.x = 0.5 * self.width - 0.5 * self.elementsOnFrame.scoretext.object:GetWidth();
-    
+
     self.elementsOnFrame.score.x = 0.5 * self.width - 30;
-    
+
     self.elementsOnFrame.button_retry.object:SetImage(self.directory .. "Button.png")
     self.elementsOnFrame.button_retry.object:SizeToImage()
     self.elementsOnFrame.button_retry.object:SetText("Retry");
-    
+
     self.elementsOnFrame.button_backToMenu.object:SetImage(self.directory .. "Button.png")
     self.elementsOnFrame.button_backToMenu.object:SizeToImage()
     self.elementsOnFrame.button_backToMenu.object:SetText("Back to Menu");
-    
-    
+
+
     --onclick events for all buttons
-    self.elementsOnFrame.button_retry.object.OnClick = function(object)
+    self.elementsOnFrame.button_retry.object.OnClick = function(_)
         _gui:getLevelManager():replayLevel();
         _gui:changeFrame(_gui:getFrames().inGame);
     end
-    
-    self.elementsOnFrame.button_backToMenu.object.OnClick = function(object)
+
+    self.elementsOnFrame.button_backToMenu.object.OnClick = function(_)
         _gui:getLevelManager():freeManagedObjects();
         _gui:changeFrame(_gui:getFrames().mainMenu);
     end
 end
 
----shows the frame on screen
+--- shows the frame on screen
 function Score:draw()
     self.elementsOnFrame.score.object:SetText(_G._tmpTable.earnedMoney);
     self.frame:draw(self.elementsOnFrame);
 end
 
----called to "delete" this frame
+--- called to "delete" this frame
 function Score:clear()
     self.frame:clear(self.elementsOnFrame);
 end
 
----called in the "fly in" state 
+--- called in the "fly in" state
 function Score:appear()
     love.mouse.setVisible(true);
     self.frame:appear(self.elementsOnFrame);
 end
 
----called in the "fly out" state
+--- called in the "fly out" state
 function Score:disappear()
     self.frame:disappear(self.elementsOnFrame);
 end
 
----return true if the frame is on position /fly in move is finished
+--- return true if the frame is on position /fly in move is finished
 function Score:checkPosition()
     return self.frame:checkPosition();
 end

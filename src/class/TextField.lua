@@ -11,7 +11,7 @@ local Textbox = Class {
     end;
 };
 
----change the text on the textfield
+--- change the text on the textfield
 -- @parm newTopic: the new topic of the text
 -- @parm newText: new text
 function Textbox:changeText(newTopic, newText, newPrice)
@@ -26,8 +26,8 @@ function Textbox:changeText(newTopic, newText, newPrice)
     end
 end
 
----Function not conform to CC/ implements an interface
----set visible of the textfield
+--- Function not conform to CC/ implements an interface
+--- set visible of the textfield
 -- @parm visible: true or false
 function Textbox:SetVisible(visible)
     self.objTopic:SetVisible(visible);
@@ -36,8 +36,8 @@ function Textbox:SetVisible(visible)
     self.objBackground:SetVisible(visible);
 end
 
----Function not conform to CC/ implements an interface
----Set position of the textfield
+--- Function not conform to CC/ implements an interface
+--- Set position of the textfield
 -- @parm x: x axis position
 -- @parm y: y axis position
 function Textbox:SetPos(x, y)

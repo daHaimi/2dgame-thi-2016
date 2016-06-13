@@ -6,7 +6,6 @@ _G.math.inf = 1 / 0
 
 describe("Unit test for main.lua", function()
     it("Example unit test", function()
-        assert.truthy("Yup.")
+        assert.truthy("Yup.");
     end)
 end)
-

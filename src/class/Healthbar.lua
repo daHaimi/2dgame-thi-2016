@@ -24,19 +24,19 @@ local Healthbar = Class {
 
 --scale the heart images to an half
 function Healthbar:scaleHearts()
-    for k, v in pairs(self.hearts) do
+    for _, v in pairs(self.hearts) do
         v:SetScale(0.5, 0.5);
     end
 end
 
----Refresh the position and visible of the Healtbarh
+--- Refresh the position and visible of the Healtbarh
 function Healthbar:refresh()
     self:scaleHearts();
     self:SetVisible(self.basic.visible);
     self:SetPos(self.basic.xPos, self.basic.yPos);
 end
 
----triggerd if the hamster hit an object
+--- triggerd if the hamster hit an object
 function Healthbar:minus()
     if self.currentHearts < 1 then
         --trigger turn end
@@ -62,28 +62,28 @@ function Healthbar:resetHearts()
     self:refresh();
 end
 
----Function not conform to CC/ implements an interface
----Set the visible of the element
+--- Function not conform to CC/ implements an interface
+--- Set the visible of the element
 -- @parm visible: true or false
 function Healthbar:SetVisible(visible)
     self.basic.visible = visible;
     if self.currentHearts ~= {} then
-        for k, v in pairs(self.hearts) do
+        for _, v in pairs(self.hearts) do
             v:SetVisible(visible);
         end
     end
     self.icon:SetVisible(visible);
 end
 
----Function not conform to CC/ implements an interface
----set the position of the element
+--- Function not conform to CC/ implements an interface
+--- set the position of the element
 -- @parm x: x axis position
 -- @parm y: y axis position
 function Healthbar:SetPos(x, y)
     self.basic.xPos = x;
     self.basic.yPos = y;
     for k, v in ipairs(self.hearts) do
-        v:SetPos(_persTable.scaledDeviceDim[1] - 32 * k,  16);
+        v:SetPos(_persTable.scaledDeviceDim[1] - 32 * k, 16);
     end
     self.icon:SetPos(_persTable.scaledDeviceDim[1] - (32 * self.unlockedHearts + 64), 0);
 end

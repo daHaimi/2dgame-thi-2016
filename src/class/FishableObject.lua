@@ -16,14 +16,14 @@ require "socket" math.randomseed(socket.gettime() * 10000);
 -- @param animTimeoutMax The max timeout between the images in seconds
 -- @param animType (Animate.AnimType.linear) The animation type of the enum Animate.AnimType
 local FishableObject = Class {
-    init = function(self, name, imageSrc, yPosition, minSpeed, maxSpeed, value, hitpoints, 
-            spriteSize, hitbox, animTimeoutMin, animTimeoutMax, animType, fallSpeed, levMan)
+    init = function(self, name, imageSrc, yPosition, minSpeed, maxSpeed, value, hitpoints,
+    spriteSize, hitbox, animTimeoutMin, animTimeoutMax, animType, fallSpeed, levMan)
         self.name = name;
         self.image = love.graphics.newImage("assets/" .. imageSrc);
         self.xPosition = math.random(spriteSize + 26, levMan:getCurLevel().winDim[1] - 58 - self.spriteSize);
         -- 58 = 26 (width of level wall) + 32 (0.5 * width of hamster)
         if fallSpeed > 0 then
-            self.yPosition = - math.random(100);
+            self.yPosition = -math.random(100);
         elseif fallSpeed < 0 then
             self.yPosition = levMan:getCurLevel().winDim[2] + math.random(100);
         else
@@ -43,24 +43,24 @@ local FishableObject = Class {
         else
             self.speed = -(math.random() * (maxSpeed - minSpeed) + minSpeed);
         end
-        
+
         local spriteFile = "assets/sprites/sprite_" .. imageSrc;
         if love.filesystem.exists(spriteFile) then
             self.sprite = love.graphics.newImage(spriteFile);
             local spriteCols = self.sprite:getWidth() / self.image:getWidth();
             local spriteRows = self.sprite:getHeight() / self.image:getHeight();
-            local animTimeout = nil;
+            local animTimeout;
             if animTimeoutMin and animTimeoutMax then
-                animTimeout = math.random() * (animTimeoutMax - animTimeoutMin) + animTimeoutMin - 
-                              math.abs(self.speed / 100); -- animation speed also depended on move speed
+                animTimeout = math.random() * (animTimeoutMax - animTimeoutMin) + animTimeoutMin -
+                        math.abs(self.speed / 100); -- animation speed also depended on move speed
             end
             animType = Animate.AnimType[animType];
             self.animation = Animate(self.sprite, spriteCols, spriteRows, animTimeout, animType);
         end
-        
+
         if love.filesystem.exists("assets/sprites/sprite_explosion.png") then
-        self.spriteDestroy = love.graphics.newImage("assets/sprites/sprite_explosion.png");
-        self.animDestroy = Animate(self.spriteDestroy, 3, 1, .08, Animate.AnimType.random);
+            self.spriteDestroy = love.graphics.newImage("assets/sprites/sprite_explosion.png");
+            self.animDestroy = Animate(self.spriteDestroy, 3, 1, .08, Animate.AnimType.random);
         end
     end;
 
@@ -72,12 +72,12 @@ local FishableObject = Class {
     value = 0;
     hitpoints = 1;
     spriteSize = 0;
-    
+
     hitbox = {};
-    
+
     caught = false;
     caughtAt = nil;
-    
+
     soundPlayed = false;
 };
 
@@ -91,7 +91,7 @@ function FishableObject:draw()
             else
                 love.graphics.draw(self.image, self.xPosition, self.yPosition);
             end
-            
+
             love.graphics.setColor(0, 0, 0);
         else
             love.graphics.scale(-1, 1);
@@ -101,7 +101,7 @@ function FishableObject:draw()
             else
                 love.graphics.draw(self.image, -self.xPosition, self.yPosition);
             end
-        
+
             love.graphics.scale(-1, 1);
         end
 
@@ -111,38 +111,38 @@ function FishableObject:draw()
             love.graphics.rectangle("line", self:getHitboxXPosition(i), self:getHitboxYPosition(i),
             self:getHitboxWidth(i), self:getHitboxHeight(i));
         end]]
-        
+
     elseif self.caught and not self.destroyed then
         if math.abs(self.caughtAt - self.yPosition) < 50 then
             if self.value > 0 then
-                love.graphics.setColor (0, 255, 0);
+                love.graphics.setColor(0, 255, 0);
                 _G._persTable.fish.postiveFishCaught = true;
                 if not self.soundPlayed then
                     TEsound.play("assets/sound/collectedPositivValue.wav");
                     self.soundPlayed = true;
                 end
             elseif self.value < 0 then
-                love.graphics.setColor (255, 0, 0);
+                love.graphics.setColor(255, 0, 0);
                 if not self.soundPlayed then
                     TEsound.play("assets/sound/collectedNegativValue.wav");
                     self.soundPlayed = true;
                 end
             end
-            
+
             if not (self.value == 0) then
-                tempFont = love.graphics.getFont();
+                local tempFont = love.graphics.getFont();
                 love.graphics.setNewFont(20);
-                love.graphics.print (math.abs(self.value), self.xPosition, self.yPosition);
+                love.graphics.print(math.abs(self.value), self.xPosition, self.yPosition);
                 love.graphics.setFont(tempFont);
             end
-      end
-      elseif self.caught and self.destroyed then
-            if math.abs(self.yPosition - self.caughtAt) < 100 
-            and self.levMan:getCurLevel():getDirection() == 1 then
-              self.animDestroy:draw(self.xPosition, self.yPosition);
-            end
+        end
+    elseif self.caught and self.destroyed then
+        if math.abs(self.yPosition - self.caughtAt) < 100
+                and self.levMan:getCurLevel():getDirection() == 1 then
+            self.animDestroy:draw(self.xPosition, self.yPosition);
         end
     end
+end
 
 
 --- Updates the position of the object depending on its speed
@@ -153,29 +153,29 @@ function FishableObject:update(dt, speedMulitplicator)
     else
         self.outOfArea = false;
     end
-    
+
     if self.destroyed then
-      if math.abs(self.yPosition - self.caughtAt) < 100  
-      and self.levMan:getCurLevel():getDirection() == 1 then
-        self.animDestroy:update(dt);
-      end
+        if math.abs(self.yPosition - self.caughtAt) < 100
+                and self.levMan:getCurLevel():getDirection() == 1 then
+            self.animDestroy:update(dt);
+        end
     end
-    
+
     if not self.caught then
         if not self.outOfArea then
             if self.animation then
                 self.animation:update(dt);
             end
-            
+
             if ((self.xPosition - self.hitbox[1].deltaXPos) >= _G._persTable.winDim[1]) and self.speed > 0 then
                 self.speed = self.speed * -1;
-                self.xPosition = _G._persTable.winDim[1] - self:getHitboxWidth(1) - self.hitbox[1].deltaXPos + 
-                    self.speed * speedMulitplicator;
+                self.xPosition = _G._persTable.winDim[1] - self:getHitboxWidth(1) - self.hitbox[1].deltaXPos +
+                        self.speed * speedMulitplicator;
 
             elseif (self.xPosition + self.hitbox[1].deltaXPos) <= 0 then
                 self.speed = self.speed * -1;
                 self.xPosition = math.abs(self:getHitboxWidth(1) + self.hitbox[1].deltaXPos + self.speed * speedMulitplicator);
-                
+
             else
                 self.xPosition = self.xPosition + self.speed * speedMulitplicator;
             end
@@ -186,12 +186,12 @@ function FishableObject:update(dt, speedMulitplicator)
             if self.levMan:getCurLevel():getDirection() == 1 then
                 self.yPosition = self.yPosition + self.fallSpeed * speedMulitplicator;
             else
-                self.yPosition = self.yPosition + self.fallSpeed * speedMulitplicator 
-                    - self.levMan:getCurLevel():getMoved();
+                self.yPosition = self.yPosition + self.fallSpeed * speedMulitplicator
+                        - self.levMan:getCurLevel():getMoved();
             end
         end
     elseif self.caught and self.destroyed then
-      self.yPosition = self.yPosition - self.levMan:getCurLevel():getMoved();
+        self.yPosition = self.yPosition - self.levMan:getCurLevel():getMoved();
     else
         self.yPosition = self.yPosition + 0.5 * self.levMan:getCurLevel():getMoved();
     end
@@ -269,9 +269,9 @@ end
 
 --- set flags to destroy all fishables which were hitted by GodMode
 function FishableObject:setDestroyed()
-  self:setToCaught();
-  self.destroyed = true;
-  self.xPosition = self.levMan:getCurPlayer():getPosX();
+    self:setToCaught();
+    self.destroyed = true;
+    self.xPosition = self.levMan:getCurPlayer():getPosX();
 end
 
 return FishableObject;

@@ -31,13 +31,13 @@ local Options = Class {
             self.speed = 75;
         end
         self.name = "Options";
-        self.frame = Frame((_G._persTable.scaledDeviceDim[1] - self.width) / 2, 
+        self.frame = Frame((_G._persTable.scaledDeviceDim[1] - self.width) / 2,
             (_G._persTable.scaledDeviceDim[2] - self.height) / 2 - self.speed, "down", "down", self.speed, 0, -1500);
         self:create();
     end;
 };
 
----creates the options frame
+--- creates the options frame
 function Options:create()
     --add, create and position all elements on this frame
     self.elementsOnFrame = {
@@ -56,7 +56,7 @@ function Options:create()
             x = 64;
             y = 70;
         };
-        text_music= {
+        text_music = {
             object = Loveframes.Create("text");
             x = 30;
             y = 100;
@@ -80,47 +80,47 @@ function Options:create()
 
     --adjust all elements on this frame
     self.elementsOnFrame.background.object:SetImage(self.directory .. "StandardBG.png");
-    
+
     self.elementsOnFrame.slider_bgm.object:SetMinMax(0, 100);
     self.elementsOnFrame.slider_bgm.object:SetWidth(self.buttonWidth);
-    
+
     self.elementsOnFrame.slider_music.object:SetMinMax(0, 100);
     self.elementsOnFrame.slider_music.object:SetWidth(self.buttonWidth);
-    
+
     self.elementsOnFrame.button_reset.object:SetImage(self.directory .. "Button.png");
     self.elementsOnFrame.button_reset.object:SizeToImage();
-    
+
     self.elementsOnFrame.button_back.object:SetImage(self.directory .. "Button.png");
     self.elementsOnFrame.button_back.object:SizeToImage();
-    
+
     --load values out of persTable into the chart
     self:loadValuesFromPersTable();
-        
+
     --onclick events for all buttons
-    self.elementsOnFrame.slider_bgm.OnValueChanged = function(object)
+    self.elementsOnFrame.slider_bgm.OnValueChanged = function(_)
         _persTable.config.bgm = self.elementsOnFrame.slider_bgm.object:GetValue();
     end
-    
-    self.elementsOnFrame.slider_music.OnValueChanged = function(object)
+
+    self.elementsOnFrame.slider_music.OnValueChanged = function(_)
         _persTable.config.music = self.elementsOnFrame.slider_music.object:GetValue();
     end
-    
-    self.elementsOnFrame.button_reset.object.OnClick = function(object)
+
+    self.elementsOnFrame.button_reset.object.OnClick = function(_)
         _persistence:resetGame();
         self:loadValuesFromPersTable();
     end
-    
-    self.elementsOnFrame.button_back.object.OnClick = function(object)
+
+    self.elementsOnFrame.button_back.object.OnClick = function(_)
         self:loadValuesInPersTable();
         _gui:changeFrame(_gui:getLastState());
     end
 end
 
----changes the language of this frame
+--- changes the language of this frame
 function Options:setLanguage(language)
     self.elementsOnFrame.button_back.object:SetText(_G.data.languages[language].package.buttonBack);
     self.elementsOnFrame.button_reset.object:SetText(_G.data.languages[language].package.buttonReset);
-    
+
     self.elementsOnFrame.text_bgm.object:SetText(_G.data.languages[language].package.textMusic);
     self.elementsOnFrame.text_music.object:SetText(_G.data.languages[language].package.textBGM);
 end
@@ -136,29 +136,29 @@ function Options:loadValuesFromPersTable()
     self.elementsOnFrame.slider_music.object:SetValue(_persTable.config.music);
 end
 
----shows the frame on screen
+--- shows the frame on screen
 function Options:draw()
     self:loadValuesFromPersTable();
     self.frame:draw(self.elementsOnFrame);
 end
 
----called to "delete" this frame
+--- called to "delete" this frame
 function Options:clear()
     self.frame:clear(self.elementsOnFrame);
 end
 
----called in the "fly in" state 
+--- called in the "fly in" state
 function Options:appear()
     love.mouse.setVisible(true);
     self.frame:appear(self.elementsOnFrame);
 end
 
----called in the "fly out" state
+--- called in the "fly out" state
 function Options:disappear()
     self.frame:disappear(self.elementsOnFrame);
 end
 
----return true if the frame is on position /fly in move is finished
+--- return true if the frame is on position /fly in move is finished
 function Options:checkPosition()
     return self.frame:checkPosition();
 end

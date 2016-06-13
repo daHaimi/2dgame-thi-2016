@@ -16,7 +16,7 @@ local Frame = Class {
 
 --- Call to set all Elements invisible and reset the x/yOffset
 function Frame:clear(elements)
-    for k, v in pairs(elements) do
+    for _, v in pairs(elements) do
         v.object:SetVisible(false);
     end
     self.p_xOffset = self.p_xDefaultOffset;
@@ -25,14 +25,14 @@ end
 
 --- Call to set all Elements visible/ set all elements on position
 function Frame:draw(elements)
-    for k, v in pairs(elements) do
+    for _, v in pairs(elements) do
         v.object:SetVisible(true)
         v.object:SetPos(v.x + self.p_xPos + self.p_xOffset, v.y + self.p_yPos + self.p_yOffset);
     end
 end
 
 
---called in the "fly in" state 
+--called in the "fly in" state
 function Frame:appear(elements)
     if self.p_moveInDirection == "up" then
         self.p_yOffset = self.p_yOffset - self.p_moveSpeed;
@@ -43,9 +43,9 @@ function Frame:appear(elements)
     elseif self.p_moveInDirection == "left" then
         self.p_xOffset = self.p_xOffset - self.p_moveSpeed;
     end
-    for k, v in pairs(elements) do
+    for _, v in pairs(elements) do
         v.object:SetPos(v.x + self.p_xPos + self.p_xOffset, v.y + self.p_yPos + self.p_yOffset);
-        if (v.object.SetClickable ~= nil) then 
+        if (v.object.SetClickable ~= nil) then
             v.object:SetClickable(true);
         end
     end
@@ -62,15 +62,15 @@ function Frame:disappear(elements)
     elseif self.p_moveOutDirection == "left" then
         self.p_xOffset = self.p_xOffset - self.p_moveSpeed;
     end
-    for k, v in pairs(elements) do
+    for _, v in pairs(elements) do
         v.object:SetPos(self.p_xPos + v.x + self.p_xOffset, self.p_yPos + v.y + self.p_yOffset);
-        if (v.object.SetClickable ~= nil) then 
+        if (v.object.SetClickable ~= nil) then
             v.object:SetClickable(false);
         end
     end
 end
 
----return true if the frame is on position /fly in move is finished
+--- return true if the frame is on position /fly in move is finished
 function Frame:checkPosition()
     if (self.p_xOffset == 0 and self.p_yOffset == 0) then
         return true;

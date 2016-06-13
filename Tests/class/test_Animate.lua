@@ -9,21 +9,22 @@ describe("Unit test for Animate.lua", function()
         getWidth = function() return 48; end;
         getHeight = function() return 96; end;
         getDimensions = function() return 48, 96; end;
-    }
+    };
     local function round(num, idp)
-        local mult = 10^(idp or 0)
-        return math.floor(num * mult + 0.5) / mult
+        local mult = 10 ^ (idp or 0);
+        return math.floor(num * mult + 0.5) / mult;
     end
+
     local almost_equal = function(actual, expected)
         assert.are.equal(round(actual, 6), round(expected, 6));
-    end
+    end;
 
     before_each(function()
         _G.love = {
             graphics = {
                 draw = function(...) end;
                 newQuad = function(...) return 0; end;
-            }
+            };
         };
 
         locInstance = testClass(locImage, 1, 1);
@@ -41,7 +42,7 @@ describe("Unit test for Animate.lua", function()
         locInstance.p_numEnd = 2;
         locInstance.p_measures[1] = 24;
         locInstance.p_timeout = .3;
-        locInstance.p_quads = {0,0};
+        locInstance.p_quads = { 0, 0 };
         assert.are.same(myInstance1, myInstance2);
     end)
 
@@ -52,7 +53,7 @@ describe("Unit test for Animate.lua", function()
         locInstance.p_numEnd = 2;
         locInstance.p_measures[1] = 24;
         locInstance.p_timeout = .1;
-        locInstance.p_quads = {0,0};
+        locInstance.p_quads = { 0, 0 };
         locInstance.p_animType = 2;
         assert.are.same(myInstance1, myInstance2);
     end)
@@ -66,7 +67,7 @@ describe("Unit test for Animate.lua", function()
         locInstance.p_numEnd = 2;
         locInstance.p_measures[1] = 24;
         locInstance.p_timeout = .1;
-        locInstance.p_quads = {[2]=0};
+        locInstance.p_quads = { [2] = 0 };
         locInstance.p_animType = 2;
         assert.are.same(myInstance1, myInstance2);
     end)
@@ -80,7 +81,7 @@ describe("Unit test for Animate.lua", function()
         locInstance.p_numEnd = 3;
         locInstance.p_measures[1] = 12;
         locInstance.p_timeout = .1;
-        locInstance.p_quads = {[2]=0,[3]=0};
+        locInstance.p_quads = { [2] = 0, [3] = 0 };
         locInstance.p_animType = 3;
         assert.are.same(myInstance1, myInstance2);
     end)
@@ -133,7 +134,7 @@ describe("Unit test for Animate.lua", function()
 
     it("Testing update", function()
         local myInstance = testClass(locImage, 4, 1, .5);
-        local s = stub(myInstance, "shiftImage");
+        stub(myInstance, "shiftImage");
         myInstance:update(.1);
         almost_equal(myInstance.p_timer, .1);
         assert.stub(myInstance.shiftImage).was_called(0);
@@ -147,7 +148,7 @@ describe("Unit test for Animate.lua", function()
 
     it("Testing draw", function()
         local myInstance = testClass(locImage, 4, 1, .5, 2, 2);
-        local s = stub(love.graphics, "draw");
+        stub(love.graphics, "draw");
         myInstance:draw(42, 1337);
         assert.stub(love.graphics.draw).was_called_with(myInstance.p_image, myInstance.p_quads[2], 42, 1337);
     end)
