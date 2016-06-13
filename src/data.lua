@@ -756,7 +756,7 @@ return {
             image_disable = "shop_fuel1_locked.png";
         },
         moreFuel2 = {
-            nameOnPersTable = "";
+            nameOnPersTable = "moreFuel2";
             price = 1500;
             image = "shop_fuel2.png";
             image_disable = "shop_fuel2_locked.png";
