@@ -256,7 +256,7 @@ function Bait:draw()
     if self.levMan:getCurLevel():getLevelName() == "sewers" then
         self:drawLineDiagonal();
     else
-        self:drawLIneStraight();
+        self:drawLineStraight();
     end
     self.image:draw(self.xPos - 32, self.yPos - 39); -- FIXME magic number
     if self.quadCheeks ~= nil then
@@ -266,7 +266,7 @@ function Bait:draw()
 end
 
 --- draws the line of the Hamster in the canyon
-function Bait:drawLIneStraight()
+function Bait:drawLineStraight()
     local length = self.yPos
     for i = 1, length, 1 do
         if not (i * 9 > length) then

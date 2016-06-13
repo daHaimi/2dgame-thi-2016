@@ -1,4 +1,5 @@
 Class = require "lib.hump.class";
+Animate = require "class.Animate";
 require "lib/light"
 
 _G.math.inf = 1 / 0;
@@ -113,14 +114,15 @@ local Level = Class {
             self.borderLeft = love.graphics.newImage("assets/canyon_left.png");
             self.borderRight = love.graphics.newImage("assets/canyon_right.png");
             self.background = love.graphics.newImage("assets/canyon_back.png");
-            self.background2 = love.graphics.newImage("assets/canyon_back.png");
+            self.background2 = love.graphics.newImage("assets/canyon_back2.png");
             self.front = love.graphics.newImage("assets/canyon_front.png");
             self.frontOffset = 375;
         end
         
         self.hamster = love.graphics.newImage("assets/hamster_noLine.png");
         self.line = love.graphics.newImage("assets/line.png");
-        self.hand = love.graphics.newImage("assets/hand.png");
+        self.handsprite = love.graphics.newImage("assets/sprites/hand.png");
+        self.hand = Animate(self.handsprite, 2, 1, 0, Animate.AnimType.linear, false, 1);
         self.borderBottom = love.graphics.newImage("assets/border.png");
         self.borderBottomDestroyed = love.graphics.newImage("assets/border_destroyed.png");
         self.lowerBorderPosition = math.abs(self.lowerBoarder) + self.winDim[2] * 0.68 + 130;
@@ -215,6 +217,7 @@ function Level:update(dt, bait)
     
     --do the animation movement
     self:doStartAnimationMovement(bait, dt);
+    self.hand:update(dt);
     self:startEndAnimation();
     self:doEndAnimationMovement(bait, dt);
     if self.animationEndFinished then
@@ -287,7 +290,7 @@ end
 --- Unlocks the given achievement.
 -- @param achName The name of the achievement.
 function Level:unlockAchievement(achName)
-    print("Erfolg " .. achName .. " freigeschaltet");
+    --print("Erfolg " .. achName .. " freigeschaltet");
     table.insert(_G._unlockedAchievements, _G.data.achievements[achName]);
     _gui:newNotification("assets/gui/480px/" .. _G.data.achievements[achName].image_unlock, 
         achName);
@@ -454,11 +457,11 @@ function Level:drawEnviroment()
     if not self.animationStart then
         love.graphics.draw(self.hamster, self.levMan:getCurPlayer():getPosXMouse() - 32, self.hamsterYPos);
         self:drawLine(self.levMan:getCurPlayer():getPosXMouse() - 32, 100);
-        love.graphics.draw(self.hand, self.levMan:getCurPlayer():getPosXMouse() - 48, self.animationStartPoint - 220);
+        self.hand:draw(self.levMan:getCurPlayer():getPosXMouse() - 48, self.animationStartPoint - 220);
     -- while starting animation in sewers or while playing canyon
     elseif self.direction == 1 or self.p_levelName == "canyon" then
-        love.graphics.draw(self.hand, xPosHamster - 16, self.animationStartPoint - 220);
         self:drawLine(xPosHamster, 300);
+        self.hand:draw(xPosHamster - 16, self.animationStartPoint - 220);
         if self.hamsterYPos < self.animationStartPoint + 130 or self.failedStart 
             or self.hamsterYPos < self.animationStartPoint + 200 and self.p_levelName == "canyon" then
             love.graphics.draw(self.hamster, xPosHamster, self.hamsterYPos);
@@ -475,13 +478,13 @@ end
 
 --- Draws the line
 function Level:drawLine(position, length)
-    local p_dist = (self.hamsterYPos - (self.animationStartPoint - 40));
+    local p_dist = (self.hamsterYPos - (self.animationStartPoint - 60));
     local p_toMuch = 0;
     while p_dist > length do
         p_dist = p_dist - 9;
         p_toMuch = p_toMuch + 9
     end
-    for i = 9, p_dist, 9 do
+    for i = 0, p_dist, 9 do
         love.graphics.draw(self.line, position + 30, self.hamsterYPos - p_toMuch - i);
     end
 end
@@ -753,6 +756,7 @@ end
 function Level:startStartAnimation()
     self.animationStart = true;
     self.hamsterLockedXPos = self.levMan:getCurPlayer():getPosXMouse() - 32;
+    self.hand:startAnimation();
 end
 
 function Level:startEndAnimation()
