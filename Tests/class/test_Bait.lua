@@ -20,6 +20,7 @@ _G.love = {
     };
 };
 testClass = require "src.class.Bait"
+match = require 'luassert.match';
 
 
 describe("Unit test for Bait.lua", function()
@@ -617,16 +618,66 @@ describe("Unit test for Bait.lua", function()
         assert.are.same(myInstance:getPosY(), 5);
     end)
   
-    it("Test growing cheeks", function()
+    it("Test big bait cheeks", function()
         local myInstance = testClass(locWinDim, levMan);
         myInstance.image = locImageStub;
         local loveMock = mock(_G.love, true);
         myInstance.imageCheeks = locImageStub;
         myInstance.imageCheeks = {
-          getDimensions = function(...) return 0, 0 end;
+          getDimensions = function(...) return 192, 64 end;
         };
-        myInstance.hitFishable = 100;
+        myInstance.hitFishable = 25;
+        local dimX, dimY = myInstance.imageCheeks.getDimensions();
         myInstance:update();
         assert.spy(loveMock.graphics.newQuad).called(1);
+        assert.spy(loveMock.graphics.newQuad).was.called_with(2*dimX/3, 0, dimX/3, dimY, dimX, dimY);
     end)
+  
+    it("Test middle bait cheeks", function()
+        local myInstance = testClass(locWinDim, levMan);
+        myInstance.image = locImageStub;
+        local loveMock = mock(_G.love, true);
+        myInstance.imageCheeks = locImageStub;
+        myInstance.imageCheeks = {
+          getDimensions = function(...) return 192, 64 end;
+        };
+        myInstance.hitFishable = 17;
+        local dimX, dimY = myInstance.imageCheeks.getDimensions();
+        myInstance:update();
+        assert.spy(loveMock.graphics.newQuad).called(1);
+        assert.spy(loveMock.graphics.newQuad).was.called_with(dimX/3, 0, dimX/3, dimY, dimX, dimY);
+        myInstance:draw()
+    end)
+  
+     it("Test middle bait cheeks", function()
+        local myInstance = testClass(locWinDim, levMan);
+        myInstance.image = locImageStub;
+        local loveMock = mock(_G.love, true);
+        myInstance.imageCheeks = locImageStub;
+        myInstance.imageCheeks = {
+          getDimensions = function(...) return 192, 64 end;
+        };
+        myInstance.hitFishable = 10;
+        local dimX, dimY = myInstance.imageCheeks.getDimensions();
+        myInstance:update();
+        assert.spy(loveMock.graphics.newQuad).called(1);
+        assert.spy(loveMock.graphics.newQuad).was.called_with(0, 0, dimX/3, dimY, dimX, dimY);
+    end)
+  
+    it("Test draw cheeks", function()
+        local myInstance = testClass(locWinDim, levMan);
+        myInstance.image = locImageStub;
+        local loveMock = mock(_G.love, true);
+
+        myInstance.levMan.curLevel.getGodModeStat = function() return 0 end;
+        myInstance.xPos = 0;
+        myInstance.yPos = 0;
+        myInstance.quadCheeks = {};
+        myInstance:draw();
+        assert.spy(loveMock.graphics.draw).was_called();
+        assert.spy(loveMock.graphics.draw).was.called_with(myInstance.imageCheeks, myInstance.quadCheeks, 
+        match._, match._);
+    end)
+  
+  
 end)
