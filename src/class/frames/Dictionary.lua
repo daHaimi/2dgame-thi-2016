@@ -80,18 +80,20 @@ end
 --add all object written in the data.lua into the chart and adds an OnClick event
 function Dictionary:addAllObjects()
     for _, v in pairs(_G.data.fishableObjects) do
-        local path = "";
-        if self:imageExists(self.directory .. "dic_" .. v.image) then
-            path = self.directory .. "dic_" .. v.image;
-        else
-            path = "assets/" .. v.image;
-        end
+        if v.name ~= "bubble" then
+            local path = "";
+            if self:imageExists(self.directory .. "dic_" .. v.image) then
+                path = self.directory .. "dic_" .. v.image;
+            else
+                path = "assets/" .. v.image;
+            end
 
-        local newKlickableElement = KlickableElement(v.name, path, path, v.description, v.value, nil);
-        newKlickableElement.object.OnClick = function(_)
-            self.elementsOnFrame.chart.object:markElement(newKlickableElement);
+            local newKlickableElement = KlickableElement(v.name, path, path, v.description, v.value, nil);
+            newKlickableElement.object.OnClick = function(_)
+                self.elementsOnFrame.chart.object:markElement(newKlickableElement);
+            end
+            self.elementsOnFrame.chart.object:addKlickableElement(newKlickableElement);
         end
-        self.elementsOnFrame.chart.object:addKlickableElement(newKlickableElement);
     end
 end
 
