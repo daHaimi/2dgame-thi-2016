@@ -224,4 +224,13 @@ describe("Unit test for Achievement.lua", function()
         assert.are.same(_G._persTable.achievements.gFishCaugtTotal  , exp);
     end)
   
+    it("Test function Achievement:negativCoins", function()
+        _G._persTable.statistic.minCoinOneRound  = -200;
+
+        local myInstance = testClass();
+        local exp = true;
+        myInstance:checkAchievements()
+        assert.are.same(_G._persTable.achievements.negativCoins   , exp);
+    end)
+  
   end)
