@@ -7,15 +7,15 @@ fakeElement = require "Tests.fakeLoveframes.fakeElement";
 
 describe("Unit test for AchievementDisplay.lua", function()
     local locInstance;
-    
+
     before_each(function()
         _G.Loveframes = {
             Create = function(typeName) return fakeElement(typeName); end;
-        }
+        };
         _G._unlockedAchievements = {};
         _G._tmpTable = {
             unlockedAchievements = nil;
-        }
+        };
         locInstance = testClass("path/");
     end)
 
@@ -37,7 +37,7 @@ describe("Unit test for AchievementDisplay.lua", function()
         locInstance:SetVisible(true);
         assert.are.equal(locInstance.defaultText.visible, true);
         assert.are.equal(locInstance.background.visible, true);
-        
+
         locInstance:SetVisible(false);
         assert.are.equal(locInstance.defaultText.visible, false);
         assert.are.equal(locInstance.background.visible, false);
@@ -45,24 +45,24 @@ describe("Unit test for AchievementDisplay.lua", function()
 
     it("Testing SetVisible function with achievements", function()
         local testTable = {
-                    nameOnPersTable = "test";
-                    name = "testname";
-                    description = "testdes";
-                    image_lock = "testpath1";
-                    image_unlock = "testpath2";
-                }
+            nameOnPersTable = "test";
+            name = "testname";
+            description = "testdes";
+            image_lock = "testpath1";
+            image_unlock = "testpath2";
+        };
         _G._unlockedAchievements = {
-                [1] = testTable;
+            [1] = testTable;
         };
         locInstance:SetVisible(true);
         assert.are.same(_G._unlockedAchievements[1], nil);
         assert.are.same(locInstance.unlockedAchievements[1].imagepath, "path/" .. testTable.image_unlock);
         assert.are.equal(locInstance.defaultText.visible, nil);
         assert.are.equal(locInstance.background.visible, true);
-        
+
         locInstance.unlockedAchievements = {
             fakeElement("image"),
-            fakeElement("image"),
+            fakeElement("image")
         };
         locInstance:SetVisible(false);
         assert.are.equal(locInstance.unlockedAchievements[1].calledRemove, true);
@@ -77,10 +77,10 @@ describe("Unit test for AchievementDisplay.lua", function()
         assert.are.equal(locInstance.background.y, 50)
         assert.are.equal(locInstance.defaultText.x, 70)
         assert.are.equal(locInstance.defaultText.y, 70)
-        
+
         locInstance.unlockedAchievements = {
             fakeElement("image"),
-            fakeElement("image"),
+            fakeElement("image")
         };
         locInstance:SetPos(30, 30);
         assert.are.equal(locInstance.background.x, 30)
@@ -89,7 +89,6 @@ describe("Unit test for AchievementDisplay.lua", function()
         assert.are.equal(locInstance.unlockedAchievements[1].y, 50);
         assert.are.equal(locInstance.unlockedAchievements[2].x, 146);
         assert.are.equal(locInstance.unlockedAchievements[2].y, 50);
-        end)
-    
+    end)
 end)
 

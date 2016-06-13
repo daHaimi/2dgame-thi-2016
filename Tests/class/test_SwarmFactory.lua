@@ -2,11 +2,6 @@ testClass = require "src.class.SwarmFactory"
 
 describe("Unit test for SwarmFactory.lua", function()
     local locInstance;
-    
-    local level = {
-        lowerBoarder = -7000;
-        winDim = {500, 1000};
-    }
 
     before_each(function()
         _G.love = {
@@ -15,37 +10,37 @@ describe("Unit test for SwarmFactory.lua", function()
                 newImage = function(...) end;
                 draw = function(...) end;
                 scale = function(...) end;
-            },
-            
+            };
+
             filesystem = {
                 exists = function(...) return false end;
-            }
-        }
+            };
+        };
 
         _G._persTable = {
             winDim = { 500; 500 };
             moved = 0;
             enabled = {
                 ring = true;
-            }
-        }
-        
+            };
+        };
+
         _G.levMan = {
             curLevel = {
                 lowerBoarder = -7000;
-                winDim = {500, 1000};
+                winDim = { 500, 1000 };
                 getLowerBoarder = function(...) return _G.levMan.curLevel.lowerBoarder end;
                 getLevelName = function(...) return "sewers" end;
-            },
-            curPlayer = nil,
-            curSwarmFac = nil,
-            getCurSwarmFactory = function(...) return _G.levMan.curSwarmFac end,
-            getCurPlayer = function(...) return _G.levMan.curPlayer end,
-            getCurLevel = function(...) return _G.levMan.curLevel end
-        }
-        
+            };
+            curPlayer = nil;
+            curSwarmFac = nil;
+            getCurSwarmFactory = function(...) return _G.levMan.curSwarmFac end;
+            getCurPlayer = function(...) return _G.levMan.curPlayer end;
+            getCurLevel = function(...) return _G.levMan.curLevel end;
+        };
+
         local data = require "src.data";
-        
+
         locInstance = testClass(data, levMan);
     end)
 
@@ -56,7 +51,7 @@ describe("Unit test for SwarmFactory.lua", function()
 
     it("Testing constructor for canyon", function()
         levMan.curLevel.getLevelName = function(...) return "canyon" end;
-        data = require "src.data"
+        data = require "src.data";
         local myInstance = testClass(data, levMan);
         assert.are.same(myInstance.actualSwarm, data.swarmsCanyon);
     end)
@@ -64,7 +59,7 @@ describe("Unit test for SwarmFactory.lua", function()
     it("Testing destructSF", function()
         local testInstance = testClass(require "src.data", levMan);
         testInstance:destructSF();
-        
+
         assert.are.same(testInstance.levMan, nil);
         assert.are.same(testInstance.maxDepth, nil);
         assert.are.same(testInstance.currentSwarm, nil);
@@ -86,8 +81,8 @@ describe("Unit test for SwarmFactory.lua", function()
     end)
 
     it("Testing update method", function()
-        levMan.curLevel.getDirection = function (...) return -1 end;
-        levMan.curLevel.getYPos = function (...) return 50 end;
+        levMan.curLevel.getDirection = function(...) return -1 end;
+        levMan.curLevel.getYPos = function(...) return 50 end;
         local myInstance = testClass(require "src.data", levMan);
         myInstance.currentSwarm = 2;
         myInstance:update(0.004);
@@ -98,10 +93,8 @@ describe("Unit test for SwarmFactory.lua", function()
         local testInstance = testClass(require "src.data", levMan);
         testInstance.currentSwarm = 1;
         testInstance.createdFishables = {};
-        
+
         testInstance:createNextSwarm(20, 0);
-        local testSwarmheight = 100;
-        local testSwarmMaxYPos = 100 + testSwarmheight;
         local swarm = testInstance.createdFishables;
 
         for i = 1, #swarm, 1 do
@@ -123,7 +116,7 @@ describe("Unit test for SwarmFactory.lua", function()
         fishablesProbabilityTest = { 0, 100 };
         fishableRes = locInstance:determineFishable(allowedFishablesTest, fishablesProbabilityTest);
         assert.are_not.same(fishableRes, locInstance.fishableObjects["deadFish"]);
-        
+
         allowedFishablesTest = { "0815blafish", "lollipop" };
         fishablesProbabilityTest = { 0, 100 };
         fishableRes = locInstance:determineFishable(allowedFishablesTest, fishablesProbabilityTest);
@@ -131,13 +124,13 @@ describe("Unit test for SwarmFactory.lua", function()
     end)
 
     it("Testing getCreatedFishables method", function()
-        locInstance.createdFishables = {"fish1", "fish2", "fish3"};
-        assert.are.same({"fish1", "fish2", "fish3"}, locInstance:getCreatedFishables());
+        locInstance.createdFishables = { "fish1", "fish2", "fish3" };
+        assert.are.same({ "fish1", "fish2", "fish3" }, locInstance:getCreatedFishables());
     end)
 
     it("Testing getFishableObjects method", function()
-        locInstance.fishableObjects = {"fish1", "fish2", "fish3"};
-        assert.are.same({"fish1", "fish2", "fish3"}, locInstance:getFishableObjects());
+        locInstance.fishableObjects = { "fish1", "fish2", "fish3" };
+        assert.are.same({ "fish1", "fish2", "fish3" }, locInstance:getFishableObjects());
     end)
 
     it("Testing setMovementMultiplicator Function", function()
@@ -155,47 +148,47 @@ describe("Unit test for SwarmFactory.lua", function()
         local locData = {
             fishableObjects = {
                 balloon = {
-                name = "balloon",
-                image = "balloon.png",
-                spriteSize = 64,
-                minSpeed = 2,
-                maxSpeed = 4,
-                value = 10,
-                minAmount = 2,
-                maxAmount = 3,
-                swarmHeight = 200,
-                enabled = true,
-                description = "Let it go like your dreams";
-                hitbox = {
-                    {
-                        width = 20,
-                        height = 40,
-                        deltaXPos = 22,
-                        deltaYPos = 4
-                    },
-                    {
-                        width = 30,
-                        height = 14,
-                        deltaXPos = 18,
-                        deltaYPos = 14
-                    },
-                    {
-                        width = 6,
-                        height = 20,
-                        deltaXPos = 34,
-                        deltaYPos = 44
-                    }
-                }
-            }
-            },
+                    name = "balloon";
+                    image = "balloon.png";
+                    spriteSize = 64;
+                    minSpeed = 2;
+                    maxSpeed = 4;
+                    value = 10;
+                    minAmount = 2;
+                    maxAmount = 3;
+                    swarmHeight = 200;
+                    enabled = true;
+                    description = "Let it go like your dreams";
+                    hitbox = {
+                        {
+                            width = 20;
+                            height = 40;
+                            deltaXPos = 22;
+                            deltaYPos = 4;
+                        },
+                        {
+                            width = 30;
+                            height = 14;
+                            deltaXPos = 18;
+                            deltaYPos = 14;
+                        },
+                        {
+                            width = 6;
+                            height = 20;
+                            deltaXPos = 34;
+                            deltaYPos = 44;
+                        }
+                    };
+                };
+            };
             swarmsSewer = {
                 {
-                    allowedFishables = { "balloon"},
-                    fishablesProbability = {100}, 
-                    maxSwarmHeight = 90000
+                    allowedFishables = { "balloon" };
+                    fishablesProbability = { 100 };
+                    maxSwarmHeight = 90000;
                 }
-            }
-        }
+            };
+        };
         local myInstance = testClass(locData, levMan);
         myInstance.addedHeights = 0;
         myInstance:createMoreSwarms(10);

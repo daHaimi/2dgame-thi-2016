@@ -8,12 +8,12 @@ local fakeElement = Class {
         self.y = nil
         self.visible = nil;
         self.text = "";
-        
+
         --text
         self.maxWidth = nil;
         self.shadow = false;
         self.font = "";
-        
+
         --imagebutton and image
         self.imagepath = nil;
         self.text = "";
@@ -22,22 +22,21 @@ local fakeElement = Class {
         self.yScale = nil;
         self.calledRemove = false;
         self.movedToTop = false;
-        
+
         --slider
         self.min = nil;
         self.max = nil;
         self.width = nil;
         self.value = 123;
-        
     end;
 };
 
----basic functions
+--- basic functions
 function fakeElement:SetVisible(visible)
     self.visible = visible;
 end
 
-function fakeElement:SetPos (x, y)
+function fakeElement:SetPos(x, y)
     self.x = x;
     self.y = y;
 end
@@ -46,7 +45,7 @@ function fakeElement:SetText(text)
     self.text = text;
 end
 
----slider
+--- slider
 function fakeElement:SetValue(value)
     self.value = value;
 end
@@ -65,7 +64,7 @@ function fakeElement:SetWidth(width)
 end
 
 
----text
+--- text
 function fakeElement:SetMaxWidth(maxWidth)
     self.maxWidth = maxWidth;
 end
@@ -84,7 +83,7 @@ end
 
 
 
----imagebutton
+--- imagebutton
 function fakeElement:SetImage(path)
     self.imagepath = path;
 end
@@ -122,9 +121,7 @@ function fakeElement:GetImageSize()
     return 10, 20;
 end
 
-function fakeElement:SetLinksEnabled(...)
-
-end
+function fakeElement:SetLinksEnabled(...) end
 
 function fakeElement:SetDetectLinks(...) end
 

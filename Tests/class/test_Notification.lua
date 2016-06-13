@@ -11,15 +11,15 @@ describe("Unit test for Notification.lua", function()
     before_each(function()
 
         _G.Loveframes = {
-            Create = function(typeName) 
+            Create = function(typeName)
                 return fakeElement(typeName);
-            end
+            end;
         };
-        
+
         _G._persTable = {
-            scaledDeviceDim = {500, 500};
+            scaledDeviceDim = { 500, 500 };
         };
-        
+
         locInstance = testClass();
     end)
 
@@ -31,7 +31,7 @@ describe("Unit test for Notification.lua", function()
 
     it("Testing Constructor", function()
         _G._persTable = {
-            scaledDeviceDim = {640, 950};
+            scaledDeviceDim = { 640, 950 };
         };
         locInstance = testClass();
         local myInstance = testClass();
@@ -40,7 +40,7 @@ describe("Unit test for Notification.lua", function()
 
     it("Testing Constructor", function()
         _G._persTable = {
-            scaledDeviceDim = {720, 1024};
+            scaledDeviceDim = { 720, 1024 };
         };
         locInstance = testClass();
         local myInstance = testClass();
@@ -52,7 +52,7 @@ describe("Unit test for Notification.lua", function()
         locInstance.imageWidth = 50;
         locInstance:newNotification("imagepath1", "text1");
         locInstance:newNotification("imagepath2", "text2");
-        
+
         assert.are.equal(locInstance.notificationBuffer[1].image.imagepath, "imagepath1");
         assert.are.equal(locInstance.notificationBuffer[2].image.imagepath, "imagepath2");
         assert.are.equal(locInstance.notificationBuffer[1].image.visible, false);
@@ -68,11 +68,11 @@ describe("Unit test for Notification.lua", function()
     end)
 
     it("Testing function removeNotification", function()
-        locInstance.notificationBuffer = {"test1", "test2", "test3"};
+        locInstance.notificationBuffer = { "test1", "test2", "test3" };
         locInstance:removeNotification();
-        assert.are.same(locInstance.notificationBuffer, {"test2", "test3"});
+        assert.are.same(locInstance.notificationBuffer, { "test2", "test3" });
         locInstance:removeNotification();
-        assert.are.same(locInstance.notificationBuffer, {"test3"});
+        assert.are.same(locInstance.notificationBuffer, { "test3" });
         locInstance:removeNotification();
         assert.are.same(locInstance.notificationBuffer, {});
     end)
@@ -115,14 +115,14 @@ describe("Unit test for Notification.lua", function()
         locInstance:SetPos(5, 6);
         assert.same.equal(locInstance.background.x, 5);
         assert.same.equal(locInstance.background.y, 6);
-        
+
         locInstance.notificationBuffer = {
             [1] = {
                 image = fakeElement("test");
                 text = fakeElement("test");
             };
         };
-        
+
         locInstance:SetPos(5, 6);
         assert.are.equal(locInstance.notificationBuffer[1].image.x, 55);
         assert.are.equal(locInstance.notificationBuffer[1].image.y, 56);
@@ -135,14 +135,14 @@ describe("Unit test for Notification.lua", function()
         locInstance.notificationBuffer = {};
         locInstance:SetVisible(true);
         assert.same.equal(locInstance.background.visible, true);
-        
+
         locInstance.notificationBuffer = {
             [1] = {
                 image = fakeElement("test");
                 text = fakeElement("test");
             };
         };
-        
+
         locInstance:SetVisible(false);
         assert.are.equal(locInstance.notificationBuffer[1].image.visible, false);
         assert.are.equal(locInstance.notificationBuffer[1].text.visible, false);
@@ -173,18 +173,18 @@ describe("Unit test for Notification.lua", function()
         assert.spy(locInstance.checkPosition).was_called();
         assert.stub(locInstance.flyIn).was_called();
         assert.are.equal(locInstance.state, 1);
-        
+
         locInstance.x = 5;
         locInstance:update();
         assert.are.equal(locInstance.time, 1);
         assert.are.equal(locInstance.state, 2);
-        
+
         locInstance:update();
         assert.are.equal(locInstance.time, 2);
-        
+
         assert.are.equal(locInstance.state, 3);
         assert.stub(locInstance.flyOut);
-        
+
         locInstance.x = 11;
         locInstance:update();
         assert.spy(locInstance.checkPosition).was_called();
@@ -194,33 +194,4 @@ describe("Unit test for Notification.lua", function()
         assert.are.equal(locInstance.time, 0);
         assert.are.equal(locInstance.state, 0);
     end)
-
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
 end)

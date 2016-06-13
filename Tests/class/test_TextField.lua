@@ -8,25 +8,25 @@ Data = require "data";
 
 describe("Unit test for TextField.lua", function()
     local locInstance;
-    
+
     before_each(function()
         _G.Loveframes = {
             Create = function(...) return fakeElement(); end
-        }
+        };
         _G.data = Data;
         _G._persTable = {
             config = {
                 language = "english";
-            }
-        }
+            };
+        };
         _G.love = {
             graphics = {
                 newFont = function(...) return {}; end;
-            }
-        }
+            };
+        };
         locInstance = testClass(3, 4);
     end)
-    
+
     it("Testing Constructor", function()
         local myInstance = testClass(3, 4);
         assert.are.same(locInstance, myInstance);
