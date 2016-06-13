@@ -976,6 +976,9 @@ return {
                 textScore = "Your Score:";
                 textStart = "Click to start!";
                 buttonChangeLevel = "Change level";
+                textPrice = "Price: ";
+                textMoney = "Not enough Money!";
+                textBought = "Already bought";
                 --achievements
                 creditsRed = {
                     name = "Respect our Work";
@@ -1252,6 +1255,9 @@ return {
                 textScore = "Punktestand:";
                 textStart = "Klicken zum Starten!";
                 buttonChangeLevel = "Levelauswahl";
+                textPrice = "Preis: ";
+                textMoney = "Nicht genug Geld!";
+                textBought = "Already bought";
                 getFirstObject = {
                     name = "Der erste Fang";
                     description = "Du hast den ersten Fang gemacht";

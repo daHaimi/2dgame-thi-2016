@@ -86,6 +86,16 @@ _G.levelTestStub = function()
         getCurPlayer = function(...) return _G.levMan.curPlayer end;
         getCurLevel = function(...) return _G.levMan.curLevel end;
     };
+    _G._gui = {
+        getFrames = function(...) 
+            return {
+                inGame = {
+                    activate = function(...) end;
+                    clear = function(...) end;
+                };
+            } 
+        end;
+    };
     _G.love = {
         graphics = {
             newImage = function(...) end;

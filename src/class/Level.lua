@@ -240,6 +240,13 @@ function Level:update(dt, bait)
         self.playTime = 0;
         end
     end
+    if self.animationStartFinished then
+        _G._gui:getFrames().inGame:activate();
+    end
+    if self.animationEnd then
+        _G._gui:getFrames().inGame:clear();
+    end
+    
     self:checkForAchievments()
 end
 
