@@ -151,4 +151,16 @@ describe("Unit test for Animate.lua", function()
         myInstance:draw(42, 1337);
         assert.stub(love.graphics.draw).was_called_with(myInstance.p_image, myInstance.p_quads[2], 42, 1337);
     end)
+
+    it("Testing start", function()
+        locInstance.start = false;
+        locInstance:startAnimation();
+        assert.are.same(true, locInstance.start);
+    end);
+
+    it("Testing stop", function()
+        locInstance.start = true;
+        locInstance:stopAnimation();
+        assert.are.same(false, locInstance.start);
+    end);
 end)
