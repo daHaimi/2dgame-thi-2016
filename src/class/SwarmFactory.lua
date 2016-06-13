@@ -12,6 +12,7 @@ local SwarmFactory = Class {
         self.currentSwarm = 1;
         self.fishableObjects = {};
         self.createdFishables = {};
+        self.createdBubbles ={};
         self.actualSwarm = {};
         self.speedMulitplicator = 1;
         self.addedDepth = 0;
@@ -68,22 +69,23 @@ end
 --@param depth depth where the bubble should be spawned
 --@param minDistance minimal distance between two "swarms" of bubbles
 --@param maxDistance maximal distance between two "swarms" of bubbles
-function SwarmFactory:createBubbles(depth, minDistance, maxDistance)
-    if   math.abs(depth - self.positionOfLastBubbles) > math.random(maxDistance - minDistance) + minDistance then
+function SwarmFactory:createBubbles(depth, dt, time)
+    self.positionOfLastBubbles = self.positionOfLastBubbles + dt;
+    if self.positionOfLastBubbles > time then
         local fishable = self.fishableObjects["bubble"];
         local amount = math.random(fishable.minAmount, fishable.maxAmount);
         local xPosition = math.random(fishable.spriteSize + 26, 
             self.levMan:getCurLevel().winDim[1] - 58 - fishable.spriteSize);
         for i = 1, amount, 1 do 
-            self.createdFishables[#self.createdFishables + 1] = FishableObject(fishable.name, fishable.image, 
+            self.createdBubbles[#self.createdBubbles + 1] = FishableObject(fishable.name, fishable.image, 
                 depth + self.levMan:getCurLevel().winDim[2], fishable.minSpeed, fishable.maxSpeed, fishable.value, 
                 fishable.hitpoints, fishable.spriteSize, fishable.hitbox, fishable.animTimeoutMin, 
                 fishable.animTimeoutMax, fishable.animType, fishable.downSpeed, self.levMan);
-            self.positionOfLastBubbles = depth;
-            self.createdFishables[#self.createdFishables]:setYPosition(self.levMan:getCurLevel().winDim[2]
+            self.createdBubbles[#self.createdBubbles]:setYPosition(self.levMan:getCurLevel().winDim[2]
                 - math.random(100));
-            self.createdFishables[#self.createdFishables]:setXPosition(xPosition + math.random(-50, 50));
+            self.createdBubbles[#self.createdBubbles]:setXPosition(xPosition + math.random(-50, 50));
         end
+        self.positionOfLastBubbles = self.positionOfLastBubbles - time;
     end
 end
 
@@ -114,6 +116,9 @@ end
 
 --- Draws all fishables
 function SwarmFactory:draw()
+    for i = 1, #self.createdBubbles, 1 do 
+        self.createdBubbles[i]:draw();
+    end
     for i = 1, #self.createdFishables, 1 do
         self.createdFishables[i]:draw();
     end
@@ -124,6 +129,10 @@ end
 function SwarmFactory:update(dt)
     for i = 1, #self.createdFishables, 1 do
         self.createdFishables[i]:update(dt, self.speedMulitplicator, depth);
+    end
+    
+    for i = 1, #self.createdBubbles, 1 do
+        self.createdBubbles[i]:update(dt, 1, depth);
     end
  
     if self.currentSwarm > 1 and self.levMan:getCurLevel():getDirection() == -1 then
