@@ -43,6 +43,7 @@ describe("Unit test for Achievement.lua", function()
           allPillsAtLeastOnce = false;
           nothingCaught = false;
           playedTime = false;
+          bFishCaugtTotal = false;
       }
       _G._persTable.fish = {
             caught = {
@@ -184,6 +185,43 @@ describe("Unit test for Achievement.lua", function()
         local exp = true;
         myInstance:moneyTotal()
         assert.are.same(_G._persTable.achievements.gMoneyEarnedTotal  , exp);
+    end)
+  
+    it("Test function Achievement:fishCaughtTotal", function()
+        _G._persTable.fish.caughtTotal  = 10;
+
+        local myInstance = testClass();
+        local exp = false;
+        myInstance:checkAchievements()
+        assert.are.same(_G._persTable.achievements.bFishCaugtTotal , exp);
+    end)
+  
+    it("Test function Achievement:fishCaughtTotal", function()
+        _G._persTable.fish.caughtTotal  = 100;
+
+        local myInstance = testClass();
+        local exp = true;
+        myInstance:checkAchievements()
+        assert.are.same(_G._persTable.achievements.bFishCaugtTotal  , exp);
+    end)
+  
+    it("Test function Achievement:fishCaughtTotal", function()
+        _G._persTable.fish.caughtTotal  = 200;
+
+        local myInstance = testClass();
+        local exp = true;
+        myInstance:checkAchievements()
+        assert.are.same(_G._persTable.achievements.sFishCaugtTotal  , exp);
+    end)
+  
+    it("Test function Achievement:fishCaughtTotal", function()
+        _G._persTable.fish.caughtTotal  = 500;
+
+        local myInstance = testClass();
+        local exp = true;
+        myInstance:checkAchievements()
+        assert.are.same(_G._persTable.achievements.sFishCaugtTotal  , exp);
+        assert.are.same(_G._persTable.achievements.gFishCaugtTotal  , exp);
     end)
   
   end)
