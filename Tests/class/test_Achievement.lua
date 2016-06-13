@@ -230,9 +230,7 @@ describe("Unit test for Achievement.lua", function()
         local exp = true;
         myInstance:checkAchievements();
         assert.are.same(_G._persTable.achievements.negativCoins, exp);
-    end)
-<<<<<<< HEAD
-  
+    end)  
     it("Test function Achievement:onlyNegativeFishesCaught", function()
         _G._persTable.fish.postiveFishCaught  = false;
         _G._persTable.fish.caughtInOneRound = 3;
@@ -306,8 +304,5 @@ describe("Unit test for Achievement.lua", function()
         myInstance:allObjectsAtLeastOnce ()
         assert.are.same(_G._persTable.achievements.allObjectsAtLeastOnce , exp);
     end)
-  
   end)
-=======
-end)
->>>>>>> 10a525444b8e0b1516a4696cf745a9bf8fac1f9a
+
