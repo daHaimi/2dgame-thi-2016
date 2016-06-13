@@ -150,4 +150,40 @@ describe("Unit test for Achievement.lua", function()
         assert.are.same(_G._persTable.achievements.goldCoinsOneRound , exp);
     end)
   
+    it("Test function Achievement:moneyTotal", function()
+        _G._persTable.statistic.moneyEarnedTotal  = 1000;
+
+        local myInstance = testClass();
+        local exp = false;
+        myInstance:moneyTotal()
+        assert.are.same(_G._persTable.achievements.bMoneyEarnedTotal  , exp);
+    end)
+  
+    it("Test function Achievement:moneyTotal", function()
+        _G._persTable.statistic.moneyEarnedTotal  = 2000;
+
+        local myInstance = testClass();
+        local exp = true;
+        myInstance:checkAchievements()
+        assert.are.same(_G._persTable.achievements.bMoneyEarnedTotal  , exp);
+    end)
+
+    it("Test function Achievement:moneyTotal", function()
+        _G._persTable.statistic.moneyEarnedTotal  = 6000;
+
+        local myInstance = testClass();
+        local exp = true;
+        myInstance:moneyTotal()
+        assert.are.same(_G._persTable.achievements.sMoneyEarnedTotal  , exp);
+    end)
+  
+    it("Test function Achievement:moneyTotal", function()
+        _G._persTable.statistic.moneyEarnedTotal  = 100000;
+
+        local myInstance = testClass();
+        local exp = true;
+        myInstance:moneyTotal()
+        assert.are.same(_G._persTable.achievements.gMoneyEarnedTotal  , exp);
+    end)
+  
   end)
