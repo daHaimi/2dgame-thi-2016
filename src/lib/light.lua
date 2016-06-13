@@ -253,7 +253,7 @@ function _G.love.light.newWorld()
             love.graphics.setBlendMode("alpha")
 
             -- create normal map
-            worldObject.normalMap:clear()
+            --worldObject.normalMap:clear()
             love.graphics.setShader()
             love.graphics.setCanvas(worldObject.normalMap)
             for i = 1, #worldObject.body do
@@ -265,9 +265,9 @@ function _G.love.light.newWorld()
             love.graphics.setColor(255, 255, 255)
             love.graphics.setBlendMode("alpha")
 
-            worldObject.pixelShadow2:clear()
+            --worldObject.pixelShadow2:clear()
             love.graphics.setCanvas(worldObject.pixelShadow2)
-            love.graphics.setBlendMode("additive")
+            love.graphics.setBlendMode("add")
             love.graphics.setShader(worldObject.shader2)
 
             for i = 1, #worldObject.lights do
@@ -296,11 +296,11 @@ function _G.love.light.newWorld()
             end
 
             love.graphics.setShader()
-            worldObject.pixelShadow:clear(255, 255, 255)
+            --worldObject.pixelShadow:clear(255, 255, 255)
             love.graphics.setCanvas(worldObject.pixelShadow)
             love.graphics.setBlendMode("alpha")
             love.graphics.draw(worldObject.pixelShadow2, _G.love.light.translate.X, _G.love.light.translate.Y)
-            love.graphics.setBlendMode("additive")
+            love.graphics.setBlendMode("add")
             love.graphics.setColor({ worldObject.ambient[1], worldObject.ambient[2], worldObject.ambient[3] })
             love.graphics.rectangle("fill", _G.love.light.translate.X, _G.love.light.translate.Y, worldObject.width, worldObject.height)
             love.graphics.setBlendMode("alpha")
@@ -515,7 +515,7 @@ function _G.love.light.newWorld()
         if worldObject.optionGlow and worldObject.isGlow then
             love.graphics.setColor(255, 255, 255)
             if worldObject.glowBlur == 0.0 then
-                love.graphics.setBlendMode("additive")
+                love.graphics.setBlendMode("add")
                 love.graphics.setShader()
                 love.graphics.draw(worldObject.glowMap, _G.love.light.translate.X, _G.love.light.translate.Y)
                 love.graphics.setBlendMode("alpha")
@@ -523,7 +523,7 @@ function _G.love.light.newWorld()
                 _G.love.light.BLURV:send("steps", worldObject.glowBlur)
                 _G.love.light.BLURH:send("steps", worldObject.glowBlur)
                 _G.love.light.LAST_BUFFER = love.graphics.getCanvas()
-                love.graphics.setBlendMode("additive")
+                love.graphics.setBlendMode("add")
                 worldObject.glowMap2:clear()
                 love.graphics.setCanvas(worldObject.glowMap2)
                 love.graphics.setShader(_G.love.light.BLURV)
@@ -1262,7 +1262,9 @@ function _G.love.light.newBody(worldObject, type, ...)
                 { bodyObject.normalWidth, bodyObject.normalHeight, bodyObject.normalWidth / bodyObject.normal:getWidth(), bodyObject.normalHeight / bodyObject.normal:getHeight() },
                 { 0.0, bodyObject.normalHeight, 0.0, bodyObject.normalHeight / bodyObject.normal:getHeight() }
             }
-            bodyObject.normalMesh = love.graphics.newMesh(bodyObject.normalVert, bodyObject.normal, "fan")
+            --bodyObject.normalMesh = love.graphics.newMesh(bodyObject.normalVert, bodyObject.normal, "fan")
+            bodyObject.normalMesh = love.graphics.newMesh(bodyObject.normalVert, "fan")
+            bodyObject.normalMesh:setTexture(bodyObject.normal)
 
             worldObject.isPixelShadows = true
         else

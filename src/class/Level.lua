@@ -91,8 +91,10 @@ local Level = Class {
         local lightLevel = ((math.abs(30 - time)) / 30) * maxLightLevel + minLightLevel;
 
         self.lightWorld.setAmbientColor(lightLevel, lightLevel, lightLevel);
+        self.lightWorld.setRefractionStrength(32.0);
 
-        self.baitLight = self.lightWorld.newLight(1, 1, 255, 127, 63, 500);
+        self.baitLight = self.lightWorld.newLight(0, 0, 255, 127, 63, 500);
+        self.baitLight.setGlowStrength(0.3);
         self.baitLight.setSmooth(2);
 
         -- temp bugfix to play the game with persistence
@@ -274,7 +276,6 @@ end
 --- Unlocks the given achievement.
 -- @param achName The name of the achievement.
 function Level:unlockAchievement(achName)
-    print("unlockAchievment: " .. achName)
     table.insert(_G._unlockedAchievements, _G.data.achievements[achName]);
     _gui:newNotification("assets/gui/480px/" .. _G.data.achievements[achName].image_unlock,
         achName);
@@ -361,7 +362,6 @@ function Level:doStartAnimationMovement(bait, dt)
     if not self.levelFinished then
         self.hamsterYPos = self.hamsterYPos - self:getMoved();
         self.animationStartPoint = self.animationStartPoint - self:getMoved();
-        --print(self.hamsterYPos);
     end
 end
 

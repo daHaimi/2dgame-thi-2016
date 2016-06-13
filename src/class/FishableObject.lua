@@ -3,7 +3,7 @@ Animate = require "class.Animate";
 require "socket" math.randomseed(socket.gettime() * 10000);
 require "lib/light";
 
-require "util"
+require "util";
 
 --- FishableObject is the class of all fishable objects
 -- @param name The name of the fishable object
@@ -26,16 +26,20 @@ local FishableObject = Class {
         local imageName = _G.love.file.getName(imageSrc);
         local imageExtention = _G.love.file.getExtention(imageSrc);
         if love.filesystem.exists("assets/" .. imageName .. "_glow." .. imageExtention) then
-            self.glowMap = love.graphics.newImage("assets/" .. imageName .. "_glow." .. imageExtention);
             local lightWorld = levMan.curLevel:getLightWorld();
-            self.lightImage = lightWorld:newImage(self.image, 64, 64, 64, 64, 0, 0);
+            self.glowMap = love.graphics.newImage("assets/" .. imageName .. "_glow." .. imageExtention);
+            self.lightImage = lightWorld.newImage(self.image, 64, 64, 64, 64, 0, 0);
             self.lightImage.setGlowMap(self.glowMap);
             self.lightImage.setOffset(0, 0);
+        end
+        if love.filesystem.exists("assets/" .. imageName .. "_normal." .. imageExtention) then
+            self.normalMap = love.graphics.newImage("assets/" .. imageName .. "_normal." .. imageExtention);
+            self.lightImage.setNormalMap(self.normalMap)
         end
         --self.lightImage.setOffset(levMan.curLevel); end
         --if love.filesystem.exists("assets/" .. imageSrc .. "_normal") then
         --    self.normalImage = love.graphics.newImage("assets/" .. imageSrc .. "_normal");
-        --    -- TODO future work normal map
+        --    -- future work normal map
         --end
         self.xPosition = math.random(spriteSize + 26, levMan:getCurLevel().winDim[1] - 58 - self.spriteSize);
         -- 58 = 26 (width of level wall) + 32 (0.5 * width of hamster)
@@ -65,7 +69,7 @@ local FishableObject = Class {
             self.sprite = love.graphics.newImage(spriteFile);
             local spriteCols = self.sprite:getWidth() / self.image:getWidth();
             local spriteRows = self.sprite:getHeight() / self.image:getHeight();
-            local animTimeout = nil;
+            local animTimeout;
             if animTimeoutMin and animTimeoutMax then
                 animTimeout = math.random() * (animTimeoutMax - animTimeoutMin) + animTimeoutMin -
                         math.abs(self.speed / 100); -- animation speed also depended on move speed
