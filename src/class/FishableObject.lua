@@ -1,6 +1,9 @@
 Class = require "lib.hump.class";
 Animate = require "class.Animate";
 require "socket" math.randomseed(socket.gettime() * 10000);
+require "lib/light";
+
+require "util"
 
 --- FishableObject is the class of all fishable objects
 -- @param name The name of the fishable object
@@ -16,43 +19,57 @@ require "socket" math.randomseed(socket.gettime() * 10000);
 -- @param animTimeoutMax The max timeout between the images in seconds
 -- @param animType (Animate.AnimType.linear) The animation type of the enum Animate.AnimType
 local FishableObject = Class {
-    init = function(self, name, imageSrc, yPosition, minSpeed, maxSpeed, value, hitpoints, 
-            spriteSize, hitbox, animTimeoutMin, animTimeoutMax, animType, fallSpeed, levMan)
+    init = function(self, name, imageSrc, yPosition, minSpeed, maxSpeed, value, hitpoints,
+    spriteSize, hitbox, animTimeoutMin, animTimeoutMax, animType, fallSpeed, levMan)
         self.name = name;
         self.image = love.graphics.newImage("assets/" .. imageSrc);
-        self.xPosition = math.random(spriteSize + 26, levMan:getCurLevel().winDim[1] - 58 - self.spriteSize);
-        -- 58 = 26 (width of level wall) + 32 (0.5 * width of hamster)
-        if fallSpeed > 0 then
-            self.yPosition = - math.random(100);
-        else
-            self.yPosition = yPosition;
-        end
-        self.value = value;
-        self.hitpoints = hitpoints;
-        self.spriteSize = spriteSize;
-        self.fallSpeed = fallSpeed;
-        self.levMan = levMan;
-        self.hitbox = hitbox;
-        self.outOfArea = false;
-
-        if (math.random() > 0.5) then
-            self.speed = math.random() * (maxSpeed - minSpeed) + minSpeed;
-        else
-            self.speed = -(math.random() * (maxSpeed - minSpeed) + minSpeed);
-        end
-        
-        local spriteFile = "assets/sprites/sprite_" .. imageSrc;
-        if love.filesystem.exists(spriteFile) then
-            self.sprite = love.graphics.newImage(spriteFile);
-            local spriteCols = self.sprite:getWidth() / self.image:getWidth();
-            local spriteRows = self.sprite:getHeight() / self.image:getHeight();
-            local animTimeout = nil;
-            if animTimeoutMin and animTimeoutMax then
-                animTimeout = math.random() * (animTimeoutMax - animTimeoutMin) + animTimeoutMin - 
-                              math.abs(self.speed / 100); -- animation speed also depended on move speed
+        local imageName = _G.love.file.getName(imageSrc);
+        local imageExtention = _G.love.file.getExtention(imageSrc);
+        if love.filesystem.exists("assets/" .. imageName .. "_glow." .. imageExtention) then
+            self.glowImage = love.graphics.newImage("assets/" .. imageName .. "_glow." .. imageExtention);
+            local lightWorld = levMan.curLevel:getLightWorld();
+            self.lightImage = lightWorld:newImage(self.image, 0, 0, 64, 64);
+            self.lightImage.setGlowMap(self.glowImage);
+            self.lightImage.setOffset(0, 0);
+            --self.lightImage.setOffset(levMan.curLevel); end
+            --if love.filesystem.exists("assets/" .. imageSrc .. "_normal") then
+            --    self.normalImage = love.graphics.newImage("assets/" .. imageSrc .. "_normal");
+            --    -- TODO future work
+            --end
+            self.xPosition = math.random(spriteSize + 26, levMan:getCurLevel().winDim[1] - 58 - self.spriteSize);
+            -- 58 = 26 (width of level wall) + 32 (0.5 * width of hamster)
+            if fallSpeed > 0 then
+                self.yPosition = -math.random(100);
+            else
+                self.yPosition = yPosition;
             end
-            animType = Animate.AnimType[animType];
-            self.animation = Animate(self.sprite, spriteCols, spriteRows, animTimeout, animType);
+            self.value = value;
+            self.hitpoints = hitpoints;
+            self.spriteSize = spriteSize;
+            self.fallSpeed = fallSpeed;
+            self.levMan = levMan;
+            self.hitbox = hitbox or { 0, 0 };
+            self.outOfArea = false;
+
+            if (math.random() > 0.5) then
+                self.speed = math.random() * (maxSpeed - minSpeed) + minSpeed;
+            else
+                self.speed = -(math.random() * (maxSpeed - minSpeed) + minSpeed);
+            end
+
+            local spriteFile = "assets/sprites/sprite_" .. imageSrc;
+            if love.filesystem.exists(spriteFile) then
+                self.sprite = love.graphics.newImage(spriteFile);
+                local spriteCols = self.sprite:getWidth() / self.image:getWidth();
+                local spriteRows = self.sprite:getHeight() / self.image:getHeight();
+                local animTimeout = nil;
+                if animTimeoutMin and animTimeoutMax then
+                    animTimeout = math.random() * (animTimeoutMax - animTimeoutMin) + animTimeoutMin -
+                            math.abs(self.speed / 100); -- animation speed also depended on move speed
+                end
+                animType = Animate.AnimType[animType];
+                self.animation = Animate(self.sprite, spriteCols, spriteRows, animTimeout, animType);
+            end
         end
     end;
 
@@ -64,12 +81,12 @@ local FishableObject = Class {
     value = 0;
     hitpoints = 1;
     spriteSize = 0;
-    
+
     hitbox = {};
-    
+
     caught = false;
     caughtAt = nil;
-    
+
     soundPlayed = false;
 };
 
@@ -83,8 +100,8 @@ function FishableObject:draw()
             else
                 love.graphics.draw(self.image, self.xPosition, self.yPosition);
             end
-            
-            love.graphics.setColor(0, 0, 0);
+
+            --love.graphics.setColor(0, 0, 0);
         else
             love.graphics.scale(-1, 1);
             love.graphics.setColor(255, 255, 255);
@@ -93,38 +110,38 @@ function FishableObject:draw()
             else
                 love.graphics.draw(self.image, -self.xPosition, self.yPosition);
             end
-        
+
             love.graphics.scale(-1, 1);
         end
 
         --for showing the Hitbox
-        --[[for i = 1, #self.hitbox, 1 do 
+        --[[for i = 1, #self.hitbox, 1 do
             love.graphics.setColor(0,0,0);
             love.graphics.rectangle("line", self:getHitboxXPosition(i), self:getHitboxYPosition(i),
             self:getHitboxWidth(i), self:getHitboxHeight(i));
         end]]
-        
+
     elseif self.caught then
         if math.abs(self.caughtAt - self.yPosition) < 50 then
             if self.value > 0 then
-                love.graphics.setColor (0, 255, 0);
+                love.graphics.setColor(0, 255, 0);
                 _G._persTable.fish.postiveFishCaught = true;
                 if not self.soundPlayed then
                     TEsound.play("assets/sound/collectedPositivValue.wav");
                     self.soundPlayed = true;
                 end
             elseif self.value < 0 then
-                love.graphics.setColor (255, 0, 0);
+                love.graphics.setColor(255, 0, 0);
                 if not self.soundPlayed then
                     TEsound.play("assets/sound/collectedNegativValue.wav");
                     self.soundPlayed = true;
                 end
             end
-            
+
             if not (self.value == 0) then
                 tempFont = love.graphics.getFont();
                 love.graphics.setNewFont(20);
-                love.graphics.print (math.abs(self.value), self.xPosition, self.yPosition);
+                love.graphics.print(math.abs(self.value), self.xPosition, self.yPosition);
                 love.graphics.setFont(tempFont);
             end
         end
@@ -139,22 +156,22 @@ function FishableObject:update(dt, speedMulitplicator)
     else
         self.outOfArea = false;
     end
-    
+
     if not self.caught then
         if not self.outOfArea then
             if self.animation then
                 self.animation:update(dt);
             end
-            
+
             if ((self.xPosition - self.hitbox[1].deltaXPos) >= _G._persTable.winDim[1]) and self.speed > 0 then
                 self.speed = self.speed * -1;
-                self.xPosition = _G._persTable.winDim[1] - self:getHitboxWidth(1) - self.hitbox[1].deltaXPos + 
-                    self.speed * speedMulitplicator;
+                self.xPosition = _G._persTable.winDim[1] - self:getHitboxWidth(1) - self.hitbox[1].deltaXPos +
+                        self.speed * speedMulitplicator;
 
             elseif (self.xPosition + self.hitbox[1].deltaXPos) <= 0 then
                 self.speed = self.speed * -1;
                 self.xPosition = math.abs(self:getHitboxWidth(1) + self.hitbox[1].deltaXPos + self.speed * speedMulitplicator);
-                
+
             else
                 self.xPosition = self.xPosition + self.speed * speedMulitplicator;
             end
@@ -165,12 +182,19 @@ function FishableObject:update(dt, speedMulitplicator)
             if self.levMan:getCurLevel():getDirection() == 1 then
                 self.yPosition = self.yPosition + self.fallSpeed * speedMulitplicator;
             else
-                self.yPosition = self.yPosition + self.fallSpeed * speedMulitplicator 
-                    - self.levMan:getCurLevel():getMoved();
+                self.yPosition = self.yPosition + self.fallSpeed * speedMulitplicator
+                        - self.levMan:getCurLevel():getMoved();
             end
         end
     else
         self.yPosition = self.yPosition + 0.5 * self.levMan:getCurLevel():getMoved();
+    end
+    if self.lightImage ~= nil then
+        if self.speed <= 0 then
+            self.lightImage.setPosition(self.xPosition, self.yPosition);
+        else
+            self.lightImage.setPosition(-self.xPosition, self.yPosition);
+        end
     end
 end
 
