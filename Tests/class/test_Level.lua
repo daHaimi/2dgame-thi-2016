@@ -713,7 +713,22 @@ describe("Test unit test suite", function()
         };
         locInstance:update(1, bait);
         assert.are.same(_G._persTable.playedTime, 2000);
-    end)  
+    end) 
+  
+    it("Test Achievement: nothing Caught", function()
+    _G._tmpTable.caughtThisRound = {};
+    locInstance.failedStart = false;
+    locInstance.levelFinished = true;
+    _G._persTable.achievements.nothingCaught = false;
+    
+    _G._unlockedAchievements = {};
+    _G.data = { achievements = { nothingCaught = {image_unlock = "xyz"}}};
+    _G._gui = { newNotification = function(...) end; };
+    stub(_gui, "newNotification");
+     
+    locInstance:checkForAchievments();
+    assert.are.same(_G._persTable.achievements.nothingCaught, true);
+    end)
 
     it("Testing unlockAchievement function", function()
         _G._gui = {

@@ -646,7 +646,6 @@ describe("Unit test for Bait.lua", function()
         myInstance:update();
         assert.spy(loveMock.graphics.newQuad).called(1);
         assert.spy(loveMock.graphics.newQuad).was.called_with(dimX/3, 0, dimX/3, dimY, dimX, dimY);
-        myInstance:draw()
     end)
   
      it("Test middle bait cheeks", function()
