@@ -24,6 +24,8 @@ local FishableObject = Class {
         -- 58 = 26 (width of level wall) + 32 (0.5 * width of hamster)
         if fallSpeed > 0 then
             self.yPosition = - math.random(100);
+        elseif fallSpeed < 0 then
+            self.yPosition = levMan:getCurLevel().winDim[2] + math.random(100);
         else
             self.yPosition = yPosition;
         end
@@ -198,6 +200,12 @@ end
 -- @param xPosition The new x position
 function FishableObject:setXPosition(xPosition)
     self.xPosition = xPosition;
+end
+
+--- Sets the yPosition
+-- @param xPosition The new y position
+function FishableObject:setYPosition(yPosition)
+    self.yPosition = yPosition;
 end
 
 --- Returns the value of the fishable object

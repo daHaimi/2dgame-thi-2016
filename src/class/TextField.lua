@@ -20,7 +20,7 @@ function Textbox:changeText(newTopic, newText, newPrice)
     self.objText:SetFont(love.graphics.newFont("font/8bitOperatorPlus-Regular.ttf", 15));
     self.objText:SetText(newText);
     if newPrice ~= nil then
-        self.objPrice:SetText("Price: " .. newPrice);
+        self.objPrice:SetText(_G.data.languages[_G._persTable.config.language].package.textPrice .. newPrice);
     else
         self.objPrice:SetText("");
     end

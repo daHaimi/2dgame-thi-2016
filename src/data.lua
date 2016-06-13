@@ -635,6 +635,24 @@ return {
                     deltaYPos = 40
                 }
             }
+        },
+        bubble = {
+            name = "bubble",
+            image = "bubble.png",
+            spriteSize = 64,
+            minSpeed = 0,
+            maxSpeed = 0,
+            downSpeed = -10,
+            value = 0,
+            minAmount = 3,
+            maxAmount = 5,
+            swarmHeight = 0,
+            hitbox = { {
+                    width = 0,
+                    height = 0,
+                    deltaXPos = 0,
+                    deltaYPos = 0
+                }}
         }
     },
 
@@ -660,7 +678,7 @@ return {
         {
             allowedFishables = { "ring", "shoe", "snake", "crocodile"},
             fishablesProbability = { 5, 30, 55, 100},
-            maxSwarmHeight = 90000
+            maxSwarmHeight = 9000
         }
     },
     
@@ -689,7 +707,7 @@ return {
         {
             allowedFishables = { "backpack", "camera", "bird", "egg"},
             fishablesProbability = {10, 20, 50, 100}, 
-            maxSwarmHeight = 90000
+            maxSwarmHeight = 1200
         }
     },
 
@@ -756,7 +774,7 @@ return {
             image_disable = "shop_fuel1_locked.png";
         },
         moreFuel2 = {
-            nameOnPersTable = "";
+            nameOnPersTable = "moreFuel2";
             price = 1500;
             image = "shop_fuel2.png";
             image_disable = "shop_fuel2_locked.png";
@@ -776,7 +794,7 @@ return {
     },
     
     achievements = {
-        getFirtsObject = {
+        getFirstObject = {
             nameOnPersTable = "getFirstObject";
             image_lock = "ach_firstObject_locked.png";
             image_unlock = "ach_firstObject.png";
@@ -958,12 +976,15 @@ return {
                 textScore = "Your Score:";
                 textStart = "Click to start!";
                 buttonChangeLevel = "Change level";
+                textPrice = "Price: ";
+                textMoney = "Not enough Money!";
+                textBought = "Already bought";
                 --achievements
                 creditsRed = {
                     name = "Respect our Work";
                     description = "Read the credits";
                 };
-                getFirtsObject = {
+                getFirstObject = {
                     name = "First object";
                     description = "You caught your first object!";
                 };
@@ -1234,7 +1255,10 @@ return {
                 textScore = "Punktestand:";
                 textStart = "Klicken zum Starten!";
                 buttonChangeLevel = "Levelauswahl";
-                getFirtsObject = {
+                textPrice = "Preis: ";
+                textMoney = "Nicht genug Geld!";
+                textBought = "Already bought";
+                getFirstObject = {
                     name = "Der erste Fang";
                     description = "Du hast den ersten Fang gemacht";
                 };

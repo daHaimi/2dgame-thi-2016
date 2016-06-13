@@ -67,6 +67,11 @@ function Gui:newNotification(image, achName)
     end
 end
 
+---creates new text notification
+function Gui:newTextNotification(image, text)
+    self.notification:newNotification(image, text);
+end
+
 ---called in the load function
 ---clears all frames and starts at the main menu
 function Gui:start()
