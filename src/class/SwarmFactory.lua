@@ -12,7 +12,7 @@ local SwarmFactory = Class {
         self.currentSwarm = 1;
         self.fishableObjects = {};
         self.createdFishables = {};
-        self.createdBubbles ={};
+        self.createdBubbles = {};
         self.actualSwarm = {};
         self.speedMulitplicator = 1;
         self.addedDepth = 0;
@@ -64,9 +64,9 @@ function SwarmFactory:createSleepingpill(depth, minDistance, maxDistance)
 end
 
 --- creats some bubbles
---@param depth depth where the bubble should be spawned
---@param minDistance minimal distance between two "swarms" of bubbles
---@param maxDistance maximal distance between two "swarms" of bubbles
+-- @param depth depth where the bubble should be spawned
+-- @param minDistance minimal distance between two "swarms" of bubbles
+-- @param maxDistance maximal distance between two "swarms" of bubbles
 function SwarmFactory:createBubbles(depth, dt, time)
     self.positionOfLastBubbles = self.positionOfLastBubbles + dt;
     if self.positionOfLastBubbles > time then
@@ -80,7 +80,7 @@ function SwarmFactory:createBubbles(depth, dt, time)
                 fishable.hitpoints, fishable.spriteSize, fishable.hitbox, fishable.animTimeoutMin,
                 fishable.animTimeoutMax, fishable.animType, fishable.downSpeed, self.levMan);
             self.createdBubbles[#self.createdBubbles]:setYPosition(self.levMan:getCurLevel().winDim[2]
-                - math.random(100));
+                    - math.random(100));
             self.createdBubbles[#self.createdBubbles]:setXPosition(xPosition + math.random(-50, 50));
         end
         self.positionOfLastBubbles = self.positionOfLastBubbles - time;
