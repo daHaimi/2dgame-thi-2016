@@ -893,13 +893,13 @@ function _G.love.light.newLight(p, x, y, red, green, blue, range)
     return lightObject
 end
 
--- body object
-function _G.love.light.newBody(p, type, ...)
+-- body object for some reasonss there is the WorldObject twice
+function _G.love.light.newBody(worldObject, type, _, ...)
     local args = { ... }
     local bodyObject = {}
-    p.body[#p.body + 1] = bodyObject
-    p.changed = true
-    bodyObject.id = #p.body
+    worldObject.body[#worldObject.body + 1] = bodyObject
+    worldObject.changed = true
+    bodyObject.id = #worldObject.body
     bodyObject.type = type
     bodyObject.normal = nil
     bodyObject.material = nil
@@ -915,7 +915,7 @@ function _G.love.light.newBody(p, type, ...)
         bodyObject.reflective = false
         bodyObject.refraction = false
         bodyObject.refractive = false
-        p.isShadows = true
+        worldObject.isShadows = true
     elseif bodyObject.type == "rectangle" then
         bodyObject.x = args[1] or 0
         bodyObject.y = args[2] or 0
@@ -938,7 +938,7 @@ function _G.love.light.newBody(p, type, ...)
         bodyObject.reflective = false
         bodyObject.refraction = false
         bodyObject.refractive = false
-        p.isShadows = true
+        worldObject.isShadows = true
     elseif bodyObject.type == "polygon" then
         bodyObject.shadowType = "polygon"
         bodyObject.data = args or { 0, 0, 0, 0, 0, 0 }
@@ -946,13 +946,12 @@ function _G.love.light.newBody(p, type, ...)
         bodyObject.reflective = false
         bodyObject.refraction = false
         bodyObject.refractive = false
-        p.isShadows = true
+        worldObject.isShadows = true
     elseif bodyObject.type == "image" then
         bodyObject.img = args[1]
         bodyObject.x = args[2] or 0
         bodyObject.y = args[3] or 0
         if bodyObject.img then
-            print(bodyObject.img)
             bodyObject.imgWidth = bodyObject.img:getWidth()
             bodyObject.imgHeight = bodyObject.img:getHeight()
             bodyObject.width = args[4] or bodyObject.imgWidth
@@ -989,7 +988,7 @@ function _G.love.light.newBody(p, type, ...)
         bodyObject.reflective = true
         bodyObject.refraction = false
         bodyObject.refractive = false
-        p.isShadows = true
+        worldObject.isShadows = true
     elseif bodyObject.type == "refraction" then
         bodyObject.normal = args[1]
         bodyObject.x = args[2] or 0
@@ -1019,7 +1018,7 @@ function _G.love.light.newBody(p, type, ...)
         bodyObject.reflective = false
         bodyObject.refraction = true
         bodyObject.refractive = false
-        p.isRefraction = true
+        worldObject.isRefraction = true
     elseif bodyObject.type == "reflection" then
         bodyObject.normal = args[1]
         bodyObject.x = args[2] or 0
@@ -1049,7 +1048,7 @@ function _G.love.light.newBody(p, type, ...)
         bodyObject.reflective = false
         bodyObject.refraction = false
         bodyObject.refractive = false
-        p.isReflection = true
+        worldObject.isReflection = true
     end
     bodyObject.shine = true
     bodyObject.red = 0
@@ -1081,7 +1080,7 @@ function _G.love.light.newBody(p, type, ...)
             bodyObject.x = x
             bodyObject.y = y
             bodyObject.refresh()
-            p.changed = true
+            worldObject.changed = true
         end
     end
     -- set x position
@@ -1089,7 +1088,7 @@ function _G.love.light.newBody(p, type, ...)
         if x ~= bodyObject.x then
             bodyObject.x = x
             bodyObject.refresh()
-            p.changed = true
+            worldObject.changed = true
         end
     end
     -- set y position
@@ -1097,7 +1096,7 @@ function _G.love.light.newBody(p, type, ...)
         if y ~= bodyObject.y then
             bodyObject.y = y
             bodyObject.refresh()
-            p.changed = true
+            worldObject.changed = true
         end
     end
     -- get x position
@@ -1129,7 +1128,7 @@ function _G.love.light.newBody(p, type, ...)
         bodyObject.width = width
         bodyObject.height = height
         bodyObject.refresh()
-        p.changed = true
+        worldObject.changed = true
     end
     -- set offset
     bodyObject.setOffset = function(ox, oy)
@@ -1139,7 +1138,7 @@ function _G.love.light.newBody(p, type, ...)
             if bodyObject.shadowType == "rectangle" then
                 bodyObject.refresh()
             end
-            p.changed = true
+            worldObject.changed = true
         end
     end
     -- set offset
@@ -1148,7 +1147,7 @@ function _G.love.light.newBody(p, type, ...)
             bodyObject.ix = ix
             bodyObject.iy = iy
             bodyObject.refresh()
-            p.changed = true
+            worldObject.changed = true
         end
     end
     -- set offset
@@ -1157,7 +1156,7 @@ function _G.love.light.newBody(p, type, ...)
             bodyObject.nx = nx
             bodyObject.ny = ny
             bodyObject.refresh()
-            p.changed = true
+            worldObject.changed = true
         end
     end
     -- set glow color
@@ -1165,12 +1164,12 @@ function _G.love.light.newBody(p, type, ...)
         bodyObject.glowRed = red
         bodyObject.glowGreen = green
         bodyObject.glowBlue = blue
-        p.changed = true
+        worldObject.changed = true
     end
     -- set glow alpha
     bodyObject.setGlowStrength = function(strength)
         bodyObject.glowStrength = strength
-        p.changed = true
+        worldObject.changed = true
     end
     -- get radius
     bodyObject.getRadius = function()
@@ -1180,13 +1179,13 @@ function _G.love.light.newBody(p, type, ...)
     bodyObject.setRadius = function(radius)
         if radius ~= bodyObject.radius then
             bodyObject.radius = radius
-            p.changed = true
+            worldObject.changed = true
         end
     end
     -- set polygon data
     bodyObject.setPoints = function(...)
         bodyObject.data = { ... }
-        p.changed = true
+        worldObject.changed = true
     end
     -- get polygon data
     bodyObject.getPoints = function()
@@ -1195,29 +1194,29 @@ function _G.love.light.newBody(p, type, ...)
     -- set shadow on/off
     bodyObject.setShadowType = function(type)
         bodyObject.shadowType = type
-        p.changed = true
+        worldObject.changed = true
     end
     -- set shadow on/off
     bodyObject.setShadow = function(b)
         bodyObject.castsNoShadow = not b
-        p.changed = true
+        worldObject.changed = true
     end
     -- set shine on/off
     bodyObject.setShine = function(b)
         bodyObject.shine = b
-        p.changed = true
+        worldObject.changed = true
     end
     -- set glass color
     bodyObject.setColor = function(red, green, blue)
         bodyObject.red = red
         bodyObject.green = green
         bodyObject.blue = blue
-        p.changed = true
+        worldObject.changed = true
     end
     -- set glass alpha
     bodyObject.setAlpha = function(alpha)
         bodyObject.alpha = alpha
-        p.changed = true
+        worldObject.changed = true
     end
     -- set reflection on/off
     bodyObject.setReflection = function(reflection)
@@ -1262,7 +1261,7 @@ function _G.love.light.newBody(p, type, ...)
             }
             bodyObject.normalMesh = love.graphics.newMesh(bodyObject.normalVert, bodyObject.normal, "fan")
 
-            p.isPixelShadows = true
+            worldObject.isPixelShadows = true
         else
             bodyObject.normalMesh = nil
         end
@@ -1355,7 +1354,7 @@ function _G.love.light.newBody(p, type, ...)
         bodyObject.glow = glow
         bodyObject.glowStrength = 1.0
 
-        p.isGlow = true
+        worldObject.isGlow = true
     end
     -- set tile offset
     bodyObject.setNormalTileOffset = function(tx, ty)
@@ -1367,7 +1366,7 @@ function _G.love.light.newBody(p, type, ...)
             { bodyObject.normalWidth, bodyObject.normalHeight, bodyObject.tileX + 1.0, bodyObject.tileY + 1.0 },
             { 0.0, bodyObject.normalHeight, bodyObject.tileX, bodyObject.tileY + 1.0 }
         }
-        p.changed = true
+        worldObject.changed = true
     end
     -- get type
     bodyObject.getType = function()
@@ -1423,16 +1422,16 @@ function _G.love.light.newBody(p, type, ...)
     end
     -- clear
     bodyObject.clear = function()
-        for i = 1, #p.body do
-            if p.body[i] == bodyObject then
-                for k = i, #p.body - 1 do
-                    p.body[k] = p.body[k + 1]
+        for i = 1, #worldObject.body do
+            if worldObject.body[i] == bodyObject then
+                for k = i, #worldObject.body - 1 do
+                    worldObject.body[k] = worldObject.body[k + 1]
                 end
-                p.body[#p.body] = nil
+                worldObject.body[#worldObject.body] = nil
                 break
             end
         end
-        p.changed = true
+        worldObject.changed = true
     end
 
     return bodyObject
