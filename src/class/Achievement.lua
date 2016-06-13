@@ -86,7 +86,7 @@ function Achievement:allObjectsAtLeastOnce()
             _G._persTable.fish.caught.camera > 0 and _G._persTable.fish.caught.drink > 0 and
             _G._persTable.fish.caught.egg > 0 and _G._persTable.fish.caught.cactus > 0 and
             _G._persTable.fish.caught.leaf > 0 and _G._persTable.fish.caught.canyonSnake > 0 and
-            _G._persTable.fish.caught.backpack > 0 and G._persTable.fish.caught.bird > 0 and
+            _G._persTable.fish.caught.backpack > 0 and _G._persTable.fish.caught.bird > 0 and
             _G._persTable.fish.caught.squirrel > 0 then
         _G._persTable.achievements.allObjectsAtLeastOnce = true;
     end

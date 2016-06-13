@@ -243,12 +243,68 @@ describe("Unit test for Achievement.lua", function()
         assert.are.same(_G._persTable.achievements.onlyNegativeFishesCaught, exp);
     end)
   
-    it("Test function Achievement:onlyNegativeFishesCaught", function()
+    it("Test function Achievement:allPillsAtLeastOnce", function()
         _G._persTable.fish.caught.sleepingPill  = 2;
         local myInstance = testClass();
         local exp = true;
         myInstance:allPillsAtLeastOnce()
         assert.are.same(_G._persTable.achievements.allPillsAtLeastOnce, exp);
+    end)
+  
+      it("Test function Achievement:allObjectsAtLeastOnce", function()
+        _G._persTable.fish.caught.turtle = 1;
+        _G._persTable.fish.caught.rat = 1;
+        _G._persTable.fish.caught.deadFish = 1;
+        _G._persTable.fish.caught.sleepingPill= 1;
+        _G._persTable.fish.caught.nemo = 1;
+        _G._persTable.fish.caught.lollipop = 1;
+        _G._persTable.fish.caught.angler = 1;
+        _G._persTable.fish.caught.ring = 1;
+        _G._persTable.fish.caught.shoe = 1;
+        _G._persTable.fish.caught.snake = 1;
+        _G._persTable.fish.caught.crocodile = 1;
+        _G._persTable.fish.caught.balloon = 1;
+        _G._persTable.fish.caught.camera = 1;
+        _G._persTable.fish.caught.drink = 1;
+        _G._persTable.fish.caught.egg = 1;
+        _G._persTable.fish.caught.cactus = 1;
+        _G._persTable.fish.caught.leaf = 1;
+        _G._persTable.fish.caught.canyonSnake = 1; 
+        _G._persTable.fish.caught.backpack= 1;
+        _G._persTable.fish.caught.bird = 1;
+        _G._persTable.fish.caught.squirrel = 1;
+        local myInstance = testClass();
+        local exp = true;
+        myInstance:allObjectsAtLeastOnce ()
+        assert.are.same(_G._persTable.achievements.allObjectsAtLeastOnce , exp);
+    end)
+  
+    it("Test function Achievement:allObjectsAtLeastOnce", function()
+        _G._persTable.fish.caught.turtle = 1;
+        _G._persTable.fish.caught.rat = 1;
+        _G._persTable.fish.caught.deadFish = 0;
+        _G._persTable.fish.caught.sleepingPill= 1;
+        _G._persTable.fish.caught.nemo = 1;
+        _G._persTable.fish.caught.lollipop = 1;
+        _G._persTable.fish.caught.angler = 1;
+        _G._persTable.fish.caught.ring = 1;
+        _G._persTable.fish.caught.shoe = 1;
+        _G._persTable.fish.caught.snake = 1;
+        _G._persTable.fish.caught.crocodile = 1;
+        _G._persTable.fish.caught.balloon = 1;
+        _G._persTable.fish.caught.camera = 1;
+        _G._persTable.fish.caught.drink = 1;
+        _G._persTable.fish.caught.egg = 1;
+        _G._persTable.fish.caught.cactus = 1;
+        _G._persTable.fish.caught.leaf = 1;
+        _G._persTable.fish.caught.canyonSnake = 1; 
+        _G._persTable.fish.caught.backpack= 1;
+        _G._persTable.fish.caught.bird = 1;
+        _G._persTable.fish.caught.squirrel = 1;
+        local myInstance = testClass();
+        local exp = false;
+        myInstance:allObjectsAtLeastOnce ()
+        assert.are.same(_G._persTable.achievements.allObjectsAtLeastOnce , exp);
     end)
   
   end)
