@@ -76,6 +76,7 @@ _G.levelTestStub = function()
             createMoreSwarms = function (...) end;
             createSleepingpill = function (...) end;
             createFallingLitter = function (...) end;
+            createBubbles = function (...) end;
         };
         getLevelPropMapByName = function(...) return {
             direction = 1;
@@ -84,6 +85,16 @@ _G.levelTestStub = function()
         getCurSwarmFactory = function(...) return _G.levMan.curSwarmFac end;
         getCurPlayer = function(...) return _G.levMan.curPlayer end;
         getCurLevel = function(...) return _G.levMan.curLevel end;
+    };
+    _G._gui = {
+        getFrames = function(...) 
+            return {
+                inGame = {
+                    activate = function(...) end;
+                    clear = function(...) end;
+                };
+            } 
+        end;
     };
     _G.love = {
         graphics = {

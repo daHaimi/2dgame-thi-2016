@@ -91,11 +91,19 @@ it("Testing Constructor", function()
             getLastState = function(...) return _G._gui.myFrames.pause; end;
         };
         _gui.getFrames = function(...) return _G._gui.myFrames; end;
-        stub(locInstance.frame, "draw");
+        stub(locInstance.elementsOnFrame.healthbar.object, "SetVisible");
+        stub(locInstance.elementsOnFrame.pause.object, "SetVisible");
         locInstance:draw();
-        assert.stub(locInstance.frame.draw).was_called(1);
+        assert.stub(locInstance.elementsOnFrame.healthbar.object.SetVisible).was_called(1);
+        assert.stub(locInstance.elementsOnFrame.pause.object.SetVisible).was_called(1);
     end)
 
+    it("Testing activate function", function()
+        stub(locInstance.frame, "draw");
+        locInstance:activate();
+        assert.stub(locInstance.frame.draw).was_called(1);
+    end)
+    
     it("Testing clear function", function()
         stub(locInstance.frame, "clear");
         locInstance.elementsOnFrame = "test"

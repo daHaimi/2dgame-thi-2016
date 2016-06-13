@@ -635,6 +635,24 @@ return {
                     deltaYPos = 40
                 }
             }
+        },
+        bubble = {
+            name = "bubble",
+            image = "bubble.png",
+            spriteSize = 64,
+            minSpeed = 0,
+            maxSpeed = 0,
+            downSpeed = -10,
+            value = 0,
+            minAmount = 3,
+            maxAmount = 5,
+            swarmHeight = 0,
+            hitbox = { {
+                    width = 0,
+                    height = 0,
+                    deltaXPos = 0,
+                    deltaYPos = 0
+                }}
         }
     },
 
@@ -958,6 +976,9 @@ return {
                 textScore = "Your Score:";
                 textStart = "Click to start!";
                 buttonChangeLevel = "Change level";
+                textPrice = "Price: ";
+                textMoney = "Not enough Money!";
+                textBought = "Already bought";
                 --achievements
                 creditsRed = {
                     name = "Respect our Work";
@@ -1234,6 +1255,9 @@ return {
                 textScore = "Punktestand:";
                 textStart = "Klicken zum Starten!";
                 buttonChangeLevel = "Levelauswahl";
+                textPrice = "Preis: ";
+                textMoney = "Nicht genug Geld!";
+                textBought = "Already bought";
                 getFirtsObject = {
                     name = "Der erste Fang";
                     description = "Du hast den ersten Fang gemacht";

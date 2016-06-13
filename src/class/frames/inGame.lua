@@ -130,10 +130,6 @@ function InGame:appear()
     love.mouse.setGrabbed(true);
     love.mouse.setVisible(false);
     self.frame:appear(self.elementsOnFrame);
-    if self:checkPosition() then
-        self.elementsOnFrame.healthbar.object:SetVisible(true);
-        self.elementsOnFrame.pause.object:SetVisible(true);
-    end
 end
 
 ---called in the "fly out" state

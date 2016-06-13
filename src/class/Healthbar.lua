@@ -19,7 +19,6 @@ local Healthbar = Class {
             visible = false;
         };
         self:scaleHearts();
-        self:SetVisible(false);
     end;
 };
 

@@ -3,6 +3,7 @@ _G.math.inf = 1 / 0
 
 testClass = require "src.class.TextField"
 fakeElement = require "Tests.fakeLoveframes.fakeElement"
+Data = require "data";
 
 
 describe("Unit test for TextField.lua", function()
@@ -12,6 +13,12 @@ describe("Unit test for TextField.lua", function()
         _G.Loveframes = {
             Create = function(...) return fakeElement(); end
         }
+        _G.data = Data;
+        _G._persTable = {
+            config = {
+                language = "english";
+            }
+        }
         _G.love = {
             graphics = {
                 newFont = function(...) return {}; end;
@@ -19,7 +26,6 @@ describe("Unit test for TextField.lua", function()
         }
         locInstance = testClass(3, 4);
     end)
-    
     
     it("Testing Constructor", function()
         local myInstance = testClass(3, 4);
