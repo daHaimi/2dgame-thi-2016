@@ -34,7 +34,7 @@ local Level = Class {
         self.moved = 0;
         self.gMMusicPlaying = false;
         self.reachedDepth = 0;
-        
+
         self.levMan = levelManager;
         self.direction = direction;
         self.p_levelName = levelName;
@@ -66,7 +66,7 @@ local Level = Class {
             end
         end
         _G._tmpTable.roundFuel = self.godModeFuel;
-        
+
         --Animation parameters
         self.animationStart = false;
         self.animationStartFinished = false;
@@ -89,7 +89,7 @@ local Level = Class {
         local minLightLevel = 81;
         local maxLightLevel = 174;
         local lightLevel = ((math.abs(30 - time)) / 30) * maxLightLevel + minLightLevel;
-        
+
         self.lightWorld.setAmbientColor(lightLevel, lightLevel, lightLevel);
 
         self.baitLight = self.lightWorld.newLight(1, 1, 255, 127, 63, 500);
@@ -98,9 +98,9 @@ local Level = Class {
         -- temp bugfix to play the game with persistence
         -- delete when non persistent table exists
         _G._persTable.phase = 1;
-        
+
         --elements to draw
-        
+
         if self.p_levelName == "sewers" then
             self.borderLeft = love.graphics.newImage("assets/left.png");
             self.borderRight = love.graphics.newImage("assets/right.png");
@@ -117,19 +117,18 @@ local Level = Class {
             self.front = love.graphics.newImage("assets/canyon_front.png");
             self.frontOffset = 375;
         end
-        
+
         self.hamster = love.graphics.newImage("assets/hamster_noLine.png");
         self.line = love.graphics.newImage("assets/line.png");
         self.hand = love.graphics.newImage("assets/hand.png");
         self.borderBottom = love.graphics.newImage("assets/border.png");
         self.borderBottomDestroyed = love.graphics.newImage("assets/border_destroyed.png");
         self.lowerBorderPosition = math.abs(self.lowerBoarder) + self.winDim[2] * 0.68 + 130;
-        
+
         --parameters for achievements
         self.failedStart = false;
         --parameter for loading the game
         self.gameLoaded = true;
-
     end
 }
 
@@ -175,16 +174,16 @@ function Level:update(dt, bait)
         self:payPlayer();
     end
     --dynamic creation of swarms of fishable objects
-    self.levMan:getCurSwarmFactory():createMoreSwarms( - (self.posY - self.winDim[2] * 0.5));
+    self.levMan:getCurSwarmFactory():createMoreSwarms(-(self.posY - self.winDim[2] * 0.5));
     --dynamic creation of sleepingPills
-    self.levMan:getCurSwarmFactory():createSleepingpill( - (self.posY - self.winDim[2] * 0.5), 300, 700);
+    self.levMan:getCurSwarmFactory():createSleepingpill(-(self.posY - self.winDim[2] * 0.5), 300, 700);
     --dynamic creation of falling litter in the canyon
     if self.p_levelName == "canyon" then
-        self.levMan:getCurSwarmFactory():createFallingLitter( - (self.posY + self.winDim[2] * 0.5), 500, 1500);
+        self.levMan:getCurSwarmFactory():createFallingLitter(-(self.posY + self.winDim[2] * 0.5), 500, 1500);
     end
-    
+
     --set the movement in relation of the direction
-    if not self.animationStartFinished  then
+    if not self.animationStartFinished then
         self.moved = 0;
     elseif self.direction == 1 then
         self.moved = math.ceil(dt * bait:getSpeed());
@@ -200,7 +199,7 @@ function Level:update(dt, bait)
 
     self:checkGodMode();
     bait:update(dt);
-    
+
     --do the animation movement
     self:doStartAnimationMovement(bait, dt);
     self:startEndAnimation();
@@ -208,7 +207,7 @@ function Level:update(dt, bait)
     if self.animationEndFinished then
         self.waitTillSwitch = self.waitTillSwitch - dt;
     end
-    
+
     --Update music
     if self.godModeActive and not self.gMMusicPlaying then
         TEsound.playLooping({ "assets/sound/godMode.wav" }, 'godmode');
@@ -217,20 +216,20 @@ function Level:update(dt, bait)
         TEsound.stop('godmode');
         self.gMMusicPlaying = false;
     end
-    
+
     --Update the light
     self.baitLight.setPosition(self.posY or 0, self.posX or 0);
     self.lightWorld:update();
-    
+
     -- update the currentDepth
     _G._tmpTable.currentDepth = self.posY;
-    
+
     -- calc fished Value
     if self.levelFinished then
         _G._tmpTable.earnedMoney = self:calcFishedValue();
         if self.playTime ~= 0 then
-        _G._persTable.playedTime = _G._persTable.playedTime + self.playTime;
-        self.playTime = 0;
+            _G._persTable.playedTime = _G._persTable.playedTime + self.playTime;
+            self.playTime = 0;
         end
     end
     self:checkForAchievments()
@@ -241,26 +240,26 @@ function Level:checkForAchievments()
     if self.failedStart and self.levelFinished and not _G._persTable.achievements.failedStart then
         self:unlockAchievement("failedStart");
     end
-    if self.levelFinished and _G._tmpTable.caughtThisRound.shoe == 2 
-    and not _G._persTable.achievements.caughtTwoBoots 
-    and self:calcFishedValue() == self.levMan:getCurSwarmFactory():getFishableObjects().shoe.value * 2 then
-         self:unlockAchievement("caughtTwoBoots");
+    if self.levelFinished and _G._tmpTable.caughtThisRound.shoe == 2
+            and not _G._persTable.achievements.caughtTwoBoots
+            and self:calcFishedValue() == self.levMan:getCurSwarmFactory():getFishableObjects().shoe.value * 2 then
+        self:unlockAchievement("caughtTwoBoots");
     end
     if self.levelFinished and next(_G._tmpTable.caughtThisRound) == nil and not self.failedStart
-    and not _G._persTable.achievements.nothingCaught then
+            and not _G._persTable.achievements.nothingCaught then
         self:unlockAchievement("nothingCaught");
     end
-    if self.levelFinished and not _G._persTable.achievements.allLevelBoardersPassed 
-    and _persTable.upgrades.mapBreakthrough1 == true and _persTable.upgrades.mapBreakthrough2 == true 
-    and self.reachedDepth <= self.lowerBoarder then
+    if self.levelFinished and not _G._persTable.achievements.allLevelBoardersPassed
+            and _persTable.upgrades.mapBreakthrough1 == true and _persTable.upgrades.mapBreakthrough2 == true
+            and self.reachedDepth <= self.lowerBoarder then
         self:unlockAchievement("allLevelBoardersPassed");
     end
-    if self.levelFinished and not _G._persTable.achievements.getFirtsObject 
-    and next(_G._tmpTable.caughtThisRound) ~= nil then
+    if self.levelFinished and not _G._persTable.achievements.getFirtsObject
+            and next(_G._tmpTable.caughtThisRound) ~= nil then
         self:unlockAchievement("getFirtsObject");
     end
-    if self.levelFinished and not _G._persTable.achievements.playedTime 
-    and _G._persTable.playedTime > (2*60*60) then
+    if self.levelFinished and not _G._persTable.achievements.playedTime
+            and _G._persTable.playedTime > (2 * 60 * 60) then
         self:unlockAchievement("playedTime");
     end
 end
@@ -269,14 +268,14 @@ end
 -- @param achName The name of the achievement.
 function Level:unlockAchievement(achName)
     table.insert(_G._unlockedAchievements, _G.data.achievements[achName]);
-    _gui:newNotification("assets/gui/480px/" .. _G.data.achievements[achName].image_unlock, 
+    _gui:newNotification("assets/gui/480px/" .. _G.data.achievements[achName].image_unlock,
         _G.data.achievements[achName].name);
     _G._persTable.achievements[achName] = true;
 end
 
 --- calculates the momement an positioning of all elements needed for the ending animation
---@param bai curBait
---@param dt delta time
+-- @param bai curBait
+-- @param dt delta time
 function Level:doEndAnimationMovement(bait, dt)
     if self.levelFinished and not self.failedStart then
         if self.p_levelName == "sewers" then
@@ -311,14 +310,14 @@ function Level:doEndAnimationMovement(bait, dt)
 end
 
 --- calculates the momement an positioning of all elements needed for the starting animation
---@param bai curBait
---@param dt delta time
+-- @param bai curBait
+-- @param dt delta time
 function Level:doStartAnimationMovement(bait, dt)
     if self.animationStart and not self.animationStartFinished then
         if self.p_levelName == "sewers" then
             -- hamster dropped on frame of toilet
-            if  self.hamsterLockedXPos < 120 and self.hamsterLockedXPos > 65 or 
-                self.hamsterLockedXPos < 355 and self.hamsterLockedXPos > 300 then
+            if self.hamsterLockedXPos < 120 and self.hamsterLockedXPos > 65 or
+                    self.hamsterLockedXPos < 355 and self.hamsterLockedXPos > 300 then
                 if self.hamsterYPos < self.winDim[2] * 0.5 - 230 then
                     self.hamsterYPos = self.hamsterYPos + 0.5 * math.ceil(dt * bait:getSpeed());
                     self.failedStart = true;
@@ -344,7 +343,7 @@ function Level:doStartAnimationMovement(bait, dt)
             end
         else
             --canyon
-           if self.hamsterYPos < self.winDim[2] * 0.55 then
+            if self.hamsterYPos < self.winDim[2] * 0.55 then
                 self.hamsterYPos = self.hamsterYPos + 0.5 * math.ceil(dt * bait:getSpeed());
             else
                 self.animationStartFinished = true;
@@ -366,7 +365,7 @@ function Level:switchToPhase2()
         self.reachedDepth = self.posY;
         self:deactivateGodMode();
         self.levMan:getCurPlayer():changeSprite();
-        
+
         -- for ending animation in sewers
         if self.p_levelName == "sewers" then
             self.hamsterLockedXPos = 208;
@@ -394,7 +393,7 @@ function Level:drawEnviroment()
     self.enviromentPosition = self.enviromentPosition - self:getMoved();
 
     self.lightWorld.drawShadow();
-    
+
     love.graphics.setColor(255, 255, 255);
 
     --border bottom
@@ -402,8 +401,8 @@ function Level:drawEnviroment()
         love.graphics.draw(self.borderBottomDestroyed, 0, self.lowerBorderPosition + self.mapBreakthroughBonus1);
     elseif _persTable.upgrades.mapBreakthrough1 and _persTable.upgrades.mapBreakthrough2 then
         love.graphics.draw(self.borderBottomDestroyed, 0, self.lowerBorderPosition + self.mapBreakthroughBonus1);
-        love.graphics.draw(self.borderBottomDestroyed, 0, self.lowerBorderPosition + 
-            self.mapBreakthroughBonus1 + self.mapBreakthroughBonus2);
+        love.graphics.draw(self.borderBottomDestroyed, 0, self.lowerBorderPosition +
+                self.mapBreakthroughBonus1 + self.mapBreakthroughBonus2);
     end
     love.graphics.draw(self.borderBottom, 0, self.lowerBorderPosition);
 
@@ -435,12 +434,12 @@ function Level:drawEnviroment()
         love.graphics.draw(self.hamster, self.levMan:getCurPlayer():getPosXMouse() - 32, self.hamsterYPos);
         self:drawLine(self.levMan:getCurPlayer():getPosXMouse() - 32, 100);
         love.graphics.draw(self.hand, self.levMan:getCurPlayer():getPosXMouse() - 48, self.animationStartPoint - 220);
-    -- while starting animation in sewers or while playing canyon
+        -- while starting animation in sewers or while playing canyon
     elseif self.direction == 1 or self.p_levelName == "canyon" then
         love.graphics.draw(self.hand, xPosHamster - 16, self.animationStartPoint - 220);
         self:drawLine(xPosHamster, 300);
-        if self.hamsterYPos < self.animationStartPoint + 130 or self.failedStart 
-            or self.hamsterYPos < self.animationStartPoint + 200 and self.p_levelName == "canyon" then
+        if self.hamsterYPos < self.animationStartPoint + 130 or self.failedStart
+                or self.hamsterYPos < self.animationStartPoint + 200 and self.p_levelName == "canyon" then
             love.graphics.draw(self.hamster, xPosHamster, self.hamsterYPos);
         end
         --ending animation for sewer
@@ -448,9 +447,8 @@ function Level:drawEnviroment()
         love.graphics.draw(self.hamster, xPosHamster, self.hamsterYPos - self.pumpingWay);
         love.graphics.draw(self.plunger, xPosHamster - 32, self.hamsterYPos - 170 - self.pumpingWay);
     end
-    
+
     love.graphics.draw(self.front, 0, self.posY - self.frontOffset);
-    
 end
 
 --- Draws the line
@@ -465,6 +463,7 @@ function Level:drawLine(position, length)
         love.graphics.draw(self.line, position + 30, self.hamsterYPos - p_toMuch - i);
     end
 end
+
 --- Pay the achieved money to the player and multiply it with the
 -- bonus value (when activated) at the end of each round. Remove the money multi when it was activated.
 function Level:payPlayer()
@@ -549,12 +548,11 @@ end
 -- @return When the god mode was successfully activated it returns 1 otherwise 0.
 function Level:activateGodMode()
     if _G._persTable.upgrades.godMode and not self.godModeActive and
-    self.direction == self.levMan:getLevelPropMapByName(self.p_levelName).direction then
+            self.direction == self.levMan:getLevelPropMapByName(self.p_levelName).direction then
         if self.godModeFuel > 0 then
             self.godModeActive = true;
         end
     end
-
 end
 
 --- Deactivates the god mode.
@@ -580,11 +578,11 @@ function Level:calcFishedValue()
     if fishedVal > _G._persTable.statistic.maxCoinOneRound then
         _G._persTable.statistic.maxCoinOneRound = fishedVal;
     end
-    
+
     if fishedVal < _G._persTable.statistic.minCoinOneRound then
         _G._persTable.statistic.minCoinOneRound = fishedVal;
     end
-    
+
     if fishedAmount > _G._persTable.fish.caughtInOneRound then
         _G._persTable.fish.caughtInOneRound = fishedAmount;
     end
@@ -758,6 +756,12 @@ end
 -- @return Returns the reached depth.
 function Level:getReachedDepth()
     return self.reachedDepth;
+end
+
+--- Returns the LightWorld
+-- @return lightWorld
+function Level:getLightWorld()
+    return self.lightWorld;
 end
 
 return Level;
