@@ -114,7 +114,7 @@ local Level = Class {
             self.borderLeft = love.graphics.newImage("assets/canyon_left.png");
             self.borderRight = love.graphics.newImage("assets/canyon_right.png");
             self.background = love.graphics.newImage("assets/canyon_back.png");
-            self.background2 = love.graphics.newImage("assets/canyon_back.png");
+            self.background2 = love.graphics.newImage("assets/canyon_back2.png");
             self.front = love.graphics.newImage("assets/canyon_front.png");
             self.frontOffset = 375;
         end
