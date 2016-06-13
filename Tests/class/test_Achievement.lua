@@ -114,5 +114,40 @@ describe("Unit test for Achievement.lua", function()
         assert.are.same(_G._persTable.achievements.goldCaughtOneRound , exp);
     end)
     
-    
+    it("Test function Achievement:moneyOneRound", function()
+        _G._persTable.statistic.maxCoinOneRound = 100;
+
+        local myInstance = testClass();
+        local exp = false;
+        myInstance:moneyOneRound()
+        assert.are.same(_G._persTable.achievements.bronzeCoinsOneRound , exp);
+    end)
+  
+    it("Test function Achievement:moneyOneRound", function()
+        _G._persTable.statistic.maxCoinOneRound = 200;
+
+        local myInstance = testClass();
+        local exp = true;
+        myInstance:moneyOneRound()
+        assert.are.same(_G._persTable.achievements.bronzeCoinsOneRound , exp);
+    end)
+
+    it("Test function Achievement:moneyOneRound", function()
+        _G._persTable.statistic.maxCoinOneRound = 600;
+
+        local myInstance = testClass();
+        local exp = true;
+        myInstance:moneyOneRound()
+        assert.are.same(_G._persTable.achievements.silverCoinsOneRound , exp);
+    end)
+  
+    it("Test function Achievement:moneyOneRound", function()
+        _G._persTable.statistic.maxCoinOneRound = 1000;
+
+        local myInstance = testClass();
+        local exp = true;
+        myInstance:moneyOneRound()
+        assert.are.same(_G._persTable.achievements.goldCoinsOneRound , exp);
+    end)
+  
   end)
