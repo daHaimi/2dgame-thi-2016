@@ -794,7 +794,7 @@ return {
     },
     
     achievements = {
-        getFirtsObject = {
+        getFirstObject = {
             nameOnPersTable = "getFirstObject";
             image_lock = "ach_firstObject_locked.png";
             image_unlock = "ach_firstObject.png";
@@ -976,12 +976,15 @@ return {
                 textScore = "Your Score:";
                 textStart = "Click to start!";
                 buttonChangeLevel = "Change level";
+                textPrice = "Price: ";
+                textMoney = "Not enough Money!";
+                textBought = "Already bought";
                 --achievements
                 creditsRed = {
                     name = "Respect our Work";
                     description = "Read the credits";
                 };
-                getFirtsObject = {
+                getFirstObject = {
                     name = "First object";
                     description = "You caught your first object!";
                 };
@@ -1252,7 +1255,10 @@ return {
                 textScore = "Punktestand:";
                 textStart = "Klicken zum Starten!";
                 buttonChangeLevel = "Levelauswahl";
-                getFirtsObject = {
+                textPrice = "Preis: ";
+                textMoney = "Nicht genug Geld!";
+                textBought = "Already bought";
+                getFirstObject = {
                     name = "Der erste Fang";
                     description = "Du hast den ersten Fang gemacht";
                 };

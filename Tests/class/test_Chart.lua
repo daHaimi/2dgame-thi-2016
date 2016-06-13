@@ -27,11 +27,14 @@ describe("Unit test for Chart.lua", function()
         }
         Element = {
             object = {
-                GetPos = function(...) return 40, 60; end;};
+                GetPos = function(...) return 40, 60; end;
+                GetVisible = function(...) return Element.visible; end;
+            };
             visible = nil;
             x = nil;
             y = nil;
             nameOnPersTable = "something";
+            
         };
         function Element:SetVisible(visible) 
             self.visible = visible; 
@@ -98,39 +101,56 @@ it("Testing Constructor", function()
     end)
 
     it("Testing scroll up function", function()
-        local a = spy.on(locInstance, "drawChart");
-        local b = spy.on(locInstance, "resetMarkedFrame");
+        stub(locInstance, "drawChart");
+        stub(locInstance, "resetMarkedFrame");
+        stub(locInstance, "markElement");
         
         locInstance.toprow = 0;
         locInstance:scrollUp();
         assert.are.equal(locInstance.p_toprow, 0);
         assert.spy(locInstance.drawChart).was_not_called();
         assert.spy(locInstance.resetMarkedFrame).was_not_called();
+        assert.spy(locInstance.markElement).was_not_called();
         
         locInstance.p_toprow = 2;
+        locInstance.p_markedElement = Element;
+        locInstance.p_markedElement.visible = true;
         locInstance:scrollUp();
         assert.are.equal(locInstance.p_toprow, 1);
-        assert.spy(locInstance.drawChart).was_called(1);
-        assert.spy(locInstance.resetMarkedFrame).was_called(1);
+        assert.stub(locInstance.drawChart).was_called(1);
+        assert.stub(locInstance.markElement).was_called(1);
+        
+        locInstance.p_markedElement.visible = false;
+        locInstance:scrollUp();
+        assert.stub(locInstance.resetMarkedFrame).was_called(1);
     end)
 
     it("Testing scroll down function", function()
-        local a = spy.on(locInstance, "drawChart");
-        local b = spy.on(locInstance, "resetMarkedFrame");
+        stub(locInstance, "drawChart");
+        stub(locInstance, "resetMarkedFrame");
+        stub(locInstance, "markElement");
         
         locInstance.p_row = 2
         locInstance.p_toprow = 0;
         locInstance:scrollDown();
         assert.are.equal(locInstance.p_toprow, 0);
-        assert.spy(locInstance.drawChart).was_not_called();
-        assert.spy(locInstance.resetMarkedFrame).was_not_called();
+        assert.stub(locInstance.drawChart).was_not_called();
+        assert.stub(locInstance.resetMarkedFrame).was_not_called();
         
         locInstance.p_row = 4
         locInstance.p_toprow = 0;
+        locInstance.p_markedElement = Element;
+        locInstance.p_markedElement.visible = true;
         locInstance:scrollDown();
         assert.are.equal(locInstance.p_toprow, 1);
-        assert.spy(locInstance.drawChart).was_called(1);
-        assert.spy(locInstance.resetMarkedFrame).was_called(1);
+        assert.stub(locInstance.drawChart).was_called(1);
+        assert.stub(locInstance.markElement).was_called(1);
+        
+        locInstance.p_row = 4
+        locInstance.p_toprow = 0;
+        locInstance.p_markedElement.visible = false;
+        locInstance:scrollDown();
+        assert.stub(locInstance.resetMarkedFrame).was_called(1);
     end)
     
     it("Testing resetTopRow function", function()
@@ -198,41 +218,4 @@ it("Testing Constructor", function()
         
         assert.spy(locInstance.textField.changeText).was_called();
     end)
-
---[[
-    it("Testing drawChart function", function()
-        locInstance.p_column = 3;
-        locInstance.p_toprow = 0;
-        for var = 1, 12 do
-            locInstance.p_elementsOnChart[var] = Element;
-        end
-        locInstance:drawChart()
-        for var = 1, 12 do
-            assert.are.equal(locInstance.p_elementsOnChart[var].visible, true);
-        end
-        assert.are.equal(locInstance.p_elementsOnChart[12].visible, false);
-    end)
-    
-
-    it("Testing setPosOfKlickableElements function", function()
-        for var = 1, 4 do
-            locInstance.p_elementsOnChart[var] = Element;
-        end
-        locInstance.p_xPos = 5;
-        locInstance.p_yPos = 5;
-        locInstance.p_toprow = 0;
-        locInstance.klickableSize = 90;
-        locInstance.p_column = 3;
-        locInstance.buttonHeight = 50;
-        locInstance:setPosOfKlickableElements();
-        --assert.are.equal(locInstance.p_elementsOnChart[1].x, 5);
-        --assert.are.equal(locInstance.p_elementsOnChart[1].y, 1);
-        --assert.are.equal(locInstance.p_elementsOnChart[2].x, 5);
-        --assert.are.equal(locInstance.p_elementsOnChart[2].y, 1);
-        --assert.are.equal(locInstance.p_elementsOnChart[3].x, 5);
-        --assert.are.equal(locInstance.p_elementsOnChart[3].y, 1);
-        --assert.are.equal(locInstance.p_elementsOnChart[4].x, 5);
-        --assert.are.equal(locInstance.p_elementsOnChart[4].y, 1);
-    end)
-]]--
 end)

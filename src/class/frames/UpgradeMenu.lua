@@ -98,7 +98,8 @@ function UpgradeMenu:create()
                 self:buyElement();
                 _G._persistence:updateSaveFile();
             else
-                _gui:newNotification(self.directory .. "ach_nothingCaught.png", "Not enough Money!");
+                print(_G.data.languages[_G._persTable.config.language].package.textMoney)
+                _gui:newTextNotification(self.directory .. "ach_nothingCaught.png", _G.data.languages[_G._persTable.config.language].package.textMoney);
             end
         end
     end
@@ -133,6 +134,8 @@ function UpgradeMenu:buyElement()
         local price = self.elementsOnFrame.chart.object:getMarkedElement().price;
         _G._persTable.money = _G._persTable.money - price;
         self:updateMoney()
+    else
+        _gui:newTextNotification(self.directory .. "ach_shitcoin.png", _G.data.languages[_G._persTable.config.language].package.textBought)
     end
     if not _G._persTable.achievements.shoppingQueen then
         self:checkForAchievement();
