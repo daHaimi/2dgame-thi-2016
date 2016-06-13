@@ -226,9 +226,7 @@ function Level:update(dt, bait)
         self.gMMusicPlaying = false;
     end
 
-    --Update the light
     self.baitLight.setPosition(self.posY or 0, self.posX or 0);
-    self.lightWorld:update();
 
     -- update the currentDepth
     _G._tmpTable.currentDepth = self.posY;
@@ -400,7 +398,10 @@ function Level:drawEnviroment()
     local xPosHamster = 0;
     self.enviromentPosition = self.enviromentPosition - self:getMoved();
 
+    self.lightWorld.update();
     self.lightWorld.drawShadow();
+    self.lightWorld.drawPixelShadow();
+    self.lightWorld.drawGlow();
 
     love.graphics.setColor(255, 255, 255);
 

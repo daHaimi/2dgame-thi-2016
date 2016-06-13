@@ -355,7 +355,7 @@ function _G.love.light.newWorld()
             love.graphics.setShader()
 
             -- create refraction map
-            worldObject.refractionMap:clear()
+            --worldObject.refractionMap:clear()
             love.graphics.setCanvas(worldObject.refractionMap)
             for i = 1, #worldObject.body do
                 if worldObject.body[i].refraction and worldObject.body[i].normal then
@@ -524,7 +524,7 @@ function _G.love.light.newWorld()
                 _G.love.light.BLURH:send("steps", worldObject.glowBlur)
                 _G.love.light.LAST_BUFFER = love.graphics.getCanvas()
                 love.graphics.setBlendMode("add")
-                worldObject.glowMap2:clear()
+                --worldObject.glowMap2:clear()
                 love.graphics.setCanvas(worldObject.glowMap2)
                 love.graphics.setShader(_G.love.light.BLURV)
                 love.graphics.draw(worldObject.glowMap, _G.love.light.translate.X, _G.love.light.translate.Y)
@@ -1010,7 +1010,10 @@ function _G.love.light.newBody(worldObject, type, ...)
                 { bodyObject.width, bodyObject.height, 1.0, 1.0 },
                 { 0.0, bodyObject.height, 0.0, 1.0 }
             }
-            bodyObject.normalMesh = love.graphics.newMesh(bodyObject.normalVert, bodyObject.normal, "fan")
+            --bodyObject.normalMesh = love.graphics.newMesh(bodyObject.normalVert, bodyObject.normal, "fan")
+            bodyObject.msh = love.graphics.newMesh(bodyObject.normalVert, "fan")
+            bodyObject.msh:setTexture(bodyObject.normal)
+
         else
             bodyObject.width = args[4] or 64
             bodyObject.height = args[5] or 64

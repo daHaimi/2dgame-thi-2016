@@ -31,10 +31,13 @@ local FishableObject = Class {
             self.lightImage = lightWorld.newImage(self.image, 64, 64, 64, 64, 0, 0);
             self.lightImage.setGlowMap(self.glowMap);
             self.lightImage.setOffset(0, 0);
-        end
-        if love.filesystem.exists("assets/" .. imageName .. "_normal." .. imageExtention) then
-            self.normalMap = love.graphics.newImage("assets/" .. imageName .. "_normal." .. imageExtention);
+            if love.filesystem.exists("assets/" .. imageName .. "_normal." .. imageExtention) then
+                self.normalMap = love.graphics.newImage("assets/" .. imageName .. "_normal." .. imageExtention);
+            else
+                -- TODO load default
+            end
             self.lightImage.setNormalMap(self.normalMap)
+            self.objectTest = lightWorld.newBody("refraction", self.image, 64, 64, 64, 64);
         end
         --self.lightImage.setOffset(levMan.curLevel); end
         --if love.filesystem.exists("assets/" .. imageSrc .. "_normal") then
