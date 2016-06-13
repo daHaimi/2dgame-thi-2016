@@ -14,6 +14,7 @@ local SwarmFactory = Class {
         self.createdFishables = {};
         self.actualSwarm = {};
         self.speedMulitplicator = 1;
+        self.addedDepth = 0;
         self.positionOfLastPill = 0;
         self.positionOfLastLitter = 0;        
         self.positionOfLastBubbles = 0;
@@ -137,8 +138,12 @@ end
 -- @param startPosY Start y position of the swarm
 -- @return Returns a random value.
 function SwarmFactory:createNextSwarm(startPosY, depth)
-    if self.actualSwarm[self.currentSwarm].maxSwarmHeight < startPosY then
+    if self.actualSwarm[self.currentSwarm].maxSwarmHeight < startPosY - self.addedDepth then
         self.currentSwarm = self.currentSwarm + 1;
+        if self.currentSwarm > #self.actualSwarm then
+            self.currentSwarm = 1;
+            self.addedDepth = self.actualSwarm[#self.actualSwarm].maxSwarmHeight + self.addedDepth;
+        end
     end
     
     local newSwarm = self.actualSwarm[self.currentSwarm];
