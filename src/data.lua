@@ -635,6 +635,24 @@ return {
                     deltaYPos = 40
                 }
             }
+        },
+        bubble = {
+            name = "bubble",
+            image = "bubble.png",
+            spriteSize = 64,
+            minSpeed = 0,
+            maxSpeed = 0,
+            downSpeed = -10,
+            value = 0,
+            minAmount = 3,
+            maxAmount = 5,
+            swarmHeight = 0,
+            hitbox = { {
+                    width = 0,
+                    height = 0,
+                    deltaXPos = 0,
+                    deltaYPos = 0
+                }}
         }
     },
 
@@ -660,7 +678,7 @@ return {
         {
             allowedFishables = { "ring", "shoe", "snake", "crocodile"},
             fishablesProbability = { 5, 30, 55, 100},
-            maxSwarmHeight = 90000
+            maxSwarmHeight = 9000
         }
     },
     
@@ -689,7 +707,7 @@ return {
         {
             allowedFishables = { "backpack", "camera", "bird", "egg"},
             fishablesProbability = {10, 20, 50, 100}, 
-            maxSwarmHeight = 90000
+            maxSwarmHeight = 1200
         }
     },
 

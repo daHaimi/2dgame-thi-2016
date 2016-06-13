@@ -20,7 +20,7 @@ require "util"
 -- @param animType (Animate.AnimType.linear) The animation type of the enum Animate.AnimType
 local FishableObject = Class {
     init = function(self, name, imageSrc, yPosition, minSpeed, maxSpeed, value, hitpoints,
-    spriteSize, hitbox, animTimeoutMin, animTimeoutMax, animType, fallSpeed, levMan)
+            spriteSize, hitbox, animTimeoutMin, animTimeoutMax, animType, fallSpeed, levMan)
         self.name = name;
         self.image = love.graphics.newImage("assets/" .. imageSrc);
         local imageName = _G.love.file.getName(imageSrc);
@@ -40,7 +40,9 @@ local FishableObject = Class {
         self.xPosition = math.random(spriteSize + 26, levMan:getCurLevel().winDim[1] - 58 - self.spriteSize);
         -- 58 = 26 (width of level wall) + 32 (0.5 * width of hamster)
         if fallSpeed > 0 then
-            self.yPosition = -math.random(100);
+            self.yPosition = - math.random(100);
+        elseif fallSpeed < 0 then
+            self.yPosition = levMan:getCurLevel().winDim[2] + math.random(100);
         else
             self.yPosition = yPosition;
         end
@@ -66,7 +68,7 @@ local FishableObject = Class {
             local animTimeout = nil;
             if animTimeoutMin and animTimeoutMax then
                 animTimeout = math.random() * (animTimeoutMax - animTimeoutMin) + animTimeoutMin -
-                        math.abs(self.speed / 100); -- animation speed also depended on move speed
+                              math.abs(self.speed / 100); -- animation speed also depended on move speed
             end
             animType = Animate.AnimType[animType];
             self.animation = Animate(self.sprite, spriteCols, spriteRows, animTimeout, animType);
@@ -100,8 +102,6 @@ function FishableObject:draw()
             else
                 love.graphics.draw(self.image, self.xPosition, self.yPosition);
             end
-
-            --love.graphics.setColor(0, 0, 0);
         else
             love.graphics.scale(-1, 1);
             love.graphics.setColor(255, 255, 255);
@@ -202,6 +202,12 @@ end
 -- @param xPosition The new x position
 function FishableObject:setXPosition(xPosition)
     self.xPosition = xPosition;
+end
+
+--- Sets the yPosition
+-- @param xPosition The new y position
+function FishableObject:setYPosition(yPosition)
+    self.yPosition = yPosition;
 end
 
 --- Returns the value of the fishable object
