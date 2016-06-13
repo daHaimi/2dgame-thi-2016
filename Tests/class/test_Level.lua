@@ -18,18 +18,18 @@ _G.levelTestStub = function()
         achievements = {};
         playedTime = 0;
         phase = 1;
-    };    
-    
-    _G.Animate.init = function (...) end;
+    };
+
+    _G.Animate.init = function(...) end;
     _G.Animate.AnimType = {
         linear = 1;
         bounce = 2;
         random = 3;
-    }
+    };
     _G.Animate.p_quads = {};
 
     _G._persTable.achievements = {
-         getFirstObject = true;
+        getFirstObject = true;
         getSecondObject = false;
         failedStart = false;
         caughtTwoBoots = false;
@@ -53,55 +53,55 @@ _G.levelTestStub = function()
         playedTime = false;
     }
     _G._persTable.fish = {
-          caught = {
+        caught = {
             turtle = 0;
             rat = 0;
             deadFish = 0;
             nemo = 0;
-          },
-          caughtTotal = 0;
-          caughtInOneRound = 0;
+        };
+        caughtTotal = 0;
+        caughtInOneRound = 0;
     };
     _G._persTable.statistic = {
-          maxCoinOneRound = 0;
-          minCoinOneRound = 0;
-          moneyEarnedTotal = 0;
+        maxCoinOneRound = 0;
+        minCoinOneRound = 0;
+        moneyEarnedTotal = 0;
     };
     _G._tmpTable = {
         earnedMoney = nil;
         currentDepth = nil;
         roundFuel = nil;
-        caughtThisRound  = {};
+        caughtThisRound = {};
     };
     _G.levMan = {
         curLevel = nil;
         curPlayer = {
-            getPosXMouse = function (...) return 50 end;
-            getSpeed = function (...) return 200 end;
-            changeSprite = function (...) end;
+            getPosXMouse = function(...) return 50 end;
+            getSpeed = function(...) return 200 end;
+            changeSprite = function(...) end;
         };
         curSwarmFac = {
-            createMoreSwarms = function (...) end;
-            createSleepingpill = function (...) end;
-            createFallingLitter = function (...) end;
-            createBubbles = function (...) end;
+            createMoreSwarms = function(...) end;
+            createSleepingpill = function(...) end;
+            createFallingLitter = function(...) end;
+            createBubbles = function(...) end;
         };
         getLevelPropMapByName = function(...) return {
             direction = 1;
-        }
+        };
         end;
-        getCurSwarmFactory = function(...) return _G.levMan.curSwarmFac end;
-        getCurPlayer = function(...) return _G.levMan.curPlayer end;
-        getCurLevel = function(...) return _G.levMan.curLevel end;
+        getCurSwarmFactory = function(...) return _G.levMan.curSwarmFac; end;
+        getCurPlayer = function(...) return _G.levMan.curPlayer; end;
+        getCurLevel = function(...) return _G.levMan.curLevel; end;
     };
     _G._gui = {
-        getFrames = function(...) 
+        getFrames = function(...)
             return {
                 inGame = {
                     activate = function(...) end;
                     clear = function(...) end;
                 };
-            } 
+            };
         end;
     };
     _G.love = {
@@ -178,7 +178,7 @@ describe("Test unit test suite", function()
     it("Testing destructLevel", function()
         local testInstance = testClass("sewers", "assets/testbg.png", { 512, 256 }, 1, _G.levMan);
         testInstance:destructLevel();
-        
+
         assert.are.same(testInstance.levMan, nil);
         assert.are.same(testInstance.p_levelName, nil);
         assert.are.same(testInstance.levelFinished, nil);
@@ -217,7 +217,7 @@ describe("Test unit test suite", function()
     end)
 
     it("Testing getYPos", function()
-        locInstance.posY = 1
+        locInstance.posY = 1;
         assert.are.same(1, locInstance:getYPos());
     end)
 
@@ -226,8 +226,7 @@ describe("Test unit test suite", function()
         locInstance.godModeFuel = 20;
         locInstance.moved = 2;
 
-        for i = 1, 20, 1
-        do
+        for i = 1, 20, 1 do
             locInstance:checkGodMode();
         end
         assert.are.same(locInstance.godModeActive, false);
@@ -305,15 +304,15 @@ describe("Test unit test suite", function()
     it("Testing calcFishedValue", function()
         locInstance.levMan.curSwarmFac = {
             getFishableObjects = function() return {
-                ["turtle"] = { ["value"] = 10 },
-                ["rat"] = { ["value"] = 20 },
-                ["nemo"] = { ["value"] = 10 },
-                ["deadFish"] = { ["value"] = -10 }
+                ["turtle"] = { ["value"] = 10 };
+                ["rat"] = { ["value"] = 20 };
+                ["nemo"] = { ["value"] = 10 };
+                ["deadFish"] = { ["value"] = -10 };
             };
             end;
         };
-       
-        _G._tmpTable.caughtThisRound = { ["turtle"] = 5, ["rat"] = 0, ["deadFish"] = 5, ["nemo"] = 3 };
+
+        _G._tmpTable.caughtThisRound = { ["turtle"] = 5; ["rat"] = 0; ["deadFish"] = 5; ["nemo"] = 3; };
         assert.are.same(locInstance:calcFishedValue(), 30);
     end)
 
@@ -342,7 +341,9 @@ describe("Test unit test suite", function()
         _G._tmpTable.caughtThisRound["turtle"] = 1;
         _G._tmpTable.caughtThisRound["nemo"] = 2;
         locInstance.levMan.curSwarmFac = {
-            getFishableObjects = function() return { ["turtle"] = { ["value"] = 10 }, ["nemo"] = { ["value"] = 20 } }; end;
+            getFishableObjects = function()
+                return { ["turtle"] = { ["value"] = 10 }; ["nemo"] = { ["value"] = 20 }; };
+            end;
         };
         local loveMock = mock(_G.love, true);
         locInstance:printResult();
@@ -369,9 +370,9 @@ describe("Test unit test suite", function()
         locInstance:update(dt, bait);
         assert.are.same(-1, locInstance:getDirection());
         locInstance.posY = 1200;
-        locInstance.payPlayer = function (...) end;
+        locInstance.payPlayer = function(...) end;
         locInstance:update(dt, bait);
-        
+
         assert.stub(locInstance.checkForAchievments).was_called(2);
         assert.are.same(0, locInstance:getDirection());
     end)
@@ -394,8 +395,8 @@ describe("Test unit test suite", function()
     it("Testing activateShortGM", function()
         levMan.p_levelProperties = {
             sewers = {
-                levelName = "sewers",
-                direction = 1,
+                levelName = "sewers";
+                direction = 1;
                 bgPath = "assets/testbg.png";
             };
         };
@@ -417,7 +418,6 @@ describe("Test unit test suite", function()
         locInstance:activateShortGM(0.12, 200);
 
         assert.are.same(locInstance.godModeActive, false);
-
     end)
 
     it("Testing reduceShortGMDist", function()
@@ -427,8 +427,7 @@ describe("Test unit test suite", function()
         locInstance:activateShortGM(0.12, 200);
         local sRSGM = spy.on(locInstance, "reduceShortGMDist");
 
-        for i = 10, -250, -1
-        do
+        for i = 10, -250, -1 do
             locInstance.posY = i;
             locInstance:checkGodMode();
         end
@@ -472,7 +471,7 @@ describe("Test unit test suite", function()
         locInstance.enviromentPosition = 250;
         locInstance:drawEnviroment();
         assert.are.same(50, locInstance.enviromentPosition);
-        
+
         locInstance.enviromentPosition = -250;
         locInstance:drawEnviroment();
         assert.are.same(-50, locInstance.enviromentPosition);
@@ -491,12 +490,12 @@ describe("Test unit test suite", function()
         locInstance.animationStart = true;
         locInstance.direction = -1;
         locInstance.pumpingWay = 100;
-        locInstance.animationEnd= true;
+        locInstance.animationEnd = true;
         locInstance.levelFinished = true;
         locInstance:drawEnviroment();
         assert.spy(loveMock.graphics.draw).was.called(16);
     end)
-    
+
     it("Testing getStartAnimationRunning", function()
         locInstance.animationStart = true;
         locInstance.animationStartFinished = false;
@@ -518,7 +517,7 @@ describe("Test unit test suite", function()
         local loveMock = mock(_G.love, true);
         locInstance.hamsterYPos = 400;
         locInstance.animationStartPoint = 0;
-        locInstance:drawLine(0,300)
+        locInstance:drawLine(0, 300);
         assert.spy(loveMock.graphics.draw).was.called(34);
     end)
 
@@ -532,7 +531,7 @@ describe("Test unit test suite", function()
         locInstance.hamsterLockedXPos = 70;
         locInstance.animationStart = true;
         locInstance.animationStartFinished = false;
-        locInstance.winDim = {480, 833};
+        locInstance.winDim = { 480, 833 };
         locInstance:doStartAnimationMovement(_G.levMan.curPlayer, 5);
         assert.are.same(locInstance.failedStart, true);
     end)
@@ -542,27 +541,27 @@ describe("Test unit test suite", function()
         locInstance.hamsterYPos = 0;
         locInstance.animationStart = true;
         locInstance.animationStartFinished = false;
-        locInstance.winDim = {480, 833};
+        locInstance.winDim = { 480, 833 };
         locInstance:doStartAnimationMovement(_G.levMan.curPlayer, 5);
         assert.are.same(locInstance.failedStart, true);
-    end) 
-    
+    end)
+
     it("Testing doAnimation failed start 3", function()
         locInstance.hamsterLockedXPos = 50;
         locInstance.hamsterYPos = 1000;
         locInstance.animationStart = true;
         locInstance.animationStartFinished = false;
-        locInstance.winDim = {480, 833};
+        locInstance.winDim = { 480, 833 };
         locInstance:doStartAnimationMovement(_G.levMan.curPlayer, 5);
         assert.are.same(locInstance.levelFinished, true);
     end)
-    
+
     it("Testing doAnimation failed start 4", function()
         locInstance.hamsterLockedXPos = 150;
         locInstance.hamsterYPos = 1000;
         locInstance.animationStart = true;
         locInstance.animationStartFinished = false;
-        locInstance.winDim = {480, 833};
+        locInstance.winDim = { 480, 833 };
         locInstance:doStartAnimationMovement(_G.levMan.curPlayer, 5);
         assert.are.same(locInstance.animationStartFinished, true);
     end)
@@ -572,17 +571,17 @@ describe("Test unit test suite", function()
         locInstance.hamsterYPos = 1000;
         locInstance.animationStart = true;
         locInstance.animationStartFinished = false;
-        locInstance.winDim = {480, 833};
+        locInstance.winDim = { 480, 833 };
         locInstance:doStartAnimationMovement(_G.levMan.curPlayer, 5);
         assert.are.same(locInstance.levelFinished, true);
     end)
-    
+
     it("Testing doAnimation failed start 6", function()
         locInstance.hamsterLockedXPos = 150;
         locInstance.hamsterYPos = 1000;
         locInstance.animationStart = true;
         locInstance.animationStartFinished = false;
-        locInstance.winDim = {480, 833};
+        locInstance.winDim = { 480, 833 };
         locInstance:doStartAnimationMovement(_G.levMan.curPlayer, 5);
         assert.are.same(locInstance.failedStart, false);
     end)
@@ -590,9 +589,9 @@ describe("Test unit test suite", function()
     it("testing Constructor for canyon", function()
         local loveMock = mock(_G.love.graphics, true);
         local myTestInstance = testClass("canyon", "assets/testbg.png", { 512, 256 }, 1, _G.levMan);
-        assert.spy(loveMock.newImage).was.called_with ("assets/canyon_right.png");
+        assert.spy(loveMock.newImage).was.called_with("assets/canyon_right.png");
     end)
-    
+
     it("testing Update for canyon", function()
         local mock = mock(levMan.curSwarmFac, true);
         local myTestInstance = testClass("canyon", "assets/testbg.png", { 512, 256 }, 1, _G.levMan);
@@ -605,7 +604,7 @@ describe("Test unit test suite", function()
         myTestInstance.winDim[2] = 500;
         assert.spy(mock.createFallingLitter).was.called(1);
     end)
-    
+
     it("testing waiting time", function()
         local dt = 0.004;
         local bait = {
@@ -613,7 +612,7 @@ describe("Test unit test suite", function()
             getSpeed = function(...) return 200 end;
         };
         locInstance.animationEndFinished = true;
-        locInstance:update(dt ,bait);
+        locInstance:update(dt, bait);
         assert.are.same(locInstance.waitTillSwitch, .496);
     end)
 
@@ -625,7 +624,7 @@ describe("Test unit test suite", function()
         myTestInstance:doStartAnimationMovement(_G.levMan.getCurPlayer(), 0.05);
         assert.are.same(myTestInstance.hamsterYPos, 5);
     end)
-    
+
     it("testing startanimation for canyon 2", function()
         local myTestInstance = testClass("canyon", "assets/testbg.png", { 512, 256 }, 1, _G.levMan);
         myTestInstance.hamsterYPos = 1000;
@@ -665,7 +664,7 @@ describe("Test unit test suite", function()
         assert.are.same(locInstance.pumpDirection, true);
         assert.are.same(locInstance.pumpCounter, 1);
     end)
-    
+
     it("Testing doEndAnimationMovement for sewers", function()
         locInstance.levelFinished = true;
         locInstance.failedStart = false;
@@ -686,7 +685,7 @@ describe("Test unit test suite", function()
 
     it("Testing getReachedDepth function", function()
         locInstance.reachedDepth = -356;
-        
+
         assert.are.same(-356, locInstance:getReachedDepth());
     end)
 
@@ -700,9 +699,9 @@ describe("Test unit test suite", function()
         locInstance:update(0.05, bait);
         assert.are.same(locInstance.gMMusicPlaying, true);
     end)
-        
+
     it("Testing update playTime", function()
-        locInstance.unlockAchievement = function (...) end;
+        locInstance.unlockAchievement = function(...) end;
         locInstance.playTime = 1000;
         _G._persTable.playedTime = 1000;
         locInstance.pumpingWay = 0;
@@ -713,7 +712,7 @@ describe("Test unit test suite", function()
         };
         locInstance:update(1, bait);
         assert.are.same(_G._persTable.playedTime, 2000);
-    end)  
+    end)
 
     it("Testing unlockAchievement function", function()
         _G._gui = {
@@ -726,10 +725,10 @@ describe("Test unit test suite", function()
                     nameOnPersTable = "getFirstObject";
                     image_lock = "ach_firstObject_locked.png";
                     image_unlock = "ach_firstObject.png";
-                }
-            }
+                };
+            };
         };
-        
+
         stub(_gui, "newNotification");
         locInstance:unlockAchievement("getFirtsObject");
         assert.are.same(true, _G._persTable.achievements.getFirtsObject);

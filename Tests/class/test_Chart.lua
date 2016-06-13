@@ -8,22 +8,22 @@ Data = require "data";
 describe("Unit test for Chart.lua", function()
     local locInstance;
     local Element;
-    
+
     before_each(function()
         _G.Loveframes = {
             Create = function(...) return fakeElement(); end,
-        }
+        };
         _G._persTable = {
-            scaledDeviceDim = {480, 833};
+            scaledDeviceDim = { 480, 833 };
             config = {
                 language = "english";
-            }
+            };
         };
         _G.data = Data;
         _G.love = {
             graphics = {
                 newFont = function(...) return {}; end;
-            }
+            };
         }
         Element = {
             object = {
@@ -34,50 +34,53 @@ describe("Unit test for Chart.lua", function()
             x = nil;
             y = nil;
             nameOnPersTable = "something";
-            
         };
-        function Element:SetVisible(visible) 
-            self.visible = visible; 
-        end;
-        function Element:SetPos(x, y) 
-            self.x = x; 
-            self.y = y; 
-        end;
+        function Element:SetVisible(visible)
+            self.visible = visible;
+        end
+
+        ;
+        function Element:SetPos(x, y)
+            self.x = x;
+            self.y = y;
+        end
+
+        ;
         locInstance = testClass();
     end)
-    
+
     it("Testing Constructor", function()
         local myInstance = testClass();
-        myInstance.button_up.OnClick = {"onClick function"};
-        myInstance.button_down.OnClick = {"onClick function"};
-        locInstance.button_up.OnClick = {"onClick function"};
-        locInstance.button_down.OnClick = {"onClick function"};
+        myInstance.button_up.OnClick = { "onClick function" };
+        myInstance.button_down.OnClick = { "onClick function" };
+        locInstance.button_up.OnClick = { "onClick function" };
+        locInstance.button_down.OnClick = { "onClick function" };
         assert.are.same(locInstance, myInstance);
     end)
 
-it("Testing Constructor", function()
+    it("Testing Constructor", function()
         _G._persTable = {
-            scaledDeviceDim = {640, 950};
+            scaledDeviceDim = { 640, 950 };
         };
         locInstance = testClass();
         local myInstance = testClass();
-        myInstance.button_up.OnClick = {"onClick function"};
-        myInstance.button_down.OnClick = {"onClick function"};
-        locInstance.button_up.OnClick = {"onClick function"};
-        locInstance.button_down.OnClick = {"onClick function"};
+        myInstance.button_up.OnClick = { "onClick function" };
+        myInstance.button_down.OnClick = { "onClick function" };
+        locInstance.button_up.OnClick = { "onClick function" };
+        locInstance.button_down.OnClick = { "onClick function" };
         assert.are.same(locInstance, myInstance);
     end)
 
-it("Testing Constructor", function()
+    it("Testing Constructor", function()
         _G._persTable = {
-            scaledDeviceDim = {720, 1024};
+            scaledDeviceDim = { 720, 1024 };
         };
         locInstance = testClass();
         local myInstance = testClass();
-        myInstance.button_up.OnClick = {"onClick function"};
-        myInstance.button_down.OnClick = {"onClick function"};
-        locInstance.button_up.OnClick = {"onClick function"};
-        locInstance.button_down.OnClick = {"onClick function"};
+        myInstance.button_up.OnClick = { "onClick function" };
+        myInstance.button_down.OnClick = { "onClick function" };
+        locInstance.button_up.OnClick = { "onClick function" };
+        locInstance.button_down.OnClick = { "onClick function" };
         assert.are.same(locInstance, myInstance);
     end)
 
@@ -91,7 +94,7 @@ it("Testing Constructor", function()
         assert.are.equal(locInstance:getMarkedElement(), "test");
     end)
 
-    it("Testing OnClick function of the up and down button", function()        
+    it("Testing OnClick function of the up and down button", function()
         spy.on(locInstance, "scrollUp");
         spy.on(locInstance, "scrollDown");
         locInstance.button_up.OnClick();
@@ -104,14 +107,14 @@ it("Testing Constructor", function()
         stub(locInstance, "drawChart");
         stub(locInstance, "resetMarkedFrame");
         stub(locInstance, "markElement");
-        
+
         locInstance.toprow = 0;
         locInstance:scrollUp();
         assert.are.equal(locInstance.p_toprow, 0);
         assert.spy(locInstance.drawChart).was_not_called();
         assert.spy(locInstance.resetMarkedFrame).was_not_called();
         assert.spy(locInstance.markElement).was_not_called();
-        
+
         locInstance.p_toprow = 2;
         locInstance.p_markedElement = Element;
         locInstance.p_markedElement.visible = true;
@@ -119,7 +122,7 @@ it("Testing Constructor", function()
         assert.are.equal(locInstance.p_toprow, 1);
         assert.stub(locInstance.drawChart).was_called(1);
         assert.stub(locInstance.markElement).was_called(1);
-        
+
         locInstance.p_markedElement.visible = false;
         locInstance:scrollUp();
         assert.stub(locInstance.resetMarkedFrame).was_called(1);
@@ -129,15 +132,15 @@ it("Testing Constructor", function()
         stub(locInstance, "drawChart");
         stub(locInstance, "resetMarkedFrame");
         stub(locInstance, "markElement");
-        
-        locInstance.p_row = 2
+
+        locInstance.p_row = 2;
         locInstance.p_toprow = 0;
         locInstance:scrollDown();
         assert.are.equal(locInstance.p_toprow, 0);
         assert.stub(locInstance.drawChart).was_not_called();
         assert.stub(locInstance.resetMarkedFrame).was_not_called();
-        
-        locInstance.p_row = 4
+
+        locInstance.p_row = 4;
         locInstance.p_toprow = 0;
         locInstance.p_markedElement = Element;
         locInstance.p_markedElement.visible = true;
@@ -145,14 +148,14 @@ it("Testing Constructor", function()
         assert.are.equal(locInstance.p_toprow, 1);
         assert.stub(locInstance.drawChart).was_called(1);
         assert.stub(locInstance.markElement).was_called(1);
-        
-        locInstance.p_row = 4
+
+        locInstance.p_row = 4;
         locInstance.p_toprow = 0;
         locInstance.p_markedElement.visible = false;
         locInstance:scrollDown();
         assert.stub(locInstance.resetMarkedFrame).was_called(1);
     end)
-    
+
     it("Testing resetTopRow function", function()
         locInstance.p_toprow = 5;
         locInstance:resetTopRow();
@@ -160,7 +163,7 @@ it("Testing Constructor", function()
     end)
 
     it("Testing resetMarkedFrame function", function()
-        locInstance:resetMarkedFrame()
+        locInstance:resetMarkedFrame();
         assert.are.equal(locInstance.p_markFrame.visible, false);
     end)
 
@@ -175,8 +178,8 @@ it("Testing Constructor", function()
         assert.are.equal(locInstance.textField.objTopic.visible, true);
         assert.spy(locInstance.drawChart).was.called();
         assert.are.equal(locInstance.p_markFrame.visible, false);
-        
-        locInstance.p_elementsOnChart = {Element, Element};
+
+        locInstance.p_elementsOnChart = { Element, Element };
         locInstance:SetVisible(false);
         assert.are.equal(locInstance.button_up.visible, false);
         assert.are.equal(locInstance.button_down.visible, false);
@@ -193,7 +196,7 @@ it("Testing Constructor", function()
         locInstance.width = 50;
         locInstance.klickableSize = 60;
         spy.on(locInstance, "setPosOfKlickableElements");
-        
+
         locInstance:SetPos(50, 50);
         assert.are.equal(locInstance.p_xPos, 150);
         assert.are.equal(locInstance.p_yPos, 50);
@@ -215,7 +218,7 @@ it("Testing Constructor", function()
         assert.are.equal(locInstance.p_markFrame.visible, true);
         assert.are.equal(locInstance.p_markFrame.movedToTop, true);
         assert.are.same(locInstance.p_markedElement, Element);
-        
+
         assert.spy(locInstance.textField.changeText).was_called();
     end)
 end)

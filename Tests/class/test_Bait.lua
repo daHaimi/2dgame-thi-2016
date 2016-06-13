@@ -16,10 +16,10 @@ _G.love = {
     window = {
         getMode = function(...)
             return 0, 0, {};
-        end
+        end;
     };
 };
-testClass = require "src.class.Bait"
+testClass = require "src.class.Bait";
 match = require 'luassert.match';
 
 
@@ -30,11 +30,11 @@ describe("Unit test for Bait.lua", function()
     local locLevel = {
         moved = 4;
         activateShortGM = function(...) end;
-        isFinished = function(...) return 0 end;
-        getMoved = function() return 4 end;
-        getDirection = function() return 1 end;
-        getYPos = function() return 50 end;
-        getLevelName = function() return "sewers" end;
+        isFinished = function(...) return 0; end;
+        getMoved = function() return 4; end;
+        getDirection = function() return 1; end;
+        getYPos = function() return 50; end;
+        getLevelName = function() return "sewers"; end;
     };
     local locImageStub = {
         draw = function(...) end;
@@ -43,8 +43,8 @@ describe("Unit test for Bait.lua", function()
 
     before_each(function()
         _G.levMan = {
-            curLevel = locLevel,
-            curPlayer = nil,
+            curLevel = locLevel;
+            curPlayer = nil;
             curSwarmFac = {
                 createdFishables = {
                     {
@@ -58,15 +58,15 @@ describe("Unit test for Bait.lua", function()
                         caught = false;
                         hitbox = {};
                     }
-                },
-                getCreatedFishables = function(...) return _G.levMan.curSwarmFac.createdFishables end;
+                };
+                getCreatedFishables = function(...) return _G.levMan.curSwarmFac.createdFishables; end;
                 setSpeedMultiplicator = function(...) end;
-            },
-            getCurSwarmFactory = function(...) return _G.levMan.curSwarmFac end,
-            getCurPlayer = function(...) return _G.levMan.curPlayer end,
-            getCurLevel = function(...) return _G.levMan.curLevel end
-        }
-        
+            };
+            getCurSwarmFactory = function(...) return _G.levMan.curSwarmFac; end;
+            getCurPlayer = function(...) return _G.levMan.curPlayer; end;
+            getCurLevel = function(...) return _G.levMan.curLevel; end;
+        };
+
         _G._tmpTable = {
             caughtThisRound = {};
             earnedMoney = nil;
@@ -74,10 +74,10 @@ describe("Unit test for Bait.lua", function()
             roundFuel = 800;
             unlockedAchievements = {};
         };
-        
+
         _G.love = {
             mouse = {
-                setPosition = function(...) end
+                setPosition = function(...) end;
             },
             graphics = {
                 setColor = function(...) end;
@@ -96,8 +96,8 @@ describe("Unit test for Bait.lua", function()
                 rotate = function(...) end;
                 polygon = function(...) end;
                 setShader = function(...) end;
-            }
-        }
+            };
+        };
         _G._gui = {
             myFrames = {
                 inGame = {
@@ -125,26 +125,26 @@ describe("Unit test for Bait.lua", function()
     it("Testing destructBait", function()
         local testInstance = testClass(locWinDim, levMan);
         testInstance:destructBait();
-        
-        assert.are.same(testInstance.levMan ,nil);
-        assert.are.same(testInstance.size ,nil);
-        assert.are.same(testInstance.speed ,nil);
-        assert.are.same(testInstance.posXMouse ,nil);
-        assert.are.same(testInstance.xPos ,nil);
-        assert.are.same(testInstance.maxSpeedX ,nil);
-        assert.are.same(testInstance.winDim ,nil);
-        assert.are.same(testInstance.life ,nil);
-        assert.are.same(testInstance.money ,nil);
-        assert.are.same(testInstance.numberOfHits ,nil);
-        assert.are.same(testInstance.hitFishable ,nil);
-        assert.are.same(testInstance.caughtThisRound ,nil);
-        assert.are.same(testInstance.sleepingPillDuration ,nil);
-        assert.are.same(testInstance.deltaTime ,nil);
-        assert.are.same(testInstance.modifier ,nil);
-        assert.are.same(testInstance.goldenRuleLowerPoint ,nil);
-        assert.are.same(testInstance.goldenRuleUpperPoint ,nil);
+
+        assert.are.same(testInstance.levMan, nil);
+        assert.are.same(testInstance.size, nil);
+        assert.are.same(testInstance.speed, nil);
+        assert.are.same(testInstance.posXMouse, nil);
+        assert.are.same(testInstance.xPos, nil);
+        assert.are.same(testInstance.maxSpeedX, nil);
+        assert.are.same(testInstance.winDim, nil);
+        assert.are.same(testInstance.life, nil);
+        assert.are.same(testInstance.money, nil);
+        assert.are.same(testInstance.numberOfHits, nil);
+        assert.are.same(testInstance.hitFishable, nil);
+        assert.are.same(testInstance.caughtThisRound, nil);
+        assert.are.same(testInstance.sleepingPillDuration, nil);
+        assert.are.same(testInstance.deltaTime, nil);
+        assert.are.same(testInstance.modifier, nil);
+        assert.are.same(testInstance.goldenRuleLowerPoint, nil);
+        assert.are.same(testInstance.goldenRuleUpperPoint, nil);
         assert.are.same(testInstance.image, nil);
-        assert.are.same(testInstance.pullIn ,nil);
+        assert.are.same(testInstance.pullIn, nil);
     end)
 
     it("Testing Update", function()
@@ -153,30 +153,31 @@ describe("Unit test for Bait.lua", function()
         myInstance.image = locImageStub;
         myInstance.imageCheeks = locImageStub;
         myInstance.imageCheeks = {
-          getDimensions = function(...) end,
+            getDimensions = function(...) end;
         };
         myInstance:update();
         assert.are.same(0.495, myInstance.modifier);
 
         myInstance.levMan.curLevel = {
-            getLevelName = function (...) return "sewers" end;
-            getMoved = function(...) return -4 end;
-            isFinished = function(...) return 0 end;
+            getLevelName = function(...) return "sewers"; end;
+            getMoved = function(...) return -4; end;
+            isFinished = function(...) return 0; end;
             getDirection = function() return -1; end;
-            isFinished = function() return 0 end;
-            getYPos = function() return 400 end;
-            getSwarmFactory = function() return {
-                createdFishables = {
-                    {
-                        setToCaught = function(...) end;
-                        setSpeedMultiplicator = function(...) end;
-                        caught = false;
-                        hitbox = {};
-                    }
+            isFinished = function() return 0; end;
+            getYPos = function() return 400; end;
+            getSwarmFactory = function()
+                return {
+                    createdFishables = {
+                        {
+                            setToCaught = function(...) end;
+                            setSpeedMultiplicator = function(...) end;
+                            caught = false;
+                            hitbox = {};
+                        }
+                    };
                 };
-            }
-            end,
-            getCreatedFishables = function(...) return myInstance.levMan.curLevel:getSwarmFactory().createdFishables end;
+            end;
+            getCreatedFishables = function(...) return myInstance.levMan.curLevel:getSwarmFactory().createdFishables; end;
         }
 
         myInstance:update();
@@ -189,14 +190,14 @@ describe("Unit test for Bait.lua", function()
         myInstance.sleepingPillDuration = 2;
         myInstance.imageCheeks = locImageStub;
         myInstance.imageCheeks = {
-          getDimensions = function(...) end,
+            getDimensions = function(...) end;
         };
         myInstance:update(0.1);
         assert.are.same(1.9, myInstance.sleepingPillDuration);
     end)
 
     it("Test getGoldenRule", function()
-        lower, upper = locInstance:getGoldenRule()
+        local lower, upper = locInstance:getGoldenRule()
         assert.are.same(0.32, lower);
         assert.are.same(0.68, upper);
     end)
@@ -369,7 +370,7 @@ describe("Unit test for Bait.lua", function()
         myInstance.image = locImageStub;
         myInstance.levMan.curLevel = {
             isFinished = function() return false end;
-        }
+        };
         myInstance.posXMouse = 70;
         myInstance.xPos = 40;
         local newPos = myInstance.xPos + myInstance.maxSpeedX;
@@ -382,7 +383,7 @@ describe("Unit test for Bait.lua", function()
         myInstance.image = locImageStub;
         myInstance.levMan.curLevel = {
             isFinished = function() return false end;
-        }
+        };
         myInstance.posXMouse = 10;
         myInstance.xPos = 40;
         local newPos = myInstance.xPos - myInstance.maxSpeedX;
@@ -408,7 +409,7 @@ describe("Unit test for Bait.lua", function()
         myInstance.image = locImageStub;
         myInstance.levMan.curLevel = {
             isFinished = function() return false end;
-        }
+        };
         myInstance.posXMouse = 40;
         myInstance.xPos = 41;
         local newPos = myInstance.posXMouse;
@@ -420,8 +421,8 @@ describe("Unit test for Bait.lua", function()
         local myInstance = testClass(locWinDim, levMan);
         myInstance.image = locImageStub;
         myInstance.levMan.curLevel = {
-            isFinished = function() return 0 end;
-        }
+            isFinished = function() return 0; end;
+        };
         myInstance.posXMouse = 40;
         myInstance.xPos = 40;
         local newPos = myInstance.posXMouse;
@@ -435,7 +436,7 @@ describe("Unit test for Bait.lua", function()
         myInstance.image = locImageStub;
         local loveGraphicsMock = mock(myInstance.image, true);
 
-        myInstance.levMan.curLevel.getGodModeStat = function() return 0 end;
+        myInstance.levMan.curLevel.getGodModeStat = function() return 0; end;
         myInstance.xPos = 0;
         myInstance.yPos = 0;
 
@@ -475,12 +476,12 @@ describe("Unit test for Bait.lua", function()
     it("Test collisionDetected with a fishable and an extra life", function()
         local myInstance = testClass(locWinDim, levMan);
         myInstance.image = locImageStub;
-        local fishable = { getName = function() return "deadFish" end };
+        local fishable = { getName = function() return "deadFish"; end; };
         myInstance.levMan.curLevel = {
-            getGodModeStat = function(...) return false end;
+            getGodModeStat = function(...) return false; end;
             activateShortGM = function(...) end;
-            isFinished = function() return false end;
-            getDirection = function(...) return 1 end;
+            isFinished = function() return false; end;
+            getDirection = function(...) return 1; end;
         };
         _G._persTable.upgrades.moreLife = 1;
         _G._persTable.upgrades.oneMoreLife = true;
@@ -491,12 +492,12 @@ describe("Unit test for Bait.lua", function()
     it("Test collisionDetected with a fishable and no extra life", function()
         local myInstance = testClass(locWinDim, levMan);
         myInstance.image = locImageStub;
-        local fishable = { getName = function() return "deadFish" end };
+        local fishable = { getName = function() return "deadFish"; end; };
         myInstance.levMan.curLevel = {
-            getGodModeStat = function(...) return false end;
+            getGodModeStat = function(...) return false; end;
             activateShortGM = function(...) end;
-            isFinished = function() return false end;
-            getDirection = function(...) return 1 end;
+            isFinished = function() return false; end;
+            getDirection = function(...) return 1; end;
             switchToPhase2 = function(...) end;
         };
         _G._persTable.upgrades.moreLife = 0;
@@ -508,12 +509,12 @@ describe("Unit test for Bait.lua", function()
     it("Test collisionDetected with a fishable and godMode", function()
         local myInstance = testClass(locWinDim, levMan);
         myInstance.image = locImageStub;
-        local fishable = { getName = function() return "deadFish" end };
+        local fishable = { getName = function() return "deadFish"; end; };
         myInstance.levMan.curLevel = {
-            getGodModeStat = function(...) return 1 end;
+            getGodModeStat = function(...) return 1; end;
             activateShortGM = function(...) end;
-            isFinished = function() return 0 end;
-            getDirection = function(...) return 1 end;
+            isFinished = function() return 0; end;
+            getDirection = function(...) return 1; end;
             switchToPhase2 = function(...) end;
         };
         _G._persTable.upgrades.moreLife = 0;
@@ -525,13 +526,13 @@ describe("Unit test for Bait.lua", function()
     it("Test collisionDetected with a fishable and godMode", function()
         local myInstance = testClass(locWinDim, levMan);
         myInstance.image = locImageStub;
-        local fishable = { getName = function() return "deadFish" end };
+        local fishable = { getName = function() return "deadFish"; end };
         myInstance.levMan.curLevel = {
-            getGodModeStat = function(...) return 1 end;
+            getGodModeStat = function(...) return 1; end;
             activateShortGM = function(...) end;
-            getDirection = function(...) return -1 end;
+            getDirection = function(...) return -1; end;
             switchToPhase2 = function(...) end;
-            isFinished = function() return 0 end;
+            isFinished = function() return 0; end;
             addToCaught = function(...) end;
             getSwarmFactory = function(...) return {
                 createdFishables = {
@@ -539,9 +540,9 @@ describe("Unit test for Bait.lua", function()
                         setToCaught = function(...) end;
                     }
                 };
-            }
+            };
             end;
-        }
+        };
         _G._persTable.upgrades.moreLife = 0;
         _G._persTable.upgrades.oneMoreLife = false;
         myInstance:collisionDetected(fishable, 1);
@@ -550,17 +551,17 @@ describe("Unit test for Bait.lua", function()
 
     it("Test checkForCollision", function()
         levMan.curLevel = {
-            getGodModeStat = function(...) return 0 end;
+            getGodModeStat = function(...) return 0; end;
             moved = 4;
             activateShortGM = function(...) end;
-            getMoved = function() return 4 end;
-            getDirection = function() return 1 end;
+            getMoved = function() return 4; end;
+            getDirection = function() return 1; end;
             switchToPhase2 = function() end;
         }
         local myInstance = testClass(locWinDim, levMan);
         myInstance.xPos = 20;
         myInstance.yPos = 25;
-        someFishables = {
+        local someFishables = {
             {
                 getHitboxHeight = function(...) return 10; end;
                 getHitboxWidth = function(...) return 10; end;
@@ -569,9 +570,9 @@ describe("Unit test for Bait.lua", function()
                 getName = function(...) return "deadFish"; end;
                 hitbox = {
                     {}
-                }
+                };
             }
-        }
+        };
         myInstance:checkForCollision(someFishables, 21);
         myInstance:checkForCollision(someFishables, 19);
         myInstance:checkForCollision(someFishables, 20);
@@ -617,67 +618,65 @@ describe("Unit test for Bait.lua", function()
         myInstance.yPos = 5;
         assert.are.same(myInstance:getPosY(), 5);
     end)
-  
+
     it("Test big bait cheeks", function()
         local myInstance = testClass(locWinDim, levMan);
         myInstance.image = locImageStub;
         local loveMock = mock(_G.love, true);
         myInstance.imageCheeks = locImageStub;
         myInstance.imageCheeks = {
-          getDimensions = function(...) return 192, 64 end;
+            getDimensions = function(...) return 192, 64; end;
         };
         myInstance.hitFishable = 25;
         local dimX, dimY = myInstance.imageCheeks.getDimensions();
         myInstance:update();
         assert.spy(loveMock.graphics.newQuad).called(1);
-        assert.spy(loveMock.graphics.newQuad).was.called_with(2*dimX/3, 0, dimX/3, dimY, dimX, dimY);
+        assert.spy(loveMock.graphics.newQuad).was.called_with(2 * dimX / 3, 0, dimX / 3, dimY, dimX, dimY);
     end)
-  
+
     it("Test middle bait cheeks", function()
         local myInstance = testClass(locWinDim, levMan);
         myInstance.image = locImageStub;
         local loveMock = mock(_G.love, true);
         myInstance.imageCheeks = locImageStub;
         myInstance.imageCheeks = {
-          getDimensions = function(...) return 192, 64 end;
+            getDimensions = function(...) return 192, 64; end;
         };
         myInstance.hitFishable = 17;
         local dimX, dimY = myInstance.imageCheeks.getDimensions();
         myInstance:update();
         assert.spy(loveMock.graphics.newQuad).called(1);
-        assert.spy(loveMock.graphics.newQuad).was.called_with(dimX/3, 0, dimX/3, dimY, dimX, dimY);
-        myInstance:draw()
+        assert.spy(loveMock.graphics.newQuad).was.called_with(dimX / 3, 0, dimX / 3, dimY, dimX, dimY);
+        myInstance:draw();
     end)
-  
-     it("Test middle bait cheeks", function()
+
+    it("Test middle bait cheeks", function()
         local myInstance = testClass(locWinDim, levMan);
         myInstance.image = locImageStub;
         local loveMock = mock(_G.love, true);
         myInstance.imageCheeks = locImageStub;
         myInstance.imageCheeks = {
-          getDimensions = function(...) return 192, 64 end;
+            getDimensions = function(...) return 192, 64; end;
         };
         myInstance.hitFishable = 10;
         local dimX, dimY = myInstance.imageCheeks.getDimensions();
         myInstance:update();
         assert.spy(loveMock.graphics.newQuad).called(1);
-        assert.spy(loveMock.graphics.newQuad).was.called_with(0, 0, dimX/3, dimY, dimX, dimY);
+        assert.spy(loveMock.graphics.newQuad).was.called_with(0, 0, dimX / 3, dimY, dimX, dimY);
     end)
-  
+
     it("Test draw cheeks", function()
         local myInstance = testClass(locWinDim, levMan);
         myInstance.image = locImageStub;
         local loveMock = mock(_G.love, true);
 
-        myInstance.levMan.curLevel.getGodModeStat = function() return 0 end;
+        myInstance.levMan.curLevel.getGodModeStat = function() return 0; end;
         myInstance.xPos = 0;
         myInstance.yPos = 0;
         myInstance.quadCheeks = {};
         myInstance:draw();
         assert.spy(loveMock.graphics.draw).was_called();
-        assert.spy(loveMock.graphics.draw).was.called_with(myInstance.imageCheeks, myInstance.quadCheeks, 
-        match._, match._);
+        assert.spy(loveMock.graphics.draw).was.called_with(myInstance.imageCheeks, myInstance.quadCheeks,
+            match._, match._);
     end)
-  
-  
 end)

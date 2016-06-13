@@ -7,23 +7,23 @@ describe("Unit test for FishableObject.lua", function()
 
     before_each(function()
         _G.TEsound = {
-            play = function (...) end;
-        }
-        
+            play = function(...) end;
+        };
+
         _G.love = {
             graphics = {
                 setColor = function(...) end;
-                setNewFont = function(...)end;
-                getFont = function(...) return "this could be your font" end;
+                setNewFont = function(...) end;
+                getFont = function(...) return "this could be your font"; end;
                 setFont = function(...) end;
                 print = function(...) end;
-                newImage = function(...) return "assets/deadFish.png" end;
+                newImage = function(...) return "assets/deadFish.png"; end;
                 draw = function(...) end;
                 scale = function(...) end;
-            },
-            
+            };
+
             filesystem = {
-                exists = function(...) return false end;
+                exists = function(...) return false; end;
             }
         }
 
@@ -32,40 +32,40 @@ describe("Unit test for FishableObject.lua", function()
             moved = 0;
             fish = {
                 postiveFishCaught = true;
-            }
-        }
-        
+            };
+        };
+
         local hitbox = {
             {
-                width = 64,
-                height = 25,
-                deltaXPos = 0,
-                deltaYPos = 20
+                width = 64;
+                height = 25;
+                deltaXPos = 0;
+                deltaYPos = 20;
             }
-        }
+        };
         _G.levMan = {
-        curLevel = {
-            winDim = {500, 500};
-            getMoved = function (...) return 4 end;
+            curLevel = {
+                winDim = { 500, 500 };
+                getMoved = function(...) return 4; end;
+            };
+            curPlayer = {
+                getPosY = function(...) return 5; end;
+            };
+            curSwarmFac = nil;
+            getLevelPropMapByName = function(...) return {
+                direction = 1;
+            };
+            end;
+            getCurSwarmFactory = function(...) return _G.levMan.curSwarmFac; end;
+            getCurPlayer = function(...) return _G.levMan.curPlayer; end;
+            getCurLevel = function(...) return _G.levMan.curLevel; end;
         };
-        curPlayer = {
-            getPosY = function (...) return 5 end;
-        };
-        curSwarmFac = nil;
-        getLevelPropMapByName = function(...) return {
-            direction = 1;
-        }
-        end;
-        getCurSwarmFactory = function(...) return _G.levMan.curSwarmFac end;
-        getCurPlayer = function(...) return _G.levMan.curPlayer end;
-        getCurLevel = function(...) return _G.levMan.curLevel end;
-    };
 
-        _G.locInstance = testClass("deadFish", "assets/deadFish.png", 50, 30, 35, 50, 5, 64, hitbox, _,_,_, 0, _G.levMan);
+        _G.locInstance = testClass("deadFish", "assets/deadFish.png", 50, 30, 35, 50, 5, 64, hitbox, _, _, _, 0, _G.levMan);
     end)
 
     it("Testing Constructor", function()
-        local myInstance = testClass("deadFish", "assets/deadFish.png", 50, 30, 35, 50, 5, 64, hitbox, _,_,_, 0, _G.levMan);
+        local myInstance = testClass("deadFish", "assets/deadFish.png", 50, 30, 35, 50, 5, 64, hitbox, _, _, _, 0, _G.levMan);
         assert.are.equal(locInstance.yPosition, myInstance.yPosition);
         assert.are.equal(locInstance.xHitbox, myInstance.xHitbox);
         assert.are.equal(locInstance.yHitbox, myInstance.yHitbox);
@@ -74,7 +74,7 @@ describe("Unit test for FishableObject.lua", function()
     end)
 
     it("Testing Contructor with fallSpeed", function()
-        local myInstance = testClass("deadFish", "assets/deadFish.png", 50, 30, 35, 50, 5, 64, hitbox, _,_,_, 5, _G.levMan);
+        local myInstance = testClass("deadFish", "assets/deadFish.png", 50, 30, 35, 50, 5, 64, hitbox, _, _, _, 5, _G.levMan);
         assert.are.equal(myInstance.fallSpeed, 5);
     end)
 
@@ -174,7 +174,7 @@ describe("Unit test for FishableObject.lua", function()
         assert.are.same(70, locInstance:getHitboxYPosition(1));
     end)
 
-    it("Testing getName Function", function()        
+    it("Testing getName Function", function()
         assert.are.same("deadFish", locInstance:getName());
     end)
 
@@ -183,16 +183,16 @@ describe("Unit test for FishableObject.lua", function()
         locInstance:update();
         assert.are.same(true, locInstance.outOfArea);
     end)
-    
+
     it("Testing falling Objekt", function()
         locInstance.yPosition = 100;
         locInstance.fallSpeed = 1;
-        locInstance.levMan.getCurLevel = function(...) return 
-            {
-                getDirection = function (...) return 1 end;
-                winDim = {480, 833};
-                getMoved = function (...) return 4 end;
-            }
+        locInstance.levMan.getCurLevel = function(...) return
+        {
+            getDirection = function(...) return 1; end;
+            winDim = { 480, 833 };
+            getMoved = function(...) return 4; end;
+        };
         end;
         locInstance:update(1, 1);
         assert.are.same(101, locInstance.yPosition);
@@ -202,15 +202,14 @@ describe("Unit test for FishableObject.lua", function()
         locInstance.yPosition = 100;
         locInstance.fallSpeed = 1;
         locInstance.yMovement = 10;
-        locInstance.levMan.getCurLevel = function(...) return 
-            {
-                getDirection = function (...) return -1 end;
-                winDim = {480, 833};
-                getMoved = function (...) return 10 end;
-            }
+        locInstance.levMan.getCurLevel = function(...) return
+        {
+            getDirection = function(...) return -1; end;
+            winDim = { 480, 833 };
+            getMoved = function(...) return 10; end;
+        };
         end;
         locInstance:update(1, 1);
         assert.are.same(91, locInstance.yPosition);
     end)
-
 end)
