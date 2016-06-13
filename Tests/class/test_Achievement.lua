@@ -243,4 +243,12 @@ describe("Unit test for Achievement.lua", function()
         assert.are.same(_G._persTable.achievements.onlyNegativeFishesCaught, exp);
     end)
   
+    it("Test function Achievement:onlyNegativeFishesCaught", function()
+        _G._persTable.fish.caught.sleepingPill  = 2;
+        local myInstance = testClass();
+        local exp = true;
+        myInstance:allPillsAtLeastOnce()
+        assert.are.same(_G._persTable.achievements.allPillsAtLeastOnce, exp);
+    end)
+  
   end)
