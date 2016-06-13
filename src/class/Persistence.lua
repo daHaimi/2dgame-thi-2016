@@ -117,7 +117,6 @@ function Persistence:createPersTable()
 
     _G._persTable.achievements = {
         getFirstObject = false;
-        getSecondObject = false;
         failedStart = false;
         caughtTwoBoots = false;
         secondStart = false;
