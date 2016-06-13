@@ -290,7 +290,7 @@ end
 --- Unlocks the given achievement.
 -- @param achName The name of the achievement.
 function Level:unlockAchievement(achName)
-    print("Erfolg " .. achName .. " freigeschaltet");
+    --print("Erfolg " .. achName .. " freigeschaltet");
     table.insert(_G._unlockedAchievements, _G.data.achievements[achName]);
     _gui:newNotification("assets/gui/480px/" .. _G.data.achievements[achName].image_unlock, 
         achName);
