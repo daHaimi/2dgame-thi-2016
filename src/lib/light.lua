@@ -47,6 +47,7 @@ _G.love.light.translate.Y_OLD = 0
 _G.love.light.DIRECTION = 0
 
 --- constructor for the light world
+-- noinspection LuaOverlyLongMethod
 function _G.love.light.newWorld()
     local worldObject = {}
 
@@ -360,7 +361,7 @@ function _G.love.light.newWorld()
                 if worldObject.body[i].refraction and worldObject.body[i].normal then
                     love.graphics.setColor(255, 255, 255)
                     if worldObject.body[i].tileX == 0.0 and worldObject.body[i].tileY == 0.0 then
-                        love.graphics.draw(normal, worldObject.body[i].x - worldObject.body[i].nx + _G.love.light.translate.X, worldObject.body[i].y - worldObject.body[i].ny + _G.love.light.translate.Y)
+                        love.graphics.draw(worldObject.normalMap, worldObject.body[i].x - worldObject.body[i].nx + _G.love.light.translate.X, worldObject.body[i].y - worldObject.body[i].ny + _G.love.light.translate.Y)
                     else
                         worldObject.body[i].normalMesh:setVertices(worldObject.body[i].normalVert)
                         love.graphics.draw(worldObject.body[i].normalMesh, worldObject.body[i].x - worldObject.body[i].nx + _G.love.light.translate.X, worldObject.body[i].y - worldObject.body[i].ny + _G.love.light.translate.Y)
@@ -765,6 +766,7 @@ function _G.love.light.newWorld()
 end
 
 -- light object
+--noinspection LuaOverlyLongMethod
 function _G.love.light.newLight(p, x, y, red, green, blue, range)
     local lightObject = {}
     lightObject.direction = 0
@@ -893,8 +895,9 @@ function _G.love.light.newLight(p, x, y, red, green, blue, range)
     return lightObject
 end
 
--- body object for some reasonss there is the WorldObject twice
-function _G.love.light.newBody(worldObject, type, _, ...)
+-- body object
+--noinspection LuaOverlyLongMethod
+function _G.love.light.newBody(worldObject, type, ...)
     local args = { ... }
     local bodyObject = {}
     worldObject.body[#worldObject.body + 1] = bodyObject
