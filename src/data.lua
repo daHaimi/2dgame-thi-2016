@@ -48,7 +48,7 @@ return {
                     width = 50;
                     height = 30;
                     deltaXPos = 5;
-                    deltaYPos = 17
+                    deltaYPos = 17;
                 }
             };
         };
@@ -71,7 +71,7 @@ return {
                     width = 60;
                     height = 25;
                     deltaXPos = 2;
-                    deltaYPos = 25
+                    deltaYPos = 25;
                 }
             };
         };
@@ -93,7 +93,7 @@ return {
                     width = 64;
                     height = 25;
                     deltaXPos = 0;
-                    deltaYPos = 20
+                    deltaYPos = 20;
                 }
             };
         };
@@ -116,7 +116,7 @@ return {
                     width = 40;
                     height = 40;
                     deltaXPos = 12;
-                    deltaYPos = 12
+                    deltaYPos = 12;
                 }
             };
         };
@@ -136,13 +136,13 @@ return {
                     width = 30;
                     height = 30;
                     deltaXPos = 17;
-                    deltaYPos = 2
+                    deltaYPos = 2;
                 },
                 {
                     width = 6;
                     height = 40;
                     deltaXPos = 29;
-                    deltaYPos = 24
+                    deltaYPos = 24;
                 }
             };
         };
@@ -161,7 +161,7 @@ return {
                     width = 40;
                     height = 58;
                     deltaXPos = 12;
-                    deltaYPos = 2
+                    deltaYPos = 2;
                 }
             };
         };
@@ -181,13 +181,13 @@ return {
                     width = 55;
                     height = 17;
                     deltaXPos = 2;
-                    deltaYPos = 43
+                    deltaYPos = 43;
                 },
                 {
                     width = 30;
                     height = 56;
                     deltaXPos = 25;
-                    deltaYPos = 4
+                    deltaYPos = 4;
                 }
             };
         };
@@ -209,7 +209,7 @@ return {
                     width = 54;
                     height = 56;
                     deltaXPos = 5;
-                    deltaYPos = 4
+                    deltaYPos = 4;
                 }
             };
         };
@@ -231,7 +231,7 @@ return {
                     width = 128;
                     height = 10;
                     deltaXPos = 0;
-                    deltaYPos = 40
+                    deltaYPos = 40;
                 }
             };
         };
@@ -250,19 +250,19 @@ return {
                     width = 15;
                     height = 15;
                     deltaXPos = 1;
-                    deltaYPos = 1
+                    deltaYPos = 1;
                 },
                 {
                     width = 15;
                     height = 15;
                     deltaXPos = 8;
-                    deltaYPos = 8
+                    deltaYPos = 8;
                 },
                 {
                     width = 15;
                     height = 15;
                     deltaXPos = 15;
-                    deltaYPos = 15
+                    deltaYPos = 15;
                 }
             };
         };
@@ -285,19 +285,19 @@ return {
                     width = 62;
                     height = 0;
                     deltaXPos = 2;
-                    deltaYPos = 0
+                    deltaYPos = 0;
                 };
                 {
                     width = 15;
                     height = 34;
                     deltaXPos = 49;
-                    deltaYPos = 0
+                    deltaYPos = 0;
                 };
                 {
                     width = 46;
                     height = 64;
                     deltaXPos = 2;
-                    deltaYPos = 0
+                    deltaYPos = 0;
                 }
             };
         };
@@ -318,7 +318,7 @@ return {
                     width = 52;
                     height = 54;
                     deltaXPos = 6;
-                    deltaYPos = 6
+                    deltaYPos = 6;
                 }
             };
         };
@@ -342,19 +342,19 @@ return {
                     width = 49;
                     height = 17;
                     deltaXPos = 9;
-                    deltaYPos = 13
+                    deltaYPos = 13;
                 },
                 {
                     width = 36;
                     height = 19;
                     deltaXPos = 16;
-                    deltaYPos = 30
+                    deltaYPos = 30;
                 },
                 {
                     width = 23;
                     height = 10;
                     deltaXPos = 22;
-                    deltaYPos = 49
+                    deltaYPos = 49;
                 }
             };
         };
@@ -374,13 +374,13 @@ return {
                     width = 22;
                     height = 10;
                     deltaXPos = 22;
-                    deltaYPos = 10
+                    deltaYPos = 10;
                 },
                 {
                     width = 42;
                     height = 36;
                     deltaXPos = 12;
-                    deltaYPos = 20
+                    deltaYPos = 20;
                 }
             };
         };
@@ -404,13 +404,13 @@ return {
                     width = 10;
                     height = 8;
                     deltaXPos = 47;
-                    deltaYPos = 9
+                    deltaYPos = 9;
                 },
                 {
                     width = 60;
                     height = 38;
                     deltaXPos = 2;
-                    deltaYPos = 16
+                    deltaYPos = 16;
                 }
             };
         };
@@ -432,7 +432,7 @@ return {
                     width = 54;
                     height = 56;
                     deltaXPos = 5;
-                    deltaYPos = 4
+                    deltaYPos = 4;
                 }
             };
         };
@@ -455,25 +455,25 @@ return {
                     width = 16;
                     height = 54;
                     deltaXPos = 28;
-                    deltaYPos = 2
+                    deltaYPos = 2;
                 },
                 {
                     width = 36;
                     height = 10;
                     deltaXPos = 17;
-                    deltaYPos = 54
+                    deltaYPos = 54;
                 },
                 {
                     width = 10;
                     height = 14;
                     deltaXPos = 11;
-                    deltaYPos = 15
+                    deltaYPos = 15;
                 },
                 {
                     width = 10;
                     height = 14;
                     deltaXPos = 48;
-                    deltaYPos = 13
+                    deltaYPos = 13;
                 }
             };
         };
@@ -496,19 +496,19 @@ return {
                     width = 3;
                     height = 10;
                     deltaXPos = 60;
-                    deltaYPos = 10
+                    deltaYPos = 10;
                 },
                 {
                     width = 46;
                     height = 20;
                     deltaXPos = 4;
-                    deltaYPos = 38
+                    deltaYPos = 38;
                 },
                 {
                     width = 44;
                     height = 20;
                     deltaXPos = 14;
-                    deltaYPos = 20
+                    deltaYPos = 20;
                 }
             };
         };
@@ -531,19 +531,19 @@ return {
                     width = 60;
                     height = 14;
                     deltaXPos = 2;
-                    deltaYPos = 8
+                    deltaYPos = 8;
                 },
                 {
                     width = 22;
                     height = 22;
                     deltaXPos = 18;
-                    deltaYPos = 22
+                    deltaYPos = 22;
                 },
                 {
                     width = 10;
                     height = 14;
                     deltaXPos = 30;
-                    deltaYPos = 44
+                    deltaYPos = 44;
                 }
             };
         };
@@ -563,19 +563,19 @@ return {
                     width = 20;
                     height = 40;
                     deltaXPos = 22;
-                    deltaYPos = 4
+                    deltaYPos = 4;
                 },
                 {
                     width = 30;
                     height = 14;
                     deltaXPos = 18;
-                    deltaYPos = 14
+                    deltaYPos = 14;
                 },
                 {
                     width = 6;
                     height = 20;
                     deltaXPos = 34;
-                    deltaYPos = 44
+                    deltaYPos = 44;
                 }
             };
         };
@@ -595,19 +595,19 @@ return {
                     width = 30;
                     height = 14;
                     deltaXPos = 18;
-                    deltaYPos = 10
+                    deltaYPos = 10;
                 },
                 {
                     width = 58;
                     height = 16;
                     deltaXPos = 3;
-                    deltaYPos = 24
+                    deltaYPos = 24;
                 },
                 {
                     width = 37;
                     height = 22;
                     deltaXPos = 14;
-                    deltaYPos = 40
+                    deltaYPos = 40;
                 }
             };
         };
@@ -627,7 +627,7 @@ return {
                     width = 0;
                     height = 0;
                     deltaXPos = 0;
-                    deltaYPos = 0
+                    deltaYPos = 0;
                 }
             };
         };
