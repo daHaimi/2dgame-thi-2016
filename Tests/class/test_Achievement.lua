@@ -75,4 +75,44 @@ describe("Unit test for Achievement.lua", function()
         assert.are.same(locInstance, myInstance);
     end)
   
+    it("Test function Achievement:caughtOneRound", function()
+        _G._persTable.fish.caughtInOneRound = 1;
+
+        local myInstance = testClass();
+        local exp = true;
+        myInstance:caughtOneRound()
+        assert.are.same(_G._persTable.achievements.onlyOneCaught, exp);
+    end)
+  
+    it("Test function Achievement:caughtOneRound", function()
+        _G._persTable.fish.caughtInOneRound = 10;
+
+        local myInstance = testClass();
+        local exp = true;
+        myInstance:caughtOneRound()
+        assert.are.same(_G._persTable.achievements.bronzeCaughtOneRound, exp);
+        assert.are_not.same(_G._persTable.achievements.silverCaughtOneRound , exp);
+        assert.are_not.same(_G._persTable.achievements.goldCaughtOneRound , exp);
+    end)
+
+    it("Test function Achievement:caughtOneRound", function()
+        _G._persTable.fish.caughtInOneRound = 20;
+
+        local myInstance = testClass();
+        local exp = true;
+        myInstance:caughtOneRound()
+        assert.are.same(_G._persTable.achievements.silverCaughtOneRound , exp);
+        assert.are_not.same(_G._persTable.achievements.goldCaughtOneRound , exp);
+    end)
+  
+    it("Test function Achievement:caughtOneRound", function()
+        _G._persTable.fish.caughtInOneRound = 100;
+
+        local myInstance = testClass();
+        local exp = true;
+        myInstance:caughtOneRound()
+        assert.are.same(_G._persTable.achievements.goldCaughtOneRound , exp);
+    end)
+    
+    
   end)
