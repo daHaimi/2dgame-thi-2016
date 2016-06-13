@@ -30,13 +30,13 @@ local Dictionary = Class {
             self.speed = 75;
         end
         self.name = "Dictionary";
-         self.frame = Frame((_G._persTable.scaledDeviceDim[1] - self.width) / 2, 
+        self.frame = Frame((_G._persTable.scaledDeviceDim[1] - self.width) / 2,
             (_G._persTable.scaledDeviceDim[2] - self.height) / 2 - self.speed, "down", "down", self.speed, 0, -1500);
         self:create();
     end;
 };
 
----creates the dictionary frame
+--- creates the dictionary frame
 function Dictionary:create()
     --add, create and position all elements on this frame
     self.elementsOnFrame = {
@@ -56,67 +56,67 @@ function Dictionary:create()
             y = self.height - self.buttonHeight;
         };
     };
-    
+
     --adjust all elements on this frame
     self.elementsOnFrame.background.object:SetImage(self.directory .. "StandardBG.png");
-    
+
     self.elementsOnFrame.button_back.object:SetImage(self.directory .. "Button.png")
     self.elementsOnFrame.button_back.object:SizeToImage()
     self.elementsOnFrame.button_back.object:SetText("Back");
-    
+
     self:addAllObjects();
-    
+
     --onclick events for all buttons
-    self.elementsOnFrame.button_back.object.OnClick = function(object)
+    self.elementsOnFrame.button_back.object.OnClick = function(_)
         _gui:changeFrame(_gui:getFrames().mainMenu);
     end
 end
 
 function Dictionary:imageExists(name)
-   local f=io.open(name,"r")
-   if f~=nil then io.close(f) return true else return false end
+    local f = io.open(name, "r")
+    if f ~= nil then io.close(f) return true else return false end
 end
 
 --add all object written in the data.lua into the chart and adds an OnClick event
 function Dictionary:addAllObjects()
-    for k, v in pairs(_G.data.fishableObjects) do
+    for _, v in pairs(_G.data.fishableObjects) do
         local path = "";
         if self:imageExists(self.directory .. "dic_" .. v.image) then
-            path = self.directory.. "dic_" .. v.image;
+            path = self.directory .. "dic_" .. v.image;
         else
             path = "assets/" .. v.image;
         end
-        
+
         local newKlickableElement = KlickableElement(v.name, path, path, v.description, v.value, nil);
-        newKlickableElement.object.OnClick = function(object)
+        newKlickableElement.object.OnClick = function(_)
             self.elementsOnFrame.chart.object:markElement(newKlickableElement);
         end
         self.elementsOnFrame.chart.object:addKlickableElement(newKlickableElement);
     end
 end
 
----shows the frame on screen
+--- shows the frame on screen
 function Dictionary:draw()
     self.frame:draw(self.elementsOnFrame);
 end
 
----called to "delete" this frame
+--- called to "delete" this frame
 function Dictionary:clear()
     self.frame:clear(self.elementsOnFrame);
 end
 
----called in the "fly in" state 
+--- called in the "fly in" state
 function Dictionary:appear()
     love.mouse.setVisible(true);
     self.frame:appear(self.elementsOnFrame);
 end
 
----called in the "fly out" state
+--- called in the "fly out" state
 function Dictionary:disappear()
     self.frame:disappear(self.elementsOnFrame);
 end
 
----return true if the frame is on position /fly in move is finished
+--- return true if the frame is on position /fly in move is finished
 function Dictionary:checkPosition()
     return self.frame:checkPosition();
 end

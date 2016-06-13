@@ -13,7 +13,7 @@ function Achievement:checkAchievements()
 end
 
 function Achievement:caughtOneRound()
-  
+
     if _G._persTable.fish.caughtInOneRound == 1 then
         _G._persTable.achievements.onlyOneCaught = true;
     end
@@ -25,7 +25,7 @@ function Achievement:caughtOneRound()
     end
     if _G._persTable.fish.caughtInOneRound > 29 then
         _G._persTable.achievements.goldCaughtOneRound = true;
-    end    
+    end
 end
 
 function Achievement:moneyOneRound()
@@ -37,7 +37,7 @@ function Achievement:moneyOneRound()
     end
     if _G._persTable.statistic.maxCoinOneRound > 999 then
         _G._persTable.achievements.goldCoinsOneRound = true;
-    end  
+    end
 end
 
 function Achievement:moneyTotal()
@@ -49,7 +49,7 @@ function Achievement:moneyTotal()
     end
     if _G._persTable.statistic.moneyEarnedTotal > 8999 then
         _G._persTable.achievements.gMoneyEarnedTotal = true;
-    end  
+    end
 end
 
 function Achievement:fishCaughtTotal()
@@ -61,7 +61,7 @@ function Achievement:fishCaughtTotal()
     end
     if _G._persTable.fish.caughtTotal > 499 then
         _G._persTable.achievements.gFishCaugtTotal = true;
-    end  
+    end
 end
 
 function Achievement:negativCoins()
@@ -78,16 +78,16 @@ end
 
 function Achievement:allObjectsAtLeastOnce()
     if _G._persTable.fish.caught.turtle > 0 and _G._persTable.fish.caught.rat > 0 and
-        _G._persTable.fish.caught.deadFish > 0 and _G._persTable.fish.caught.sleepingPill > 0 and
-        _G._persTable.fish.caught.nemo > 0 and _G._persTable.fish.caught.lollipop > 0 and
-        _G._persTable.fish.caught.angler > 0 and _G._persTable.fish.caught.ring > 0 and
-        _G._persTable.fish.caught.shoe > 0 and _G._persTable.fish.caught.snake > 0 and
-        _G._persTable.fish.caught.crocodile > 0 and _G._persTable.fish.caught.balloon > 0 and
-        _G._persTable.fish.caught.camera > 0 and _G._persTable.fish.caught.drink > 0 and
-        _G._persTable.fish.caught.egg > 0 and _G._persTable.fish.caught.cactus > 0 and
-        _G._persTable.fish.caught.leaf > 0 and _G._persTable.fish.caught.canyonSnake > 0 and
-        _G._persTable.fish.caught.backpack > 0 and G._persTable.fish.caught.bird > 0 and
-        _G._persTable.fish.caught.squirrel > 0 then
+            _G._persTable.fish.caught.deadFish > 0 and _G._persTable.fish.caught.sleepingPill > 0 and
+            _G._persTable.fish.caught.nemo > 0 and _G._persTable.fish.caught.lollipop > 0 and
+            _G._persTable.fish.caught.angler > 0 and _G._persTable.fish.caught.ring > 0 and
+            _G._persTable.fish.caught.shoe > 0 and _G._persTable.fish.caught.snake > 0 and
+            _G._persTable.fish.caught.crocodile > 0 and _G._persTable.fish.caught.balloon > 0 and
+            _G._persTable.fish.caught.camera > 0 and _G._persTable.fish.caught.drink > 0 and
+            _G._persTable.fish.caught.egg > 0 and _G._persTable.fish.caught.cactus > 0 and
+            _G._persTable.fish.caught.leaf > 0 and _G._persTable.fish.caught.canyonSnake > 0 and
+            _G._persTable.fish.caught.backpack > 0 and G._persTable.fish.caught.bird > 0 and
+            _G._persTable.fish.caught.squirrel > 0 then
         _G._persTable.achievements.allObjectsAtLeastOnce = true;
     end
 end
@@ -97,5 +97,5 @@ function Achievement:allPillsAtLeastOnce()
         _G._persTable.achievements.allPillsAtLeastOnce = true;
     end
 end
-    
+
 return Achievement;

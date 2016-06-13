@@ -2,9 +2,9 @@ Class = require "lib.hump.class";
 require "socket"
 
 --- Class for simple Animations
--- @param image                                 The sprite as love.graphics.Image instance
--- @param cols                                  The number of cols in the sprite
--- @param rows                                  The number of rows in the sprite
+-- @param image The sprite as love.graphics.Image instance
+-- @param cols The number of cols in the sprite
+-- @param rows The number of rows in the sprite
 -- @param timeout (0.2)                         The timeout between the images in seconds
 -- @param animType (Animate.AnimType.linear)    The animation type of the enum Animate.AnimType
 -- @param numStart (1)                          The frame of the image the animation should start with
@@ -31,13 +31,13 @@ local Animate = Class {
             local offsetTop = math.floor(calcWidth / self.p_image:getWidth());
             self.p_quads[i] = love.graphics.newQuad(offsetLeft, offsetTop, self.p_measures[1], self.p_measures[2], self.p_image:getDimensions());
         end
-            
+
         self.p_forward = true;
         self.start = true;
         if start ~= nil then
             self.start = start;
         end
-        
+
         if numberOfShifts == nil then
             self.numberOfShifts = _G.math.inf;
         else
@@ -60,7 +60,7 @@ Animate.AnimType = {
 -- @param dt Delta time since last update in seconds
 -- @return nil
 function Animate:update(dt)
-    if self.start and self.numberOfShifts > 0 then 
+    if self.start and self.numberOfShifts > 0 then
         self.p_timer = self.p_timer + dt;
         if self.p_timer >= self.p_timeout then
             self.p_timer = self.p_timer - self.p_timeout;

@@ -101,23 +101,23 @@ end
 --- updates the bait and checks for collisions
 -- @param dt Delta time is the amount of seconds since the last time this function was called.
 function Bait:update(dt)
-    oldXPos = self.xPos;
+    local oldXPos = self.xPos;
 
     -- update animation
     if self.image ~= nil then
         self.image:update(dt);
     end
-    
+
     -- update Bait cheeks
     if self.hitFishable ~= nil then
-      local dimX, dimY = self.imageCheeks:getDimensions();
-      if  self.hitFishable > 20 then
-          self.quadCheeks = love.graphics.newQuad(2*dimX/3, 0, dimX/3, dimY, dimX, dimY);
-      elseif self.hitFishable > 15 then
-          self.quadCheeks = love.graphics.newQuad(dimX/3, 0, dimX/3, dimY, dimX, dimY);
-      elseif self.hitFishable > 5 then
-          self.quadCheeks = love.graphics.newQuad(0, 0, dimX/3, dimY, dimX, dimY);
-      end
+        local dimX, dimY = self.imageCheeks:getDimensions();
+        if self.hitFishable > 20 then
+            self.quadCheeks = love.graphics.newQuad(2 * dimX / 3, 0, dimX / 3, dimY, dimX, dimY);
+        elseif self.hitFishable > 15 then
+            self.quadCheeks = love.graphics.newQuad(dimX / 3, 0, dimX / 3, dimY, dimX, dimY);
+        elseif self.hitFishable > 5 then
+            self.quadCheeks = love.graphics.newQuad(0, 0, dimX / 3, dimY, dimX, dimY);
+        end
     end
 
     -- calculate modifier for the golden rule
@@ -148,8 +148,8 @@ end
 function Bait:capXPosition()
     local leftBound = 58;
     local rightBound = 422;
-    if self.levMan:getCurLevel():getYPos() > self.winDim[2] * 0.2 
-    and self.levMan:getCurLevel():getLevelName() == "sewers" then
+    if self.levMan:getCurLevel():getYPos() > self.winDim[2] * 0.2
+            and self.levMan:getCurLevel():getLevelName() == "sewers" then
         local m = 142 / (self.winDim[2] * 0.2);
         leftBound = 58 + m * (self.levMan:getCurLevel():getYPos() - self.winDim[2] * 0.23);
         rightBound = 422 - m * (self.levMan:getCurLevel():getYPos() - self.winDim[2] * 0.23);
@@ -184,7 +184,7 @@ end
 function Bait:checkFishableForCollision(fishable, oldXPos, index)
     local moved = self.levMan:getCurLevel():getMoved();
     local directionOfMovement = 0;
-    yPos = self.yPos
+    local yPos = self.yPos
 
     if oldXPos < self.xPos then
         directionOfMovement = 1;
@@ -244,7 +244,7 @@ end
 --- is called everytime the bait hits a sleeping pill
 function Bait:sleepingPillHit()
     self.levMan:getCurSwarmFactory():setSpeedMultiplicator(_G._persTable.upgrades.sleepingPillSlow);
-    self.sleepingPillDuration =  _G._persTable.upgrades.sleepingPillDuration;
+    self.sleepingPillDuration = _G._persTable.upgrades.sleepingPillDuration;
 end
 
 --- implements drawing interface
@@ -260,7 +260,7 @@ function Bait:draw()
     end
     self.image:draw(self.xPos - 32, self.yPos - 39); -- FIXME magic number
     if self.quadCheeks ~= nil then
-    love.graphics.draw(self.imageCheeks, self.quadCheeks, self.xPos - 32, self.yPos - 39);
+        love.graphics.draw(self.imageCheeks, self.quadCheeks, self.xPos - 32, self.yPos - 39);
     end
     Shaders:clear();
 end
@@ -277,7 +277,7 @@ end
 
 --- draws the line of the Hamster in the sewers
 function Bait:drawLineDiagonal()
-    local angle = 0;
+    local angle;
     local length = math.sqrt(self.xPos * self.xPos + self.yPos * self.yPos);
 
     angle = math.atan((self.xPos - 0.5 * self.winDim[1]) / (self.levMan:getCurLevel():getYPos() - self.winDim[2] * self.modifier - 100));
@@ -372,7 +372,7 @@ function Bait:getSpeed()
 end
 
 function Bait:changeSprite()
-  self.image = Animate(self.imgUp, 3, 1, .08, Animate.AnimType.bounce);
+    self.image = Animate(self.imgUp, 3, 1, .08, Animate.AnimType.bounce);
 end
 
 return Bait;

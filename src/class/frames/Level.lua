@@ -28,7 +28,7 @@ local Level = Class {
             self.speed = 75;
         end
         self.name = "Level";
-        self.frame = Frame((_G._persTable.scaledDeviceDim[1] - self.width) / 2, 
+        self.frame = Frame((_G._persTable.scaledDeviceDim[1] - self.width) / 2,
             (_G._persTable.scaledDeviceDim[2] - self.height) / 2 - self.speed, "down", "down", self.speed, 0, -1500);
         self:create();
     end;
@@ -59,14 +59,14 @@ function Level:create()
             y = self.height - self.buttonHeight;
         }
     };
-    
+
     --adjust all elements on this frame
     self.elementsOnFrame.background.object:SetImage(self.directory .. "LevelBG.png");
-    
+
     self.elementsOnFrame.buttonHouse.object:SetImage(self.directory .. "HouseButton.png");
     self.elementsOnFrame.buttonHouse.object:SizeToImage();
     self.elementsOnFrame.buttonHouse.object:SetText("");
-    
+
     if _G._persTable.unlockedLevel == 1 then
         self.elementsOnFrame.buttonCanyon.object:SetImage(self.directory .. "CanyonButton_locked.png");
     else
@@ -74,66 +74,66 @@ function Level:create()
     end
     self.elementsOnFrame.buttonCanyon.object:SizeToImage();
     self.elementsOnFrame.buttonCanyon.object:SetText("");
-    
+
     self.elementsOnFrame.buttonBack.object:SetImage(self.directory .. "Button.png");
     self.elementsOnFrame.buttonBack.object:SizeToImage();
     self.elementsOnFrame.buttonBack.object:SetText("Back");
-    
+
     --onclick events for all buttons
-    self.elementsOnFrame.buttonHouse.object.OnClick = function(object)
+    self.elementsOnFrame.buttonHouse.object.OnClick = function(_)
         _gui:getLevelManager():newLevel(_gui:getLevelManager():getLevelPropMapByName("sewers"), _G.data);
         _gui:changeFrame(_gui:getFrames().inGame);
     end
-    
+
     if _G._persTable.unlockedLevel == 1 then
-        self.elementsOnFrame.buttonCanyon.object.OnClick = function(object)
+        self.elementsOnFrame.buttonCanyon.object.OnClick = function(_)
             _gui:newNotification(self.directory .. "ach_nothingCaught.png", "Not unlocked yet!");
         end
     else
-        self.elementsOnFrame.buttonCanyon.object.OnClick = function(object)
+        self.elementsOnFrame.buttonCanyon.object.OnClick = function(_)
             _gui:getLevelManager():newLevel(_gui:getLevelManager():getLevelPropMapByName("canyon"), _G.data);
             _gui:changeFrame(_gui:getFrames().inGame);
         end
     end
-    
-    self.elementsOnFrame.buttonBack.object.OnClick = function(object)
+
+    self.elementsOnFrame.buttonBack.object.OnClick = function(_)
         _gui:changeFrame(_gui:getFrames().mainMenu);
     end
 end
 
----changes the language of this frame
+--- changes the language of this frame
 function Level:setLanguage(language)
     self.elementsOnFrame.buttonBack.object:SetText(_G.data.languages[language].package.buttonBack);
 end
 
----call to unlock the second level
+--- call to unlock the second level
 function Level:unlockCanyon()
     _G._persTable.unlockLevel = 2;
     self.elementsOnFrame.buttonCanyon.object:SetImage(self.directory .. "CanyonButton.png");
 end
 
----shows the frame on screen
+--- shows the frame on screen
 function Level:draw()
     self.frame:draw(self.elementsOnFrame);
 end
 
----called to "delete" this frame
+--- called to "delete" this frame
 function Level:clear()
     self.frame:clear(self.elementsOnFrame);
 end
 
----called in the "fly in" state 
+--- called in the "fly in" state
 function Level:appear()
     love.mouse.setVisible(true);
     self.frame:appear(self.elementsOnFrame);
 end
 
----called in the "fly out" state
+--- called in the "fly out" state
 function Level:disappear()
     self.frame:disappear(self.elementsOnFrame);
 end
 
----return true if the frame is on position /fly in move is finished
+--- return true if the frame is on position /fly in move is finished
 function Level:checkPosition()
     return self.frame:checkPosition();
 end
