@@ -15,6 +15,7 @@ _G.levelTestStub = function()
             mapBreakthrough1 = 0;
             mapBreakthrough2 = 0;
         };
+        achievements = {};
         playedTime = 0;
         phase = 1;
     };
@@ -693,5 +694,26 @@ describe("Test unit test suite", function()
         };
         locInstance:update(1, bait);
         assert.are.same(_G._persTable.playedTime, 2000);
-    end)    
+    end)  
+
+    it("Testing unlockAchievement function", function()
+        _G._gui = {
+            newNotification = function(...) end;
+        };
+        _G._unlockedAchievements = {};
+        _G.data = {
+            achievements = {
+                getFirtsObject = {
+                    nameOnPersTable = "getFirstObject";
+                    image_lock = "ach_firstObject_locked.png";
+                    image_unlock = "ach_firstObject.png";
+                }
+            }
+        };
+        
+        stub(_gui, "newNotification");
+        locInstance:unlockAchievement("getFirtsObject");
+        assert.are.same(true, _G._persTable.achievements.getFirtsObject);
+        assert.stub(_gui.newNotification).was.called(1);
+    end)
 end)

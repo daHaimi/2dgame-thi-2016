@@ -88,9 +88,18 @@ describe("Test Gui", function()
     end)
     
     it("Testing newNotification function", function()
+        _G._persTable.config.language = "german";
+        _G.data.languages.german = {
+            package = {
+                testAch = {
+                    name = "testAch";
+                };
+            };
+        };
+        
         stub(locInstance.notification, "newNotification");
-        locInstance:newNotification("image", "text");
-        assert.stub(locInstance.notification.newNotification).was_called();
+        locInstance:newNotification("image", "testAch");
+        assert.stub(locInstance.notification.newNotification).was_called(1);
     end)
 
     it("Testing start function", function()

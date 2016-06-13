@@ -698,80 +698,80 @@ return {
         oneMoreLife = {
             nameOnPersTable = "oneMoreLife";--Name of parameter in persTable. Unlock change this parameter to true
             price = 500;--price of this item
-            image = "gui_Test_klickableElement.png";
-            image_disable = "gui_Test_klickableElement_disable.png";
+            image = "shop_extraLife1.png";
+            image_disable = "shop_extraLife1_locked.png";
         },
         twoMoreLife = {
             nameOnPersTable = "twoMoreLife";
             price = 1000;
-            image = "gui_Test_klickableElement.png";
-            image_disable = "gui_Test_klickableElement_disable.png";
+            image = "shop_extraLife2.png";
+            image_disable = "shop_extraLife2_locked.png";
         },
         threeMoreLife = {
             nameOnPersTable = "threeMoreLife";
             price = 1500;
-            image = "gui_Test_klickableElement.png";
-            image_disable = "gui_Test_klickableElement_disable.png";
+            image = "shop_extraLife3.png";
+            image_disable = "shop_extraLife3_locked.png";
         },
         firstSpeedUp = {
             nameOnPersTable = "firstSpeedUp";
             price = 300;
-            image = "gui_Test_klickableElement.png";
-            image_disable = "gui_Test_klickableElement_disable.png";
+            image = "shop_speedup1.png";
+            image_disable = "shop_speedup1_locked.png";
         },
         secondSpeedUp = {
             nameOnPersTable = "secondSpeedUp";
             price = 300;
-            image = "gui_Test_klickableElement.png";
-            image_disable = "gui_Test_klickableElement_disable.png";
+            image = "shop_speedup2.png";
+            image_disable = "shop_speedup2_locked.png";
         },
         moneyMulitplier = {
             nameOnPersTable = "moneyMultiplier";
             price = 300;
-            image = "gui_Test_klickableElement.png";
-            image_disable = "gui_Test_klickableElement_disable.png";
+            image = "shop_doubleScore.png";
+            image_disable = "shop_doubleScore_locked.png";
         },
         godMode = {
             nameOnPersTable = "godMode";
             price = 1000;
-            image = "gui_Test_klickableElement.png";
-            image_disable = "gui_Test_klickableElement_disable.png";
+            image = "shop_godmode.png";
+            image_disable = "shop_godmode_locked.png";
         },
         mapBreakthrough1 = {
             nameOnPersTable = "mapBreakthrough1";
             price = 2500;
-            image = "gui_Test_klickableElement.png";
-            image_disable = "gui_Test_klickableElement_disable.png";
+            image = "shop_barrier.png";
+            image_disable = "shop_barrier_locked.png";
         },
         mapBreakthrough2 = {
             nameOnPersTable = "mapBreakthrough2";
             price = 5000;
-            image = "gui_Test_klickableElement.png";
-            image_disable = "gui_Test_klickableElement_disable.png";
+            image = "shop_barrier.png";
+            image_disable = "shop_barrier_locked.png";
         },
         moreFuel1 = {
             nameOnPersTable = "moreFuel1";
             price = 1000;
-            image = "gui_Test_klickableElement.png";
-            image_disable = "gui_Test_klickableElement_disable.png";
+            image = "shop_fuel1.png";
+            image_disable = "shop_fuel1_locked.png";
         },
         moreFuel2 = {
             nameOnPersTable = "moreFuel2";
             price = 1500;
-            image = "gui_Test_klickableElement.png";
-            image_disable = "gui_Test_klickableElement_disable.png";
+            image = "shop_fuel2.png";
+            image_disable = "shop_fuel2_locked.png";
         },
         firstPermanentMoneyMulitplier = {
             nameOnPersTable = "firstPermanentMoneyMult";
             price = 1000;
-            image = "gui_Test_klickableElement.png";
-            image_disable = "gui_Test_klickableElement_disable.png";
+            image = "shop_moreMoney1.png";
+            image_disable = "shop_moreMoney1_locked.png";
         },
         secondPermanentMoneyMulitplier = {
             nameOnPersTable = "secondPermanentMoneyMult";
             price = 2500;
-            image = "gui_Test_klickableElement.png";
-            image_disable = "gui_Test_klickableElement_disable.png";
+            image = "shop_moreMoney2.png";
+            image_disable = "shop_moreMoney2_locked.png";
         },
     },
     
@@ -963,6 +963,10 @@ return {
                     name = "Respect our Work";
                     description = "Read the credits";
                 };
+                getFirtsObject = {
+                    name = "First object";
+                    description = "You caught your first object!";
+                };
                 allLevelBoardersPassed = {
                     name = "The great breakthrough";
                     description = "Pass all boarders in a level";
@@ -1111,7 +1115,7 @@ return {
                 },
                 squirrel = {
                     name = "Squirrel";
-                    description = "Give him a nut and it goes nuts!";
+                    description = "Give him a nut and he goes nuts!";
                 },
                 backpack = {
                     name = "Backpack";
@@ -1230,12 +1234,16 @@ return {
                 textScore = "Punktestand:";
                 textStart = "Klicken zum Starten!";
                 buttonChangeLevel = "Levelauswahl";
+                getFirtsObject = {
+                    name = "Der erste Fang";
+                    description = "Du hast den ersten Fang gemacht";
+                };
                 creditsRed = {
                     name = "Respektiere unsere Arbeit";
                     description = "Lese die Credits";
                 };
                 allLevelBoardersPassed = {
-                    name = "DThe great breakthrough";
+                    name = "The great breakthrough";
                     description = "Pass all boarders in a level";
                 };
                 nothingCaught = {
@@ -1331,98 +1339,93 @@ return {
                     name = "Rage Quit";
                     description = "Quit the game after a short distance";
                 },
-                getFirstObject = {
-                    name = "DFirst object";
-                    description = "You caught your first object";
-                },
-                                --objects
                 nemo = {
                     name = "Nemo";
-                    description = "Seems like you have found nemo";
+                    description = "Anscheinend hast du Nemo gefunden";
                 },
                 turtle = {
-                    name = "Turtle";
-                    description = "Its house is his shell";
+                    name = "Schildkröte";
+                    description = "Sein Panzer ist sein Haus";
                 },
                 rat = {
-                    name = "rat";
-                    description = "Easy to attract with cheese";
+                    name = "Ratte";
+                    description = "Lässt sich leicht mit Käse anlocken";
                 },
                 deadFish = {
-                    name = "Dead Fish";
-                    description = "It was a good fish throughout his whole life";
+                    name = "Toter Fisch";
+                    description = "Er war zu Lebzeiten ein guter Fisch";
                 },
                 angler = {
-                    name = "Angler";
-                    description = "Very useful if you need some light";
+                    name = "Anglerfisch";
+                    description = "Sehr nützlich, wenn du eine Lichtquelle benötigst";
                 },
                 lollipop = {
-                    name = "Lollipop";
-                    description = "You know you want it";
+                    name = "Lutscher";
+                    description = "Du weißt du willst ihn";
                 },
                 ring = {
                     name = "Ring";
-                    description = "One ring to rule them all";
+                    description = "Ein Ring um über alle zu herrschen";
                 },
                 shoe = {
-                    name = "Shoe";
-                    description = "One shoe is not enough";
+                    name = "Schuh";
+                    description = "Ein Schuh reicht nicht aus";
                 },
                 snake = {
-                    name = "Snake";
-                    description = "(T)his is a really dangerous snake";
+                    name = "Schlange";
+                    description = "Eine sehr gefährliche Schlange";
                 },
                 crocodile = {
-                    name = "Crocodile";
-                    description = "He just wants to cuddle, I promise";
+                    name = "Krokodil";
+                    description = "Er will nur kuscheln, versprochen!";
                 },
                 sleepingPill = {
-                    name = "Sleeping Pill";
-                    description = "Makes sea dwellers drowsy";
+                    name = "Schlafpille";
+                    description = "Macht Meeresbewohner schläfrig";
                 },
                 squirrel = {
-                    name = "Squirrel";
-                    description = "Give him a nut and it goes nuts!";
+                    name = "Eichhörnchen";
+                    description = "Gib ihm eine Nuss und er flippt aus";
                 },
                 backpack = {
-                    name = "Backpack";
-                    description = "Please don't leave your luggage unattended";
+                    name = "Rucksack";
+                    description = "Bitte lassen Sie Ihr Reisegepäck nicht unbeaufsichtigt";
                 },
                 drink = {
-                    name = "Drink";
-                    description = "Thank god it is sealed";
+                    name = "Getränk";
+                    description = "Zum Glück ist es versiegelt";
                 },
                 egg = {
-                    name = "Egg";
-                    description = "What kind of animal will hatch from that egg?";
+                    name = "Ei";
+                    description = "Welches Tier wird wohl aus diesem Ei schlüpfen?";
                 },
                 camera = {
-                    name = "Camera";
-                    description = "Smile, you are getting photographed";
+                    name = "Kamera";
+                    description = "Lächle, du wirst gerade fotografiert";
                 },
                 canyonSnake = {
-                    name = "Canyon Snake";
-                    description = "Wow, it managed to catch its own tail";
+                    name = "Canyon Schlange";
+                    description = "Beeindruckend, sie hat ihren eigenen Schwanz gefangen";
                 },
                 cactus = {
-                    name = "Cactus";
-                    description = "Thinking about giving it a hug?";
+                    name = "Kaktus";
+                    description = "Möchtest du ihn vielleicht umarmen?";
                 },
                 leaf = {
-                    name = "Leaf";
-                    description = "Leaf it right here please";
+                    name = "Blatt";
+                    description = "Mitnahme nicht gestattet";
                 },
                 bird = {
-                    name = "Bird";
-                    description = "It is literally free like a bird";
+                    name = "Vogel";
+                    description = "Er ist tatsächlich frei wie ein Vogel";
                 },
                 balloon = {
-                    name = "Ballon";
-                    description = "Let it go like your dreams";
+                    name = "Luftballon";
+                    description = "Lass ihn mit deinen Träumen aufsteigen";
                 },
                 ufo = {
                     name = "Ufo";
-                    description = "Wanna get examined?";
+                    description = "Willst du verhört werden?";
                 },
                 --upgrades
                 oneMoreLife = {

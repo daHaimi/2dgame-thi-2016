@@ -131,7 +131,7 @@ function Credits:disappear()
         if not _G._persTable.achievements.creditsRed then
             table.insert(_G._unlockedAchievements, _G.data.achievements.creditsRed);
             _gui:newNotification("assets/gui/480px/" .. _G.data.achievements.creditsRed.image_unlock, 
-            _G.data.achievements.creditsRed.name);
+            "creditsRed");
             _G._persTable.achievements.creditsRed = true;
         end
     end
