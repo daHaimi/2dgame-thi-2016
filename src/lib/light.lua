@@ -307,7 +307,7 @@ function _G.love.light.newWorld()
 
         if worldObject.optionGlow and worldObject.isGlow then
             -- create glow map
-            worldObject.glowMap:clear(0, 0, 0)
+            --worldObject.glowMap:clear(0, 0, 0)
             love.graphics.setCanvas(worldObject.glowMap)
 
             if worldObject.glowDown then
@@ -679,7 +679,14 @@ function _G.love.light.newWorld()
     worldObject.newPolygon = function(...)
         return love.light.newPolygon(worldObject, ...)
     end
-    -- new image
+    --- Constructor for a image
+    -- @param img the love.graphics image
+    -- @param x position
+    -- @param x position
+    -- @param width
+    -- @param height
+    -- @param ox offset
+    -- @param oy offset
     worldObject.newImage = function(img, x, y, width, height, ox, oy)
         return love.light.newImage(worldObject, img, x, y, width, height, ox, oy)
     end
@@ -945,6 +952,7 @@ function _G.love.light.newBody(p, type, ...)
         bodyObject.x = args[2] or 0
         bodyObject.y = args[3] or 0
         if bodyObject.img then
+            print(bodyObject.img)
             bodyObject.imgWidth = bodyObject.img:getWidth()
             bodyObject.imgHeight = bodyObject.img:getHeight()
             bodyObject.width = args[4] or bodyObject.imgWidth
@@ -957,7 +965,9 @@ function _G.love.light.newBody(p, type, ...)
                 { bodyObject.width, bodyObject.height, 1.0, 1.0 },
                 { 0.0, bodyObject.height, 0.0, 1.0 },
             }
-            bodyObject.msh = love.graphics.newMesh(bodyObject.vert, bodyObject.img, "fan")
+            --bodyObject.msh = love.graphics.newMesh(bodyObject.vert, bodyObject.img, "fan")
+            bodyObject.msh = love.graphics.newMesh(bodyObject.vert, "fan")
+            bodyObject.msh:setTexture(bodyObject.img)
         else
             bodyObject.width = args[4] or 64
             bodyObject.height = args[5] or 64
@@ -1444,8 +1454,8 @@ function _G.love.light.newPolygon(p, ...)
 end
 
 -- image object
-function _G.love.light.newImage(p, img, x, y, width, height, ox, oy)
-    return p.newBody("image", img, x, y, width, height, ox, oy)
+function _G.love.light.newImage(lightWorld, img, x, y, width, height, ox, oy)
+    return lightWorld.newBody("image", img, x, y, width, height, ox, oy)
 end
 
 -- refraction object
