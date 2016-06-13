@@ -712,7 +712,6 @@ describe("Test unit test suite", function()
         };
         locInstance:update(1, bait);
         assert.are.same(_G._persTable.playedTime, 2000);
-<<<<<<< HEAD
     end) 
   
     it("Test Achievement: nothing Caught", function()
@@ -728,8 +727,6 @@ describe("Test unit test suite", function()
      
     locInstance:checkForAchievments();
     assert.are.same(_G._persTable.achievements.nothingCaught, true);
-=======
->>>>>>> 0070acb6e56be9faba0c0e831920855813d438ba
     end)
 
     it("Testing unlockAchievement function", function()

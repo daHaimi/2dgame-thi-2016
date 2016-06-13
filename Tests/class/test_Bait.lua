@@ -646,12 +646,8 @@ describe("Unit test for Bait.lua", function()
         local dimX, dimY = myInstance.imageCheeks.getDimensions();
         myInstance:update();
         assert.spy(loveMock.graphics.newQuad).called(1);
-<<<<<<< HEAD
         assert.spy(loveMock.graphics.newQuad).was.called_with(dimX/3, 0, dimX/3, dimY, dimX, dimY);
-=======
         assert.spy(loveMock.graphics.newQuad).was.called_with(dimX / 3, 0, dimX / 3, dimY, dimX, dimY);
-        myInstance:draw();
->>>>>>> 0070acb6e56be9faba0c0e831920855813d438ba
     end)
 
     it("Test middle bait cheeks", function()
