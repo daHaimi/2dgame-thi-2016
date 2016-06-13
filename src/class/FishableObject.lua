@@ -26,50 +26,50 @@ local FishableObject = Class {
         local imageName = _G.love.file.getName(imageSrc);
         local imageExtention = _G.love.file.getExtention(imageSrc);
         if love.filesystem.exists("assets/" .. imageName .. "_glow." .. imageExtention) then
-            self.glowImage = love.graphics.newImage("assets/" .. imageName .. "_glow." .. imageExtention);
+            self.glowMap = love.graphics.newImage("assets/" .. imageName .. "_glow." .. imageExtention);
             local lightWorld = levMan.curLevel:getLightWorld();
-            self.lightImage = lightWorld:newImage(self.image, 0, 0, 64, 64);
-            self.lightImage.setGlowMap(self.glowImage);
+            self.lightImage = lightWorld:newImage(self.image, 64, 64, 64, 64, 0, 0);
+            self.lightImage.setGlowMap(self.glowMap);
             self.lightImage.setOffset(0, 0);
-            --self.lightImage.setOffset(levMan.curLevel); end
-            --if love.filesystem.exists("assets/" .. imageSrc .. "_normal") then
-            --    self.normalImage = love.graphics.newImage("assets/" .. imageSrc .. "_normal");
-            --    -- TODO future work
-            --end
-            self.xPosition = math.random(spriteSize + 26, levMan:getCurLevel().winDim[1] - 58 - self.spriteSize);
-            -- 58 = 26 (width of level wall) + 32 (0.5 * width of hamster)
-            if fallSpeed > 0 then
-                self.yPosition = -math.random(100);
-            else
-                self.yPosition = yPosition;
-            end
-            self.value = value;
-            self.hitpoints = hitpoints;
-            self.spriteSize = spriteSize;
-            self.fallSpeed = fallSpeed;
-            self.levMan = levMan;
-            self.hitbox = hitbox or { 0, 0 };
-            self.outOfArea = false;
+        end
+        --self.lightImage.setOffset(levMan.curLevel); end
+        --if love.filesystem.exists("assets/" .. imageSrc .. "_normal") then
+        --    self.normalImage = love.graphics.newImage("assets/" .. imageSrc .. "_normal");
+        --    -- TODO future work normal map
+        --end
+        self.xPosition = math.random(spriteSize + 26, levMan:getCurLevel().winDim[1] - 58 - self.spriteSize);
+        -- 58 = 26 (width of level wall) + 32 (0.5 * width of hamster)
+        if fallSpeed > 0 then
+            self.yPosition = -math.random(100);
+        else
+            self.yPosition = yPosition;
+        end
+        self.value = value;
+        self.hitpoints = hitpoints;
+        self.spriteSize = spriteSize;
+        self.fallSpeed = fallSpeed;
+        self.levMan = levMan;
+        self.hitbox = hitbox;
+        self.outOfArea = false;
 
-            if (math.random() > 0.5) then
-                self.speed = math.random() * (maxSpeed - minSpeed) + minSpeed;
-            else
-                self.speed = -(math.random() * (maxSpeed - minSpeed) + minSpeed);
-            end
+        if (math.random() > 0.5) then
+            self.speed = math.random() * (maxSpeed - minSpeed) + minSpeed;
+        else
+            self.speed = -(math.random() * (maxSpeed - minSpeed) + minSpeed);
+        end
 
-            local spriteFile = "assets/sprites/sprite_" .. imageSrc;
-            if love.filesystem.exists(spriteFile) then
-                self.sprite = love.graphics.newImage(spriteFile);
-                local spriteCols = self.sprite:getWidth() / self.image:getWidth();
-                local spriteRows = self.sprite:getHeight() / self.image:getHeight();
-                local animTimeout = nil;
-                if animTimeoutMin and animTimeoutMax then
-                    animTimeout = math.random() * (animTimeoutMax - animTimeoutMin) + animTimeoutMin -
-                            math.abs(self.speed / 100); -- animation speed also depended on move speed
-                end
-                animType = Animate.AnimType[animType];
-                self.animation = Animate(self.sprite, spriteCols, spriteRows, animTimeout, animType);
+        local spriteFile = "assets/sprites/sprite_" .. imageSrc;
+        if love.filesystem.exists(spriteFile) then
+            self.sprite = love.graphics.newImage(spriteFile);
+            local spriteCols = self.sprite:getWidth() / self.image:getWidth();
+            local spriteRows = self.sprite:getHeight() / self.image:getHeight();
+            local animTimeout = nil;
+            if animTimeoutMin and animTimeoutMax then
+                animTimeout = math.random() * (animTimeoutMax - animTimeoutMin) + animTimeoutMin -
+                        math.abs(self.speed / 100); -- animation speed also depended on move speed
             end
+            animType = Animate.AnimType[animType];
+            self.animation = Animate(self.sprite, spriteCols, spriteRows, animTimeout, animType);
         end
     end;
 
@@ -139,7 +139,7 @@ function FishableObject:draw()
             end
 
             if not (self.value == 0) then
-                tempFont = love.graphics.getFont();
+                local tempFont = love.graphics.getFont();
                 love.graphics.setNewFont(20);
                 love.graphics.print(math.abs(self.value), self.xPosition, self.yPosition);
                 love.graphics.setFont(tempFont);
