@@ -155,7 +155,8 @@ function FishableObject:update(dt, speedMulitplicator)
     end
     
     if self.destroyed then
-      if math.abs(self.yPosition - self.caughtAt) < 100  then
+      if math.abs(self.yPosition - self.caughtAt) < 100  
+      and self.levMan:getCurLevel():getDirection() == 1 then
         self.animDestroy:update(dt);
       end
     end
@@ -270,6 +271,7 @@ end
 function FishableObject:setDestroyed()
   self:setToCaught();
   self.destroyed = true;
+  self.xPosition = self.levMan:getCurPlayer():getPosX();
 end
 
 return FishableObject;
