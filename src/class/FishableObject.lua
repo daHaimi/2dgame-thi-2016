@@ -153,7 +153,7 @@ function FishableObject:update(dt, speedMulitplicator)
     else
         self.outOfArea = false;
     end
-
+    
     if self.destroyed then
         if math.abs(self.yPosition - self.caughtAt) < 100
                 and self.levMan:getCurLevel():getDirection() == 1 then

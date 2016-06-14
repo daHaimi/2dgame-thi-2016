@@ -12,14 +12,21 @@ describe("Unit test for FishableObject.lua", function()
 
         _G.love = {
             graphics = {
+                Image = {
+                   getWidth = function(...) return 64; end;
+                   getHeight = function(...) return 64; end;
+                   getDimensions = function(...) return 64, 64; end;
+                };
+            
                 setColor = function(...) end;
                 setNewFont = function(...) end;
                 getFont = function(...) return "this could be your font"; end;
                 setFont = function(...) end;
                 print = function(...) end;
-                newImage = function(...) return "assets/deadFish.png"; end;
+                newImage = function(...) return _G.love.graphics.Image; end;
                 draw = function(...) end;
                 scale = function(...) end;
+                newQuad = function(...) return 0; end;
             };
 
             filesystem = {
@@ -96,7 +103,7 @@ describe("Unit test for FishableObject.lua", function()
         locInstance:setXPosition(150);
         locInstance.speed = 30;
         locInstance:draw();
-        assert.spy(loveMock.graphics.draw).was_called_with("assets/deadFish.png", -150, 50);
+        assert.spy(loveMock.graphics.draw).was_called_with(_G.love.graphics.Image, -150, 50);
     end)
 
     it("Testing draw Function with negativ speed", function()
@@ -104,7 +111,7 @@ describe("Unit test for FishableObject.lua", function()
         locInstance:setXPosition(400);
         locInstance.speed = -300;
         locInstance:draw();
-        assert.spy(loveMock.graphics.draw).was_called_with("assets/deadFish.png", 400, 50);
+        assert.spy(loveMock.graphics.draw).was_called_with(_G.love.graphics.Image, 400, 50);
     end)
 
     it("Testing draw Function when caught", function()
@@ -216,5 +223,28 @@ describe("Unit test for FishableObject.lua", function()
     it("Testing setYPosition", function()
         locInstance:setYPosition(5);
         assert.are.same(5, locInstance.yPosition);
+    end)
+
+    it("Testing Animation", function()
+        local spyShiftImage = spy.on(Animate, "shiftImage");
+        local spyDraw = spy.on(Animate, "draw");
+        
+        love.filesystem.exists = function(...) return true; end;
+        local localHitbox = {
+            {
+                width = 64;
+                height = 25;
+                deltaXPos = 0;
+                deltaYPos = 20;
+            }
+        };
+        
+        local myInstance = testClass("deadFish", "assets/deadFish.png", 50, 30, 35, 50, 5, 64, 
+            localHitbox, 0.1, 0.2, 1, 0, _G.levMan);
+        
+        myInstance:draw();
+        assert.spy(spyDraw).was.called_with(myInstance.animation, myInstance.xPosition, myInstance.yPosition);
+        myInstance:update(0.05, 1);
+        assert.spy(spyShiftImage).was_called();
     end)
 end)
