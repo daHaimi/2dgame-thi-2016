@@ -212,4 +212,9 @@ describe("Unit test for FishableObject.lua", function()
         locInstance:update(1, 1);
         assert.are.same(91, locInstance.yPosition);
     end)
+
+    it("Testing setYPosition", function()
+        locInstance:setYPosition(5);
+        assert.are.same(5, locInstance.yPosition);
+    end)
 end)

@@ -203,4 +203,13 @@ describe("Unit test for SwarmFactory.lua", function()
         myInstance:createFallingLitter(1000, 200, 300);
         assert.are.same(myInstance.positionOfLastLitter, 1000);
     end)
+
+    it("Testing creatBubbles", function()
+        levMan.curLevel.getLevelName = function(...) return "sewers" end;
+        levMan.curLevel.getDirection = function(...) return 1 end;
+        local myInstance = testClass(require "src.data", levMan);
+        myInstance.positionOfLastBubbles = 0;
+        myInstance:createBubbles(0, 2, 1);
+        assert.is_true(#myInstance.createdBubbles > 0);
+    end)
 end)
