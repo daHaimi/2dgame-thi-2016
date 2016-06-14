@@ -267,9 +267,6 @@ function love.mousereleased(x, y, button)
         button = 'l';
     end
     Loveframes.mousereleased(x, y, button);
-    if love.system.getOS() == "Android" then
-        Loveframes.mousereleased(x, y, button);
-    end
     
     -- deactivate the god mode when you release the mouse
     if _gui:getCurrentState() == "InGame" then
