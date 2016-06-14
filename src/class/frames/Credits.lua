@@ -46,6 +46,7 @@ local Credits = Class {
         "Martin Lechner",
         "Daniel Plank",
         "Daniel Zistl",
+        "Manfred Möderl",
         " ",
         "Libs:",
         "hump, Matthias Richter",
