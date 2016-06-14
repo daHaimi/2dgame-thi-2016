@@ -17,8 +17,12 @@ function AchievementDisplay:create()
     self.background:SetImage(self.directory .. "AchievementDisplayBG.png");
 
     self.defaultText = Loveframes.Create("text");
-    self.defaultText:SetText("No unlocked achievements this round");
     self.defaultText:SetMaxWidth(self.background:GetWidth() - 40);
+end
+
+---Set the Language of the Text
+function AchievementDisplay:setLanguage(language)
+    self.defaultText:SetText(_G.data.languages[language].package.textNoNewAchievements);
 end
 
 --sets the visible of the display

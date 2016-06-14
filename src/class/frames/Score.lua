@@ -80,19 +80,16 @@ function Score:create()
     --adjust all elements on this frame
     self.elementsOnFrame.background.object:SetImage(self.directory .. "ScoreScreen.png");
 
-    self.elementsOnFrame.scoretext.object:SetText("Your Score:");
+    self.elementsOnFrame.scoretext.object:SetText(_G.data.languages[_G._persTable.config.language].package.textScore);
     self.elementsOnFrame.scoretext.x = 0.5 * self.width - 0.5 * self.elementsOnFrame.scoretext.object:GetWidth();
 
     self.elementsOnFrame.score.x = 0.5 * self.width - 30;
 
     self.elementsOnFrame.button_retry.object:SetImage(self.directory .. "Button.png")
     self.elementsOnFrame.button_retry.object:SizeToImage()
-    self.elementsOnFrame.button_retry.object:SetText("Retry");
 
     self.elementsOnFrame.button_backToMenu.object:SetImage(self.directory .. "Button.png")
     self.elementsOnFrame.button_backToMenu.object:SizeToImage()
-    self.elementsOnFrame.button_backToMenu.object:SetText("Back to Menu");
-
 
     --onclick events for all buttons
     self.elementsOnFrame.button_retry.object.OnClick = function(_)
@@ -104,6 +101,14 @@ function Score:create()
         _gui:getLevelManager():freeManagedObjects();
         _gui:changeFrame(_gui:getFrames().mainMenu);
     end
+end
+
+--- changes the language of this frame
+function Score:setLanguage(language)
+    self.elementsOnFrame.scoretext.object:SetText(_G.data.languages[language].package.textScore);
+    self.elementsOnFrame.button_retry.object:SetText(_G.data.languages[language].package.buttonRetry);
+    self.elementsOnFrame.button_backToMenu.object:SetText(_G.data.languages[language].package.buttonBTM);
+    self.elementsOnFrame.achievements.object:setLanguage(language);
 end
 
 --- shows the frame on screen

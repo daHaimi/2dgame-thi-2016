@@ -995,6 +995,8 @@ return {
                 textPrice = "Price: ";
                 textMoney = "Not enough Money!";
                 textBought = "Already bought";
+                buttonRetry = "Retry";
+                textNoNewAchievements = "No unlocked achievements this round";
                 --achievements
                 creditsRed = {
                     name = "Respect our Work";
@@ -1274,6 +1276,8 @@ return {
                 textPrice = "Preis: ";
                 textMoney = "Nicht genug Geld!";
                 textBought = "Already bought";
+                buttonRetry = "Neustarten";
+                textNoNewAchievements = "Keine neuen Errungenschaften";
                 getFirstObject = {
                     name = "Der erste Fang";
                     description = "Du hast den ersten Fang gemacht";

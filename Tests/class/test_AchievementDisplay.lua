@@ -3,7 +3,7 @@ _G.math.inf = 1 / 0
 
 testClass = require "src.class.AchievementDisplay"
 fakeElement = require "Tests.fakeLoveframes.fakeElement";
-
+Data = require "data";
 
 describe("Unit test for AchievementDisplay.lua", function()
     local locInstance;
@@ -12,6 +12,7 @@ describe("Unit test for AchievementDisplay.lua", function()
         _G.Loveframes = {
             Create = function(typeName) return fakeElement(typeName); end;
         };
+        _G.data = Data;
         _G._unlockedAchievements = {};
         _G._tmpTable = {
             unlockedAchievements = nil;
@@ -27,6 +28,7 @@ describe("Unit test for AchievementDisplay.lua", function()
 
     it("Testing create function", function()
         locInstance:create();
+        locInstance:setLanguage("english");
         assert.are.equal(locInstance.background.type, "image");
         assert.are.equal(locInstance.background.imagepath, "path/AchievementDisplayBG.png");
         assert.are.equal(locInstance.defaultText.type, "text");
