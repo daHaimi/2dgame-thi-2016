@@ -235,6 +235,28 @@ return {
                 }
             };
         };
+        sleepingCrocodile = {
+            name = "sleepingCrocodile";
+            image = "crocodile.png";
+            spriteSize = 128;
+            minSpeed = 0;
+            maxSpeed = 0;
+            value = 5;
+            animTimeoutMin = 0.8;
+            animTimeoutMax = 1;
+            minAmount = 3;
+            maxAmount = 4;
+            swarmHeight = 250;
+            enabled = true;
+            hitbox = {
+                {
+                    width = 128;
+                    height = 10;
+                    deltaXPos = 0;
+                    deltaYPos = 40;
+                }
+            };
+        };
         sleepingPill = {
             name = "sleepingPill";
             image = "pill.png";
@@ -272,6 +294,41 @@ return {
             spriteSize = 64;
             minSpeed = 4;
             maxSpeed = 6;
+            value = 50;
+            animTimeoutMin = 0.15;
+            animTimeoutMax = 0.17;
+            animType = "bounce";
+            minAmount = 1;
+            maxAmount = 2;
+            swarmHeight = 200;
+            enabled = true;
+            hitbox = {
+                {
+                    width = 62;
+                    height = 0;
+                    deltaXPos = 2;
+                    deltaYPos = 0;
+                };
+                {
+                    width = 15;
+                    height = 34;
+                    deltaXPos = 49;
+                    deltaYPos = 0;
+                };
+                {
+                    width = 46;
+                    height = 64;
+                    deltaXPos = 2;
+                    deltaYPos = 0;
+                }
+            };
+        };
+        crazySquirrel = {
+            name = "crazySquirrel";
+            image = "squirrel.png";
+            spriteSize = 64;
+            minSpeed = 6;
+            maxSpeed = 8;
             value = 50;
             animTimeoutMin = 0.15;
             animTimeoutMax = 0.17;
@@ -681,7 +738,21 @@ return {
         {
             allowedFishables = { "backpack"; "camera"; "bird"; "egg" };
             fishablesProbability = { 10; 20; 50; 100 };
-            maxSwarmHeight = 1200
+            maxSwarmHeight = 12000
+        }
+    };
+    swarmCrocos = {
+        {
+            allowedFishables = {"sleepingCrocodile" };
+            fishablesProbability = {100};
+            maxSwarmHeight = 9000
+        }
+    };   
+    crazySquirrels = {
+        {
+            allowedFishables = {"crazySquirrel"};
+            fishablesProbability = {100};
+            maxSwarmHeight = 9000
         }
     };
 

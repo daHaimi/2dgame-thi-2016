@@ -149,7 +149,9 @@ function Bait:capXPosition()
     local leftBound = 58;
     local rightBound = 422;
     if self.levMan:getCurLevel():getYPos() > self.winDim[2] * 0.2
-            and self.levMan:getCurLevel():getLevelName() == "sewers" then
+            and (self.levMan:getCurLevel():getLevelName() == "sewers" or 
+                self.levMan:getCurLevel():getLevelName() == "sewersEndless" or 
+                self.levMan:getCurLevel():getLevelName() == "sleepingCrocos") then
         local m = 142 / (self.winDim[2] * 0.2);
         leftBound = 58 + m * (self.levMan:getCurLevel():getYPos() - self.winDim[2] * 0.23);
         rightBound = 422 - m * (self.levMan:getCurLevel():getYPos() - self.winDim[2] * 0.23);
@@ -253,7 +255,9 @@ function Bait:draw()
     if self.levMan:getCurLevel():getGodModeStat() then
         Shaders:hueAjust(0.5);
     end
-    if self.levMan:getCurLevel():getLevelName() == "sewers" then
+    if self.levMan:getCurLevel():getLevelName() == "sewers" or 
+    self.levMan:getCurLevel():getLevelName() == "sewers" or
+    self.levMan:getCurLevel():getLevelName() == "sleepingCrocos" then
         self:drawLineDiagonal();
     else
         self:drawLineStraight();

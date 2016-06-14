@@ -164,27 +164,51 @@ describe("Test unit test suite", function()
 
         _G.levelTestStub();
 
-        locInstance = testClass("sewers", "assets/testbg.png", { 512, 256 }, 1, _G.levMan);
+        locInstance = testClass("sewers", "assets/testbg.png", { 512, 256 }, 1, "normal", _G.levMan);
     end)
 
     it("Testing Constructor", function()
-        local myInstance = testClass("sewers", "assets/testbg.png", { 512, 256 }, 1, _G.levMan);
+        local myInstance = testClass("sewers", "assets/testbg.png", { 512, 256 }, 1, "normal", _G.levMan);
         local lb = myInstance.lowerBoarder;
         local mbb1 = myInstance.mapBreakthroughBonus1;
         local mbb2 = myInstance.mapBreakthroughBonus2;
         assert.are.same(locInstance, myInstance);
 
         _persTable.upgrades.mapBreakthrough1 = true;
-        myInstance = testClass("sewers", "assets/testbg.png", { 512, 256 }, 1, _G.levMan);
+        myInstance = testClass("sewers", "assets/testbg.png", { 512, 256 }, 1, "normal", _G.levMan);
         assert.are.same(lb + mbb1, myInstance.lowerBoarder);
 
         _persTable.upgrades.mapBreakthrough2 = true;
-        myInstance = testClass("sewers", "assets/testbg.png", { 512, 256 }, 1, _G.levMan);
+        myInstance = testClass("sewers", "assets/testbg.png", { 512, 256 }, 1, "normal", _G.levMan);
         assert.are.same(lb + mbb1 + mbb2, myInstance.lowerBoarder);
     end)
 
+    it("Testing Constructor for sewersEndless", function ()
+        local myInstance1 = testClass("sewersEndless", "assets/testbg.png", { 512, 256 }, 1, "endless", _G.levMan);
+        local myInstance2 = testClass("sewersEndless", "assets/testbg.png", { 512, 256 }, 1, "endless", _G.levMan);
+        assert.are.same(myInstance1, myInstance2);
+    end)
+
+    it("Testing Constructor for canyonEndless", function ()
+        local myInstance1 = testClass("canyonEndless", "assets/testbg.png", { 512, 256 }, 1, "endless", _G.levMan);
+        local myInstance2 = testClass("canyonEndless", "assets/testbg.png", { 512, 256 }, 1, "endless", _G.levMan);
+        assert.are.same(myInstance1, myInstance2);
+    end)
+
+    it("Testing Constructor for sleepingCrocos", function ()
+        local myInstance1 = testClass("sleepingCrocos", "assets/testbg.png", { 512, 256 }, 1, "sleepingCrocos", _G.levMan);
+        local myInstance2 = testClass("sleepingCrocos", "assets/testbg.png", { 512, 256 }, 1, "sleepingCrocos", _G.levMan);
+        assert.are.same(myInstance1, myInstance2);
+    end)
+
+    it("Testing Constructor for crazySquirrels", function ()
+        local myInstance1 = testClass("crazySquirrels", "assets/testbg.png", { 512, 256 }, 1, "crazySquirrels", _G.levMan);
+        local myInstance2 = testClass("crazySquirrels", "assets/testbg.png", { 512, 256 }, 1, "crazySquirrels", _G.levMan);
+        assert.are.same(myInstance1, myInstance2);
+    end)
+
     it("Testing destructLevel", function()
-        local testInstance = testClass("sewers", "assets/testbg.png", { 512, 256 }, 1, _G.levMan);
+        local testInstance = testClass("sewers", "assets/testbg.png", { 512, 256 }, 1, "normal", _G.levMan);
         testInstance:destructLevel();
 
         assert.are.same(testInstance.levMan, nil);
@@ -596,13 +620,13 @@ describe("Test unit test suite", function()
 
     it("testing Constructor for canyon", function()
         local loveMock = mock(_G.love.graphics, true);
-        local myTestInstance = testClass("canyon", "assets/testbg.png", { 512, 256 }, 1, _G.levMan);
+        local myTestInstance = testClass("canyon", "assets/testbg.png", { 512, 256 }, 1, "normal", _G.levMan);
         assert.spy(loveMock.newImage).was.called_with("assets/canyon_right.png");
     end)
 
     it("testing Update for canyon", function()
         local mock = mock(levMan.curSwarmFac, true);
-        local myTestInstance = testClass("canyon", "assets/testbg.png", { 512, 256 }, 1, _G.levMan);
+        local myTestInstance = testClass("canyon", "assets/testbg.png", { 512, 256 }, 1, "normal", _G.levMan);
         local bait = {
             update = function(...) end;
             getSpeed = function(...) return 200 end;
@@ -625,7 +649,7 @@ describe("Test unit test suite", function()
     end)
 
     it("testing startanimation for canyon 1", function()
-        local myTestInstance = testClass("canyon", "assets/testbg.png", { 512, 256 }, 1, _G.levMan);
+        local myTestInstance = testClass("canyon", "assets/testbg.png", { 512, 256 }, 1, "normal", _G.levMan);
         myTestInstance.hamsterYPos = 0;
         myTestInstance.animationStart = true;
         myTestInstance.animationStartFinished = false;
@@ -634,7 +658,7 @@ describe("Test unit test suite", function()
     end)
 
     it("testing startanimation for canyon 2", function()
-        local myTestInstance = testClass("canyon", "assets/testbg.png", { 512, 256 }, 1, _G.levMan);
+        local myTestInstance = testClass("canyon", "assets/testbg.png", { 512, 256 }, 1, "normal", _G.levMan);
         myTestInstance.hamsterYPos = 1000;
         myTestInstance.animationStart = true;
         myTestInstance.animationStartFinished = false;
@@ -643,7 +667,7 @@ describe("Test unit test suite", function()
     end)
 
     it("Testing doEndAnimationMovement for canyon", function()
-        local myTestInstance = testClass("canyon", "assets/testbg.png", { 512, 256 }, 1, _G.levMan);
+        local myTestInstance = testClass("canyon", "assets/testbg.png", { 512, 256 }, 1, "normal", _G.levMan);
         myTestInstance.hamsterYPos = 1000;
         myTestInstance.levelFinished = true;
         myTestInstance:doEndAnimationMovement(_G.levMan.getCurPlayer(), 0.05);
