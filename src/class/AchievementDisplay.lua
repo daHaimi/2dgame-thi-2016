@@ -6,6 +6,7 @@ local AchievementDisplay = Class {
         self.defaultText = nil;
         self.unlockedAchievements = {};
         self.directory = directory;
+        self.maxAchievements = 3;
         self:create();
     end;
 };
@@ -16,7 +17,12 @@ function AchievementDisplay:create()
     self.background:SetImage(self.directory .. "AchievementDisplayBG.png");
 
     self.defaultText = Loveframes.Create("text");
-    self.defaultText:SetText("No unlocked achievements this round");
+    self.defaultText:SetMaxWidth(self.background:GetWidth() - 40);
+end
+
+---Set the Language of the Text
+function AchievementDisplay:setLanguage(language)
+    self.defaultText:SetText(_G.data.languages[language].package.textNoNewAchievements);
 end
 
 --sets the visible of the display
@@ -24,11 +30,15 @@ function AchievementDisplay:SetVisible(visible)
     if visible == true then
         --look for new achievements
         if _G._unlockedAchievements[1] ~= nil then
+            local amountOfShownAchievements = 1;
             --new achievements
             for k, v in ipairs(_G._unlockedAchievements) do
-                local image = Loveframes.Create("image");
-                image:SetImage(self.directory .. v.image_unlock);
-                self.unlockedAchievements[k] = image;
+                if amountOfShownAchievements < self.maxAchievements then
+                    local image = Loveframes.Create("image");
+                    image:SetImage(self.directory .. v.image_unlock);
+                    self.unlockedAchievements[k] = image;
+                    amountOfShownAchievements = amountOfShownAchievements + 1;
+                end
             end
             _G._unlockedAchievements = {};
         else

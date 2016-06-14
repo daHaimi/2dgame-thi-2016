@@ -25,10 +25,16 @@ local SwarmFactory = Class {
         self.addedHeights = self.levMan:getCurLevel().winDim[2] * 0.75;
 
         self.fishableObjects = data.fishableObjects;
-        if self.levMan:getCurLevel():getLevelName() == "sewers" then
+        if self.levMan:getCurLevel():getLevelName() == "sewers" or 
+            self.levMan:getCurLevel():getLevelName() == "sewersEndless" then
             self.actualSwarm = data.swarmsSewer;
-        elseif self.levMan:getCurLevel():getLevelName() == "canyon" then
+        elseif  self.levMan:getCurLevel():getLevelName() == "canyon" or  
+            self.levMan:getCurLevel():getLevelName() == "canyonEndless" then
             self.actualSwarm = data.swarmsCanyon;
+        elseif self.levMan:getCurLevel():getLevelName() == "sleepingCrocos" then
+            self.actualSwarm = data.swarmCrocos;
+        elseif self.levMan:getCurLevel():getLevelName() == "crazySquirrels" then
+            self.actualSwarm = data.crazySquirrels;
         end
 
         for k, _ in pairs(self.fishableObjects) do

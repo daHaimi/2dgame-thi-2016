@@ -56,6 +56,34 @@ describe("Unit test for SwarmFactory.lua", function()
         assert.are.same(myInstance.actualSwarm, data.swarmsCanyon);
     end)
 
+    it("Testing constructor for canyonEndless", function()
+        levMan.curLevel.getLevelName = function(...) return "canyonEndless" end;
+        data = require "src.data";
+        local myInstance = testClass(data, levMan);
+        assert.are.same(myInstance.actualSwarm, data.swarmsCanyon);
+    end)
+
+    it("Testing constructor for sewerEndless", function()
+        levMan.curLevel.getLevelName = function(...) return "sewersEndless" end;
+        data = require "src.data";
+        local myInstance = testClass(data, levMan);
+        assert.are.same(myInstance.actualSwarm, data.swarmsSewer);
+    end)
+
+    it("Testing constructor for crazySquirrels", function()
+        levMan.curLevel.getLevelName = function(...) return "crazySquirrels" end;
+        data = require "src.data";
+        local myInstance = testClass(data, levMan);
+        assert.are.same(myInstance.actualSwarm, data.crazySquirrels);
+    end)
+
+    it("Testing constructor for sleepingCrocos", function()
+        levMan.curLevel.getLevelName = function(...) return "sleepingCrocos" end;
+        data = require "src.data";
+        local myInstance = testClass(data, levMan);
+        assert.are.same(myInstance.actualSwarm, data.swarmCrocos);
+    end)
+
     it("Testing destructSF", function()
         local testInstance = testClass(require "src.data", levMan);
         testInstance:destructSF();

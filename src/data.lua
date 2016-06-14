@@ -235,6 +235,28 @@ return {
                 }
             };
         };
+        sleepingCrocodile = {
+            name = "sleepingCrocodile";
+            image = "crocodile.png";
+            spriteSize = 128;
+            minSpeed = 0;
+            maxSpeed = 0;
+            value = 5;
+            animTimeoutMin = 0.8;
+            animTimeoutMax = 1;
+            minAmount = 3;
+            maxAmount = 4;
+            swarmHeight = 250;
+            enabled = true;
+            hitbox = {
+                {
+                    width = 128;
+                    height = 10;
+                    deltaXPos = 0;
+                    deltaYPos = 40;
+                }
+            };
+        };
         sleepingPill = {
             name = "sleepingPill";
             image = "pill.png";
@@ -272,6 +294,41 @@ return {
             spriteSize = 64;
             minSpeed = 4;
             maxSpeed = 6;
+            value = 50;
+            animTimeoutMin = 0.15;
+            animTimeoutMax = 0.17;
+            animType = "bounce";
+            minAmount = 1;
+            maxAmount = 2;
+            swarmHeight = 200;
+            enabled = true;
+            hitbox = {
+                {
+                    width = 62;
+                    height = 0;
+                    deltaXPos = 2;
+                    deltaYPos = 0;
+                };
+                {
+                    width = 15;
+                    height = 34;
+                    deltaXPos = 49;
+                    deltaYPos = 0;
+                };
+                {
+                    width = 46;
+                    height = 64;
+                    deltaXPos = 2;
+                    deltaYPos = 0;
+                }
+            };
+        };
+        crazySquirrel = {
+            name = "crazySquirrel";
+            image = "squirrel.png";
+            spriteSize = 64;
+            minSpeed = 6;
+            maxSpeed = 8;
             value = 50;
             animTimeoutMin = 0.15;
             animTimeoutMax = 0.17;
@@ -652,8 +709,8 @@ return {
         },
         {
             allowedFishables = { "ring"; "shoe"; "snake"; "crocodile" };
-            fishablesProbability = { 5; 30; 55; 100 };
-            maxSwarmHeight = 9000
+            fishablesProbability = { 1; 30; 55; 100 };
+            maxSwarmHeight = 7000
         }
     };
     swarmsCanyon = {
@@ -679,9 +736,23 @@ return {
             maxSwarmHeight = 9000
         },
         {
-            allowedFishables = { "backpack"; "camera"; "bird"; "egg" };
-            fishablesProbability = { 10; 20; 50; 100 };
-            maxSwarmHeight = 1200
+            allowedFishables = { "ufo"; "balloon"; "bird"; "egg" };
+            fishablesProbability = { 1; 20; 50; 100 };
+            maxSwarmHeight = 10000
+        }
+    };
+    swarmCrocos = {
+        {
+            allowedFishables = {"sleepingCrocodile" };
+            fishablesProbability = {100};
+            maxSwarmHeight = 9000
+        }
+    };   
+    crazySquirrels = {
+        {
+            allowedFishables = {"crazySquirrel"};
+            fishablesProbability = {100};
+            maxSwarmHeight = 9000
         }
     };
 
@@ -925,6 +996,8 @@ return {
                 textPrice = "Price: ";
                 textMoney = "Not enough Money!";
                 textBought = "Already bought";
+                buttonRetry = "Retry";
+                textNoNewAchievements = "No unlocked achievements this round";
                 --credits
                 credits = {
                     staff = "Staff:";
@@ -1134,55 +1207,55 @@ return {
                 --upgrades
                 oneMoreLife = {
                     name = "One more life"; --Name shown on the Textfield on the shop
-                    description = "Upgrade to two lifes"; --shown on the shop
+                    description = "Just in case you lose your first life."; --shown on the shop
                 };
                 twoMoreLife = {
-                    name = "Two more lifes";
-                    description = "Upgrade to three lifes";
+                    name = "Two more life";
+                    description = "One, two, three, fo... Ah! No! Just three lives now. Too bad!";
                 };
                 threeMoreLife = {
-                    name = "Three more lifes";
-                    description = "Upgrade to four lifes";
+                    name = "Three more life";
+                    description = "Wow, with four lives you are almost a cat now!";
                 };
                 firstSpeedUp = {
-                    name = "1st speed upgrade";
-                    description = "Increase your speed";
+                    name = "1st Speed Update";
+                    description = "Speed up that S.H.I.T!";
                 };
                 secondSpeedUp = {
-                    name = "2nd speed upgrade";
-                    description = "Increase your speed even more";
+                    name = "2nd Speed Update";
+                    description = "Still not fast enough? Then try this double S.H.I.T-Speed!";
                 };
                 moneyMultiplier = {
-                    name = "Money multiplier";
-                    description = "The value of your haul will be doubled";
+                    name = "Money Multiplier";
+                    description = "It's good to have money. It's better to have twice as much money.";
                 };
                 godMode = {
-                    name = "God mode";
-                    description = "Unlock god mode";
+                    name = "God Mode";
+                    description = "Be Go(o)d. Don't give a S.H.I.T about anything";
                 };
                 mapBreakthrough1 = {
-                    name = "Get out of my way!";
-                    description = "Smash that barrier";
+                    name = "Let me go further!";
+                    description = "Blow this barrier up! Violence IS a solution.";
                 };
                 mapBreakthrough2 = {
-                    name = "Not again";
-                    description = "Smash another barrier";
+                    name = "You shall pass";
+                    description = "This bomb can take you places.";
                 };
                 moreFuel1 = {
                     name = "Need more Fuel?";
-                    description = "Upgrade your fuel to 1600";
+                    description = "Consider shifting the gear. Upgrade your fuel to 1600";
                 };
                 moreFuel2 = {
                     name = "Need more Fuel?";
-                    description = "Upgrade your fuel to 2400";
+                    description = "Better get yourself a tank wagon. Upgrade your fuel to 2400";
                 };
                 firstPermanentMoneyMult = {
-                    name = "Trade novice";
-                    description = "Earn 20% more money";
+                    name = "Negotiation Novice";
+                    description = "'Convince' the object to give you 20% more money.";
                 };
                 secondPermanentMoneyMult = {
-                    name = "Trade expert";
-                    description = "Earn 25% more money";
+                    name = "Playground Bully";
+                    description = "Take 25% more money from your victims.";
                 };
             };
         };
@@ -1211,6 +1284,8 @@ return {
                 textPrice = "Preis: ";
                 textMoney = "Nicht genug Geld!";
                 textBought = "Already bought";
+                buttonRetry = "Neustarten";
+                textNoNewAchievements = "Keine neuen Errungenschaften";
                 --credits
                 credits = {
                     staff = "Mitwirkende:";

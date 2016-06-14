@@ -43,6 +43,7 @@ local Credits = Class {
         "Baris Kutlu",
         "Burak Kutlu",
         "Martin Lechner",
+        "Manfred Möderl",
         "Daniel Plank",
         "Daniel Zistl",
     };

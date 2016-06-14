@@ -20,7 +20,7 @@ local FishableObject = Class {
     spriteSize, hitbox, animTimeoutMin, animTimeoutMax, animType, fallSpeed, levMan)
         self.name = name;
         self.image = love.graphics.newImage("assets/" .. imageSrc);
-        self.xPosition = math.random(spriteSize + 26, levMan:getCurLevel().winDim[1] - 58 - self.spriteSize);
+        self.xPosition = math.random(26, levMan:getCurLevel().winDim[1] - 58 - self.spriteSize);
         -- 58 = 26 (width of level wall) + 32 (0.5 * width of hamster)
         if fallSpeed > 0 then
             self.yPosition = -math.random(100);
@@ -153,7 +153,7 @@ function FishableObject:update(dt, speedMulitplicator)
     else
         self.outOfArea = false;
     end
-
+    
     if self.destroyed then
         if math.abs(self.yPosition - self.caughtAt) < 100
                 and self.levMan:getCurLevel():getDirection() == 1 then

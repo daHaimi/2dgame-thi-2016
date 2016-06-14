@@ -97,6 +97,8 @@ function InGame:update()
     --update Fuelbar
     if _G._tmpTable.roundFuel >= 0 then
         self.elementsOnFrame.fuelBar.object:SetX((math.ceil((100 / 2400) * _G._tmpTable.roundFuel) - 90) * self.scaleFactor);
+    else
+        self.elementsOnFrame.fuelBar.object:SetX(-90 * self.scaleFactor)
     end
     local depth = math.ceil(_G._tmpTable.currentDepth / 300);
     if depth <= 0 then

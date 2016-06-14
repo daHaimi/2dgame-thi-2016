@@ -51,12 +51,12 @@ function Level:create()
         buttonCanyon = {
             object = Loveframes.Create("imagebutton");
             x = 0.25 * self.width;
-            y = self.height - 3.5 * self.buttonHeight;
+            y = self.height - 3.6 * self.buttonHeight;
         },
         buttonBack = {
             object = Loveframes.Create("imagebutton");
             x = 0.25 * self.width;
-            y = self.height - self.buttonHeight;
+            y = self.height - self.buttonHeight - self.buttonOffset;
         }
     };
 
@@ -91,7 +91,7 @@ function Level:create()
         end
     else
         self.elementsOnFrame.buttonCanyon.object.OnClick = function(_)
-            _gui:getLevelManager():newLevel(_gui:getLevelManager():getLevelPropMapByName("canyon"), _G.data);
+            _gui:getLevelManager():newLevel(_gui:getLevelManager():getLevelPropMapByName("crazySquirrels"), _G.data);
             _gui:changeFrame(_gui:getFrames().inGame);
         end
     end
