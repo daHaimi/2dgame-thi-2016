@@ -268,7 +268,6 @@ function love.mousereleased(x, y, button)
     end
     Loveframes.mousereleased(x, y, button);
     if love.system.getOS() == "Android" then
-        Loveframes.mousepressed(x, y, button);
         Loveframes.mousereleased(x, y, button);
     end
     
