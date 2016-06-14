@@ -194,6 +194,18 @@ describe("Unit test for Bait.lua", function()
         };
         myInstance:update(0.1);
         assert.are.same(1.9, myInstance.sleepingPillDuration);
+    end)    
+
+    it("Test show Mouth", function()
+        local myInstance = testClass(locWinDim, levMan);
+        myInstance.image = locImageStub;
+        myInstance.timeShowMouth = 5;
+        myInstance.imageCheeks = locImageStub;
+        myInstance.imageCheeks = {
+            getDimensions = function(...) end;
+        };
+        myInstance:update(4);
+        assert.are.same(1, myInstance.timeShowMouth);
     end)
 
     it("Test getGoldenRule", function()
@@ -437,6 +449,7 @@ describe("Unit test for Bait.lua", function()
         local loveGraphicsMock = mock(myInstance.image, true);
 
         myInstance.levMan.curLevel.getGodModeStat = function() return 0; end;
+        myInstance.timeShowMouth = 0.1;
         myInstance.xPos = 0;
         myInstance.yPos = 0;
 
@@ -546,6 +559,7 @@ describe("Unit test for Bait.lua", function()
         _G._persTable.upgrades.moreLife = 0;
         _G._persTable.upgrades.oneMoreLife = false;
         myInstance:collisionDetected(fishable, 1);
+        assert.are.same(0.1, myInstance.timeShowMouth);
         assert.are.same(0, myInstance.numberOfHits);
     end)
 
