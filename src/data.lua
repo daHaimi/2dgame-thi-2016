@@ -738,7 +738,7 @@ return {
         {
             allowedFishables = { "ufo"; "balloon"; "bird"; "egg" };
             fishablesProbability = { 1; 20; 50; 100 };
-            maxSwarmHeight = 1000
+            maxSwarmHeight = 10000
         }
     };
     swarmCrocos = {
