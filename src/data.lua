@@ -709,8 +709,8 @@ return {
         },
         {
             allowedFishables = { "ring"; "shoe"; "snake"; "crocodile" };
-            fishablesProbability = { 5; 30; 55; 100 };
-            maxSwarmHeight = 9000
+            fishablesProbability = { 1; 30; 55; 100 };
+            maxSwarmHeight = 7000
         }
     };
     swarmsCanyon = {
@@ -736,9 +736,9 @@ return {
             maxSwarmHeight = 9000
         },
         {
-            allowedFishables = { "backpack"; "camera"; "bird"; "egg" };
-            fishablesProbability = { 10; 20; 50; 100 };
-            maxSwarmHeight = 12000
+            allowedFishables = { "ufo"; "balloon"; "bird"; "egg" };
+            fishablesProbability = { 1; 20; 50; 100 };
+            maxSwarmHeight = 1000
         }
     };
     swarmCrocos = {
