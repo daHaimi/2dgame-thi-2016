@@ -30,6 +30,7 @@ local Bait = Class {
         self.image = nil;
         self.imageCheeks = nil;
         self.quadCheeks = nil;
+        self.timeShowMouth = 0;
         self.pullIn = false;
 
 
@@ -40,6 +41,7 @@ local Bait = Class {
         local img = love.graphics.newImage("assets/sprites/sprite_hamster.png");
         self.imgUp = love.graphics.newImage("assets/sprites/sprite_hamster_up.png");
         self.imageCheeks = love.graphics.newImage("assets/sprites/sprite_cheeks.png");
+        self.imageMouth = love.graphics.newImage("assets/nomnom.png");
         self.line = love.graphics.newImage("assets/line.png");
         if img == 0 then
             self.image = nil;
@@ -118,6 +120,10 @@ function Bait:update(dt)
         elseif self.hitFishable > 5 then
             self.quadCheeks = love.graphics.newQuad(0, 0, dimX / 3, dimY, dimX, dimY);
         end
+    end
+    
+    if self.timeShowMouth > 0 then
+        self.timeShowMouth = self.timeShowMouth - dt;
     end
 
     -- calculate modifier for the golden rule
@@ -214,6 +220,7 @@ end
 -- @param fishable the fishable object hit
 -- @param index index of the fishable object hit
 function Bait:collisionDetected(fishable, index)
+    self.timeShowMouth = 0.3;
     -- sleeping Pill hit
     if fishable:getName() == "sleepingPill" then
         self:sleepingPillHit();
@@ -263,6 +270,9 @@ function Bait:draw()
         self:drawLineStraight();
     end
     self.image:draw(self.xPos - 32, self.yPos - 39); -- FIXME magic number
+    if self.timeShowMouth > 0 then
+        love.graphics.draw(self.imageMouth, self.xPos - 32, self.yPos - 39);
+    end
     if self.quadCheeks ~= nil then
         love.graphics.draw(self.imageCheeks, self.quadCheeks, self.xPos - 32, self.yPos - 39);
     end
