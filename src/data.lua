@@ -1197,55 +1197,55 @@ return {
                 --upgrades
                 oneMoreLife = {
                     name = "One more life"; --Name shown on the Textfield on the shop
-                    description = "add one more life to your healthbar."; --shown on the shop
+                    description = "Just in case you lose your first life."; --shown on the shop
                 };
                 twoMoreLife = {
                     name = "Two more life";
-                    description = "add a third life to your healthbar.";
+                    description = "One, two, three, fo... Ah! No! Just three lives now. Too bad!";
                 };
                 threeMoreLife = {
                     name = "Three more life";
-                    description = "upgrade your healthbar up to four lifes.";
+                    description = "Wow, with four lives you are almost a cat now!";
                 };
                 firstSpeedUp = {
                     name = "1st Speed Update";
-                    description = "raise your speed.";
+                    description = "Speed up that S.H.I.T!";
                 };
                 secondSpeedUp = {
                     name = "2nd Speed Update";
-                    description = "raise your speed again.";
+                    description = "Still not fast enough? Then try this double S.H.I.T-Speed!";
                 };
                 moneyMultiplier = {
                     name = "Money Multiplier";
-                    description = "the value of your caught object are doubled";
+                    description = "It's good to have money. It's better to have twice as much money.";
                 };
                 godMode = {
                     name = "God Mode";
-                    description = "unlock godMode";
+                    description = "Be Go(o)d. Don't give a S.H.I.T about anything";
                 };
                 mapBreakthrough1 = {
-                    name = "Who put this in my way?";
-                    description = "Smash that barrier";
+                    name = "Let me go further!";
+                    description = "Blow this barrier up! Violence IS a solution.";
                 };
                 mapBreakthrough2 = {
-                    name = "Not again";
-                    description = "Smash another barrier";
+                    name = "You shall pass";
+                    description = "This bomb can take you places.";
                 };
                 moreFuel1 = {
                     name = "Need more Fuel?";
-                    description = "Upgrade your Fuel to 1600";
+                    description = "Consider shifting the gear. Upgrade your fuel to 1600";
                 };
                 moreFuel2 = {
                     name = "Need more Fuel?";
-                    description = "Upgrade your Fuel to 2400";
+                    description = "Better get yourself a tank wagon. Upgrade your fuel to 2400";
                 };
                 firstPermanentMoneyMult = {
                     name = "Negotiation Novice";
-                    description = "earn 20% more money";
+                    description = "'Convince' the object to give you 20% more money.";
                 };
                 secondPermanentMoneyMult = {
-                    name = "Negotiation Expert";
-                    description = "earn 25% more money";
+                    name = "Playground Bully";
+                    description = "Take 25% more money from your victims.";
                 };
             };
         };

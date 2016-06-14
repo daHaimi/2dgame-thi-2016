@@ -36,7 +36,7 @@ _G._unlockedAchievements = {};
 _G.myfont = love.graphics.newFont(30);
 
 -- Game Title
-love.window.setTitle("Simon Hamsters insane trip");
+love.window.setTitle("Simon Hamster's Insane Trip");
 
 --- Local variables
 local curLevel;
