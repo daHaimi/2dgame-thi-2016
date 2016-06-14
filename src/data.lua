@@ -916,14 +916,22 @@ return {
                 textMusic = "In Game Music:";
                 textBGM = "Background Music:";
                 buttonRestart = "Restart";
-                buttonBTG = "Back to game";
+                buttonBTG = "Continue";
                 buttonBTM = "Back to menu";
                 textScore = "Your Score:";
+                buttonTA = "Try again";
                 textStart = "Click to start!";
                 buttonChangeLevel = "Change level";
                 textPrice = "Price: ";
                 textMoney = "Not enough Money!";
                 textBought = "Already bought";
+                --credits
+                credits = {
+                    staff = "Staff:";
+                    trans = "Translation:";
+                    libs = "Libs:";
+                    noHWH = "No hamsters were harmed!";
+                };
                 --achievements
                 creditsRed = {
                     name = "Respect our Work";
@@ -934,80 +942,80 @@ return {
                     description = "You caught your first object!";
                 };
                 allLevelBoardersPassed = {
-                    name = "The great breakthrough";
-                    description = "Pass all boarders in a level";
+                    name = "The breakthrough";
+                    description = "Pass all borders within a level";
                 };
                 nothingCaught = {
                     name = "Misadventure";
-                    description = "Don't catch one thing";
+                    description = "You didn't catch a single thing";
                 };
                 allPillsAtLeastOnce = {
                     name = "Addict";
                     description = "Caught every type of pills";
                 };
                 onlyNegativeFishesCaught = {
-                    name = "Was that on purpose?";
+                    name = "Coincidence?";
                     description = "Caught only negative objects";
                 };
                 firstBorderRemoved = {
-                    name = "Out of my way";
-                    description = "Now I can dive further";
+                    name = "Get out of my way";
+                    description = "The treasury can be continued";
                 };
                 gFishCaugtTotal = {
-                    name = "Godlike Fisher";
-                    description = "500 Fishes Total";
+                    name = "God of fishing";
+                    description = "500 fish in total";
                 };
                 sFishCaugtTotal = {
-                    name = "Master Fisher";
-                    description = "200 Fishes Total";
+                    name = "Master of fishing";
+                    description = "200 fish total";
                 };
                 bFishCaugtTotal = {
-                    name = "Apprentice Fisher";
-                    description = "50 Fishes Total";
+                    name = "Fishing trainee";
+                    description = "50 fish in total";
                 };
                 shoppingQueen = {
-                    name = "Shopping Queen";
-                    description = "You bought all Items in the Shop";
+                    name = "Shopping queen";
+                    description = "You bought all items in the shop";
                 };
                 negativCoins = {
-                    name = "You're doing it wrong!";
-                    description = "-200 in one Round ... noob";
+                    name = "Oh no!";
+                    description = "-200 coins in one round ... noob";
                 };
                 gMoneyEarnedTotal = {
                     name = "OVER 9000!";
-                    description = "Earned 9000 Coins Total";
+                    description = "You have earned 9000 coins in total";
                 };
                 sMoneyEarnedTotal = {
-                    name = "Rich Boy";
-                    description = "5000 Coins Total";
+                    name = "Rich boy";
+                    description = "5000 coins in total";
                 };
                 bMoneyEarnedTotal = {
-                    name = "slumdog millionaire";
-                    description = "2000 Coins Total";
+                    name = "Slumdog millionaire";
+                    description = "2000 coins in total";
                 };
                 goldCoinsOneRound = {
                     name = "Amazing!";
-                    description = "1000 Coins in one Round o.O";
+                    description = "Earn 1000 coins in one round o.O";
                 };
                 silverCoinsOneRound = {
-                    name = "Your getting better ;)";
-                    description = "600 Coins in one Round";
+                    name = "Your getting better";
+                    description = "Earn 600 coins in one round";
                 };
                 bronzeCoinsOneRound = {
                     name = "200";
-                    description = "200 Coins in one Round";
+                    description = "Earn 200 coins in one round";
                 };
                 bronzeCaughtOneRound = {
-                    name = "Nice catch!";
-                    description = "Caught more than 10 fishes in a single Round";
+                    name = "Good haul!";
+                    description = "Caught more than 10 fish in a single round";
                 };
                 silverCaughtOneRound = {
-                    name = "Nicer catch!";
-                    description = "Caught more than 20 fishes in a single Round";
+                    name = "Better haul!";
+                    description = "Caught more than 20 fish in a single round";
                 };
                 goldCaughtOneRound = {
-                    name = "Nicesest catch!";
-                    description = "Caught more than 30 fishes in a single Round";
+                    name = "Best haul!";
+                    description = "Caught more than 30 fish in a single round";
                 };
                 secondStart = {
                     name = "Welcome again!";
@@ -1015,19 +1023,19 @@ return {
                 };
                 caughtTwoBoots = {
                     name = "One for each foot";
-                    description = "You've got two almost new shoes. At least they used to be new before somebody flushed them down";
+                    description = "Your new shoes aren't really that new anymore...";
                 };
                 failedStart = {
-                    name = "Failed from the beginning";
-                    description = "Gratulation! You failed to start the game";
+                    name = "Complete failure";
+                    description = "Congratulations! You failed to start the game";
                 };
 
                 playedTime = {
-                    name = "Play Time";
-                    description = "Congratulations! You played over 2 hours";
+                    name = "Play time";
+                    description = "Congratulations! You played over two hours";
                 };
                 rageQuit = {
-                    name = "Rage Quit";
+                    name = "Rage quit";
                     description = "Quit the game after a short distance";
                 };
                 getFirstObject = {
@@ -1037,19 +1045,19 @@ return {
                 --objects
                 nemo = {
                     name = "Nemo";
-                    description = "Seems like you have found nemo";
+                    description = "Congratulations! You have found nemo!";
                 };
                 turtle = {
                     name = "Turtle";
-                    description = "Its house is his shell";
+                    description = "Its house is its shell";
                 };
                 rat = {
-                    name = "rat";
+                    name = "Rat";
                     description = "Easy to attract with cheese";
                 };
                 deadFish = {
-                    name = "Dead Fish";
-                    description = "It was a good fish throughout his whole life";
+                    name = "Dead fish";
+                    description = "It was a good fish throughout its whole life";
                 };
                 angler = {
                     name = "Angler";
@@ -1069,15 +1077,15 @@ return {
                 };
                 snake = {
                     name = "Snake";
-                    description = "(T)his is a really dangerous snake";
+                    description = "This is a really dangerous snake";
                 };
                 crocodile = {
                     name = "Crocodile";
-                    description = "He just wants to cuddle; I promise";
+                    description = "He just wants to cuddle, I promise!";
                 };
                 sleepingPill = {
-                    name = "Sleeping Pill";
-                    description = "Makes sea dwellers drowsy";
+                    name = "Sleeping pill";
+                    description = "Makes your haul drowsy";
                 };
                 squirrel = {
                     name = "Squirrel";
@@ -1089,7 +1097,7 @@ return {
                 };
                 drink = {
                     name = "Drink";
-                    description = "Thank god it is sealed";
+                    description = "Don't spill it!";
                 };
                 egg = {
                     name = "Egg";
@@ -1097,63 +1105,63 @@ return {
                 };
                 camera = {
                     name = "Camera";
-                    description = "Smile; you are getting photographed";
+                    description = "Say cheeeeese!";
                 };
                 canyonSnake = {
-                    name = "Canyon Snake";
+                    name = "Canyon snake";
                     description = "Wow; it managed to catch its own tail";
                 };
                 cactus = {
                     name = "Cactus";
-                    description = "Thinking about giving it a hug?";
+                    description = "Do you want to hug it?";
                 };
                 leaf = {
                     name = "Leaf";
-                    description = "Leaf it right here please";
+                    description = "Leave it right here please";
                 };
                 bird = {
                     name = "Bird";
-                    description = "It is literally free like a bird";
+                    description = "Free like a bird";
                 };
                 balloon = {
                     name = "Ballon";
-                    description = "Let it go like your dreams";
+                    description = "Let it touch the sky";
                 };
                 ufo = {
                     name = "Ufo";
-                    description = "Wanna get examined?";
+                    description = "Wanna be our guinea pig?";
                 };
                 --upgrades
                 oneMoreLife = {
                     name = "One more life"; --Name shown on the Textfield on the shop
-                    description = "add one more life to your healthbar."; --shown on the shop
+                    description = "Upgrade to two lifes"; --shown on the shop
                 };
                 twoMoreLife = {
-                    name = "Two more life";
-                    description = "add a third life to your healthbar.";
+                    name = "Two more lifes";
+                    description = "Upgrade to three lifes";
                 };
                 threeMoreLife = {
-                    name = "Three more life";
-                    description = "upgrade your healthbar up to four lifes.";
+                    name = "Three more lifes";
+                    description = "Upgrade to four lifes";
                 };
                 firstSpeedUp = {
-                    name = "1st Speed Update";
-                    description = "raise your speed.";
+                    name = "1st speed upgrade";
+                    description = "Increase your speed";
                 };
                 secondSpeedUp = {
-                    name = "2nd Speed Update";
-                    description = "raise your speed again.";
+                    name = "2nd speed upgrade";
+                    description = "Increase your speed even more";
                 };
                 moneyMultiplier = {
-                    name = "Money Multiplier";
-                    description = "the value of your caught object are doubled";
+                    name = "Money multiplier";
+                    description = "The value of your haul will be doubled";
                 };
                 godMode = {
-                    name = "God Mode";
-                    description = "unlock godMode";
+                    name = "God mode";
+                    description = "Unlock god mode";
                 };
                 mapBreakthrough1 = {
-                    name = "Who put this in my way?";
+                    name = "Get out of my way!";
                     description = "Smash that barrier";
                 };
                 mapBreakthrough2 = {
@@ -1162,19 +1170,19 @@ return {
                 };
                 moreFuel1 = {
                     name = "Need more Fuel?";
-                    description = "Upgrade your Fuel to 1600";
+                    description = "Upgrade your fuel to 1600";
                 };
                 moreFuel2 = {
                     name = "Need more Fuel?";
-                    description = "Upgrade your Fuel to 2400";
+                    description = "Upgrade your fuel to 2400";
                 };
                 firstPermanentMoneyMult = {
-                    name = "Negotiation Novice";
-                    description = "earn 20% more money";
+                    name = "Trade novice";
+                    description = "Earn 20% more money";
                 };
                 secondPermanentMoneyMult = {
-                    name = "Negotiation Expert";
-                    description = "earn 25% more money";
+                    name = "Trade expert";
+                    description = "Earn 25% more money";
                 };
             };
         };
@@ -1182,17 +1190,17 @@ return {
             language = "german";
             flagImage = "GermanFlag.png";
             package = {
-                buttonStart = "Starte Spiel";
+                buttonStart = "Spiel starten";
                 buttonShop = "Shop";
                 buttonDictionary = "Lexikon";
-                buttonAchievements = "Errungenschaften";
+                buttonAchievements = "Erfolge";
                 buttonOptions = "Optionen";
                 buttonCredits = "Credits";
                 buttonClose = "Spiel beenden";
                 buttonBack = "Zurück";
                 textDepth = "Tiefe: ";
                 buttonReset = "Zurücksetzten";
-                textMusic = "In Game Musik:";
+                textMusic = "Musik im Spiel:";
                 textBGM = "Hintergrund Musik:";
                 buttonRestart = "Neustarten";
                 buttonBTG = "Zurück zum Spiel";
@@ -1203,110 +1211,117 @@ return {
                 textPrice = "Preis: ";
                 textMoney = "Nicht genug Geld!";
                 textBought = "Already bought";
+                --credits
+                credits = {
+                    staff = "Mitwirkende:";
+                    trans = "Übersetzung:";
+                    libs = "Bibliotheken:";
+                    noHWH = "Es kamen keine Hamster zu Schaden.";
+                };
+                --achievements
                 getFirstObject = {
                     name = "Der erste Fang";
                     description = "Du hast den ersten Fang gemacht";
                 };
                 creditsRed = {
-                    name = "Respektiere unsere Arbeit";
-                    description = "Lese die Credits";
+                    name = "Etwas Respekt bitte";
+                    description = "Lies die Credits";
                 };
                 allLevelBoardersPassed = {
-                    name = "The great breakthrough";
-                    description = "Pass all boarders in a level";
+                    name = "Durchbruch";
+                    description = "Überwinde alle Grenzen innerhalb des Levels";
                 };
                 nothingCaught = {
-                    name = "DMisadventure";
-                    description = "Don't catch one thing";
+                    name = "Ups...";
+                    description = "Du hast gar nichts gefangen!";
                 };
                 allPillsAtLeastOnce = {
-                    name = "DAddict";
-                    description = "Caught every type of pills";
+                    name = "Suchti";
+                    description = "Fange jede Art von Pillen";
                 };
                 onlyNegativeFishesCaught = {
-                    name = "DWas that on purpose?";
-                    description = "Caught only negative objects";
+                    name = "Absicht?!";
+                    description = "Du hast Minuspunkte geangelt";
                 };
                 firstBorderRemoved = {
-                    name = "DOut of my way";
-                    description = "Now I can dive further";
+                    name = "Aus dem Weg!";
+                    description = "Die Schatzsuche kann weitergehen";
                 };
                 gFishCaugtTotal = {
-                    name = "DGodlike Fisher";
-                    description = "500 Fishes Total";
+                    name = "Ultimativer Fischer";
+                    description = "Fange 500 Fische";
                 };
                 sFishCaugtTotal = {
-                    name = "DMaster Fisher";
-                    description = "200 Fishes Total";
+                    name = "Meisterfischer";
+                    description = "Fange 200 Fische";
                 };
                 bFishCaugtTotal = {
-                    name = "DApprentice Fisher";
-                    description = "50 Fishes Total";
+                    name = "Fischerlehrling";
+                    description = "Fange 50 Fische";
                 };
                 shoppingQueen = {
-                    name = "DShopping Queen";
-                    description = "You bought all Items in the Shop";
+                    name = "Shopping Queen";
+                    description = "Du hast alle Shop-Gegenstände erworben";
                 };
                 negativCoins = {
-                    name = "DYou're doing it wrong!";
-                    description = "-200 in one Round ... noob";
+                    name = "Doch nicht so!";
+                    description = "Verliere 200 Münzen in einer Runde...";
                 };
                 gMoneyEarnedTotal = {
-                    name = "DOVER 9000!";
-                    description = "Earned 9000 Coins Total";
+                    name = "Mehr als 9000!";
+                    description = "Verdiene 9000 Münzen";
                 };
                 sMoneyEarnedTotal = {
-                    name = "DRich Boy";
-                    description = "5000 Coins Total";
+                    name = "Yuppie";
+                    description = "Verdiene 5000 Münzen";
                 };
                 bMoneyEarnedTotal = {
-                    name = "Dslumdog millionaire";
-                    description = "2000 Coins Total";
+                    name = "Slumdog Millionär";
+                    description = "Verdiene 2000 Münzen";
                 };
                 goldCoinsOneRound = {
-                    name = "DAmazing!";
-                    description = "1000 Coins in one Round o.O";
+                    name = "Prima!";
+                    description = "Du hast 1000 Münzen in einer Runde verdient o.O";
                 };
                 silverCoinsOneRound = {
-                    name = "DYour getting better ;)";
-                    description = "600 Coins in one Round";
+                    name = "Du wirst besser";
+                    description = "Verdiene 600 Münzen in einer Runde";
                 };
                 bronzeCoinsOneRound = {
-                    name = "D200";
-                    description = "200 Coins in one Round";
+                    name = "Nicht schlecht";
+                    description = "Verdiene 200 Münzen in einer Runde";
                 };
                 bronzeCaughtOneRound = {
-                    name = "DNice catch!";
-                    description = "Caught more than 10 fishes in a single Round";
+                    name = "Guter Fang!";
+                    description = "Du hast 10 Fische in nur einer Runde gefangen";
                 };
                 silverCaughtOneRound = {
-                    name = "DNicer catch!";
-                    description = "Caught more than 20 fishes in a single Round";
+                    name = "Exzellenter Fang!";
+                    description = "Du hast 20 Fische in nur einer Runde gefangen";
                 };
                 goldCaughtOneRound = {
-                    name = "DNicesest catch!";
-                    description = "Caught more than 30 fishes in a single Round";
+                    name = "Ultimativer Fang!";
+                    description = "Du hast 30 Fische in nur einer Runde gefangen";
                 };
                 secondStart = {
-                    name = "DWelcome again!";
-                    description = "It's nice to see you again";
+                    name = "Willkommen zurück!";
+                    description = "Schön dich wiederzusehen";
                 };
                 caughtTwoBoots = {
-                    name = "DOne for each foot";
-                    description = "You've got two almost new shoes. At least they used to be new before somebody flushed them down";
+                    name = "Trendsetter";
+                    description = "Wo hast du denn die her?!";
                 };
                 failedStart = {
-                    name = "DFailed from the beginning";
-                    description = "Gratulation! You failed to start the game";
+                    name = "Totalversagen";
+                    description = "Glückwunsch! Du hast es nicht einmal geschafft das Spiel zu starten";
                 };
-
                 playedTime = {
-                    name = "DPlay Time";
-                    description = "Congratulations! You played over 2 hours";
+                    name = "Zocker";
+                    description = "Glückwunsch, deine Spielzeit beträgt über zwei Stunden";
                 };
                 rageQuit = {
-                    name = "Rage Quit";
-                    description = "Quit the game after a short distance";
+                    name = "Zurück auf Anfang";
+                    description = "Starte das Spiel nach einer kurzen Distanz neu";
                 };
                 nemo = {
                     name = "Nemo";
@@ -1326,7 +1341,7 @@ return {
                 };
                 angler = {
                     name = "Anglerfisch";
-                    description = "Sehr nützlich; wenn du eine Lichtquelle benötigst";
+                    description = "Mit ihm geht dir ein Licht auf";
                 };
                 lollipop = {
                     name = "Lutscher";
@@ -1334,11 +1349,12 @@ return {
                 };
                 ring = {
                     name = "Ring";
-                    description = "Ein Ring um über alle zu herrschen";
+                    name = "Ring";
+                    description = "Ein Ring sie alle zu knechten";
                 };
                 shoe = {
                     name = "Schuh";
-                    description = "Ein Schuh reicht nicht aus";
+                    description = "Ein Schuh ist nicht genug";
                 };
                 snake = {
                     name = "Schlange";
@@ -1346,11 +1362,11 @@ return {
                 };
                 crocodile = {
                     name = "Krokodil";
-                    description = "Er will nur kuscheln; versprochen!";
+                    description = "Er will nur kuscheln, versprochen!";
                 };
                 sleepingPill = {
                     name = "Schlafpille";
-                    description = "Macht Meeresbewohner schläfrig";
+                    description = "Macht deine Beute schläfrig";
                 };
                 squirrel = {
                     name = "Eichhörnchen";
@@ -1362,7 +1378,7 @@ return {
                 };
                 drink = {
                     name = "Getränk";
-                    description = "Zum Glück ist es versiegelt";
+                    description = "Nicht verschütten!";
                 };
                 egg = {
                     name = "Ei";
@@ -1370,7 +1386,7 @@ return {
                 };
                 camera = {
                     name = "Kamera";
-                    description = "Lächle; du wirst gerade fotografiert";
+                    description = "Bitte lächeln!";
                 };
                 canyonSnake = {
                     name = "Canyon Schlange";
@@ -1394,60 +1410,60 @@ return {
                 };
                 ufo = {
                     name = "Ufo";
-                    description = "Willst du verhört werden?";
+                    description = "Willst du unser Versuchskaninchen sein?";
                 };
                 --upgrades
                 oneMoreLife = {
-                    name = "One more life"; --Name shown on the Textfield on the shop
-                    description = "add one more life to your healthbar."; --shown on the shop
+                    name = "Zweites Leben"; --Name shown on the Textfield on the shop
+                    description = "Du bekommst dein zweites Leben"; --shown on the shop
                 };
                 twoMoreLife = {
-                    name = "Two more life";
-                    description = "add a third life to your healthbar.";
+                    name = "Drittes Leben";
+                    description = "Du bekommst dein drittes Leben";
                 };
                 threeMoreLife = {
-                    name = "Three more life";
-                    description = "upgrade your healthbar up to four lifes.";
+                    name = "Viertes Leben";
+                    description = "Du erhälst ein viertes Leben";
                 };
                 firstSpeedUp = {
-                    name = "1st Speed Update";
-                    description = "raise your speed.";
+                    name = "Schneller!";
+                    description = "Erhöhe deine Geschwindigkeit";
                 };
                 secondSpeedUp = {
-                    name = "2nd Speed Update";
-                    description = "raise your speed again.";
+                    name = "Noch schneller!";
+                    description = "Erhöhe deine Geschwindigkeit erneut";
                 };
                 moneyMultiplier = {
-                    name = "Money Multiplier";
-                    description = "the value of your caught object are doubled";
+                    name = "Gewinn verdoppeln";
+                    description = "Verdopple den Gewinn deines Fangs";
                 };
                 godMode = {
-                    name = "God Mode";
-                    description = "unlock godMode";
+                    name = "God mode";
+                    description = "Schaltet den god mode frei";
                 };
                 mapBreakthrough1 = {
-                    name = "Who put this in my way?";
-                    description = "Smash that barrier";
+                    name = "Aus dem Weg!";
+                    description = "Zerstöre eine Barriere";
                 };
                 mapBreakthrough2 = {
-                    name = "Not again";
-                    description = "Smash another barrier";
+                    name = "Freie Bahn";
+                    description = "Zerstöre eine weitere Barriere";
                 };
                 moreFuel1 = {
-                    name = "Need more Fuel?";
-                    description = "Upgrade your Fuel to 1600";
+                    name = "Mehr Treibstoff?";
+                    description = "Erhöhe deine Treibstoffmenge auf 1600";
                 };
                 moreFuel2 = {
-                    name = "Need more Fuel?";
-                    description = "Upgrade your Fuel to 2400";
+                    name = "Volltanken bitte!";
+                    description = "Erhöhe deine Treibstoffmenge auf 2400";
                 };
                 firstPermanentMoneyMult = {
-                    name = "Negotiation Novice";
-                    description = "earn 20% more money";
+                    name = "Lehrling";
+                    description = "Verdiene 20% mehr Geld";
                 };
                 secondPermanentMoneyMult = {
-                    name = "Negotiation Expert";
-                    description = "earn 25% more money";
+                    name = "Profi Dealer";
+                    description = "Verdiene 25% mehr Geld";
                 };
             };
         };

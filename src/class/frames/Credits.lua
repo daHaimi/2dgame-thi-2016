@@ -34,9 +34,8 @@ local Credits = Class {
         self:create();
     end;
 
-    p_staffString = "";
     p_staff = {
-        "Staff:",
+        staff = "",
         "Marco Egner",
         "Samson Groß",
         "Mathias Haimerl",
@@ -46,16 +45,18 @@ local Credits = Class {
         "Martin Lechner",
         "Daniel Plank",
         "Daniel Zistl",
-        " ",
-        "Libs:",
+    };
+    p_transTable = {
+        "Michelle Guttenberger",
+    };
+    
+    p_libsTable = {
         "hump, Matthias Richter",
         "light, Marcus Ihde",
         "LoveFrames, Kenny Shields",
         "LÖVE 2D",
         "table_serializer, Mathias Haimerl",
         "TEsound, Ensayia and Taehl",
-        " ",
-        "No hamsters were harmed!",
     };
 };
 
@@ -76,14 +77,12 @@ function Credits:create()
         text_credits = {
             object = Loveframes.Create("text");
             x = 15;
-            y = 30;
+            y = 10;
         }
     };
 
-    for i = 1, #self.p_staff, 1
-    do
-        self.p_staffString = self.p_staffString .. self.p_staff[i] .. "\n";
-    end
+    --build the credits
+    local creditsToPrint = self:buildCreditsString();
 
     --adjust all elements on this frame
     self.elementsOnFrame.background.object:SetImage(self.directory .. "StandardBG.png");
@@ -91,7 +90,7 @@ function Credits:create()
     self.elementsOnFrame.button_back.object:SetImage(self.directory .. "Button.png")
     self.elementsOnFrame.button_back.object:SizeToImage()
 
-    self.elementsOnFrame.text_credits.object:SetText(self.p_staffString);
+    self.elementsOnFrame.text_credits.object:SetText(creditsToPrint);
     self.elementsOnFrame.text_credits.object:SetLinksEnabled(true);
     self.elementsOnFrame.text_credits.object:SetDetectLinks(true);
     self.elementsOnFrame.text_credits.object:SetShadowColor(150, 210, 255)
@@ -105,6 +104,47 @@ end
 --- changes the language of this frame
 function Credits:setLanguage(language)
     self.elementsOnFrame.button_back.object:SetText(_G.data.languages[language].package.buttonBack);
+end
+
+function Credits:buildCreditsString()
+    local creditsString = "";
+    print(_G.data.languages[_G._persTable.config.language].package.credits.staff);
+    print(_G.data.languages[_G._persTable.config.language].package.credits.trans)
+    print(_G.data.languages[_G._persTable.config.language].package.credits.libs)
+    print(_G.data.languages[_G._persTable.config.language].package.credits.noHWH)
+
+    --staff
+    creditsString = _G.data.languages[_G._persTable.config.language].package.credits.staff .. "\n";
+    
+    for i = 1, #self.p_staff, 1
+    do
+        creditsString = creditsString .. self.p_staff[i] .. "\n";
+    end
+    
+    creditsString = creditsString .. "\n";
+    
+    --translation
+    creditsString = creditsString .. _G.data.languages[_G._persTable.config.language].package.credits.trans .. "\n";
+    for i = 1, #self.p_transTable, 1
+    do
+        creditsString = creditsString .. self.p_transTable[i] .. "\n";
+    end
+    
+    creditsString = creditsString .. "\n";
+    
+    --libs
+    creditsString = creditsString .. _G.data.languages[_G._persTable.config.language].package.credits.libs .. "\n";
+    for i = 1, #self.p_libsTable, 1
+    do
+        creditsString = creditsString .. self.p_libsTable[i] .. "\n";
+    end
+    
+    creditsString = creditsString .. "\n";
+    
+    --no hamsters were harmed
+    creditsString = creditsString .. _G.data.languages[_G._persTable.config.language].package.credits.noHWH;
+    
+    return creditsString;
 end
 
 --- shows the frame on screen
