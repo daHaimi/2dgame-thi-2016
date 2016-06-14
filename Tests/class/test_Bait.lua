@@ -559,7 +559,7 @@ describe("Unit test for Bait.lua", function()
         _G._persTable.upgrades.moreLife = 0;
         _G._persTable.upgrades.oneMoreLife = false;
         myInstance:collisionDetected(fishable, 1);
-        assert.are.same(0.1, myInstance.timeShowMouth);
+        assert.are.same(0.3, myInstance.timeShowMouth);
         assert.are.same(0, myInstance.numberOfHits);
     end)
 
