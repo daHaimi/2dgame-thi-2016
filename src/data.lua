@@ -968,6 +968,11 @@ return {
             image_lock = "ach_ragequit_locked.png";
             image_unlock = "ach_ragequit.png";
         };
+        unreachable = {
+            nameOnPersTable = "unreachable";
+            image_lock = "gui_Test_klickableElement_disable.png";
+            image_unlock = "gui_Test_klickableElement.png";
+        };
     };
     languages = {
         english = {
@@ -1114,6 +1119,10 @@ return {
                 getFirstObject = {
                     name = "First object";
                     description = "You caught your first object";
+                };
+                unreachable = {
+                    name = "Unreachable";
+                    description = "Don't try to get it";
                 };
                 --objects
                 nemo = {
@@ -1397,6 +1406,10 @@ return {
                 rageQuit = {
                     name = "Zurück auf Anfang";
                     description = "Starte das Spiel nach einer kurzen Distanz neu";
+                };
+                unreachable = {
+                    name = "Unerreichbar";
+                    description = "Versuche es erst gar nicht";
                 };
                 nemo = {
                     name = "Nemo";
