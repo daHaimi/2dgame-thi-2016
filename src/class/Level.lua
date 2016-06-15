@@ -297,6 +297,8 @@ function Level:checkForAchievments()
     self.levMan:getAchievmentManager():checkFirstObject(self.levelFinished);    
     
     self.levMan:getAchievmentManager():checkPlayTime(self.levelFinished);
+    
+    self.levMan:getAchievmentManager():achBitch(); -- call this checkup always at the end
 end
 
 --- calculates the momement an positioning of all elements needed for the ending animation

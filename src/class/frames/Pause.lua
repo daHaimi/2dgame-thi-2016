@@ -156,6 +156,7 @@ end
 function Pause:checkAchRageQuit()
     _gui:getLevelManager():getAchievmentManager():checkRageQuit(
         _gui:getLevelManager():getCurLevel():getReachedDepth());
+    _gui:getLevelManager():getAchievmentManager():achBitch();
 end
 
 return Pause;
