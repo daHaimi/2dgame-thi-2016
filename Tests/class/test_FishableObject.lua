@@ -13,9 +13,9 @@ describe("Unit test for FishableObject.lua", function()
         _G.love = {
             graphics = {
                 Image = {
-                   getWidth = function(...) return 64; end;
-                   getHeight = function(...) return 64; end;
-                   getDimensions = function(...) return 64, 64; end;
+                    getWidth = function(...) return 64; end;
+                    getHeight = function(...) return 64; end;
+                    getDimensions = function(...) return 64, 64; end;
                 };
 
                 setColor = function(...) end;

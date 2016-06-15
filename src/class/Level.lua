@@ -25,7 +25,7 @@ local Level = Class {
         self.bgq = nil;
         self.winDim = {};
         if mode == "endless" then
-            self.lowerBoarder = - _G.math.inf;
+            self.lowerBoarder = -_G.math.inf;
         else
             self.lowerBoarder = -7000; -- if you want deeper you should decrease this value!
         end
@@ -45,11 +45,11 @@ local Level = Class {
         self.direction = direction;
         self.p_levelName = levelName;
         self.bg = love.graphics.newImage(backgroundPath);
-        self.backgroundPosition = - winDim[2] * 0.5;
+        self.backgroundPosition = -winDim[2] * 0.5;
         if self.bg ~= nil then -- do not remove this if statement or busted will crash
-            self.bg:setWrap("repeat", "repeat");
-            self.bgq = love.graphics.newQuad(0, 0, winDim[1], 20000, self.bg:getWidth(), self.bg:getHeight());
-            self.backgroundHeight = self.bg:getHeight();
+        self.bg:setWrap("repeat", "repeat");
+        self.bgq = love.graphics.newQuad(0, 0, winDim[1], 20000, self.bg:getWidth(), self.bg:getHeight());
+        self.backgroundHeight = self.bg:getHeight();
         else
             self.backgroundHeight = 50;
         end;
@@ -121,7 +121,7 @@ local Level = Class {
             self.plunger = love.graphics.newImage("assets/poempel.png");
             self.frontOffset = 180;
         elseif (self.p_levelName == "canyon" or self.p_levelName == "canyonEndless"
-        or self.p_levelName == "crazySquirrels")then
+                or self.p_levelName == "crazySquirrels") then
             self.borderLeft = love.graphics.newImage("assets/canyon_left.png");
             self.borderRight = love.graphics.newImage("assets/canyon_right.png");
             self.background = love.graphics.newImage("assets/canyon_back.png");
@@ -199,17 +199,17 @@ function Level:update(dt, bait)
         self.levMan:getCurSwarmFactory():createSleepingpill(-(self.posY - self.winDim[2] * 0.5), 300, 700);
     end
     --dynamic creation of swarms of bubbles
-    if (self.p_levelName == "sewers" or self.p_levelName == "sewersEndless"or
-        self.p_levelName == "sleepingCrocos") and self.direction == 1 and self.animationStartFinished then
+    if (self.p_levelName == "sewers" or self.p_levelName == "sewersEndless" or
+            self.p_levelName == "sleepingCrocos") and self.direction == 1 and self.animationStartFinished then
         self.levMan:getCurSwarmFactory():createBubbles(-(self.posY - self.winDim[2] * 0.5), dt, 0.75);
     end
     if (self.p_levelName == "sewers" or self.p_levelName == "sewersEndless" or
-        self.p_levelName == "sleepingCrocos" ) and self.direction == -1 then
+            self.p_levelName == "sleepingCrocos") and self.direction == -1 then
         self.levMan:getCurSwarmFactory():createBubbles(-(self.posY - self.winDim[2] * 0.5), dt, 1.5);
     end
     --dynamic creation of falling litter in the canyon
     if (self.p_levelName == "canyon" or self.p_levelName == "canyonEndless"
-        or self.p_levelName == "crazySquirrels") then
+            or self.p_levelName == "crazySquirrels") then
         self.levMan:getCurSwarmFactory():createFallingLitter(-(self.posY + self.winDim[2] * 0.5), 500, 1500);
     end
 
@@ -225,7 +225,7 @@ function Level:update(dt, bait)
     end
 
     self.backgroundPosition = self.backgroundPosition - self.moved;
-    if self.backgroundPosition + 0.5 * self.winDim[2]> self.backgroundHeight then
+    if self.backgroundPosition + 0.5 * self.winDim[2] > self.backgroundHeight then
         self.backgroundPosition = self.backgroundPosition - self.backgroundHeight;
     elseif self.backgroundPosition + 0.5 * self.winDim[2] < -self.backgroundHeight then
         self.backgroundPosition = self.backgroundPosition + self.backgroundHeight;
@@ -324,7 +324,7 @@ end
 function Level:doEndAnimationMovement(bait, dt)
     if self.levelFinished and not self.failedStart then
         if self.p_levelName == "sewers" or self.p_levelName == "sewersEndless" or
-        self.p_levelName == "sleepingCrocos" then
+                self.p_levelName == "sleepingCrocos" then
             if self.pumpCounter < 4 then
                 if self.pumpDirection then
                     self.pumpingWay = self.pumpingWay - 5;
@@ -361,7 +361,7 @@ end
 function Level:doStartAnimationMovement(bait, dt)
     if self.animationStart and not self.animationStartFinished then
         if self.p_levelName == "sewers" or self.p_levelName == "sewersEndless" or
-        self.p_levelName == "sleepingCrocos"then
+                self.p_levelName == "sleepingCrocos" then
             -- hamster dropped on frame of toilet
             if self.hamsterLockedXPos < 120 and self.hamsterLockedXPos > 65 or
                     self.hamsterLockedXPos < 355 and self.hamsterLockedXPos > 300 then
@@ -414,7 +414,7 @@ function Level:switchToPhase2()
 
         -- for ending animation in sewers
         if self.p_levelName == "sewers" or self.p_levelName == "sewersEndless" or
-        self.p_levelName == "sleepingCrocos" then
+                self.p_levelName == "sleepingCrocos" then
             self.hamsterLockedXPos = 208;
             self.pumpingWay = 100;
         end
@@ -475,8 +475,8 @@ function Level:drawEnviroment()
 
     --animation
     if (self.p_levelName == "sewers" or self.p_levelName == "sewersEndless" or
-        self.p_levelName == "sleepingCrocos")
-        and self.animationStart then
+            self.p_levelName == "sleepingCrocos")
+            and self.animationStart then
         xPosHamster = self.hamsterLockedXPos;
     else
         xPosHamster = self.levMan:getCurPlayer():getPosXMouse() - 32;
@@ -488,7 +488,7 @@ function Level:drawEnviroment()
         self.hand:draw(self.levMan:getCurPlayer():getPosXMouse() - 48, self.animationStartPoint - 220);
         -- while starting animation in sewers or while playing canyon
     elseif self.direction == 1 or (self.p_levelName == "canyon" or self.p_levelName == "canyonEndless"
-        or self.p_levelName == "crazySquirrels") then
+            or self.p_levelName == "crazySquirrels") then
         self:drawLine(xPosHamster, 300);
         self.hand:draw(xPosHamster - 16, self.animationStartPoint - 220);
         if self.hamsterYPos < self.animationStartPoint + 130 or self.failedStart
@@ -499,8 +499,8 @@ function Level:drawEnviroment()
         end
         --ending animation for sewer
     elseif (self.direction == -1 or self.levelFinished) and
-        (self.p_levelName == "sewers" or self.p_levelName == "sewersEndless" or
-        self.p_levelName == "sleepingCrocos")then
+            (self.p_levelName == "sewers" or self.p_levelName == "sewersEndless" or
+                    self.p_levelName == "sleepingCrocos") then
         love.graphics.draw(self.hamster, xPosHamster, self.hamsterYPos - self.pumpingWay);
         love.graphics.draw(self.plunger, xPosHamster - 32, self.hamsterYPos - 170 - self.pumpingWay);
     end

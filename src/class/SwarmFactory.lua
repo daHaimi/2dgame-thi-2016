@@ -25,10 +25,10 @@ local SwarmFactory = Class {
 
         self.fishableObjects = data.fishableObjects;
         if self.levMan:getCurLevel():getLevelName() == "sewers" or
-            self.levMan:getCurLevel():getLevelName() == "sewersEndless" then
+                self.levMan:getCurLevel():getLevelName() == "sewersEndless" then
             self.actualSwarm = data.swarmsSewer;
-        elseif  self.levMan:getCurLevel():getLevelName() == "canyon" or
-            self.levMan:getCurLevel():getLevelName() == "canyonEndless" then
+        elseif self.levMan:getCurLevel():getLevelName() == "canyon" or
+                self.levMan:getCurLevel():getLevelName() == "canyonEndless" then
             self.actualSwarm = data.swarmsCanyon;
         elseif self.levMan:getCurLevel():getLevelName() == "sleepingCrocos" then
             self.actualSwarm = data.swarmCrocos;
