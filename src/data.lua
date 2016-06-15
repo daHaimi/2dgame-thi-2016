@@ -1031,8 +1031,8 @@ return {
         unreachable = {
             nameOnPersTable = "unreachable";
             sortNumber = 26;
-            image_lock = "gui_Test_klickableElement_disable.png";
-            image_unlock = "gui_Test_klickableElement.png";
+            image_lock = "ach_unreachable_locked.png";
+            image_unlock = "ach_unreachable.png";
         };
     };
     languages = {
