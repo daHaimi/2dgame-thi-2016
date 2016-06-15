@@ -101,7 +101,7 @@ function UpgradeMenu:create()
                 print(_G.data.languages[_G._persTable.config.language].package.textMoney)
                 _gui:newTextNotification(self.directory .. "ach_nothingCaught.png", _G.data.languages[_G._persTable.config.language].package.textMoney);
             end
-            achiev:achBitch(); -- check the achievement achBitch
+            _gui:getAchievmentManager():achBitch(); -- check the achievement achBitch
         end
     end
 end

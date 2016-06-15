@@ -100,17 +100,27 @@ end
 
 --- Checks if the achievement achBitch was unlocked
 function Achievement:achBitch()
-    local numOfUnlockedAch = 0;
-    
-    for i=1, #_G._persTable.achievements, 1
-    do
-        if _G._persTable.achievements[i] == true then
-            numOfUnlockedAch = numOfUnlockedAch +1;
+    if not _G._persTable.achievements.achBitch then
+        local numOfUnlockedAch = 0;
+
+        for i=1, self:tablelength(_G._persTable.achievements), 1
+        do
+            if _G._persTable.achievements[i] == true then
+                numOfUnlockedAch = numOfUnlockedAch +1;
+            end
+        end
+
+        if self:tablelength(_G.data.achievements) == numOfUnlockedAch then
+            self:unlockAchievement("achBitch");
         end
     end
-    
-    if #_G.data.achievements == numOfUnlockedAch then
-        self:unlockAchievement("achBitch");
+end
+
+function Achievement:checkCreditsRed(timeSpent)
+    if timeSpent >= 10 then
+        if not _G._persTable.achievements.creditsRed then
+            self:unlockAchievement("creditsRed");
+        end
     end
 end
 
@@ -118,9 +128,19 @@ end
 -- @param achName The name of the achievement.
 function Achievement:unlockAchievement(achName)
     table.insert(_G._unlockedAchievements, _G.data.achievements[achName]);
-    _gui:newNotification("assets/gui/480px/" .. _G.data.achievements[achName].image_unlock,
-        achName);
+    _gui:newNotification("assets/gui/480px/" .. _G.data.achievements[achName].image_unlock, achName);
     _G._persTable.achievements[achName] = true;
+end
+
+--- Counts the elements in a table.
+-- @return Returns the number of elements in the table.
+function Achievement:tablelength(T)
+  local count = 0;
+  for _ in pairs(T) do 
+      count = count + 1;
+  end
+  
+  return count
 end
 
 return Achievement;

@@ -39,6 +39,7 @@ local Gui = Class {
         self.notification = Notification();
     end;
     levMan = nil;
+    achMan = nil;
 }
 
 function Gui:setLanguage()
@@ -159,6 +160,18 @@ end
 -- @param levelManager The reference to the LevelManager object.
 function Gui:setLevelManager(levelManager)
     self.levMan = levelManager;
+end
+
+--- Returns the reference to the achievement manager object.
+-- @return Returns the reference to the achievement manager object.
+function Gui:getAchievmentManager()
+    return self.achMan;
+end
+
+--- Set the reference to the achievment manager.
+-- @param achievMan The achievment manager object.
+function Gui:setAchievementManager(achievMan)
+    self.achMan = achievMan;
 end
 
 return Gui;
