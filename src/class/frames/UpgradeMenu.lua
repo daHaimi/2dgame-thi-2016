@@ -146,7 +146,7 @@ end
 function UpgradeMenu:addAllUpgrades()
     for _, v in pairs(_G.data.upgrades) do
         local newKlickableElement = KlickableElement(v.name, self.directory .. v.image,
-            self.directory .. v.image_disable, v.description, v.price, v.nameOnPersTable);
+            self.directory .. v.image_disable, v.description, v.price, v.nameOnPersTable, v.sortNumber);
 
         --add OnClick event
         newKlickableElement.object.OnClick = function(_)

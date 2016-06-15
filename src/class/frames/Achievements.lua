@@ -79,7 +79,7 @@ function Achievements:addAllAchievements()
     for _, v in pairs(_G.data.achievements) do
         local imageDirectory = self.directory .. v.image_lock;
         local newKlickableElement = KlickableElement(v.name, imageDirectory, self.directory .. v.image_unlock,
-            v.description, nil, v.nameOnPersTable);
+            v.description, nil, v.nameOnPersTable, v.sortNumber);
         newKlickableElement.object.OnClick = function(_)
             self.elementsOnFrame.chart.object:markElement(newKlickableElement);
         end

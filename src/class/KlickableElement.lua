@@ -2,7 +2,7 @@
 Class = require "lib.hump.class";
 
 local KlickableElement = Class {
-    init = function(self, name, imagepath, imagepath_disable, description, price, nameOnPersTable)
+    init = function(self, name, imagepath, imagepath_disable, description, price, nameOnPersTable, sortNumber)
         self.name = name;
         self.enable = true;
         self.imagepath = imagepath;
@@ -14,6 +14,7 @@ local KlickableElement = Class {
         self.object:SetImage(self.imagepath);
         self.object:SizeToImage();
         self.object:SetText("");
+        self.sortNumber = sortNumber;
     end;
 };
 
