@@ -73,103 +73,103 @@ function MainMenu:create()
             x = 0.16 * self.width;
             y = self.buttonOffset + 5 * self.buttonHeight;
         };
-        
+
         button_close = {
             object = Loveframes.Create("imagebutton");
             x = 0.16 * self.width;
             y = self.height - self.buttonHeight;
         };
-        
+
         language = {
             object = FlagButton();
             x = (self.width - self.flagWidth) / 2;
             y = self.buttonOffset + 6 * self.buttonHeight;
         };
     };
-    
+
     --adjust all elements on this frame
-    
+
     --self.elementsOnFrame.background.object:SetImage(self.directory .. "gui_Test_Bg.png");
-    
+
     self.elementsOnFrame.button_start.object:SetImage(self.directory .. "Button.png");
     self.elementsOnFrame.button_start.object:SizeToImage();
-    
-    
+
+
     self.elementsOnFrame.button_upgradeMenu.object:SetImage(self.directory .. "Button.png");
     self.elementsOnFrame.button_upgradeMenu.object:SizeToImage();
-    
+
     self.elementsOnFrame.button_dictionary.object:SetImage(self.directory .. "Button.png");
     self.elementsOnFrame.button_dictionary.object:SizeToImage();
-    
+
     self.elementsOnFrame.button_achievements.object:SetImage(self.directory .. "Button.png");
     self.elementsOnFrame.button_achievements.object:SizeToImage();
-    
+
     self.elementsOnFrame.button_options.object:SetImage(self.directory .. "Button.png");
     self.elementsOnFrame.button_options.object:SizeToImage();
-    
+
     self.elementsOnFrame.button_credits.object:SetImage(self.directory .. "Button.png");
     self.elementsOnFrame.button_credits.object:SizeToImage();
-    
+
     self.elementsOnFrame.button_close.object:SetImage(self.directory .. "Button.png");
     self.elementsOnFrame.button_close.object:SizeToImage();
-    
+
     --onclick events for all buttons
-    self.elementsOnFrame.button_start.object.OnClick = function(object)
+    self.elementsOnFrame.button_start.object.OnClick = function(_)
         _gui:changeFrame(_gui:getFrames().level);
     end
-    
-    self.elementsOnFrame.button_upgradeMenu.object.OnClick = function(object)
+
+    self.elementsOnFrame.button_upgradeMenu.object.OnClick = function(_)
         _gui:changeFrame(_gui:getFrames().upgradeMenu);
     end
-    
-    self.elementsOnFrame.button_dictionary.object.OnClick = function(object)
+
+    self.elementsOnFrame.button_dictionary.object.OnClick = function(_)
         _gui:changeFrame(_gui:getFrames().dictionary);
     end
-    
-    self.elementsOnFrame.button_achievements.object.OnClick = function(object)
+
+    self.elementsOnFrame.button_achievements.object.OnClick = function(_)
         _gui:changeFrame(_gui:getFrames().achievements);
     end
-    
-    self.elementsOnFrame.button_options.object.OnClick = function(object)
+
+    self.elementsOnFrame.button_options.object.OnClick = function(_)
         _gui:changeFrame(_gui:getFrames().options);
     end
-    
-    self.elementsOnFrame.button_credits.object.OnClick = function(object)
+
+    self.elementsOnFrame.button_credits.object.OnClick = function(_)
         _gui:changeFrame(_gui:getFrames().credits);
     end
-    
-    self.elementsOnFrame.button_close.object.OnClick = function(object)
+
+    self.elementsOnFrame.button_close.object.OnClick = function(_)
         love.window:close(); -- close the window
         love.event.quit(); -- exit the game
     end
 end
 
----shows the frame on screen
+--- shows the frame on screen
 function MainMenu:draw()
     self.frame:draw(self.elementsOnFrame);
 end
 
----called to "delete" this frame
+--- called to "delete" this frame
 function MainMenu:clear()
     self.frame:clear(self.elementsOnFrame)
 end
 
----called in the "fly in" state 
+--- called in the "fly in" state
 function MainMenu:appear()
     self.frame:appear(self.elementsOnFrame)
 end
 
----called in the "fly out" state
+--- called in the "fly out" state
 function MainMenu:disappear()
     self.frame:disappear(self.elementsOnFrame)
 end
 
----return true if the frame is on position /fly in move is finished
+--- return true if the frame is on position /fly in move is finished
 function MainMenu:checkPosition()
     return self.frame:checkPosition();
 end
 
----changes the language of this frame
+--- changes the language of this frame
 function MainMenu:setLanguage(language)
     self.elementsOnFrame.button_close.object:SetText(_G.data.languages[language].package.buttonClose);
     self.elementsOnFrame.button_credits.object:SetText(_G.data.languages[language].package.buttonCredits);

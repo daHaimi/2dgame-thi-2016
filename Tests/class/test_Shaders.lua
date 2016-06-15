@@ -33,11 +33,9 @@ describe("Unit test for Shaders.lua", function()
 
     it("Testing clear", function()
         local shadersClass = require "src.class.Shaders";
-
         local loveGraphicsMock = mock(_G.love.graphics, true);
 
         shadersClass:clear();
-
         assert.spy(loveGraphicsMock.setShader).was_called();
     end)
 end)

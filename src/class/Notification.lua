@@ -42,7 +42,7 @@ local Notification = Class {
     end;
 };
 
----called to create and buffer a new notification 
+--- called to create and buffer a new notification
 function Notification:newNotification(imagepath, text)
     local newNotification = {
         image = Loveframes.Create("image");
@@ -57,25 +57,25 @@ function Notification:newNotification(imagepath, text)
     table.insert(self.notificationBuffer, newNotification);
 end
 
----removes already shown notifications
+--- removes already shown notifications
 function Notification:removeNotification()
     table.remove(self.notificationBuffer, 1);
 end
 
----called in the fly in state
+--- called in the fly in state
 function Notification:flyIn()
     self.x = self.x - self.speed;
     self:SetPos(self.x, self.yPos);
 end
 
----called in the fly out state
+--- called in the fly out state
 function Notification:flyOut()
     self.x = self.x + self.speed;
     self:SetPos(self.x, self.yPos);
 end
 
----function checks the position of the notification frame
---@parm pos: position "in" or "out" is reached
+--- function checks the position of the notification frame
+-- @parm pos: position "in" or "out" is reached
 function Notification:checkPosition(pos)
     if pos == "in" then
         if self.x <= self.defaultX - self.length then
@@ -83,26 +83,25 @@ function Notification:checkPosition(pos)
         else
             return false;
         end
-    else 
+    else
         if self.x >= self.defaultX then
             return true;
         else
             return false;
         end
-        
     end
 end
 
----sets position of the notification frame
+--- sets position of the notification frame
 function Notification:SetPos(x, y)
-    self.background:SetPos(x,y);
+    self.background:SetPos(x, y);
     if self.notificationBuffer[1] ~= nil then
         self.notificationBuffer[1].image:SetPos(x + self.offset, y + self.offset);
         self.notificationBuffer[1].text:SetPos(x + self.imageLength + self.offset, y + self.offset);
     end
 end
 
----sets the visible of the notification frame
+--- sets the visible of the notification frame
 function Notification:SetVisible(visible)
     self.background:SetVisible(visible);
     if self.notificationBuffer[1] then
@@ -111,7 +110,7 @@ function Notification:SetVisible(visible)
     end
 end
 
----called in the love.update function/ state machine for notification frame
+--- called in the love.update function/ state machine for notification frame
 function Notification:update()
     if self.notificationBuffer[1] ~= nil then
         if self.state == 0 then
@@ -143,6 +142,6 @@ function Notification:update()
             end;
         end;
     end;
-end;
+end
 
 return Notification;

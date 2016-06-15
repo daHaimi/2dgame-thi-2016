@@ -19,17 +19,38 @@ local LevelManager = Class {
         sewers = {
             levelName = "sewers",
             direction = 1,
-            bgPath = "assets/testbg.png";
+            bgPath = "assets/testbg.png",
+            mode = "normal"
         },
         canyon = {
             levelName = "canyon",
             direction = 1,
-            bgPath = "assets/canyonBG.png";   
+            bgPath = "assets/canyonBG.png",
+            mode = "normal"
         },
-        space = {
-            levelName = "space",
-            direction = -1,
-            bgPath = "assets/testbg.png";
+        sewersEndless = {
+            levelName = "sewersEndless",
+            direction = 1,
+            bgPath = "assets/testbg.png",
+            mode = "endless"
+        },
+        canyonEndless = {
+            levelName = "canyonEndless",
+            direction = 1,
+            bgPath = "assets/canyonBG.png",
+            mode = "endless"
+        },
+        sleepingCrocos = {
+            levelName = "sleepingCrocos",
+            direction = 1,
+            bgPath = "assets/testbg.png",
+            mode = "sleepingCrocos"
+        },
+        crazySquirrels = {
+            levelName = "crazySquirrels",
+            direction = 1,
+            bgPath = "assets/canyonBG.png",
+            mode = "crazySquirrles"
         }
     };
 }
@@ -40,19 +61,20 @@ local LevelManager = Class {
 -- @param swarmFactory The swarm factory of the level.
 -- @return Returns a reference to the created level object.
 function LevelManager:newLevel(levelPropMap, swarmFactoryData)
-    for k, v in pairs(_G._tmpTable) do
+    for k, _ in pairs(_G._tmpTable) do
         _G._tmpTable[k] = nil
     end;
 
     self:freeManagedObjects();
-    
+
     self.p_curDataRef = swarmFactoryData;
-    self.curLevel = Level(levelPropMap.levelName, levelPropMap.bgPath, _G._persTable.winDim, levelPropMap.direction, self);
+    self.curLevel = Level(levelPropMap.levelName, levelPropMap.bgPath, _G._persTable.winDim, levelPropMap.direction, 
+        levelPropMap.mode, self);
     self.curPlayer = Bait(_G._persTable.winDim, self);
     self.curPlayer:checkUpgrades();
     self.curSwarmFac = SwarmFactory(swarmFactoryData, self);
     _gui:getFrames().inGame.elementsOnFrame.healthbar.object:resetHearts();
-        
+
     return self.curLevel;
 end
 
@@ -60,7 +82,7 @@ end
 -- @return Returns a reference to the created level object.
 function LevelManager:replayLevel()
     local currentLevelType = self.curLevel:getLevelName();
-    
+
     return self:newLevel(self:getLevelPropMapByName(currentLevelType), self.p_curDataRef);
 end
 
@@ -80,7 +102,7 @@ function LevelManager:freeManagedObjects()
         self.curLevel:destructLevel();
         self.curLevel = nil;
     end
-    
+
     collectgarbage("collect");
 end
 

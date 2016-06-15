@@ -1,106 +1,73 @@
 -- Lua 5.1 Hack
 _G.math.inf = 1 / 0
 
-_G.fishableObjectStub = function()
-    _G.TEsound = {
-        play = function(...) end;
-    }
-
-    _G.love = {
-        graphics = {
-            setColor = function(...) end;
-            setNewFont = function(...) end;
-            getFont = function(...) return "this could be your font" end;
-            setFont = function(...) end;
-            print = function(...) end;
-            newImage = function(...) return "assets/deadFish.png" end;
-            draw = function(...) end;
-            scale = function(...) end;
-            newImage = function(...) end;
-            newQuad = function(...) end;
-            setColor = function(...) end;
-            shader = {
-                send = function(...) end;
-            };
-            Canvas = {
-                setWrap = function(...) end;
-            };
-            print = function(...) end;
-            draw = function(...) end;
-        },
-        file = {
-            getName = function() return "" end;
-            getExtention = function() return "" end;
-        };
-        filesystem = {
-            exists = function(...) return false end;
-        };
-        image = {
-            CompressedImageData = {
-                getWidth = function(...) return 4 end;
-                getHeight = function(...) return 5 end;
-            };
-        };
-        window = {
-            getMode = function(...) return 0, 0, {}; end;
-        };
-        light = {
-            world = {
-                setAmbientColor = function(...) end;
-                update = function(...) end;
-                drawShadow = function(...) end;
-            };
-            setSmooth = function(...) end;
-            setPosition = function(...) end;
-        };
-    };
-    _G.love.light.world.newLight = function(...) return _G.love.light; end;
-    _G.love.light.newWorld = function(...) return _G.love.light.world; end;
-    _G.love.graphics.newShader = function(...) return _G.love.graphics.shader; end;
-    _G.love.graphics.newCanvas = function(...) return _G.love.graphics.Canvas; end;
-
-    _G._persTable = {
-        winDim = { 500; 500 };
-        moved = 0;
-        fish = {
-            postiveFishCaught = true;
-        }
-    }
-
-    local hitbox = {
-        {
-            width = 64,
-            height = 25,
-            deltaXPos = 0,
-            deltaYPos = 20
-        }
-    }
-    _G.levMan = {
-        curLevel = {
-            winDim = { 500, 500 };
-            getMoved = function(...) return 4 end;
-        };
-        curPlayer = {
-            getPosY = function(...) return 5 end;
-        };
-        curSwarmFac = nil;
-        getLevelPropMapByName = function(...) return {
-            direction = 1;
-        }
-        end;
-        getCurSwarmFactory = function(...) return _G.levMan.curSwarmFac end;
-        getCurPlayer = function(...) return _G.levMan.curPlayer end;
-        getCurLevel = function(...) return _G.levMan.curLevel end;
-    };
-end;
-_G.fishableObjectStub();
-
 testClass = require "src.class.FishableObject"
 --self, name, imageSrc, yPosition, minSpeed, maxSpeed, value, hitpoints, spriteSize, hitbox
 describe("Unit test for FishableObject.lua", function()
 
     before_each(function()
-        _G.fishableObjectStub();
+        _G.TEsound = {
+            play = function(...) end;
+        };
+
+        _G.love = {
+            graphics = {
+                Image = {
+                   getWidth = function(...) return 64; end;
+                   getHeight = function(...) return 64; end;
+                   getDimensions = function(...) return 64, 64; end;
+                };
+
+                setColor = function(...) end;
+                setNewFont = function(...) end;
+                getFont = function(...) return "this could be your font"; end;
+                setFont = function(...) end;
+                print = function(...) end;
+                newImage = function(...) return _G.love.graphics.Image; end;
+                draw = function(...) end;
+                scale = function(...) end;
+                newQuad = function(...) return 0; end;
+            };
+
+            filesystem = {
+                exists = function(...) return false; end;
+            }
+        }
+
+        _G._persTable = {
+            winDim = { 500; 500 };
+            moved = 0;
+            fish = {
+                postiveFishCaught = true;
+            };
+        };
+
+        local hitbox = {
+            {
+                width = 64;
+                height = 25;
+                deltaXPos = 0;
+                deltaYPos = 20;
+            }
+        };
+        _G.levMan = {
+            curLevel = {
+                winDim = { 500, 500 };
+                getMoved = function(...) return 4; end;
+            };
+            curPlayer = {
+                getPosY = function(...) return 5; end;
+            };
+            curSwarmFac = nil;
+            getLevelPropMapByName = function(...) return {
+                direction = 1;
+            };
+            end;
+            getCurSwarmFactory = function(...) return _G.levMan.curSwarmFac; end;
+            getCurPlayer = function(...) return _G.levMan.curPlayer; end;
+            getCurLevel = function(...) return _G.levMan.curLevel; end;
+        };
+
         _G.locInstance = testClass("deadFish", "assets/deadFish.png", 50, 30, 35, 50, 5, 64, hitbox, _, _, _, 0, _G.levMan);
     end)
 
@@ -136,7 +103,7 @@ describe("Unit test for FishableObject.lua", function()
         locInstance:setXPosition(150);
         locInstance.speed = 30;
         locInstance:draw();
-        assert.spy(loveMock.graphics.draw).was_called_with("assets/deadFish.png", -150, 50);
+        assert.spy(loveMock.graphics.draw).was_called_with(_G.love.graphics.Image, -150, 50);
     end)
 
     it("Testing draw Function with negativ speed", function()
@@ -144,7 +111,7 @@ describe("Unit test for FishableObject.lua", function()
         locInstance:setXPosition(400);
         locInstance.speed = -300;
         locInstance:draw();
-        assert.spy(loveMock.graphics.draw).was_called_with("assets/deadFish.png", 400, 50);
+        assert.spy(loveMock.graphics.draw).was_called_with(_G.love.graphics.Image, 400, 50);
     end)
 
     it("Testing draw Function when caught", function()
@@ -229,10 +196,10 @@ describe("Unit test for FishableObject.lua", function()
         locInstance.fallSpeed = 1;
         locInstance.levMan.getCurLevel = function(...) return
         {
-            getDirection = function(...) return 1 end;
+            getDirection = function(...) return 1; end;
             winDim = { 480, 833 };
-            getMoved = function(...) return 4 end;
-        }
+            getMoved = function(...) return 4; end;
+        };
         end;
         locInstance:update(1, 1);
         assert.are.same(101, locInstance.yPosition);
@@ -244,12 +211,44 @@ describe("Unit test for FishableObject.lua", function()
         locInstance.yMovement = 10;
         locInstance.levMan.getCurLevel = function(...) return
         {
-            getDirection = function(...) return -1 end;
+            getDirection = function(...) return -1; end;
             winDim = { 480, 833 };
-            getMoved = function(...) return 10 end;
-        }
+            getMoved = function(...) return 10; end;
+        };
         end;
         locInstance:update(1, 1);
         assert.are.same(91, locInstance.yPosition);
+    end)
+
+    it("Testing setYPosition", function()
+        locInstance:setYPosition(5);
+        assert.are.same(5, locInstance.yPosition);
+    end)
+
+    it("Testing Animation", function()
+        local spyShiftImage = spy.on(Animate, "shiftImage");
+        local spyDraw = spy.on(Animate, "draw");
+
+        love.filesystem.exists = function(...) return true; end;
+        local localHitbox = {
+            {
+                width = 64;
+                height = 25;
+                deltaXPos = 0;
+                deltaYPos = 20;
+            }
+        };
+
+        local myInstance = testClass("deadFish", "assets/deadFish.png", 50, 30, 35, 50, 5, 64,
+            localHitbox, 0.1, 0.2, 1, 0, _G.levMan);
+
+        myInstance:draw();
+        assert.spy(spyDraw).was.called_with(myInstance.animation, myInstance.xPosition, myInstance.yPosition);
+        myInstance:update(0.05, 1);
+        assert.spy(spyShiftImage).was_called();
+
+        myInstance.speed = 1;
+        myInstance:draw();
+        assert.spy(spyDraw).was.called_with(myInstance.animation, -myInstance.xPosition, myInstance.yPosition);
     end)
 end)

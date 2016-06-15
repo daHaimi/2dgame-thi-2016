@@ -4,6 +4,7 @@ _G.math.inf = 1 / 0
 testClass = require "src.class.frames.Score";
 fakeElement = require "Tests.fakeLoveframes.fakeElement";
 Frame = require "class.Frame";
+Data = require "data";
 
 
 describe("Unit test for Score.lua", function()
@@ -16,7 +17,7 @@ describe("Unit test for Score.lua", function()
                 setVisible = function(...) end;
             };
         };
-        
+        _G.data = Data;
         _G.Loveframes = {
             Create = function(typeName) 
                 return fakeElement(typeName);
@@ -26,6 +27,9 @@ describe("Unit test for Score.lua", function()
             scaledDeviceDim = {
                 [1] = 500;
                 [2] = 500;
+            };
+            config = {
+                language = "english";
             };
         };
         _G._tmpTable = {
@@ -44,6 +48,9 @@ describe("Unit test for Score.lua", function()
 
 it("Testing Constructor", function()
         _G._persTable = {
+            config = {
+                language = "english";
+            };
             scaledDeviceDim = {640, 950};
         };
         locInstance = testClass();
@@ -55,6 +62,9 @@ it("Testing Constructor", function()
 
 it("Testing Constructor", function()
         _G._persTable = {
+            config = {
+                language = "english";
+            };
             scaledDeviceDim = {720, 1024};
         };
         locInstance = testClass();

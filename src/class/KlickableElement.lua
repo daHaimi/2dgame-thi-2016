@@ -1,4 +1,4 @@
----a klickableElement represents an achievement, wikielement or an upgrade
+--- a klickableElement represents an achievement, wikielement or an upgrade
 Class = require "lib.hump.class";
 
 local KlickableElement = Class {
@@ -17,20 +17,20 @@ local KlickableElement = Class {
     end;
 };
 
----Function not conform to CC/ implements an interface
----Set the visible of the element
+--- Function not conform to CC/ implements an interface
+--- Set the visible of the element
 -- @parm visible: true or false
 function KlickableElement:SetVisible(visible)
     self.object:SetVisible(visible);
 end
 
----reset the Element (just the enable state and the image)
+--- reset the Element (just the enable state and the image)
 function KlickableElement:reset()
     self.enable = true;
     self.object:SetImage(self.imagepath);
 end
 
----represents an upgrade buy
+--- represents an upgrade buy
 function KlickableElement:disable()
     self.enable = false;
     self.object:SetImage(self.imagepath_disable);
@@ -39,15 +39,15 @@ function KlickableElement:disable()
     end
 end
 
----Function not conform to CC/ implements an interface
----set the position of the element
+--- Function not conform to CC/ implements an interface
+--- set the position of the element
 -- @parm x: x axis position
 -- @parm y: y axis position
 function KlickableElement:SetPos(x, y)
     self.object:SetPos(x, y);
 end
 
----getter of the enable parameter
+--- getter of the enable parameter
 function KlickableElement:getEnable()
     return self.enable;
 end
