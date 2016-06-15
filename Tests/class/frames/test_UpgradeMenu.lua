@@ -96,12 +96,18 @@ end)
     end)
 
     it("Testing create function", function()
+        local achBitchCalled = false;
         _G._gui = {
             getFrames = function(...) return{}; end;
             changeFrame = function(...) end;
+            getLevelManager = function(...) return {
+                getAchievmentManager = function(...) return{
+                    achBitch = function(...) achBitchCalled = true end;
+                } end;
+            } end;
         };
-        
-       local ME = {
+
+        local ME = {
          price = 0;
          };
         
@@ -126,6 +132,7 @@ end)
         stub(locInstance, "buyElement");
         locInstance.elementsOnFrame.button_buy.object.OnClick();
         assert.stub(locInstance.buyElement).was.called();
+        assert.are.same(true, achBitchCalled);
     end)
 
     it("Testing buyElement function", function()
