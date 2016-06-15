@@ -152,6 +152,7 @@ end)
             upgrades = {
                 testUp1 = {
                     nameOnPersTable = "test1";
+                    sortNumber = 1;
                     name = "test1";
                     description = "test1";
                     image = "path1";
@@ -160,6 +161,7 @@ end)
                 },
                 testUp2 = {
                     nameOnPersTable = "test2";
+                    sortNumber = 2;
                     name = "test2";
                     description = "test2";
                     image = "path3";
@@ -229,6 +231,7 @@ end)
                 testUp1 = {
                     nameOnPersTable = "testUp1";
                     name = "test1";
+                    sortNumber = 1;
                     description = "test1";
                     price = 1;
                     image = "path1";
@@ -237,6 +240,7 @@ end)
                 testUp2 = {
                     nameOnPersTable = "testUp2";
                     name = "test2";
+                    sortNumber = 2;
                     description = "test2";
                     price = 1;
                     image = "path3";

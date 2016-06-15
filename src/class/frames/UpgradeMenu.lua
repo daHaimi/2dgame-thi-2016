@@ -145,14 +145,16 @@ end
 --add all upgrades written in the data.lua into the chart and adds an OnClick event
 function UpgradeMenu:addAllUpgrades()
     for _, v in pairs(_G.data.upgrades) do
-        local newKlickableElement = KlickableElement(v.name, self.directory .. v.image,
-            self.directory .. v.image_disable, v.description, v.price, v.nameOnPersTable, v.sortNumber);
+        if v.sortNumber ~= nil then
+            local newKlickableElement = KlickableElement(v.name, self.directory .. v.image,
+                self.directory .. v.image_disable, v.description, v.price, v.nameOnPersTable, v.sortNumber);
 
-        --add OnClick event
-        newKlickableElement.object.OnClick = function(_)
-            self.elementsOnFrame.chart.object:markElement(newKlickableElement);
+            --add OnClick event
+            newKlickableElement.object.OnClick = function(_)
+                self.elementsOnFrame.chart.object:markElement(newKlickableElement);
+            end
+            self.elementsOnFrame.chart.object:addKlickableElement(newKlickableElement);
         end
-        self.elementsOnFrame.chart.object:addKlickableElement(newKlickableElement);
     end
 end
 

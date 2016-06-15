@@ -99,6 +99,7 @@ describe("Unit test for Achievements.lua", function()
                 testAch1 = {
                     nameOnPersTable = "test1";
                     name = "test1";
+                    sortNumber = 1;
                     description = "test1";
                     image_lock = "path1";
                     image_unlock = "path2";
@@ -106,6 +107,7 @@ describe("Unit test for Achievements.lua", function()
                 testAch2 = {
                     nameOnPersTable = "test2";
                     name = "test2";
+                    sortNumber = 2;
                     description = "test2";
                     image_lock = "path3";
                     image_unlock = "path4";
@@ -136,6 +138,7 @@ describe("Unit test for Achievements.lua", function()
                 testAch1 = {
                     nameOnPersTable = "testAch1";
                     name = "test1";
+                    sortNumber = 1;
                     description = "test1";
                     image_lock = "path1";
                     image_unlock = "path2";
@@ -143,6 +146,7 @@ describe("Unit test for Achievements.lua", function()
                 testAch2 = {
                     nameOnPersTable = "testAch2";
                     name = "test2";
+                    sortNumber = 2;
                     description = "test2";
                     image_lock = "path3";
                     image_unlock = "path4";
