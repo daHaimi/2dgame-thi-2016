@@ -14,6 +14,8 @@ Notification = require "class.Notification";
 
 FakeElement = require "Tests.fakeLoveframes.fakeElement";
 
+
+
 testClass = require "class.Gui";
 describe("Test Gui", function()
     local locInstance;
@@ -49,7 +51,24 @@ describe("Test Gui", function()
                 english = {
                     language = "english";
                     flagImage = "testimage";
-                    package = {};
+                    package = {
+                        credits = {
+                            staff = "Staff:";
+                            trans = "Translation:";
+                            libs = "Libs:";
+                            noHWH = "No hamsters were harmed!";
+                        };
+                    };
+                };
+                german = {
+                    package = {
+                        credits = {
+                            staff = "Mitwirkende:";
+                            trans = "Übersetzung:";
+                            libs = "Bibliotheken:";
+                            noHWH = "Es kamen keine Hamster zu Schaden.";
+                        };
+                    };
                 };
             };
         };
