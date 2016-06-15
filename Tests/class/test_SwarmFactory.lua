@@ -121,8 +121,10 @@ describe("Unit test for SwarmFactory.lua", function()
         local testInstance = testClass(require "src.data", levMan);
         testInstance.currentSwarm = 1;
         testInstance.createdFishables = {};
+        testInstance.currentSwarm = #testInstance.actualSwarm
+        testInstance.actualSwarm[testInstance.currentSwarm].maxSwarmHeight = 10;
+        testInstance:createNextSwarm(100, 0);
 
-        testInstance:createNextSwarm(20, 0);
         local swarm = testInstance.createdFishables;
 
         for i = 1, #swarm, 1 do

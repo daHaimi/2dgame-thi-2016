@@ -156,6 +156,7 @@ function SwarmFactory:createNextSwarm(startPosY, depth)
         self.currentSwarm = self.currentSwarm + 1;
         if self.currentSwarm > #self.actualSwarm then
             self.currentSwarm = 1;
+            
             self.addedDepth = self.actualSwarm[#self.actualSwarm].maxSwarmHeight + self.addedDepth;
         end
     end
