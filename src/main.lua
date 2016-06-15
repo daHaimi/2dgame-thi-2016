@@ -46,6 +46,7 @@ local levMan;
 local p_scaleFactor
 local achiev;
 local frameCounter = 0;
+local timeCounter = 1;
 
 --- The bootstrap of the game.
 -- This function is called exactly once at the beginning of the game.
@@ -191,6 +192,23 @@ function love.update(dt)
     end
     _gui:update();
     Loveframes.update(dt);
+    if timeCounter < 0 then
+        if love.system.getOS() == "Android" or true then
+            local hoveredObject = Loveframes.util.GetHoverObject();
+                    if hoveredObject == false or hoveredObject == nil then
+                        print(hoveredObject);
+                    else
+                        print(hoveredObject.text);
+                    end
+            if hoveredObject ~= false and hoveredObject.OnClick ~= nil then
+                print("2");
+                hoveredObject:OnClick();
+            end
+        end
+        timeCounter = 1;
+    else
+        timeCounter = timeCounter - dt;
+    end
     TEsound.cleanup();
     
     -- free unused memory
@@ -254,6 +272,8 @@ function love.mousepressed(x, y, button)
         _gui:changeFrame(_gui:getFrames().pause);
     end
     
+
+    
 end
 
 --- Callback function triggered wehen the mouse is released.
@@ -267,12 +287,7 @@ function love.mousereleased(x, y, button)
         button = 'l';
     end
     Loveframes.mousereleased(x, y, button);
-    if love.system.getOS() == "Android" then
-        local hoveredObject = Loveframes.util.GetHoverObject();
-        if hoveredObject ~= false and hoveredObject.OnClick ~= nil then
-            hoveredObject:OnClick();
-        end
-    end
+    
     
     -- deactivate the god mode when you release the mouse
     if _gui:getCurrentState() == "InGame" then
