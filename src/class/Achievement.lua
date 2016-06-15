@@ -98,7 +98,7 @@ function Achievement:allPillsAtLeastOnce()
     end
 end
 
---- Checks if the achievement achBitch was unlocked
+--- Checks if the achievement achBitch was unlocked.
 function Achievement:achBitch()
     if not _G._persTable.achievements.achBitch then
         local numOfUnlockedAch = 0;
@@ -116,12 +116,19 @@ function Achievement:achBitch()
     end
 end
 
+--- Checks and unlock the caughtTwoBoots achievement.
+-- @param failedStart Indicates if the intro failed.
+-- @param levelFinished The boolean that indicate if the level has been already finished.
 function Achievement:checkFailStart(failedStart, levelFinished)
     if failedStart and levelFinished and not _G._persTable.achievements.failedStart then
         self:unlockAchievement("failedStart");
     end
 end
 
+--- Checks and unlock the caughtTwoBoots achievement.
+-- @param levelFinished The boolean that indicate if the level has been already finished.
+-- @param fishedValue The total value of fished objects.
+-- @param valOfTwoShoes The value of two shoe objects.
 function Achievement:checkTwoShoes(levelFinished, fishedValue, valOfTwoShoes)
     if levelFinished and _G._tmpTable.caughtThisRound.shoe == 2
     and not _G._persTable.achievements.caughtTwoBoots
@@ -130,7 +137,9 @@ function Achievement:checkTwoShoes(levelFinished, fishedValue, valOfTwoShoes)
     end
 end
 
-
+--- Checks and unlock the nothingCaught achievement.
+-- @param levelFinished The boolean that indicate if the level has been already finished.
+-- @param failedStart Indicates if the intro failed.
 function Achievement:checkNothingCaught(levelFinished, failedStart)
     if levelFinished and next(_G._tmpTable.caughtThisRound) == nil and not failedStart
     and not _G._persTable.achievements.nothingCaught then
@@ -138,16 +147,20 @@ function Achievement:checkNothingCaught(levelFinished, failedStart)
     end
 end
 
-
-function Achievement:checkAllBordersPassed(levelFinished, reachedDepth, lowerBoarder)
+--- Checks and unlock the allLevelBoardersPassed achievement.
+-- @param levelFinished The boolean that indicate if the level has been already finished.
+-- @param reachedDepth The maximal reached depth of one round.
+-- @param lowerBorder The lower border of the current level.
+function Achievement:checkAllBordersPassed(levelFinished, reachedDepth, lowerBorder)
     if levelFinished and not _G._persTable.achievements.allLevelBoardersPassed
     and _persTable.upgrades.mapBreakthrough1 == true and _persTable.upgrades.mapBreakthrough2 == true
-    and reachedDepth <= lowerBoarder then
+    and reachedDepth <= lowerBorder then
         self:unlockAchievement("allLevelBoardersPassed");
     end
 end
 
-
+--- Checks and unlock the getFirstObject achievement.
+-- @param levelFinished The boolean that indicate if the level has been already finished.
 function Achievement:checkFirstObject(levelFinished)
     if levelFinished and not _G._persTable.achievements.getFirstObject
     and next(_G._tmpTable.caughtThisRound) ~= nil then
@@ -155,6 +168,8 @@ function Achievement:checkFirstObject(levelFinished)
     end
 end
 
+--- Checks and unlock the rageQuit achievement.
+-- @param reachedDepth The maximal reached depth of one round.
 function Achievement:checkRageQuit(reachedDepth)
     if not _G._persTable.achievements.rageQuit and _G._persTable.phase == 2
     and math.ceil(math.abs(reachedDepth / 300)) <= 2 then
@@ -162,6 +177,8 @@ function Achievement:checkRageQuit(reachedDepth)
     end
 end
 
+--- Checks and unlock the playedTime achievement.
+-- @param levelFinished The boolean that indicate if the level has been already finished.
 function Achievement:checkPlayTime(levelFinished)
     if levelFinished and not _G._persTable.achievements.playedTime
     and _G._persTable.playedTime > (2 * 60 * 60) then
@@ -169,6 +186,8 @@ function Achievement:checkPlayTime(levelFinished)
     end
 end
 
+--- Checks and unlock the creditsRed achievement.
+-- @param timeSpent The difference of the time of calling the credits frame and leaving it.
 function Achievement:checkCreditsRed(timeSpent)
     if timeSpent >= 10 then
         if not _G._persTable.achievements.creditsRed then
