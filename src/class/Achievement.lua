@@ -116,6 +116,59 @@ function Achievement:achBitch()
     end
 end
 
+function Achievement:checkFailStart(failedStart, levelFinished)
+    if failedStart and levelFinished and not _G._persTable.achievements.failedStart then
+        self:unlockAchievement("failedStart");
+    end
+end
+
+function Achievement:checkTwoShoes(levelFinished, fishedValue, valOfTwoShoes)
+    if levelFinished and _G._tmpTable.caughtThisRound.shoe == 2
+    and not _G._persTable.achievements.caughtTwoBoots
+    and fishedValue == valOfTwoShoes then
+        self:unlockAchievement("caughtTwoBoots");
+    end
+end
+
+
+function Achievement:checkNothingCaught(levelFinished, failedStart)
+    if levelFinished and next(_G._tmpTable.caughtThisRound) == nil and not failedStart
+    and not _G._persTable.achievements.nothingCaught then
+        self:unlockAchievement("nothingCaught");
+    end
+end
+
+
+function Achievement:checkAllBordersPassed(levelFinished, reachedDepth, lowerBoarder)
+    if levelFinished and not _G._persTable.achievements.allLevelBoardersPassed
+    and _persTable.upgrades.mapBreakthrough1 == true and _persTable.upgrades.mapBreakthrough2 == true
+    and reachedDepth <= lowerBoarder then
+        self:unlockAchievement("allLevelBoardersPassed");
+    end
+end
+
+
+function Achievement:checkFirstObject(levelFinished)
+    if levelFinished and not _G._persTable.achievements.getFirstObject
+    and next(_G._tmpTable.caughtThisRound) ~= nil then
+        self:unlockAchievement("getFirstObject");
+    end
+end
+
+function Achievement:checkRageQuit(reachedDepth)
+    if not _G._persTable.achievements.rageQuit and _G._persTable.phase == 2
+    and math.ceil(math.abs(reachedDepth / 300)) <= 2 then
+        self:unlockAchievement("rageQuit");
+    end
+end
+
+function Achievement:checkPlayTime(levelFinished)
+    if levelFinished and not _G._persTable.achievements.playedTime
+    and _G._persTable.playedTime > (2 * 60 * 60) then
+        self:unlockAchievement("playedTime");
+    end
+end
+
 function Achievement:checkCreditsRed(timeSpent)
     if timeSpent >= 10 then
         if not _G._persTable.achievements.creditsRed then

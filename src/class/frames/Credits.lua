@@ -153,8 +153,8 @@ end
 --- called in the "fly out" state
 function Credits:disappear()
     self.frame:disappear(self.elementsOnFrame);
-    _gui:getAchievmentManager():checkCreditsRed(self:calcTimeSpent());
-    _gui:getAchievmentManager():achBitch(); -- must be the last ach checkup!
+    _gui:getLevelManager():getAchievmentManager():checkCreditsRed(self:calcTimeSpent());
+    _gui:getLevelManager():getAchievmentManager():achBitch(); -- must be the last ach checkup!
 end
 
 --- return true if the frame is on position /fly in move is finished

@@ -9,8 +9,11 @@ _G.math.inf = 1 / 0;
 --- The class LevelManager administrate all references to the current level
 -- the current player and swarmfactory objects.
 local LevelManager = Class {
-    init = function(self)
+    init = function(self, achievements) 
+        self.achMan = achievements;
     end,
+
+    achMan = nil;
     curLevel = nil;
     curPlayer = nil;
     curSwarmFac = nil;
@@ -128,6 +131,12 @@ end
 -- @return Returns the properties table for the given level.
 function LevelManager:getLevelPropMapByName(levName)
     return self.p_levelProperties[levName];
+end
+
+--- Returns the reference to the achievement manager object.
+-- @return Returns the reference to the achievement manager object.
+function LevelManager:getAchievmentManager()
+    return self.achMan;
 end
 
 return LevelManager;
