@@ -108,6 +108,7 @@ _G.levelTestStub = function()
                 checkAllBordersPassed = function(...) end;
                 checkFirstObject = function(...) end;
                 checkPlayTime = function(...) end;
+                onlyNegativeFishesCaught = function(...) end;
                 achBitch = function(...) end;
         } end;
     };

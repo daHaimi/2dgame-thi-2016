@@ -994,7 +994,7 @@ return {
         };
         allPillsAtLeastOnce = {
             nameOnPersTable = "allPillsAtLeastOnce";
-            sortNumber = 21;
+            sortNumber = 22;
             image_lock = "ach_suchti_locked.png";
             image_unlock = "ach_suchti.png";
         };
@@ -1006,19 +1006,19 @@ return {
         };
         allLevelBoardersPassed = {
             nameOnPersTable = "allLevelBoardersPassed";
-            sortNumber = 22;
+            sortNumber = 23;
             image_lock = "ach_noLvlBorderInfinity_locked.png";
             image_unlock = "ach_noLvlBorderInfinity.png";
         };
         creditsRed = {
             nameOnPersTable = "creditsRed";
-            sortNumber = 23;
+            sortNumber = 24;
             image_lock = "ach_credits_locked.png";
             image_unlock = "ach_credits.png";
         };
         playedTime = {
             nameOnPersTable = "playedTime";
-            sortNumber = 24;
+            sortNumber = 26;
             image_lock = "ach_playtime_locked.png";
             image_unlock = "ach_playtime.png";
         };
@@ -1030,13 +1030,13 @@ return {
         };
         unreachable = {
             nameOnPersTable = "unreachable";
-            sortNumber = 26;
+            sortNumber = 27;
             image_lock = "ach_unreachable_locked.png";
             image_unlock = "ach_unreachable.png";
         };
         achBitch = {
             nameOnPersTable = "achBitch";
-            sortNumber = 27;
+            sortNumber = 28;
             image_lock = "ach_achievmentBitch_locked.png";
             image_unlock = "ach_achievmentBitch.png";
         };

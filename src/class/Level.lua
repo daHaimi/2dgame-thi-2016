@@ -298,6 +298,8 @@ function Level:checkForAchievments()
     
     self.levMan:getAchievmentManager():checkPlayTime(self.levelFinished);
     
+    self.levMan:getAchievmentManager():onlyNegativeFishesCaught(self.levelFinished, self.levMan:getCurSwarmFactory());
+    
     self.levMan:getAchievmentManager():achBitch(); -- call this checkup always at the end
 end
 

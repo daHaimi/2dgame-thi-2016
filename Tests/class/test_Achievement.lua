@@ -234,14 +234,42 @@ describe("Unit test for Achievement.lua", function()
         myInstance:checkAchievements();
         assert.are.same(_G._persTable.achievements.negativCoins, exp);
     end)  
-    it("Test function Achievement:onlyNegativeFishesCaught", function()
-        _G._persTable.fish.postiveFishCaught  = false;
-        _G._persTable.fish.caughtInOneRound = 3;
 
-        local myInstance = testClass();
-        local exp = true;
-        myInstance:onlyNegativeFishesCaught()
-        assert.are.same(_G._persTable.achievements.onlyNegativeFishesCaught, exp);
+    it("Test Achievement: nothing Caught", function()
+        _G._gui = {
+            newNotification = function(...) end;
+        };
+        _G._unlockedAchievements = {};
+        _G.data = {
+            achievements = {
+                onlyNegativeFishesCaught = {
+                    nameOnPersTable = "onlyNegativeFishesCaught";
+                    sortNumber = 20;
+                    image_lock = "ach_negativeShitcoin_locked.png";
+                    image_unlock = "ach_negativeShitcoin.png";
+                };
+            };
+        };
+        _G._tmpTable = {
+            caughtThisRound = { 
+                ["rat"] = 2;
+            };
+        };
+        
+        local levelFinished = true;
+        local swarmFactory = {
+            getFishableObjects = function(...) return {
+                rat = {
+                    value = -10;
+                };
+            } end;
+        };
+        
+        stub(_gui, "newNotification");
+        
+        locInstance:onlyNegativeFishesCaught(levelFinished, swarmFactory);
+        assert.are.same(true, _G._persTable.achievements.onlyNegativeFishesCaught);
+        assert.stub(_gui.newNotification).was.called(1);
     end)
   
     it("Test function Achievement:allPillsAtLeastOnce", function()
@@ -306,21 +334,6 @@ describe("Unit test for Achievement.lua", function()
         local exp = false;
         myInstance:allObjectsAtLeastOnce ()
         assert.are.same(_G._persTable.achievements.allObjectsAtLeastOnce , exp);
-    end)
-
-    it("Test Achievement: nothing Caught", function()
-        _G._tmpTable.caughtThisRound = {};
-        local failedStart = false;
-        local levelFinished = true;
-        _G._persTable.achievements.nothingCaught = false;
-
-        _G._unlockedAchievements = {};
-        _G.data = { achievements = { nothingCaught = {image_unlock = "xyz"}}};
-        _G._gui = { newNotification = function(...) end; };
-        stub(_gui, "newNotification");
-         
-        locInstance:checkNothingCaught(levelFinished, failedStart);
-        assert.are.same(_G._persTable.achievements.nothingCaught, true);
     end)
 
     it("Testing unlock FailedStart", function()

@@ -70,9 +70,23 @@ function Achievement:negativCoins()
     end
 end
 
-function Achievement:onlyNegativeFishesCaught()
-    if _G._persTable.fish.postiveFishCaught == false and _G._persTable.fish.caughtInOneRound > 2 then
-        _G._persTable.achievements.onlyNegativeFishesCaught = true;
+--- Checks if the achievement onlyNegativeFishesCaught was unlocked.
+-- @param levelFinished The boolean that indicate if the level has been already finished.
+-- @param swarmFac The reference to the current swarmFactory.
+function Achievement:onlyNegativeFishesCaught(levelFinished, swarmFac)
+    if levelFinished and not _G._persTable.achievements.onlyNegativeFishesCaught then
+        local negObjects = 0;
+        for name, amount in pairs(_G._tmpTable.caughtThisRound) do
+            if swarmFac:getFishableObjects()[name].value < 0 then
+                negObjects = negObjects + amount;
+            else
+                return;
+            end
+        end
+        
+        if negObjects >= 2 then
+            self:unlockAchievement("onlyNegativeFishesCaught");
+        end
     end
 end
 
