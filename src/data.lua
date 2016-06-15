@@ -1034,6 +1034,11 @@ return {
             image_lock = "ach_unreachable_locked.png";
             image_unlock = "ach_unreachable.png";
         };
+        achBitch = {
+            nameOnPersTable = "achBitch";
+            image_lock = "gui_Test_klickableElement_disable.png";
+            image_unlock = "gui_Test_klickableElement.png";
+        };
     };
     languages = {
         english = {
@@ -1184,6 +1189,10 @@ return {
                 unreachable = {
                     name = "Unreachable";
                     description = "Don't try to get it";
+                };
+                achBitch = {
+                    name = "Achievement bitch";
+                    description = "You got all achievements?!";
                 };
                 --objects
                 nemo = {
@@ -1472,6 +1481,11 @@ return {
                     name = "Unerreichbar";
                     description = "Versuche es erst gar nicht";
                 };
+                achBitch = {
+                    name = "Achievement Bitch";
+                    description = "Du hast alle Erfolge freigeschaltet?!";
+                };
+                --objects
                 nemo = {
                     name = "Nemo";
                     description = "Anscheinend hast du Nemo gefunden";

@@ -141,6 +141,8 @@ function Persistence:createPersTable()
         bFishCaugtTotal = false;
         sFishCaugtTotal = false;
         gFishCaugtTotal = false;
+        achBitch = false;
+        unreachable = false;
     };
 
 

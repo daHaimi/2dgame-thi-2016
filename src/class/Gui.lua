@@ -39,6 +39,7 @@ local Gui = Class {
         self.notification = Notification();
     end;
     levMan = nil;
+    achMan = nil;
 }
 
 function Gui:setLanguage()

@@ -120,7 +120,9 @@ it("Testing Constructor", function()
             getLevelManager = function(...) return {
                 getCurLevel = function(...) return {
                     getReachedDepth = function(...) return -500 end;
-                    unlockAchievement = function(...) res = true end;
+                } end;
+                getAchievmentManager = function(...) return {
+                    checkRageQuit = function(...) res = true end;
                 } end;
             } end;
         };

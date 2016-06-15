@@ -66,6 +66,9 @@ describe("Unit test for Achievement.lua", function()
             roundFuel = nil;
             caughtThisRound = {};
         };
+        
+        local locInstance = testClass();
+        
     end)
 
 
@@ -304,5 +307,123 @@ describe("Unit test for Achievement.lua", function()
         myInstance:allObjectsAtLeastOnce ()
         assert.are.same(_G._persTable.achievements.allObjectsAtLeastOnce , exp);
     end)
-  end)
+
+    it("Test Achievement: nothing Caught", function()
+        _G._tmpTable.caughtThisRound = {};
+        local failedStart = false;
+        local levelFinished = true;
+        _G._persTable.achievements.nothingCaught = false;
+
+        _G._unlockedAchievements = {};
+        _G.data = { achievements = { nothingCaught = {image_unlock = "xyz"}}};
+        _G._gui = { newNotification = function(...) end; };
+        stub(_gui, "newNotification");
+         
+        locInstance:checkNothingCaught(levelFinished, failedStart);
+        assert.are.same(_G._persTable.achievements.nothingCaught, true);
+    end)
+
+    it("Testing unlock FailedStart", function()
+        _G._gui = {
+            newNotification = function(...) end;
+        };
+        _G._unlockedAchievements = {};
+        _G.data = {
+            achievements = {
+                failedStart = {
+                    nameOnPersTable = "failedStart";
+                    image_lock = "ach_drop_hamster_locked.png";
+                    image_unlock = "ach_drop_hamster.png";
+                };
+            };
+        };
+
+        stub(_gui, "newNotification");
+        local failedStart = true;
+        local levelFinished = true;
+        _G._persTable.achievements.failedStart = false;
+        locInstance:checkFailStart(failedStart, levelFinished);
+        assert.are.same(true, _G._persTable.achievements.failedStart);
+        assert.stub(_gui.newNotification).was.called(1);
+    end)
+
+    it("Testing unlock twoBoots", function()
+        _G._gui = {
+            newNotification = function(...) end;
+        };
+        _G._unlockedAchievements = {};
+        _G.data = {
+            achievements = {
+                caughtTwoBoots = {
+                    nameOnPersTable = "caughtTwoBoots";
+                    image_lock = "ach_two_shoes_locked.png";
+                    image_unlock = "ach_two_shoes.png";
+                };
+            };
+        };
+
+        stub(_gui, "newNotification");
+        _G._tmpTable.caughtThisRound = {
+            shoe = 2;
+        }
+        _G._persTable.fish.caught = {
+            shoe = 2;
+        }
+        
+        local shoeVal = -20;
+        local fishedVal = -40;
+        local levelFinished = true;
+        _G._persTable.achievements.caughtTwoBoots = false;
+        locInstance:checkTwoShoes(levelFinished, fishedVal, shoeVal*2);
+        assert.are.same(true, _G._persTable.achievements.caughtTwoBoots);
+        assert.stub(_gui.newNotification).was.called(1);
+    end)
+
+
+    it("Testing unlockAchievement function", function()
+        _G._gui = {
+            newNotification = function(...) end;
+        };
+        _G._unlockedAchievements = {};
+        _G.data = {
+            achievements = {
+                getFirtsObject = {
+                    nameOnPersTable = "getFirstObject";
+                    image_lock = "ach_firstObject_locked.png";
+                    image_unlock = "ach_firstObject.png";
+                };
+            };
+        };
+
+        stub(_gui, "newNotification");
+        locInstance:unlockAchievement("getFirtsObject");
+        assert.are.same(true, _G._persTable.achievements.getFirtsObject);
+        assert.stub(_gui.newNotification).was.called(1);
+    end) 
+
+    it("Testing update playTime", function()
+        _G._gui = {
+            newNotification = function(...) end;
+        };
+        _G.data = {
+            achievements = {
+                playedTime = {
+                    nameOnPersTable = "playedTime";
+                    image_lock = "ach_playtime_locked.png";
+                    image_unlock = "ach_playtime.png";
+                };
+            };
+        };
+        _G._persTable.playedTime = 7201;
+        _G._persTable.achievements = {
+            playedTime = false;
+        };
+        stub(_gui, "newNotification");
+        local levelFinished = true;
+        
+        locInstance:checkPlayTime(levelFinished);
+        assert.are.same(true, _G._persTable.achievements.playedTime);
+        assert.stub(_gui.newNotification).was.called(1);
+    end) 
+end)
 
