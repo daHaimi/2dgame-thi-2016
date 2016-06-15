@@ -187,13 +187,13 @@ describe("Unit test for Bait.lua", function()
     it("Test sleeping pill duration", function()
         local myInstance = testClass(locWinDim, levMan);
         myInstance.image = locImageStub;
-        myInstance.sleepingPillDuration = 2;
+        myInstance.pillDuration = 2;
         myInstance.imageCheeks = locImageStub;
         myInstance.imageCheeks = {
             getDimensions = function(...) end;
         };
         myInstance:update(0.1);
-        assert.are.same(1.9, myInstance.sleepingPillDuration);
+        assert.are.same(1.9, myInstance.pillDuration);
     end)    
 
     it("Test show Mouth", function()
@@ -466,16 +466,30 @@ describe("Unit test for Bait.lua", function()
 
     it("Test sleepingPillHit", function()
         _G._persTable.upgrades = {
-            sleepingPillDuration = 600; -- duration of the effect of the sleeping pill
+            pillDuration = 600; -- duration of the effect of the sleeping pill
             sleepingPillSlow = 0.3; -- sets the slow factor of the sleeping pill 0.25 = 25% of the usual movement
         };
 
         local myInstance = testClass(locWinDim, levMan);
         myInstance.image = locImageStub;
-        myInstance.sleepingPillDuration = 0;
-        myInstance:sleepingPillHit(FishableObject);
+        myInstance.pillDuration = 0;
+        myInstance:sleepingPillHit();
 
-        assert.are.same(600, myInstance.sleepingPillDuration);
+        assert.are.same(600, myInstance.pillDuration);
+    end)
+
+    it("Test coffeeHit", function()
+        _G._persTable.upgrades = {
+            pillDuration = 600; -- duration of the effect of the sleeping pill
+            coffeeSpeedup = 2; -- sets the speedup factor for coffe 2 = 200% of the usual movement speed
+        };
+
+        local myInstance = testClass(locWinDim, levMan);
+        myInstance.image = locImageStub;
+        myInstance.pillDuration = 0;
+        myInstance:coffeeHit();
+
+        assert.are.same(600, myInstance.pillDuration);
     end)
 
     it("Test collisionDetected with a sleeping pill", function()

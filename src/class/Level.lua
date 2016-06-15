@@ -95,8 +95,8 @@ local Level = Class {
         self.lightWorld = love.light.newWorld();
 
         local time = tonumber(os.date("%M"));
-        local minLightLevel = 81;
-        local maxLightLevel = 174;
+        local minLightLevel = 100;
+        local maxLightLevel = 155;
         local lightLevel = ((math.abs(30 - time)) / 30) * maxLightLevel + minLightLevel;
 
         self.lightWorld.setAmbientColor(lightLevel, lightLevel, lightLevel);
@@ -194,9 +194,9 @@ function Level:update(dt, bait)
     
     --dynamic creation of swarms of fishable objects
     self.levMan:getCurSwarmFactory():createMoreSwarms(-(self.posY - self.winDim[2] * 0.5));
-    --dynamic creation of sleepingPills
+    --dynamic creation of Pills
     if self.p_mode ~= "sleepingCrocos" then
-        self.levMan:getCurSwarmFactory():createSleepingpill(-(self.posY - self.winDim[2] * 0.5), 300, 700);
+        self.levMan:getCurSwarmFactory():createRandomPill(-(self.posY - self.winDim[2] * 0.5), 300, 700);
     end
     --dynamic creation of swarms of bubbles
     if (self.p_levelName == "sewers" or self.p_levelName == "sewersEndless"or 

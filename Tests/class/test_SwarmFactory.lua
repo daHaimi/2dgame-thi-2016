@@ -168,10 +168,10 @@ describe("Unit test for SwarmFactory.lua", function()
         assert.are.same(0.3, locInstance.speedMulitplicator);
     end)
 
-    it("Testing createSleepingpill", function()
+    it("Testing createRandomPill", function()
         locInstance.createdFishables = {};
         locInstance.positionOfLastPill = 0;
-        locInstance:createSleepingpill(1000, 200, 400);
+        locInstance:createRandomPill(1000, 200, 400);
         assert.are.same(1, #locInstance.createdFishables);
     end)
 

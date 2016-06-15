@@ -298,6 +298,25 @@ return {
                 }
             };
         };
+        coffee = {
+            name = "coffee";
+            image = "coffee.png";
+            spriteSize = 32;
+            minSpeed = 0;
+            maxSpeed = 0;
+            value = 0;
+            minAmount = 1;
+            maxAmount = 1;
+            swarmHeight = 50;
+            hitbox = {
+                {
+                    width = 26;
+                    height = 10;
+                    deltaXPos = 3;
+                    deltaYPos = 11;
+                }
+            };
+        };
         squirrel = {
             name = "squirrel";
             image = "squirrel.png";
@@ -762,6 +781,12 @@ return {
             maxSwarmHeight = 10000
         }
     };
+    
+    pills = {
+        allowedFishables = {"sleepingPill", "coffee" };
+         fishablesProbability = {50, 100};
+    };
+    
     swarmCrocos = {
         {
             allowedFishables = {"sleepingCrocodile" };

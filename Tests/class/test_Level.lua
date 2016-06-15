@@ -89,7 +89,7 @@ _G.levelTestStub = function()
         };
         curSwarmFac = {
             createMoreSwarms = function(...) end;
-            createSleepingpill = function(...) end;
+            createRandomPill = function(...) end;
             createFallingLitter = function(...) end;
             createBubbles = function(...) end;
             getFishableObjects = function(...) return fishables end;

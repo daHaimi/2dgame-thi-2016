@@ -19,6 +19,7 @@ local SwarmFactory = Class {
         self.positionOfLastPill = 0;
         self.positionOfLastLitter = 0;
         self.positionOfLastBubbles = 0;
+        self.pillSwarm = data.pills
 
         self.levMan = levelManager;
         -- Start at the lower 75% of the screen to create swarms
@@ -59,9 +60,9 @@ end
 -- @param depth depth where the pill should be spawned
 -- @param minDistance minimal distance between two pills
 -- @param maxDistance maximal distance between two pills
-function SwarmFactory:createSleepingpill(depth, minDistance, maxDistance)
+function SwarmFactory:createRandomPill(depth, minDistance, maxDistance)
     if depth > self.positionOfLastPill + math.random(maxDistance - minDistance) + minDistance then
-        local fishable = self.fishableObjects["sleepingPill"];
+        local fishable = self:determineFishable(self.pillSwarm.allowedFishables, self.pillSwarm.fishablesProbability);
         self.createdFishables[#self.createdFishables + 1] = FishableObject(fishable.name, fishable.image,
             depth + self.levMan:getCurLevel().winDim[2], fishable.minSpeed, fishable.maxSpeed, fishable.value,
             fishable.hitpoints, fishable.spriteSize, fishable.hitbox, fishable.animTimeoutMin, fishable.animTimeoutMax,
