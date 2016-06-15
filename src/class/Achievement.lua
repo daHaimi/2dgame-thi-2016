@@ -103,14 +103,14 @@ function Achievement:achBitch()
     if not _G._persTable.achievements.achBitch then
         local numOfUnlockedAch = 0;
 
-        for i=1, self:tablelength(_G._persTable.achievements), 1
+        for k,v in pairs(_G._persTable.achievements)
         do
-            if _G._persTable.achievements[i] == true then
-                numOfUnlockedAch = numOfUnlockedAch +1;
+            if v == true then
+                numOfUnlockedAch = numOfUnlockedAch + 1;
             end
         end
 
-        if self:tablelength(_G.data.achievements) == numOfUnlockedAch then
+        if self:tablelength(_G.data.achievements) - 2 == numOfUnlockedAch then
             self:unlockAchievement("achBitch");
         end
     end

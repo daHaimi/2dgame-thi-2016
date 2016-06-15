@@ -379,28 +379,6 @@ describe("Unit test for Achievement.lua", function()
         assert.stub(_gui.newNotification).was.called(1);
     end)
 
-
-    it("Testing unlockAchievement function", function()
-        _G._gui = {
-            newNotification = function(...) end;
-        };
-        _G._unlockedAchievements = {};
-        _G.data = {
-            achievements = {
-                getFirtsObject = {
-                    nameOnPersTable = "getFirstObject";
-                    image_lock = "ach_firstObject_locked.png";
-                    image_unlock = "ach_firstObject.png";
-                };
-            };
-        };
-
-        stub(_gui, "newNotification");
-        locInstance:unlockAchievement("getFirtsObject");
-        assert.are.same(true, _G._persTable.achievements.getFirtsObject);
-        assert.stub(_gui.newNotification).was.called(1);
-    end) 
-
     it("Testing update playTime", function()
         _G._gui = {
             newNotification = function(...) end;
@@ -424,6 +402,70 @@ describe("Unit test for Achievement.lua", function()
         locInstance:checkPlayTime(levelFinished);
         assert.are.same(true, _G._persTable.achievements.playedTime);
         assert.stub(_gui.newNotification).was.called(1);
+    end)
+
+    it("Testing achievement achBitch", function()
+        _G._persTable.achievements = {
+            getFirstObject = false;
+            failedStart = true;
+            caughtTwoBoots = true;
+            secondStart = true;
+            bronzeCaughtOneRound = true;
+            silverCaughtOneRound = true;
+            goldCaughtOneRound = true;
+            bronzeCoinsOneRound = true;
+            silverCoinsOneRound = true;
+            goldCoinsOneRound = true;
+            bMoneyEarnedTotal = true;
+            sMoneyEarnedTotal = true;
+            gMoneyEarnedTotal = true;
+            negativCoins = true;
+            shoppingQueen = true;
+            bFishCaugtTotal = true;
+            sFishCaugtTotal = true;
+            gFishCaugtTotal = true;
+            firstBorderRemoved = true;
+            onlyNegativeFishesCaught = true;
+            allPillsAtLeastOnce = true;
+            nothingCaught = true;
+            allLevelBoardersPassed = true;
+            creditsRed = true;
+            playedTime = true;
+            rageQuit = true;
+            unreachable = false;
+            achBitch = false;
+        };
+        
+        locInstance:achBitch();
+        assert.are.same(false, _G._persTable.achievements.achBitch);
+        
+        _G._persTable.achievements.getFirstObject = true;
+        locInstance:achBitch();
+        
+        assert.are.same(true, _G._persTable.achievements.playedTime);
+        assert.stub(_gui.newNotification).was.called(1);
+    end)
+
+    it("Testing unlockAchievement function", function()
+        _G._gui = {
+            newNotification = function(...) end;
+        };
+        _G._unlockedAchievements = {};
+        _G.data = {
+            achievements = {
+                getFirtsObject = {
+                    nameOnPersTable = "getFirstObject";
+                    image_lock = "ach_firstObject_locked.png";
+                    image_unlock = "ach_firstObject.png";
+                };
+            };
+        };
+
+        stub(_gui, "newNotification");
+        locInstance:unlockAchievement("getFirtsObject");
+        assert.are.same(true, _G._persTable.achievements.getFirtsObject);
+        assert.stub(_gui.newNotification).was.called(1);
     end) 
+
 end)
 

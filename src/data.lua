@@ -900,7 +900,7 @@ return {
             nameOnPersTable = "bronzeCaughtOneRound";
             sortNumber = 4;
             image_lock = "ach_objectsOneRound_locked.png";
-            image_unlock = "ach_objectsOneRoundBronze.png";
+            image_unlock = "ach_objectsOneRound.png";
         };
         silverCaughtOneRound = {
             nameOnPersTable = "silverCaughtOneRound";
@@ -912,7 +912,7 @@ return {
             nameOnPersTable = "goldCaughtOneRound";
             sortNumber = 6;
             image_lock = "ach_objectsOneRound_locked.png";
-            image_unlock = "ach_objectsOneRoundGold.png";
+            image_unlock = "ach_objectsOneRound.png";
         };
         bronzeCoinsOneRound = {
             nameOnPersTable = "bronzeCoinsOneRound";
