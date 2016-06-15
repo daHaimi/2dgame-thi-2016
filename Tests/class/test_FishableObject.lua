@@ -243,7 +243,9 @@ describe("Unit test for FishableObject.lua", function()
             localHitbox, 0.1, 0.2, 1, 0, _G.levMan);
         
         myInstance:draw();
-        assert.spy(spyDraw).was.called_with(myInstance.animation, myInstance.xPosition, myInstance.yPosition);
+        myInstance.xPosition = 100;
+        myInstance.speed = 1;
+        assert.spy(spyDraw).was.called(1);
         myInstance:update(0.05, 1);
         assert.spy(spyShiftImage).was_called();
         
