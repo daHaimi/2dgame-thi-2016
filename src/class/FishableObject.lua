@@ -28,22 +28,15 @@ local FishableObject = Class {
         if love.filesystem.exists("assets/" .. imageName .. "_glow." .. imageExtention) then
             local lightWorld = levMan.curLevel:getLightWorld();
             self.glowMap = love.graphics.newImage("assets/" .. imageName .. "_glow." .. imageExtention);
-            self.lightImage = lightWorld.newImage(self.image, 64, 64, 64, 64, 0, 0);
+            self.lightImage = lightWorld.newImage(self.image, 64, 64, 64, 64, 64, 64);
             self.lightImage.setGlowMap(self.glowMap);
-            self.lightImage.setOffset(0, 0);
             if love.filesystem.exists("assets/" .. imageName .. "_normal." .. imageExtention) then
                 self.normalMap = love.graphics.newImage("assets/" .. imageName .. "_normal." .. imageExtention);
-            else
-                -- TODO load default
+                --else TODO load default
             end
             self.lightImage.setNormalMap(self.normalMap)
             self.objectTest = lightWorld.newBody("refraction", self.image, 64, 64, 64, 64);
         end
-        --self.lightImage.setOffset(levMan.curLevel); end
-        --if love.filesystem.exists("assets/" .. imageSrc .. "_normal") then
-        --    self.normalImage = love.graphics.newImage("assets/" .. imageSrc .. "_normal");
-        --    -- future work normal map
-        --end
         self.xPosition = math.random(spriteSize + 26, levMan:getCurLevel().winDim[1] - 58 - self.spriteSize);
         -- 58 = 26 (width of level wall) + 32 (0.5 * width of hamster)
         if fallSpeed > 0 then
@@ -198,9 +191,9 @@ function FishableObject:update(dt, speedMulitplicator)
     end
     if self.lightImage ~= nil then
         if self.speed <= 0 then
-            self.lightImage.setPosition(self.xPosition, self.yPosition);
+            self.lightImage.setPosition(self.xPosition + 32, self.yPosition + 32);
         else
-            self.lightImage.setPosition(-self.xPosition, self.yPosition);
+            self.lightImage.setPosition(self.xPosition + 4, self.yPosition + 32);
         end
     end
 end
