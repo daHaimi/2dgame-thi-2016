@@ -1036,8 +1036,9 @@ return {
         };
         achBitch = {
             nameOnPersTable = "achBitch";
-            image_lock = "gui_Test_klickableElement_disable.png";
-            image_unlock = "gui_Test_klickableElement.png";
+            sortNumber = 27;
+            image_lock = "ach_achievmentBitch_locked.png";
+            image_unlock = "ach_achievmentBitch.png";
         };
     };
     languages = {
