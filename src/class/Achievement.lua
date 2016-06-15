@@ -98,4 +98,29 @@ function Achievement:allPillsAtLeastOnce()
     end
 end
 
+--- Checks if the achievement achBitch was unlocked
+function Achievement:achBitch()
+    local numOfUnlockedAch = 0;
+    
+    for i=1, #_G._persTable.achievements, 1
+    do
+        if _G._persTable.achievements[i] == true then
+            numOfUnlockedAch = numOfUnlockedAch +1;
+        end
+    end
+    
+    if #_G.data.achievements == numOfUnlockedAch then
+        self:unlockAchievement("achBitch");
+    end
+end
+
+--- Unlocks the given achievement.
+-- @param achName The name of the achievement.
+function Achievement:unlockAchievement(achName)
+    table.insert(_G._unlockedAchievements, _G.data.achievements[achName]);
+    _gui:newNotification("assets/gui/480px/" .. _G.data.achievements[achName].image_unlock,
+        achName);
+    _G._persTable.achievements[achName] = true;
+end
+
 return Achievement;
