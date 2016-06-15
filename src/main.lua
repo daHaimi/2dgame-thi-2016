@@ -66,7 +66,8 @@ function love.load()
     _G._persTable.scaledDeviceDim = {_G._persTable.winDim[1] * p_scaleFactor, _G._persTable.winDim[2] * p_scaleFactor };
     love.window.setMode(_G._persTable.scaledDeviceDim[1], _G._persTable.scaledDeviceDim[2], 
         {x = (_G._persTable.deviceDim[1] - _G._persTable.scaledDeviceDim[1]) / 2, y = titleHeight});
-    levMan = LevelManager();
+    achiev = Achievement();
+    levMan = LevelManager(achiev);
 
     -- Get Accelerometer if android
     if love.system.getOS() == "Android" then
@@ -88,7 +89,6 @@ function love.load()
     _G._gui = Gui();
     _gui:setLevelManager(levMan);
     _gui:start();
-    achiev = Achievement();
     achiev:checkAchievements();
 end
 

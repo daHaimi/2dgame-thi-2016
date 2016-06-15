@@ -153,14 +153,8 @@ end
 --- called in the "fly out" state
 function Credits:disappear()
     self.frame:disappear(self.elementsOnFrame);
-    if self:calcTimeSpent() >= 10 then
-        if not _G._persTable.achievements.creditsRed then
-            table.insert(_G._unlockedAchievements, _G.data.achievements.creditsRed);
-            _gui:newNotification("assets/gui/480px/" .. _G.data.achievements.creditsRed.image_unlock,
-                "creditsRed");
-            _G._persTable.achievements.creditsRed = true;
-        end
-    end
+    _gui:getLevelManager():getAchievmentManager():checkCreditsRed(self:calcTimeSpent());
+    _gui:getLevelManager():getAchievmentManager():achBitch(); -- must be the last ach checkup!
 end
 
 --- return true if the frame is on position /fly in move is finished

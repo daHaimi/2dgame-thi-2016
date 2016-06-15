@@ -119,9 +119,24 @@ it("Testing Constructor", function()
     end)
 
     it("Testing disappear function", function()
+        local creditsAchCalled = false;
+        local achBitchAchCalled = false;
+        
+        _G._gui = {
+            getLevelManager = function(...) return {
+                getAchievmentManager = function(...) return {
+                    checkCreditsRed = function(...) creditsAchCalled = true end;
+                    achBitch = function(...) achBitchAchCalled = true end;
+                } end;
+            } end;
+        };
+        
+
         stub(locInstance.frame, "disappear");
         locInstance:disappear();
         assert.stub(locInstance.frame.disappear).was_called(1);
+        assert.are.same(true, creditsAchCalled);
+        assert.are.same(true, achBitchAchCalled);
     end)
 
     it("Testing checkPosition function", function()
