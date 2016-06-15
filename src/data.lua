@@ -1272,7 +1272,7 @@ return {
                 };
                 ufo = {
                     name = "Ufo";
-                    description = "Wanna be our guinea pig?";
+                    description = "Wanna be our hamster?";
                 };
                 --upgrades
                 oneMoreLife = {
