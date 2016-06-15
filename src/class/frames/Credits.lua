@@ -47,9 +47,6 @@ local Credits = Class {
         "Daniel Plank",
         "Daniel Zistl",
     };
-    p_transTable = {
-        "Michelle Guttenberger",
-    };
     
     p_libsTable = {
         "hump, Matthias Richter",
@@ -105,15 +102,14 @@ end
 --- changes the language of this frame
 function Credits:setLanguage(language)
     self.elementsOnFrame.button_back.object:SetText(_G.data.languages[language].package.buttonBack);
+    self.elementsOnFrame.text_credits.object:SetText(self:buildCreditsString());
 end
 
+--- Bild the credits string.
+-- @return Returns the formatted credits string.
 function Credits:buildCreditsString()
     local creditsString = "";
-    print(_G.data.languages[_G._persTable.config.language].package.credits.staff);
-    print(_G.data.languages[_G._persTable.config.language].package.credits.trans)
-    print(_G.data.languages[_G._persTable.config.language].package.credits.libs)
-    print(_G.data.languages[_G._persTable.config.language].package.credits.noHWH)
-
+    
     --staff
     creditsString = _G.data.languages[_G._persTable.config.language].package.credits.staff .. "\n";
     
@@ -121,16 +117,6 @@ function Credits:buildCreditsString()
     do
         creditsString = creditsString .. self.p_staff[i] .. "\n";
     end
-    
-    creditsString = creditsString .. "\n";
-    
-    --translation
-    creditsString = creditsString .. _G.data.languages[_G._persTable.config.language].package.credits.trans .. "\n";
-    for i = 1, #self.p_transTable, 1
-    do
-        creditsString = creditsString .. self.p_transTable[i] .. "\n";
-    end
-    
     creditsString = creditsString .. "\n";
     
     --libs
@@ -139,7 +125,6 @@ function Credits:buildCreditsString()
     do
         creditsString = creditsString .. self.p_libsTable[i] .. "\n";
     end
-    
     creditsString = creditsString .. "\n";
     
     --no hamsters were harmed
