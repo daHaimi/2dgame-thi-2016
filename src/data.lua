@@ -65,8 +65,8 @@ return {
             animTimeoutMin = 0.08;
             animTimeoutMax = 0.15;
             animType = "bounce";
-            minAmount = 3;
-            maxAmount = 3;
+            minAmount = 40;
+            maxAmount = 80;
             swarmHeight = 350;
             enabled = true;
             hitbox = {
@@ -1114,6 +1114,7 @@ return {
                 textBought = "Already bought";
                 buttonRetry = "Retry";
                 textNoNewAchievements = "No unlocked achievements this round";
+                buttonBuy = "Buy";
                 --credits
                 credits = {
                     staff = "Staff:";
@@ -1410,6 +1411,7 @@ return {
                 textBought = "Already bought";
                 buttonRetry = "Neustarten";
                 textNoNewAchievements = "Keine neuen Errungenschaften";
+                buttonBuy = "Kaufen";
                 --credits
                 credits = {
                     staff = "Mitwirkende:";

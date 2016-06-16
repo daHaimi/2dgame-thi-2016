@@ -98,33 +98,25 @@ function UpgradeMenu:create()
                 self:buyElement();
                 _G._persistence:updateSaveFile();
             else
-                print(_G.data.languages[_G._persTable.config.language].package.textMoney)
                 _gui:newTextNotification(self.directory .. "ach_nothingCaught.png", _G.data.languages[_G._persTable.config.language].package.textMoney);
+            end
+            if not _G._persTable.achievements.shoppingQueen then
+                _gui:getLevelManager():getAchievmentManager():achShoppingQueen();
             end
             _gui:getLevelManager():getAchievmentManager():achBitch(); -- check the achievement achBitch
         end
     end
 end
 
-function UpgradeMenu:checkForAchievement()
-    local boughtAll = true;
-    for _, v in pairs(_G._persTable.upgrades) do
-        if type(v) == "boolean" then
-            if not v then
-                boughtAll = false;
-            end
-        end
-    end
-    if boughtAll then
-        _G._persTable.achievements.shoppingQueen = true;
-        _gui:newNotification(self.directory .. _G.data.achievements.boughtAllItems.image_unlock,
-            _G.data.achievements.boughtAllItems.name);
-    end
-end
-
 --updates the money on this frame
 function UpgradeMenu:updateMoney()
     self.elementsOnFrame.money.object:SetText("Money: " .. _G._persTable.money);
+end
+
+--- changes the language of this frame
+function UpgradeMenu:setLanguage(language)
+    self.elementsOnFrame.button_back.object:SetText(_G.data.languages[language].package.buttonBack);
+    self.elementsOnFrame.button_buy.object:SetText(_G.data.languages[language].package.buttonBuy);
 end
 
 --- called to buy an Item
@@ -137,9 +129,6 @@ function UpgradeMenu:buyElement()
         self:updateMoney()
     else
         _gui:newTextNotification(self.directory .. "ach_shitcoin.png", _G.data.languages[_G._persTable.config.language].package.textBought)
-    end
-    if not _G._persTable.achievements.shoppingQueen then
-        self:checkForAchievement();
     end
 end
 
