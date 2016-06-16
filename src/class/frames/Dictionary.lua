@@ -43,9 +43,8 @@ function Dictionary:create()
     --adjust all elements on this frame
     self.elementsOnFrame.background.object:SetImage(self.directory .. "StandardBG.png");
 
-    self.elementsOnFrame.button_back.object:SetImage(self.directory .. "Button.png")
-    self.elementsOnFrame.button_back.object:SizeToImage()
-    self.elementsOnFrame.button_back.object:SetText("Back");
+    self.elementsOnFrame.button_back.object:SetImage(self.directory .. "Button.png");
+    self.elementsOnFrame.button_back.object:SizeToImage();
 
     self:addAllObjects();
 
@@ -77,6 +76,11 @@ function Dictionary:addAllObjects()
             self.elementsOnFrame.chart.object:addKlickableElement(newKlickableElement);
         end
     end
+end
+
+--- changes the language of this frame
+function Dictionary:setLanguage(language)
+    self.elementsOnFrame.button_back.object:SetText(_G.data.languages[language].package.buttonBack);
 end
 
 --- shows the frame on screen
