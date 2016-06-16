@@ -51,7 +51,7 @@ _G.fishableObjectStub = function()
             setSmooth = function(...) end;
             setPosition = function(...) end;
         };
-    }
+    };
 
     _G._persTable = {
         winDim = { 500; 500 };
