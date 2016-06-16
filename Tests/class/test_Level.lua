@@ -102,15 +102,16 @@ _G.levelTestStub = function()
         getCurPlayer = function(...) return _G.levMan.curPlayer; end;
         getCurLevel = function(...) return _G.levMan.curLevel; end;
         getAchievmentManager = function(...) return {
-                checkFailStart = function(...) end;
-                checkTwoShoes = function(...) end;
-                checkNothingCaught = function(...) end;
-                checkAllBordersPassed = function(...) end;
-                checkFirstObject = function(...) end;
-                checkPlayTime = function(...) end;
-                onlyNegativeFishesCaught = function(...) end;
-                achBitch = function(...) end;
-        } end;
+            checkFailStart = function(...) end;
+            checkTwoShoes = function(...) end;
+            checkNothingCaught = function(...) end;
+            checkAllBordersPassed = function(...) end;
+            checkFirstObject = function(...) end;
+            checkPlayTime = function(...) end;
+            onlyNegativeFishesCaught = function(...) end;
+            achBitch = function(...) end;
+        }
+        end;
     };
     _G._gui = {
         getFrames = function(...)
