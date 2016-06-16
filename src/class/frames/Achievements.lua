@@ -70,6 +70,7 @@ function Achievements:create()
     --onclick events for all buttons
     self.elementsOnFrame.button_back.object.OnClick = function(_)
         _gui:changeFrame(_gui:getFrames().mainMenu);
+        self.elementsOnFrame.chart.object:resetTopRow();
     end
 end
 
