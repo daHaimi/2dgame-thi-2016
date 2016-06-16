@@ -105,6 +105,10 @@ function fakeElement:SetScaleX(x)
     self.xScale = x;
 end
 
+function fakeElement:GetHeight()
+    return 50;
+end
+
 function fakeElement:Remove()
     self.calledRemove = true;
 end
@@ -115,6 +119,10 @@ end
 
 function fakeElement:GetVisible()
     return self.visible;
+end
+
+function fakeElement:SetY(y)
+    self.y = y;
 end
 
 function fakeElement:GetImageSize()

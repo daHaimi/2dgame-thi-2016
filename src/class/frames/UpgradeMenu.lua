@@ -110,7 +110,7 @@ end
 
 --updates the money on this frame
 function UpgradeMenu:updateMoney()
-    self.elementsOnFrame.money.object:SetText("Money: " .. _G._persTable.money);
+    self.elementsOnFrame.money.object:SetText(_G.data.languages[_G._persTable.config.language].package.textMoney2 .. _G._persTable.money);
 end
 
 --- changes the language of this frame
@@ -126,6 +126,7 @@ function UpgradeMenu:buyElement()
         markedElement:disable();
         local price = self.elementsOnFrame.chart.object:getMarkedElement().price;
         _G._persTable.money = _G._persTable.money - price;
+        self.elementsOnFrame.button_buy.object:SetImage(self.directory .. "HalfButton_disable.png");
         self:updateMoney()
     else
         _gui:newTextNotification(self.directory .. "ach_shitcoin.png", _G.data.languages[_G._persTable.config.language].package.textBought)

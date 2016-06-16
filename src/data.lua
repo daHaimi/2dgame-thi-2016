@@ -1115,6 +1115,7 @@ return {
                 buttonRetry = "Retry";
                 textNoNewAchievements = "No unlocked achievements this round";
                 buttonBuy = "Buy";
+                textMoney2 = "Money: ";
                 --credits
                 credits = {
                     staff = "Staff:";
@@ -1412,6 +1413,7 @@ return {
                 buttonRetry = "Neustarten";
                 textNoNewAchievements = "Keine neuen Errungenschaften";
                 buttonBuy = "Kaufen";
+                textMoney2 = "Geld: ";
                 --credits
                 credits = {
                     staff = "Mitwirkende:";

@@ -208,13 +208,24 @@ function Chart:markElement(element)
     self.p_markedElement = element;
     if _G._gui:getCurrentState() == "Achievements" or _G._gui:getCurrentState() == "Shop" or 
     (_G._gui:getCurrentState() == "Dictionary" and _G._persTable.fish.caught[element.name] > 0 ) then
+        
+        
         if element.price ~= nil then
             if element.name ~= nil then
+                
                 self.textField:changeText(_G.data.languages[_G._persTable.config.language].package[element.name].name,
                     _G.data.languages[_G._persTable.config.language].package[element.name].description, element.price);
+                
+                
             else
                 self.textField:changeText(_G.data.languages[_G._persTable.config.language].package[element.nameOnPersTable].name,
                     _G.data.languages[_G._persTable.config.language].package[element.nameOnPersTable].description, element.price);
+                if _G._persTable.upgrades[element.nameOnPersTable] then
+                    _G._gui:getFrames().upgradeMenu.elementsOnFrame.button_buy.object:SetImage(self.directory .. "HalfButton_disable.png");
+                else
+                    _G._gui:getFrames().upgradeMenu.elementsOnFrame.button_buy.object:SetImage(self.directory .. "HalfButton.png");
+                end
+                
             end
         else
             self.textField:changeText(_G.data.languages[_G._persTable.config.language].package[element.nameOnPersTable].name,
