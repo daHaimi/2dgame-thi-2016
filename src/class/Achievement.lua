@@ -52,13 +52,13 @@ end
 
 function Achievement:fishCaughtTotal()
     if _G._persTable.fish.caughtTotal > 49 then
-       self:unlockAchievement("bFishCaugtTotal");
+       self:unlockAchievement("bFishCaughtTotal");
     end
     if _G._persTable.fish.caughtTotal > 199 then
-        self:unlockAchievement("sFishCaugtTotal");
+        self:unlockAchievement("sFishCaughtTotal");
     end
     if _G._persTable.fish.caughtTotal > 499 then
-        self:unlockAchievement("gFishCaugtTotal");
+        self:unlockAchievement("gFishCaughtTotal");
     end
 end
 

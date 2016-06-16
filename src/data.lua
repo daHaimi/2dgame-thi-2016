@@ -1007,19 +1007,19 @@ return {
             image_unlock = "ach_shoppingQueen.png";
         };
         bFishCaughtTotal = {
-            nameOnPersTable = "bFishCaugtTotal";
+            nameOnPersTable = "bFishCaughtTotal";
             sortNumber = 16;
             image_lock = "ach_objectsOverTime_locked.png";
             image_unlock = "ach_objectsOverTime.png";
         };
         sFishCaughtTotal = {
-            nameOnPersTable = "sFishCaugtTotal";
+            nameOnPersTable = "sFishCaughtTotal";
             sortNumber = 17;
             image_lock = "ach_objectsOverTime_locked.png";
             image_unlock = "ach_objectsOverTime.png";
         };
         gFishCaughtTotal = {
-            nameOnPersTable = "gFishCaugtTotal";
+            nameOnPersTable = "gFishCaughtTotal";
             sortNumber = 18;
             image_lock = "ach_objectsOverTime_locked.png";
             image_unlock = "ach_objectsOverTime.png";
@@ -1152,15 +1152,15 @@ return {
                     name = "Get out of my way";
                     description = "The treasury can be continued";
                 };
-                gFishCaugtTotal = {
+                gFishCaughtTotal = {
                     name = "God of fishing";
                     description = "500 fish in total";
                 };
-                sFishCaugtTotal = {
+                sFishCaughtTotal = {
                     name = "Master of fishing";
                     description = "200 fish total";
                 };
-                bFishCaugtTotal = {
+                bFishCaughtTotal = {
                     name = "Fishing trainee";
                     description = "50 fish in total";
                 };
@@ -1450,15 +1450,15 @@ return {
                     name = "Aus dem Weg!";
                     description = "Die Schatzsuche kann weitergehen";
                 };
-                gFishCaugtTotal = {
+                gFishCaughtTotal = {
                     name = "Ultimativer Fischer";
                     description = "Fange 500 Fische";
                 };
-                sFishCaugtTotal = {
+                sFishCaughtTotal = {
                     name = "Meisterfischer";
                     description = "Fange 200 Fische";
                 };
-                bFishCaugtTotal = {
+                bFishCaughtTotal = {
                     name = "Fischerlehrling";
                     description = "Fange 50 Fische";
                 };
