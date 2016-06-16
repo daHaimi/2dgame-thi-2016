@@ -201,6 +201,12 @@ function love.update(dt)
             frameCounter = 0;
         end
     end
+    
+    if levMan:getCurLevel() ~= nil then
+        if levMan:getCurLevel():isFinished() then
+            achiev:checkAchievements();
+        end
+    end
 end
 
 --- Callback function triggered when the mouse is moved.

@@ -13,52 +13,52 @@ end
 
 function Achievement:caughtOneRound()
     if _G._persTable.fish.caughtInOneRound == 1 then
-        _G._persTable.achievements.onlyOneCaught = true;
+        self:unlockAchievement("onlyOneCaught");
     end
     if _G._persTable.fish.caughtInOneRound > 9 then
-        _G._persTable.achievements.bronzeCaughtOneRound = true;
+        self:unlockAchievement("bronzeCaughtOneRound");
     end
     if _G._persTable.fish.caughtInOneRound > 19 then
-        _G._persTable.achievements.silverCaughtOneRound = true;
+        self:unlockAchievement("silverCaughtOneRound");
     end
     if _G._persTable.fish.caughtInOneRound > 29 then
-        _G._persTable.achievements.goldCaughtOneRound = true;
+        self:unlockAchievement("goldCaughtOneRound");
     end
 end
 
 function Achievement:moneyOneRound()
     if _G._persTable.statistic.maxCoinOneRound > 199 then
-        _G._persTable.achievements.bronzeCoinsOneRound = true;
+        self:unlockAchievement("bronzeCoinsOneRound");
     end
     if _G._persTable.statistic.maxCoinOneRound > 599 then
-        _G._persTable.achievements.silverCoinsOneRound = true;
+        self:unlockAchievement("silverCoinsOneRound");
     end
     if _G._persTable.statistic.maxCoinOneRound > 999 then
-        _G._persTable.achievements.goldCoinsOneRound = true;
+        self:unlockAchievement("goldCoinsOneRound");
     end
 end
 
 function Achievement:moneyTotal()
     if _G._persTable.statistic.moneyEarnedTotal > 1999 then
-        _G._persTable.achievements.bMoneyEarnedTotal = true;
+        self:unlockAchievement("bMoneyEarnedTotal");
     end
     if _G._persTable.statistic.moneyEarnedTotal > 4999 then
-        _G._persTable.achievements.sMoneyEarnedTotal = true;
+        self:unlockAchievement("sMoneyEarnedTotal");
     end
     if _G._persTable.statistic.moneyEarnedTotal > 8999 then
-        _G._persTable.achievements.gMoneyEarnedTotal = true;
+        self:unlockAchievement("gMoneyEarnedTotal");
     end
 end
 
 function Achievement:fishCaughtTotal()
     if _G._persTable.fish.caughtTotal > 49 then
-        _G._persTable.achievements.bFishCaugtTotal = true;
+       self:unlockAchievement("bFishCaugtTotal");
     end
     if _G._persTable.fish.caughtTotal > 199 then
-        _G._persTable.achievements.sFishCaugtTotal = true;
+        self:unlockAchievement("sFishCaugtTotal");
     end
     if _G._persTable.fish.caughtTotal > 499 then
-        _G._persTable.achievements.gFishCaugtTotal = true;
+        self:unlockAchievement("gFishCaugtTotal");
     end
 end
 
@@ -104,13 +104,13 @@ function Achievement:allObjectsAtLeastOnce()
             _G._persTable.fish.caught.leaf > 0 and _G._persTable.fish.caught.canyonSnake > 0 and
             _G._persTable.fish.caught.backpack > 0 and _G._persTable.fish.caught.bird > 0 and
             _G._persTable.fish.caught.squirrel > 0 then
-        _G._persTable.achievements.allObjectsAtLeastOnce = true;
+        self:unlockAchievement("allObjectsAtLeastOnce");
     end
 end
 
 function Achievement:allPillsAtLeastOnce()
     if _G._persTable.fish.caught.sleepingPill > 0 then
-        _G._persTable.achievements.allPillsAtLeastOnce = true;
+        self:unlockAchievement("allPillsAtLeastOnce");
     end
 end
 
@@ -153,7 +153,7 @@ end
 -- @param failedStart Indicates if the intro failed.
 -- @param levelFinished The boolean that indicate if the level has been already finished.
 function Achievement:checkFailStart(failedStart, levelFinished)
-    if failedStart and levelFinished and not _G._persTable.achievements.failedStart then
+    if failedStart and levelFinished then
         self:unlockAchievement("failedStart");
     end
 end
@@ -232,9 +232,11 @@ end
 --- Unlocks the given achievement.
 -- @param achName The name of the achievement.
 function Achievement:unlockAchievement(achName)
-    table.insert(_G._unlockedAchievements, _G.data.achievements[achName]);
-    _gui:newNotification("assets/gui/480px/" .. _G.data.achievements[achName].image_unlock, achName);
-    _G._persTable.achievements[achName] = true;
+    if not _G._persTable.achievements[achName] then
+        table.insert(_G._unlockedAchievements, _G.data.achievements[achName]);
+        _gui:newNotification("assets/gui/480px/" .. _G.data.achievements[achName].image_unlock, achName);
+        _G._persTable.achievements[achName] = true;
+    end
 end
 
 --- Counts the elements in a table.

@@ -87,8 +87,10 @@ describe("Unit test for Achievement.lua", function()
 
         local myInstance = testClass();
         local exp = true;
+        myInstance.unlockAchievement = function (...) end;
+        stub(myInstance, "unlockAchievement");
         myInstance:caughtOneRound()
-        assert.are.same(_G._persTable.achievements.onlyOneCaught, exp);
+        assert.stub(myInstance.unlockAchievement).was.called(1);
     end)
 
     it("Testing achShoppingQueen function", function()
@@ -108,10 +110,9 @@ describe("Unit test for Achievement.lua", function()
 
         local myInstance = testClass();
         local exp = true;
+        stub(myInstance, "unlockAchievement");
         myInstance:caughtOneRound()
-        assert.are.same(_G._persTable.achievements.bronzeCaughtOneRound, exp);
-        assert.are_not.same(_G._persTable.achievements.silverCaughtOneRound, exp);
-        assert.are_not.same(_G._persTable.achievements.goldCaughtOneRound, exp);
+        assert.stub(myInstance.unlockAchievement).was.called(1);
     end)
 
     it("Test function Achievement:caughtOneRound", function()
@@ -119,9 +120,10 @@ describe("Unit test for Achievement.lua", function()
 
         local myInstance = testClass();
         local exp = true;
+        myInstance.unlockAchievement = function (...) end;
+        stub(myInstance, "unlockAchievement");
         myInstance:caughtOneRound()
-        assert.are.same(_G._persTable.achievements.silverCaughtOneRound, exp);
-        assert.are_not.same(_G._persTable.achievements.goldCaughtOneRound, exp);
+        assert.stub(myInstance.unlockAchievement).was.called(2);
     end)
 
     it("Test function Achievement:caughtOneRound", function()
@@ -129,8 +131,10 @@ describe("Unit test for Achievement.lua", function()
 
         local myInstance = testClass();
         local exp = true;
+        myInstance.unlockAchievement = function (...) end;
+        stub(myInstance, "unlockAchievement");
         myInstance:caughtOneRound()
-        assert.are.same(_G._persTable.achievements.goldCaughtOneRound, exp);
+        assert.stub(myInstance.unlockAchievement).was.called(3);
     end)
 
     it("Test function Achievement:moneyOneRound", function()
@@ -138,8 +142,10 @@ describe("Unit test for Achievement.lua", function()
 
         local myInstance = testClass();
         local exp = false;
+        myInstance.unlockAchievement = function (...) end;
+        stub(myInstance, "unlockAchievement");
         myInstance:moneyOneRound()
-        assert.are.same(_G._persTable.achievements.bronzeCoinsOneRound, exp);
+        assert.stub(myInstance.unlockAchievement).was.called(0);
     end)
 
     it("Test function Achievement:moneyOneRound", function()
@@ -147,8 +153,10 @@ describe("Unit test for Achievement.lua", function()
 
         local myInstance = testClass();
         local exp = true;
+        myInstance.unlockAchievement = function (...) end;
+        stub(myInstance, "unlockAchievement");
         myInstance:moneyOneRound()
-        assert.are.same(_G._persTable.achievements.bronzeCoinsOneRound, exp);
+        assert.stub(myInstance.unlockAchievement).was.called(1);
     end)
 
     it("Test function Achievement:moneyOneRound", function()
@@ -156,8 +164,10 @@ describe("Unit test for Achievement.lua", function()
 
         local myInstance = testClass();
         local exp = true;
+        myInstance.unlockAchievement = function (...) end;
+        stub(myInstance, "unlockAchievement");
         myInstance:moneyOneRound();
-        assert.are.same(_G._persTable.achievements.silverCoinsOneRound, exp);
+        assert.stub(myInstance.unlockAchievement).was.called(2);
     end)
 
     it("Test function Achievement:moneyOneRound", function()
@@ -165,8 +175,10 @@ describe("Unit test for Achievement.lua", function()
 
         local myInstance = testClass();
         local exp = true;
+        myInstance.unlockAchievement = function (...) end;
+        stub(myInstance, "unlockAchievement");
         myInstance:moneyOneRound();
-        assert.are.same(_G._persTable.achievements.goldCoinsOneRound, exp);
+        assert.stub(myInstance.unlockAchievement).was.called(3);
     end)
 
     it("Test function Achievement:moneyTotal", function()
@@ -174,6 +186,7 @@ describe("Unit test for Achievement.lua", function()
 
         local myInstance = testClass();
         local exp = false;
+        myInstance.unlockAchievement = function (...) end;
         myInstance:moneyTotal()
         assert.are.same(_G._persTable.achievements.bMoneyEarnedTotal, exp);
     end)
@@ -183,8 +196,10 @@ describe("Unit test for Achievement.lua", function()
 
         local myInstance = testClass();
         local exp = true;
+        myInstance.unlockAchievement = function (...) end;
+        stub(myInstance, "unlockAchievement");
         myInstance:checkAchievements();
-        assert.are.same(_G._persTable.achievements.bMoneyEarnedTotal, exp);
+        assert.stub(myInstance.unlockAchievement).was.called(1);
     end)
 
     it("Test function Achievement:moneyTotal", function()
@@ -192,8 +207,10 @@ describe("Unit test for Achievement.lua", function()
 
         local myInstance = testClass();
         local exp = true;
+        myInstance.unlockAchievement = function (...) end;
+        stub(myInstance, "unlockAchievement");
         myInstance:moneyTotal();
-        assert.are.same(_G._persTable.achievements.sMoneyEarnedTotal, exp);
+        assert.stub(myInstance.unlockAchievement).was.called(2);
     end)
 
     it("Test function Achievement:moneyTotal", function()
@@ -201,8 +218,10 @@ describe("Unit test for Achievement.lua", function()
 
         local myInstance = testClass();
         local exp = true;
+        myInstance.unlockAchievement = function (...) end;
+        stub(myInstance, "unlockAchievement");
         myInstance:moneyTotal();
-        assert.are.same(_G._persTable.achievements.gMoneyEarnedTotal, exp);
+        assert.stub(myInstance.unlockAchievement).was.called(3);
     end)
 
     it("Test function Achievement:fishCaughtTotal", function()
@@ -210,8 +229,10 @@ describe("Unit test for Achievement.lua", function()
 
         local myInstance = testClass();
         local exp = false;
+        myInstance.unlockAchievement = function (...) end;
+        stub(myInstance, "unlockAchievement");
         myInstance:checkAchievements();
-        assert.are.same(_G._persTable.achievements.bFishCaugtTotal, exp);
+        assert.stub(myInstance.unlockAchievement).was.called(0);
     end)
 
     it("Test function Achievement:fishCaughtTotal", function()
@@ -219,8 +240,10 @@ describe("Unit test for Achievement.lua", function()
 
         local myInstance = testClass();
         local exp = true;
+        myInstance.unlockAchievement = function (...) end;
+        stub(myInstance, "unlockAchievement");
         myInstance:checkAchievements();
-        assert.are.same(_G._persTable.achievements.bFishCaugtTotal, exp);
+        assert.stub(myInstance.unlockAchievement).was.called(1);
     end)
 
     it("Test function Achievement:fishCaughtTotal", function()
@@ -228,8 +251,10 @@ describe("Unit test for Achievement.lua", function()
 
         local myInstance = testClass();
         local exp = true;
+        myInstance.unlockAchievement = function (...) end;
+        stub(myInstance, "unlockAchievement");
         myInstance:checkAchievements();
-        assert.are.same(_G._persTable.achievements.sFishCaugtTotal, exp);
+        assert.stub(myInstance.unlockAchievement).was.called(2);
     end)
 
     it("Test function Achievement:fishCaughtTotal", function()
@@ -237,9 +262,10 @@ describe("Unit test for Achievement.lua", function()
 
         local myInstance = testClass();
         local exp = true;
+        myInstance.unlockAchievement = function (...) end;
+        stub(myInstance, "unlockAchievement");
         myInstance:checkAchievements();
-        assert.are.same(_G._persTable.achievements.sFishCaugtTotal, exp);
-        assert.are.same(_G._persTable.achievements.gFishCaugtTotal, exp);
+        assert.stub(myInstance.unlockAchievement).was.called(3);
     end)
 
     it("Test function Achievement:negativCoins", function()
@@ -268,7 +294,7 @@ describe("Unit test for Achievement.lua", function()
         locInstance:checkNegativCoins(gotPayed, roundVal);
         assert.are.same(false, _G._persTable.achievements.negativCoins);
         
-        local roundVal = -200;
+        roundVal = -200;
         locInstance:checkNegativCoins(gotPayed, roundVal);
         assert.are.same(true, _G._persTable.achievements.negativCoins);
     end)  
@@ -319,6 +345,7 @@ describe("Unit test for Achievement.lua", function()
     end)
   
       it("Test function Achievement:allObjectsAtLeastOnce", function()
+        _G._persTable.fish.caught = {};
         _G._persTable.fish.caught.turtle = 1;
         _G._persTable.fish.caught.rat = 1;
         _G._persTable.fish.caught.deadFish = 1;
@@ -341,9 +368,10 @@ describe("Unit test for Achievement.lua", function()
         _G._persTable.fish.caught.bird = 1;
         _G._persTable.fish.caught.squirrel = 1;
         local myInstance = testClass();
-        local exp = true;
-        myInstance:allObjectsAtLeastOnce ()
-        assert.are.same(_G._persTable.achievements.allObjectsAtLeastOnce , exp);
+        myInstance.unlockAchievement = function (...) end
+        stub(myInstance, "unlockAchievement");
+        myInstance:allObjectsAtLeastOnce();
+        assert.stub(myInstance.unlockAchievement).was.called(1);
     end)
   
     it("Test function Achievement:allObjectsAtLeastOnce", function()
@@ -370,6 +398,7 @@ describe("Unit test for Achievement.lua", function()
         _G._persTable.fish.caught.squirrel = 1;
         local myInstance = testClass();
         local exp = false;
+        myInstance.unlockAchievement = function (...) end;
         myInstance:allObjectsAtLeastOnce ()
         assert.are.same(_G._persTable.achievements.allObjectsAtLeastOnce , exp);
     end)
