@@ -22,7 +22,7 @@ local Bait = Class {
         self.numberOfHits = 0;
         self.hitFishable = 0;
         _G._tmpTable.caughtThisRound = {};
-        self.pillDuration = 0;
+        self.pillDuration = {0,0,0};
         self.deltaTime = 0;
         self.modifier = 0.5;
         self.goldenRuleLowerPoint = 0.32;
@@ -142,12 +142,22 @@ function Bait:update(dt)
     self.deltaTime = dt;
     self:checkForCollision(self.levMan:getCurSwarmFactory().createdFishables, oldXPos);
 
-    -- decrease or deativate sleeping pill
-    if self.pillDuration > 0 then
-        self.pillDuration = self.pillDuration - dt;
-    else
-        self.pillDuration = 0;
+    -- decrease or deativate pills
+    for i = 1, #self.pillDuration, 1 do 
+        if self.pillDuration[i] > 0 then
+            self.pillDuration[i] = self.pillDuration[i] - dt;
+        elseif self.pillDuration[i] < 0 then
+            self.pillDuration[i] = 0;
+            self:resetPill(i);
+        end
+    end
+end
+
+function Bait:resetPill(i)
+    if i == 1 or i == 2 then
         self.levMan:getCurSwarmFactory():setSpeedMultiplicator(1);
+    elseif i == 3 then
+        self.levMan:getCurSwarmFactory():resetNyan();
     end
 end
 
@@ -229,7 +239,11 @@ function Bait:collisionDetected(fishable, index)
     elseif fishable:getName() == "coffee" then
         self:coffeeHit();
         self.levMan:getCurSwarmFactory().createdFishables[index]:setToCaught();
-        -- other fishable object hit and no godMode active
+    -- rainbowPill Hit
+    elseif fishable:getName() == "rainbowPill" then
+        self:rainbowPillHit();
+        self.levMan:getCurSwarmFactory().createdFishables[index]:setToCaught();
+    -- other fishable object hit and no godMode active
     elseif not self.levMan:getCurLevel():getGodModeStat() then
         -- still lifes left
         if self.numberOfHits <= _G._persTable.upgrades.moreLife then
@@ -257,13 +271,18 @@ end
 --- is called everytime the bait hits a sleeping pill
 function Bait:sleepingPillHit()
     self.levMan:getCurSwarmFactory():setSpeedMultiplicator(_G._persTable.upgrades.sleepingPillSlow);
-    self.pillDuration = _G._persTable.upgrades.pillDuration;
+    self.pillDuration[1] = _G._persTable.upgrades.pillDuration;
 end
 
 --- is called everytime the bait hits a coffee pill
 function Bait:coffeeHit()
     self.levMan:getCurSwarmFactory():setSpeedMultiplicator(_G._persTable.upgrades.coffeeSpeedup);
-    self.pillDuration = _G._persTable.upgrades.pillDuration;
+    self.pillDuration[2] = _G._persTable.upgrades.pillDuration;
+end
+
+function Bait:rainbowPillHit()
+    self.levMan:getCurSwarmFactory():setImageToNyan();
+    self.pillDuration[3] = _G._persTable.upgrades.rainbowPillDuration;
 end
 
 --- implements drawing interface

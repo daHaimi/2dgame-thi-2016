@@ -20,6 +20,7 @@ local SwarmFactory = Class {
         self.positionOfLastLitter = 0;
         self.positionOfLastBubbles = 0;
         self.pillSwarm = data.pills
+        self.nyan = false;
 
         self.levMan = levelManager;
         -- Start at the lower 75% of the screen to create swarms
@@ -134,7 +135,7 @@ end
 -- @param dt Delta time since last update in seconds
 function SwarmFactory:update(dt)
     for i = 1, #self.createdFishables, 1 do
-        self.createdFishables[i]:update(dt, self.speedMulitplicator, depth);
+        self.createdFishables[i]:update(dt, self.speedMulitplicator, self.nyan);
     end
 
     for i = 1, #self.createdBubbles, 1 do
@@ -206,6 +207,14 @@ end
 -- @param amount prozentage of the slow. 0.25 for slow to 25%
 function SwarmFactory:setSpeedMultiplicator(amount)
     self.speedMulitplicator = amount;
+end
+
+function SwarmFactory:setImageToNyan()
+    self.nyan = true;
+end
+
+function SwarmFactory:resetNyan()
+    self.nyan = false;
 end
 
 --- Returns the table of the fishable objects.

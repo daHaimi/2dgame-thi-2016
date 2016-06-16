@@ -110,7 +110,8 @@ function Persistence:createPersTable()
         mapBreakthrough2 = false; -- can you access the second map limit? 0 = no, 1 = yes
         moreFuel1 = false;
         moreFuel2 = false;
-        pillDuration = 2; -- duration of the effect of the sleeping pill in seconds
+        pillDuration = 2; -- duration of the effect of the pills in seconds
+        rainbowPillDuration = 5; -- duration of the effect of the pills in seconds
         sleepingPillSlow = 0.25; -- sets the slow factor of the sleeping pill 0.25 = 25% of the usual movement speed
         coffeeSpeedup = 2; -- sets the speedup factor for coffe 2 = 200% of the usual movement speed
         firstPermanentMoneyMult = false; -- false means no additional money

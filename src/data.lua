@@ -297,6 +297,25 @@ return {
                     deltaYPos = 15;
                 }
             };
+        };        
+        rainbowPill = {
+            name = "rainbowPill";
+            image = "rainbowPill.png";
+            spriteSize = 32;
+            minSpeed = 0;
+            maxSpeed = 0;
+            value = 0;
+            minAmount = 1;
+            maxAmount = 1;
+            swarmHeight = 50;
+            hitbox = {
+                {
+                    width = 20;
+                    height = 20;
+                    deltaXPos = 6;
+                    deltaYPos = 6;
+                }
+            };
         };
         coffee = {
             name = "coffee";
@@ -783,8 +802,8 @@ return {
     };
     
     pills = {
-        allowedFishables = {"sleepingPill", "coffee" };
-         fishablesProbability = {50, 100};
+        allowedFishables = {"rainbowPill", "sleepingPill", "coffee" };
+         fishablesProbability = {50, 75, 100};
     };
     
     swarmCrocos = {
