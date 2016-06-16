@@ -138,6 +138,7 @@ describe("Unit test for FishableObject.lua", function()
         local loveMock = mock(_G.love, true);
         locInstance:setXPosition(150);
         locInstance.speed = 30;
+        locInstance.image = locInstance.defaultImage;
         locInstance:draw();
         assert.spy(loveMock.graphics.draw).was_called_with(_G.love.graphics.Image, -150, 50);
     end)
@@ -145,7 +146,8 @@ describe("Unit test for FishableObject.lua", function()
     it("Testing draw Function with negativ speed", function()
         local loveMock = mock(_G.love, true);
         locInstance:setXPosition(400);
-        locInstance.speed = -300;
+        locInstance.speed = -300;        
+        locInstance.image = locInstance.defaultImage;
         locInstance:draw();
         assert.spy(loveMock.graphics.draw).was_called_with(_G.love.graphics.Image, 400, 50);
     end)

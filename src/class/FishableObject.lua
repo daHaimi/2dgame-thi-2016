@@ -22,7 +22,8 @@ local FishableObject = Class {
     init = function(self, name, imageSrc, yPosition, minSpeed, maxSpeed, value, hitpoints,
     spriteSize, hitbox, animTimeoutMin, animTimeoutMax, animType, fallSpeed, levMan)
         self.name = name;
-        self.image = love.graphics.newImage("assets/" .. imageSrc);
+        self.defaultImage = love.graphics.newImage("assets/" .. imageSrc);
+        self.nyanImage = love.graphics.newImage("assets/nyan.png");
         local imageName = _G.file.getName(imageSrc);
         local imageExtention = _G.file.getExtention(imageSrc);
         if love.filesystem.exists("assets/" .. imageName .. "_glow." .. imageExtention) then
@@ -55,6 +56,7 @@ local FishableObject = Class {
         self.hitbox = hitbox;
         self.outOfArea = false;
         self.destroyed = false;
+        self.nyan = false;
 
         if (math.random() > 0.5) then
             self.speed = math.random() * (maxSpeed - minSpeed) + minSpeed;
@@ -65,8 +67,8 @@ local FishableObject = Class {
         local spriteFile = "assets/sprites/sprite_" .. imageSrc;
         if love.filesystem.exists(spriteFile) then
             self.sprite = love.graphics.newImage(spriteFile);
-            local spriteCols = self.sprite:getWidth() / self.image:getWidth();
-            local spriteRows = self.sprite:getHeight() / self.image:getHeight();
+            local spriteCols = self.sprite:getWidth() / self.defaultImage:getWidth();
+            local spriteRows = self.sprite:getHeight() / self.defaultImage:getHeight();
             local animTimeout;
             if animTimeoutMin and animTimeoutMax then
                 animTimeout = math.random() * (animTimeoutMax - animTimeoutMin) + animTimeoutMin -
@@ -104,22 +106,20 @@ function FishableObject:draw()
     if not self.caught and not self.outOfArea and not self.destroyed then
         love.graphics.setColor(255, 255, 255);
         if self.speed <= 0 then
-            if self.animation then
+            if self.animation and not self.nyan then
                 self.animation:draw(self.xPosition, self.yPosition);
             else
                 love.graphics.draw(self.image, self.xPosition, self.yPosition);
             end
-
             love.graphics.setColor(0, 0, 0);
         else
             love.graphics.scale(-1, 1);
             love.graphics.setColor(255, 255, 255);
-            if self.animation then
+            if self.animation and not self.nyan then
                 self.animation:draw(-self.xPosition, self.yPosition);
             else
                 love.graphics.draw(self.image, -self.xPosition, self.yPosition);
             end
-
             love.graphics.scale(-1, 1);
         end
 
@@ -165,11 +165,18 @@ end
 
 --- Updates the position of the object depending on its speed
 -- @param dt Delta time since last update in seconds
-function FishableObject:update(dt, speedMulitplicator)
+function FishableObject:update(dt, speedMulitplicator, nyan)
     if math.abs(self.yPosition - self.levMan:getCurPlayer():getPosY()) > self.levMan:getCurLevel().winDim[2] then
         self.outOfArea = true;
     else
         self.outOfArea = false;
+    end
+    
+    self.nyan = nyan;
+    if not nyan then 
+        self.image = self.defaultImage;
+    else
+        self.image = self.nyanImage;
     end
 
     if self.destroyed then

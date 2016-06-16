@@ -61,6 +61,7 @@ describe("Unit test for Bait.lua", function()
                 };
                 getCreatedFishables = function(...) return _G.levMan.curSwarmFac.createdFishables; end;
                 setSpeedMultiplicator = function(...) end;
+                setImageToNyan = function (...) end;
             };
             getCurSwarmFactory = function(...) return _G.levMan.curSwarmFac; end;
             getCurPlayer = function(...) return _G.levMan.curPlayer; end;
@@ -187,13 +188,13 @@ describe("Unit test for Bait.lua", function()
     it("Test sleeping pill duration", function()
         local myInstance = testClass(locWinDim, levMan);
         myInstance.image = locImageStub;
-        myInstance.pillDuration = 2;
+        myInstance.pillDuration[1] = 2;
         myInstance.imageCheeks = locImageStub;
         myInstance.imageCheeks = {
             getDimensions = function(...) end;
         };
         myInstance:update(0.1);
-        assert.are.same(1.9, myInstance.pillDuration);
+        assert.are.same(1.9, myInstance.pillDuration[1]);
     end)    
 
     it("Test show Mouth", function()
@@ -472,10 +473,23 @@ describe("Unit test for Bait.lua", function()
 
         local myInstance = testClass(locWinDim, levMan);
         myInstance.image = locImageStub;
-        myInstance.pillDuration = 0;
+        myInstance.pillDuration[1] = 0;
         myInstance:sleepingPillHit();
 
-        assert.are.same(600, myInstance.pillDuration);
+        assert.are.same(600, myInstance.pillDuration[1]);
+    end)
+
+    it("Test rainbowPillHit", function()
+        _G._persTable.upgrades = {
+            rainbowPillDuration = 600; -- duration of the effect of the sleeping pill
+        };
+
+        local myInstance = testClass(locWinDim, levMan);
+        myInstance.image = locImageStub;
+        myInstance.pillDuration[3] = 0;
+        myInstance:rainbowPillHit();
+
+        assert.are.same(600, myInstance.pillDuration[3]);
     end)
 
     it("Test coffeeHit", function()
@@ -486,16 +500,24 @@ describe("Unit test for Bait.lua", function()
 
         local myInstance = testClass(locWinDim, levMan);
         myInstance.image = locImageStub;
-        myInstance.pillDuration = 0;
+        myInstance.pillDuration[2] = 0;
         myInstance:coffeeHit();
 
-        assert.are.same(600, myInstance.pillDuration);
+        assert.are.same(600, myInstance.pillDuration[2]);
     end)
 
     it("Test collisionDetected with a sleeping pill", function()
         local myInstance = testClass(locWinDim, levMan);
         myInstance.image = locImageStub;
         local fishable = { getName = function() return "sleepingPill" end };
+        myInstance:collisionDetected(fishable, 1);
+        assert.are.same(0, myInstance.numberOfHits);
+    end)
+
+    it("Test collisionDetected with a rainbowpill pill", function()
+        local myInstance = testClass(locWinDim, levMan);
+        myInstance.image = locImageStub;
+        local fishable = { getName = function() return "rainbowPill" end };
         myInstance:collisionDetected(fishable, 1);
         assert.are.same(0, myInstance.numberOfHits);
     end)
@@ -707,4 +729,10 @@ describe("Unit test for Bait.lua", function()
         assert.spy(loveMock.graphics.draw).was.called_with(myInstance.imageCheeks, myInstance.quadCheeks,
             match._, match._);
     end)
+
+    it("Test resetPill", function()
+        local locMock = mock(locInstance.levMan.curSwarmFac, true);
+        locInstance:resetPill(1);
+        assert.spy(locMock.setSpeedMultiplicator).was.called();
+    end);
 end)
