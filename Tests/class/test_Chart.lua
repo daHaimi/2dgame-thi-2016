@@ -231,6 +231,9 @@ describe("Unit test for Chart.lua", function()
         stub(_G._gui:getFrames().upgradeMenu.elementsOnFrame.button_buy.object, "SetImage");
         spy.on(locInstance.textField, "changeText");
         Element.nameOnPersTable = "rageQuit";
+        _G._gui = {
+            getCurrentState = function () return "Achievements" end;
+        }; 
         locInstance:markElement(Element);
         assert.are.equal(locInstance.p_markFrame.x, 40);
         assert.are.equal(locInstance.p_markFrame.y, 60);
