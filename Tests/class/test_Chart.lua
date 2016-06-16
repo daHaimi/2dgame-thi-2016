@@ -227,20 +227,17 @@ describe("Unit test for Chart.lua", function()
                 };
             };
             getFrames = function(...) return _G._gui.frames; end;
+            getCurrentState = function () return "Achievements" end;
         };
-        stub(_G._gui:getFrames().upgradeMenu.elementsOnFrame.button_buy.object, "SetImage");
+        spy.on(_G._gui:getFrames().upgradeMenu.elementsOnFrame.button_buy.object, "SetImage");
         spy.on(locInstance.textField, "changeText");
         Element.nameOnPersTable = "rageQuit";
-        _G._gui = {
-            getCurrentState = function () return "Achievements" end;
-        }; 
         locInstance:markElement(Element);
         assert.are.equal(locInstance.p_markFrame.x, 40);
         assert.are.equal(locInstance.p_markFrame.y, 60);
         assert.are.equal(locInstance.p_markFrame.visible, true);
         assert.are.equal(locInstance.p_markFrame.movedToTop, true);
         assert.are.same(locInstance.p_markedElement, Element);
-        
         local element = Element;
         element.price = 10;
         element.name = nil;
@@ -253,6 +250,6 @@ describe("Unit test for Chart.lua", function()
         locInstance:markElement(element);
         
         assert.spy(locInstance.textField.changeText).was_called(4);
-        assert.stub(_G._gui.frames.upgradeMenu.elementsOnFrame.button_buy.object.SetImage).was_called(2);
+        assert.spy(_G._gui.frames.upgradeMenu.elementsOnFrame.button_buy.object.SetImage).was_called(2);
     end)
 end)
