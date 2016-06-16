@@ -3,15 +3,14 @@ require("lib.table_serializer");
 
 --- Class to save the persTable data permanent 
 -- it will be saved to the devices love.filesystem save directory 
-local Persistence = Class{
-
+local Persistence = Class {
     init = function(self)
         -- set foldername for the game data
         love.filesystem.setIdentity("hamster");
-        
+
         self.serialize = table.serialize;
         self.deserialize = table.deserialize;
-        
+
         -- first load of persTable
         if love.filesystem.exists("saveFile") then
             self:loadPersTable();
@@ -19,32 +18,34 @@ local Persistence = Class{
         else
             self:createPersTable();
             self:updateSaveFile();
-        end        
-        
+        end
+
         --- creates a file or removes all contents if the file exist in order to simulate a temporary file
         -- if you want to clear the contents of the file manually use:
         -- 1) tmpfile:close();
         -- 2) tmpfile = io.open("tmp.lua", "w+");
-        tmpfile = io.open("tmp.lua", "w+");
-end};
+        io.open("tmp.lua", "w+");
+    end
+};
 
 
 --- Deletes the saveFile and crates newPersTable to reset the game
 -- Returns true if deleted the saveFile
 -- @return boolean
 function Persistence:resetGame()
+    local scaleFactor;
     self:createPersTable();
     local _, _, flags = love.window.getMode();
     love.graphics.setBackgroundColor(55, 80, 100);
-    _G._persTable.deviceDim = {love.window.getDesktopDimensions(flags.display)};
+    _G._persTable.deviceDim = { love.window.getDesktopDimensions(flags.display) };
     _G._persTable.winDim[1], _G._persTable.winDim[2], scaleFactor = getScaledDimension(_G._persTable.deviceDim);
-    _G._persTable.scaledDeviceDim = {_G._persTable.winDim[1] * scaleFactor, _G._persTable.winDim[2] * scaleFactor };
+    _G._persTable.scaledDeviceDim = { _G._persTable.winDim[1] * scaleFactor, _G._persTable.winDim[2] * scaleFactor };
     return love.filesystem.remove("saveFile");
 end
 
 function getScaledDimension(deviceDim)
     local resultDim = {};
-    local scaleFactor = 1;
+    local scaleFactor;
     if deviceDim[1] > deviceDim[2] then
         scaleFactor = (0.9 * deviceDim[2]) / (480 * 16 / 9);
         resultDim[1] = 480;
@@ -71,7 +72,7 @@ end
 
 --- Load persTable from saveFile
 function Persistence:loadPersTable()
-    local fileData,_ = love.filesystem.read("saveFile");
+    local fileData, _ = love.filesystem.read("saveFile");
     _G._persTable = self.deserialize(fileData);
 end
 
@@ -97,7 +98,7 @@ function Persistence:createPersTable()
 
     --- upgrades list in persTable, "0" means unbought
     _G._persTable.upgrades = {
-        firstSpeedUp = true; -- more speed
+        firstSpeedUp = false; -- more speed
         secondSpeedUp = false; -- more speed
         oneMoreLife = false; -- more life
         twoMoreLife = false; -- more life
@@ -117,7 +118,6 @@ function Persistence:createPersTable()
 
     _G._persTable.achievements = {
         getFirstObject = false;
-        getSecondObject = false;
         failedStart = false;
         caughtTwoBoots = false;
         secondStart = false;
@@ -138,6 +138,9 @@ function Persistence:createPersTable()
         allPillsAtLeastOnce = false;
         nothingCaught = false;
         playedTime = false;
+        bFishCaugtTotal = false;
+        sFishCaugtTotal = false;
+        gFishCaugtTotal = false;
     };
 
 
@@ -146,14 +149,14 @@ function Persistence:createPersTable()
         minCoinOneRound = 0;
         moneyEarnedTotal = 0;
     };
-    
+
     --- config options
     _G._persTable.config = {
         bgm = 100;
         music = 100;
         language = "english";
     };
-    
+
     _G._persTable.fish = {
         caughtInOneRound = 0;
         caughtTotal = 0;
@@ -164,8 +167,6 @@ function Persistence:createPersTable()
     for name in pairs(data.fishableObjects) do
         _G._persTable.fish.caught[name] = 0;
     end
-
-  
 end
 
 return Persistence;

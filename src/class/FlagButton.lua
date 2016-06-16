@@ -1,4 +1,4 @@
----Button on the main menu to change the language
+--- Button on the main menu to change the language
 Class = require "lib.hump.class";
 
 local FlagButton = Class {
@@ -22,7 +22,7 @@ function FlagButton:create()
     self.object:SetImage(self.directory .. self.languages[_persTable.config.language].flagImage);
     self.object:SetVisible(false);
     self.object:SizeToImage();
-    self.object.OnClick = function(object)
+    self.object.OnClick = function(_)
         self:changeLanguage();
     end
 end

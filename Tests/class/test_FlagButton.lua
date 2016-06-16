@@ -6,7 +6,7 @@ fakeElement = require "Tests.fakeLoveframes.fakeElement";
 
 describe("Unit test for FlagButton.lua", function()
     local locInstance;
-    
+
     before_each(function()
         _G.Loveframes = {
             Create = function(typeName) return fakeElement(typeName); end
@@ -16,13 +16,12 @@ describe("Unit test for FlagButton.lua", function()
                 english = {
                     name = "english";
                     flagImage = "path1";
-                },
+                };
                 german = {
                     name = "german";
                     flagImage = "path2";
                 };
             };
-            
         };
         _G._gui = {
             setLanguage = function(...) end;
@@ -31,7 +30,7 @@ describe("Unit test for FlagButton.lua", function()
             config = {
                 language = "english";
             };
-            scaledDeviceDim = {480, 833};
+            scaledDeviceDim = { 480, 833 };
         };
         locInstance = testClass();
     end)
@@ -50,7 +49,7 @@ describe("Unit test for FlagButton.lua", function()
         assert.are.equal(locInstance.object.text, "");
         assert.are.equal(locInstance.object.imagepath, "assets/gui/480px/path1");
         assert.are.equal(locInstance.object.visible, false);
-        
+
         locInstance.object:OnClick();
         assert.stub(locInstance.changeLanguage).was.called();
     end)
@@ -60,7 +59,7 @@ describe("Unit test for FlagButton.lua", function()
         locInstance:changeLanguage();
         assert.are.equal(_G._persTable.config.language, "german");
         assert.are.equal(locInstance.object.imagepath, "assets/gui/480px/path2");
-        
+
         locInstance:changeLanguage();
         assert.are.equal(_G._persTable.config.language, "english");
         assert.are.equal(locInstance.object.imagepath, "assets/gui/480px/path1");

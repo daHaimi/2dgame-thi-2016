@@ -2,7 +2,8 @@ Class = require "lib.hump.class";
 Healthbar = require "class.Healthbar";
 
 local InGame = Class {
-    init = function(self)if _G._persTable.scaledDeviceDim[1] < 640 then
+    init = function(self)
+        if _G._persTable.scaledDeviceDim[1] < 640 then
             self.directory = "assets/gui/480px/";
             self.scaleFactor = 1;
             self.widthPx = 480;
@@ -26,12 +27,12 @@ local InGame = Class {
         end
         self.name = "InGame";
         self.offsetY = -1000;
-        self.frame = Frame(0, - self.speed, "down", "up", 50, 0, self.offsetY);
+        self.frame = Frame(0, -self.speed, "down", "up", 50, 0, self.offsetY);
         self:create();
     end;
 };
 
----creates the inGame elements
+--- creates the inGame elements
 function InGame:create()
     --add, create and position all elements on this frame
     self.elementsOnFrame = {
@@ -71,32 +72,33 @@ function InGame:create()
             y = 10 * self.scaleFactor;
         }
     };
-    
+
     self.elementsOnFrame.barMiddle.object:SetImage(self.directory .. "BarMiddle.png");
-    self.elementsOnFrame.barMiddle.object:SetScaleX(_G._persTable.scaledDeviceDim[1]/64);
+    self.elementsOnFrame.barMiddle.object:SetScaleX(_G._persTable.scaledDeviceDim[1] / 64);
     self.elementsOnFrame.barFuel.object:SetImage(self.directory .. "BarFuel.png");
     self.elementsOnFrame.fuelBar.object:SetImage(self.directory .. "FuelBar.png");
     self.elementsOnFrame.fuelBarBackground.object:SetImage(self.directory .. "FuelBarBG.png");
-    
+
     self.elementsOnFrame.score.object:SetShadow(true);
-    
+
     --set image of pause button only on mobile version
     if love.system.getOS() == "Android" or love.system.getOS() == "iOS" then
         self.elementsOnFrame.pause.object:SetImage(self.directory .. "Pause.png");
     end
     self.elementsOnFrame.pause.object:SetText("");
     self.elementsOnFrame.pause.object:SizeToImage();
-    
-    self.elementsOnFrame.pause.object.OnClick = function(object)
+
+    self.elementsOnFrame.pause.object.OnClick = function(_)
         _gui:changeFrame(_gui:getFrames().pause);
     end
-    
 end
 
 function InGame:update()
     --update Fuelbar
     if _G._tmpTable.roundFuel >= 0 then
-        self.elementsOnFrame.fuelBar.object:SetX((math.ceil((100 / 2400)*_G._tmpTable.roundFuel) - 90) * self.scaleFactor);
+        self.elementsOnFrame.fuelBar.object:SetX((math.ceil((100 / 2400) * _G._tmpTable.roundFuel) - 90) * self.scaleFactor);
+    else
+        self.elementsOnFrame.fuelBar.object:SetX(-90 * self.scaleFactor)
     end
     local depth = math.ceil(_G._tmpTable.currentDepth / 300);
     if depth <= 0 then
@@ -106,34 +108,33 @@ function InGame:update()
     end
 end
 
----shows the elements on screen
+--- shows the elements on screen
 function InGame:draw()
     --the healthbar does not reset after the pause state
     if _gui:getLastState() ~= _gui:getFrames().pause then
         self.elementsOnFrame.healthbar.object = Healthbar();
     end
-    self.frame:draw(self.elementsOnFrame);
     self.elementsOnFrame.healthbar.object:SetVisible(false);
     self.elementsOnFrame.pause.object:SetVisible(false);
 end
 
----called to "delete" this frame
+function InGame:activate()
+    self.frame:draw(self.elementsOnFrame);
+end
+
+--- called to "delete" this frame
 function InGame:clear()
     self.frame:clear(self.elementsOnFrame);
 end
 
----called in the "fly in" state 
+--- called in the "fly in" state
 function InGame:appear()
     love.mouse.setGrabbed(true);
     love.mouse.setVisible(false);
     self.frame:appear(self.elementsOnFrame);
-    if self:checkPosition() then
-        self.elementsOnFrame.healthbar.object:SetVisible(true);
-        self.elementsOnFrame.pause.object:SetVisible(true);
-    end
 end
 
----called in the "fly out" state
+--- called in the "fly out" state
 function InGame:disappear()
     love.mouse.setGrabbed(false);
     self.elementsOnFrame.healthbar.object:SetVisible(false);
@@ -141,7 +142,7 @@ function InGame:disappear()
     self.frame:disappear(self.elementsOnFrame);
 end
 
----return true if the frame is on position /fly in move is finished
+--- return true if the frame is on position /fly in move is finished
 function InGame:checkPosition()
     return self.frame:checkPosition();
 end

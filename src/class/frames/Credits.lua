@@ -29,15 +29,13 @@ local Credits = Class {
             self.speed = 75;
         end
         self.name = "Credits";
-        self.frame = Frame((_G._persTable.scaledDeviceDim[1] - self.width) / 2, 
+        self.frame = Frame((_G._persTable.scaledDeviceDim[1] - self.width) / 2,
             (_G._persTable.scaledDeviceDim[2] - self.height) / 2 - self.speed, "down", "down", self.speed, 0, -1500);
         self:create();
-        
-        
     end;
-    
-    p_staffString = "";
-    p_staff = {"Staff:",
+
+    p_staff = {
+        staff = "",
         "Marco Egner",
         "Samson Groß",
         "Mathias Haimerl",
@@ -45,21 +43,22 @@ local Credits = Class {
         "Baris Kutlu",
         "Burak Kutlu",
         "Martin Lechner",
+        "Manfred Möderl",
         "Daniel Plank",
         "Daniel Zistl",
-        " ",
-        "Libs:",
+    };
+    
+    p_libsTable = {
         "hump, Matthias Richter",
         "light, Marcus Ihde",
         "LoveFrames, Kenny Shields",
+        "LÖVE 2D",
         "table_serializer, Mathias Haimerl",
         "TEsound, Ensayia and Taehl",
-        " ",
-        "No hamsters were harmed!",
     };
 };
 
----creates the credits frame
+--- creates the credits frame
 function Credits:create()
     --add, create and position all elements on this frame
     self.elementsOnFrame = {
@@ -76,68 +75,95 @@ function Credits:create()
         text_credits = {
             object = Loveframes.Create("text");
             x = 15;
-            y = 30;
+            y = 10;
         }
     };
-    
-    for i=1, #self.p_staff, 1
-    do
-        self.p_staffString = self.p_staffString .. self.p_staff[i] .. "\n";
-    end
-    
+
+    --build the credits
+    local creditsToPrint = self:buildCreditsString();
+
     --adjust all elements on this frame
-    self.elementsOnFrame.background.object:SetImage(self.directory .."StandardBG.png");
-    
+    self.elementsOnFrame.background.object:SetImage(self.directory .. "StandardBG.png");
+
     self.elementsOnFrame.button_back.object:SetImage(self.directory .. "Button.png")
     self.elementsOnFrame.button_back.object:SizeToImage()
-    
-    self.elementsOnFrame.text_credits.object:SetText(self.p_staffString);
+
+    self.elementsOnFrame.text_credits.object:SetText(creditsToPrint);
     self.elementsOnFrame.text_credits.object:SetLinksEnabled(true);
     self.elementsOnFrame.text_credits.object:SetDetectLinks(true);
     self.elementsOnFrame.text_credits.object:SetShadowColor(150, 210, 255)
 
     --onclick events for all buttons
-    self.elementsOnFrame.button_back.object.OnClick = function(object)
+    self.elementsOnFrame.button_back.object.OnClick = function(_)
         _gui:changeFrame(_gui:getFrames().mainMenu);
     end
 end
 
----changes the language of this frame
+--- changes the language of this frame
 function Credits:setLanguage(language)
     self.elementsOnFrame.button_back.object:SetText(_G.data.languages[language].package.buttonBack);
+    self.elementsOnFrame.text_credits.object:SetText(self:buildCreditsString());
 end
 
----shows the frame on screen
+--- Bild the credits string.
+-- @return Returns the formatted credits string.
+function Credits:buildCreditsString()
+    local creditsString = "";
+    
+    --staff
+    creditsString = _G.data.languages[_G._persTable.config.language].package.credits.staff .. "\n";
+    
+    for i = 1, #self.p_staff, 1
+    do
+        creditsString = creditsString .. self.p_staff[i] .. "\n";
+    end
+    creditsString = creditsString .. "\n";
+    
+    --libs
+    creditsString = creditsString .. _G.data.languages[_G._persTable.config.language].package.credits.libs .. "\n";
+    for i = 1, #self.p_libsTable, 1
+    do
+        creditsString = creditsString .. self.p_libsTable[i] .. "\n";
+    end
+    creditsString = creditsString .. "\n";
+    
+    --no hamsters were harmed
+    creditsString = creditsString .. _G.data.languages[_G._persTable.config.language].package.credits.noHWH;
+    
+    return creditsString;
+end
+
+--- shows the frame on screen
 function Credits:draw()
     self.frame:draw(self.elementsOnFrame);
 end
 
----called to "delete" this frame
+--- called to "delete" this frame
 function Credits:clear()
     self.frame:clear(self.elementsOnFrame);
 end
 
----called in the "fly in" state 
+--- called in the "fly in" state
 function Credits:appear()
     love.mouse.setVisible(true);
     self.frame:appear(self.elementsOnFrame);
     self:createStartTime();
 end
 
----called in the "fly out" state
+--- called in the "fly out" state
 function Credits:disappear()
     self.frame:disappear(self.elementsOnFrame);
     if self:calcTimeSpent() >= 10 then
         if not _G._persTable.achievements.creditsRed then
             table.insert(_G._unlockedAchievements, _G.data.achievements.creditsRed);
-            _gui:newNotification("assets/gui/480px/" .. _G.data.achievements.creditsRed.image_unlock, 
-            "creditsRed");
+            _gui:newNotification("assets/gui/480px/" .. _G.data.achievements.creditsRed.image_unlock,
+                "creditsRed");
             _G._persTable.achievements.creditsRed = true;
         end
     end
 end
 
----return true if the frame is on position /fly in move is finished
+--- return true if the frame is on position /fly in move is finished
 function Credits:checkPosition()
     return self.frame:checkPosition();
 end

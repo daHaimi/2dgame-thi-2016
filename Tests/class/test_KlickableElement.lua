@@ -7,22 +7,22 @@ fakeElement = require "Tests.fakeLoveframes.fakeElement";
 
 describe("Unit test for KlickableElement.lua", function()
     local locInstance;
-    
+
     before_each(function()
         _G.Loveframes = {
-            Create = function(...) return fakeElement(); end
-        }
+            Create = function(...) return fakeElement(); end;
+        };
         _G._persTable = {
-            scaledDeviceDim = {480, 833};
+            scaledDeviceDim = { 480, 833 };
         };
         locInstance = testClass("testClass", "test/path/testImage.png", "test/path/testImage_disable.png", "test discription", 0, "testName");
     end)
-    
+
     it("Testing Constructor", function()
         local myInstance = testClass("testClass", "test/path/testImage.png", "test/path/testImage_disable.png", "test discription", 0, "testName");
         assert.are.same(locInstance, myInstance);
     end)
-    
+
     it("Testing SetVisible function", function()
         locInstance:SetVisible(true);
         assert.are.same(locInstance.object.visible, true);
@@ -51,8 +51,8 @@ describe("Unit test for KlickableElement.lua", function()
         _G._persTable = {
             upgrades = {
                 [locInstance.nameOnPersTable] = 0;
-            }
-        }
+            };
+        };
         locInstance:disable();
         assert.are.equal(locInstance.enable, false);
         assert.stub(locInstance.object.SetImage).was.called();

@@ -11,7 +11,7 @@ local Textbox = Class {
     end;
 };
 
----change the text on the textfield
+--- change the text on the textfield
 -- @parm newTopic: the new topic of the text
 -- @parm newText: new text
 function Textbox:changeText(newTopic, newText, newPrice)
@@ -20,14 +20,14 @@ function Textbox:changeText(newTopic, newText, newPrice)
     self.objText:SetFont(love.graphics.newFont("font/8bitOperatorPlus-Regular.ttf", 15));
     self.objText:SetText(newText);
     if newPrice ~= nil then
-        self.objPrice:SetText("Price: " .. newPrice);
+        self.objPrice:SetText(_G.data.languages[_G._persTable.config.language].package.textPrice .. newPrice);
     else
         self.objPrice:SetText("");
     end
 end
 
----Function not conform to CC/ implements an interface
----set visible of the textfield
+--- Function not conform to CC/ implements an interface
+--- set visible of the textfield
 -- @parm visible: true or false
 function Textbox:SetVisible(visible)
     self.objTopic:SetVisible(visible);
@@ -36,8 +36,8 @@ function Textbox:SetVisible(visible)
     self.objBackground:SetVisible(visible);
 end
 
----Function not conform to CC/ implements an interface
----Set position of the textfield
+--- Function not conform to CC/ implements an interface
+--- Set position of the textfield
 -- @parm x: x axis position
 -- @parm y: y axis position
 function Textbox:SetPos(x, y)

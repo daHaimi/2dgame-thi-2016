@@ -2,15 +2,15 @@ Class = require "lib.hump.class";
 require "socket"
 
 --- Class for simple Animations
--- @param image                                 The sprite as love.graphics.Image instance
--- @param cols                                  The number of cols in the sprite
--- @param rows                                  The number of rows in the sprite
+-- @param image The sprite as love.graphics.Image instance
+-- @param cols The number of cols in the sprite
+-- @param rows The number of rows in the sprite
 -- @param timeout (0.2)                         The timeout between the images in seconds
 -- @param animType (Animate.AnimType.linear)    The animation type of the enum Animate.AnimType
 -- @param numStart (1)                          The frame of the image the animation should start with
 -- @param numEnd (cols * rows)                  The frame of the image the animation should end with
 local Animate = Class {
-    init = function(self, image, cols, rows, timeout, animType, numStart, numEnd)
+    init = function(self, image, cols, rows, timeout, animType, start, numberOfShifts)
         self.p_image = image;
         self.p_cols = cols;
         self.p_rows = rows;
@@ -31,8 +31,18 @@ local Animate = Class {
             local offsetTop = math.floor(calcWidth / self.p_image:getWidth());
             self.p_quads[i] = love.graphics.newQuad(offsetLeft, offsetTop, self.p_measures[1], self.p_measures[2], self.p_image:getDimensions());
         end
-            
+
         self.p_forward = true;
+        self.start = true;
+        if start ~= nil then
+            self.start = start;
+        end
+
+        if numberOfShifts == nil then
+            self.numberOfShifts = _G.math.inf;
+        else
+            self.numberOfShifts = numberOfShifts;
+        end
     end;
 };
 
@@ -50,10 +60,13 @@ Animate.AnimType = {
 -- @param dt Delta time since last update in seconds
 -- @return nil
 function Animate:update(dt)
-    self.p_timer = self.p_timer + dt;
-    if self.p_timer >= self.p_timeout then
-        self.p_timer = self.p_timer - self.p_timeout;
-        self:shiftImage();
+    if self.start and self.numberOfShifts > 0 then
+        self.p_timer = self.p_timer + dt;
+        if self.p_timer >= self.p_timeout then
+            self.p_timer = self.p_timer - self.p_timeout;
+            self:shiftImage();
+            self.numberOfShifts = self.numberOfShifts - 1;
+        end
     end
 end
 
@@ -80,6 +93,16 @@ function Animate:shiftImage()
         math.randomseed(socket.gettime() * 10000);
         self.p_curPos = math.random(self.p_numStart, self.p_numEnd);
     end
+end
+
+--- starts the animation
+function Animate:startAnimation()
+    self.start = true;
+end
+
+--- stops the animation
+function Animate:stopAnimation()
+    self.start = false;
 end
 
 --- Draw the current quad to a position

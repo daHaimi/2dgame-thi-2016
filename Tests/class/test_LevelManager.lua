@@ -63,7 +63,7 @@ _G.testLevelManagerStub = function(...)
     _G.Bait = function(...) return { checkUpgrades = function(...) return 42; end }; end;
     _G.Level = function(...) return { 4, 5 }; end;
     _G.SwarmFactory = function(...) return { 3 }; end;
-    
+
 
     _G._persTable = {
         winDim = { 930, 523.125 };
@@ -84,18 +84,14 @@ describe("Unit test suite for the LevelManager class", function()
         _G.testLevelManagerStub();
 
         levMan = LevelManager();
-        --_G.loveMock = mock(_G.love, true);
-        --_G.levelMock = mock(_G.Level, true);
-        --_G.playerMock = mock(_G.Bait, true);
-        --_G.swarmFacMock = mock(_G.SwarmFactory, true);
     end)
-        _G._tmpTable = {
-            caughtThisRound = {};
-            earnedMoney = nil;
-            currentDepth = nil;
-            roundFuel = 800;
-            unlockedAchievements = {};
-        };
+    _G._tmpTable = {
+        caughtThisRound = {};
+        earnedMoney = nil;
+        currentDepth = nil;
+        roundFuel = 800;
+        unlockedAchievements = {};
+    };
     it("Testing Constructor", function()
         local const = spy.on(LevelManager, "init");
         local myInstance = LevelManager();
@@ -104,10 +100,8 @@ describe("Unit test suite for the LevelManager class", function()
     end)
 
     it("Testing newLevel", function()
-        _G._tmptable = {
-            1, 2 , 3
-        };
-        
+        _G._tmptable = { 1, 2, 3 };
+
         local sewers = {
             levelName = "sewers";
             direction = 1;
@@ -124,17 +118,14 @@ describe("Unit test suite for the LevelManager class", function()
                 levelName = "sewers",
                 direction = 1,
                 bgPath = "assets/testbg.png";
-            }
+            };
         };
-        
-        _G._tmptable = {
-            1, 2 , 3
-        };
-        
+
+        _G._tmptable = { 1, 2, 3 };
 
         levMan.curLevel = { 445, 79862, getLevelName = function(...) return "sewers" end, destructLevel = function(...) end; };
         levMan.curPlayer = { 2268, -45, destructBait = function(...) end; };
-        levMan.curSwarmFac = { 33688, destructSF = function(...) end};
+        levMan.curSwarmFac = { 33688, destructSF = function(...) end };
         levMan.p_curDataRef = { 66823 };
 
         levMan:replayLevel();
@@ -145,23 +136,26 @@ describe("Unit test suite for the LevelManager class", function()
 
     it("Testing freeManagedObjects", function()
         local localInstance = LevelManager();
-        
-        localInstance.curLevel = {25, 864, 74, 
-            getLevelName = function(...) return "sewers" end, destructLevel = function(...) end;};
-        localInstance.curPlayer = {1325, 86, 6326, destructBait = function(...) end;};
-        localInstance.curSwarmFac = {4965, 2255, destructSF = function(...) end};
-        localInstance.p_curDataRef = {13874};
-        
+
+        localInstance.curLevel = {
+            25, 864, 74,
+            getLevelName = function(...) return "sewers" end;
+            destructLevel = function(...) end;
+        };
+        localInstance.curPlayer = { 1325, 86, 6326, destructBait = function(...) end; };
+        localInstance.curSwarmFac = { 4965, 2255, destructSF = function(...) end };
+        localInstance.p_curDataRef = { 13874 };
+
         local levelSpy = spy.on(localInstance.curLevel, "destructLevel");
         local playerSpy = spy.on(localInstance.curPlayer, "destructBait");
         local swSpy = spy.on(localInstance.curSwarmFac, "destructSF");
-        
+
         localInstance:freeManagedObjects();
-        
+
         assert.spy(levelSpy).was.called(1);
         assert.spy(playerSpy).was.called(1);
         assert.spy(swSpy).was.called(1);
-        
+
         assert.are.same(localInstance.curLevel, nil);
         assert.are.same(localInstance.curBait, nil);
         assert.are.same(localInstance.curSwarmFac, nil);
@@ -189,7 +183,7 @@ describe("Unit test suite for the LevelManager class", function()
                 levelName = "sewers",
                 direction = 1,
                 bgPath = "assets/testbg.png";
-            }
+            };
         };
 
         assert.are.same("sewers", levMan:getLevelPropMapByName("sewers").levelName);

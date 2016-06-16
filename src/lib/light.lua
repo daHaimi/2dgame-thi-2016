@@ -199,7 +199,7 @@ function _G.love.light.newWorld()
 
                         -- draw shine
                         love.graphics.setCanvas(worldObject.lights[i].shine)
-                        --o.lights[i].shine:clear(255, 255, 255)
+                        --worldObject.lights[i].shine:clear(255, 255, 255)
                         love.graphics.clear(255, 255, 255)
                         love.graphics.setBlendMode("alpha")
                         --love.graphics.setStencil(_G.love.light.polyStencil)
@@ -256,6 +256,7 @@ function _G.love.light.newWorld()
             --worldObject.normalMap:clear()
             love.graphics.setShader()
             love.graphics.setCanvas(worldObject.normalMap)
+            love.graphics.clear()
             for i = 1, #worldObject.body do
                 if worldObject.body[i].type == "image" and worldObject.body[i].normalMesh then
                     love.graphics.setColor(255, 255, 255)
@@ -267,6 +268,7 @@ function _G.love.light.newWorld()
 
             --worldObject.pixelShadow2:clear()
             love.graphics.setCanvas(worldObject.pixelShadow2)
+            love.graphics.clear()
             love.graphics.setBlendMode("add")
             love.graphics.setShader(worldObject.shader2)
 
@@ -298,6 +300,7 @@ function _G.love.light.newWorld()
             love.graphics.setShader()
             --worldObject.pixelShadow:clear(255, 255, 255)
             love.graphics.setCanvas(worldObject.pixelShadow)
+            love.graphics.clear()
             love.graphics.setBlendMode("alpha")
             love.graphics.draw(worldObject.pixelShadow2, _G.love.light.translate.X, _G.love.light.translate.Y)
             love.graphics.setBlendMode("add")
@@ -310,6 +313,7 @@ function _G.love.light.newWorld()
             -- create glow map
             --worldObject.glowMap:clear(0, 0, 0)
             love.graphics.setCanvas(worldObject.glowMap)
+            love.graphics.clear(0, 0, 0)
 
             if worldObject.glowDown then
                 worldObject.glowTimer = math.max(0.0, worldObject.glowTimer - love.timer.getDelta())
@@ -388,8 +392,9 @@ function _G.love.light.newWorld()
         if worldObject.optionReflection and worldObject.isReflection then
             -- create reflection map
             if worldObject.changed then
-                worldObject.reflectionMap:clear(0, 0, 0)
+                --worldObject.reflectionMap:clear(0, 0, 0)
                 love.graphics.setCanvas(worldObject.reflectionMap)
+                love.graphics.clear(0, 0, 0)
                 for i = 1, #worldObject.body do
                     if worldObject.body[i].reflection and worldObject.body[i].normal then
                         love.graphics.setColor(255, 0, 0)
@@ -526,6 +531,7 @@ function _G.love.light.newWorld()
                 love.graphics.setBlendMode("add")
                 --worldObject.glowMap2:clear()
                 love.graphics.setCanvas(worldObject.glowMap2)
+                love.graphics.clear()
                 love.graphics.setShader(_G.love.light.BLURV)
                 love.graphics.draw(worldObject.glowMap, _G.love.light.translate.X, _G.love.light.translate.Y)
                 love.graphics.setCanvas(worldObject.glowMap)

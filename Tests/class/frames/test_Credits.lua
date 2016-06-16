@@ -25,7 +25,36 @@ describe("Unit test for Credits.lua", function()
                 [1] = 500;
                 [2] = 500;
             };
+            config = {
+                language = "english";
+            };
         };
+        
+        _G.data = {
+            languages = {
+                english = {
+                    package = {
+                        credits = {
+                            staff = "Staff:";
+                            trans = "Translation:";
+                            libs = "Libs:";
+                            noHWH = "No hamsters were harmed!";
+                        };
+                    };
+                };
+                german = {
+                    package = {
+                        credits = {
+                            staff = "Mitwirkende:";
+                            trans = "Übersetzung:";
+                            libs = "Bibliotheken:";
+                            noHWH = "Es kamen keine Hamster zu Schaden.";
+                        };
+                    };
+                };
+            };
+        };
+        
         _G.Frame = function(...) return Frame; end;
 
         locInstance = testClass();
@@ -51,9 +80,8 @@ describe("Unit test for Credits.lua", function()
         assert.are.same(locInstance, myInstance);
     end)
 it("Testing Constructor", function()
-        _G._persTable = {
-            scaledDeviceDim = {640, 950};
-        };
+        _G._persTable.scaledDeviceDim = {640, 950};
+
         locInstance = testClass();
         local myInstance = testClass();
         myInstance.elementsOnFrame.button_back.object.OnClick = {};
@@ -62,9 +90,8 @@ it("Testing Constructor", function()
     end)
 
 it("Testing Constructor", function()
-        _G._persTable = {
-            scaledDeviceDim = {720, 1024};
-        };
+        _G._persTable.scaledDeviceDim = {720, 1024};
+
         locInstance = testClass();
         local myInstance = testClass();
         myInstance.elementsOnFrame.button_back.object.OnClick = {};
@@ -119,5 +146,15 @@ it("Testing Constructor", function()
         local diffTime = locInstance:calcTimeSpent();
         
         assert.are_not.equals(diffTime, nil);
+    end)
+
+    it("Testing buildCreditsString function", function()
+        local creditStr = locInstance:buildCreditsString();
+        assert.are.same(_G.data.languages.english.package.credits.staff, string.sub(creditStr, 1, 6));
+        
+        _G._persTable.config.language = "german";
+        creditStr = locInstance:buildCreditsString();
+        assert.are.same(_G.data.languages.german.package.credits.staff, string.sub(creditStr, 1, 12));
+        
     end)
 end)
