@@ -140,9 +140,9 @@ function Persistence:createPersTable()
         allPillsAtLeastOnce = false;
         nothingCaught = false;
         playedTime = false;
-        bFishCaugtTotal = false;
-        sFishCaugtTotal = false;
-        gFishCaugtTotal = false;
+        bFishCaughtTotal = false;
+        sFishCaughtTotal = false;
+        gFishCaughtTotal = false;
         achBitch = false;
         unreachable = false;
     };
