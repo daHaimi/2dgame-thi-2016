@@ -3,28 +3,13 @@ Healthbar = require "class.Healthbar";
 
 local InGame = Class {
     init = function(self)
-        if _G._persTable.scaledDeviceDim[1] < 640 then
-            self.directory = "assets/gui/480px/";
-            self.scaleFactor = 1;
-            self.widthPx = 480;
-            self.width = 384;
-            self.height = 666;
-            self.speed = 50;
-        elseif _G._persTable.scaledDeviceDim[1] < 720 then
-            self.widthPx = 640;
-            self.directory = "assets/gui/640px/";
-            self.scaleFactor = 1.5;
-            self.width = 512;
-            self.height = 888;
-            self.speed = 60;
-        else
-            self.widthPx = 720;
-            self.directory = "assets/gui/720px/";
-            self.scaleFactor = 2.25;
-            self.width = 576;
-            self.height = 1024;
-            self.speed = 75;
-        end
+        self.directory = "assets/gui/480px/";
+        self.scaleFactor = 1;
+        self.widthPx = 480;
+        self.width = 384;
+        self.height = 666;
+        self.speed = 50;
+
         self.name = "InGame";
         self.offsetY = -1000;
         self.frame = Frame(0, -self.speed, "down", "up", 50, 0, self.offsetY);

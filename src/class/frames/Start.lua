@@ -23,10 +23,8 @@ function Start:create()
 
     --adjust all elements on this frame
     self.elementsOnFrame.title:SetImage("assets/gui/title.png");
-    self.elementsOnFrame.title:SetScale(0.9 * _persTable.scaledDeviceDim[1] / 256, 0.9 * _persTable.scaledDeviceDim[1] / 256);
 
     self.elementsOnFrame.hamster:SetImage("assets/gui/hamster.png");
-    self.elementsOnFrame.hamster:SetScale(0.9 * _persTable.scaledDeviceDim[1] / 256, 0.9 * _persTable.scaledDeviceDim[1] / 256);
 
     self.elementsOnFrame.text:SetFont(love.graphics.newFont("font/8bitOperatorPlus-Bold.ttf", 35));
     self.elementsOnFrame.text:SetText({ { color = { 255, 255, 255, 255 } }, _G.data.languages[_G._persTable.config.language].package.textStart })

@@ -3,31 +3,14 @@ Class = require "lib.hump.class";
 local Credits = Class {
     init = function(self)
         self.startTime = 0;
-        if _G._persTable.scaledDeviceDim[1] < 640 then
-            self.directory = "assets/gui/480px/";
-            self.widthPx = 480;
-            self.width = 384;
-            self.height = 666;
-            self.buttonHeight = 75;
-            self.buttonOffset = 15;
-            self.speed = 50;
-        elseif _G._persTable.scaledDeviceDim[1] < 720 then
-            self.widthPx = 640;
-            self.directory = "assets/gui/640px/";
-            self.width = 512;
-            self.height = 888;
-            self.buttonOffset = 20;
-            self.buttonHeight = 96;
-            self.speed = 60;
-        else
-            self.widthPx = 720;
-            self.directory = "assets/gui/720px/";
-            self.width = 576;
-            self.height = 1024;
-            self.buttonOffset = 30;
-            self.buttonHeight = 106;
-            self.speed = 75;
-        end
+        self.directory = "assets/gui/480px/";
+        self.widthPx = 480;
+        self.width = 384;
+        self.height = 666;
+        self.buttonHeight = 75;
+        self.buttonOffset = 15;
+        self.speed = 50;
+
         self.name = "Credits";
         self.frame = Frame((_G._persTable.scaledDeviceDim[1] - self.width) / 2,
             (_G._persTable.scaledDeviceDim[2] - self.height) / 2 - self.speed, "down", "down", self.speed, 0, -1500);
@@ -47,7 +30,7 @@ local Credits = Class {
         "Daniel Plank",
         "Daniel Zistl",
     };
-    
+
     p_libsTable = {
         "hump, Matthias Richter",
         "light, Marcus Ihde",
@@ -109,16 +92,16 @@ end
 -- @return Returns the formatted credits string.
 function Credits:buildCreditsString()
     local creditsString = "";
-    
+
     --staff
     creditsString = _G.data.languages[_G._persTable.config.language].package.credits.staff .. "\n";
-    
+
     for i = 1, #self.p_staff, 1
     do
         creditsString = creditsString .. self.p_staff[i] .. "\n";
     end
     creditsString = creditsString .. "\n";
-    
+
     --libs
     creditsString = creditsString .. _G.data.languages[_G._persTable.config.language].package.credits.libs .. "\n";
     for i = 1, #self.p_libsTable, 1
@@ -126,10 +109,10 @@ function Credits:buildCreditsString()
         creditsString = creditsString .. self.p_libsTable[i] .. "\n";
     end
     creditsString = creditsString .. "\n";
-    
+
     --no hamsters were harmed
     creditsString = creditsString .. _G.data.languages[_G._persTable.config.language].package.credits.noHWH;
-    
+
     return creditsString;
 end
 

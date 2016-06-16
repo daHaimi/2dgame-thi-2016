@@ -20,16 +20,15 @@ _G.math.inf = 1 / 0;
 _G._gui = nil;
 _G._persistence = nil;
 _G._androidConfig = {
-  lastPos = {};
-  rrLen = 15;
-  rrPos = 1;
+    lastPos = {};
+    rrLen = 15;
+    rrPos = 1;
 };
 _G._tmpTable = {
     caughtThisRound = {};
     earnedMoney = nil;
     currentDepth = nil;
     roundFuel = nil;
-    
 };
 _G._unlockedAchievements = {};
 -- Font for android debugging
@@ -43,7 +42,7 @@ local curLevel;
 local player;
 local swarmFactory;
 local levMan;
-local p_scaleFactor
+local p_scaleFactor;
 local achiev;
 local frameCounter = 0;
 
@@ -61,18 +60,19 @@ function love.load()
     --_G._persTable.deviceDim = {720, 1080};
     --_G._persTable.deviceDim = {1366,768};
     --_G._persTable.deviceDim = {1600,900};
-    _G._persTable.winDim[1], _G._persTable.winDim[2], p_scaleFactor, titleHeight = getScaledDimension(_G._persTable.deviceDim);
+    _G._persTable.winDim[1], _G._persTable.winDim[2], _, titleHeight = getScaledDimension(_G._persTable.deviceDim);
+    p_scaleFactor = 1;
 
-    _G._persTable.scaledDeviceDim = {_G._persTable.winDim[1] * p_scaleFactor, _G._persTable.winDim[2] * p_scaleFactor };
-    love.window.setMode(_G._persTable.scaledDeviceDim[1], _G._persTable.scaledDeviceDim[2], 
-        {x = (_G._persTable.deviceDim[1] - _G._persTable.scaledDeviceDim[1]) / 2, y = titleHeight});
+    _G._persTable.scaledDeviceDim = { _G._persTable.winDim[1] * p_scaleFactor, _G._persTable.winDim[2] * p_scaleFactor };
+    love.window.setMode(_G._persTable.scaledDeviceDim[1], _G._persTable.scaledDeviceDim[2],
+        { x = (_G._persTable.deviceDim[1] - _G._persTable.scaledDeviceDim[1]) / 2, y = titleHeight });
     achiev = Achievement();
     levMan = LevelManager(achiev);
 
     -- Get Accelerometer if android
     if love.system.getOS() == "Android" then
         local joy = love.joystick.getJoysticks();
-        for k, js in pairs(joy) do
+        for _, js in pairs(joy) do
             if js:getName() == "Android Accelerometer" then
                 _G._androidConfig.joystick = js;
             end
@@ -85,7 +85,7 @@ function love.load()
     end
 
     Loveframes.basicfont = love.graphics.newFont("font/8bitOperatorPlus-Regular.ttf", 18);
-    
+
     _G._gui = Gui();
     _gui:setLevelManager(levMan);
     _gui:start();
@@ -104,7 +104,7 @@ function getScaledDimension(deviceDim)
         titleHeight = 25
         if resultDim[2] > 0.93 * deviceDim[2] then
             resultDim[2] = 0.93 * deviceDim[2]
-        else 
+        else
             scaleFactor = (deviceDim[2] * 0.93) / 853
         end
     else
@@ -119,12 +119,9 @@ end
 -- This function is called continuously by the love.run().
 function love.draw()
     if _gui:drawGame() then
-        love.graphics.scale(p_scaleFactor, p_scaleFactor);
-
         levMan:getCurLevel():draw(levMan:getCurPlayer());
         levMan:getCurSwarmFactory():draw();
         levMan:getCurLevel():drawEnviroment();
-        love.graphics.scale(1 / p_scaleFactor, 1 / p_scaleFactor);
     end
 
     if levMan:getCurLevel() ~= nil then
@@ -155,7 +152,7 @@ function love.draw()
         "godMode " .. tostring(_G._persTable.upgrades.godMode) .. "\n" ..
         "MB1 " .. tostring(_G._persTable.upgrades.mapBreakthrough1) .. "\n" ..
         "MB2 " .. tostring(_G._persTable.upgrades.mapBreakthrough2),
-        0, 0)]]--
+        0, 0)]] --
 end
 
 --- This function is called continuously by the love.run().
@@ -166,33 +163,32 @@ function love.update(dt)
         -- updates the curLevel only in the InGame GUI
         levMan:getCurLevel():update(dt, levMan:getCurPlayer());
         levMan:getCurSwarmFactory():update(dt);
-        
-      -- if love.load had been executed and on android
-      if love.system.getOS() == "Android" then
-          -- shift [-30,30] to [0,60] and scale to windim[1]
-          _G._androidConfig.lastPos[_G._androidConfig.rrPos] = (_G._androidConfig.joystick:getAxis(1) + _G._androidConfig.maxTilt) * (_G._persTable.winDim[1] / (_G._androidConfig.maxTilt * 2));
-          _G._androidConfig.rrPos = (_G._androidConfig.rrPos % _G._androidConfig.rrLen) + 1;
-          local joyPos = 0;
-          for _,v in pairs(_G._androidConfig.lastPos) do
-            joyPos = joyPos + v;
-          end
-          joyPos = joyPos / #_G._androidConfig.lastPos;
-          _G._androidConfig.joyPos = joyPos;
-          if joyPos < (levMan:getCurPlayer():getSize() / 2) then
-              levMan:getCurPlayer():setPosXMouse(0);
-          else
-              if joyPos > _G._persTable.winDim[1] - levMan:getCurPlayer():getSize() then
-                  levMan:getCurPlayer():setPosXMouse(_G._persTable.winDim[1] - levMan:getCurPlayer():getSize());
-              else
-                  levMan:getCurPlayer():setPosXMouse(joyPos - (levMan:getCurPlayer():getSize() / 2));
-              end
-          end
-      end
+
+        -- if love.load had been executed and on android
+        if love.system.getOS() == "Android" then
+            _G._androidConfig.lastPos[_G._androidConfig.rrPos] = (_G._androidConfig.joystick:getAxis(1) + _G._androidConfig.maxTilt) * (_G._persTable.winDim[1] / (_G._androidConfig.maxTilt * 2));
+            _G._androidConfig.rrPos = (_G._androidConfig.rrPos % _G._androidConfig.rrLen) + 1;
+            local joyPos = 0;
+            for _, v in pairs(_G._androidConfig.lastPos) do
+                joyPos = joyPos + v;
+            end
+            joyPos = joyPos / #_G._androidConfig.lastPos;
+            _G._androidConfig.joyPos = joyPos;
+            if joyPos < (levMan:getCurPlayer():getSize() / 2) then
+                levMan:getCurPlayer():setPosXMouse(0);
+            else
+                if joyPos > _G._persTable.winDim[1] - levMan:getCurPlayer():getSize() then
+                    levMan:getCurPlayer():setPosXMouse(_G._persTable.winDim[1] - levMan:getCurPlayer():getSize());
+                else
+                    levMan:getCurPlayer():setPosXMouse(joyPos - (levMan:getCurPlayer():getSize() / 2));
+                end
+            end
+        end
     end
     _gui:update();
     Loveframes.update(dt);
     TEsound.cleanup();
-    
+
     -- free unused memory
     frameCounter = frameCounter + 1;
     if _gui:getCurrentState() ~= "InGame" or levMan:getCurLevel():isFinished() == 1 then
@@ -231,29 +227,28 @@ function love.mousepressed(x, y, button)
         button = 'l';
     end
     Loveframes.mousepressed(x, y, button);
-    
+
     if _gui:getCurrentState() == "start" then
         _gui:changeFrame(_gui:getFrames().mainMenu);
     end
-    
+
     -- activate the god mode when you press the mouse
     if love.mouse.isDown(1) and _gui:getCurrentState() == "InGame" and
-    levMan:getCurLevel():getStartAnimationFinished() then
+            levMan:getCurLevel():getStartAnimationFinished() then
         levMan:getCurLevel():activateGodMode();
     end
-    
+
     -- starts the starting sequence of the game
     if love.mouse.isDown(1) and _gui:getCurrentState() == "InGame" and
-    not levMan:getCurLevel():getStartAnimationRunning() and
-    not levMan:getCurLevel():getStartAnimationFinished() then
+            not levMan:getCurLevel():getStartAnimationRunning() and
+            not levMan:getCurLevel():getStartAnimationFinished() then
         levMan:getCurLevel():startStartAnimation();
     end
-    
+
     -- pause game when when mouse is pressed (right button)
     if love.mouse.isDown(2) and _gui:drawGame() and levMan:getCurLevel():isLoaded() then
         _gui:changeFrame(_gui:getFrames().pause);
     end
-    
 end
 
 --- Callback function triggered wehen the mouse is released.
@@ -267,7 +262,7 @@ function love.mousereleased(x, y, button)
         button = 'l';
     end
     Loveframes.mousereleased(x, y, button);
-    
+
     -- deactivate the god mode when you release the mouse
     if _gui:getCurrentState() == "InGame" then
         levMan:getCurLevel():deactivateGodMode();

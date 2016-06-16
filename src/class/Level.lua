@@ -1,6 +1,7 @@
 Class = require "lib.hump.class";
 Animate = require "class.Animate";
-require "lib/light"
+require "lib/OffscreenRendering";
+require "lib/light";
 
 _G.math.inf = 1 / 0;
 
@@ -21,10 +22,10 @@ local Level = Class {
         self.posY = 0;
         self.direction = 1; -- (-1) means up and 1 means down
         self.p_mode = mode;
-        self.bg = nil;
-        self.bgq = nil;
+        self.background = nil;
+        self.backgroundQuad = nil;
         self.winDim = {};
-        
+
         if mode == "endless" then
             self.lowerBoarder = -_G.math.inf;
         else
@@ -45,12 +46,14 @@ local Level = Class {
         self.levMan = levelManager;
         self.direction = direction;
         self.p_levelName = levelName;
-        self.bg = love.graphics.newImage(backgroundPath);
+        self.background = love.graphics.newImage(backgroundPath);
         self.backgroundPosition = -winDim[2] * 0.5;
-        if self.bg ~= nil then -- do not remove this if statement or busted will crash
-        self.bg:setWrap("repeat", "repeat");
-        self.bgq = love.graphics.newQuad(0, 0, winDim[1], 20000, self.bg:getWidth(), self.bg:getHeight());
-        self.backgroundHeight = self.bg:getHeight();
+        if self.background ~= nil then
+            -- do not remove this if statement or busted will crash
+            self.background:setWrap("repeat", "repeat");
+            self.backgroundQuad = love.graphics.newQuad(0, 0, winDim[1], winDim[2] + self.background:getHeight(),
+                self.background:getWidth(), self.background:getHeight());
+            self.backgroundHeight = self.background:getHeight();
         else
             self.backgroundHeight = 50;
         end;
@@ -102,10 +105,6 @@ local Level = Class {
         self.lightWorld.setAmbientColor(lightLevel, lightLevel, lightLevel);
         self.lightWorld.setRefractionStrength(32.0);
 
-        self.baitLight = self.lightWorld.newLight(0, 0, 255, 127, 63, 500);
-        self.baitLight.setGlowStrength(0.3);
-        self.baitLight.setSmooth(2);
-
         -- temp bugfix to play the game with persistence
         -- delete when non persistent table exists
         _G._persTable.phase = 1;
@@ -156,8 +155,8 @@ function Level:destructLevel()
     self.roundValue = nil;
     self.posY = nil;
     self.direction = nil;
-    self.bg = nil;
-    self.bgq = nil;
+    self.background = nil;
+    self.backgroundQuad = nil;
     self.winDim = nil;
     self.lowerBoarder = nil;
     self.upperBoarder = nil;
@@ -226,7 +225,7 @@ function Level:update(dt, bait)
         self.playTime = self.playTime + dt;
     end
 
-    self.backgroundPosition = self.backgroundPosition - self.moved;
+    self.backgroundPosition = (self.backgroundPosition - self.moved) % self.background:getHeight();
     if self.backgroundPosition + 0.5 * self.winDim[2] > self.backgroundHeight then
         self.backgroundPosition = self.backgroundPosition - self.backgroundHeight;
     elseif self.backgroundPosition + 0.5 * self.winDim[2] < -self.backgroundHeight then
@@ -257,9 +256,6 @@ function Level:update(dt, bait)
         self.gMMusicPlaying = false;
     end
 
-    --Update the light
-    self.baitLight.setPosition(self.posY or 0, self.posX or 0);
-
     -- update the currentDepth
     _G._tmpTable.currentDepth = self.posY;
 
@@ -283,24 +279,24 @@ end
 
 --- checks if a new achievement is unlocked
 function Level:checkForAchievments()
-    
+
     -- check failedStart ach
     self.levMan:getAchievmentManager():checkFailStart(self.failedStart, self.levelFinished);
-    
+
     -- check if only two shoes was fished
-    self.levMan:getAchievmentManager():checkTwoShoes(self.levelFinished, self:calcFishedValue(), 
+    self.levMan:getAchievmentManager():checkTwoShoes(self.levelFinished, self:calcFishedValue(),
         self.levMan:getCurSwarmFactory():getFishableObjects().shoe.value * 2);
-    
+
     self.levMan:getAchievmentManager():checkNothingCaught(self.levelFinished, self.failedStart);
 
     self.levMan:getAchievmentManager():checkAllBordersPassed(self.levelFinished, self.reachedDepth, self.lowerBoarder);
 
-    self.levMan:getAchievmentManager():checkFirstObject(self.levelFinished);    
-    
+    self.levMan:getAchievmentManager():checkFirstObject(self.levelFinished);
+
     self.levMan:getAchievmentManager():checkPlayTime(self.levelFinished);
-    
+
     self.levMan:getAchievmentManager():onlyNegativeFishesCaught(self.levelFinished, self.levMan:getCurSwarmFactory());
-    
+
     self.levMan:getAchievmentManager():achBitch(); -- call this checkup always at the end
 end
 
@@ -412,11 +408,10 @@ end
 -- @param bait The bait object, which stands for the user.
 function Level:draw(bait)
     love.graphics.setColor(255, 255, 255);
-    love.graphics.draw(self.bg, self.bgq, 0, self.backgroundPosition);
+    love.graphics.draw(self.background, self.backgroundQuad, 0, self.backgroundPosition % self.background:getHeight());
     bait:draw();
     if self.levelFinished and self.waitTillSwitch < 0 then
         _gui:changeFrame(_gui:getFrames().score);
-        --self:printResult();
     end
 end
 
@@ -426,8 +421,8 @@ function Level:drawEnviroment()
     self.enviromentPosition = self.enviromentPosition - self:getMoved();
 
     self.lightWorld.update();
-    self.lightWorld.drawShadow();
-    self.lightWorld.drawPixelShadow();
+    --self.lightWorld.drawShadow();
+    --self.lightWorld.drawPixelShadow();
     self.lightWorld.drawGlow();
 
     love.graphics.setColor(255, 255, 255);
@@ -492,6 +487,8 @@ function Level:drawEnviroment()
     end
 
     love.graphics.draw(self.front, 0, self.posY - self.frontOffset);
+
+    _G.offscreen.drawToScreen();
 end
 
 --- Draws the line
