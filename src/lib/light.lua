@@ -35,7 +35,8 @@ _G.love.light.SHADOW_GEOMETRY = nil
 
 _G.love.light.BLURV = love.graphics.newShader("shader/blurv.glsl")
 _G.love.light.BLURH = love.graphics.newShader("shader/blurh.glsl")
-local width, height, _ = love.window.getMode()
+local width = _G.offscreen.width;
+local height = _G.offscreen.height;
 local windowDimension = { width, height }
 _G.love.light.BLURV:send("screen", windowDimension)
 _G.love.light.BLURH:send("screen", windowDimension)
@@ -51,7 +52,8 @@ _G.love.light.DIRECTION = 0
 function _G.love.light.newWorld()
     local worldObject = {}
 
-    worldObject.width, worldObject.height, _ = love.window.getMode()
+    worldObject.width = _G.offscreen.width;
+    worldObject.height = _G.offscreen.height;
 
     worldObject.lights = {}
     worldObject.ambient = { 0, 0, 0 }
