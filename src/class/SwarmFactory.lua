@@ -26,11 +26,11 @@ local SwarmFactory = Class {
         self.addedHeights = self.levMan:getCurLevel().winDim[2] * 0.75;
 
         self.fishableObjects = data.fishableObjects;
-        if self.levMan:getCurLevel():getLevelName() == "sewers" or 
-            self.levMan:getCurLevel():getLevelName() == "sewersEndless" then
+        if self.levMan:getCurLevel():getLevelName() == "sewers" or
+                self.levMan:getCurLevel():getLevelName() == "sewersEndless" then
             self.actualSwarm = data.swarmsSewer;
-        elseif  self.levMan:getCurLevel():getLevelName() == "canyon" or  
-            self.levMan:getCurLevel():getLevelName() == "canyonEndless" then
+        elseif self.levMan:getCurLevel():getLevelName() == "canyon" or
+                self.levMan:getCurLevel():getLevelName() == "canyonEndless" then
             self.actualSwarm = data.swarmsCanyon;
         elseif self.levMan:getCurLevel():getLevelName() == "sleepingCrocos" then
             self.actualSwarm = data.swarmCrocos;
@@ -157,7 +157,7 @@ function SwarmFactory:createNextSwarm(startPosY, depth)
         self.currentSwarm = self.currentSwarm + 1;
         if self.currentSwarm > #self.actualSwarm then
             self.currentSwarm = 1;
-            
+
             self.addedDepth = self.actualSwarm[#self.actualSwarm].maxSwarmHeight + self.addedDepth;
         end
     end

@@ -1,12 +1,13 @@
 -- Lua 5.1 Hack
 _G.math.inf = 1 / 0
-testClass = require "src.class.Achievement"
+testClass = require "src.class.Achievement";
+Data = require "data";
 
 describe("Unit test for Achievement.lua", function()
     local locInstance;
 
     before_each(function()
-
+        _G.data = Data;
         _G._persTable = {
             upgrades = {
                 godMode = true;
@@ -19,7 +20,10 @@ describe("Unit test for Achievement.lua", function()
             playedTime = 0;
             phase = 1;
         };
-
+        _G._gui = {
+            newNotification = function(...) end;
+        };
+        
         _G._persTable.achievements = {
             getFirstObject = true;
             getSecondObject = false;
@@ -85,6 +89,18 @@ describe("Unit test for Achievement.lua", function()
         local exp = true;
         myInstance:caughtOneRound()
         assert.are.same(_G._persTable.achievements.onlyOneCaught, exp);
+    end)
+
+    it("Testing achShoppingQueen function", function()
+        stub(_G._gui, "newNotification");
+        _G._persTable.upgrades = {test = false};
+        locInstance:achShoppingQueen();
+        assert.are.equal(_G._persTable.achievements.shoppingQueen, false);
+        _G._persTable.upgrades = {test = true};
+        locInstance:achShoppingQueen();
+        assert.are.equal(_G._persTable.achievements.shoppingQueen, true);
+        assert.stub(_G._gui.newNotification).was_called();
+        assert.are.equal(true, _G._persTable.achievements.shoppingQueen);
     end)
 
     it("Test function Achievement:caughtOneRound", function()
@@ -470,7 +486,7 @@ describe("Unit test for Achievement.lua", function()
             unreachable = false;
             achBitch = false;
         };
-        
+        stub(_G._gui, "newNotification");
         locInstance:achBitch();
         assert.are.same(false, _G._persTable.achievements.achBitch);
         

@@ -1,6 +1,9 @@
 Class = require "lib.hump.class";
 Animate = require "class.Animate";
 require "socket" math.randomseed(socket.gettime() * 10000);
+require "lib/light";
+
+require "util";
 
 --- FishableObject is the class of all fishable objects
 -- @param name The name of the fishable object
@@ -20,7 +23,22 @@ local FishableObject = Class {
     spriteSize, hitbox, animTimeoutMin, animTimeoutMax, animType, fallSpeed, levMan)
         self.name = name;
         self.image = love.graphics.newImage("assets/" .. imageSrc);
-        self.xPosition = math.random(26, levMan:getCurLevel().winDim[1] - 58 - self.spriteSize);
+        local imageName = _G.file.getName(imageSrc);
+        local imageExtention = _G.file.getExtention(imageSrc);
+        if love.filesystem.exists("assets/" .. imageName .. "_glow." .. imageExtention) then
+            local lightWorld = levMan.curLevel:getLightWorld();
+            self.glowMap = love.graphics.newImage("assets/" .. imageName .. "_glow." .. imageExtention);
+            self.lightImage = lightWorld.newImage(self.image, 64, 64, 64, 64, 64, 64);
+            self.lightImage.setGlowMap(self.glowMap);
+            if love.filesystem.exists("assets/" .. imageName .. "_normal." .. imageExtention) then
+                self.normalMap = love.graphics.newImage("assets/" .. imageName .. "_normal." .. imageExtention);
+            else
+                self.notmalMap = love.graphics.newImage("assets/shader/empty_normal.png");
+            end
+            self.lightImage.setNormalMap(self.normalMap)
+            self.objectTest = lightWorld.newBody("refraction", self.image, 64, 64, 64, 64);
+        end
+        self.xPosition = math.random(spriteSize + 26, levMan:getCurLevel().winDim[1] - 58 - self.spriteSize);
         -- 58 = 26 (width of level wall) + 32 (0.5 * width of hamster)
         if fallSpeed > 0 then
             self.yPosition = -math.random(100);
@@ -106,7 +124,7 @@ function FishableObject:draw()
         end
 
         --for showing the Hitbox
-        --[[for i = 1, #self.hitbox, 1 do 
+        --[[for i = 1, #self.hitbox, 1 do
             love.graphics.setColor(0,0,0);
             love.graphics.rectangle("line", self:getHitboxXPosition(i), self:getHitboxYPosition(i),
             self:getHitboxWidth(i), self:getHitboxHeight(i));
@@ -153,7 +171,7 @@ function FishableObject:update(dt, speedMulitplicator)
     else
         self.outOfArea = false;
     end
-    
+
     if self.destroyed then
         if math.abs(self.yPosition - self.caughtAt) < 100
                 and self.levMan:getCurLevel():getDirection() == 1 then
@@ -194,6 +212,13 @@ function FishableObject:update(dt, speedMulitplicator)
         self.yPosition = self.yPosition - self.levMan:getCurLevel():getMoved();
     else
         self.yPosition = self.yPosition + 0.5 * self.levMan:getCurLevel():getMoved();
+    end
+    if self.lightImage ~= nil then
+        if self.speed <= 0 then
+            self.lightImage.setPosition(self.xPosition + 32, self.yPosition + 32);
+        else
+            self.lightImage.setPosition(self.xPosition + 4, self.yPosition + 32);
+        end
     end
 end
 

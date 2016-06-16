@@ -47,6 +47,7 @@ _G.love.light.translate.Y_OLD = 0
 _G.love.light.DIRECTION = 0
 
 --- constructor for the light world
+-- noinspection LuaOverlyLongMethod
 function _G.love.light.newWorld()
     local worldObject = {}
 
@@ -198,7 +199,7 @@ function _G.love.light.newWorld()
 
                         -- draw shine
                         love.graphics.setCanvas(worldObject.lights[i].shine)
-                        --o.lights[i].shine:clear(255, 255, 255)
+                        --worldObject.lights[i].shine:clear(255, 255, 255)
                         love.graphics.clear(255, 255, 255)
                         love.graphics.setBlendMode("alpha")
                         --love.graphics.setStencil(_G.love.light.polyStencil)
@@ -252,9 +253,10 @@ function _G.love.light.newWorld()
             love.graphics.setBlendMode("alpha")
 
             -- create normal map
-            worldObject.normalMap:clear()
+            --worldObject.normalMap:clear()
             love.graphics.setShader()
             love.graphics.setCanvas(worldObject.normalMap)
+            love.graphics.clear()
             for i = 1, #worldObject.body do
                 if worldObject.body[i].type == "image" and worldObject.body[i].normalMesh then
                     love.graphics.setColor(255, 255, 255)
@@ -264,9 +266,10 @@ function _G.love.light.newWorld()
             love.graphics.setColor(255, 255, 255)
             love.graphics.setBlendMode("alpha")
 
-            worldObject.pixelShadow2:clear()
+            --worldObject.pixelShadow2:clear()
             love.graphics.setCanvas(worldObject.pixelShadow2)
-            love.graphics.setBlendMode("additive")
+            love.graphics.clear()
+            love.graphics.setBlendMode("add")
             love.graphics.setShader(worldObject.shader2)
 
             for i = 1, #worldObject.lights do
@@ -295,11 +298,12 @@ function _G.love.light.newWorld()
             end
 
             love.graphics.setShader()
-            worldObject.pixelShadow:clear(255, 255, 255)
+            --worldObject.pixelShadow:clear(255, 255, 255)
             love.graphics.setCanvas(worldObject.pixelShadow)
+            love.graphics.clear()
             love.graphics.setBlendMode("alpha")
             love.graphics.draw(worldObject.pixelShadow2, _G.love.light.translate.X, _G.love.light.translate.Y)
-            love.graphics.setBlendMode("additive")
+            love.graphics.setBlendMode("add")
             love.graphics.setColor({ worldObject.ambient[1], worldObject.ambient[2], worldObject.ambient[3] })
             love.graphics.rectangle("fill", _G.love.light.translate.X, _G.love.light.translate.Y, worldObject.width, worldObject.height)
             love.graphics.setBlendMode("alpha")
@@ -307,8 +311,9 @@ function _G.love.light.newWorld()
 
         if worldObject.optionGlow and worldObject.isGlow then
             -- create glow map
-            worldObject.glowMap:clear(0, 0, 0)
+            --worldObject.glowMap:clear(0, 0, 0)
             love.graphics.setCanvas(worldObject.glowMap)
+            love.graphics.clear(0, 0, 0)
 
             if worldObject.glowDown then
                 worldObject.glowTimer = math.max(0.0, worldObject.glowTimer - love.timer.getDelta())
@@ -354,13 +359,13 @@ function _G.love.light.newWorld()
             love.graphics.setShader()
 
             -- create refraction map
-            worldObject.refractionMap:clear()
+            --worldObject.refractionMap:clear()
             love.graphics.setCanvas(worldObject.refractionMap)
             for i = 1, #worldObject.body do
                 if worldObject.body[i].refraction and worldObject.body[i].normal then
                     love.graphics.setColor(255, 255, 255)
                     if worldObject.body[i].tileX == 0.0 and worldObject.body[i].tileY == 0.0 then
-                        love.graphics.draw(normal, worldObject.body[i].x - worldObject.body[i].nx + _G.love.light.translate.X, worldObject.body[i].y - worldObject.body[i].ny + _G.love.light.translate.Y)
+                        love.graphics.draw(worldObject.normalMap, worldObject.body[i].x - worldObject.body[i].nx + _G.love.light.translate.X, worldObject.body[i].y - worldObject.body[i].ny + _G.love.light.translate.Y)
                     else
                         worldObject.body[i].normalMesh:setVertices(worldObject.body[i].normalVert)
                         love.graphics.draw(worldObject.body[i].normalMesh, worldObject.body[i].x - worldObject.body[i].nx + _G.love.light.translate.X, worldObject.body[i].y - worldObject.body[i].ny + _G.love.light.translate.Y)
@@ -387,8 +392,9 @@ function _G.love.light.newWorld()
         if worldObject.optionReflection and worldObject.isReflection then
             -- create reflection map
             if worldObject.changed then
-                worldObject.reflectionMap:clear(0, 0, 0)
+                --worldObject.reflectionMap:clear(0, 0, 0)
                 love.graphics.setCanvas(worldObject.reflectionMap)
+                love.graphics.clear(0, 0, 0)
                 for i = 1, #worldObject.body do
                     if worldObject.body[i].reflection and worldObject.body[i].normal then
                         love.graphics.setColor(255, 0, 0)
@@ -514,7 +520,7 @@ function _G.love.light.newWorld()
         if worldObject.optionGlow and worldObject.isGlow then
             love.graphics.setColor(255, 255, 255)
             if worldObject.glowBlur == 0.0 then
-                love.graphics.setBlendMode("additive")
+                love.graphics.setBlendMode("add")
                 love.graphics.setShader()
                 love.graphics.draw(worldObject.glowMap, _G.love.light.translate.X, _G.love.light.translate.Y)
                 love.graphics.setBlendMode("alpha")
@@ -522,9 +528,10 @@ function _G.love.light.newWorld()
                 _G.love.light.BLURV:send("steps", worldObject.glowBlur)
                 _G.love.light.BLURH:send("steps", worldObject.glowBlur)
                 _G.love.light.LAST_BUFFER = love.graphics.getCanvas()
-                love.graphics.setBlendMode("additive")
-                worldObject.glowMap2:clear()
+                love.graphics.setBlendMode("add")
+                --worldObject.glowMap2:clear()
                 love.graphics.setCanvas(worldObject.glowMap2)
+                love.graphics.clear()
                 love.graphics.setShader(_G.love.light.BLURV)
                 love.graphics.draw(worldObject.glowMap, _G.love.light.translate.X, _G.love.light.translate.Y)
                 love.graphics.setCanvas(worldObject.glowMap)
@@ -679,7 +686,14 @@ function _G.love.light.newWorld()
     worldObject.newPolygon = function(...)
         return love.light.newPolygon(worldObject, ...)
     end
-    -- new image
+    --- Constructor for a image
+    -- @param img the love.graphics image
+    -- @param x position
+    -- @param x position
+    -- @param width
+    -- @param height
+    -- @param ox offset
+    -- @param oy offset
     worldObject.newImage = function(img, x, y, width, height, ox, oy)
         return love.light.newImage(worldObject, img, x, y, width, height, ox, oy)
     end
@@ -758,6 +772,7 @@ function _G.love.light.newWorld()
 end
 
 -- light object
+--noinspection LuaOverlyLongMethod
 function _G.love.light.newLight(p, x, y, red, green, blue, range)
     local lightObject = {}
     lightObject.direction = 0
@@ -887,12 +902,13 @@ function _G.love.light.newLight(p, x, y, red, green, blue, range)
 end
 
 -- body object
-function _G.love.light.newBody(p, type, ...)
+--noinspection LuaOverlyLongMethod
+function _G.love.light.newBody(worldObject, type, ...)
     local args = { ... }
     local bodyObject = {}
-    p.body[#p.body + 1] = bodyObject
-    p.changed = true
-    bodyObject.id = #p.body
+    worldObject.body[#worldObject.body + 1] = bodyObject
+    worldObject.changed = true
+    bodyObject.id = #worldObject.body
     bodyObject.type = type
     bodyObject.normal = nil
     bodyObject.material = nil
@@ -908,7 +924,7 @@ function _G.love.light.newBody(p, type, ...)
         bodyObject.reflective = false
         bodyObject.refraction = false
         bodyObject.refractive = false
-        p.isShadows = true
+        worldObject.isShadows = true
     elseif bodyObject.type == "rectangle" then
         bodyObject.x = args[1] or 0
         bodyObject.y = args[2] or 0
@@ -931,7 +947,7 @@ function _G.love.light.newBody(p, type, ...)
         bodyObject.reflective = false
         bodyObject.refraction = false
         bodyObject.refractive = false
-        p.isShadows = true
+        worldObject.isShadows = true
     elseif bodyObject.type == "polygon" then
         bodyObject.shadowType = "polygon"
         bodyObject.data = args or { 0, 0, 0, 0, 0, 0 }
@@ -939,7 +955,7 @@ function _G.love.light.newBody(p, type, ...)
         bodyObject.reflective = false
         bodyObject.refraction = false
         bodyObject.refractive = false
-        p.isShadows = true
+        worldObject.isShadows = true
     elseif bodyObject.type == "image" then
         bodyObject.img = args[1]
         bodyObject.x = args[2] or 0
@@ -957,7 +973,9 @@ function _G.love.light.newBody(p, type, ...)
                 { bodyObject.width, bodyObject.height, 1.0, 1.0 },
                 { 0.0, bodyObject.height, 0.0, 1.0 },
             }
-            bodyObject.msh = love.graphics.newMesh(bodyObject.vert, bodyObject.img, "fan")
+            --bodyObject.msh = love.graphics.newMesh(bodyObject.vert, bodyObject.img, "fan")
+            bodyObject.msh = love.graphics.newMesh(bodyObject.vert, "fan")
+            bodyObject.msh:setTexture(bodyObject.img)
         else
             bodyObject.width = args[4] or 64
             bodyObject.height = args[5] or 64
@@ -979,7 +997,7 @@ function _G.love.light.newBody(p, type, ...)
         bodyObject.reflective = true
         bodyObject.refraction = false
         bodyObject.refractive = false
-        p.isShadows = true
+        worldObject.isShadows = true
     elseif bodyObject.type == "refraction" then
         bodyObject.normal = args[1]
         bodyObject.x = args[2] or 0
@@ -998,7 +1016,10 @@ function _G.love.light.newBody(p, type, ...)
                 { bodyObject.width, bodyObject.height, 1.0, 1.0 },
                 { 0.0, bodyObject.height, 0.0, 1.0 }
             }
-            bodyObject.normalMesh = love.graphics.newMesh(bodyObject.normalVert, bodyObject.normal, "fan")
+            --bodyObject.normalMesh = love.graphics.newMesh(bodyObject.normalVert, bodyObject.normal, "fan")
+            bodyObject.msh = love.graphics.newMesh(bodyObject.normalVert, "fan")
+            bodyObject.msh:setTexture(bodyObject.normal)
+
         else
             bodyObject.width = args[4] or 64
             bodyObject.height = args[5] or 64
@@ -1009,7 +1030,7 @@ function _G.love.light.newBody(p, type, ...)
         bodyObject.reflective = false
         bodyObject.refraction = true
         bodyObject.refractive = false
-        p.isRefraction = true
+        worldObject.isRefraction = true
     elseif bodyObject.type == "reflection" then
         bodyObject.normal = args[1]
         bodyObject.x = args[2] or 0
@@ -1039,7 +1060,7 @@ function _G.love.light.newBody(p, type, ...)
         bodyObject.reflective = false
         bodyObject.refraction = false
         bodyObject.refractive = false
-        p.isReflection = true
+        worldObject.isReflection = true
     end
     bodyObject.shine = true
     bodyObject.red = 0
@@ -1071,7 +1092,7 @@ function _G.love.light.newBody(p, type, ...)
             bodyObject.x = x
             bodyObject.y = y
             bodyObject.refresh()
-            p.changed = true
+            worldObject.changed = true
         end
     end
     -- set x position
@@ -1079,7 +1100,7 @@ function _G.love.light.newBody(p, type, ...)
         if x ~= bodyObject.x then
             bodyObject.x = x
             bodyObject.refresh()
-            p.changed = true
+            worldObject.changed = true
         end
     end
     -- set y position
@@ -1087,7 +1108,7 @@ function _G.love.light.newBody(p, type, ...)
         if y ~= bodyObject.y then
             bodyObject.y = y
             bodyObject.refresh()
-            p.changed = true
+            worldObject.changed = true
         end
     end
     -- get x position
@@ -1119,7 +1140,7 @@ function _G.love.light.newBody(p, type, ...)
         bodyObject.width = width
         bodyObject.height = height
         bodyObject.refresh()
-        p.changed = true
+        worldObject.changed = true
     end
     -- set offset
     bodyObject.setOffset = function(ox, oy)
@@ -1129,7 +1150,7 @@ function _G.love.light.newBody(p, type, ...)
             if bodyObject.shadowType == "rectangle" then
                 bodyObject.refresh()
             end
-            p.changed = true
+            worldObject.changed = true
         end
     end
     -- set offset
@@ -1138,7 +1159,7 @@ function _G.love.light.newBody(p, type, ...)
             bodyObject.ix = ix
             bodyObject.iy = iy
             bodyObject.refresh()
-            p.changed = true
+            worldObject.changed = true
         end
     end
     -- set offset
@@ -1147,7 +1168,7 @@ function _G.love.light.newBody(p, type, ...)
             bodyObject.nx = nx
             bodyObject.ny = ny
             bodyObject.refresh()
-            p.changed = true
+            worldObject.changed = true
         end
     end
     -- set glow color
@@ -1155,12 +1176,12 @@ function _G.love.light.newBody(p, type, ...)
         bodyObject.glowRed = red
         bodyObject.glowGreen = green
         bodyObject.glowBlue = blue
-        p.changed = true
+        worldObject.changed = true
     end
     -- set glow alpha
     bodyObject.setGlowStrength = function(strength)
         bodyObject.glowStrength = strength
-        p.changed = true
+        worldObject.changed = true
     end
     -- get radius
     bodyObject.getRadius = function()
@@ -1170,13 +1191,13 @@ function _G.love.light.newBody(p, type, ...)
     bodyObject.setRadius = function(radius)
         if radius ~= bodyObject.radius then
             bodyObject.radius = radius
-            p.changed = true
+            worldObject.changed = true
         end
     end
     -- set polygon data
     bodyObject.setPoints = function(...)
         bodyObject.data = { ... }
-        p.changed = true
+        worldObject.changed = true
     end
     -- get polygon data
     bodyObject.getPoints = function()
@@ -1185,29 +1206,29 @@ function _G.love.light.newBody(p, type, ...)
     -- set shadow on/off
     bodyObject.setShadowType = function(type)
         bodyObject.shadowType = type
-        p.changed = true
+        worldObject.changed = true
     end
     -- set shadow on/off
     bodyObject.setShadow = function(b)
         bodyObject.castsNoShadow = not b
-        p.changed = true
+        worldObject.changed = true
     end
     -- set shine on/off
     bodyObject.setShine = function(b)
         bodyObject.shine = b
-        p.changed = true
+        worldObject.changed = true
     end
     -- set glass color
     bodyObject.setColor = function(red, green, blue)
         bodyObject.red = red
         bodyObject.green = green
         bodyObject.blue = blue
-        p.changed = true
+        worldObject.changed = true
     end
     -- set glass alpha
     bodyObject.setAlpha = function(alpha)
         bodyObject.alpha = alpha
-        p.changed = true
+        worldObject.changed = true
     end
     -- set reflection on/off
     bodyObject.setReflection = function(reflection)
@@ -1250,9 +1271,11 @@ function _G.love.light.newBody(p, type, ...)
                 { bodyObject.normalWidth, bodyObject.normalHeight, bodyObject.normalWidth / bodyObject.normal:getWidth(), bodyObject.normalHeight / bodyObject.normal:getHeight() },
                 { 0.0, bodyObject.normalHeight, 0.0, bodyObject.normalHeight / bodyObject.normal:getHeight() }
             }
-            bodyObject.normalMesh = love.graphics.newMesh(bodyObject.normalVert, bodyObject.normal, "fan")
+            --bodyObject.normalMesh = love.graphics.newMesh(bodyObject.normalVert, bodyObject.normal, "fan")
+            bodyObject.normalMesh = love.graphics.newMesh(bodyObject.normalVert, "fan")
+            bodyObject.normalMesh:setTexture(bodyObject.normal)
 
-            p.isPixelShadows = true
+            worldObject.isPixelShadows = true
         else
             bodyObject.normalMesh = nil
         end
@@ -1345,7 +1368,7 @@ function _G.love.light.newBody(p, type, ...)
         bodyObject.glow = glow
         bodyObject.glowStrength = 1.0
 
-        p.isGlow = true
+        worldObject.isGlow = true
     end
     -- set tile offset
     bodyObject.setNormalTileOffset = function(tx, ty)
@@ -1357,7 +1380,7 @@ function _G.love.light.newBody(p, type, ...)
             { bodyObject.normalWidth, bodyObject.normalHeight, bodyObject.tileX + 1.0, bodyObject.tileY + 1.0 },
             { 0.0, bodyObject.normalHeight, bodyObject.tileX, bodyObject.tileY + 1.0 }
         }
-        p.changed = true
+        worldObject.changed = true
     end
     -- get type
     bodyObject.getType = function()
@@ -1413,16 +1436,16 @@ function _G.love.light.newBody(p, type, ...)
     end
     -- clear
     bodyObject.clear = function()
-        for i = 1, #p.body do
-            if p.body[i] == bodyObject then
-                for k = i, #p.body - 1 do
-                    p.body[k] = p.body[k + 1]
+        for i = 1, #worldObject.body do
+            if worldObject.body[i] == bodyObject then
+                for k = i, #worldObject.body - 1 do
+                    worldObject.body[k] = worldObject.body[k + 1]
                 end
-                p.body[#p.body] = nil
+                worldObject.body[#worldObject.body] = nil
                 break
             end
         end
-        p.changed = true
+        worldObject.changed = true
     end
 
     return bodyObject
@@ -1444,8 +1467,8 @@ function _G.love.light.newPolygon(p, ...)
 end
 
 -- image object
-function _G.love.light.newImage(p, img, x, y, width, height, ox, oy)
-    return p.newBody("image", img, x, y, width, height, ox, oy)
+function _G.love.light.newImage(lightWorld, img, x, y, width, height, ox, oy)
+    return lightWorld.newBody("image", img, x, y, width, height, ox, oy)
 end
 
 -- refraction object
