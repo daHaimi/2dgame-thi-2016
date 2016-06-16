@@ -40,6 +40,12 @@ _G.fishableObjectStub = function()
                 setRefractionStrength = function(...) end;
                 drawPixelShadow = function(...) end;
                 drawGlow = function(...) end;
+                newBody = function(...) end;
+            };
+            Image = {
+                setGlowMap = function(...) end;
+                setNormalMap = function(...) end;
+                setPosition = function(...) end;
             };
             setGlowStrength = function(...) end;
             setSmooth = function(...) end;
@@ -55,30 +61,25 @@ _G.fishableObjectStub = function()
         };
     };
     _G.love.light.world.newLight = function(...) return _G.love.light; end;
+    _G.love.light.world.newImage = function(...) return _G.love.light.Image; end;
     _G.love.light.newWorld = function(...) return _G.love.light.world; end;
     _G.love.graphics.newShader = function(...) return _G.love.graphics.shader; end;
     _G.love.graphics.newCanvas = function(...) return _G.love.graphics.Canvas; end;
 
-    local hitbox = {
-        {
-            width = 64;
-            height = 25;
-            deltaXPos = 0;
-            deltaYPos = 20;
-        }
-    };
     _G.levMan = {
         curLevel = {
             winDim = { 500, 500 };
             getMoved = function(...) return 4; end;
+            getLightWorld = function(...) return _G.love.light.world; end;
         };
         curPlayer = {
             getPosY = function(...) return 5; end;
         };
         curSwarmFac = nil;
-        getLevelPropMapByName = function(...) return {
-            direction = 1;
-        };
+        getLevelPropMapByName = function(...)
+            return {
+                direction = 1;
+            };
         end;
         getCurSwarmFactory = function(...) return _G.levMan.curSwarmFac; end;
         getCurPlayer = function(...) return _G.levMan.curPlayer; end;
@@ -93,6 +94,14 @@ testClass = require "src.class.FishableObject"
 describe("Unit test for FishableObject.lua", function()
 
     before_each(function()
+        local hitbox = {
+            {
+                width = 64;
+                height = 25;
+                deltaXPos = 0;
+                deltaYPos = 20;
+            }
+        };
         _G.fishableObjectStub();
 
         _G.locInstance = testClass("deadFish", "assets/deadFish.png", 50, 30, 35, 50, 5, 64, hitbox, _, _, _, 0, _G.levMan);
@@ -270,7 +279,7 @@ describe("Unit test for FishableObject.lua", function()
             localHitbox, 0.1, 0.2, 1, 0, _G.levMan);
 
         myInstance:draw();
-        assert.spy(spyDraw).was.called_with(myInstance.animation, myInstance.xPosition, myInstance.yPosition);
+        assert.spy(spyDraw).was.called();
         myInstance:update(0.05, 1);
         assert.spy(spyShiftImage).was_called();
 
