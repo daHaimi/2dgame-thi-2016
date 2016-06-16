@@ -1,72 +1,99 @@
 -- Lua 5.1 Hack
 _G.math.inf = 1 / 0
+_G.fishableObjectStub = function()
+    _G.TEsound = {
+        play = function(...) end;
+    };
+
+    _G.love = {
+        graphics = {
+            Image = {
+                getWidth = function(...) return 64; end;
+                getHeight = function(...) return 64; end;
+                getDimensions = function(...) return 64, 64; end;
+            };
+            shader = {
+                send = function(...) end;
+            };
+            newShader = function(...) end;
+            setColor = function(...) end;
+            setNewFont = function(...) end;
+            getFont = function(...) return "this could be your font"; end;
+            setFont = function(...) end;
+            print = function(...) end;
+            newImage = function(...) return _G.love.graphics.Image; end;
+            draw = function(...) end;
+            scale = function(...) end;
+            newQuad = function(...) return 0; end;
+        };
+        window = {
+            getMode = function(...) return 0, 0, {}; end;
+        };
+        filesystem = {
+            exists = function(...) return false; end;
+        };
+        light = {
+            world = {
+                setAmbientColor = function(...) end;
+                update = function(...) end;
+                drawShadow = function(...) end;
+                setRefractionStrength = function(...) end;
+                drawPixelShadow = function(...) end;
+                drawGlow = function(...) end;
+            };
+            setGlowStrength = function(...) end;
+            setSmooth = function(...) end;
+            setPosition = function(...) end;
+        };
+    }
+
+    _G._persTable = {
+        winDim = { 500; 500 };
+        moved = 0;
+        fish = {
+            postiveFishCaught = true;
+        };
+    };
+    _G.love.light.world.newLight = function(...) return _G.love.light; end;
+    _G.love.light.newWorld = function(...) return _G.love.light.world; end;
+    _G.love.graphics.newShader = function(...) return _G.love.graphics.shader; end;
+    _G.love.graphics.newCanvas = function(...) return _G.love.graphics.Canvas; end;
+
+    local hitbox = {
+        {
+            width = 64;
+            height = 25;
+            deltaXPos = 0;
+            deltaYPos = 20;
+        }
+    };
+    _G.levMan = {
+        curLevel = {
+            winDim = { 500, 500 };
+            getMoved = function(...) return 4; end;
+        };
+        curPlayer = {
+            getPosY = function(...) return 5; end;
+        };
+        curSwarmFac = nil;
+        getLevelPropMapByName = function(...) return {
+            direction = 1;
+        };
+        end;
+        getCurSwarmFactory = function(...) return _G.levMan.curSwarmFac; end;
+        getCurPlayer = function(...) return _G.levMan.curPlayer; end;
+        getCurLevel = function(...) return _G.levMan.curLevel; end;
+    };
+end;
+
+_G.fishableObjectStub();
 
 testClass = require "src.class.FishableObject"
 --self, name, imageSrc, yPosition, minSpeed, maxSpeed, value, hitpoints, spriteSize, hitbox
 describe("Unit test for FishableObject.lua", function()
 
     before_each(function()
-        _G.TEsound = {
-            play = function(...) end;
-        };
-
-        _G.love = {
-            graphics = {
-                Image = {
-                    getWidth = function(...) return 64; end;
-                    getHeight = function(...) return 64; end;
-                    getDimensions = function(...) return 64, 64; end;
-                };
-
-                setColor = function(...) end;
-                setNewFont = function(...) end;
-                getFont = function(...) return "this could be your font"; end;
-                setFont = function(...) end;
-                print = function(...) end;
-                newImage = function(...) return _G.love.graphics.Image; end;
-                draw = function(...) end;
-                scale = function(...) end;
-                newQuad = function(...) return 0; end;
-            };
-
-            filesystem = {
-                exists = function(...) return false; end;
-            }
-        }
-
-        _G._persTable = {
-            winDim = { 500; 500 };
-            moved = 0;
-            fish = {
-                postiveFishCaught = true;
-            };
-        };
-
-        local hitbox = {
-            {
-                width = 64;
-                height = 25;
-                deltaXPos = 0;
-                deltaYPos = 20;
-            }
-        };
-        _G.levMan = {
-            curLevel = {
-                winDim = { 500, 500 };
-                getMoved = function(...) return 4; end;
-            };
-            curPlayer = {
-                getPosY = function(...) return 5; end;
-            };
-            curSwarmFac = nil;
-            getLevelPropMapByName = function(...) return {
-                direction = 1;
-            };
-            end;
-            getCurSwarmFactory = function(...) return _G.levMan.curSwarmFac; end;
-            getCurPlayer = function(...) return _G.levMan.curPlayer; end;
-            getCurLevel = function(...) return _G.levMan.curLevel; end;
-        };
+        _G.fishableObjectStub();
 
         _G.locInstance = testClass("deadFish", "assets/deadFish.png", 50, 30, 35, 50, 5, 64, hitbox, _, _, _, 0, _G.levMan);
     end)

@@ -23,8 +23,8 @@ local FishableObject = Class {
     spriteSize, hitbox, animTimeoutMin, animTimeoutMax, animType, fallSpeed, levMan)
         self.name = name;
         self.image = love.graphics.newImage("assets/" .. imageSrc);
-        local imageName = _G.love.file.getName(imageSrc);
-        local imageExtention = _G.love.file.getExtention(imageSrc);
+        local imageName = _G.file.getName(imageSrc);
+        local imageExtention = _G.file.getExtention(imageSrc);
         if love.filesystem.exists("assets/" .. imageName .. "_glow." .. imageExtention) then
             local lightWorld = levMan.curLevel:getLightWorld();
             self.glowMap = love.graphics.newImage("assets/" .. imageName .. "_glow." .. imageExtention);
@@ -32,7 +32,8 @@ local FishableObject = Class {
             self.lightImage.setGlowMap(self.glowMap);
             if love.filesystem.exists("assets/" .. imageName .. "_normal." .. imageExtention) then
                 self.normalMap = love.graphics.newImage("assets/" .. imageName .. "_normal." .. imageExtention);
-                --else TODO load default
+            else
+                self.notmalMap = love.graphics.newImage("assets/shader/empty_normal.png");
             end
             self.lightImage.setNormalMap(self.normalMap)
             self.objectTest = lightWorld.newBody("refraction", self.image, 64, 64, 64, 64);

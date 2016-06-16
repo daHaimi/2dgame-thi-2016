@@ -18,9 +18,9 @@ _G.levelTestStub = function()
         achievements = {};
         playedTime = 0;
         phase = 1;
-    };    
-    
-    _G.Animate.init = function (...) end;
+    };
+
+    _G.Animate.init = function(...) end;
     _G.Animate.AnimType = {
         linear = 1;
         bounce = 2;
@@ -29,7 +29,7 @@ _G.levelTestStub = function()
     _G.Animate.p_quads = {};
 
     _G._persTable.achievements = {
-         getFirstObject = true;
+        getFirstObject = true;
         getSecondObject = false;
         failedStart = false;
         caughtTwoBoots = false;
@@ -73,13 +73,13 @@ _G.levelTestStub = function()
         roundFuel = nil;
         caughtThisRound = {};
     };
-    
+
     local fishables = {
         shoe = {
             value = -50;
         };
     };
-    
+
     _G.levMan = {
         curLevel = nil;
         curPlayer = {
@@ -140,7 +140,11 @@ _G.levelTestStub = function()
                 setAmbientColor = function(...) end;
                 update = function(...) end;
                 drawShadow = function(...) end;
+                setRefractionStrength = function(...) end;
+                drawPixelShadow = function(...) end;
+                drawGlow = function(...) end;
             };
+            setGlowStrength = function(...) end;
             setSmooth = function(...) end;
             setPosition = function(...) end;
         };
@@ -183,25 +187,25 @@ describe("Test unit test suite", function()
         assert.are.same(lb + mbb1 + mbb2, myInstance.lowerBoarder);
     end)
 
-    it("Testing Constructor for sewersEndless", function ()
+    it("Testing Constructor for sewersEndless", function()
         local myInstance1 = testClass("sewersEndless", "assets/testbg.png", { 512, 256 }, 1, "endless", _G.levMan);
         local myInstance2 = testClass("sewersEndless", "assets/testbg.png", { 512, 256 }, 1, "endless", _G.levMan);
         assert.are.same(myInstance1, myInstance2);
     end)
 
-    it("Testing Constructor for canyonEndless", function ()
+    it("Testing Constructor for canyonEndless", function()
         local myInstance1 = testClass("canyonEndless", "assets/testbg.png", { 512, 256 }, 1, "endless", _G.levMan);
         local myInstance2 = testClass("canyonEndless", "assets/testbg.png", { 512, 256 }, 1, "endless", _G.levMan);
         assert.are.same(myInstance1, myInstance2);
     end)
 
-    it("Testing Constructor for sleepingCrocos", function ()
+    it("Testing Constructor for sleepingCrocos", function()
         local myInstance1 = testClass("sleepingCrocos", "assets/testbg.png", { 512, 256 }, 1, "sleepingCrocos", _G.levMan);
         local myInstance2 = testClass("sleepingCrocos", "assets/testbg.png", { 512, 256 }, 1, "sleepingCrocos", _G.levMan);
         assert.are.same(myInstance1, myInstance2);
     end)
 
-    it("Testing Constructor for crazySquirrels", function ()
+    it("Testing Constructor for crazySquirrels", function()
         local myInstance1 = testClass("crazySquirrels", "assets/testbg.png", { 512, 256 }, 1, "crazySquirrels", _G.levMan);
         local myInstance2 = testClass("crazySquirrels", "assets/testbg.png", { 512, 256 }, 1, "crazySquirrels", _G.levMan);
         assert.are.same(myInstance1, myInstance2);
@@ -744,21 +748,21 @@ describe("Test unit test suite", function()
         };
         locInstance:update(1, bait);
         assert.are.same(_G._persTable.playedTime, 2000);
-    end) 
-  
+    end)
+
     it("Test Achievement: nothing Caught", function()
-    _G._tmpTable.caughtThisRound = {};
-    locInstance.failedStart = false;
-    locInstance.levelFinished = true;
-    _G._persTable.achievements.nothingCaught = false;
-    
-    _G._unlockedAchievements = {};
-    _G.data = { achievements = { nothingCaught = {image_unlock = "xyz"}}};
-    _G._gui = { newNotification = function(...) end; };
-    stub(_gui, "newNotification");
-     
-    locInstance:checkForAchievments();
-    assert.are.same(_G._persTable.achievements.nothingCaught, true);
+        _G._tmpTable.caughtThisRound = {};
+        locInstance.failedStart = false;
+        locInstance.levelFinished = true;
+        _G._persTable.achievements.nothingCaught = false;
+
+        _G._unlockedAchievements = {};
+        _G.data = { achievements = { nothingCaught = { image_unlock = "xyz" } } };
+        _G._gui = { newNotification = function(...) end; };
+        stub(_gui, "newNotification");
+
+        locInstance:checkForAchievments();
+        assert.are.same(_G._persTable.achievements.nothingCaught, true);
     end)
 
     it("Testing unlockAchievement function", function()
