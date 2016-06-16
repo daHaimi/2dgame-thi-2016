@@ -36,7 +36,7 @@ describe("Unit test for UpgradeMenu.lua", function()
             };
         };
         _G._gui = {
-            newNotification = function(...) end;
+            newTextNotification = function(...) end;
         };
         _G.data = {
             upgrades = {};
@@ -86,23 +86,16 @@ end)
         assert.are.same(locInstance, myInstance);
     end)
 
-    it("Testing checkForAchievement function", function()
-        stub(_G._gui, "newNotification");
-        locInstance:checkForAchievement();
-        assert.are.equal(_G._persTable.achievements.shoppingQueen, false);
-        _G._persTable.upgrades.test1 = true;
-        locInstance:checkForAchievement();
-        assert.are.equal(_G._persTable.achievements.shoppingQueen, true);
-    end)
-
     it("Testing create function", function()
         local achBitchCalled = false;
+        local achShoppingQueen = false;
         _G._gui = {
             getFrames = function(...) return{}; end;
             changeFrame = function(...) end;
             getLevelManager = function(...) return {
                 getAchievmentManager = function(...) return{
                     achBitch = function(...) achBitchCalled = true end;
+                    achShoppingQueen = function(...) achShoppingQueen = true end;
                 } end;
             } end;
         };
@@ -133,6 +126,7 @@ end)
         locInstance.elementsOnFrame.button_buy.object.OnClick();
         assert.stub(locInstance.buyElement).was.called();
         assert.are.same(true, achBitchCalled);
+        assert.are.same(true, achShoppingQueen);
     end)
 
     it("Testing buyElement function", function()
@@ -151,7 +145,6 @@ end)
         stub(locInstance.elementsOnFrame.chart.object.p_markedElement, "disable");
         locInstance:buyElement();
         assert.stub(locInstance.elementsOnFrame.chart.object.p_markedElement.disable).was.called();
-        assert.stub(locInstance.checkForAchievement).was_called();
     end)
 
     it("Testing addAllUpgrades function", function()
