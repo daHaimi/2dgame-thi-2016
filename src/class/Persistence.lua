@@ -103,7 +103,7 @@ function Persistence:createPersTable()
         oneMoreLife = false; -- more life
         twoMoreLife = false; -- more life
         threeMoreLife = false; -- more life
-        moneyMult = false; -- false means no additional money
+        moneyMultiplier = false; -- false means no additional money
         moreLife = 0; -- needed for calculation in a few classes
         godMode = false; -- indicates if the god mode is available or not
         mapBreakthrough1 = false; -- can you access the first map limit? 0 = no, 1 = yes

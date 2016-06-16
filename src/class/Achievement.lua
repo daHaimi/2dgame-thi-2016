@@ -13,7 +13,6 @@ function Achievement:checkAchievements()
 end
 
 function Achievement:caughtOneRound()
-
     if _G._persTable.fish.caughtInOneRound == 1 then
         _G._persTable.achievements.onlyOneCaught = true;
     end
@@ -129,6 +128,23 @@ function Achievement:achBitch()
         end
     end
 end
+
+---Checks for achievement Shopping Queen
+function Achievement:achShoppingQueen()
+    local boughtAll = true;
+    for _, v in pairs(_G._persTable.upgrades) do
+        if type(v) == "boolean" then
+            if not v then
+                boughtAll = false;
+            end
+        end
+    end
+    if boughtAll then
+        _G._persTable.achievements.shoppingQueen = true;
+        _gui:newNotification("assets/gui/480px/" .. _G.data.achievements.boughtAllItems.image_unlock, "shoppingQueen");
+    end
+end
+
 
 --- Checks and unlock the caughtTwoBoots achievement.
 -- @param failedStart Indicates if the intro failed.
