@@ -65,8 +65,8 @@ return {
             animTimeoutMin = 0.08;
             animTimeoutMax = 0.15;
             animType = "bounce";
-            minAmount = 3;
-            maxAmount = 3;
+            minAmount = 40;
+            maxAmount = 80;
             swarmHeight = 350;
             enabled = true;
             hitbox = {

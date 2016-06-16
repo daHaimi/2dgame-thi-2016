@@ -227,12 +227,34 @@ describe("Unit test for Achievement.lua", function()
     end)
 
     it("Test function Achievement:negativCoins", function()
-        _G._persTable.statistic.minCoinOneRound = -200;
-
-        local myInstance = testClass();
-        local exp = true;
-        myInstance:checkAchievements();
-        assert.are.same(_G._persTable.achievements.negativCoins, exp);
+        _G._gui = {
+            newNotification = function(...) end;
+        };
+        _G._unlockedAchievements = {};
+        _G.data = {
+            achievements = {
+                negativCoins = {
+                    nameOnPersTable = "negativCoins";
+                    sortNumber = 13;
+                    image_lock = "ach_negativeShitcoin_locked.png";
+                    image_unlock = "ach_negativeShitcoin.png";
+                };
+            };
+        };
+        
+        local gotPayed = 0;
+        local roundVal = -100;
+        
+        locInstance:checkNegativCoins(gotPayed, roundVal);
+        assert.are.same(false, _G._persTable.achievements.negativCoins);
+        
+        gotPayed = 1;
+        locInstance:checkNegativCoins(gotPayed, roundVal);
+        assert.are.same(false, _G._persTable.achievements.negativCoins);
+        
+        local roundVal = -200;
+        locInstance:checkNegativCoins(gotPayed, roundVal);
+        assert.are.same(true, _G._persTable.achievements.negativCoins);
     end)  
 
     it("Test Achievement: nothing Caught", function()

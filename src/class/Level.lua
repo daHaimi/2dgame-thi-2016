@@ -300,6 +300,8 @@ function Level:checkForAchievments()
     
     self.levMan:getAchievmentManager():onlyNegativeFishesCaught(self.levelFinished, self.levMan:getCurSwarmFactory());
     
+    self.levMan:getAchievmentManager():checkNegativCoins(self.gotPayed, self.roundValue);
+    
     self.levMan:getAchievmentManager():achBitch(); -- call this checkup always at the end
 end
 

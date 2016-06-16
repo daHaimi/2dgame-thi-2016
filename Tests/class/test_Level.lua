@@ -109,6 +109,7 @@ _G.levelTestStub = function()
                 checkFirstObject = function(...) end;
                 checkPlayTime = function(...) end;
                 onlyNegativeFishesCaught = function(...) end;
+                checkNegativCoins = function(...) end;
                 achBitch = function(...) end;
         } end;
     };

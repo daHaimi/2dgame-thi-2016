@@ -7,7 +7,6 @@ local Achievement = Class {
 function Achievement:checkAchievements()
     self:caughtOneRound();
     self:moneyOneRound();
-    self:negativCoins();
     self:moneyTotal();
     self:fishCaughtTotal();
 end
@@ -64,9 +63,13 @@ function Achievement:fishCaughtTotal()
     end
 end
 
-function Achievement:negativCoins()
-    if _G._persTable.statistic.minCoinOneRound < -199 then
-        _G._persTable.achievements.negativCoins = true;
+--- Checks if the achievement onlyNegativeFishesCaught was unlocked.
+-- @param gotPayed 0 indicates that the player haven't got any money until yet.
+-- 1 means the player got his profit.
+-- @param totalRoundVal The amount of coins got in the current level.
+function Achievement:checkNegativCoins(gotPayed, totalRoundVal)
+    if gotPayed == 1 and not _G._persTable.achievements.negativCoins and totalRoundVal <= -200 then
+        self:unlockAchievement("negativCoins");
     end
 end
 
