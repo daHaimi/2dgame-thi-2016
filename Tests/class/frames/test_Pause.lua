@@ -113,19 +113,24 @@ it("Testing Constructor", function()
     end)
 
     it("Testing checkAchRageQuit function", function()
-        local res = false;
+        local rq = false;
+        local ab = false;
         _G._persTable.achievements = {};
         _G._persTable.phase = 2;
         _G._gui = {
             getLevelManager = function(...) return {
                 getCurLevel = function(...) return {
                     getReachedDepth = function(...) return -500 end;
-                    unlockAchievement = function(...) res = true end;
+                } end;
+                getAchievmentManager = function(...) return {
+                    checkRageQuit = function(...) rq = true end;
+                    achBitch = function(...) ab = true end;
                 } end;
             } end;
         };
 
         locInstance:checkAchRageQuit();
-        assert.are.same(true, res);
+        assert.are.same(true, rq);
+        assert.are.same(true, ab);
     end)
 end)

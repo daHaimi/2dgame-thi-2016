@@ -2,6 +2,7 @@
 _G.math.inf = 1 / 0
 
 _G.testLevelManagerStub = function(...)
+    _achievements = {};
     _G.love = {
         graphics = {
             newImage = function(...) end;
@@ -83,7 +84,7 @@ describe("Unit test suite for the LevelManager class", function()
     before_each(function()
         _G.testLevelManagerStub();
 
-        levMan = LevelManager();
+        levMan = LevelManager(_achievements);
     end)
     _G._tmpTable = {
         caughtThisRound = {};
@@ -94,9 +95,8 @@ describe("Unit test suite for the LevelManager class", function()
     };
     it("Testing Constructor", function()
         local const = spy.on(LevelManager, "init");
-        local myInstance = LevelManager();
+        local myInstance = LevelManager(_achievements);
         assert.spy(const).was.called(1);
-        assert.spy(const).was.called_with(myInstance);
     end)
 
     it("Testing newLevel", function()
@@ -187,5 +187,10 @@ describe("Unit test suite for the LevelManager class", function()
         };
 
         assert.are.same("sewers", levMan:getLevelPropMapByName("sewers").levelName);
+    end)
+
+    it("Testing getAchievmentManager", function()
+        levMan.achMan = { 36, 587, 8843, 987 };
+        assert.are.same(levMan.achMan, levMan:getAchievmentManager());
     end)
 end)

@@ -130,9 +130,11 @@ function Chart:drawChart()
         v:SetVisible(false);
     end
     --draw new elements
-    for var1 = 1 + (self.p_column * self.p_toprow), 9 + (self.p_column * self.p_toprow) do
-        if self.p_elementsOnChart[var1] ~= nil then
-            self.p_elementsOnChart[var1]:SetVisible(true);
+    for i = 1, #self.p_elementsOnChart, 1 do
+        if self.p_elementsOnChart[i] ~= nil and
+        self.p_elementsOnChart[i].sortNumber > self.p_toprow * 3 and
+        self.p_elementsOnChart[i].sortNumber <= self.p_toprow * 3 + 9 then
+            self.p_elementsOnChart[i]:SetVisible(true);
         end
     end
     self:setPosOfKlickableElements()
@@ -141,14 +143,14 @@ end
 --- set the position of all elements in the table
 function Chart:setPosOfKlickableElements()
     local row = 0;
-    for _ = 1, self.p_row + 1 do
-        for var2 = 1, self.p_column + 1 do
-            if self.p_elementsOnChart[var2 + row * self.p_column] ~= nil then
-                self.p_elementsOnChart[var2 + row * self.p_column]:SetPos(self.p_xPos + self.klickableSize * (var2 - 1),
-                    (self.p_yPos + self.klickableSize * row) - (self.klickableSize * self.p_toprow) + self.buttonHeight);
+    for i = 1, #self.p_elementsOnChart, 1 do
+            if self.p_elementsOnChart[i] ~= nil then
+                local positionNumber = self.p_elementsOnChart[i].sortNumber;
+                local colNumber = (positionNumber - 1)%3;
+                local rowNumber = (positionNumber - colNumber-1) /3
+                self.p_elementsOnChart[i]:SetPos(self.p_xPos + self.klickableSize * colNumber,
+                   self.klickableSize * rowNumber + self.p_yPos - (self.klickableSize * self.p_toprow) + self.buttonHeight);
             end
-        end
-        row = row + 1;
     end
 end
 

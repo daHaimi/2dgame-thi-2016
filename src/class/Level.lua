@@ -24,6 +24,7 @@ local Level = Class {
         self.bg = nil;
         self.bgq = nil;
         self.winDim = {};
+        
         if mode == "endless" then
             self.lowerBoarder = -_G.math.inf;
         else
@@ -94,8 +95,8 @@ local Level = Class {
         self.lightWorld = love.light.newWorld();
 
         local time = tonumber(os.date("%M"));
-        local minLightLevel = 81;
-        local maxLightLevel = 174;
+        local minLightLevel = 100;
+        local maxLightLevel = 155;
         local lightLevel = ((math.abs(30 - time)) / 30) * maxLightLevel + minLightLevel;
 
         self.lightWorld.setAmbientColor(lightLevel, lightLevel, lightLevel);
@@ -148,6 +149,7 @@ local Level = Class {
 --- Marks the member variables for the garbage collector
 function Level:destructLevel()
     self.levMan = nil;
+    self.achMan = nil;
     self.p_levelName = nil;
     self.levelFinished = nil;
     self.gotPayed = nil;
@@ -194,9 +196,9 @@ function Level:update(dt, bait)
 
     --dynamic creation of swarms of fishable objects
     self.levMan:getCurSwarmFactory():createMoreSwarms(-(self.posY - self.winDim[2] * 0.5));
-    --dynamic creation of sleepingPills
+    --dynamic creation of Pills
     if self.p_mode ~= "sleepingCrocos" then
-        self.levMan:getCurSwarmFactory():createSleepingpill(-(self.posY - self.winDim[2] * 0.5), 300, 700);
+        self.levMan:getCurSwarmFactory():createRandomPill(-(self.posY - self.winDim[2] * 0.5), 300, 700);
     end
     --dynamic creation of swarms of bubbles
     if (self.p_levelName == "sewers" or self.p_levelName == "sewersEndless" or
@@ -281,41 +283,25 @@ end
 
 --- checks if a new achievement is unlocked
 function Level:checkForAchievments()
-    if self.failedStart and self.levelFinished and not _G._persTable.achievements.failedStart then
-        self:unlockAchievement("failedStart");
-    end
-    if self.levelFinished and _G._tmpTable.caughtThisRound.shoe == 2
-            and not _G._persTable.achievements.caughtTwoBoots
-            and self:calcFishedValue() == self.levMan:getCurSwarmFactory():getFishableObjects().shoe.value * 2 then
-        self:unlockAchievement("caughtTwoBoots");
-    end
-    if self.levelFinished and next(_G._tmpTable.caughtThisRound) == nil and not self.failedStart
-            and not _G._persTable.achievements.nothingCaught then
-        self:unlockAchievement("nothingCaught");
-    end
-    if self.levelFinished and not _G._persTable.achievements.allLevelBoardersPassed
-            and _persTable.upgrades.mapBreakthrough1 == true and _persTable.upgrades.mapBreakthrough2 == true
-            and self.reachedDepth <= self.lowerBoarder then
-        self:unlockAchievement("allLevelBoardersPassed");
-    end
-    if self.levelFinished and not _G._persTable.achievements.getFirstObject
-            and next(_G._tmpTable.caughtThisRound) ~= nil then
-        self:unlockAchievement("getFirstObject");
-    end
-    if self.levelFinished and not _G._persTable.achievements.playedTime
-            and _G._persTable.playedTime > (2 * 60 * 60) then
-        self:unlockAchievement("playedTime");
-    end
-end
+    
+    -- check failedStart ach
+    self.levMan:getAchievmentManager():checkFailStart(self.failedStart, self.levelFinished);
+    
+    -- check if only two shoes was fished
+    self.levMan:getAchievmentManager():checkTwoShoes(self.levelFinished, self:calcFishedValue(), 
+        self.levMan:getCurSwarmFactory():getFishableObjects().shoe.value * 2);
+    
+    self.levMan:getAchievmentManager():checkNothingCaught(self.levelFinished, self.failedStart);
 
---- Unlocks the given achievement.
--- @param achName The name of the achievement.
-function Level:unlockAchievement(achName)
-    --print("Erfolg " .. achName .. " freigeschaltet");
-    table.insert(_G._unlockedAchievements, _G.data.achievements[achName]);
-    _gui:newNotification("assets/gui/480px/" .. _G.data.achievements[achName].image_unlock,
-        achName);
-    _G._persTable.achievements[achName] = true;
+    self.levMan:getAchievmentManager():checkAllBordersPassed(self.levelFinished, self.reachedDepth, self.lowerBoarder);
+
+    self.levMan:getAchievmentManager():checkFirstObject(self.levelFinished);    
+    
+    self.levMan:getAchievmentManager():checkPlayTime(self.levelFinished);
+    
+    self.levMan:getAchievmentManager():onlyNegativeFishesCaught(self.levelFinished, self.levMan:getCurSwarmFactory());
+    
+    self.levMan:getAchievmentManager():achBitch(); -- call this checkup always at the end
 end
 
 --- calculates the momement an positioning of all elements needed for the ending animation

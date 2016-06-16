@@ -165,8 +165,10 @@ describe("Unit test for SwarmFactory.lua", function()
         local testInstance = testClass(require "src.data", levMan);
         testInstance.currentSwarm = 1;
         testInstance.createdFishables = {};
+        testInstance.currentSwarm = #testInstance.actualSwarm
+        testInstance.actualSwarm[testInstance.currentSwarm].maxSwarmHeight = 10;
+        testInstance:createNextSwarm(100, 0);
 
-        testInstance:createNextSwarm(20, 0);
         local swarm = testInstance.createdFishables;
 
         for i = 1, #swarm, 1 do
@@ -210,9 +212,10 @@ describe("Unit test for SwarmFactory.lua", function()
         assert.are.same(0.3, locInstance.speedMulitplicator);
     end)
 
-    it("Testing createSleepingpill", function()
+    it("Testing createRandomPill", function()
         locInstance.createdFishables = {};
-        locInstance:createSleepingpill(400, 200, 400);
+        locInstance.positionOfLastPill = 0;
+        locInstance:createRandomPill(1000, 200, 400);
         assert.are.same(1, #locInstance.createdFishables);
     end)
 

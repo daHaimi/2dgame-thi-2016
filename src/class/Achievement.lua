@@ -70,9 +70,23 @@ function Achievement:negativCoins()
     end
 end
 
-function Achievement:onlyNegativeFishesCaught()
-    if _G._persTable.fish.postiveFishCaught == false and _G._persTable.fish.caughtInOneRound > 2 then
-        _G._persTable.achievements.onlyNegativeFishesCaught = true;
+--- Checks if the achievement onlyNegativeFishesCaught was unlocked.
+-- @param levelFinished The boolean that indicate if the level has been already finished.
+-- @param swarmFac The reference to the current swarmFactory.
+function Achievement:onlyNegativeFishesCaught(levelFinished, swarmFac)
+    if levelFinished and not _G._persTable.achievements.onlyNegativeFishesCaught then
+        local negObjects = 0;
+        for name, amount in pairs(_G._tmpTable.caughtThisRound) do
+            if swarmFac:getFishableObjects()[name].value < 0 then
+                negObjects = negObjects + amount;
+            else
+                return;
+            end
+        end
+        
+        if negObjects >= 2 then
+            self:unlockAchievement("onlyNegativeFishesCaught");
+        end
     end
 end
 
@@ -96,6 +110,123 @@ function Achievement:allPillsAtLeastOnce()
     if _G._persTable.fish.caught.sleepingPill > 0 then
         _G._persTable.achievements.allPillsAtLeastOnce = true;
     end
+end
+
+--- Checks if the achievement achBitch was unlocked.
+function Achievement:achBitch()
+    if not _G._persTable.achievements.achBitch then
+        local numOfUnlockedAch = 0;
+
+        for k,v in pairs(_G._persTable.achievements)
+        do
+            if v == true then
+                numOfUnlockedAch = numOfUnlockedAch + 1;
+            end
+        end
+
+        if self:tablelength(_G.data.achievements) - 2 == numOfUnlockedAch then
+            self:unlockAchievement("achBitch");
+        end
+    end
+end
+
+--- Checks and unlock the caughtTwoBoots achievement.
+-- @param failedStart Indicates if the intro failed.
+-- @param levelFinished The boolean that indicate if the level has been already finished.
+function Achievement:checkFailStart(failedStart, levelFinished)
+    if failedStart and levelFinished and not _G._persTable.achievements.failedStart then
+        self:unlockAchievement("failedStart");
+    end
+end
+
+--- Checks and unlock the caughtTwoBoots achievement.
+-- @param levelFinished The boolean that indicate if the level has been already finished.
+-- @param fishedValue The total value of fished objects.
+-- @param valOfTwoShoes The value of two shoe objects.
+function Achievement:checkTwoShoes(levelFinished, fishedValue, valOfTwoShoes)
+    if levelFinished and _G._tmpTable.caughtThisRound.shoe == 2
+    and not _G._persTable.achievements.caughtTwoBoots
+    and fishedValue == valOfTwoShoes then
+        self:unlockAchievement("caughtTwoBoots");
+    end
+end
+
+--- Checks and unlock the nothingCaught achievement.
+-- @param levelFinished The boolean that indicate if the level has been already finished.
+-- @param failedStart Indicates if the intro failed.
+function Achievement:checkNothingCaught(levelFinished, failedStart)
+    if levelFinished and next(_G._tmpTable.caughtThisRound) == nil and not failedStart
+    and not _G._persTable.achievements.nothingCaught then
+        self:unlockAchievement("nothingCaught");
+    end
+end
+
+--- Checks and unlock the allLevelBoardersPassed achievement.
+-- @param levelFinished The boolean that indicate if the level has been already finished.
+-- @param reachedDepth The maximal reached depth of one round.
+-- @param lowerBorder The lower border of the current level.
+function Achievement:checkAllBordersPassed(levelFinished, reachedDepth, lowerBorder)
+    if levelFinished and not _G._persTable.achievements.allLevelBoardersPassed
+    and _persTable.upgrades.mapBreakthrough1 == true and _persTable.upgrades.mapBreakthrough2 == true
+    and reachedDepth <= lowerBorder then
+        self:unlockAchievement("allLevelBoardersPassed");
+    end
+end
+
+--- Checks and unlock the getFirstObject achievement.
+-- @param levelFinished The boolean that indicate if the level has been already finished.
+function Achievement:checkFirstObject(levelFinished)
+    if levelFinished and not _G._persTable.achievements.getFirstObject
+    and next(_G._tmpTable.caughtThisRound) ~= nil then
+        self:unlockAchievement("getFirstObject");
+    end
+end
+
+--- Checks and unlock the rageQuit achievement.
+-- @param reachedDepth The maximal reached depth of one round.
+function Achievement:checkRageQuit(reachedDepth)
+    if not _G._persTable.achievements.rageQuit and _G._persTable.phase == 2
+    and math.ceil(math.abs(reachedDepth / 300)) <= 2 then
+        self:unlockAchievement("rageQuit");
+    end
+end
+
+--- Checks and unlock the playedTime achievement.
+-- @param levelFinished The boolean that indicate if the level has been already finished.
+function Achievement:checkPlayTime(levelFinished)
+    if levelFinished and not _G._persTable.achievements.playedTime
+    and _G._persTable.playedTime > (2 * 60 * 60) then
+        self:unlockAchievement("playedTime");
+    end
+end
+
+--- Checks and unlock the creditsRed achievement.
+-- @param timeSpent The difference of the time of calling the credits frame and leaving it.
+function Achievement:checkCreditsRed(timeSpent)
+    if timeSpent >= 10 then
+        if not _G._persTable.achievements.creditsRed then
+            self:unlockAchievement("creditsRed");
+        end
+    end
+end
+
+--- Unlocks the given achievement.
+-- @param achName The name of the achievement.
+function Achievement:unlockAchievement(achName)
+    table.insert(_G._unlockedAchievements, _G.data.achievements[achName]);
+    _gui:newNotification("assets/gui/480px/" .. _G.data.achievements[achName].image_unlock, achName);
+    _G._persTable.achievements[achName] = true;
+end
+
+--- Counts the elements in a table.
+-- @return Returns the number of elements in the table.
+function Achievement:tablelength(T)
+  local count = 0;
+  for _ in pairs(T) do 
+      count = count + 1;
+  end
+  
+  return count
 end
 
 return Achievement;

@@ -77,13 +77,15 @@ end
 --add all achievements written in the data.lua into the chart and adds an OnClick event
 function Achievements:addAllAchievements()
     for _, v in pairs(_G.data.achievements) do
-        local imageDirectory = self.directory .. v.image_lock;
-        local newKlickableElement = KlickableElement(v.name, imageDirectory, self.directory .. v.image_unlock,
-            v.description, nil, v.nameOnPersTable);
-        newKlickableElement.object.OnClick = function(_)
-            self.elementsOnFrame.chart.object:markElement(newKlickableElement);
+        if v.sortNumber ~= nil then
+            local imageDirectory = self.directory .. v.image_lock;
+            local newKlickableElement = KlickableElement(v.name, imageDirectory, self.directory .. v.image_unlock,
+                v.description, nil, v.nameOnPersTable, v.sortNumber);
+            newKlickableElement.object.OnClick = function(_)
+                self.elementsOnFrame.chart.object:markElement(newKlickableElement);
+            end
+            self.elementsOnFrame.chart.object:addKlickableElement(newKlickableElement);
         end
-        self.elementsOnFrame.chart.object:addKlickableElement(newKlickableElement);
     end
 end
 

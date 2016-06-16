@@ -5,6 +5,7 @@ return {
             -- definition of the object
             name = "nemo"; -- The name
             image = "nemo.png"; -- The image file
+            sortNumber = 4; --needed to sort objects
             spriteSize = 64; -- width of the image
             minSpeed = 4; -- Min movement speed
             maxSpeed = 7; -- Max movement speed
@@ -32,6 +33,7 @@ return {
         turtle = {
             name = "turtle";
             image = "turtle.png";
+            sortNumber = 3;
             spriteSize = 64;
             minSpeed = 1;
             maxSpeed = 2;
@@ -55,6 +57,7 @@ return {
         rat = {
             name = "rat";
             image = "rat.png";
+            sortNumber = 1;
             spriteSize = 64;
             minSpeed = 3;
             maxSpeed = 4;
@@ -78,6 +81,7 @@ return {
         deadFish = {
             name = "deadFish";
             image = "deadFish.png";
+            sortNumber = 2;
             spriteSize = 64;
             minSpeed = 0;
             maxSpeed = 1;
@@ -100,6 +104,7 @@ return {
         angler = {
             name = "angler";
             image = "angler.png";
+            sortNumber = 5;
             spriteSize = 64;
             minSpeed = 1;
             maxSpeed = 5;
@@ -123,6 +128,7 @@ return {
         lollipop = {
             name = "lollipop";
             image = "lolli.png";
+            sortNumber = 9;
             spriteSize = 64;
             minSpeed = 0;
             maxSpeed = 2;
@@ -149,6 +155,7 @@ return {
         ring = {
             name = "ring";
             image = "ring.png";
+            sortNumber = 10;
             spriteSize = 64;
             minSpeed = 0;
             maxSpeed = 5;
@@ -168,6 +175,7 @@ return {
         shoe = {
             name = "shoe";
             image = "shoe.png";
+            sortNumber = 6;
             spriteSize = 64;
             minSpeed = 0;
             maxSpeed = 0;
@@ -194,6 +202,7 @@ return {
         snake = {
             name = "snake";
             image = "snake.png";
+            sortNumber = 7;
             spriteSize = 64;
             minSpeed = 2;
             maxSpeed = 5;
@@ -216,6 +225,7 @@ return {
         crocodile = {
             name = "crocodile";
             image = "crocodile.png";
+            sortNumber = 8;
             spriteSize = 128;
             minSpeed = 1;
             maxSpeed = 5;
@@ -288,9 +298,29 @@ return {
                 }
             };
         };
+        coffee = {
+            name = "coffee";
+            image = "coffee.png";
+            spriteSize = 32;
+            minSpeed = 0;
+            maxSpeed = 0;
+            value = 0;
+            minAmount = 1;
+            maxAmount = 1;
+            swarmHeight = 50;
+            hitbox = {
+                {
+                    width = 26;
+                    height = 10;
+                    deltaXPos = 3;
+                    deltaYPos = 11;
+                }
+            };
+        };
         squirrel = {
             name = "squirrel";
             image = "squirrel.png";
+            sortNumber = 11;
             spriteSize = 64;
             minSpeed = 4;
             maxSpeed = 6;
@@ -361,6 +391,7 @@ return {
         backpack = {
             name = "backpack";
             image = "backpack.png";
+            sortNumber = 12;
             spriteSize = 64;
             minSpeed = 0;
             maxSpeed = 0;
@@ -382,6 +413,7 @@ return {
         drink = {
             name = "drink";
             image = "drink.png";
+            sortNumber = 12;
             spriteSize = 64;
             minSpeed = 0;
             maxSpeed = 0;
@@ -418,6 +450,7 @@ return {
         egg = {
             name = "egg";
             image = "egg.png";
+            sortNumber = 14;
             spriteSize = 64;
             minSpeed = 0;
             maxSpeed = 0;
@@ -444,6 +477,7 @@ return {
         camera = {
             name = "camera";
             image = "camera.png";
+            sortNumber = 15;
             spriteSize = 64;
             minSpeed = 0;
             maxSpeed = 0;
@@ -474,6 +508,7 @@ return {
         canyonSnake = {
             name = "canyonSnake";
             image = "canyon_snake.png";
+            sortNumber = 16;
             spriteSize = 64;
             minSpeed = 1;
             maxSpeed = 4;
@@ -496,6 +531,7 @@ return {
         cactus = {
             name = "cactus";
             image = "cactus.png";
+            sortNumber = 17;
             spriteSize = 64;
             minSpeed = 0;
             maxSpeed = 0;
@@ -537,6 +573,7 @@ return {
         leaf = {
             name = "leaf";
             image = "leaf.png";
+            sortNumber = 18;
             spriteSize = 64;
             minSpeed = 0;
             maxSpeed = 2;
@@ -572,6 +609,7 @@ return {
         bird = {
             name = "bird";
             image = "bird.png";
+            sortNumber = 19;
             spriteSize = 64;
             minSpeed = 2;
             maxSpeed = 4;
@@ -607,6 +645,7 @@ return {
         balloon = {
             name = "balloon";
             image = "balloon.png";
+            sortNumber = 13;
             spriteSize = 64;
             minSpeed = 2;
             maxSpeed = 4;
@@ -639,6 +678,7 @@ return {
         ufo = {
             name = "ufo";
             image = "ufo.png";
+            sortNumber = 20;
             spriteSize = 64;
             minSpeed = 1;
             maxSpeed = 4;
@@ -741,6 +781,12 @@ return {
             maxSwarmHeight = 10000
         }
     };
+    
+    pills = {
+        allowedFishables = {"sleepingPill", "coffee" };
+         fishablesProbability = {50, 100};
+    };
+    
     swarmCrocos = {
         {
             allowedFishables = {"sleepingCrocodile" };
@@ -759,78 +805,91 @@ return {
     --- Data for all upgrades
     upgrades = {
         oneMoreLife = {
+            sortNumber = 1;
             nameOnPersTable = "oneMoreLife"; --Name of parameter in persTable. Unlock change this parameter to true
             price = 500; --price of this item
             image = "shop_extraLife1.png";
             image_disable = "shop_extraLife1_locked.png";
         };
         twoMoreLife = {
+            sortNumber = 2;
             nameOnPersTable = "twoMoreLife";
             price = 1000;
             image = "shop_extraLife2.png";
             image_disable = "shop_extraLife2_locked.png";
         };
         threeMoreLife = {
+            sortNumber = 3;
             nameOnPersTable = "threeMoreLife";
             price = 1500;
             image = "shop_extraLife3.png";
             image_disable = "shop_extraLife3_locked.png";
         };
         firstSpeedUp = {
+            sortNumber = 4;
             nameOnPersTable = "firstSpeedUp";
             price = 300;
             image = "shop_speedup1.png";
             image_disable = "shop_speedup1_locked.png";
         };
         secondSpeedUp = {
+            sortNumber = 5;
             nameOnPersTable = "secondSpeedUp";
             price = 300;
             image = "shop_speedup2.png";
             image_disable = "shop_speedup2_locked.png";
         };
         moneyMulitplier = {
+            sortNumber = 6;
             nameOnPersTable = "moneyMultiplier";
             price = 300;
             image = "shop_doubleScore.png";
             image_disable = "shop_doubleScore_locked.png";
         };
         godMode = {
+            sortNumber = 7;
             nameOnPersTable = "godMode";
             price = 1000;
             image = "shop_godmode.png";
             image_disable = "shop_godmode_locked.png";
         };
         mapBreakthrough1 = {
+            sortNumber = 8;
             nameOnPersTable = "mapBreakthrough1";
             price = 2500;
             image = "shop_barrier.png";
             image_disable = "shop_barrier_locked.png";
         };
         mapBreakthrough2 = {
+            sortNumber = 9;
             nameOnPersTable = "mapBreakthrough2";
             price = 5000;
             image = "shop_barrier.png";
             image_disable = "shop_barrier_locked.png";
         };
         moreFuel1 = {
+            sortNumber = 10;
             nameOnPersTable = "moreFuel1";
             price = 1000;
             image = "shop_fuel1.png";
             image_disable = "shop_fuel1_locked.png";
         };
         moreFuel2 = {
+            sortNumber = 11;
             nameOnPersTable = "moreFuel2";
             price = 1500;
             image = "shop_fuel2.png";
             image_disable = "shop_fuel2_locked.png";
         };
         firstPermanentMoneyMulitplier = {
+            sortNumber = 12;
             nameOnPersTable = "firstPermanentMoneyMult";
             price = 1000;
             image = "shop_moreMoney1.png";
             image_disable = "shop_moreMoney1_locked.png";
         };
         secondPermanentMoneyMulitplier = {
+            sortNumber = 13;
             nameOnPersTable = "secondPermanentMoneyMult";
             price = 2500;
             image = "shop_moreMoney2.png";
@@ -840,138 +899,171 @@ return {
     achievements = {
         getFirstObject = {
             nameOnPersTable = "getFirstObject";
+            sortNumber = 1;
             image_lock = "ach_firstObject_locked.png";
             image_unlock = "ach_firstObject.png";
         };
         failedStart = {
             nameOnPersTable = "failedStart";
+            sortNumber = 2;
             image_lock = "ach_drop_hamster_locked.png";
             image_unlock = "ach_drop_hamster.png";
         };
         caughtTwoBoots = {
             nameOnPersTable = "caughtTwoBoots";
+            sortNumber = 3;
             image_lock = "ach_two_shoes_locked.png";
             image_unlock = "ach_two_shoes.png";
         };
         secondStart = {
             nameOnPersTable = "secondStart";
+            sortNumber = 15;
             image_lock = "ach_secondTimeGame_locked.png";
             image_unlock = "ach_secondTimeGame.png";
         };
         bronzeCaughtOneRound = {
             nameOnPersTable = "bronzeCaughtOneRound";
+            sortNumber = 4;
             image_lock = "ach_objectsOneRound_locked.png";
-            image_unlock = "ach_objectsOneRoundBronze.png";
+            image_unlock = "ach_objectsOneRound.png";
         };
         silverCaughtOneRound = {
             nameOnPersTable = "silverCaughtOneRound";
+            sortNumber = 5;
             image_lock = "ach_objectsOneRound_locked.png";
             image_unlock = "ach_objectsOneRound.png";
         };
         goldCaughtOneRound = {
             nameOnPersTable = "goldCaughtOneRound";
+            sortNumber = 6;
             image_lock = "ach_objectsOneRound_locked.png";
-            image_unlock = "ach_objectsOneRoundGold.png";
+            image_unlock = "ach_objectsOneRound.png";
         };
         bronzeCoinsOneRound = {
             nameOnPersTable = "bronzeCoinsOneRound";
+            sortNumber = 7;
             image_lock = "ach_shitcoin_locked.png";
             image_unlock = "ach_shitcoin.png";
         };
         silverCoinsOneRound = {
             nameOnPersTable = "silverCoinsOneRound";
+            sortNumber = 8;
             image_lock = "ach_shitcoin_locked.png";
             image_unlock = "ach_shitcoin.png";
         };
         goldCoinsOneRound = {
             nameOnPersTable = "goldCoinsOneRound";
+            sortNumber = 9;
             image_lock = "ach_shitcoin_locked.png";
             image_unlock = "ach_shitcoin.png";
         };
         bMoneyEarnedTotal = {
             nameOnPersTable = "bMoneyEarnedTotal";
+            sortNumber = 10;
             image_lock = "ach_shitcoin_locked.png";
             image_unlock = "ach_shitcoin.png";
         };
         sMoneyEarnedTotal = {
             nameOnPersTable = "sMoneyEarnedTotal";
+            sortNumber = 11;
             image_lock = "ach_shitcoin_locked.png";
             image_unlock = "ach_shitcoin.png";
         };
         gMoneyEarnedTotal = {
             nameOnPersTable = "gMoneyEarnedTotal";
+            sortNumber = 12;
             image_lock = "ach_shitcoin_locked.png";
             image_unlock = "ach_shitcoin.png";
         };
         negativCoins = {
             nameOnPersTable = "negativCoins";
+            sortNumber = 13;
             image_lock = "ach_negativeShitcoin_locked.png";
             image_unlock = "ach_negativeShitcoin.png";
         };
         boughtAllItems = {
             nameOnPersTable = "shoppingQueen";
+            sortNumber = 14;
             image_lock = "ach_shoppingQueen_locked.png";
             image_unlock = "ach_shoppingQueen.png";
         };
         bFishCaughtTotal = {
             nameOnPersTable = "bFishCaugtTotal";
+            sortNumber = 16;
             image_lock = "ach_objectsOverTime_locked.png";
             image_unlock = "ach_objectsOverTime.png";
         };
         sFishCaughtTotal = {
             nameOnPersTable = "sFishCaugtTotal";
+            sortNumber = 17;
             image_lock = "ach_objectsOverTime_locked.png";
             image_unlock = "ach_objectsOverTime.png";
         };
         gFishCaughtTotal = {
             nameOnPersTable = "gFishCaugtTotal";
+            sortNumber = 18;
             image_lock = "ach_objectsOverTime_locked.png";
             image_unlock = "ach_objectsOverTime.png";
         };
         firstBorderRemoved = {
             nameOnPersTable = "firstBorderRemoved";
+            sortNumber = 19;
             image_lock = "ach_noLvlBorder_locked.png";
             image_unlock = "ach_noLvlBorder.png";
         };
         onlyNegativeFishesCaught = {
             nameOnPersTable = "onlyNegativeFishesCaught";
+            sortNumber = 20;
             image_lock = "ach_negativeShitcoin_locked.png";
             image_unlock = "ach_negativeShitcoin.png";
         };
         allPillsAtLeastOnce = {
             nameOnPersTable = "allPillsAtLeastOnce";
+            sortNumber = 22;
             image_lock = "ach_suchti_locked.png";
             image_unlock = "ach_suchti.png";
         };
         nothingCaught = {
             nameOnPersTable = "nothingCaught";
+            sortNumber = 21;
             image_lock = "ach_nothingCaught_locked.png";
             image_unlock = "ach_nothingCaught.png";
         };
         allLevelBoardersPassed = {
             nameOnPersTable = "allLevelBoardersPassed";
+            sortNumber = 23;
             image_lock = "ach_noLvlBorderInfinity_locked.png";
             image_unlock = "ach_noLvlBorderInfinity.png";
         };
         creditsRed = {
             nameOnPersTable = "creditsRed";
+            sortNumber = 24;
             image_lock = "ach_credits_locked.png";
             image_unlock = "ach_credits.png";
         };
         playedTime = {
             nameOnPersTable = "playedTime";
+            sortNumber = 26;
             image_lock = "ach_playtime_locked.png";
             image_unlock = "ach_playtime.png";
         };
         rageQuit = {
             nameOnPersTable = "rageQuit";
+            sortNumber = 25;
             image_lock = "ach_ragequit_locked.png";
             image_unlock = "ach_ragequit.png";
         };
         unreachable = {
             nameOnPersTable = "unreachable";
-            image_lock = "gui_Test_klickableElement_disable.png";
-            image_unlock = "gui_Test_klickableElement.png";
+            sortNumber = 27;
+            image_lock = "ach_unreachable_locked.png";
+            image_unlock = "ach_unreachable.png";
+        };
+        achBitch = {
+            nameOnPersTable = "achBitch";
+            sortNumber = 28;
+            image_lock = "ach_achievmentBitch_locked.png";
+            image_unlock = "ach_achievmentBitch.png";
         };
     };
     languages = {
@@ -1124,6 +1216,10 @@ return {
                     name = "Unreachable";
                     description = "Don't try to get it";
                 };
+                achBitch = {
+                    name = "Achievement bitch";
+                    description = "You got all achievements?!";
+                };
                 --objects
                 nemo = {
                     name = "Nemo";
@@ -1211,7 +1307,7 @@ return {
                 };
                 ufo = {
                     name = "Ufo";
-                    description = "Wanna be our guinea pig?";
+                    description = "Wanna be our hamster?";
                 };
                 --upgrades
                 oneMoreLife = {
@@ -1411,6 +1507,11 @@ return {
                     name = "Unerreichbar";
                     description = "Versuche es erst gar nicht";
                 };
+                achBitch = {
+                    name = "Achievement Bitch";
+                    description = "Du hast alle Erfolge freigeschaltet?!";
+                };
+                --objects
                 nemo = {
                     name = "Nemo";
                     description = "Anscheinend hast du Nemo gefunden";

@@ -66,6 +66,9 @@ describe("Unit test for Achievement.lua", function()
             roundFuel = nil;
             caughtThisRound = {};
         };
+        
+        local locInstance = testClass();
+        
     end)
 
 
@@ -231,14 +234,42 @@ describe("Unit test for Achievement.lua", function()
         myInstance:checkAchievements();
         assert.are.same(_G._persTable.achievements.negativCoins, exp);
     end)  
-    it("Test function Achievement:onlyNegativeFishesCaught", function()
-        _G._persTable.fish.postiveFishCaught  = false;
-        _G._persTable.fish.caughtInOneRound = 3;
 
-        local myInstance = testClass();
-        local exp = true;
-        myInstance:onlyNegativeFishesCaught()
-        assert.are.same(_G._persTable.achievements.onlyNegativeFishesCaught, exp);
+    it("Test Achievement: nothing Caught", function()
+        _G._gui = {
+            newNotification = function(...) end;
+        };
+        _G._unlockedAchievements = {};
+        _G.data = {
+            achievements = {
+                onlyNegativeFishesCaught = {
+                    nameOnPersTable = "onlyNegativeFishesCaught";
+                    sortNumber = 20;
+                    image_lock = "ach_negativeShitcoin_locked.png";
+                    image_unlock = "ach_negativeShitcoin.png";
+                };
+            };
+        };
+        _G._tmpTable = {
+            caughtThisRound = { 
+                ["rat"] = 2;
+            };
+        };
+        
+        local levelFinished = true;
+        local swarmFactory = {
+            getFishableObjects = function(...) return {
+                rat = {
+                    value = -10;
+                };
+            } end;
+        };
+        
+        stub(_gui, "newNotification");
+        
+        locInstance:onlyNegativeFishesCaught(levelFinished, swarmFactory);
+        assert.are.same(true, _G._persTable.achievements.onlyNegativeFishesCaught);
+        assert.stub(_gui.newNotification).was.called(1);
     end)
   
     it("Test function Achievement:allPillsAtLeastOnce", function()
@@ -304,5 +335,150 @@ describe("Unit test for Achievement.lua", function()
         myInstance:allObjectsAtLeastOnce ()
         assert.are.same(_G._persTable.achievements.allObjectsAtLeastOnce , exp);
     end)
-  end)
+
+    it("Testing unlock FailedStart", function()
+        _G._gui = {
+            newNotification = function(...) end;
+        };
+        _G._unlockedAchievements = {};
+        _G.data = {
+            achievements = {
+                failedStart = {
+                    nameOnPersTable = "failedStart";
+                    image_lock = "ach_drop_hamster_locked.png";
+                    image_unlock = "ach_drop_hamster.png";
+                };
+            };
+        };
+
+        stub(_gui, "newNotification");
+        local failedStart = true;
+        local levelFinished = true;
+        _G._persTable.achievements.failedStart = false;
+        locInstance:checkFailStart(failedStart, levelFinished);
+        assert.are.same(true, _G._persTable.achievements.failedStart);
+        assert.stub(_gui.newNotification).was.called(1);
+    end)
+
+    it("Testing unlock twoBoots", function()
+        _G._gui = {
+            newNotification = function(...) end;
+        };
+        _G._unlockedAchievements = {};
+        _G.data = {
+            achievements = {
+                caughtTwoBoots = {
+                    nameOnPersTable = "caughtTwoBoots";
+                    image_lock = "ach_two_shoes_locked.png";
+                    image_unlock = "ach_two_shoes.png";
+                };
+            };
+        };
+
+        stub(_gui, "newNotification");
+        _G._tmpTable.caughtThisRound = {
+            shoe = 2;
+        }
+        _G._persTable.fish.caught = {
+            shoe = 2;
+        }
+        
+        local shoeVal = -20;
+        local fishedVal = -40;
+        local levelFinished = true;
+        _G._persTable.achievements.caughtTwoBoots = false;
+        locInstance:checkTwoShoes(levelFinished, fishedVal, shoeVal*2);
+        assert.are.same(true, _G._persTable.achievements.caughtTwoBoots);
+        assert.stub(_gui.newNotification).was.called(1);
+    end)
+
+    it("Testing update playTime", function()
+        _G._gui = {
+            newNotification = function(...) end;
+        };
+        _G.data = {
+            achievements = {
+                playedTime = {
+                    nameOnPersTable = "playedTime";
+                    image_lock = "ach_playtime_locked.png";
+                    image_unlock = "ach_playtime.png";
+                };
+            };
+        };
+        _G._persTable.playedTime = 7201;
+        _G._persTable.achievements = {
+            playedTime = false;
+        };
+        stub(_gui, "newNotification");
+        local levelFinished = true;
+        
+        locInstance:checkPlayTime(levelFinished);
+        assert.are.same(true, _G._persTable.achievements.playedTime);
+        assert.stub(_gui.newNotification).was.called(1);
+    end)
+
+    it("Testing achievement achBitch", function()
+        _G._persTable.achievements = {
+            getFirstObject = false;
+            failedStart = true;
+            caughtTwoBoots = true;
+            secondStart = true;
+            bronzeCaughtOneRound = true;
+            silverCaughtOneRound = true;
+            goldCaughtOneRound = true;
+            bronzeCoinsOneRound = true;
+            silverCoinsOneRound = true;
+            goldCoinsOneRound = true;
+            bMoneyEarnedTotal = true;
+            sMoneyEarnedTotal = true;
+            gMoneyEarnedTotal = true;
+            negativCoins = true;
+            shoppingQueen = true;
+            bFishCaugtTotal = true;
+            sFishCaugtTotal = true;
+            gFishCaugtTotal = true;
+            firstBorderRemoved = true;
+            onlyNegativeFishesCaught = true;
+            allPillsAtLeastOnce = true;
+            nothingCaught = true;
+            allLevelBoardersPassed = true;
+            creditsRed = true;
+            playedTime = true;
+            rageQuit = true;
+            unreachable = false;
+            achBitch = false;
+        };
+        
+        locInstance:achBitch();
+        assert.are.same(false, _G._persTable.achievements.achBitch);
+        
+        _G._persTable.achievements.getFirstObject = true;
+        locInstance:achBitch();
+        
+        assert.are.same(true, _G._persTable.achievements.playedTime);
+        assert.stub(_gui.newNotification).was.called(1);
+    end)
+
+    it("Testing unlockAchievement function", function()
+        _G._gui = {
+            newNotification = function(...) end;
+        };
+        _G._unlockedAchievements = {};
+        _G.data = {
+            achievements = {
+                getFirtsObject = {
+                    nameOnPersTable = "getFirstObject";
+                    image_lock = "ach_firstObject_locked.png";
+                    image_unlock = "ach_firstObject.png";
+                };
+            };
+        };
+
+        stub(_gui, "newNotification");
+        locInstance:unlockAchievement("getFirtsObject");
+        assert.are.same(true, _G._persTable.achievements.getFirtsObject);
+        assert.stub(_gui.newNotification).was.called(1);
+    end) 
+
+end)
 
