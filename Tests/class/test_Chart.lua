@@ -212,6 +212,9 @@ describe("Unit test for Chart.lua", function()
     it("Testing markElement function", function()
         spy.on(locInstance.textField, "changeText");
         Element.nameOnPersTable = "rageQuit";
+        _G._gui = {
+            getCurrentState = function () return "Achievements" end;
+        }; 
         locInstance:markElement(Element);
         assert.are.equal(locInstance.p_markFrame.x, 40);
         assert.are.equal(locInstance.p_markFrame.y, 60);

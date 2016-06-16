@@ -206,17 +206,22 @@ function Chart:markElement(element)
     self.p_markFrame:SetVisible(true);
     self.p_markFrame:MoveToTop();
     self.p_markedElement = element;
-    if element.price ~= nil then
-        if element.name ~= nil then
-            self.textField:changeText(_G.data.languages[_G._persTable.config.language].package[element.name].name,
-                _G.data.languages[_G._persTable.config.language].package[element.name].description, element.price);
+    if _G._gui:getCurrentState() == "Achievements" or _G._gui:getCurrentState() == "Shop" or 
+    (_G._gui:getCurrentState() == "Dictionary" and _G._persTable.fish.caught[element.name] > 0 ) then
+        if element.price ~= nil then
+            if element.name ~= nil then
+                self.textField:changeText(_G.data.languages[_G._persTable.config.language].package[element.name].name,
+                    _G.data.languages[_G._persTable.config.language].package[element.name].description, element.price);
+            else
+                self.textField:changeText(_G.data.languages[_G._persTable.config.language].package[element.nameOnPersTable].name,
+                    _G.data.languages[_G._persTable.config.language].package[element.nameOnPersTable].description, element.price);
+            end
         else
             self.textField:changeText(_G.data.languages[_G._persTable.config.language].package[element.nameOnPersTable].name,
-                _G.data.languages[_G._persTable.config.language].package[element.nameOnPersTable].description, element.price);
+                _G.data.languages[_G._persTable.config.language].package[element.nameOnPersTable].description);
         end
     else
-        self.textField:changeText(_G.data.languages[_G._persTable.config.language].package[element.nameOnPersTable].name,
-            _G.data.languages[_G._persTable.config.language].package[element.nameOnPersTable].description);
+         self.textField:changeText("???", "?????", "???");
     end
 end
 
