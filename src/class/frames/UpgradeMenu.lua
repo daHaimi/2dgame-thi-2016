@@ -113,6 +113,12 @@ function UpgradeMenu:updateMoney()
     self.elementsOnFrame.money.object:SetText("Money: " .. _G._persTable.money);
 end
 
+--- changes the language of this frame
+function UpgradeMenu:setLanguage(language)
+    self.elementsOnFrame.button_back.object:SetText(_G.data.languages[language].package.buttonBack);
+    self.elementsOnFrame.button_buy.object:SetText(_G.data.languages[language].package.buttonBuy);
+end
+
 --- called to buy an Item
 function UpgradeMenu:buyElement()
     local markedElement = self.elementsOnFrame.chart.object:getMarkedElement();
