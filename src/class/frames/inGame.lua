@@ -64,7 +64,7 @@ function InGame:create()
         pause = {
             object = Loveframes.Create("imagebutton");
             x = 0;
-            y = _G._persTable.scaledDeviceDim[2] - 128;
+            y = 0;
         };
         score = {
             object = Loveframes.Create("text");
@@ -72,7 +72,10 @@ function InGame:create()
             y = 10 * self.scaleFactor;
         }
     };
-
+    
+    ---set position of pause button
+    self.elementsOnFrame.pause.object:SetY(_G._persTable.scaledDeviceDim[2] - self.elementsOnFrame.pause.object:GetHeight());
+    
     self.elementsOnFrame.barMiddle.object:SetImage(self.directory .. "BarMiddle.png");
     self.elementsOnFrame.barMiddle.object:SetScaleX(_G._persTable.scaledDeviceDim[1] / 64);
     self.elementsOnFrame.barFuel.object:SetImage(self.directory .. "BarFuel.png");

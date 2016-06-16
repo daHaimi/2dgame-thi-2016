@@ -213,6 +213,11 @@ function Chart:markElement(element)
         else
             self.textField:changeText(_G.data.languages[_G._persTable.config.language].package[element.nameOnPersTable].name,
                 _G.data.languages[_G._persTable.config.language].package[element.nameOnPersTable].description, element.price);
+            if _G._persTable.upgrades[element.nameOnPersTable] then
+                _G._gui:getFrames().upgradeMenu.elementsOnFrame.button_buy.object:SetImage(self.directory .. "HalfButton_disable.png");
+            else
+                _G._gui:getFrames().upgradeMenu.elementsOnFrame.button_buy.object:SetImage(self.directory .. "HalfButton.png");
+            end
         end
     else
         self.textField:changeText(_G.data.languages[_G._persTable.config.language].package[element.nameOnPersTable].name,

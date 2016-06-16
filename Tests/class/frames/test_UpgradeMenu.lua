@@ -15,7 +15,6 @@ describe("Unit test for UpgradeMenu.lua", function()
                 setVisible = function(...) end;
             };
         };
-        
         _G.Loveframes = {
             Create = function(typeName) 
                 return fakeElement(typeName);
@@ -34,11 +33,22 @@ describe("Unit test for UpgradeMenu.lua", function()
             achievements = {
                 shoppingQueen = false;
             };
+            config = {
+                language = "english";
+            }
+            
         };
         _G._gui = {
             newTextNotification = function(...) end;
         };
         _G.data = {
+            languages = {
+                english = {
+                    package = {
+                        textMoney2 = "test";
+                    }
+                }
+            };
             upgrades = {};
             achievements = {
                 boughtAllItems = {
@@ -67,6 +77,9 @@ end)
     it("Testing Constructor", function()
         _G._persTable = {
             scaledDeviceDim = {640, 950};
+            config = {
+                language = "english";
+            }
         };
         locInstance = testClass();
         local myInstance = testClass();
@@ -78,6 +91,9 @@ end)
     it("Testing Constructor", function()
         _G._persTable = {
             scaledDeviceDim = {720, 1024};
+            config = {
+                language = "english";
+            }
         };
         locInstance = testClass();
         local myInstance = testClass();
@@ -169,6 +185,13 @@ end)
                     price = 2;
                 }
             };
+            languages = {
+                english = {
+                    package = {
+                        textMoney2 = "test";
+                    }
+                }
+            }
         };
 
         local KE = {
@@ -225,6 +248,9 @@ end)
                 testUp1 = true;
                 testUp2 = false;
             };
+            config = {
+                language = "english";
+            }
         };
         _G.data = {
             upgrades = {

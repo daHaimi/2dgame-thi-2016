@@ -18,6 +18,9 @@ describe("Unit test for Chart.lua", function()
             config = {
                 language = "english";
             };
+            upgrades = {
+                something = false;
+            };
         };
         _G.data = Data;
         _G.love = {
@@ -34,6 +37,7 @@ describe("Unit test for Chart.lua", function()
             x = nil;
             y = nil;
             nameOnPersTable = "something";
+            price = nil;
         };
         function Element:SetVisible(visible)
             self.visible = visible;
@@ -210,6 +214,21 @@ describe("Unit test for Chart.lua", function()
     end)
 
     it("Testing markElement function", function()
+        _G._gui = {
+            frames = {
+                upgradeMenu = {
+                    elementsOnFrame = {
+                        button_buy = {
+                            object = {
+                                SetImage = function(...) end;
+                            };
+                        };
+                    };
+                };
+            };
+            getFrames = function(...) return _G._gui.frames; end;
+        };
+        stub(_G._gui:getFrames().upgradeMenu.elementsOnFrame.button_buy.object, "SetImage");
         spy.on(locInstance.textField, "changeText");
         Element.nameOnPersTable = "rageQuit";
         locInstance:markElement(Element);
@@ -218,7 +237,19 @@ describe("Unit test for Chart.lua", function()
         assert.are.equal(locInstance.p_markFrame.visible, true);
         assert.are.equal(locInstance.p_markFrame.movedToTop, true);
         assert.are.same(locInstance.p_markedElement, Element);
-
-        assert.spy(locInstance.textField.changeText).was_called();
+        
+        local element = Element;
+        element.price = 10;
+        element.name = nil;
+        locInstance:markElement(element);
+        
+        _G._persTable.upgrades.something = true;
+        locInstance:markElement(element);
+        
+        element.name = "nemo";
+        locInstance:markElement(element);
+        
+        assert.spy(locInstance.textField.changeText).was_called(4);
+        assert.stub(_G._gui.frames.upgradeMenu.elementsOnFrame.button_buy.object.SetImage).was_called(2);
     end)
 end)
