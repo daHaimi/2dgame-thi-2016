@@ -38,8 +38,9 @@ function Persistence:resetGame()
     local _, _, flags = love.window.getMode();
     love.graphics.setBackgroundColor(55, 80, 100);
     _G._persTable.deviceDim = { love.window.getDesktopDimensions(flags.display) };
-    _G._persTable.winDim[1], _G._persTable.winDim[2], scaleFactor = getScaledDimension(_G._persTable.deviceDim);
-    _G._persTable.scaledDeviceDim = { _G._persTable.winDim[1] * scaleFactor, _G._persTable.winDim[2] * scaleFactor };
+    _G._persTable.winDim[1], _G._persTable.winDim[2], _G._persTable.scaleFactor = getScaledDimension(_G._persTable.deviceDim);
+    _G._persTable.scaledDeviceDim = { _G._persTable.winDim[1] * _G._persTable.scaleFactor, 
+        _G._persTable.winDim[2] * _G._persTable.scaleFactor };
     return love.filesystem.remove("saveFile");
 end
 

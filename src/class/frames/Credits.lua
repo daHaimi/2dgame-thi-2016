@@ -1,14 +1,14 @@
 Class = require "lib.hump.class";
 
 local Credits = Class {
-        init = function(self)
-            self.imageButton = love.graphics.newImage("assets/gui/button.png");
-            self.background = love.graphics.newImage("assets/gui/StandardBG.png");
-            self.buttonHeight = self.imageButton:getHeight();
-            self.buttonWidth = self.imageButton:getWidth();
-            self.buttonXPosition = (_G._persTable.winDim[1] - self.buttonWidth) / 2;
-            self.offset = 100;
-            self.buttonDistance = 15;
+    init = function(self)
+        self.imageButton = love.graphics.newImage("assets/gui/button.png");
+        self.background = love.graphics.newImage("assets/gui/StandardBG.png");
+        self.buttonHeight = self.imageButton:getHeight();
+        self.buttonWidth = self.imageButton:getWidth();
+        self.buttonXPosition = (_G._persTable.winDim[1] - self.buttonWidth) / 2;
+        self.offset = 30;
+        self.buttonDistance = 15;
         self.name = "Credits";
         self.frame = Frame(0, 0, "down", "down", 50, 0, -1500);
         self:create();
@@ -43,7 +43,7 @@ function Credits:create()
     --add, create and position all elements on this frame
     self.elementsOnFrame = {
         button_back = ImageButton(self.imageButton, self.buttonXPosition , 
-            _G._persTable.winDim[2] - self.offset - self.buttonHeight, true);
+            (_G._persTable.winDim[2] + self.background:getHeight())/2 - self.buttonHeight - self.offset, true);
     };
 
     --build the credits
@@ -61,15 +61,13 @@ function Credits:setLanguage(language)
 end
 
 function Credits:mousepressed(x, y)
-    local xClick = x * _G._persTable.scaleFactor;
-    local yClick = y * _G._persTable.scaleFactor;
     
     for _, v in pairs (self.elementsOnFrame) do
         local xPosition, yPosition = v:getPosition();
         local width, height = v:getSize();
         
-        if xClick > xPosition and xClick < xPosition + width and
-        yClick > yPosition and yClick < yPosition + height then
+        if x > xPosition and x < xPosition + width and
+        y > yPosition and y < yPosition + height then
             v.gotClicked();
         end
     end
@@ -111,9 +109,9 @@ function Credits:draw()
     -- draw background
     love.graphics.draw(self.background, (_G._persTable.winDim[1] - self.background:getWidth())/2,
         (_G._persTable.winDim[2] - self.background:getHeight())/2 + y);
-    love.graphics.setFont(love.graphics.newFont("font/8bitOperatorPlus-Bold.ttf", 16));
     
     -- print the text
+    love.graphics.setFont(love.graphics.newFont("font/8bitOperatorPlus-Bold.ttf", 16));
     love.graphics.printf(self:buildCreditsString(),_G._persTable.winDim[1]*0.25,
         100 + y, _G._persTable.winDim[1], "left");
     love.graphics.setFont(font);

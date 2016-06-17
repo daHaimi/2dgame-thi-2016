@@ -5,14 +5,15 @@ ImageButton = require "class.ImageButton";
 
 local MainMenu = Class {
     init = function(self)
-            self.imageButton = love.graphics.newImage("assets/gui/button.png");
-            self.imageFlag = love.graphics.newImage("assets/gui/" .. _G.data.languages[_persTable.config.language].flagImage);
-            self.buttonHeight = self.imageButton:getHeight();
-            self.buttonWidth = self.imageButton:getWidth();
-            self.buttonXPosition = (_G._persTable.winDim[1] - self.buttonWidth) / 2;
-            self.offset = 70;
-            self.buttonDistance = 15;
-            self.flagWidth = 120;
+        self.background = love.graphics.newImage("assets/gui/StandardBG.png");
+        self.imageButton = love.graphics.newImage("assets/gui/button.png");
+        self.imageFlag = love.graphics.newImage("assets/gui/" .. _G.data.languages[_persTable.config.language].flagImage);
+        self.buttonHeight = self.imageButton:getHeight();
+        self.buttonWidth = self.imageButton:getWidth();
+        self.buttonXPosition = (_G._persTable.winDim[1] - self.buttonWidth) / 2;
+        self.offset = (_G._persTable.winDim[2] - self.background:getHeight())/2 + 30;
+        self.buttonDistance = 10;
+        self.flagWidth = 120;
         self.name = "Main Menu";
         self.frame = Frame(0, 0, "down", "down", 50, 0, -1500);
         self:create();
@@ -38,7 +39,7 @@ function MainMenu:create()
         button_flag = ImageButton(self.imageFlag, (_G._persTable.winDim[1] - self.imageFlag:getWidth())/2 ,  
             self.offset + (self.buttonHeight + self.buttonDistance) * 6, true);
         button_close = ImageButton(self.imageButton, self.buttonXPosition , 
-            _G._persTable.winDim[2] - self.offset - self.buttonHeight, true);
+            (_G._persTable.winDim[2] + self.background:getHeight())/2 - self.buttonHeight - 30, true);
 
         --[[language = {
             object = FlagButton();
@@ -71,8 +72,7 @@ function MainMenu:create()
     end
     
     self.elementsOnFrame.button_options.gotClicked = function(_)
-        print "options"
-        --_gui:changeFrame(_gui:getFrames().options);
+        _gui:changeFrame(_gui:getFrames().options);
     end
     
     self.elementsOnFrame.button_credits.gotClicked = function(_)
@@ -97,21 +97,21 @@ function MainMenu:create()
 end
 
 function MainMenu:draw()
+    local _, y = self.elementsOnFrame.button_start:getOffset();
+    love.graphics.draw(self.background, (_G._persTable.winDim[1] - self.background:getWidth())/2,
+        (_G._persTable.winDim[2] - self.background:getHeight())/2 + y);
     for _, v in pairs (self.elementsOnFrame) do
         v:draw();
     end
 end
 
-function MainMenu:mousepressed(x, y)
-    local xClick = x * _G._persTable.scaleFactor;
-    local yClick = y * _G._persTable.scaleFactor;
-    
+function MainMenu:mousepressed(x, y)    
     for _, v in pairs (self.elementsOnFrame) do
         local xPosition, yPosition = v:getPosition();
         local width, height = v:getSize();
         
-        if xClick > xPosition and xClick < xPosition + width and
-        yClick > yPosition and yClick < yPosition + height then
+        if x > xPosition and x < xPosition + width and
+        y > yPosition and y < yPosition + height then
             v.gotClicked();
         end
     end

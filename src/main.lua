@@ -59,8 +59,8 @@ function love.load()
     _G._persTable.deviceDim = { love.window.getDesktopDimensions(flags.display) };
     --_G._persTable.deviceDim = {720, 1080};
     --_G._persTable.deviceDim = {1366,768};
-    _G._persTable.deviceDim = {1600,900};
-    --_G._persTable.deviceDim = {480,853};
+    --_G._persTable.deviceDim = {1600,900};
+    _G._persTable.deviceDim = {480,853};
     _G._persTable.winDim[1], _G._persTable.winDim[2], _G._persTable.scaleFactor, titleHeight = getScaledDimension(_G._persTable.deviceDim);
 
     _G._persTable.scaledDeviceDim = {_G._persTable.winDim[1] * _G._persTable.scaleFactor, _G._persTable.winDim[2] * _G._persTable.scaleFactor };
@@ -126,7 +126,6 @@ function love.draw()
         levMan:getCurLevel():drawEnviroment(); 
     end
     _gui.p_states.currentState:draw();
-    love.graphics.rectangle("line", 100, 100, 10,10);
     love.graphics.scale(1 / _G._persTable.scaleFactor, 1 / _G._persTable.scaleFactor);
    
 
@@ -147,7 +146,7 @@ function love.draw()
     -- debug info for memory usage do not remove!
     love.graphics.print('Memory actually used (in kB): ' .. collectgarbage('count'), 200, 60);
     love.graphics.print("Current FPS: " .. tostring(love.timer.getFPS()), 200, 75);
-    love.graphics.print(_gui.p_states.currentState.name, 100, 100 );
+    love.graphics.print(_gui.p_states.currentState.name, 10, 10 );
     --[[
     love.graphics.print(
         "1speedUp " .. tostring(_G._persTable.upgrades.firstSpeedUp) .. "\n" ..

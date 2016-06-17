@@ -18,7 +18,7 @@ local Gui = Class {
         self.p_myFrames = {
             --achievements = Achievements();
             mainMenu = Mainmenu();
-            --options = Options();
+            options = Options();
             --upgradeMenu = UpgradeMenu();
             --dictionary = Dictionary();
             credits = Credits();
@@ -51,7 +51,7 @@ function Gui:setLanguage()
 end
 
 function Gui:mousepressed(x, y)
-    self.p_states.currentState:mousepressed(x,y);
+    self.p_states.currentState:mousepressed(x/_G._persTable.scaleFactor,y/_G._persTable.scaleFactor);
 end
 
 --- return all frames
