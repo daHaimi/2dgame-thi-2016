@@ -3,13 +3,12 @@ Class = require "lib.hump.class";
 local Credits = Class {
         init = function(self)
             self.imageButton = love.graphics.newImage("assets/gui/button.png");
+            self.background = love.graphics.newImage("assets/gui/StandardBG.png");
             self.buttonHeight = self.imageButton:getHeight();
             self.buttonWidth = self.imageButton:getWidth();
             self.buttonXPosition = (_G._persTable.winDim[1] - self.buttonWidth) / 2;
-            self.background = love.graphics.newImage("assets/gui/StandardBG.png");
             self.offset = 100;
             self.buttonDistance = 15;
-            self.flagWidth = 120;
         self.name = "Credits";
         self.frame = Frame(0, 0, "down", "down", 50, 0, -1500);
         self:create();
@@ -108,12 +107,18 @@ end
 function Credits:draw()
     local _, y = self.elementsOnFrame.button_back:getOffset();
     local font = love.graphics.getFont();
+    
+    -- draw background
     love.graphics.draw(self.background, (_G._persTable.winDim[1] - self.background:getWidth())/2,
         (_G._persTable.winDim[2] - self.background:getHeight())/2 + y);
     love.graphics.setFont(love.graphics.newFont("font/8bitOperatorPlus-Bold.ttf", 16));
+    
+    -- print the text
     love.graphics.printf(self:buildCreditsString(),_G._persTable.winDim[1]*0.25,
         100 + y, _G._persTable.winDim[1], "left");
     love.graphics.setFont(font);
+    
+    -- draw the buttons
     for _, v in pairs (self.elementsOnFrame) do
         v:draw();
     end

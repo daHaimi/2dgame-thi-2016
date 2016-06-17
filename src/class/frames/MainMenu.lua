@@ -6,10 +6,11 @@ ImageButton = require "class.ImageButton";
 local MainMenu = Class {
     init = function(self)
             self.imageButton = love.graphics.newImage("assets/gui/button.png");
+            self.imageFlag = love.graphics.newImage("assets/gui/" .. _G.data.languages[_persTable.config.language].flagImage);
             self.buttonHeight = self.imageButton:getHeight();
             self.buttonWidth = self.imageButton:getWidth();
             self.buttonXPosition = (_G._persTable.winDim[1] - self.buttonWidth) / 2;
-            self.offset = 100;
+            self.offset = 70;
             self.buttonDistance = 15;
             self.flagWidth = 120;
         self.name = "Main Menu";
@@ -34,6 +35,8 @@ function MainMenu:create()
             self.offset + (self.buttonHeight + self.buttonDistance) * 4, true);
         button_credits = ImageButton(self.imageButton, self.buttonXPosition ,  
             self.offset + (self.buttonHeight + self.buttonDistance) * 5, true);
+        button_flag = ImageButton(self.imageFlag, (_G._persTable.winDim[1] - self.imageFlag:getWidth())/2 ,  
+            self.offset + (self.buttonHeight + self.buttonDistance) * 6, true);
         button_close = ImageButton(self.imageButton, self.buttonXPosition , 
             _G._persTable.winDim[2] - self.offset - self.buttonHeight, true);
 
@@ -79,6 +82,17 @@ function MainMenu:create()
     self.elementsOnFrame.button_close.gotClicked = function(_)
         love.window:close();
         love.event.quit();
+    end
+    
+    self.elementsOnFrame.button_flag.gotClicked = function(_)
+        if _G._persTable.config.language == "english" then
+            _G._persTable.config.language = "german";
+        else
+            _G._persTable.config.language = "english";
+        end
+        self.elementsOnFrame.button_flag:setImage(love.graphics.newImage("assets/gui/" .. 
+                _G.data.languages[_persTable.config.language].flagImage));
+        _G._gui:setLanguage();
     end
 end
 
@@ -132,6 +146,7 @@ function MainMenu:setLanguage(language)
     self.elementsOnFrame.button_dictionary:setText(_G.data.languages[language].package.buttonDictionary);
     self.elementsOnFrame.button_upgradeMenu:setText(_G.data.languages[language].package.buttonShop);
     self.elementsOnFrame.button_start:setText(_G.data.languages[language].package.buttonStart);
+    self.elementsOnFrame.button_flag:setText("");
 end
 
 return MainMenu;
