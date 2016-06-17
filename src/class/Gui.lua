@@ -137,6 +137,11 @@ function Gui:getCurrentState()
     return self.p_currentState;
 end
 
+--return the activeStateChange value
+function Gui:getFrameChangeActive()
+    return self.p_frameChangeActive;
+end
+
 --- checking the gui state and return a boolean
 function Gui:drawGame()
     --returns "true" in the InGame-state
@@ -146,8 +151,6 @@ function Gui:drawGame()
         return true;
     end
 end
-
-
 
 --- Returns the reference to the LevelManager object.
 -- @return Returns the reference to the LevelManager object.

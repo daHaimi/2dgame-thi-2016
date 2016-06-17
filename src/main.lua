@@ -224,7 +224,11 @@ function love.mousepressed(x, y, button)
     if button == 1 then
         button = 'l';
     end
-    Loveframes.mousepressed(x, y, button);
+    
+    --Gui elements not clickable while framechange 
+    if not _G._gui:getFrameChangeActive() then
+        Loveframes.mousepressed(x, y, button);
+    end
     
     if _gui:getCurrentStateName() == "Start" then
         _gui:changeState("MainMenu");
@@ -260,8 +264,12 @@ function love.mousereleased(x, y, button)
     if button == 1 then
         button = 'l';
     end
-    Loveframes.mousereleased(x, y, button);
     
+    --Gui elements not clickable while framechange 
+    if not _G._gui:getFrameChangeActive() then
+        Loveframes.mousereleased(x, y, button);
+    end
+        
     -- deactivate the god mode when you release the mouse
     if _gui:getCurrentStateName() == "InGame" then
         levMan:getCurLevel():deactivateGodMode();
