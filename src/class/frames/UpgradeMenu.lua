@@ -1,6 +1,6 @@
 Class = require "lib.hump.class";
 Chart = require "class.Chart";
-KlickableElement = require "class.KlickableElement"
+
 
 local UpgradeMenu = Class {
     init = function(self)
@@ -46,6 +46,13 @@ local UpgradeMenu = Class {
 --- creates the shop frame
 function UpgradeMenu:create()
     --add, create and position all elements on this frame
+    local contantTable = {};
+    for _, v in pairs(_G.data.upgrades) do
+        if v.sortNumber ~= nil then
+            table.insert(contantTable, v);
+        end
+    end
+    
     self.elementsOnFrame = {
         background = {
             object = Loveframes.Create("image");
@@ -58,7 +65,7 @@ function UpgradeMenu:create()
             y = 30;
         };
         chart = {
-            object = Chart();
+            object = Chart(contantTable);
             x = 0.125 * self.width;
             y = self.buttonOffset + 20;
         };
@@ -73,25 +80,22 @@ function UpgradeMenu:create()
             y = self.height - self.buttonHeight;
         };
     };
-
+    
     --adjust all elements on this frame
     self.elementsOnFrame.background.object:SetImage(self.directory .. "StandardBG.png");
 
     self.elementsOnFrame.button_buy.object:SetImage(self.directory .. "HalfButton.png")
-    self.elementsOnFrame.button_buy.object:SizeToImage()
-    self.elementsOnFrame.button_buy.object:SetText("Buy");
+    self.elementsOnFrame.button_buy.object:SizeToImage();
 
     self.elementsOnFrame.button_back.object:SetImage(self.directory .. "HalfButton.png")
-    self.elementsOnFrame.button_back.object:SizeToImage()
-    self.elementsOnFrame.button_back.object:SetText("Back");
+    self.elementsOnFrame.button_back.object:SizeToImage();
 
-    self:addAllUpgrades();
-    self:loadValuesFromPersTable();
+    --self:addAllUpgrades();
+    --self:loadValuesFromPersTable();
 
     --onclick events for all buttons
     self.elementsOnFrame.button_back.object.OnClick = function(_)
         _gui:changeState("MainMenu");
-        self.elementsOnFrame.chart.object:resetTopRow();
     end
 
     self.elementsOnFrame.button_buy.object.OnClick = function(_)
@@ -137,8 +141,15 @@ end
 
 --add all upgrades written in the data.lua into the chart and adds an OnClick event
 function UpgradeMenu:addAllUpgrades()
+    local contantTable = {};
     for _, v in pairs(_G.data.upgrades) do
         if v.sortNumber ~= nil then
+            table.insert(contantTable, v);
+        end
+    end
+            
+            
+            --[[
             local newKlickableElement = KlickableElement(v.name, self.directory .. v.image,
                 self.directory .. v.image_disable, v.description, v.price, v.nameOnPersTable, v.sortNumber);
 
@@ -146,9 +157,9 @@ function UpgradeMenu:addAllUpgrades()
             newKlickableElement.object.OnClick = function(_)
                 self.elementsOnFrame.chart.object:markElement(newKlickableElement);
             end
-            self.elementsOnFrame.chart.object:addKlickableElement(newKlickableElement);
-        end
-    end
+            self.elementsOnFrame.chart.object:addKlickableElement(newKlickableElement);]]--
+     
+    self.elementsOnFrame.chart.object:addElements(contantTable);
 end
 
 

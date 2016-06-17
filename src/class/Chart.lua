@@ -1,9 +1,10 @@
 --- Chart contains a table with clickable elements and a textfield
 Class = require "lib.hump.class";
 TextField = require "class.TextField";
+KlickableElement = require "class.KlickableElement";
 
 local Chart = Class {
-    init = function(self, _)
+    init = function(self, table)
         if _G._persTable.scaledDeviceDim[1] < 640 then
             self.directory = "assets/gui/480px/";
             self.widthPx = 480;
@@ -33,15 +34,17 @@ local Chart = Class {
             self.textfieldSize = 400;
         end
         self.p_column = 3; --amount of the columns of the table
-        self.p_row = 0; --automatically calculated value of the amount of rows in the table
+        self.p_row = math.ceil(#table / self.p_column); --automatically calculated value of the amount of rows in the table
         self.p_toprow = 0; --top visible row. needed to scroll up and down
         self.p_xPos = 0;
         self.p_yPos = 0;
+        self.p_contantTable = table;
 
         self.p_elementsOnChart = {}; --elements in the table
         self.p_markedElement = nil;
 
         self:create();
+        self:drawChart();
     end;
 };
 
@@ -122,28 +125,37 @@ function Chart:scrollDown()
     end
 end
 
---- resets the top row. called at the back button to reset the table for the next shop visit
-function Chart:resetTopRow()
-    self.p_toprow = 0;
-end
 
---- reset the markedFrame visible to false
-function Chart:resetMarkedFrame()
-    self.p_markFrame:SetVisible(false);
+function Chart:addElements(contantTable)
+    self.contantTable = contantTable;
 end
 
 --- draws the elements shown in the table
 function Chart:drawChart()
     --clear
     for _, v in pairs(self.p_elementsOnChart) do
-        v:SetVisible(false);
+        v:Remove();
     end
+    self.p_elementsOnChart = {};
     --draw new elements
-    for i = 1, #self.p_elementsOnChart, 1 do
-        if self.p_elementsOnChart[i] ~= nil and
-        self.p_elementsOnChart[i].sortNumber > self.p_toprow * 3 and
-        self.p_elementsOnChart[i].sortNumber <= self.p_toprow * 3 + 9 then
-            self.p_elementsOnChart[i]:SetVisible(true);
+    for i = 1, #self.p_contantTable, 1 do
+        if self.p_contantTable[i] ~= nil and self.p_contantTable[i].sortNumber > self.p_toprow * 3 and
+        self.p_contantTable[i].sortNumber <= self.p_toprow * 3 + 9 then
+            local newKlickableElement = KlickableElement(
+                    self.p_contantTable[i].name,
+                    self.directory .. self.p_contantTable[i].image,
+                    self.directory .. self.p_contantTable[i].image_disable,
+                    self.p_contantTable[i].description,
+                    self.p_contantTable[i].price,
+                    self.p_contantTable[i].nameOnPersTable,
+                    self.p_contantTable[i].sortNumber
+                );
+
+            --add OnClick event
+            newKlickableElement.object.OnClick = function(_)
+                self:markElement(newKlickableElement);
+            end
+            table.insert(self.p_elementsOnChart, newKlickableElement);
         end
     end
     self:setPosOfKlickableElements()
@@ -152,14 +164,14 @@ end
 --- set the position of all elements in the table
 function Chart:setPosOfKlickableElements()
     local row = 0;
-    for i = 1, #self.p_elementsOnChart, 1 do
-            if self.p_elementsOnChart[i] ~= nil then
-                local positionNumber = self.p_elementsOnChart[i].sortNumber;
-                local colNumber = (positionNumber - 1)%3;
-                local rowNumber = (positionNumber - colNumber-1) /3
-                self.p_elementsOnChart[i]:SetPos(self.p_xPos + self.klickableSize * colNumber,
-                   self.klickableSize * rowNumber + self.p_yPos - (self.klickableSize * self.p_toprow) + self.buttonHeight);
-            end
+    for i = 1, 9, 1 do
+        if self.p_elementsOnChart[i] ~= nil then
+            local positionNumber = self.p_elementsOnChart[i].sortNumber;
+            local colNumber = (positionNumber - 1)%3;
+            local rowNumber = (positionNumber - colNumber-1) /3
+            self.p_elementsOnChart[i]:SetPos(self.p_xPos + self.klickableSize * colNumber,
+               self.klickableSize * rowNumber + self.p_yPos - (self.klickableSize * self.p_toprow) + self.buttonHeight);
+        end
     end
 end
 

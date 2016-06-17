@@ -94,7 +94,6 @@ end
 function Gui:update()
     --controls the fly in/out animation
     if self.p_frameChangeActive then
-        print(tostring(self.p_currentState.name))
         if (not self.p_currentState:checkPosition()) then
             self.p_currentState:appear();
             if self.p_lastState ~= nil then

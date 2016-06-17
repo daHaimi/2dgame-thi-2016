@@ -40,6 +40,13 @@ local Dictionary = Class {
 --- creates the dictionary frame
 function Dictionary:create()
     --add, create and position all elements on this frame
+    local contantTable = {};
+    for _, v in pairs(_G.data.fishableObjects) do
+        if v.sortNumber ~= nil then
+            table.insert(contantTable, v);
+        end
+    end
+    
     self.elementsOnFrame = {
         background = {
             object = Loveframes.Create("image");
@@ -47,7 +54,7 @@ function Dictionary:create()
             y = 0;
         };
         chart = {
-            object = Chart();
+            object = Chart(contantTable);
             x = 0.125 * self.width;
             y = self.buttonOffset;
         };

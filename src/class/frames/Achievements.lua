@@ -41,6 +41,13 @@ local Achievements = Class {
 --- creates the achievement frame
 function Achievements:create()
     --add, create and position all elements on this frame
+    local contantTable = {};
+    for _, v in pairs(_G.data.achievements) do
+        if v.sortNumber ~= nil then
+            table.insert(contantTable, v);
+        end
+    end
+    
     self.elementsOnFrame = {
         background = {
             object = Loveframes.Create("image");
@@ -48,7 +55,7 @@ function Achievements:create()
             y = 0;
         };
         chart = {
-            object = Chart();
+            object = Chart(contantTable);
             x = 0.125 * self.width;
             y = self.buttonOffset;
         };
