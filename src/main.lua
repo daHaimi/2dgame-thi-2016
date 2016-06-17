@@ -93,7 +93,7 @@ function love.load()
 end
 
 --- calculates the dimension of the Level and the factor of the scaling
--- @ param deviceDim dimension of the divice
+-- @param deviceDim dimension of the device
 function getScaledDimension(deviceDim)
     local resultDim = {};
     local scaleFactor = 1;
@@ -101,11 +101,11 @@ function getScaledDimension(deviceDim)
     if deviceDim[1] > deviceDim[2] then
         resultDim[1] = 480;
         resultDim[2] = 853; -- 480 * 16 /9
-        titleHeight = 25
+        titleHeight = 25;
         if resultDim[2] > 0.93 * deviceDim[2] then
-            resultDim[2] = 0.93 * deviceDim[2]
+            resultDim[2] = 0.93 * deviceDim[2];
         else 
-            scaleFactor = (deviceDim[2] * 0.93) / 853
+            scaleFactor = (deviceDim[2] * 0.93) / 853;
         end
     else
         scaleFactor = deviceDim[1] / 480;

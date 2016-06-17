@@ -1,5 +1,8 @@
 Class = require "lib.hump.class";
 
+--- class for a text box
+-- @param width the size of the textfield
+-- @param directory the current resolution directory 
 local Textbox = Class {
     init = function(self, width, directory)
         self.objBackground = Loveframes.Create("image");
@@ -12,8 +15,9 @@ local Textbox = Class {
 };
 
 --- change the text on the textfield
--- @parm newTopic: the new topic of the text
--- @parm newText: new text
+-- @param newTopic the new topic of the text
+-- @param newText new text
+-- @param newPrice the new price or nil
 function Textbox:changeText(newTopic, newText, newPrice)
     self.objTopic:SetFont(love.graphics.newFont("font/8bitOperatorPlus-Bold.ttf", 20));
     self.objTopic:SetText(newTopic);
@@ -28,7 +32,7 @@ end
 
 --- Function not conform to CC/ implements an interface
 --- set visible of the textfield
--- @parm visible: true or false
+-- @param visible true or false
 function Textbox:SetVisible(visible)
     self.objTopic:SetVisible(visible);
     self.objText:SetVisible(visible);
@@ -38,8 +42,8 @@ end
 
 --- Function not conform to CC/ implements an interface
 --- Set position of the textfield
--- @parm x: x axis position
--- @parm y: y axis position
+-- @param x x axis position
+-- @param y y axis position
 function Textbox:SetPos(x, y)
     self.objTopic:SetPos(x + 10, y + 10);
     self.objTopic:SetMaxWidth(self.width);
