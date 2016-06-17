@@ -4,6 +4,7 @@ _G.math.inf = 1 / 0
 testClass = require "src.class.frames.MainMenu";
 fakeElement = require "Tests.fakeLoveframes.fakeElement";
 Frame = require "class.Frame";
+Data = require "data";
 
 
 describe("Unit test for MainMenu.lua", function()
@@ -19,15 +20,7 @@ describe("Unit test for MainMenu.lua", function()
                 return fakeElement(typeName);
             end
         }
-        _G.data = {
-            languages = {
-                english = {
-                    name = "english";
-                    flagImage = "path1";
-                },
-            };
-            
-        };
+        _G.data = Data;
         _G._persTable = {
             config = {
                 language = "english";
@@ -80,7 +73,7 @@ it("Testing Constructor", function()
     it("Testing create function", function()
         _G._gui = {
             getFrames = function(...) return{}; end;
-            changeFrame = function(...) end;
+            changeState = function(...) end;
         };
         _G.love = {
             window = {
@@ -94,14 +87,14 @@ it("Testing Constructor", function()
         
         locInstance:create();
 
-        spy.on(_G._gui, "changeFrame");
+        spy.on(_G._gui, "changeState");
         locInstance.elementsOnFrame.button_start.object.OnClick();
         locInstance.elementsOnFrame.button_upgradeMenu.object.OnClick();
         locInstance.elementsOnFrame.button_dictionary.object.OnClick();
         locInstance.elementsOnFrame.button_achievements.object.OnClick();
         locInstance.elementsOnFrame.button_options.object.OnClick();
         locInstance.elementsOnFrame.button_credits.object.OnClick();
-        assert.spy(_gui.changeFrame).was.called(6);
+        assert.spy(_gui.changeState).was.called(6);
         
         spy.on(_G.love.window, "close");
         spy.on(_G.love.event, "quit");

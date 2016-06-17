@@ -114,7 +114,7 @@ _G.levelTestStub = function()
         } end;
     };
     _G._gui = {
-        getFrames = function(...)
+        getCurrentStateName = function(...)
             return {
                 inGame = {
                     activate = function(...) end;

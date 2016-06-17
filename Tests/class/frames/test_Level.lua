@@ -79,7 +79,7 @@ it("Testing Constructor", function()
     it("Testing create function", function()
         _G._gui = {
             getFrames = function(...) return{}; end;
-            changeFrame = function(...) end;
+            changeState = function(...) end;
             getLevelManager = function(...) return {
                 curLevel = nil,
                 curPlayer = nil,
@@ -94,11 +94,11 @@ it("Testing Constructor", function()
         
         locInstance:create();
 
-        spy.on(_G._gui, "changeFrame");
+        spy.on(_G._gui, "changeState");
         locInstance.elementsOnFrame.buttonBack.object.OnClick();
         locInstance.elementsOnFrame.buttonHouse.object.OnClick();
         locInstance.elementsOnFrame.buttonCanyon.object.OnClick();
-        assert.spy(_gui.changeFrame).was.called(3);
+        assert.spy(_gui.changeState).was.called(3);
     end)
 
     it("Testing draw function", function()

@@ -15,13 +15,16 @@ describe("Unit test for Frame.lua", function()
                 xPos = nil;
                 yPos = nil;
             };
+            removed = false;
             x = 0;
             y = 0;
         };
         function Element.object:SetVisible(visible)
             self.visible = visible;
         end
-
+        function Element.object:Remove()
+            self.removed = true;
+        end
         function Element.object:SetPos(x, y)
             self.xPos = x;
             self.yPos = y;
@@ -37,20 +40,16 @@ describe("Unit test for Frame.lua", function()
     end)
 
     it("DefaultOffset has to be a multiple of moveSpeed", function()
-        assert.are.equal((locInstance.p_xDefaultOffset) % (locInstance.p_moveSpeed), 0);
-        assert.are.equal((locInstance.p_yDefaultOffset) % (locInstance.p_moveSpeed), 0);
+        assert.are.equal((locInstance.p_xOffset) % (locInstance.p_moveSpeed), 0);
+        assert.are.equal((locInstance.p_yOffset) % (locInstance.p_moveSpeed), 0);
     end)
     
     
     it("Testing clear function", function()
-        locInstance.p_xOffset = nil;
-        locInstance.p_yOffset = nil;
         locInstance:clear(locElements);
-        assert.are.equal(locElements[1].object.visible, false);
-        assert.are.equal(locElements[2].object.visible, false);
-        assert.are.equal(locElements[3].object.visible, false);
-        assert.are.equal(locInstance.p_xOffset, locInstance.p_xDefaultOffset);
-        assert.are.equal(locInstance.p_yOffset, locInstance.p_yDefaultOffset);
+        assert.are.equal(locElements[1].object.removed, true);
+        assert.are.equal(locElements[2].object.removed, true);
+        assert.are.equal(locElements[3].object.removed, true);
     end)
 
     it("Testing draw function", function()

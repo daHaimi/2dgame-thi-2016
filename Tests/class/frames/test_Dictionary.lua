@@ -69,7 +69,7 @@ it("Testing Constructor", function()
     it("Testing create function", function()
         _G._gui = {
             getFrames = function(...) return{}; end;
-            changeFrame = function(...) end;
+            changeState = function(...) end;
         };
         
         spy.on(locInstance, "addAllObjects");
@@ -77,9 +77,9 @@ it("Testing Constructor", function()
 
         assert.spy(locInstance.addAllObjects).was.called();
 
-        spy.on(_G._gui, "changeFrame");
+        spy.on(_G._gui, "changeState");
         locInstance.elementsOnFrame.button_back.object.OnClick();
-        assert.spy(_gui.changeFrame).was.called();
+        assert.spy(_gui.changeState).was.called();
     end)
 
     it("Testing addAllObjects function", function()

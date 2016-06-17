@@ -274,7 +274,7 @@ function Level:update(dt, bait)
     if _G._gui:getCurrentStateName() == "InGame" and self.animationStartFinished then
         _G._gui:getCurrentState():activate();
     end
-    if G._gui:getCurrentStateName() == "InGame" and self.animationEnd then
+    if _G._gui:getCurrentStateName() == "InGame" and self.animationEnd then
         _G._gui:getCurrentState():clear();
     end
 

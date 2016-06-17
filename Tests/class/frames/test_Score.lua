@@ -81,7 +81,7 @@ it("Testing Constructor", function()
         }
         _G._gui = {
             getFrames = function(...) return{}; end;
-            changeFrame = function(...) end;
+            changeState = function(...) end;
             getLevelManager = function(...) return table end;
         };
         
@@ -89,10 +89,10 @@ it("Testing Constructor", function()
         
         locInstance:create();
         
-        spy.on(_G._gui, "changeFrame");
+        spy.on(_G._gui, "changeState");
         locInstance.elementsOnFrame.button_retry.object.OnClick();
         locInstance.elementsOnFrame.button_backToMenu.object.OnClick();
-        assert.spy(_gui.changeFrame).was.called(2);
+        assert.spy(_gui.changeState).was.called(2);
         assert.stub(table.replayLevel).was.called();
     end)
 

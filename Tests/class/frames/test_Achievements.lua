@@ -78,7 +78,7 @@ describe("Unit test for Achievements.lua", function()
     it("Testing create function", function()
         _G._gui = {
             getFrames = function(...) return{}; end;
-            changeFrame = function(...) end;
+            changeState = function(...) end;
         };
         
         spy.on(locInstance, "addAllAchievements");
@@ -88,9 +88,9 @@ describe("Unit test for Achievements.lua", function()
         assert.spy(locInstance.addAllAchievements).was.called();
         assert.spy(locInstance.loadValuesFromPersTable).was.called();
 
-        spy.on(_G._gui, "changeFrame");
+        spy.on(_G._gui, "changeState");
         locInstance.elementsOnFrame.button_back.object.OnClick();
-        assert.spy(_gui.changeFrame).was.called();
+        assert.spy(_gui.changeState).was.called();
     end)
 
     it("Testing addAllAchievements function", function()

@@ -63,7 +63,7 @@ it("Testing Constructor", function()
     it("Testing create function", function()
         _G._gui = {
             getFrames = function(...) return{}; end;
-            changeFrame = function(...) end;
+            changeState = function(...) end;
             getLevelManager = function(...) return {
                 freeManagedObjects = function(...) end;
                 
@@ -72,12 +72,12 @@ it("Testing Constructor", function()
         stub(locInstance, "checkAchRageQuit");
         locInstance:create();
 
-        spy.on(_G._gui, "changeFrame");
+        spy.on(_G._gui, "changeState");
         locInstance.elementsOnFrame.button_backToGame.object.OnClick();
         locInstance.elementsOnFrame.button_backToMenu.object.OnClick();
         locInstance.elementsOnFrame.button_changeLevel.object.OnClick();
         locInstance.elementsOnFrame.button_options.object.OnClick();
-        assert.spy(_gui.changeFrame).was.called(4);
+        assert.spy(_gui.changeState).was.called(4);
         assert.stub(locInstance.checkAchRageQuit).was.called(1);
     end)
 

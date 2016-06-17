@@ -107,7 +107,7 @@ end)
         local achShoppingQueen = false;
         _G._gui = {
             getFrames = function(...) return{}; end;
-            changeFrame = function(...) end;
+            changeState = function(...) end;
             getLevelManager = function(...) return {
                 getAchievmentManager = function(...) return{
                     achBitch = function(...) achBitchCalled = true end;
@@ -131,9 +131,9 @@ end)
         assert.spy(locInstance.addAllUpgrades).was.called();
         assert.spy(locInstance.loadValuesFromPersTable).was.called();
 
-        spy.on(_G._gui, "changeFrame");
+        spy.on(_G._gui, "changeState");
         locInstance.elementsOnFrame.button_back.object.OnClick();
-        assert.spy(_gui.changeFrame).was.called();
+        assert.spy(_gui.changeState).was.called();
         
         locInstance.elementsOnFrame.chart.object.p_markedElement = locInstance.elementsOnFrame.chart.object.p_elementsOnChart[1];
        
