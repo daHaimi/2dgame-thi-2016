@@ -1,13 +1,11 @@
 Class = require "lib.hump.class";
 
 local Frame = Class {
-    init = function(self, xPos, yPos, moveInDirection, moveOutDirection, moveSpeed, xDefaultOffset, yDefaultOffset)
+    init = function(self, xPos, yPos, moveInDirection, moveOutDirection, moveSpeed, xOffset, yOffset)
         self.p_xPos = xPos;
         self.p_yPos = yPos;
-        self.p_xDefaultOffset = xDefaultOffset; --constant value to reset the x/yOffset at frame change
-        self.p_yDefaultOffset = yDefaultOffset;
-        self.p_xOffset = xDefaultOffset; --value is changing to animate the move in/ out
-        self.p_yOffset = yDefaultOffset;
+        self.p_xOffset = xOffset; --value is changing to animate the move in/ out
+        self.p_yOffset = yOffset;
         self.p_moveInDirection = moveInDirection; --move direction of the "fly in"
         self.p_moveOutDirection = moveOutDirection; --move direction of the "fly out"
         self.p_moveSpeed = moveSpeed; --this value is added each "update" to the x/yOffset
@@ -17,10 +15,8 @@ local Frame = Class {
 --- Call to set all Elements invisible and reset the x/yOffset
 function Frame:clear(elements)
     for _, v in pairs(elements) do
-        v.object:SetVisible(false);
+        v.object:Remove();
     end
-    self.p_xOffset = self.p_xDefaultOffset;
-    self.p_yOffset = self.p_yDefaultOffset;
 end
 
 --- Call to set all Elements visible/ set all elements on position

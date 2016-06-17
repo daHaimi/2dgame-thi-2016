@@ -18,6 +18,10 @@ local KlickableElement = Class {
     end;
 };
 
+function KlickableElement:Remove()
+    self.object:Remove();
+end
+
 --- Function not conform to CC/ implements an interface
 --- Set the visible of the element
 -- @parm visible: true or false

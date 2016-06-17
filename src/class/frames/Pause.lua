@@ -93,27 +93,27 @@ function Pause:create()
 
     --onclick events for all buttons
     self.elementsOnFrame.button_backToGame.object.OnClick = function(_)
-        _gui:changeFrame(_gui:getFrames().inGame);
+        _gui:changeState("InGame");
     end
 
     self.elementsOnFrame.button_changeLevel.object.OnClick = function(_)
-        _gui:changeFrame(_gui:getFrames().level);
+        _gui:changeState("Level");
     end
 
     self.elementsOnFrame.button_backToMenu.object.OnClick = function(_)
         self:checkAchRageQuit();
         _gui:getLevelManager():freeManagedObjects(); -- cleanup level, bait and swarmfactory
-        _gui:changeFrame(_gui:getFrames().mainMenu);
+        _gui:changeState("MainMenu");
     end
 
     self.elementsOnFrame.button_restartLevel.object.OnClick = function(_)
         self:checkAchRageQuit();
         _gui:getLevelManager():replayLevel();
-        _gui:changeFrame(_gui:getFrames().inGame);
+        _gui:changeState("InGame");
     end
 
     self.elementsOnFrame.button_options.object.OnClick = function(_)
-        _gui:changeFrame(_gui:getFrames().options);
+        _gui:changeState("Options");
     end
 end
 

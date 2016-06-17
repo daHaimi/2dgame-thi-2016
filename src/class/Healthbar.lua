@@ -22,6 +22,13 @@ local Healthbar = Class {
     end;
 };
 
+function Healthbar:Remove()
+    for _, v in pairs (self.hearts) do
+        v:Remove();
+    end
+    self.icon:Remove();
+end
+
 --scale the heart images to an half
 function Healthbar:scaleHearts()
     for _, v in pairs(self.hearts) do

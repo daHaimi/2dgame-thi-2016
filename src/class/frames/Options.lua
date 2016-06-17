@@ -112,7 +112,7 @@ function Options:create()
 
     self.elementsOnFrame.button_back.object.OnClick = function(_)
         self:loadValuesInPersTable();
-        _gui:changeFrame(_gui:getLastState());
+        _gui:changeState(_gui:getLastStateName());
     end
 end
 

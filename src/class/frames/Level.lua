@@ -82,7 +82,7 @@ function Level:create()
     --onclick events for all buttons
     self.elementsOnFrame.buttonHouse.object.OnClick = function(_)
         _gui:getLevelManager():newLevel(_gui:getLevelManager():getLevelPropMapByName("sewers"), _G.data);
-        _gui:changeFrame(_gui:getFrames().inGame);
+        _gui:changeState("inGame");
     end
 
     if _G._persTable.unlockedLevel == 1 then
@@ -92,12 +92,12 @@ function Level:create()
     else
         self.elementsOnFrame.buttonCanyon.object.OnClick = function(_)
             _gui:getLevelManager():newLevel(_gui:getLevelManager():getLevelPropMapByName("crazySquirrels"), _G.data);
-            _gui:changeFrame(_gui:getFrames().inGame);
+            _gui:changeState("InGame");
         end
     end
 
     self.elementsOnFrame.buttonBack.object.OnClick = function(_)
-        _gui:changeFrame(_gui:getFrames().mainMenu);
+        _gui:changeState("MainMenu");
     end
 end
 

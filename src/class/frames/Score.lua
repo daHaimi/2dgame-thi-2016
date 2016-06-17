@@ -94,12 +94,12 @@ function Score:create()
     --onclick events for all buttons
     self.elementsOnFrame.button_retry.object.OnClick = function(_)
         _gui:getLevelManager():replayLevel();
-        _gui:changeFrame(_gui:getFrames().inGame);
+        _gui:changeState("InGame");
     end
 
     self.elementsOnFrame.button_backToMenu.object.OnClick = function(_)
         _gui:getLevelManager():freeManagedObjects();
-        _gui:changeFrame(_gui:getFrames().mainMenu);
+        _gui:changeState("MainMenu");
     end
 end
 

@@ -65,4 +65,9 @@ function AchievementDisplay:SetPos(x, y)
     end
 end
 
+function AchievementDisplay:Remove()
+    self.background:Remove();
+    self.defaultText:Remove();
+end
+
 return AchievementDisplay;

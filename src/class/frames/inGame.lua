@@ -92,7 +92,7 @@ function InGame:create()
     self.elementsOnFrame.pause.object:SizeToImage();
 
     self.elementsOnFrame.pause.object.OnClick = function(_)
-        _gui:changeFrame(_gui:getFrames().pause);
+        _gui:changeState("Pause");
     end
 end
 
@@ -114,7 +114,7 @@ end
 --- shows the elements on screen
 function InGame:draw()
     --the healthbar does not reset after the pause state
-    if _gui:getLastState() ~= _gui:getFrames().pause then
+    if _gui:getLastState() ~= "Pause" then
         self.elementsOnFrame.healthbar.object = Healthbar();
     end
     self.elementsOnFrame.healthbar.object:SetVisible(false);

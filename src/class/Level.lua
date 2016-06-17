@@ -271,14 +271,14 @@ function Level:update(dt, bait)
             self.playTime = 0;
         end
     end
-    if self.animationStartFinished then
-        _G._gui:getFrames().inGame:activate();
+    if _G._gui:getCurrentStateName() == "InGame" and self.animationStartFinished then
+        _G._gui:getCurrentState():activate();
     end
-    if self.animationEnd then
-        _G._gui:getFrames().inGame:clear();
+    if G._gui:getCurrentStateName() == "InGame" and self.animationEnd then
+        _G._gui:getCurrentState():clear();
     end
 
-    self:checkForAchievments()
+    self:checkForAchievments();
 end
 
 --- checks if a new achievement is unlocked
@@ -417,8 +417,7 @@ function Level:draw(bait)
     love.graphics.draw(self.bg, self.bgq, 0, self.backgroundPosition);
     bait:draw();
     if self.levelFinished and self.waitTillSwitch < 0 then
-        _gui:changeFrame(_gui:getFrames().score);
-        --self:printResult();
+        _gui:changeFrame("Score");
     end
 end
 

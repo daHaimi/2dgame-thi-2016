@@ -45,4 +45,8 @@ function FlagButton:SetPos(x, y)
     self.object:SetPos(x, y);
 end
 
+function FlagButton:Remove()
+    self.object:Remove();
+end
+
 return FlagButton;

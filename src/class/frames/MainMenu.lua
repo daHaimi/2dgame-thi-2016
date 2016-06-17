@@ -32,10 +32,11 @@ local MainMenu = Class {
             self.flagWidth = 180;
             self.speed = 75;
         end
-        self.name = "Main Menu";
+        self.name = "MainMenu";
         self.frame = Frame((_G._persTable.scaledDeviceDim[1] - self.width) / 2, (_G._persTable.scaledDeviceDim[2] - self.height) / 2 - self.speed,
             "down", "down", self.speed, 0, -1500);
         self:create();
+        self:setLanguage(_G._persTable.config.language)
     end;
 };
 
@@ -89,11 +90,8 @@ function MainMenu:create()
 
     --adjust all elements on this frame
 
-    --self.elementsOnFrame.background.object:SetImage(self.directory .. "gui_Test_Bg.png");
-
     self.elementsOnFrame.button_start.object:SetImage(self.directory .. "Button.png");
     self.elementsOnFrame.button_start.object:SizeToImage();
-
 
     self.elementsOnFrame.button_upgradeMenu.object:SetImage(self.directory .. "Button.png");
     self.elementsOnFrame.button_upgradeMenu.object:SizeToImage();
@@ -115,27 +113,27 @@ function MainMenu:create()
 
     --onclick events for all buttons
     self.elementsOnFrame.button_start.object.OnClick = function(_)
-        _gui:changeFrame(_gui:getFrames().level);
+        _gui:changeState("Level");
     end
 
     self.elementsOnFrame.button_upgradeMenu.object.OnClick = function(_)
-        _gui:changeFrame(_gui:getFrames().upgradeMenu);
+        _gui:changeState("UpgradeMenu");
     end
 
     self.elementsOnFrame.button_dictionary.object.OnClick = function(_)
-        _gui:changeFrame(_gui:getFrames().dictionary);
+        _gui:changeState("Dictionary");
     end
 
     self.elementsOnFrame.button_achievements.object.OnClick = function(_)
-        _gui:changeFrame(_gui:getFrames().achievements);
+        _gui:changeState("Achievements");
     end
 
     self.elementsOnFrame.button_options.object.OnClick = function(_)
-        _gui:changeFrame(_gui:getFrames().options);
+        _gui:changeState("Options");
     end
 
     self.elementsOnFrame.button_credits.object.OnClick = function(_)
-        _gui:changeFrame(_gui:getFrames().credits);
+        _gui:changeState("Credits");
     end
 
     self.elementsOnFrame.button_close.object.OnClick = function(_)

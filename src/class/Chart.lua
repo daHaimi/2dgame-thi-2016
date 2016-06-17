@@ -74,13 +74,22 @@ function Chart:create()
     self.textField = TextField(self.textfieldSize, self.directory);
 
     --onclick events of the buttons
-    self.button_up.OnClick = function(_)
+    self.button_up.OnClick = function()
         self:scrollUp();
     end
 
-    self.button_down.OnClick = function(_)
+    self.button_down.OnClick = function()
         self:scrollDown();
     end
+end
+
+function Chart:Remove()
+    for _, v in pairs(self.p_elementsOnChart) do
+        v:Remove();
+    end
+    self.button_up:Remove();
+    self.button_down:Remove();
+    self.p_markFrame:Remove();
 end
 
 --- called to scroll the table up

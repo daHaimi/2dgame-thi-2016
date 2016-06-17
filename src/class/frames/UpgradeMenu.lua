@@ -89,7 +89,7 @@ function UpgradeMenu:create()
 
     --onclick events for all buttons
     self.elementsOnFrame.button_back.object.OnClick = function(_)
-        _gui:changeFrame(_gui:getFrames().mainMenu);
+        _gui:changeState("MainMenu");
         self.elementsOnFrame.chart.object:resetTopRow();
     end
 

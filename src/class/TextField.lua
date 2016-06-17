@@ -11,6 +11,12 @@ local Textbox = Class {
     end;
 };
 
+function Textbox:Remove()
+    self.objBackground:Remove();
+    self.objTopic:Remove();
+    self.objText:Remove();
+end
+
 --- change the text on the textfield
 -- @parm newTopic: the new topic of the text
 -- @parm newText: new text

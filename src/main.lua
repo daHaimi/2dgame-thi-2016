@@ -88,7 +88,7 @@ function love.load()
     
     _G._gui = Gui();
     _gui:setLevelManager(levMan);
-    _gui:start();
+    _gui:changeState("Start");
     achiev:checkAchievements();
 end
 
@@ -129,7 +129,7 @@ function love.draw()
 
     if levMan:getCurLevel() ~= nil then
         if levMan:getCurLevel().levelFinished == 1 and
-                _gui:getCurrentState() == "InGame" then
+                _gui:getCurrentStateName() == "InGame" then
             levMan:getCurLevel():printResult();
         end
     end
@@ -144,18 +144,6 @@ function love.draw()
     -- debug info for memory usage do not remove!
     love.graphics.print('Memory actually used (in kB): ' .. collectgarbage('count'), 200, 60);
     love.graphics.print("Current FPS: " .. tostring(love.timer.getFPS()), 200, 75);
-    --[[
-    love.graphics.print(
-        "1speedUp " .. tostring(_G._persTable.upgrades.firstSpeedUp) .. "\n" ..
-        "2speedUp " .. tostring(_G._persTable.upgrades.secondSpeedUp) .. "\n" ..
-        "1moreLife " .. tostring(_G._persTable.upgrades.oneMoreLife) .. "\n" ..
-        "2moreLife " .. tostring(_G._persTable.upgrades.twoMoreLife) .. "\n" ..
-        "3moreLife " .. tostring(_G._persTable.upgrades.threeMoreLife) .. "\n" ..
-        "moneyMult " .. tostring(_G._persTable.upgrades.moneyMult) .. "\n" ..
-        "godMode " .. tostring(_G._persTable.upgrades.godMode) .. "\n" ..
-        "MB1 " .. tostring(_G._persTable.upgrades.mapBreakthrough1) .. "\n" ..
-        "MB2 " .. tostring(_G._persTable.upgrades.mapBreakthrough2),
-        0, 0)]]--
 end
 
 --- This function is called continuously by the love.run().
@@ -195,7 +183,7 @@ function love.update(dt)
     
     -- free unused memory
     frameCounter = frameCounter + 1;
-    if _gui:getCurrentState() ~= "InGame" or levMan:getCurLevel():isFinished() == 1 then
+    if _gui:getCurrentStateName() ~= "InGame" or levMan:getCurLevel():isFinished() == 1 then
         if (frameCounter % 60) == 0 then
             collectgarbage("collect");
             frameCounter = 0;
@@ -238,8 +226,8 @@ function love.mousepressed(x, y, button)
     end
     Loveframes.mousepressed(x, y, button);
     
-    if _gui:getCurrentState() == "start" then
-        _gui:changeFrame(_gui:getFrames().mainMenu);
+    if _gui:getCurrentStateName() == "Start" then
+        _gui:changeState("MainMenu");
     end
     
     -- activate the god mode when you press the mouse
@@ -249,7 +237,7 @@ function love.mousepressed(x, y, button)
     end
     
     -- starts the starting sequence of the game
-    if love.mouse.isDown(1) and _gui:getCurrentState() == "InGame" and
+    if love.mouse.isDown(1) and _gui:getCurrentStateName() == "InGame" and
     not levMan:getCurLevel():getStartAnimationRunning() and
     not levMan:getCurLevel():getStartAnimationFinished() then
         levMan:getCurLevel():startStartAnimation();
@@ -257,7 +245,7 @@ function love.mousepressed(x, y, button)
     
     -- pause game when when mouse is pressed (right button)
     if love.mouse.isDown(2) and _gui:drawGame() and levMan:getCurLevel():isLoaded() then
-        _gui:changeFrame(_gui:getFrames().pause);
+        _gui:changeState("Pause");
     end
     
 end
@@ -275,7 +263,7 @@ function love.mousereleased(x, y, button)
     Loveframes.mousereleased(x, y, button);
     
     -- deactivate the god mode when you release the mouse
-    if _gui:getCurrentState() == "InGame" then
+    if _gui:getCurrentStateName() == "InGame" then
         levMan:getCurLevel():deactivateGodMode();
         levMan:getCurLevel():resetOldPosY();
     end
