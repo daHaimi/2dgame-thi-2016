@@ -1,36 +1,17 @@
 Class = require "lib.hump.class";
 
 local Credits = Class {
-    init = function(self)
-        self.startTime = 0;
-        if _G._persTable.scaledDeviceDim[1] < 640 then
-            self.directory = "assets/gui/480px/";
-            self.widthPx = 480;
-            self.width = 384;
-            self.height = 666;
-            self.buttonHeight = 75;
-            self.buttonOffset = 15;
-            self.speed = 50;
-        elseif _G._persTable.scaledDeviceDim[1] < 720 then
-            self.widthPx = 640;
-            self.directory = "assets/gui/640px/";
-            self.width = 512;
-            self.height = 888;
-            self.buttonOffset = 20;
-            self.buttonHeight = 96;
-            self.speed = 60;
-        else
-            self.widthPx = 720;
-            self.directory = "assets/gui/720px/";
-            self.width = 576;
-            self.height = 1024;
-            self.buttonOffset = 30;
-            self.buttonHeight = 106;
-            self.speed = 75;
-        end
+        init = function(self)
+            self.imageButton = love.graphics.newImage("assets/gui/button.png");
+            self.buttonHeight = self.imageButton:getHeight();
+            self.buttonWidth = self.imageButton:getWidth();
+            self.buttonXPosition = (_G._persTable.winDim[1] - self.buttonWidth) / 2;
+            self.background = love.graphics.newImage("assets/gui/StandardBG.png");
+            self.offset = 100;
+            self.buttonDistance = 15;
+            self.flagWidth = 120;
         self.name = "Credits";
-        self.frame = Frame((_G._persTable.scaledDeviceDim[1] - self.width) / 2,
-            (_G._persTable.scaledDeviceDim[2] - self.height) / 2 - self.speed, "down", "down", self.speed, 0, -1500);
+        self.frame = Frame(0, 0, "down", "down", 50, 0, -1500);
         self:create();
     end;
 
@@ -62,47 +43,37 @@ local Credits = Class {
 function Credits:create()
     --add, create and position all elements on this frame
     self.elementsOnFrame = {
-        background = {
-            object = Loveframes.Create("image");
-            x = 0;
-            y = 0;
-        };
-        button_back = {
-            object = Loveframes.Create("imagebutton");
-            x = 0.16 * self.width;
-            y = self.height - self.buttonHeight;
-        };
-        text_credits = {
-            object = Loveframes.Create("text");
-            x = 15;
-            y = 10;
-        }
+        button_back = ImageButton(self.imageButton, self.buttonXPosition , 
+            _G._persTable.winDim[2] - self.offset - self.buttonHeight, true);
     };
 
     --build the credits
     local creditsToPrint = self:buildCreditsString();
 
-    --adjust all elements on this frame
-    self.elementsOnFrame.background.object:SetImage(self.directory .. "StandardBG.png");
-
-    self.elementsOnFrame.button_back.object:SetImage(self.directory .. "Button.png")
-    self.elementsOnFrame.button_back.object:SizeToImage()
-
-    self.elementsOnFrame.text_credits.object:SetText(creditsToPrint);
-    self.elementsOnFrame.text_credits.object:SetLinksEnabled(true);
-    self.elementsOnFrame.text_credits.object:SetDetectLinks(true);
-    self.elementsOnFrame.text_credits.object:SetShadowColor(150, 210, 255)
-
     --onclick events for all buttons
-    self.elementsOnFrame.button_back.object.OnClick = function(_)
+    self.elementsOnFrame.button_back.gotClicked = function(_)
         _gui:changeFrame(_gui:getFrames().mainMenu);
     end
 end
 
 --- changes the language of this frame
 function Credits:setLanguage(language)
-    self.elementsOnFrame.button_back.object:SetText(_G.data.languages[language].package.buttonBack);
-    self.elementsOnFrame.text_credits.object:SetText(self:buildCreditsString());
+    self.elementsOnFrame.button_back:setText(_G.data.languages[language].package.buttonBack);
+end
+
+function Credits:mousepressed(x, y)
+    local xClick = x * _G._persTable.scaleFactor;
+    local yClick = y * _G._persTable.scaleFactor;
+    
+    for _, v in pairs (self.elementsOnFrame) do
+        local xPosition, yPosition = v:getPosition();
+        local width, height = v:getSize();
+        
+        if xClick > xPosition and xClick < xPosition + width and
+        yClick > yPosition and yClick < yPosition + height then
+            v.gotClicked();
+        end
+    end
 end
 
 --- Bild the credits string.
@@ -135,7 +106,17 @@ end
 
 --- shows the frame on screen
 function Credits:draw()
-    self.frame:draw(self.elementsOnFrame);
+    local _, y = self.elementsOnFrame.button_back:getOffset();
+    local font = love.graphics.getFont();
+    love.graphics.draw(self.background, (_G._persTable.winDim[1] - self.background:getWidth())/2,
+        (_G._persTable.winDim[2] - self.background:getHeight())/2 + y);
+    love.graphics.setFont(love.graphics.newFont("font/8bitOperatorPlus-Bold.ttf", 16));
+    love.graphics.printf(self:buildCreditsString(),_G._persTable.winDim[1]*0.25,
+        100 + y, _G._persTable.winDim[1], "left");
+    love.graphics.setFont(font);
+    for _, v in pairs (self.elementsOnFrame) do
+        v:draw();
+    end
 end
 
 --- called to "delete" this frame

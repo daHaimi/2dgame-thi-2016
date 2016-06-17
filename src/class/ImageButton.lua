@@ -55,6 +55,10 @@ function ImageButton:setOffset(x,y)
     self.yOffset = y;
 end
 
+function ImageButton:getOffset()
+    return self.xOffset, self.yOffset;
+end
+
 function ImageButton:setImage(image)
     if image ~= nil then
         self.image = love.graphics.newImage(image);

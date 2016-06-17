@@ -16,16 +16,16 @@ Notification = require "class.Notification";
 local Gui = Class {
     init = function(self)
         self.p_myFrames = {
-            achievements = Achievements();
+            --achievements = Achievements();
             mainMenu = Mainmenu();
-            options = Options();
-            upgradeMenu = UpgradeMenu();
-            dictionary = Dictionary();
+            --options = Options();
+            --upgradeMenu = UpgradeMenu();
+            --dictionary = Dictionary();
             credits = Credits();
-            score = Score();
-            pause = Pause();
-            level = ChooseLevel();
-            inGame = InGame();
+            --score = Score();
+            --pause = Pause();
+            --level = ChooseLevel();
+            --inGame = InGame();
             start = Start();
         };
         self.p_frameChangeActiv = false; --true if a frame change is activ
@@ -35,6 +35,7 @@ local Gui = Class {
         };
         self.p_textOutput = "";
         self.notification = Notification();
+        self.onPoint = false;
     end;
     levMan = nil;
     achMan = nil;
@@ -85,6 +86,7 @@ end
 --- called to draw a new frame
 -- @parm : newFrame: the frame which should be draw
 function Gui:changeFrame(newFrame)
+    self.onPoint = false;
     self:setFrameChangeActivity(true);
     self.p_states.lastState = self.p_states.currentState;
     self.p_states.currentState = newFrame;
@@ -98,8 +100,11 @@ end
 --- updates the gui. called in the love.update function
 function Gui:update()
     self:draw()
+    if not self.onPoint then
+        self.onPoint = self.p_states.currentState:checkPosition()
+    end
     if self.p_frameChangeActiv then
-        if (not self.p_states.currentState:checkPosition()) then
+        if (not self.onPoint) then
             self.p_states.currentState:appear();
             if self.p_states.lastState ~= nil then
                 self.p_states.lastState:disappear();

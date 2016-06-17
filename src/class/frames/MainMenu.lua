@@ -73,13 +73,18 @@ function MainMenu:create()
     end
     
     self.elementsOnFrame.button_credits.gotClicked = function(_)
-        print "credits"
-        --_gui:changeFrame(_gui:getFrames().credits);
+        _gui:changeFrame(_gui:getFrames().credits);
     end
 
     self.elementsOnFrame.button_close.gotClicked = function(_)
         love.window:close();
         love.event.quit();
+    end
+end
+
+function MainMenu:draw()
+    for _, v in pairs (self.elementsOnFrame) do
+        v:draw();
     end
 end
 
@@ -96,11 +101,6 @@ function MainMenu:mousepressed(x, y)
             v.gotClicked();
         end
     end
-end
-
---- shows the frame on screen
-function MainMenu:draw()
-    self.frame:draw(self.elementsOnFrame);
 end
 
 --- called to "delete" this frame
