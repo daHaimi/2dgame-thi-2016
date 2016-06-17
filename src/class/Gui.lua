@@ -87,8 +87,13 @@ function Gui:changeFrame(newFrame)
     self.p_states.currentState:draw();
 end
 
+function Gui:draw()
+    self.p_states.currentState:draw();
+end
+
 --- updates the gui. called in the love.update function
 function Gui:update()
+    self:draw()
     if self.p_frameChangeActiv then
         if (not self.p_states.currentState:checkPosition()) then
             self.p_states.currentState:appear();

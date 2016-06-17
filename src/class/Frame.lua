@@ -59,10 +59,11 @@ function Frame:appear(elements)
             if (v.object.SetClickable ~= nil) then
                 v.object:SetClickable(true);
             end
-        else 
+        else
             v:setPosition(v.xPosition + self.p_xPos + self.p_xOffset, v.yPosition + self.p_yPos + self.p_yOffset);
             if (v:setClickable() ~= nil) then
                 v:setClickable(true);
+                self:draw();
             end
         end
     end

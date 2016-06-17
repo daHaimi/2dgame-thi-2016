@@ -26,7 +26,7 @@ function MainMenu:create()
     self.elementsOnFrame = {
         button_start = ImageButton(self.directory .. "Button.png", 100, 100, "", true);
         
-        button_upgradeMenu = {
+        --[[button_upgradeMenu = {
             object = Loveframes.Create("imagebutton");
             x = 0.16 * self.width;
             y = self.buttonOffset + 1 * self.buttonHeight;
@@ -62,7 +62,7 @@ function MainMenu:create()
             object = FlagButton();
             x = (self.width - self.flagWidth) / 2;
             y = self.buttonOffset + 6 * self.buttonHeight;
-        };
+        };]]
     };
 
     --adjust all elements on this frame
@@ -72,7 +72,7 @@ function MainMenu:create()
     self.elementsOnFrame.button_start:setImage(self.directory .. "Button.png");
 
 
-    self.elementsOnFrame.button_upgradeMenu.object:SetImage(self.directory .. "Button.png");
+    --[[self.elementsOnFrame.button_upgradeMenu.object:SetImage(self.directory .. "Button.png");
     self.elementsOnFrame.button_upgradeMenu.object:SizeToImage();
 
     self.elementsOnFrame.button_dictionary.object:SetImage(self.directory .. "Button.png");
@@ -88,14 +88,14 @@ function MainMenu:create()
     self.elementsOnFrame.button_credits.object:SizeToImage();
 
     self.elementsOnFrame.button_close.object:SetImage(self.directory .. "Button.png");
-    self.elementsOnFrame.button_close.object:SizeToImage();
+    self.elementsOnFrame.button_close.object:SizeToImage();]]
 
     --onclick events for all buttons
     --self.elementsOnFrame.button_start.object.OnClick = function(_)
     --    _gui:changeFrame(_gui:getFrames().level);
     --end
 
-    self.elementsOnFrame.button_upgradeMenu.object.OnClick = function(_)
+    --[[self.elementsOnFrame.button_upgradeMenu.object.OnClick = function(_)
         _gui:changeFrame(_gui:getFrames().upgradeMenu);
     end
 
@@ -118,7 +118,7 @@ function MainMenu:create()
     self.elementsOnFrame.button_close.object.OnClick = function(_)
         love.window:close(); -- close the window
         love.event.quit(); -- exit the game
-    end
+    end]]
 end
 
 --- shows the frame on screen
@@ -148,12 +148,12 @@ end
 
 --- changes the language of this frame
 function MainMenu:setLanguage(language)
-    self.elementsOnFrame.button_close.object:SetText(_G.data.languages[language].package.buttonClose);
+    --[[self.elementsOnFrame.button_close.object:SetText(_G.data.languages[language].package.buttonClose);
     self.elementsOnFrame.button_credits.object:SetText(_G.data.languages[language].package.buttonCredits);
     self.elementsOnFrame.button_options.object:SetText(_G.data.languages[language].package.buttonOptions);
     self.elementsOnFrame.button_achievements.object:SetText(_G.data.languages[language].package.buttonAchievements);
     self.elementsOnFrame.button_dictionary.object:SetText(_G.data.languages[language].package.buttonDictionary);
-    self.elementsOnFrame.button_upgradeMenu.object:SetText(_G.data.languages[language].package.buttonShop);
+    self.elementsOnFrame.button_upgradeMenu.object:SetText(_G.data.languages[language].package.buttonShop);]]
     self.elementsOnFrame.button_start:setText(_G.data.languages[language].package.buttonStart);
 end
 
