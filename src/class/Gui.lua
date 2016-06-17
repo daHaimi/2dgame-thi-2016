@@ -49,6 +49,10 @@ function Gui:setLanguage()
     end
 end
 
+function Gui:mousepressed(x, y)
+    self.p_states.currentState:mousepressed(x,y);
+end
+
 --- return all frames
 function Gui:getFrames()
     return self.p_myFrames;
@@ -99,12 +103,6 @@ function Gui:update()
             self.p_states.currentState:appear();
             if self.p_states.lastState ~= nil then
                 self.p_states.lastState:disappear();
-            end
-        else
-            self.p_states.currentState:appear();
-            self:setFrameChangeActivity(false);
-            if self.p_states.lastState ~= nil then
-                self.p_states.lastState:clear();
             end
         end
     end

@@ -43,7 +43,6 @@ local curLevel;
 local player;
 local swarmFactory;
 local levMan;
-local p_scaleFactor
 local achiev;
 local frameCounter = 0;
 
@@ -60,11 +59,11 @@ function love.load()
     _G._persTable.deviceDim = { love.window.getDesktopDimensions(flags.display) };
     --_G._persTable.deviceDim = {720, 1080};
     --_G._persTable.deviceDim = {1366,768};
-    --_G._persTable.deviceDim = {1600,900};
-    _G._persTable.deviceDim = {480,853};
-    _G._persTable.winDim[1], _G._persTable.winDim[2], p_scaleFactor, titleHeight = getScaledDimension(_G._persTable.deviceDim);
+    _G._persTable.deviceDim = {1600,900};
+    --_G._persTable.deviceDim = {480,853};
+    _G._persTable.winDim[1], _G._persTable.winDim[2], _G._persTable.scaleFactor, titleHeight = getScaledDimension(_G._persTable.deviceDim);
 
-    _G._persTable.scaledDeviceDim = {_G._persTable.winDim[1] * p_scaleFactor, _G._persTable.winDim[2] * p_scaleFactor };
+    _G._persTable.scaledDeviceDim = {_G._persTable.winDim[1] * _G._persTable.scaleFactor, _G._persTable.winDim[2] * _G._persTable.scaleFactor };
     love.window.setMode(_G._persTable.scaledDeviceDim[1], _G._persTable.scaledDeviceDim[2], 
         {x = (_G._persTable.deviceDim[1] - _G._persTable.scaledDeviceDim[1]) / 2, y = 25});
     achiev = Achievement();
@@ -120,7 +119,7 @@ end
 -- This function is called continuously by the love.run().
 function love.draw()
     
-    love.graphics.scale(p_scaleFactor, p_scaleFactor);
+    love.graphics.scale(_G._persTable.scaleFactor, _G._persTable.scaleFactor);
     if _gui:drawGame() then
         levMan:getCurLevel():draw(levMan:getCurPlayer());
         levMan:getCurSwarmFactory():draw();
@@ -129,7 +128,8 @@ function love.draw()
     for _, v in pairs(_gui.p_states.currentState.elementsOnFrame) do
         v:draw();
     end
-    love.graphics.scale(1 / p_scaleFactor, 1 / p_scaleFactor);
+    love.graphics.rectangle("line", 100, 100, 10,10);
+    love.graphics.scale(1 / _G._persTable.scaleFactor, 1 / _G._persTable.scaleFactor);
    
 
     if levMan:getCurLevel() ~= nil then
@@ -243,8 +243,8 @@ function love.mousepressed(x, y, button)
     end
     Loveframes.mousepressed(x, y, button);
     
-    if _gui:getCurrentState() == "start" then
-        _gui:changeFrame(_gui:getFrames().mainMenu);
+    if love.mouse.isDown(1) then
+        _gui:mousepressed(x, y);
     end
     
     -- activate the god mode when you press the mouse
@@ -277,7 +277,6 @@ function love.mousereleased(x, y, button)
     if button == 1 then
         button = 'l';
     end
-    Loveframes.mousereleased(x, y, button);
     
     -- deactivate the god mode when you release the mouse
     if _gui:getCurrentState() == "InGame" then

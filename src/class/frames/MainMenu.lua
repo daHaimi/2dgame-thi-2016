@@ -13,7 +13,7 @@ local MainMenu = Class {
             self.buttonDistance = 15;
             self.flagWidth = 120;
         self.name = "Main Menu";
-        self.frame = Frame(0,0, "down", "down", 50, 0, -1500);
+        self.frame = Frame(0, 0, "down", "down", 50, 0, -1500);
         self:create();
     end;
 };
@@ -46,37 +46,56 @@ function MainMenu:create()
 
     --adjust all elements on this frame
 
-    --self.elementsOnFrame.background.object:SetImage(self.directory .. "gui_Test_Bg.png");
-
     --onclick events for all buttons
-    --self.elementsOnFrame.button_start.object.OnClick = function(_)
-    --    _gui:changeFrame(_gui:getFrames().level);
-    --end
-
-    --[[self.elementsOnFrame.button_upgradeMenu.object.OnClick = function(_)
-        _gui:changeFrame(_gui:getFrames().upgradeMenu);
+    self.elementsOnFrame.button_start.gotClicked = function(_)
+        print "Level"
+        --_gui:changeFrame(_gui:getFrames().level);
     end
 
-    self.elementsOnFrame.button_dictionary.object.OnClick = function(_)
-        _gui:changeFrame(_gui:getFrames().dictionary);
+    self.elementsOnFrame.button_upgradeMenu.gotClicked = function(_)
+        print "upgradeMenu"
+        --_gui:changeFrame(_gui:getFrames().upgradeMenu);
     end
 
-    self.elementsOnFrame.button_achievements.object.OnClick = function(_)
-        _gui:changeFrame(_gui:getFrames().achievements);
+    self.elementsOnFrame.button_dictionary.gotClicked = function(_)
+        print "dictionary"
+        --_gui:changeFrame(_gui:getFrames().dictionary);
     end
 
-    self.elementsOnFrame.button_options.object.OnClick = function(_)
-        _gui:changeFrame(_gui:getFrames().options);
+    self.elementsOnFrame.button_achievements.gotClicked = function(_)
+        print "achievements"
+        --_gui:changeFrame(_gui:getFrames().achievements);
+    end
+    
+    self.elementsOnFrame.button_options.gotClicked = function(_)
+        print "options"
+        --_gui:changeFrame(_gui:getFrames().options);
+    end
+    
+    self.elementsOnFrame.button_credits.gotClicked = function(_)
+        print "credits"
+        --_gui:changeFrame(_gui:getFrames().credits);
     end
 
-    self.elementsOnFrame.button_credits.object.OnClick = function(_)
-        _gui:changeFrame(_gui:getFrames().credits);
+    self.elementsOnFrame.button_close.gotClicked = function(_)
+        love.window:close();
+        love.event.quit();
     end
+end
 
-    self.elementsOnFrame.button_close.object.OnClick = function(_)
-        love.window:close(); -- close the window
-        love.event.quit(); -- exit the game
-    end]]
+function MainMenu:mousepressed(x, y)
+    local xClick = x * _G._persTable.scaleFactor;
+    local yClick = y * _G._persTable.scaleFactor;
+    
+    for _, v in pairs (self.elementsOnFrame) do
+        local xPosition, yPosition = v:getPosition();
+        local width, height = v:getSize();
+        
+        if xClick > xPosition and xClick < xPosition + width and
+        yClick > yPosition and yClick < yPosition + height then
+            v.gotClicked();
+        end
+    end
 end
 
 --- shows the frame on screen

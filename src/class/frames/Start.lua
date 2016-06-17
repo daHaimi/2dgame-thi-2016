@@ -33,6 +33,10 @@ function Start:create()
     self.elementsOnFrame.text:SetPos(0.5 * _persTable.scaledDeviceDim[1] - 0.5 * self.elementsOnFrame.text:GetWidth(), 0.75 * _persTable.scaledDeviceDim[2]);
 end
 
+function Start:mousepressed(x, y)
+    _gui:changeFrame(_gui:getFrames().mainMenu);
+end
+
 --- just called frequenzly in the start state
 function Start:blink()
     self.blinkTimer = self.blinkTimer - 1;

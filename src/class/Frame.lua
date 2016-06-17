@@ -28,12 +28,7 @@ end
 --- Call to set all Elements visible/ set all elements on position
 function Frame:draw(elements)
     for _, v in pairs(elements) do
-        if v.object ~= nil then
-            v.object:SetVisible(true)
-            v.object:SetPos(v.x + self.p_xPos + self.p_xOffset, v.y + self.p_yPos + self.p_yOffset);
-        else
-            --v:setPosition(v.xPosition + self.p_xPos + self.p_xOffset, v.yPosition + self.p_yPos + self.p_yOffset);
-        end
+        v:setOffset(self.p_xOffset, self.p_yOffset);
     end
 end
 
@@ -50,18 +45,7 @@ function Frame:appear(elements)
         self.p_xOffset = self.p_xOffset - self.p_moveSpeed;
     end
     for _, v in pairs(elements) do
-        if v.object ~= nil then
-            v.object:SetPos(v.x + self.p_xPos + self.p_xOffset, v.y + self.p_yPos + self.p_yOffset);
-            if (v.object.SetClickable ~= nil) then
-                v.object:SetClickable(true);
-            end
-        else
-            --v:setPosition(v.xPosition + self.p_xOffset, v.yPosition + self.p_yOffset);
-            if (v:setClickable() ~= nil) then
-                v:setClickable(true);
-                self:draw();
-            end
-        end
+        v:setOffset(self.p_xOffset, self.p_yOffset);
     end
 end
 
@@ -76,11 +60,8 @@ function Frame:disappear(elements)
     elseif self.p_moveOutDirection == "left" then
         self.p_xOffset = self.p_xOffset - self.p_moveSpeed;
     end
-    for _, v in pairs(elements) do
-        v.object:SetPos(self.p_xPos + v.x + self.p_xOffset, self.p_yPos + v.y + self.p_yOffset);
-        if (v.object.SetClickable ~= nil) then
-            v.object:SetClickable(false);
-        end
+        for _, v in pairs(elements) do
+        v:setOffset(self.p_xOffset, self.p_yOffset);
     end
 end
 

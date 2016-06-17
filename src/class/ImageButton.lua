@@ -4,6 +4,8 @@ local ImageButton = Class{
     init = function (self, image, xPos, yPos, clickable)
         self.xPosition = xPos;
         self.yPosition = yPos;
+        self.xOffset = 0;
+        self.yOffset = 0;
         if image ~= nil then
             self.image = image;
             self.width = self.image:getWidth()
@@ -26,8 +28,8 @@ local ImageButton = Class{
 function ImageButton:draw() 
     local font = love.graphics.getFont();
     love.graphics.setFont(love.graphics.newFont("font/8bitOperatorPlus-Bold.ttf", 22));
-    love.graphics.draw(self.image, self.xPosition, self.yPosition);
-   love.graphics.printf(self.text, self.xPosition, self.yPosition + 25, self.width, "center")
+    love.graphics.draw(self.image, self.xPosition + self.xOffset, self.yPosition + self.yOffset);
+    love.graphics.printf(self.text, self.xPosition + self.xOffset, self.yPosition + 25 + self.yOffset, self.width, "center")
     love.graphics.setFont(font);
 end
 
@@ -38,6 +40,19 @@ end
 function ImageButton:setPosition(x, y)
     self.xPosition = x;
     self.yPosition = y;
+end
+
+function ImageButton:getPosition()
+    return self.xPosition, self.yPosition;
+end
+
+function ImageButton:getSize()
+    return self.width, self.height;
+end
+
+function ImageButton:setOffset(x,y)
+    self.xOffset = x;
+    self.yOffset = y;
 end
 
 function ImageButton:setImage(image)
