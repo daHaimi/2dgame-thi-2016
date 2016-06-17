@@ -31,6 +31,7 @@ local Level = Class {
         self.frame = Frame((_G._persTable.scaledDeviceDim[1] - self.width) / 2,
             (_G._persTable.scaledDeviceDim[2] - self.height) / 2 - self.speed, "down", "down", self.speed, 0, -1500);
         self:create();
+        self:setLanguage(_G._persTable.config.language)
     end;
 };
 
@@ -82,7 +83,7 @@ function Level:create()
     --onclick events for all buttons
     self.elementsOnFrame.buttonHouse.object.OnClick = function(_)
         _gui:getLevelManager():newLevel(_gui:getLevelManager():getLevelPropMapByName("sewers"), _G.data);
-        _gui:changeState("inGame");
+        _gui:changeState("InGame");
     end
 
     if _G._persTable.unlockedLevel == 1 then

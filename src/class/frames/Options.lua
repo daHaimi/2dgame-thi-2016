@@ -34,6 +34,7 @@ local Options = Class {
         self.frame = Frame((_G._persTable.scaledDeviceDim[1] - self.width) / 2,
             (_G._persTable.scaledDeviceDim[2] - self.height) / 2 - self.speed, "down", "down", self.speed, 0, -1500);
         self:create();
+        self:setLanguage(_G._persTable.config.language)
     end;
 };
 
