@@ -119,14 +119,18 @@ end
 --- The love main draw call, which draws every frame on the screen.
 -- This function is called continuously by the love.run().
 function love.draw()
+    
+    love.graphics.scale(p_scaleFactor, p_scaleFactor);
     if _gui:drawGame() then
-        love.graphics.scale(p_scaleFactor, p_scaleFactor);
-
         levMan:getCurLevel():draw(levMan:getCurPlayer());
         levMan:getCurSwarmFactory():draw();
-        levMan:getCurLevel():drawEnviroment();
-        love.graphics.scale(1 / p_scaleFactor, 1 / p_scaleFactor);
+        levMan:getCurLevel():drawEnviroment(); 
     end
+    for _, v in pairs(_gui.p_states.currentState.elementsOnFrame) do
+        v:draw();
+    end
+    love.graphics.scale(1 / p_scaleFactor, 1 / p_scaleFactor);
+   
 
     if levMan:getCurLevel() ~= nil then
         if levMan:getCurLevel().levelFinished == 1 and

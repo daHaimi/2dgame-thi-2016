@@ -19,8 +19,6 @@ function Frame:clear(elements)
     for _, v in pairs(elements) do
         if v.object ~= nil then
             v.object:SetVisible(false);
-        else
-            v:setVisible(false);
         end
     end
     self.p_xOffset = self.p_xDefaultOffset;
@@ -34,9 +32,7 @@ function Frame:draw(elements)
             v.object:SetVisible(true)
             v.object:SetPos(v.x + self.p_xPos + self.p_xOffset, v.y + self.p_yPos + self.p_yOffset);
         else
-            v:setVisible(true);
-            v:setPosition(v.xPosition + self.p_xPos + self.p_xOffset, v.yPosition + self.p_yPos + self.p_yOffset);
-            v:draw();
+            --v:setPosition(v.xPosition + self.p_xPos + self.p_xOffset, v.yPosition + self.p_yPos + self.p_yOffset);
         end
     end
 end
@@ -60,7 +56,7 @@ function Frame:appear(elements)
                 v.object:SetClickable(true);
             end
         else
-            v:setPosition(v.xPosition + self.p_xPos + self.p_xOffset, v.yPosition + self.p_yPos + self.p_yOffset);
+            --v:setPosition(v.xPosition + self.p_xOffset, v.yPosition + self.p_yOffset);
             if (v:setClickable() ~= nil) then
                 v:setClickable(true);
                 self:draw();
