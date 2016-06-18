@@ -37,7 +37,6 @@ end
 
 ---draws the slider
 function Slider:draw() 
-    love.graphics.rectangle("line", self.xDefaultPosition, self.yDefaultPosition - 0.5 * self.imageUnpressedHeight, self.width, self.imageUnpressedHeight);
     love.graphics.draw(self.imageUnpressed, self.xPosition + self.xOffset  - 0.5 * self.imageUnpressedWidth, 
         self.yPosition + self.yOffset - self.imageUnpressedWidth * 0.5 + 5);
 end
