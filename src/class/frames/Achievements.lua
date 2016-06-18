@@ -78,7 +78,7 @@ function Achievements:create()
     --onclick events for all buttons
     self.elementsOnFrame.button_back.object.OnClick = function(_)
         _gui:changeState("MainMenu");
-        self.elementsOnFrame.chart.object:resetTopRow();
+        --self.elementsOnFrame.chart.object:resetTopRow();
     end
 end
 
@@ -93,7 +93,7 @@ function Achievements:addAllAchievements()
         if v.sortNumber ~= nil then
             local imageDirectory = self.directory .. v.image_lock;
             local newKlickableElement = KlickableElement(v.name, imageDirectory, self.directory .. v.image_unlock,
-                v.description, nil, v.nameOnPersTable, v.sortNumber);
+                v.description, v.price, v.nameOnPersTable, v.sortNumber);
             newKlickableElement.object.OnClick = function(_)
                 self.elementsOnFrame.chart.object:markElement(newKlickableElement);
             end
