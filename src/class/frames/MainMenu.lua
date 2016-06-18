@@ -1,6 +1,5 @@
 Class = require "lib.hump.class";
 Frame = require "class.Frame";
-FlagButton = require "class.FlagButton";
 ImageButton = require "class.ImageButton";
 
 local MainMenu = Class {
@@ -40,12 +39,6 @@ function MainMenu:create()
             self.offset + (self.buttonHeight + self.buttonDistance) * 6, true);
         button_close = ImageButton(self.imageButton, self.buttonXPosition , 
             (_G._persTable.winDim[2] + self.background:getHeight())/2 - self.buttonHeight - 30, true);
-
-        --[[language = {
-            object = FlagButton();
-            x = (self.width - self.flagWidth) / 2;
-            y = self.buttonOffset + 6 * self.buttonHeight;
-        };]]
     };
 
     --adjust all elements on this frame

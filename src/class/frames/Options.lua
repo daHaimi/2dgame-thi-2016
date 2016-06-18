@@ -1,9 +1,13 @@
 Class = require "lib.hump.class";
+ImageButton = require "class.ImageButton";
+Slider = require "class.Slider";
 
 local Options = Class {
     init = function(self)
         self.imageButton = love.graphics.newImage("assets/gui/button.png");
         self.background = love.graphics.newImage("assets/gui/StandardBG.png");
+        self.imageUnpressedSlider = love.graphics.newImage("assets/hamster.png");
+        self.imagePressedSlider = love.graphics.newImage("assets/hamster.png");
         self.buttonHeight = self.imageButton:getHeight();
         self.buttonWidth = self.imageButton:getWidth();
         self.buttonXPosition = (_G._persTable.winDim[1] - self.buttonWidth) / 2;
@@ -20,16 +24,10 @@ local Options = Class {
 function Options:create()
     --add, create and position all elements on this frame
     self.elementsOnFrame = {
-        --[[slider_bgm = {
-            object = Loveframes.Create("slider");
-            x = 64;
-            y = 70;
-        };
-        slider_music = {
-            object = Loveframes.Create("slider");
-            x = 64;
-            y = 120;
-        };]]
+        slider_bgm = Slider(self.imageUnpressedSlider, self.imagePressedSlider, self.buttonXPosition, 140,
+            _G._persTable.winDim[1] - 2* self.buttonXPosition);
+        slider_music = Slider(self.imageUnpressedSlider, self.imagePressedSlider, self.buttonXPosition, 220,
+            _G._persTable.winDim[1] - 2* self.buttonXPosition);
         button_reset = ImageButton(self.imageButton, self.buttonXPosition , 
             (_G._persTable.winDim[2] + self.background:getHeight())/2 - 2 * self.buttonHeight 
             - self.buttonDistance - 30, true);
@@ -37,25 +35,19 @@ function Options:create()
             (_G._persTable.winDim[2] + self.background:getHeight())/2 - self.buttonHeight - 30, true);
     };
 
-    --adjust all elements on this frame
-
-    --[[self.elementsOnFrame.slider_bgm.object:SetMinMax(0, 100);
-    self.elementsOnFrame.slider_bgm.object:SetWidth(self.buttonWidth);
-
-    self.elementsOnFrame.slider_music.object:SetMinMax(0, 100);
-    self.elementsOnFrame.slider_music.object:SetWidth(self.buttonWidth);]]
-
     --load values out of persTable into the chart
     self:loadValuesFromPersTable();
 
     --onclick events for all buttons
-    --[[self.elementsOnFrame.slider_bgm.OnValueChanged = function(_)
-        _persTable.config.bgm = self.elementsOnFrame.slider_bgm.object:GetValue();
+    self.elementsOnFrame.slider_bgm.gotClicked = function(x, y)
+        self.elementsOnFrame.slider_bgm:setPosition (x, y);
+        _persTable.config.bgm = self.elementsOnFrame.slider_bgm:getValue();
     end
 
-    self.elementsOnFrame.slider_music.OnValueChanged = function(_)
-        _persTable.config.music = self.elementsOnFrame.slider_music.object:GetValue();
-    end]]
+    self.elementsOnFrame.slider_music.gotClicked = function(x, y)
+        self.elementsOnFrame.slider_music:setPosition (x, y);
+        _persTable.config.music = self.elementsOnFrame.slider_music:getValue();
+    end
 
     self.elementsOnFrame.button_reset.gotClicked = function(_)
         _persistence:resetGame();
@@ -78,14 +70,14 @@ function Options:setLanguage(language)
 end
 
 function Options:loadValuesInPersTable()
-    --_G._persTable.config.bgm = self.elementsOnFrame.slider_bgm.object:GetValue();
-    --_G._persTable.config.music = self.elementsOnFrame.slider_music.object:GetValue();
+    _G._persTable.config.bgm = self.elementsOnFrame.slider_bgm:getValue();
+    _G._persTable.config.music = self.elementsOnFrame.slider_music:getValue();
 end
 
 
 function Options:loadValuesFromPersTable()
-    --self.elementsOnFrame.slider_bgm.object:SetValue(_persTable.config.bgm);
-    --self.elementsOnFrame.slider_music.object:SetValue(_persTable.config.music);
+    self.elementsOnFrame.slider_bgm:setValue(_persTable.config.bgm);
+    self.elementsOnFrame.slider_music:setValue(_persTable.config.music);
 end
 
 --- shows the frame on screen
@@ -97,6 +89,13 @@ function Options:draw()
     love.graphics.draw(self.background, (_G._persTable.winDim[1] - self.background:getWidth())/2,
         (_G._persTable.winDim[2] - self.background:getHeight())/2 + y);
     
+    -- draw line for slider
+    love.graphics.setColor(0,0,0);
+    love.graphics.rectangle("fill", self.buttonXPosition, 140 + y , 
+        _G._persTable.winDim[1] - 2 * self.buttonXPosition, 10); 
+    love.graphics.rectangle("fill", self.buttonXPosition, 220 + y , 
+        _G._persTable.winDim[1] - 2 * self.buttonXPosition, 10);
+    love.graphics.setColor(255,255,255);
     -- print the text
     love.graphics.setFont(love.graphics.newFont("font/8bitOperatorPlus-Bold.ttf", 20));
     love.graphics.printf(self.text_bgm, (_G._persTable.winDim[1] - self.background:getWidth())/2 + 64,
@@ -139,7 +138,7 @@ function Options:mousepressed(x, y)
         
         if x > xPosition and x < xPosition + width and
         y > yPosition and y < yPosition + height then
-            v.gotClicked();
+            v.gotClicked(x, y);
         end
     end
 end
