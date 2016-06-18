@@ -80,7 +80,7 @@ end
 function Gui:start()
     self:clearAll();
     self:setLanguage();
-    self:changeFrame(self.p_myFrames.start);
+    self:changeFrame(self.p_myFrames.mainMenu);
 end
 
 --- called to draw a new frame
