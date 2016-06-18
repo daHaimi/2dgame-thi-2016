@@ -141,10 +141,20 @@ function Chart:drawChart()
     for i = 1, #self.p_contantTable, 1 do
         if self.p_contantTable[i] ~= nil and self.p_contantTable[i].sortNumber > self.p_toprow * 3 and
         self.p_contantTable[i].sortNumber <= self.p_toprow * 3 + 9 then
+            local image_disable = self.p_contantTable[i].image_disable;
+            if image_disable == nil then
+                image_disable = self.p_contantTable[i].image;
+            end
+            
+            
+            
+            
+            
+            
             local newKlickableElement = KlickableElement(
                     self.p_contantTable[i].name,
                     self.directory .. self.p_contantTable[i].image,
-                    self.directory .. self.p_contantTable[i].image_disable,
+                    self.directory .. image_disable,
                     self.p_contantTable[i].description,
                     self.p_contantTable[i].price,
                     self.p_contantTable[i].nameOnPersTable,
