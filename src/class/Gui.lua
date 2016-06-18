@@ -24,7 +24,7 @@ local Gui = Class {
             credits = Credits();
             --score = Score();
             --pause = Pause();
-            --level = ChooseLevel();
+            level = ChooseLevel();
             --inGame = InGame();
             start = Start();
         };
@@ -90,7 +90,6 @@ function Gui:changeFrame(newFrame)
     self:setFrameChangeActivity(true);
     self.p_states.lastState = self.p_states.currentState;
     self.p_states.currentState = newFrame;
-    self.p_states.currentState:draw();
 end
 
 function Gui:draw()
