@@ -56,10 +56,10 @@ function Slider:getOffset()
 end
 
 function Slider:getValue()
-    return self.xPosition * 100 /(self.xDefaultPosition + self.width)
+    return (self.xPosition - self.xDefaultPosition) * 100 / self.width
 end
 
 function Slider:setValue(value)
-    self.xPosition = value * (self.xDefaultPosition + self.width) / 100
+    self.xPosition = value / 100 * self.width + self.xDefaultPosition
 end
 return Slider;

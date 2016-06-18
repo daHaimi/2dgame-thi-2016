@@ -41,12 +41,12 @@ function Options:create()
     --onclick events for all buttons
     self.elementsOnFrame.slider_bgm.gotClicked = function(x, y)
         self.elementsOnFrame.slider_bgm:setPosition (x, y);
-        _persTable.config.bgm = self.elementsOnFrame.slider_bgm:getValue();
+        _G._persTable.config.bgm = self.elementsOnFrame.slider_bgm:getValue();
     end
 
     self.elementsOnFrame.slider_music.gotClicked = function(x, y)
         self.elementsOnFrame.slider_music:setPosition (x, y);
-        _persTable.config.music = self.elementsOnFrame.slider_music:getValue();
+        _G._persTable.config.music = self.elementsOnFrame.slider_music:getValue();
     end
 
     self.elementsOnFrame.button_reset.gotClicked = function(_)
@@ -76,8 +76,8 @@ end
 
 
 function Options:loadValuesFromPersTable()
-    self.elementsOnFrame.slider_bgm:setValue(_persTable.config.bgm);
-    self.elementsOnFrame.slider_music:setValue(_persTable.config.music);
+    self.elementsOnFrame.slider_bgm:setValue(_G._persTable.config.bgm);
+    self.elementsOnFrame.slider_music:setValue(_G._persTable.config.music);
 end
 
 --- shows the frame on screen
