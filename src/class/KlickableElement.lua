@@ -31,7 +31,7 @@ function KlickableElement:reset()
     self.object:SetImage(self.imagepath);
 end
 
---- represents an upgrade buy
+--- i.e. represents an upgrade buy
 function KlickableElement:disable()
     self.enable = false;
     self.object:SetImage(self.imagepath_disable);

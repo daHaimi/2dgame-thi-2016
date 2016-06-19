@@ -125,11 +125,10 @@ end)
         };
         
         spy.on(locInstance, "addAllUpgrades");
-        spy.on(locInstance, "loadValuesFromPersTable");
+
         locInstance:create();
 
         assert.spy(locInstance.addAllUpgrades).was.called();
-        assert.spy(locInstance.loadValuesFromPersTable).was.called();
 
         spy.on(_G._gui, "changeFrame");
         locInstance.elementsOnFrame.button_back.object.OnClick();
@@ -212,9 +211,11 @@ end)
     end)
 
     it("Testing draw function", function()
+        spy.on(locInstance, "loadValuesFromPersTable");
         stub(locInstance.frame, "draw");
         locInstance:draw();
         assert.stub(locInstance.frame.draw).was_called(1);
+        assert.spy(locInstance.loadValuesFromPersTable).was.called();
     end)
 
     it("Testing clear function", function()

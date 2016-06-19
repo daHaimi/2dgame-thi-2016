@@ -85,7 +85,6 @@ function UpgradeMenu:create()
     self.elementsOnFrame.button_back.object:SetText("Back");
 
     self:addAllUpgrades();
-    self:loadValuesFromPersTable();
 
     --onclick events for all buttons
     self.elementsOnFrame.button_back.object.OnClick = function(_)
@@ -158,6 +157,8 @@ function UpgradeMenu:loadValuesFromPersTable()
             if _G._persTable.upgrades[elementName] == true then
                 v:disable();
             end
+        else
+            v:reset();
         end
     end
 end
@@ -165,6 +166,7 @@ end
 --- shows the frame on screen
 function UpgradeMenu:draw()
     self:updateMoney();
+    self:loadValuesFromPersTable();
     self.frame:draw(self.elementsOnFrame);
 end
 
