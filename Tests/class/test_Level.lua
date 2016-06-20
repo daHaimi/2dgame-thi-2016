@@ -731,6 +731,32 @@ describe("Test unit test suite", function()
         assert.are.same(locInstance.animationEndFinished, true);
     end)
 
+    it("Testing updateStatistics function", function()
+        locInstance.calcFishedValue = function(...) return 210 end;
+        _G._tmpTable.caughtThisRound = { 
+            ["turtle"] = 30; ["rat"] = 0;
+            ["deadFish"] = 19;
+            ["nemo"] = 1;
+        };
+        _G._persTable.statistic.maxCoinOneRound = 20;
+        _G._persTable.statistic.minCoinOneRound = 1;
+        _G._persTable.fish = {
+            caughtTotal = 10;
+            caughtInOneRound = 50;
+            caught = {
+                ["turtle"] = 0; 
+                ["rat"] = 0;
+                ["deadFish"] = 0;
+                ["nemo"] = 0;
+            };
+        };
+        locInstance.levelFinished = true;
+        locInstance.statUpdated = false;
+        
+        locInstance:updateStatistics();
+        assert.are.same(60, _G._persTable.fish.caughtTotal);
+    end)
+
     it("Testing getReachedDepth function", function()
         locInstance.reachedDepth = -356;
 
