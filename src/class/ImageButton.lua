@@ -12,7 +12,7 @@ local ImageButton = Class{
         self.yOffset = 0;
         if image ~= nil then
             self.image = image;
-            self.width = self.image:getWidth()
+            self.width = self.image:getWidth();
             self.height = self.image:getHeight();
         else
             self.image = nil;
