@@ -510,9 +510,18 @@ end
 --- Pay the achieved money to the player and multiply it with the
 -- bonus value (when activated) at the end of each round. Remove the money multi when it was activated.
 function Level:payPlayer()
-    -- check if the round has been finished
-    if self.levelFinished and self.levMan:getCurSwarmFactory() ~= nil then
-        if self.gotPayed == 0 then -- check if the earned money was already payed
+    -- check if the round has been finished and the earned money was not payed already
+    if self.levelFinished and self.levMan:getCurSwarmFactory() ~= nil and self.gotPayed == 0 then
+        
+        -- reward player with amounts only one time
+        for name, amount in pairs(_G._tmpTable.caughtThisRound) do
+            if amount > 0 then
+                -- for achivements
+                _G._persTable.fish.caught[name] = _G._persTable.fish.caught[name] + amount;
+                _G._persTable.fish.caughtTotal = _G._persTable.fish.caughtTotal + amount;
+            end
+        end
+        
         local fishedVal = self:calcFishedValue();
         if _G._persTable.upgrades.firstPermanentMoneyMult == true then
             self.roundValue = self:multiplyFishedValue(1.2, fishedVal);
@@ -532,7 +541,6 @@ function Level:payPlayer()
         if self.roundValue >= 0 then
             _G._persTable.money = _G._persTable.money + self.roundValue;
             _G._persistence:updateSaveFile();
-        end
         end
     end
 end
@@ -611,9 +619,6 @@ function Level:calcFishedValue()
     for name, amount in pairs(_G._tmpTable.caughtThisRound) do
         if amount > 0 then
             fishedVal = fishedVal + self.levMan:getCurSwarmFactory():getFishableObjects()[name].value * amount;
-            -- for achivements
-            _G._persTable.fish.caught[name] = _G._persTable.fish.caught[name] + amount;
-            _G._persTable.fish.caughtTotal = _G._persTable.fish.caughtTotal + amount;
             fishedAmount = fishedAmount + amount
         end
     end
