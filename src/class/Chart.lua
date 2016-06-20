@@ -173,12 +173,9 @@ end
 function Chart:markElement(element)
     local x, y = element.object:getPosition();
     self.markPosition = {x, y};
-    --self.p_markFrame:SetVisible(true);
-    --self.p_markFrame:MoveToTop();
     self.p_markedElement = element;
     if _G._gui:getCurrentState() == "Achievements" or _G._gui:getCurrentState() == "Shop" or 
     (_G._gui:getCurrentState() == "Dictionary" and _G._persTable.fish.caught[element.name] > 0 ) then
-        
         if element.price ~= nil then
             if element.name ~= nil then
                 

@@ -54,10 +54,9 @@ end
 function Dictionary:addAllObjects()
     for _, v in pairs(_G.data.fishableObjects) do
         if v.sortNumber ~= nil then
-            print (v.name);
             local imageDirectory = self.directory .. v.image;
             local newKlickableElement = KlickableElement(v.name, imageDirectory, nil,
-                v.description, nil, v.nameOnPersTable, v.sortNumber);
+                v.description, v.value, v.nameOnPersTable, v.sortNumber);
             
             self.elementsOnFrame.chart:addKlickableElement(newKlickableElement);
         end
