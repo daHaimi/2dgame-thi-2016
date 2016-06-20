@@ -274,7 +274,7 @@ function love.mousereleased(x, y, button)
         button = 'l';
     end
     Loveframes.mousereleased(x, y, button);
-    love.system.vibrate(0.5);
+    love.system.vibrate(0.1);
     -- deactivate the god mode when you release the mouse
     if _gui:getCurrentState() == "InGame" then
         levMan:getCurLevel():deactivateGodMode();
