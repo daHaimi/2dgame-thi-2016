@@ -420,7 +420,7 @@ describe("Test unit test suite", function()
         locInstance.payPlayer = function(...) end;
         locInstance:update(dt, bait);
 
-     --   assert.stub(locInstance.checkForAchievments).was_called(2);
+        assert.stub(locInstance.checkForAchievments).was_called(2);
         assert.are.same(0, locInstance:getDirection());
     end)
 
