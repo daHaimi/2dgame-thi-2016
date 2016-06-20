@@ -25,7 +25,7 @@ local Gui = Class {
             --score = Score();
             --pause = Pause();
             level = ChooseLevel();
-            --inGame = InGame();
+            inGame = InGame();
             start = Start();
         };
         self.p_frameChangeActiv = false; --true if a frame change is activ

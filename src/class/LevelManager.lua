@@ -76,7 +76,7 @@ function LevelManager:newLevel(levelPropMap, swarmFactoryData)
     self.curPlayer = Bait(_G._persTable.winDim, self);
     self.curPlayer:checkUpgrades();
     self.curSwarmFac = SwarmFactory(swarmFactoryData, self);
-    _gui:getFrames().inGame.elementsOnFrame.healthbar.object:resetHearts();
+    _gui:getFrames().inGame.elementsOnFrame.healthbar:resetHearts();
 
     return self.curLevel;
 end

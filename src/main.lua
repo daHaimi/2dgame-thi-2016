@@ -251,13 +251,6 @@ function love.mousepressed(x, y, button)
         levMan:getCurLevel():activateGodMode();
     end
     
-    -- starts the starting sequence of the game
-    if love.mouse.isDown(1) and _gui:getCurrentState() == "InGame" and
-    not levMan:getCurLevel():getStartAnimationRunning() and
-    not levMan:getCurLevel():getStartAnimationFinished() then
-        levMan:getCurLevel():startStartAnimation();
-    end
-    
     -- pause game when when mouse is pressed (right button)
     if love.mouse.isDown(2) and _gui:drawGame() and levMan:getCurLevel():isLoaded() then
         _gui:changeFrame(_gui:getFrames().pause);
