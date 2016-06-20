@@ -42,6 +42,7 @@ function Achievements:create()
     self.elementsOnFrame.button_back.gotClicked = function(_)
         _gui:changeFrame(_gui:getFrames().mainMenu);
         self.elementsOnFrame.chart:resetTopRow();
+        self.elementsOnFrame.chart:resetMarkedFrame();
     end
     self.elementsOnFrame.chart.gotClicked = function(x, y)
         self.elementsOnFrame.chart:mousepressed(x,y)

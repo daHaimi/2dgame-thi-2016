@@ -49,8 +49,7 @@ function MainMenu:create()
     end
 
     self.elementsOnFrame.button_upgradeMenu.gotClicked = function(_)
-        print "upgradeMenu"
-        --_gui:changeFrame(_gui:getFrames().upgradeMenu);
+        _gui:changeFrame(_gui:getFrames().upgradeMenu);
     end
 
     self.elementsOnFrame.button_dictionary.gotClicked = function(_)

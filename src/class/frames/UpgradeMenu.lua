@@ -4,41 +4,25 @@ KlickableElement = require "class.KlickableElement"
 
 local UpgradeMenu = Class {
     init = function(self)
-        if _G._persTable.scaledDeviceDim[1] < 640 then
-            self.directory = "assets/gui/480px/";
-            self.widthPx = 480;
-            self.width = 384;
-            self.height = 666;
-            self.buttonHeight = 75;
-            self.buttonOffset = 15;
-            self.buttonLength = 128;
-            self.textFieldLength = 279;
-            self.speed = 50;
-        elseif _G._persTable.scaledDeviceDim[1] < 720 then
-            self.widthPx = 640;
-            self.directory = "assets/gui/640px/";
-            self.width = 512;
-            self.height = 888;
-            self.buttonOffset = 20;
-            self.buttonHeight = 96;
-            self.buttonLength = 174;
-            self.textFieldLength = 384;
-            self.speed = 60;
-        else
-            self.widthPx = 720;
-            self.directory = "assets/gui/720px/";
-            self.width = 576;
-            self.height = 1024;
-            self.buttonOffset = 30;
-            self.buttonHeight = 106;
-            self.buttonLength = 196;
-            self.textFieldLength = 432;
-            self.speed = 75;
-        end
+        self.imageButton = love.graphics.newImage("assets/gui/HalfButton.png");
+        self.imageButtonLocked = love.graphics.newImage("assets/gui/HalfButton_disable.png");
+        self.background = love.graphics.newImage("assets/gui/StandardBG.png");
+        self.backgroundPosition = {(_G._persTable.winDim[1] - self.background:getWidth()) / 2,
+            (_G._persTable.winDim[2] - self.background:getHeight()) / 2};
+        self.offset = (_G._persTable.winDim[2] - self.background:getHeight())/2 + 30;
+        self.buttonHeight = self.imageButton:getHeight();
+        self.buttonWidth = self.imageButton:getWidth();
+        self.directory = "assets/gui/icons/";
+        self.buttonXPosition = (_G._persTable.winDim[1] - self.buttonWidth) / 2;
+        self.offset = (_G._persTable.winDim[2] - self.background:getHeight())/2 + 30;
         self.name = "Shop";
-        self.frame = Frame((_G._persTable.scaledDeviceDim[1] - self.width) / 2,
-            (_G._persTable.scaledDeviceDim[2] - self.height) / 2 - self.speed, "down", "down", self.speed, 0, -1500);
+        self.frame = Frame(0, 0, "down", "down", 50, 0, -1500);
+        self.money = "";
         self:create();
+
+        
+        self.xOffset = 0;
+        self.yOffset = 0;
     end;
 };
 
@@ -46,56 +30,26 @@ local UpgradeMenu = Class {
 function UpgradeMenu:create()
     --add, create and position all elements on this frame
     self.elementsOnFrame = {
-        background = {
-            object = Loveframes.Create("image");
-            x = 0;
-            y = 0;
-        };
-        money = {
-            object = Loveframes.Create("text");
-            x = 50;
-            y = 30;
-        };
-        chart = {
-            object = Chart();
-            x = 0.125 * self.width;
-            y = self.buttonOffset + 20;
-        };
-        button_buy = {
-            object = Loveframes.Create("imagebutton");
-            x = 0.125 * self.width + self.textFieldLength - self.buttonLength;
-            y = self.height - self.buttonHeight;
-        };
-        button_back = {
-            object = Loveframes.Create("imagebutton");
-            x = 0.125 * self.width;
-            y = self.height - self.buttonHeight;
-        };
+        chart = Chart();
+        button_buy = ImageButton(self.imageButton, 0.875 * self.background:getWidth() + self.backgroundPosition[1]
+            - self.buttonWidth, self.background:getHeight() + self.backgroundPosition[2] - self.buttonHeight - 30, true);
+        button_back = ImageButton(self.imageButton, 0.125 * self.background:getWidth() + self.backgroundPosition[1], 
+            self.background:getHeight() + self.backgroundPosition[2] - self.buttonHeight - 30, true);
     };
-
-    --adjust all elements on this frame
-    self.elementsOnFrame.background.object:SetImage(self.directory .. "StandardBG.png");
-
-    self.elementsOnFrame.button_buy.object:SetImage(self.directory .. "HalfButton.png")
-    self.elementsOnFrame.button_buy.object:SizeToImage()
-    self.elementsOnFrame.button_buy.object:SetText("Buy");
-
-    self.elementsOnFrame.button_back.object:SetImage(self.directory .. "HalfButton.png")
-    self.elementsOnFrame.button_back.object:SizeToImage()
-    self.elementsOnFrame.button_back.object:SetText("Back");
 
     self:addAllUpgrades();
     self:loadValuesFromPersTable();
 
     --onclick events for all buttons
-    self.elementsOnFrame.button_back.object.OnClick = function(_)
+    self.elementsOnFrame.button_back.gotClicked = function(_)
         _gui:changeFrame(_gui:getFrames().mainMenu);
-        self.elementsOnFrame.chart.object:resetTopRow();
+        self.elementsOnFrame.chart:resetTopRow();
+        self.elementsOnFrame.chart:resetMarkedFrame();
     end
 
-    self.elementsOnFrame.button_buy.object.OnClick = function(_)
-        if self.elementsOnFrame.chart.object:getMarkedElement() ~= nil then
-            if _G._persTable.money >= self.elementsOnFrame.chart.object:getMarkedElement().price then
+    self.elementsOnFrame.button_buy.gotClicked = function(_)
+        if self.elementsOnFrame.chart:getMarkedElement() ~= nil then
+            if _G._persTable.money >= self.elementsOnFrame.chart:getMarkedElement().price then
                 self:buyElement();
                 _G._persistence:updateSaveFile();
             else
@@ -107,27 +61,31 @@ function UpgradeMenu:create()
             _gui:getLevelManager():getAchievmentManager():achBitch(); -- check the achievement achBitch
         end
     end
+    
+    self.elementsOnFrame.chart.gotClicked = function (x, y)
+        self.elementsOnFrame.chart:mousepressed(x, y);
+    end
 end
 
 --updates the money on this frame
 function UpgradeMenu:updateMoney()
-    self.elementsOnFrame.money.object:SetText(_G.data.languages[_G._persTable.config.language].package.textMoney2 .. _G._persTable.money);
+    self.money = (_G.data.languages[_G._persTable.config.language].package.textMoney2 .. _G._persTable.money);
 end
 
 --- changes the language of this frame
 function UpgradeMenu:setLanguage(language)
-    self.elementsOnFrame.button_back.object:SetText(_G.data.languages[language].package.buttonBack);
-    self.elementsOnFrame.button_buy.object:SetText(_G.data.languages[language].package.buttonBuy);
+    self.elementsOnFrame.button_back:setText(_G.data.languages[language].package.buttonBack);
+    self.elementsOnFrame.button_buy:setText(_G.data.languages[language].package.buttonBuy);
 end
 
 --- called to buy an Item
 function UpgradeMenu:buyElement()
-    local markedElement = self.elementsOnFrame.chart.object:getMarkedElement();
+    local markedElement = self.elementsOnFrame.chart:getMarkedElement();
     if not _G._persTable.upgrades[markedElement.nameOnPersTable] then
         markedElement:disable();
-        local price = self.elementsOnFrame.chart.object:getMarkedElement().price;
+        local price = self.elementsOnFrame.chart:getMarkedElement().price;
         _G._persTable.money = _G._persTable.money - price;
-        self.elementsOnFrame.button_buy.object:SetImage(self.directory .. "HalfButton_disable.png");
+        self.elementsOnFrame.button_buy:setImage(self.imageButtonLocked);
         self:updateMoney()
     else
         _gui:newTextNotification(self.directory .. "ach_shitcoin.png", _G.data.languages[_G._persTable.config.language].package.textBought)
@@ -140,19 +98,14 @@ function UpgradeMenu:addAllUpgrades()
         if v.sortNumber ~= nil then
             local newKlickableElement = KlickableElement(v.name, self.directory .. v.image,
                 self.directory .. v.image_disable, v.description, v.price, v.nameOnPersTable, v.sortNumber);
-
-            --add OnClick event
-            newKlickableElement.object.OnClick = function(_)
-                self.elementsOnFrame.chart.object:markElement(newKlickableElement);
-            end
-            self.elementsOnFrame.chart.object:addKlickableElement(newKlickableElement);
+            self.elementsOnFrame.chart:addKlickableElement(newKlickableElement);
         end
     end
 end
 
 
 function UpgradeMenu:loadValuesFromPersTable()
-    for _, v in pairs(self.elementsOnFrame.chart.object:getAllElements()) do
+    for _, v in pairs(self.elementsOnFrame.chart:getAllElements()) do
         local elementName = v.nameOnPersTable;
         if _G._persTable.upgrades[elementName] then
             if _G._persTable.upgrades[elementName] == true then
@@ -163,9 +116,20 @@ function UpgradeMenu:loadValuesFromPersTable()
 end
 
 --- shows the frame on screen
-function UpgradeMenu:draw()
+function UpgradeMenu:draw()  
+    local _, y = self.elementsOnFrame.button_back:getOffset();
+    love.graphics.draw(self.background, self.backgroundPosition[1], self.backgroundPosition[2] + y);
+    for _, v in pairs (self.elementsOnFrame) do
+        v:draw();
+    end
+    
+    -- print the text
     self:updateMoney();
-    self.frame:draw(self.elementsOnFrame);
+    local font = love.graphics.getFont();
+    love.graphics.setFont(love.graphics.newFont("font/8bitOperatorPlus-Bold.ttf", 16));
+    love.graphics.printf(self.money, self.backgroundPosition[1] + 50, 
+        self.backgroundPosition[2] + 30 + y, 1000, "left");
+    love.graphics.setFont(font);
 end
 
 --- called to "delete" this frame
@@ -187,6 +151,26 @@ end
 --- return true if the frame is on position /fly in move is finished
 function UpgradeMenu:checkPosition()
     return self.frame:checkPosition();
+end
+
+--- sets the offset of the frame
+--@param x x offset of the frame
+--@parma y y offset of the frame
+function UpgradeMenu:setOffset(x,y)
+    self.xOffset = x;
+    self.yOffset = y;
+end
+
+function UpgradeMenu:mousepressed(x, y)    
+    for _, v in pairs (self.elementsOnFrame) do
+        local xPosition, yPosition = v:getPosition();
+        local width, height = v:getSize();
+        
+        if x > xPosition and x < xPosition + width and
+        y > yPosition and y < yPosition + height then
+            v.gotClicked(x, y);
+        end
+    end
 end
 
 return UpgradeMenu;

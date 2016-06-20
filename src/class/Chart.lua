@@ -103,6 +103,7 @@ end
 --- reset the markedFrame visible to false
 function Chart:resetMarkedFrame()
     self.markPosition = {nil, nil};
+    self.p_markedElement = nil;
 end
 
 --- draws the elements shown in the table
@@ -190,9 +191,11 @@ function Chart:markElement(element)
                     [element.nameOnPersTable].description;
                 self.textFieldPrice = element.price;
                 if _G._persTable.upgrades[element.nameOnPersTable] then
-                    _G._gui:getFrames().upgradeMenu.elementsOnFrame.button_buy:setImage("assets/gui/HalfButton_disable.png");
+                    _G._gui:getFrames().upgradeMenu.elementsOnFrame.button_buy:setImage(
+                        love.graphics.newImage("assets/gui/HalfButton_disable.png"));
                 else
-                    _G._gui:getFrames().upgradeMenu.elementsOnFrame.button_buy:setImage("assets/gui/HalfButton.png");
+                    _G._gui:getFrames().upgradeMenu.elementsOnFrame.button_buy:setImage(
+                        love.graphics.newImage("assets/gui/HalfButton.png"));
                 end
                 
             end
