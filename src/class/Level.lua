@@ -24,7 +24,7 @@ local Level = Class {
         self.bg = nil;
         self.bgq = nil;
         self.winDim = {};
-        
+
         if mode == "endless" then
             self.lowerBoarder = -_G.math.inf;
         else
@@ -283,26 +283,26 @@ end
 
 --- checks if a new achievement is unlocked
 function Level:checkForAchievments()
-    
+
     -- check failedStart ach
     self.levMan:getAchievmentManager():checkFailStart(self.failedStart, self.levelFinished);
-    
+
     -- check if only two shoes was fished
-    self.levMan:getAchievmentManager():checkTwoShoes(self.levelFinished, self:calcFishedValue(), 
+    self.levMan:getAchievmentManager():checkTwoShoes(self.levelFinished, self:calcFishedValue(),
         self.levMan:getCurSwarmFactory():getFishableObjects().shoe.value * 2);
-    
+
     self.levMan:getAchievmentManager():checkNothingCaught(self.levelFinished, self.failedStart);
 
     self.levMan:getAchievmentManager():checkAllBordersPassed(self.levelFinished, self.reachedDepth, self.lowerBoarder);
 
-    self.levMan:getAchievmentManager():checkFirstObject(self.levelFinished);    
-    
+    self.levMan:getAchievmentManager():checkFirstObject(self.levelFinished);
+
     self.levMan:getAchievmentManager():checkPlayTime(self.levelFinished);
-    
+
     self.levMan:getAchievmentManager():onlyNegativeFishesCaught(self.levelFinished, self.levMan:getCurSwarmFactory());
-    
+
     self.levMan:getAchievmentManager():checkNegativCoins(self.gotPayed, self.roundValue);
-    
+
     self.levMan:getAchievmentManager():achBitch(); -- call this checkup always at the end
 end
 
@@ -429,8 +429,6 @@ function Level:drawEnviroment()
 
     self.lightWorld.update();
     self.lightWorld.drawShadow();
-    self.lightWorld.drawPixelShadow();
-    self.lightWorld.drawGlow();
 
     love.graphics.setColor(255, 255, 255);
 
@@ -631,26 +629,26 @@ function Level:calcFishedValue()
     if fishedAmount > _G._persTable.fish.caughtInOneRound then
         _G._persTable.fish.caughtInOneRound = fishedAmount;
     end
-    
+
     -- to add calced value to sewers/canyon highscore
---    _G._persTable.statistic.moneyEarnedTotal = _G._persTable.statistic.moneyEarnedTotal + fishedAmount;
---    if fishedVal > 0 then
---        if self.p_levelName == "sewers" or self.p_levelName == "sewersEndless" or
---                    self.p_levelName == "sleepingCrocos" then 
---            _G._tmpTable.lastLevelWas = "sewers";
---            if fishedVal > _G._persTable.statistic.highscoreSewers then
---                _G._persTable.statistic.highscoreSewers = fishedVal;
-                
---            end    
---        elseif (self.p_levelName == "canyon" or self.p_levelName == "canyonEndless"
---                    or self.p_levelName == "crazySquirrels") then
---            _G._tmpTable.lastLevelWas = "canyon";
---            if fishedVal > _G._persTable.statistic.highscoreCanyon  then
---                _G._persTable.statistic.highscoreCanyon = fishedVal;
---            end   
---        end 
---    end
-    
+    --    _G._persTable.statistic.moneyEarnedTotal = _G._persTable.statistic.moneyEarnedTotal + fishedAmount;
+    --    if fishedVal > 0 then
+    --        if self.p_levelName == "sewers" or self.p_levelName == "sewersEndless" or
+    --                    self.p_levelName == "sleepingCrocos" then
+    --            _G._tmpTable.lastLevelWas = "sewers";
+    --            if fishedVal > _G._persTable.statistic.highscoreSewers then
+    --                _G._persTable.statistic.highscoreSewers = fishedVal;
+
+    --            end
+    --        elseif (self.p_levelName == "canyon" or self.p_levelName == "canyonEndless"
+    --                    or self.p_levelName == "crazySquirrels") then
+    --            _G._tmpTable.lastLevelWas = "canyon";
+    --            if fishedVal > _G._persTable.statistic.highscoreCanyon  then
+    --                _G._persTable.statistic.highscoreCanyon = fishedVal;
+    --            end
+    --        end
+    --    end
+
     return (fishedVal);
 end
 
