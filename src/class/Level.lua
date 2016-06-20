@@ -632,6 +632,23 @@ function Level:calcFishedValue()
         _G._persTable.fish.caughtInOneRound = fishedAmount;
     end
     _G._persTable.statistic.moneyEarnedTotal = _G._persTable.statistic.moneyEarnedTotal + fishedAmount;
+    
+    if self.p_levelName == "sewers" or self.p_levelName == "sewersEndless" or
+                self.p_levelName == "sleepingCrocos" then
+        _G._tmpTable.lastLevelWas = "sewers";
+        if fishedVal > _G._persTable.statistic.highscoreSewers then
+            _G._persTable.statistic.highscoreSewers = fishedVal;
+            
+        end      
+    elseif (self.p_levelName == "canyon" or self.p_levelName == "canyonEndless"
+                or self.p_levelName == "crazySquirrels") then
+        _G._tmpTable.lastLevelWas = "canyon";
+        if fishedVal > _G._persTable.statistic.highscoreCanyon then
+            _G._persTable.statistic.highscoreCanyon = fishedVal;
+        end   
+    end 
+    
+    
     return (fishedVal);
 end
 

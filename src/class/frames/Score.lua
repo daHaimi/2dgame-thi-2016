@@ -60,6 +60,19 @@ function Score:create()
             x = 110;
             y = 90;
         };
+                
+        highestScoretext = {
+            object = Loveframes.Create("text");
+            x = 0;
+            y = -30;
+        };
+        
+        highestScore = {
+            object = Loveframes.Create("text");
+            x = 110;
+            y = -15;
+        };
+        
         achievements = {
             object = AchievementDisplay(self.directory);
             x = 0;
@@ -78,12 +91,18 @@ function Score:create()
     };
 
     --adjust all elements on this frame
+    -- for Score
     self.elementsOnFrame.background.object:SetImage(self.directory .. "ScoreScreen.png");
 
     self.elementsOnFrame.scoretext.object:SetText(_G.data.languages[_G._persTable.config.language].package.textScore);
     self.elementsOnFrame.scoretext.x = 0.5 * self.width - 0.5 * self.elementsOnFrame.scoretext.object:GetWidth();
 
     self.elementsOnFrame.score.x = 0.5 * self.width - 30;
+    
+    -- for highscore 
+    self.elementsOnFrame.highestScoretext.object:SetText(_G.data.languages[_G._persTable.config.language].package.textHScore);
+    self.elementsOnFrame.highestScoretext.x = 0.5 * self.width - 90;
+    self.elementsOnFrame.highestScore.x = 0.5 * self.width - 30;
 
     self.elementsOnFrame.button_retry.object:SetImage(self.directory .. "Button.png")
     self.elementsOnFrame.button_retry.object:SizeToImage()
@@ -106,6 +125,7 @@ end
 --- changes the language of this frame
 function Score:setLanguage(language)
     self.elementsOnFrame.scoretext.object:SetText(_G.data.languages[language].package.textScore);
+    self.elementsOnFrame.highestScoretext.object:SetText(_G.data.languages[language].package.textHiScore);
     self.elementsOnFrame.button_retry.object:SetText(_G.data.languages[language].package.buttonRetry);
     self.elementsOnFrame.button_backToMenu.object:SetText(_G.data.languages[language].package.buttonBTM);
     self.elementsOnFrame.achievements.object:setLanguage(language);
@@ -113,7 +133,14 @@ end
 
 --- shows the frame on screen
 function Score:draw()
-    self.elementsOnFrame.score.object:SetText(_G._tmpTable.earnedMoney);
+    self.elementsOnFrame.score.object:SetText(_G._tmpTable.earnedMoney);    
+    print(_G._tmpTable.lastLevelWas);
+    if _G._tmpTable.lastLevelWas == "sewers" then
+        self.elementsOnFrame.highestScore.object:SetText(_G._persTable.statistic.highscoreSewers);
+    else
+        self.elementsOnFrame.highestScore.object:SetText(_G._persTable.statistic.highscoreCanyon);
+    end
+
     self.frame:draw(self.elementsOnFrame);
 end
 

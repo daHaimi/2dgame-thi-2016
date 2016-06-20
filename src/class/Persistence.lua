@@ -152,6 +152,8 @@ function Persistence:createPersTable()
         maxCoinOneRound = 0;
         minCoinOneRound = 0;
         moneyEarnedTotal = 0;
+        highscoreSewers = 0;
+        highscoreCanyon = 0;
     };
 
     --- config options

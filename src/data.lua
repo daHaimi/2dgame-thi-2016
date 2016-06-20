@@ -1106,6 +1106,8 @@ return {
                 buttonBTG = "Continue";
                 buttonBTM = "Back to menu";
                 textScore = "Your Score:";
+                textHiScore = "Your Highscore:";
+                textNewHighscore = "New Highscore";
                 buttonTA = "Try again";
                 textStart = "Click to start!";
                 buttonChangeLevel = "Change level";
@@ -1405,6 +1407,8 @@ return {
                 buttonBTG = "Zurück zum Spiel";
                 buttonBTM = "Zurück zum Menü";
                 textScore = "Punktestand:";
+                textHiScore = "Dein Rekord:";
+                textNewHighscore = "Neuer Rekord";
                 textStart = "Klicken zum Starten!";
                 buttonChangeLevel = "Levelauswahl";
                 textPrice = "Preis: ";
