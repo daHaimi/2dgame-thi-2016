@@ -83,14 +83,14 @@ describe("Unit test for Achievement.lua", function()
     end)
 
     it("Test function Achievement:caughtOneRound", function()
-        _G._persTable.fish.caughtInOneRound = 1;
+        _G._persTable.fish.caughtInOneRound = 30;
 
         local myInstance = testClass();
         local exp = true;
         myInstance.unlockAchievement = function (...) end;
         stub(myInstance, "unlockAchievement");
         myInstance:caughtOneRound()
-        assert.stub(myInstance.unlockAchievement).was.called(1);
+        assert.stub(myInstance.unlockAchievement).was.called(3);
     end)
 
     it("Testing achShoppingQueen function", function()

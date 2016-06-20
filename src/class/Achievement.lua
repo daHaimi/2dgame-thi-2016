@@ -11,10 +11,8 @@ function Achievement:checkAchievements()
     self:fishCaughtTotal();
 end
 
+--- Checks achievements for round based fished amount of objects.
 function Achievement:caughtOneRound()
-    if _G._persTable.fish.caughtInOneRound == 1 then
-        self:unlockAchievement("onlyOneCaught");
-    end
     if _G._persTable.fish.caughtInOneRound > 9 then
         self:unlockAchievement("bronzeCaughtOneRound");
     end
