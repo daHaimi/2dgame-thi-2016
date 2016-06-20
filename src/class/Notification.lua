@@ -3,21 +3,21 @@ Class = require "lib.hump.class";
 local Notification = Class {
     init = function(self)
         if _G._persTable.scaledDeviceDim[1] < 640 then
-            self.directory = "assets/gui/480px/";
+            self.directory = "assets/gui/icons/";
             self.imageWidth = 50;
             self.imageLength = 50;
             self.yPos = 30;
             self.length = 256;
             self.offset = 7;
         elseif _G._persTable.scaledDeviceDim[1] < 720 then
-            self.directory = "assets/gui/640px/";
+            self.directory = "assets/gui/icons/";
             self.imageWidth = 75;
             self.imageLength = 75;
             self.yPos = 50;
             self.length = 384;
             self.offset = 10;
         else
-            self.directory = "assets/gui/720px/";
+            self.directory = "assets/gui/icons/";
             self.imageWidth = 100;
             self.imageLength = 100;
             self.yPos = 70;

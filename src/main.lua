@@ -60,7 +60,7 @@ function love.load()
     --_G._persTable.deviceDim = {720, 1080};
     --_G._persTable.deviceDim = {1366,768};
     --_G._persTable.deviceDim = {1600,900};
-    _G._persTable.deviceDim = {480,853};
+    --_G._persTable.deviceDim = {480,853};
     _G._persTable.winDim[1], _G._persTable.winDim[2], _G._persTable.scaleFactor, titleHeight = getScaledDimension(_G._persTable.deviceDim);
 
     _G._persTable.scaledDeviceDim = {_G._persTable.winDim[1] * _G._persTable.scaleFactor, _G._persTable.winDim[2] * _G._persTable.scaleFactor };

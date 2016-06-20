@@ -47,7 +47,6 @@ function Level:create()
 
     --onclick events for all buttons
     self.elementsOnFrame.buttonHouse.gotClicked = function(_)
-        print "new sewer"
         _gui:getLevelManager():newLevel(_gui:getLevelManager():getLevelPropMapByName("sewers"), _G.data);
         _gui:changeFrame(_gui:getFrames().inGame);
     end
@@ -55,11 +54,10 @@ function Level:create()
    
     self.elementsOnFrame.buttonCanyon.gotClicked = function(_)
          if _G._persTable.unlockedLevel == 1 then
-            --_gui:newNotification(self.directory .. "ach_nothingCaught.png", "Not unlocked yet!");
+            _gui:newNotification(self.directory .. "ach_nothingCaught.png", "Not unlocked yet!");
         else
-            print "new canyon"
-            --_gui:getLevelManager():newLevel(_gui:getLevelManager():getLevelPropMapByName("crazySquirrels"), _G.data);
-            --_gui:changeFrame(_gui:getFrames().inGame);
+            _gui:getLevelManager():newLevel(_gui:getLevelManager():getLevelPropMapByName("crazySquirrels"), _G.data);
+            _gui:changeFrame(_gui:getFrames().inGame);
         end
     end
 

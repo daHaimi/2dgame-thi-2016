@@ -234,7 +234,7 @@ end
 function Achievement:unlockAchievement(achName)
     if not _G._persTable.achievements[achName] then
         table.insert(_G._unlockedAchievements, _G.data.achievements[achName]);
-        _gui:newNotification("assets/gui/480px/" .. _G.data.achievements[achName].image_unlock, achName);
+        _gui:newNotification("assets/gui/icons/" .. _G.data.achievements[achName].image_unlock, achName);
         _G._persTable.achievements[achName] = true;
     end
 end

@@ -95,8 +95,8 @@ local Level = Class {
         self.lightWorld = love.light.newWorld();
 
         local time = tonumber(os.date("%M"));
-        local minLightLevel = 100;
-        local maxLightLevel = 155;
+        local minLightLevel = 255;
+        local maxLightLevel = 0;
         local lightLevel = ((math.abs(30 - time)) / 30) * maxLightLevel + minLightLevel;
 
         self.lightWorld.setAmbientColor(lightLevel, lightLevel, lightLevel);

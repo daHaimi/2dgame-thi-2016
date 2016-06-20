@@ -8,11 +8,10 @@ local InGame = Class {
         self.fuelBarBackground = love.graphics.newImage("assets/gui/FuelBarBG.png");
         self.fuelBar = love.graphics.newImage("assets/gui/FuelBar.png");
         self.barFuel = love.graphics.newImage("assets/gui/BarFuel.png");
-        self.barMiddle = love.graphics.newImage("assets/gui/BarMiddle.png");
         self.score = "";
         self.drawBar = false;
         self.fuelBarPosition = 0;
-        self.frame = Frame(0, 0, "up", "up", 50, 0, 1500);
+        self.frame = Frame(0, 0, "down", "up", 50, 0, -1500);
         self:create();
     end;
 };
@@ -69,16 +68,17 @@ end
 --- shows the elements on screen
 function InGame:draw()
     if self.drawBar then
-        love.graphics.draw(self.fuelBarBackground, 10, 10);
-        love.graphics.draw(self.fuelBar, self.fuelBarPosition, 10);
-        love.graphics.draw(self.barFuel, 0, 0);
+        local _, y = self.elementsOnFrame.healthbar:getOffset()
+        love.graphics.draw(self.fuelBarBackground, 10, 10 + y);
+        love.graphics.draw(self.fuelBar, self.fuelBarPosition, 10 + y);
+        love.graphics.draw(self.barFuel, 0, 0 + y);
         if love.system.getOS() == "Android" or love.system.getOS() == "iOS" then
             self.elementsOnFrame.pause:draw();
         end
         self.elementsOnFrame.healthbar:draw();
         local font = love.graphics.getFont();
         love.graphics.setFont(love.graphics.newFont("font/8bitOperatorPlus-Bold.ttf", 20));
-        love.graphics.printf(self.score, _G._persTable.winDim[1]/2 - 100 , 20, 200, "center")
+        love.graphics.printf(self.score, _G._persTable.winDim[1]/2 - 100 , 20 + y, 200, "center")
         love.graphics.setFont(font);
     end
 end

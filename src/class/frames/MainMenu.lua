@@ -45,7 +45,6 @@ function MainMenu:create()
 
     --onclick events for all buttons
     self.elementsOnFrame.button_start.gotClicked = function(_)
-        print "Level"
        _gui:changeFrame(_gui:getFrames().level);
     end
 

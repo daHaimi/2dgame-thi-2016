@@ -51,6 +51,12 @@ function Healthbar:setOffset(x,y)
     self.yOffset = y;
 end
 
+--- retruns the offset of the button
+--@return x and y offset of the button
+function Healthbar:getOffset()
+    return self.xOffset, self.yOffset;
+end
+
 --- Function not conform to CC/ implements an interface
 --- set the position of the element
 -- @parm x: x axis position
