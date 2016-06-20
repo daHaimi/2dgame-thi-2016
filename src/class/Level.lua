@@ -278,33 +278,33 @@ function Level:update(dt, bait)
         _G._gui:getFrames().inGame:clear();
     end
 
-    self:checkForAchievments()
+--    self:checkForAchievments()
 end
 
 --- checks if a new achievement is unlocked
-function Level:checkForAchievments()
+--function Level:checkForAchievments()
     
-    -- check failedStart ach
-    self.levMan:getAchievmentManager():checkFailStart(self.failedStart, self.levelFinished);
+--    -- check failedStart ach
+--    self.levMan:getAchievmentManager():checkFailStart(self.failedStart, self.levelFinished);
     
-    -- check if only two shoes was fished
-    self.levMan:getAchievmentManager():checkTwoShoes(self.levelFinished, self:calcFishedValue(), 
-        self.levMan:getCurSwarmFactory():getFishableObjects().shoe.value * 2);
+--    -- check if only two shoes was fished
+--    self.levMan:getAchievmentManager():checkTwoShoes(self.levelFinished, self:calcFishedValue(), 
+--        self.levMan:getCurSwarmFactory():getFishableObjects().shoe.value * 2);
     
-    self.levMan:getAchievmentManager():checkNothingCaught(self.levelFinished, self.failedStart);
+--    self.levMan:getAchievmentManager():checkNothingCaught(self.levelFinished, self.failedStart);
 
-    self.levMan:getAchievmentManager():checkAllBordersPassed(self.levelFinished, self.reachedDepth, self.lowerBoarder);
+--    self.levMan:getAchievmentManager():checkAllBordersPassed(self.levelFinished, self.reachedDepth, self.lowerBoarder);
 
-    self.levMan:getAchievmentManager():checkFirstObject(self.levelFinished);    
+--    self.levMan:getAchievmentManager():checkFirstObject(self.levelFinished);    
     
-    self.levMan:getAchievmentManager():checkPlayTime(self.levelFinished);
+--    self.levMan:getAchievmentManager():checkPlayTime(self.levelFinished);
     
-    self.levMan:getAchievmentManager():onlyNegativeFishesCaught(self.levelFinished, self.levMan:getCurSwarmFactory());
+--    self.levMan:getAchievmentManager():onlyNegativeFishesCaught(self.levelFinished, self.levMan:getCurSwarmFactory());
     
-    self.levMan:getAchievmentManager():checkNegativCoins(self.gotPayed, self.roundValue);
+--    self.levMan:getAchievmentManager():checkNegativCoins(self.gotPayed, self.roundValue);
     
-    self.levMan:getAchievmentManager():achBitch(); -- call this checkup always at the end
-end
+--    self.levMan:getAchievmentManager():achBitch(); -- call this checkup always at the end
+--end
 
 --- calculates the momement an positioning of all elements needed for the ending animation
 -- @param bai curBait
@@ -516,6 +516,7 @@ function Level:payPlayer()
     if self.levelFinished and self.levMan:getCurSwarmFactory() ~= nil then
         if self.gotPayed == 0 then -- check if the earned money was already payed
         local fishedVal = self:calcFishedValue();
+		local fishedVal = self:calcFishedValue();
         if _G._persTable.upgrades.firstPermanentMoneyMult == true then
             self.roundValue = self:multiplyFishedValue(1.2, fishedVal);
         end
