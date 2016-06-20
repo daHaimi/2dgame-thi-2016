@@ -50,14 +50,17 @@ function Achievement:moneyTotal()
     end
 end
 
+--- Checks the achievements for total amount of caught fish.
 function Achievement:fishCaughtTotal()
-    if _G._persTable.fish.caughtTotal > 49 then
+    local fishTotal = _G._persTable.fish.caughtTotal;
+
+    if fishTotal >= 50 then
        self:unlockAchievement("bFishCaughtTotal");
     end
-    if _G._persTable.fish.caughtTotal > 199 then
+    if fishTotal >= 200 then
         self:unlockAchievement("sFishCaughtTotal");
     end
-    if _G._persTable.fish.caughtTotal > 499 then
+    if fishTotal >= 500 then
         self:unlockAchievement("gFishCaughtTotal");
     end
 end

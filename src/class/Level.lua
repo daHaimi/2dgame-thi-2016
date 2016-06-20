@@ -24,6 +24,7 @@ local Level = Class {
         self.bg = nil;
         self.bgq = nil;
         self.winDim = {};
+        self.statUpdated = false;
 
         if mode == "endless" then
             self.lowerBoarder = -_G.math.inf;
@@ -279,6 +280,11 @@ function Level:update(dt, bait)
     end
 
     self:checkForAchievments()
+    
+    -- at the end of the level update the statistics
+    if self.levelFinished == true then
+        self:updateStatistics();
+    end
 end
 
 --- checks if a new achievement is unlocked
@@ -607,49 +613,45 @@ end
 -- @return Returns the value of all fished objects.
 function Level:calcFishedValue()
     local fishedVal = 0;
-    local fishedAmount = 0;
     for name, amount in pairs(_G._tmpTable.caughtThisRound) do
         if amount > 0 then
             fishedVal = fishedVal + self.levMan:getCurSwarmFactory():getFishableObjects()[name].value * amount;
-            -- for achivements
-            _G._persTable.fish.caught[name] = _G._persTable.fish.caught[name] + amount;
-            _G._persTable.fish.caughtTotal = _G._persTable.fish.caughtTotal + amount;
-            fishedAmount = fishedAmount + amount
         end
     end
-    -- for achivement x caught in one round
-    if fishedVal > _G._persTable.statistic.maxCoinOneRound then
-        _G._persTable.statistic.maxCoinOneRound = fishedVal;
-    end
-
-    if fishedVal < _G._persTable.statistic.minCoinOneRound then
-        _G._persTable.statistic.minCoinOneRound = fishedVal;
-    end
-
-    if fishedAmount > _G._persTable.fish.caughtInOneRound then
-        _G._persTable.fish.caughtInOneRound = fishedAmount;
-    end
-
-    -- to add calced value to sewers/canyon highscore
-    --    _G._persTable.statistic.moneyEarnedTotal = _G._persTable.statistic.moneyEarnedTotal + fishedAmount;
-    --    if fishedVal > 0 then
-    --        if self.p_levelName == "sewers" or self.p_levelName == "sewersEndless" or
-    --                    self.p_levelName == "sleepingCrocos" then
-    --            _G._tmpTable.lastLevelWas = "sewers";
-    --            if fishedVal > _G._persTable.statistic.highscoreSewers then
-    --                _G._persTable.statistic.highscoreSewers = fishedVal;
-
-    --            end
-    --        elseif (self.p_levelName == "canyon" or self.p_levelName == "canyonEndless"
-    --                    or self.p_levelName == "crazySquirrels") then
-    --            _G._tmpTable.lastLevelWas = "canyon";
-    --            if fishedVal > _G._persTable.statistic.highscoreCanyon  then
-    --                _G._persTable.statistic.highscoreCanyon = fishedVal;
-    --            end
-    --        end
-    --    end
 
     return (fishedVal);
+end
+
+--- Update all statistics
+function Level:updateStatistics()
+    if self.statUpdated == false then
+        local fishedAmount = 0;
+        local fishedVal = 0;
+        
+        for name, amount in pairs(_G._tmpTable.caughtThisRound) do
+            if amount > 0 then
+                _G._persTable.fish.caught[name] = _G._persTable.fish.caught[name] + amount;
+                _G._persTable.fish.caughtTotal = _G._persTable.fish.caughtTotal + amount;
+                fishedAmount = fishedAmount + amount;
+            end
+        end
+
+        fishedVal = self:calcFishedValue();
+        -- for achivement x caught in one round
+        if fishedVal > _G._persTable.statistic.maxCoinOneRound then
+            _G._persTable.statistic.maxCoinOneRound = fishedVal;
+        end
+
+        if fishedVal < _G._persTable.statistic.minCoinOneRound then
+            _G._persTable.statistic.minCoinOneRound = fishedVal;
+        end
+
+        if fishedAmount > _G._persTable.fish.caughtInOneRound then
+            _G._persTable.fish.caughtInOneRound = fishedAmount;
+        end
+    end
+
+    self.statUpdated = true;
 end
 
 --- Calculate the amount of money with the given multiply bonus (round up).
