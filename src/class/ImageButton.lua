@@ -48,7 +48,13 @@ end
 --- changes the position of the button
 --@param x new x position of the button
 --@param y new y position of the button
-function ImageButton:setPosition(x, y)
+function ImageButton:setPosition(x, y)    
+    if x == nil then
+        x = 0;
+    end
+    if y == nil then
+        y = 0;
+    end
     self.xPosition = x;
     self.yPosition = y;
 end

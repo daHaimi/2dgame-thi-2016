@@ -59,8 +59,7 @@ function MainMenu:create()
     end
 
     self.elementsOnFrame.button_achievements.gotClicked = function(_)
-        print "achievements"
-        --_gui:changeFrame(_gui:getFrames().achievements);
+        _gui:changeFrame(_gui:getFrames().achievements);
     end
     
     self.elementsOnFrame.button_options.gotClicked = function(_)

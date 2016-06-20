@@ -5,36 +5,34 @@ local KlickableElement = Class {
     init = function(self, name, imagepath, imagepath_disable, description, price, nameOnPersTable, sortNumber)
         self.name = name;
         self.enable = true;
-        self.imagepath = imagepath;
-        self.imagepath_disable = imagepath_disable;
+        self.image = love.graphics.newImage(imagepath);
+        self.image_disable = love.graphics.newImage(imagepath_disable);
         self.price = price;
         self.nameOnPersTable = nameOnPersTable;
         self.description = description;
-        self.object = Loveframes.Create("imagebutton");
-        self.object:SetImage(self.imagepath);
-        self.object:SizeToImage();
-        self.object:SetText("");
+        self.object = ImageButton(self.image, 0, 0, true);
+        self.object:setText ("");
         self.sortNumber = sortNumber;
+        
+        self.xOffset = 0;
+        self.yOffset = 0;
     end;
 };
 
---- Function not conform to CC/ implements an interface
---- Set the visible of the element
--- @parm visible: true or false
-function KlickableElement:SetVisible(visible)
-    self.object:SetVisible(visible);
+function KlickableElement:gotClicked()
+    _gui.p_states.currentState.elementsOnFrame.chart:markElement(self);
 end
 
 --- reset the Element (just the enable state and the image)
 function KlickableElement:reset()
     self.enable = true;
-    self.object:SetImage(self.imagepath);
+    self.object:setImage(self.image);
 end
 
 --- represents an upgrade buy
 function KlickableElement:disable()
     self.enable = false;
-    self.object:SetImage(self.imagepath_disable);
+    self.object:setImage(self.image_disable);
     if _persTable.upgrades[self.nameOnPersTable] ~= nil then
         _persTable.upgrades[self.nameOnPersTable] = true;
     end
@@ -44,13 +42,39 @@ end
 --- set the position of the element
 -- @parm x: x axis position
 -- @parm y: y axis position
-function KlickableElement:SetPos(x, y)
-    self.object:SetPos(x, y);
+function KlickableElement:setPos(x, y)
+    self.object:setPosition(x, y);
 end
 
 --- getter of the enable parameter
 function KlickableElement:getEnable()
     return self.enable;
+end
+
+--- getter for x Position
+function KlickableElement:getX()
+    local x, _ = self.object:getPosition();
+    return x;
+end
+
+--- getter for y Position
+function KlickableElement:getY()
+    local _, y = self.object:getPosition();
+    return y;
+end
+
+function KlickableElement:draw()
+    self.object:draw();
+end
+
+function KlickableElement:getSize()
+    return self.object:getSize();
+end
+
+--@parma y y offset of the button
+function KlickableElement:setOffset(x,y)
+    self.xOffset = x;
+    self.yOffset = y;
 end
 
 return KlickableElement;
