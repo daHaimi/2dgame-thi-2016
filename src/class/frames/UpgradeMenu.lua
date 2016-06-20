@@ -94,11 +94,9 @@ function UpgradeMenu:create()
 
     self.elementsOnFrame.button_buy.object.OnClick = function(_)
         if self.elementsOnFrame.chart.object:getMarkedElement() ~= nil then
-            if _G._persTable.money >= self.elementsOnFrame.chart.object:getMarkedElement().price then
+            if _G._persTable.money >= self.elementsOnFrame.chart.object:getMarkedElement().price and self.elementsOnFrame.chart.object:getMarkedElement().purchaseable then
                 self:buyElement();
                 _G._persistence:updateSaveFile();
-            else
-                _gui:newTextNotification(self.directory .. "ach_nothingCaught.png", _G.data.languages[_G._persTable.config.language].package.textMoney);
             end
             if not _G._persTable.achievements.shoppingQueen then
                 _gui:getLevelManager():getAchievmentManager():achShoppingQueen();
@@ -124,6 +122,7 @@ function UpgradeMenu:buyElement()
     local markedElement = self.elementsOnFrame.chart.object:getMarkedElement();
     if not _G._persTable.upgrades[markedElement.nameOnPersTable] then
         markedElement:disable();
+        self:loadValuesFromPersTable();
         local price = self.elementsOnFrame.chart.object:getMarkedElement().price;
         _G._persTable.money = _G._persTable.money - price;
         self.elementsOnFrame.button_buy.object:SetImage(self.directory .. "HalfButton_disable.png");
@@ -138,7 +137,7 @@ function UpgradeMenu:addAllUpgrades()
     for _, v in pairs(_G.data.upgrades) do
         if v.sortNumber ~= nil then
             local newKlickableElement = KlickableElement(v.name, self.directory .. v.image,
-                self.directory .. v.image_disable, v.description, v.price, v.nameOnPersTable, v.sortNumber);
+                self.directory .. v.image_disable, v.description, v.price, v.nameOnPersTable, v.sortNumber, v.dependency);
 
             --add OnClick event
             newKlickableElement.object.OnClick = function(_)
@@ -153,12 +152,24 @@ end
 function UpgradeMenu:loadValuesFromPersTable()
     for _, v in pairs(self.elementsOnFrame.chart.object:getAllElements()) do
         local elementName = v.nameOnPersTable;
-        if _G._persTable.upgrades[elementName] then
-            if _G._persTable.upgrades[elementName] == true then
+        local elementOnPersTable = _G._persTable.upgrades[elementName];
+        
+        if elementOnPersTable ~= nil and v.dependency == nil then
+            if elementOnPersTable == true then
                 v:disable();
+            else
+                v:reset();
             end
-        else
-            v:reset();
+        elseif elementOnPersTable ~= nil and v.dependency ~= nil then
+            if _G._persTable.upgrades[v.dependency] then
+                if elementOnPersTable == true then
+                    v:disable();
+                else
+                    v:reset();
+                end
+            else
+                v:lock();
+            end
         end
     end
 end

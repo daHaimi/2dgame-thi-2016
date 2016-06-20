@@ -118,6 +118,7 @@ end)
 
         local ME = {
          price = 0;
+         purchaseable = true;
          };
         
         _G._persistence = {

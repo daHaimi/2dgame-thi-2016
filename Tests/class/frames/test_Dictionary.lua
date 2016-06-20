@@ -105,6 +105,7 @@ it("Testing Constructor", function()
             imagepath = "assets/path2";
             imagepath_disable = "assets/path2";
             name = "test2";
+            purchaseable = true;
             object = {};
         };
         locInstance.elementsOnFrame.chart.object.p_elementsOnChart[2] = {
@@ -113,6 +114,7 @@ it("Testing Constructor", function()
             imagepath = "assets/path1";
             imagepath_disable = "assets/path1";
             name = "test1";
+            purchaseable = true;
             object = {};};
         local KE1 = KlickableElement("test1", "assets/path1", "assets/path1", "test1", nil);
         local KE2 = KlickableElement("test2", "assets/path2", "assets/path2", "test2", nil);

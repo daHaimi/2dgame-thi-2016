@@ -2,12 +2,14 @@
 Class = require "lib.hump.class";
 
 local KlickableElement = Class {
-    init = function(self, name, imagepath, imagepath_disable, description, price, nameOnPersTable, sortNumber)
+    init = function(self, name, imagepath, imagepath_disable, description, price, nameOnPersTable, sortNumber, dependency)
         self.name = name;
         self.enable = true;
         self.imagepath = imagepath;
         self.imagepath_disable = imagepath_disable;
         self.price = price;
+        self.dependency = dependency;
+        self.purchaseable = true;
         self.nameOnPersTable = nameOnPersTable;
         self.description = description;
         self.object = Loveframes.Create("imagebutton");
@@ -28,16 +30,25 @@ end
 --- reset the Element (just the enable state and the image)
 function KlickableElement:reset()
     self.enable = true;
+    self.purchaseable = true;
     self.object:SetImage(self.imagepath);
 end
 
 --- i.e. represents an upgrade buy
 function KlickableElement:disable()
     self.enable = false;
+    self.purchaseable = false;
     self.object:SetImage(self.imagepath_disable);
     if _persTable.upgrades[self.nameOnPersTable] ~= nil then
         _persTable.upgrades[self.nameOnPersTable] = true;
     end
+end
+
+--- lock an item because of the dependency to an other item
+function KlickableElement:lock()
+    self.enable = true;
+    self.purchaseable = false;
+    self.object:SetImage(self.imagepath_disable);
 end
 
 --- Function not conform to CC/ implements an interface
