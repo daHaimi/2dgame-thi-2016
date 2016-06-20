@@ -54,8 +54,7 @@ function MainMenu:create()
     end
 
     self.elementsOnFrame.button_dictionary.gotClicked = function(_)
-        print "dictionary"
-        --_gui:changeFrame(_gui:getFrames().dictionary);
+        _gui:changeFrame(_gui:getFrames().dictionary);
     end
 
     self.elementsOnFrame.button_achievements.gotClicked = function(_)

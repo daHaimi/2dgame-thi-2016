@@ -6,7 +6,9 @@ local KlickableElement = Class {
         self.name = name;
         self.enable = true;
         self.image = love.graphics.newImage(imagepath);
-        self.image_disable = love.graphics.newImage(imagepath_disable);
+        if imagepath_disable ~= nil then
+            self.image_disable = love.graphics.newImage(imagepath_disable);
+        end
         self.price = price;
         self.nameOnPersTable = nameOnPersTable;
         self.description = description;

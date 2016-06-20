@@ -60,9 +60,7 @@ function Achievements:addAllAchievements()
             local imageDirectory = self.directory .. v.image_lock;
             local newKlickableElement = KlickableElement(v.name, imageDirectory, self.directory .. v.image_unlock,
                 v.description, nil, v.nameOnPersTable, v.sortNumber);
-            newKlickableElement.object.OnClick = function(_)
-                self.elementsOnFrame.chart:markElement(newKlickableElement);
-            end
+            
             self.elementsOnFrame.chart:addKlickableElement(newKlickableElement);
         end
     end
@@ -93,9 +91,9 @@ end
 
 --- shows the frame on screen
 function Achievements:draw()
-    love.graphics.draw(self.background, self.backgroundPosition[1], self.backgroundPosition[2]);
+    local _, y = self.elementsOnFrame.button_back:getOffset();
+    love.graphics.draw(self.background, self.backgroundPosition[1], self.backgroundPosition[2] + y);
     for _, v in pairs (self.elementsOnFrame) do
-        
         v:draw();
     end
     self:loadValuesFromPersTable();
@@ -121,7 +119,9 @@ function Achievements:checkPosition()
     return self.frame:checkPosition();
 end
 
---@parma y y offset of the button
+--- sets the offset of the frame
+--@param x x offset of the frame
+--@parma y y offset of the frame
 function Achievements:setOffset(x,y)
     self.xOffset = x;
     self.yOffset = y;
