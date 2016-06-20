@@ -125,7 +125,7 @@ end
 --- changes the language of this frame
 function Score:setLanguage(language)
     self.elementsOnFrame.scoretext.object:SetText(_G.data.languages[language].package.textScore);
-    self.elementsOnFrame.highestScoretext.object:SetText(_G.data.languages[language].package.textHiScore);
+--    self.elementsOnFrame.highestScoretext.object:SetText(_G.data.languages[language].package.textHiScore);
     self.elementsOnFrame.button_retry.object:SetText(_G.data.languages[language].package.buttonRetry);
     self.elementsOnFrame.button_backToMenu.object:SetText(_G.data.languages[language].package.buttonBTM);
     self.elementsOnFrame.achievements.object:setLanguage(language);
@@ -134,12 +134,12 @@ end
 --- shows the frame on screen
 function Score:draw()
     self.elementsOnFrame.score.object:SetText(_G._tmpTable.earnedMoney);    
-    print(_G._tmpTable.lastLevelWas);
-    if _G._tmpTable.lastLevelWas == "sewers" then
-        self.elementsOnFrame.highestScore.object:SetText(_G._persTable.statistic.highscoreSewers);
-    else
-        self.elementsOnFrame.highestScore.object:SetText(_G._persTable.statistic.highscoreCanyon);
-    end
+--    print(_G._tmpTable.lastLevelWas);
+--    if _G._tmpTable.lastLevelWas == "sewers" then
+--        self.elementsOnFrame.highestScore.object:SetText(_G._persTable.statistic.highscoreSewers);
+--    else
+--        self.elementsOnFrame.highestScore.object:SetText(_G._persTable.statistic.highscoreCanyon);
+--    end
 
     self.frame:draw(self.elementsOnFrame);
 end
