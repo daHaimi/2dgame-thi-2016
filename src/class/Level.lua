@@ -543,8 +543,9 @@ function Level:payPlayer()
         -- persist money from this round
         if self.roundValue >= 0 then
             _G._persTable.money = _G._persTable.money + self.roundValue;
-            _G._persistence:updateSaveFile();
         end
+        _G._persistence:updateSaveFile();
+
     end
 end
 
@@ -655,6 +656,8 @@ function Level:updateStatistics()
             _G._persTable.fish.caughtInOneRound = fishedAmount;
         end
     end
+
+    _G._persistence:updateSaveFile();
 
     self.statUpdated = true;
 end
