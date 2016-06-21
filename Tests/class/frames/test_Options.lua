@@ -9,7 +9,10 @@ Frame = require "class.Frame";
 describe("Unit test for Options.lua", function()
     local locInstance;
 
-
+    _G.TEsound = {
+        play = function(...) end;
+    };
+    
     before_each(function()
         _G.love = {
             mouse = {
@@ -52,6 +55,7 @@ describe("Unit test for Options.lua", function()
         spy.on(_G._gui, "changeFrame");
         spy.on(_G._persistence, "resetGame");
         spy.on(_G._persistence, "updateSaveFile");
+        spy.on(TEsound, "play");
         
         locInstance:create();
 
@@ -69,6 +73,7 @@ describe("Unit test for Options.lua", function()
         assert.spy(_gui.changeFrame).was.called();
         assert.spy(locInstance.loadValuesInPersTable).was.called(1);
         assert.spy(_G._persistence.updateSaveFile).was.called(1);
+        assert.spy(TEsound.play).was.called(2);
     end)
 
     it("Testing Constructor", function()
