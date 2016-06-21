@@ -417,6 +417,8 @@ describe("Test unit test suite", function()
             update = function(...) end;
             getSpeed = function(...) return 200 end;
         };
+        
+        local perStub = stub(_G._persistence, "updateSaveFile");
         locInstance.posY = -7500;
         locInstance:update(dt, bait);
         assert.are.same(-1, locInstance:getDirection());
@@ -786,6 +788,7 @@ describe("Test unit test suite", function()
     it("Testing update playTime", function()
         locInstance.unlockAchievement = function(...) end;
         locInstance.playTime = 1000;
+        local perStub = stub(_G._persistence, "updateSaveFile");
         _G._persTable.playedTime = 1000;
         locInstance.pumpingWay = 0;
         locInstance.levelFinished = true;
