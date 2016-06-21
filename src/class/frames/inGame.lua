@@ -22,19 +22,11 @@ function InGame:create()
     self.elementsOnFrame = {
         healthbar = Healthbar();
         pause = ImageButton(self.button, 0, 0, true);
-        --[[score = {
-            object = Loveframes.Create("text");
-            x = 150;
-            y = 10
-        }]]
     };
-    
-    self.elementsOnFrame.healthbar:setPos();
     
     ---set position of pause button
     local _, height = self.elementsOnFrame.pause:getSize();
     self.elementsOnFrame.pause:setPosition(0, _G._persTable.scaledDeviceDim[2] - height);
-   -- self.elementsOnFrame.barMiddle.object:SetScaleX(_G._persTable.scaledDeviceDim[1] / 64);
 
     --set image of pause button only on mobile version
     self.elementsOnFrame.pause:setText("");
@@ -92,6 +84,8 @@ end
 function InGame:appear()
     love.mouse.setGrabbed(true);
     love.mouse.setVisible(false);
+    self.elementsOnFrame.healthbar:resetHearts();
+    self.elementsOnFrame.healthbar:setPos();
     self.frame:appear(self.elementsOnFrame);
 end
 

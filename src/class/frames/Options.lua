@@ -7,7 +7,7 @@ local Options = Class {
         self.imageButton = love.graphics.newImage("assets/gui/button.png");
         self.background = love.graphics.newImage("assets/gui/StandardBG.png");
         self.imageUnpressedSlider = love.graphics.newImage("assets/hamster.png");
-        self.imagePressedSlider = love.graphics.newImage("assets/hamster.png");
+        self.imagePressedSlider = love.graphics.newImage("assets/hamsterOpenMouth.png");
         self.buttonHeight = self.imageButton:getHeight();
         self.buttonWidth = self.imageButton:getWidth();
         self.buttonXPosition = (_G._persTable.winDim[1] - self.buttonWidth) / 2;
@@ -39,16 +39,6 @@ function Options:create()
     self:loadValuesFromPersTable();
 
     --onclick events for all buttons
-    self.elementsOnFrame.slider_bgm.gotClicked = function(x, y)
-        self.elementsOnFrame.slider_bgm:setPosition (x, y);
-        _G._persTable.config.bgm = self.elementsOnFrame.slider_bgm:getValue();
-    end
-
-    self.elementsOnFrame.slider_music.gotClicked = function(x, y)
-        self.elementsOnFrame.slider_music:setPosition (x, y);
-        _G._persTable.config.music = self.elementsOnFrame.slider_music:getValue();
-    end
-
     self.elementsOnFrame.button_reset.gotClicked = function(_)
         _persistence:resetGame();
         self:loadValuesFromPersTable();
@@ -79,6 +69,18 @@ end
 function Options:loadValuesFromPersTable()
     self.elementsOnFrame.slider_bgm:setValue(_G._persTable.config.bgm);
     self.elementsOnFrame.slider_music:setValue(_G._persTable.config.music);
+end
+
+function Options:update()
+    self.elementsOnFrame.slider_bgm:update();
+    self.elementsOnFrame.slider_music:update();
+    if self.elementsOnFrame.slider_bgm:getMoveable() then
+        _G._persTable.config.bgm = self.elementsOnFrame.slider_bgm:getValue();
+    end
+    
+    if self.elementsOnFrame.slider_music:getMoveable() then
+        _G._persTable.config.music = self.elementsOnFrame.slider_music:getValue();
+    end
 end
 
 --- shows the frame on screen
@@ -139,12 +141,13 @@ function Options:mousepressed(x, y)
         
         if x > xPosition and x < xPosition + width and
         y > yPosition and y < yPosition + height then
-            v.gotClicked(x, y);
+            v:gotClicked(x, y);
         end
     end
 end
 
-function Options:mousereleased(x, y)    
-    print "release"
+function Options:mousereleased(x, y)
+    self.elementsOnFrame.slider_bgm:release();
+    self.elementsOnFrame.slider_music:release();
 end
 return Options;

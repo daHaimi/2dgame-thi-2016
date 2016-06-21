@@ -5,7 +5,7 @@ local Healthbar = Class {
         self.icon = love.graphics.newImage("assets/hamster.png");
         self.blackHeart = love.graphics.newImage("assets/heart_grey.png");
         self.redHeart = love.graphics.newImage("assets/heart.png");
-        self.unlockedHearts = 1 + _persTable.upgrades.moreLife;
+        self.unlockedHearts = 1 + _G._persTable.upgrades.moreLife;
         self.currentHearts = self.unlockedHearts;
         self.xPosition = 0;
         self.yPosition = 0;
@@ -23,7 +23,7 @@ end
 
 --- Reset the amount of lives to the start value.
 function Healthbar:resetHearts()
-    self.unlockedHearts = 1 + _persTable.upgrades.moreLife;
+    self.unlockedHearts = 1 + _G._persTable.upgrades.moreLife;
     self.currentHearts = self.unlockedHearts;
 end
 

@@ -13,6 +13,7 @@ local Slider = Class {
         self.xDefaultPosition = xPosition;
         self.yDefaultPosition = yPosition;
         self.width = width;
+        self.moveable = false;
         self.range = 100;
         self.xOffset = 0;
         self.yOffset = 0;
@@ -26,7 +27,9 @@ end
 
 --- sets the position of the button
 function Slider:setPosition(x, y)
-    self.xPosition = x;
+    if x >= self.xDefaultPosition and x <= self.xDefaultPosition + self.width then
+        self.xPosition = x;
+    end
 end
 
 --- return the size of the button
@@ -35,10 +38,23 @@ function Slider:getSize()
     return self.width, self.imageUnpressedHeight;
 end
 
+--- updates the slider
+function Slider:update()
+    if self.moveable then
+        local x, y = love.mouse:getPosition();
+        self:setPosition(x / _G._persTable.scaleFactor, y / _G._persTable.scaleFactor);
+    end
+end
+
 ---draws the slider
 function Slider:draw() 
-    love.graphics.draw(self.imageUnpressed, self.xPosition + self.xOffset  - 0.5 * self.imageUnpressedWidth, 
+    if self.moveable then 
+        love.graphics.draw(self.imagePressed, self.xPosition + self.xOffset  - 0.5 * self.imageUnpressedWidth, 
         self.yPosition + self.yOffset - self.imageUnpressedWidth * 0.5 + 5);
+    else
+        love.graphics.draw(self.imageUnpressed, self.xPosition + self.xOffset  - 0.5 * self.imageUnpressedWidth, 
+        self.yPosition + self.yOffset - self.imageUnpressedWidth * 0.5 + 5);
+    end
 end
 
 --- sets the offset of the button 
@@ -61,5 +77,19 @@ end
 
 function Slider:setValue(value)
     self.xPosition = value / 100 * self.width + self.xDefaultPosition
+end
+
+function Slider:gotClicked(x, y)
+    self.moveable = true;
+end
+
+function Slider:release(x, y)
+    self.moveable = false;
+end
+
+--- returns true if the slider is moving
+--@return moveable
+function Slider:getMoveable()
+    return self.moveable
 end
 return Slider;

@@ -56,7 +56,7 @@ function Level:create()
          if _G._persTable.unlockedLevel == 1 then
             _gui:newNotification(self.directory .. "ach_nothingCaught.png", "Not unlocked yet!");
         else
-            _gui:getLevelManager():newLevel(_gui:getLevelManager():getLevelPropMapByName("crazySquirrels"), _G.data);
+            _gui:getLevelManager():newLevel(_gui:getLevelManager():getLevelPropMapByName("cayon"), _G.data);
             _gui:changeFrame(_gui:getFrames().inGame);
         end
     end

@@ -129,6 +129,10 @@ function Gui:update()
     if self:drawGame() then
         self.p_myFrames.inGame:update();
     end
+    
+    if self.p_states.currentState == self.p_myFrames.options then
+        self.p_myFrames.options:update()
+    end
     self.notification:update();
 end
 
