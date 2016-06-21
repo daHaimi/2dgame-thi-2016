@@ -654,6 +654,23 @@ function Level:updateStatistics()
         if fishedAmount > _G._persTable.fish.caughtInOneRound then
             _G._persTable.fish.caughtInOneRound = fishedAmount;
         end
+        
+        -- for highscore
+        if self.p_levelName == "sewers" or self.p_levelName == "sewersEndless" or 
+        self.p_levelName == "sleepingCrocos" then
+        
+            if fishedVal > _G._persTable.statistic.highscoreSewers then
+                _G._persTable.statistic.highscoreSewers = fishedVal;
+                _gui:newTextNotification("assets/hamster.png", "New Highscore!")
+            end
+        elseif (self.p_levelName == "canyon" or self.p_levelName == "canyonEndless"
+                or self.p_levelName == "crazySquirrels") then
+            if fishedVal > _G._persTable.statistic.highscoreCanyon then
+                _G._persTable.statistic.highscoreCanyon = fishedVal;
+                _gui:newTextNotification("assets/hamster.png", "New Highscore!")
+            end
+        end
+        
     end
 
     self.statUpdated = true;
