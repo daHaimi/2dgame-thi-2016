@@ -1204,7 +1204,7 @@ return {
                     description = "Earn 1000 coins in one round o.O";
                 };
                 silverCoinsOneRound = {
-                    name = "Your getting better";
+                    name = "You are getting better";
                     description = "Earn 600 coins in one round";
                 };
                 bronzeCoinsOneRound = {
