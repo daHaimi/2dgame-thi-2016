@@ -240,6 +240,7 @@ function love.mousepressed(x, y, button)
     Loveframes.mousepressed(x, y, button);
     
     if _gui:getCurrentState() == "start" then
+        TEsound.play({ "assets/sound/buttonPressed.wav" }, 'buttonPressed'); 
         _gui:changeFrame(_gui:getFrames().mainMenu);
     end
     

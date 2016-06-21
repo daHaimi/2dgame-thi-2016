@@ -81,6 +81,7 @@ function Level:create()
 
     --onclick events for all buttons
     self.elementsOnFrame.buttonHouse.object.OnClick = function(_)
+        TEsound.play({ "assets/sound/buttonPressed.wav" }, 'buttonPressed');
         _gui:getLevelManager():newLevel(_gui:getLevelManager():getLevelPropMapByName("sewers"), _G.data);
         _gui:changeFrame(_gui:getFrames().inGame);
     end
@@ -91,6 +92,7 @@ function Level:create()
         end
     else
         self.elementsOnFrame.buttonCanyon.object.OnClick = function(_)
+            TEsound.play({ "assets/sound/buttonPressed.wav" }, 'buttonPressed');
             _gui:getLevelManager():newLevel(_gui:getLevelManager():getLevelPropMapByName("crazySquirrels"), _G.data);
             _gui:changeFrame(_gui:getFrames().inGame);
         end

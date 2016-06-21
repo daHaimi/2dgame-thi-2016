@@ -88,6 +88,7 @@ function UpgradeMenu:create()
 
     --onclick events for all buttons
     self.elementsOnFrame.button_back.object.OnClick = function(_)
+        TEsound.play({ "assets/sound/buttonPressed.wav" }, 'buttonPressed');
         _gui:changeFrame(_gui:getFrames().mainMenu);
         self.elementsOnFrame.chart.object:resetTopRow();
     end
@@ -95,6 +96,7 @@ function UpgradeMenu:create()
     self.elementsOnFrame.button_buy.object.OnClick = function(_)
         if self.elementsOnFrame.chart.object:getMarkedElement() ~= nil then
             if _G._persTable.money >= self.elementsOnFrame.chart.object:getMarkedElement().price and self.elementsOnFrame.chart.object:getMarkedElement().purchaseable then
+                TEsound.play({ "assets/sound/buttonPressed.wav" }, 'buttonPressed');
                 self:buyElement();
                 _G._persistence:updateSaveFile();
             end

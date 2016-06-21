@@ -361,6 +361,8 @@ function Level:doStartAnimationMovement(bait, dt)
                     self.hamsterLockedXPos < 355 and self.hamsterLockedXPos > 300 then
                 if self.hamsterYPos < self.winDim[2] * 0.5 - 230 then
                     self.hamsterYPos = self.hamsterYPos + 0.5 * math.ceil(dt * bait:getSpeed());
+                    -- sound starts to play to soon
+--                    TEsound.play({ "assets/sound/hamsterHarmed.wav" }, 'hamsterHarmed'); 
                     self.failedStart = true;
                 else
                     self.levelFinished = true;
@@ -371,6 +373,8 @@ function Level:doStartAnimationMovement(bait, dt)
                     self.hamsterYPos = self.hamsterYPos + 0.5 * math.ceil(dt * bait:getSpeed());
                     -- hamster dropped next to toilet
                     if self.hamsterLockedXPos < 120 or self.hamsterLockedXPos > 300 then
+                        -- sound starts to play to soon
+--                        TEsound.play({ "assets/sound/hamsterHarmed.wav" }, 'hamsterHarmed');
                         self.failedStart = true;
                     end
                 else

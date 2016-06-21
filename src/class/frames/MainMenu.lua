@@ -115,30 +115,37 @@ function MainMenu:create()
 
     --onclick events for all buttons
     self.elementsOnFrame.button_start.object.OnClick = function(_)
+        TEsound.play({ "assets/sound/buttonPressed.wav" }, 'buttonPressed');
         _gui:changeFrame(_gui:getFrames().level);
     end
 
     self.elementsOnFrame.button_upgradeMenu.object.OnClick = function(_)
+        TEsound.play({ "assets/sound/buttonPressed.wav" }, 'buttonPressed');
         _gui:changeFrame(_gui:getFrames().upgradeMenu);
     end
 
     self.elementsOnFrame.button_dictionary.object.OnClick = function(_)
+        TEsound.play({ "assets/sound/buttonPressed.wav" }, 'buttonPressed');
         _gui:changeFrame(_gui:getFrames().dictionary);
     end
 
     self.elementsOnFrame.button_achievements.object.OnClick = function(_)
+        TEsound.play({ "assets/sound/buttonPressed.wav" }, 'buttonPressed');
         _gui:changeFrame(_gui:getFrames().achievements);
     end
 
     self.elementsOnFrame.button_options.object.OnClick = function(_)
+        TEsound.play({ "assets/sound/buttonPressed.wav" }, 'buttonPressed');
         _gui:changeFrame(_gui:getFrames().options);
     end
 
     self.elementsOnFrame.button_credits.object.OnClick = function(_)
+        TEsound.play({ "assets/sound/buttonPressed.wav" }, 'buttonPressed');
         _gui:changeFrame(_gui:getFrames().credits);
     end
 
     self.elementsOnFrame.button_close.object.OnClick = function(_)
+        TEsound.play({ "assets/sound/buttonPressed.wav" }, 'buttonPressed');
         love.window:close(); -- close the window
         love.event.quit(); -- exit the game
     end

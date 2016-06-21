@@ -112,11 +112,13 @@ function Score:create()
 
     --onclick events for all buttons
     self.elementsOnFrame.button_retry.object.OnClick = function(_)
+        TEsound.play({ "assets/sound/buttonPressed.wav" }, 'buttonPressed');
         _gui:getLevelManager():replayLevel();
         _gui:changeFrame(_gui:getFrames().inGame);
     end
 
     self.elementsOnFrame.button_backToMenu.object.OnClick = function(_)
+        TEsound.play({ "assets/sound/buttonPressed.wav" }, 'buttonPressed');
         _gui:getLevelManager():freeManagedObjects();
         _gui:changeFrame(_gui:getFrames().mainMenu);
     end

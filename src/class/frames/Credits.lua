@@ -95,6 +95,7 @@ function Credits:create()
 
     --onclick events for all buttons
     self.elementsOnFrame.button_back.object.OnClick = function(_)
+        TEsound.play({ "assets/sound/buttonPressed.wav" }, 'buttonPressed');
         _gui:changeFrame(_gui:getFrames().mainMenu);
     end
 end

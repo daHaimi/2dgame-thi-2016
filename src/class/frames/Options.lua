@@ -106,11 +106,13 @@ function Options:create()
     end
 
     self.elementsOnFrame.button_reset.object.OnClick = function(_)
+        TEsound.play({ "assets/sound/buttonPressed.wav" }, 'buttonPressed');
         _persistence:resetGame();
         self:loadValuesFromPersTable();
     end
 
     self.elementsOnFrame.button_back.object.OnClick = function(_)
+        TEsound.play({ "assets/sound/buttonPressed.wav" }, 'buttonPressed');
         self:loadValuesInPersTable();
         _gui:changeFrame(_gui:getLastState());
     end
