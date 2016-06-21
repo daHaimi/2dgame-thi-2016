@@ -163,10 +163,12 @@ function Credits:checkPosition()
     return self.frame:checkPosition();
 end
 
+--- start tracking time
 function Credits:createStartTime()
     self.startTime = os.clock();
 end
 
+--- calculate spent time
 function Credits:calcTimeSpent()
     local now = os.clock();
     return now - self.startTime;
