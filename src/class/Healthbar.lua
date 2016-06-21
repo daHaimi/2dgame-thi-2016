@@ -45,6 +45,7 @@ function Healthbar:minus()
         self.hearts[self.currentHearts]:Remove();
         self.hearts[self.currentHearts] = Loveframes.Create("image");
         self.hearts[self.currentHearts]:SetImage(self.blackHeartPath);
+        TEsound.play({ "assets/sound/lifeLost.wav" }, 'lifeLost');
         self.currentHearts = self.currentHearts - 1;
         self:refresh();
     end

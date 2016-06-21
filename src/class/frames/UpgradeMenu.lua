@@ -96,7 +96,7 @@ function UpgradeMenu:create()
     self.elementsOnFrame.button_buy.object.OnClick = function(_)
         if self.elementsOnFrame.chart.object:getMarkedElement() ~= nil then
             if _G._persTable.money >= self.elementsOnFrame.chart.object:getMarkedElement().price and self.elementsOnFrame.chart.object:getMarkedElement().purchaseable then
-                TEsound.play({ "assets/sound/buttonPressed.wav" }, 'buttonPressed');
+                TEsound.play({ "assets/sound/buying.wav" }, 'buying');
                 self:buyElement();
                 _G._persistence:updateSaveFile();
             end
