@@ -142,4 +142,8 @@ function Options:mousepressed(x, y)
         end
     end
 end
+
+function Options:mousereleased(x, y)    
+    print "release"
+end
 return Options;

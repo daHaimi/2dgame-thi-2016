@@ -69,8 +69,12 @@ function Score:draw()
     love.graphics.draw(self.background, self.backgroundPosition[1], self.backgroundPosition[2] + 100 + y);
     local font = love.graphics.getFont();
     love.graphics.setFont(love.graphics.newFont("font/8bitOperatorPlus-Bold.ttf", 25));
-    love.graphics.printf(self.score, self.backgroundPosition[1] , self.backgroundPosition[2] + 190
-        + y , self.background:getWidth() - 50, 'center');
+    love.graphics.setColor(0, 0, 0);
+    love.graphics.printf(self.scoretext, 0, self.backgroundPosition[2] + 120
+        + y, _G._persTable.winDim[1], 'center');
+    love.graphics.printf(self.score, self.backgroundPosition[1], self.backgroundPosition[2] + 190
+        + y, self.background:getWidth() - 50, 'center');    
+    love.graphics.setColor(255, 255, 255);
     love.graphics.setFont(font);
     for _, v in pairs (self.elementsOnFrame) do
         v:draw();

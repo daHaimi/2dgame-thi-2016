@@ -54,6 +54,12 @@ function Gui:mousepressed(x, y)
     self.p_states.currentState:mousepressed(x/_G._persTable.scaleFactor,y/_G._persTable.scaleFactor);
 end
 
+function Gui:mousereleased(x, y)
+    if self.p_states.currentState.mousereleased ~= nil then
+        self.p_states.currentState:mousereleased(x/_G._persTable.scaleFactor,y/_G._persTable.scaleFactor);
+    end
+end
+
 --- return all frames
 function Gui:getFrames()
     return self.p_myFrames;

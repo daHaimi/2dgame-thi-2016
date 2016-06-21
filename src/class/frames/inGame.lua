@@ -78,7 +78,7 @@ function InGame:draw()
         self.elementsOnFrame.healthbar:draw();
         local font = love.graphics.getFont();
         love.graphics.setFont(love.graphics.newFont("font/8bitOperatorPlus-Bold.ttf", 20));
-        love.graphics.printf(self.score, _G._persTable.winDim[1]/2 - 100 , 20 + y, 200, "center")
+        love.graphics.printf(self.score, _G._persTable.winDim[1]/2 - 150 , 10 + y, 200, "center")
         love.graphics.setFont(font);
     end
 end

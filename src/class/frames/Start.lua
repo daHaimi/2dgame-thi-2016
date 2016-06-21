@@ -2,32 +2,21 @@ Class = require "lib.hump.class";
 
 local Start = Class {
     init = function(self)
-        self.speed = 40;
+        self.speed = 20;
         self.name = "start";
         self.x = 0.05 * _persTable.scaledDeviceDim[1];
         self.y = 0.2 * _persTable.scaledDeviceDim[2];
         self.title = love.graphics.newImage("assets/gui/title.png")
         self.hamster = love.graphics.newImage("assets/gui/hamster.png")
         self.text = ""
-        self.blinkTimer = 25;
-        self.offset = 1200;
+        self.blinkTimer = 10;
+        self.offset = _persTable.winDim[1];
         self:create();
     end;
 };
 
 --- creates the Start frame
 function Start:create()
-    --add, create and position all elements on this frame
-    self.elementsOnFrame = {
-    };
-
-    --adjust all elements on this frame
-    --[[self.elementsOnFrame.title:SetImage("assets/gui/title.png");
-    self.elementsOnFrame.title:SetScale(0.9 * _persTable.scaledDeviceDim[1] / 256, 0.9 * _persTable.scaledDeviceDim[1] / 256);
-
-    self.elementsOnFrame.hamster:SetImage("assets/gui/hamster.png");
-    self.elementsOnFrame.hamster:SetScale(0.9 * _persTable.scaledDeviceDim[1] / 256, 0.9 * _persTable.scaledDeviceDim[1] / 256);]]
-
     self.text= _G.data.languages[_G._persTable.config.language].package.textStart;
 end
 
@@ -49,11 +38,7 @@ function Start:blink()
 end
 
 --- shows the frame on screen
-function Start:draw()
-    --for _, v in pairs(self.elementsOnFrame) do
-        --v:SetVisible(true);
-    --end
-    
+function Start:draw()    
     love.graphics.draw(self.title, (_persTable.winDim[1] - self.title:getWidth()) / 2 - self.offset,
         _persTable.winDim[2]/2 - 200);
     love.graphics.draw(self.hamster, 320 + self.offset, _persTable.winDim[2]/2 - 170);
@@ -66,9 +51,7 @@ function Start:draw()
     
     local font = love.graphics.getFont();
     love.graphics.setFont(love.graphics.newFont("font/8bitOperatorPlus-Bold.ttf", 35));
-    if self.offset == 0 then
-        love.graphics.printf(self.text, 0, 0.75 * _persTable.winDim[2], _persTable.winDim[1], 'center');
-    end
+    love.graphics.printf(self.text, 0, 0.75 * _persTable.winDim[2] + self.offset, _persTable.winDim[1], 'center');
     love.graphics.setFont(font);
     love.graphics.setColor(255, 255, 255);
 end
