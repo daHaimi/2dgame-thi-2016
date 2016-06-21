@@ -4,6 +4,11 @@ _G.math.inf = 1 / 0
 testClass = require "src.class.frames.Credits";
 fakeElement = require "Tests.fakeLoveframes.fakeElement";
 Frame = require "class.Frame";
+_G.TEsound = {
+    playLooping = function(...) end;
+    play = function(...) end;
+    stop = function(...) end;
+};
 
 
 describe("Unit test for Credits.lua", function()

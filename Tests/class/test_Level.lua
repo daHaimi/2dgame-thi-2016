@@ -4,6 +4,7 @@ _G.Animate = require "class.Animate";
 _G.levelTestStub = function()
     _G.TEsound = {
         playLooping = function(...) end;
+        play = function(...) end;
         stop = function(...) end;
     };
 
@@ -66,6 +67,8 @@ _G.levelTestStub = function()
         maxCoinOneRound = 0;
         minCoinOneRound = 0;
         moneyEarnedTotal = 0;
+        highscoreSewers = 0;
+        highscoreCanyon = 0;
     };
     _G._tmpTable = {
         earnedMoney = nil;
@@ -122,6 +125,7 @@ _G.levelTestStub = function()
                 };
             };
         end;
+        newTextNotification = function (...) end;
     };
     _G.love = {
         graphics = {

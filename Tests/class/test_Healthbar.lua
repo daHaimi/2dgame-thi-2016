@@ -3,6 +3,11 @@ _G.math.inf = 1 / 0
 
 testClass = require "src.class.Healthbar"
 fakeElement = require "Tests.fakeLoveframes.fakeElement";
+_G.TEsound = {
+    playLooping = function(...) end;
+    play = function(...) end;
+    stop = function(...) end;
+};
 
 
 describe("Unit test for Healthbar.lua", function()

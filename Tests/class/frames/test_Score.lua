@@ -5,6 +5,11 @@ testClass = require "src.class.frames.Score";
 fakeElement = require "Tests.fakeLoveframes.fakeElement";
 Frame = require "class.Frame";
 Data = require "data";
+_G.TEsound = {
+    playLooping = function(...) end;
+    play = function(...) end;
+    stop = function(...) end;
+};
 
 
 describe("Unit test for Score.lua", function()

@@ -5,6 +5,11 @@ testClass = require "src.class.frames.Achievements";
 fakeElement = require "Tests.fakeLoveframes.fakeElement";
 Frame = require "class.Frame";
 KlickableElement = require "class.KlickableElement";
+_G.TEsound = {
+    playLooping = function(...) end;
+    play = function(...) end;
+    stop = function(...) end;
+};
 
 
 describe("Unit test for Achievements.lua", function()

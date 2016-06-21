@@ -2,6 +2,12 @@
 _G.math.inf = 1 / 0
 testClass = require "src.class.Achievement";
 Data = require "data";
+_G.TEsound = {
+    playLooping = function(...) end;
+    play = function(...) end;
+    stop = function(...) end;
+};
+
 
 describe("Unit test for Achievement.lua", function()
     local locInstance;
