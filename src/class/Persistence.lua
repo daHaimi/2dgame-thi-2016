@@ -14,7 +14,7 @@ local Persistence = Class {
         -- first load of persTable
         if love.filesystem.exists("saveFile") then
             self:loadPersTable();
-            _G._persTable.achievements.secondStart = true;
+            --_G._persTable.achievements.secondStart = true;
         else
             self:createPersTable();
             self:updateSaveFile();

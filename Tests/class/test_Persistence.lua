@@ -114,17 +114,18 @@ describe("Unit test for Persistence.lua", function()
             deadFish = 0;
             nemo = 0;
     };
-        
-    local locInstance = testClass();
-        
+                
     end)
 
 
---    it("Testing Constructor", function()
---        locInstance = testClass();
---        local myInstance = testClass();
---        assert.are.same(locInstance, myInstance);
---    end)
+    it("Testing Constructor", function()
+        
+        local serStub = stub(table, "serialize");
+        local deserStub = stub(table, "deserialize");
+        locInstance = testClass();
+        local myInstance = testClass();
+        assert.are.same(locInstance, myInstance);
+    end)
 
 end)
 
