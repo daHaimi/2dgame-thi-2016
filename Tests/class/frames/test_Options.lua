@@ -44,12 +44,14 @@ describe("Unit test for Options.lua", function()
         };
         _G._persistence = {
             resetGame = function(...) end;
+            updateSaveFile = function(...) end;
         };
         
         spy.on(locInstance, "loadValuesFromPersTable");
         spy.on(locInstance, "loadValuesInPersTable");
         spy.on(_G._gui, "changeFrame");
         spy.on(_G._persistence, "resetGame");
+        spy.on(_G._persistence, "updateSaveFile");
         
         locInstance:create();
 
@@ -66,6 +68,7 @@ describe("Unit test for Options.lua", function()
         locInstance.elementsOnFrame.button_back.object.OnClick();
         assert.spy(_gui.changeFrame).was.called();
         assert.spy(locInstance.loadValuesInPersTable).was.called(1);
+        assert.spy(_G._persistence.updateSaveFile).was.called(1);
     end)
 
     it("Testing Constructor", function()
