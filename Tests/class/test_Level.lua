@@ -28,7 +28,7 @@ _G.levelTestStub = function()
         random = 3;
     }
     _G.Animate.p_quads = {};
-
+    _G._persistence = {};
     _G._persTable.achievements = {
         getFirstObject = true;
         getSecondObject = false;
@@ -737,6 +737,8 @@ describe("Test unit test suite", function()
 
     it("Testing updateStatistics function", function()
         locInstance.calcFishedValue = function(...) return 210 end;
+        local perStub = stub(_G._persistence, "updateSaveFile");
+
         _G._tmpTable.caughtThisRound = { 
             ["turtle"] = 30; ["rat"] = 0;
             ["deadFish"] = 19;
@@ -744,6 +746,8 @@ describe("Test unit test suite", function()
         };
         _G._persTable.statistic.maxCoinOneRound = 20;
         _G._persTable.statistic.minCoinOneRound = 1;
+        _G._persTable.statistic.highscoreSewers = 20;
+        _G._persTable.statistic.highscoreCanyon = 200;
         _G._persTable.fish = {
             caughtTotal = 10;
             caughtInOneRound = 50;
@@ -759,6 +763,7 @@ describe("Test unit test suite", function()
         
         locInstance:updateStatistics();
         assert.are.same(60, _G._persTable.fish.caughtTotal);
+        assert.stub(perStub).was.called(1);
     end)
 
     it("Testing getReachedDepth function", function()
