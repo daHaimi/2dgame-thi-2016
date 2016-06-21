@@ -95,6 +95,7 @@ function Achievements:addAllAchievements()
     end
 end
 
+--- load achievements
 function Achievements:loadValuesFromPersTable()
     for _, v in pairs(self.elementsOnFrame.chart.object:getAllElements()) do
         local elementName = v.nameOnPersTable;

@@ -25,6 +25,7 @@ local Level = Class {
         self.bgq = nil;
         self.winDim = {};
         self.statUpdated = false;
+        self.ploempelPlayed = false;
 
         if mode == "endless" then
             self.lowerBoarder = -_G.math.inf;
@@ -322,7 +323,10 @@ function Level:doEndAnimationMovement(bait, dt)
             if self.pumpCounter < 4 then
                 if self.pumpDirection then
                     -- plays wrong sound
---                    TEsound.play({ "assets/sound/ploempel.wav" }, 'ploempel');
+                    if self.ploempelPlayed == false then
+                        self.ploempelPlayed = true;
+                        TEsound.playLooping("assets/sound/ploempel.wav", "ploempel", 5);
+                    end
                     self.pumpingWay = self.pumpingWay - 5;
                     if self.pumpingWay == 0 then
                         self.pumpDirection = false;
@@ -820,6 +824,7 @@ function Level:startStartAnimation()
     self.hand:startAnimation();
 end
 
+--- starts the End Animation
 function Level:startEndAnimation()
     if self.levelFinished and not self.animationEnd and not self.failedStart then
         self.animationEnd = true;
