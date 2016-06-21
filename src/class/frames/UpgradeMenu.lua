@@ -99,6 +99,10 @@ function UpgradeMenu:create()
                 TEsound.play({ "assets/sound/buying.wav" }, 'buying');
                 self:buyElement();
                 _G._persistence:updateSaveFile();
+            else
+                if self.elementsOnFrame.chart.object:getMarkedElement().purchaseable then
+                TEsound.play({ "assets/sound/notEnoughMoney.wav" }, 'notEnoughMoney');
+                end
             end
             if not _G._persTable.achievements.shoppingQueen then
                 _gui:getLevelManager():getAchievmentManager():achShoppingQueen();

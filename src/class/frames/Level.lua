@@ -99,6 +99,7 @@ function Level:create()
     end
 
     self.elementsOnFrame.buttonBack.object.OnClick = function(_)
+        TEsound.play({ "assets/sound/buttonPressed.wav" }, 'buttonPressed');
         _gui:changeFrame(_gui:getFrames().mainMenu);
     end
 end

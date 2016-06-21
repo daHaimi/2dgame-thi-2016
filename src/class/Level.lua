@@ -321,6 +321,8 @@ function Level:doEndAnimationMovement(bait, dt)
                 self.p_levelName == "sleepingCrocos" then
             if self.pumpCounter < 4 then
                 if self.pumpDirection then
+                    -- plays wrong sound
+--                    TEsound.play({ "assets/sound/ploempel.wav" }, 'ploempel');
                     self.pumpingWay = self.pumpingWay - 5;
                     if self.pumpingWay == 0 then
                         self.pumpDirection = false;
