@@ -231,6 +231,14 @@ function Achievement:checkCreditsRed(timeSpent)
     end
 end
 
+--- Checks and unlock the onlyOne achievement.
+-- @param reachedDepth The maximal reached depth of one round.
+--function Achievement:checkOnlyOne(reachedDepth)
+--    if math.ceil(math.abs(reachedDepth / 300)) >= 5 and _G._persTable.fish.caughtInOneRound = 1 then
+--        self:unlockAchievement("onlyOne");
+--    end
+--end
+
 --- Unlocks the given achievement.
 -- @param achName The name of the achievement.
 function Achievement:unlockAchievement(achName)

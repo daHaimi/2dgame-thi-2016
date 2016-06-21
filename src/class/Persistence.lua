@@ -134,7 +134,7 @@ function Persistence:createPersTable()
         bMoneyEarnedTotal = false;
         sMoneyEarnedTotal = false;
         gMoneyEarnedTotal = false;
-        onlyOneCaught = false;
+--        onlyOne = false;
         onlyNegativeFishesCaught = false;
         allObjectsAtLeastOnce = false;
         allPillsAtLeastOnce = false;
