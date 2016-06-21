@@ -43,7 +43,7 @@ end
 
 --called in the "fly out" state
 function Frame:disappear(elements)
-    --[[if self.p_moveOutDirection == "up" then
+    if self.p_moveOutDirection == "up" then
         self.p_yOffset = self.p_yOffset - self.p_moveSpeed;
     elseif self.p_moveOutDirection == "down" then
         self.p_yOffset = self.p_yOffset + self.p_moveSpeed;
@@ -54,13 +54,12 @@ function Frame:disappear(elements)
     end
         for _, v in pairs(elements) do
         v:setOffset(self.p_xOffset, self.p_yOffset);
-    end]]
+    end
 end
 
 --- return true if the frame is on position /fly in move is finished
 function Frame:checkPosition()
     if (self.p_xOffset == 0 and self.p_yOffset == 0) then
-        self.p_yOffset = self.p_yDefaultOffset;
         return true;
     else
         return false;

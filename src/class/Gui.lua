@@ -94,11 +94,17 @@ end
 function Gui:changeFrame(newFrame)
     self.onPoint = false;
     self:setFrameChangeActivity(true);
+    if self.p_states.lastState ~= nil then
+        self.p_states.lastState:clear();
+    end
     self.p_states.lastState = self.p_states.currentState;
     self.p_states.currentState = newFrame;
 end
 
 function Gui:draw()
+    if self.p_states.lastState ~= nil then
+        self.p_states.lastState:draw();
+    end
     self.p_states.currentState:draw();
 end
 

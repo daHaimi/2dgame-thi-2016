@@ -52,6 +52,7 @@ function Options:create()
     self.elementsOnFrame.button_reset.gotClicked = function(_)
         _persistence:resetGame();
         self:loadValuesFromPersTable();
+        _gui:changeFrame(_gui:getFrames().mainMenu);
     end
 
     self.elementsOnFrame.button_back.gotClicked = function(_)
