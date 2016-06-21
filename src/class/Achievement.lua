@@ -104,13 +104,14 @@ function Achievement:allObjectsAtLeastOnce()
             _G._persTable.fish.caught.egg > 0 and _G._persTable.fish.caught.cactus > 0 and
             _G._persTable.fish.caught.leaf > 0 and _G._persTable.fish.caught.canyonSnake > 0 and
             _G._persTable.fish.caught.backpack > 0 and _G._persTable.fish.caught.bird > 0 and
-            _G._persTable.fish.caught.squirrel > 0 then
+            _G._persTable.fish.caught.squirrel > 0 and _G._persTable.fish.caught.ufo > 0 then
         self:unlockAchievement("allObjectsAtLeastOnce");
     end
 end
 
 function Achievement:allPillsAtLeastOnce()
-    if _G._persTable.fish.caught.sleepingPill > 0 then
+    if _G._persTable.fish.caught.sleepingPill > 0 and _G._persTable.fish.caught.rainbowPill > 0 and
+        _G._persTable.fish.caught.coffee > 0 then
         self:unlockAchievement("allPillsAtLeastOnce");
     end
 end

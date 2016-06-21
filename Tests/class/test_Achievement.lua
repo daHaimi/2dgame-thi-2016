@@ -338,6 +338,8 @@ describe("Unit test for Achievement.lua", function()
   
     it("Test function Achievement:allPillsAtLeastOnce", function()
         _G._persTable.fish.caught.sleepingPill  = 2;
+        _G._persTable.fish.caught.rainbowPill =1;
+        _G._persTable.fish.caught.coffee = 1;
         local myInstance = testClass();
         local exp = true;
         myInstance:allPillsAtLeastOnce()
@@ -367,6 +369,7 @@ describe("Unit test for Achievement.lua", function()
         _G._persTable.fish.caught.backpack= 1;
         _G._persTable.fish.caught.bird = 1;
         _G._persTable.fish.caught.squirrel = 1;
+        _G._persTable.fish.caught.ufo = 1;
         local myInstance = testClass();
         myInstance.unlockAchievement = function (...) end
         stub(myInstance, "unlockAchievement");
@@ -396,6 +399,7 @@ describe("Unit test for Achievement.lua", function()
         _G._persTable.fish.caught.backpack= 1;
         _G._persTable.fish.caught.bird = 1;
         _G._persTable.fish.caught.squirrel = 1;
+        _G._persTable.fish.caught.ufo = 1;
         local myInstance = testClass();
         local exp = false;
         myInstance.unlockAchievement = function (...) end;
