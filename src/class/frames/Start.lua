@@ -29,7 +29,11 @@ function Start:create()
     self.elementsOnFrame.hamster:SetScale(0.9 * _persTable.scaledDeviceDim[1] / 256, 0.9 * _persTable.scaledDeviceDim[1] / 256);
 
     self.elementsOnFrame.text:SetFont(love.graphics.newFont("font/8bitOperatorPlus-Bold.ttf", 35));
-    self.elementsOnFrame.text:SetText({ { color = { 255, 255, 255, 255 } }, _G.data.languages[_G._persTable.config.language].package.textStart })
+    if love.system.getOS() == "Android" then
+        self.elementsOnFrame.text:SetText({ { color = { 255, 255, 255, 255 } }, _G.data.languages[_G._persTable.config.language].package.textStartMobile })
+    else
+        self.elementsOnFrame.text:SetText({ { color = { 255, 255, 255, 255 } }, _G.data.languages[_G._persTable.config.language].package.textStartDesktop })
+    end
     self.elementsOnFrame.text:SetPos(0.5 * _persTable.scaledDeviceDim[1] - 0.5 * self.elementsOnFrame.text:GetWidth(), 0.75 * _persTable.scaledDeviceDim[2]);
 end
 

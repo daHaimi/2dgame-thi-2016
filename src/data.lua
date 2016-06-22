@@ -1122,7 +1122,8 @@ return {
                 textHiScore = "Your Highscore:";
                 textNewHighscore = "New Highscore";
                 buttonTA = "Try again";
-                textStart = "Click to start!";
+                textStartDesktop = "Click to start!";
+                textStartMobile = "Tap to start!";
                 buttonChangeLevel = "Change level";
                 textPrice = "Price: ";
                 textMoney = "Not enough Money!";
@@ -1426,7 +1427,8 @@ return {
                 textScore = "Punktestand:";
                 textHiScore = "Dein Rekord:";
                 textNewHighscore = "Neuer Rekord";
-                textStart = "Klicken zum Starten!";
+                textStartDestop = "Klicken zum Starten!";
+                textStartMobile = "Drücken zum Starten!";
                 buttonChangeLevel = "Levelauswahl";
                 textPrice = "Preis: ";
                 textMoney = "Nicht genug Geld!";

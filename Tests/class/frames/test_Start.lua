@@ -19,8 +19,12 @@ describe("Unit test for Start.lua", function()
         _G.love = {
             graphics = {
                 newFont = function(...) end;
-            }
+            };
+            system = {
+            getOS = function(...) return "Android"; end;
+            };
         }
+
         _G.data = {
             languages= {
                 english = {
