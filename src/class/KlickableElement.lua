@@ -7,7 +7,7 @@ local KlickableElement = Class {
         self.name = name;
         self.enable = true;
         self.image = love.graphics.newImage(imagepath);
-        if imagepath_disable ~= nil then
+        if image_disable ~= nil then
             self.image_disable = love.graphics.newImage(imagepath_disable);
         end
         self.price = price;
@@ -33,14 +33,14 @@ end
 function KlickableElement:reset()
     self.enable = true;
     self.purchaseable = true;
-    self.object:SetImage(self.image);
+    self.object:setImage(love.graphics.newImage(self.image));
 end
 
 --- i.e. represents an upgrade buy
 function KlickableElement:disable()
     self.enable = false;
     self.purchaseable = false;
-    self.object:SetImage(self.image_disable);
+    self.object:setImage(self.image_disable);
     if _persTable.upgrades[self.nameOnPersTable] ~= nil then
         _persTable.upgrades[self.nameOnPersTable] = true;
     end
@@ -50,7 +50,7 @@ end
 function KlickableElement:lock()
     self.enable = true;
     self.purchaseable = false;
-    self.object:SetImage(self.imagepath_disable);
+    self.object:setImage(self.image_disable);
 end
 
 --- Function not conform to CC/ implements an interface

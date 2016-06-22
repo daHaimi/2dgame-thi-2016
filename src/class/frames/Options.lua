@@ -40,6 +40,7 @@ function Options:create()
 
     --onclick events for all buttons
     self.elementsOnFrame.button_reset.gotClicked = function(_)
+        TEsound.play({ "assets/sound/buttonPressed.wav" }, 'buttonPressed');
         _persistence:resetGame();
         self:loadValuesFromPersTable();
         _gui:changeFrame(_gui:getFrames().mainMenu);
