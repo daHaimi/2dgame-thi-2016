@@ -66,8 +66,8 @@ function Achievement:fishCaughtTotal()
 end
 
 --- Checks the achievements for game started twice
-function Achievement:secondStart()
-    if _G._persistence.loaded then
+function Achievement:secondStart()  
+    if _G._persistence.loaded == true and not _G._persTable.achievements.secondStart then
         self:unlockAchievement("secondStart");
     end
 end

@@ -24,7 +24,7 @@ local Persistence = Class {
         -- if you want to clear the contents of the file manually use:
         -- 1) tmpfile:close();
         -- 2) tmpfile = io.open("tmp.lua", "w+");
-        io.open("tmp.lua", "w+");
+        --io.open("tmp.lua", "w+");
     end
 };
 
