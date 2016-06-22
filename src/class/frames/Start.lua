@@ -4,21 +4,13 @@ local Start = Class {
     init = function(self)
         self.speed = 20;
         self.name = "start";
-        self.x = 0.05 * _persTable.scaledDeviceDim[1];
-        self.y = 0.2 * _persTable.scaledDeviceDim[2];
         self.title = love.graphics.newImage("assets/gui/title.png")
         self.hamster = love.graphics.newImage("assets/gui/hamster.png")
-        self.text = ""
+        self.text = _G.data.languages[_G._persTable.config.language].package.textStart;
         self.blinkTimer = 10;
         self.offset = _persTable.winDim[1];
-        self:create();
     end;
 };
-
---- creates the Start frame
-function Start:create()
-    self.text= _G.data.languages[_G._persTable.config.language].package.textStart;
-end
 
 function Start:mousepressed(x, y)
     _gui:changeFrame(_gui:getFrames().mainMenu);
@@ -58,6 +50,7 @@ end
 
 --- called to "delete" this frame
 function Start:clear()
+    self.offset = _persTable.winDim[1];
 end
 
 --- called in the "fly in" state

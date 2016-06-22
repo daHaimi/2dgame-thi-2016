@@ -13,20 +13,27 @@ describe("Unit test for UpgradeMenu.lua", function()
         _G.love = {
             mouse = {
                 setVisible = function(...) end;
-            };
+            },
+            graphics = {
+                newImage = function(...) return {
+                    getHeight = function (...) return 50 end;
+                    getWidth = function (...) return 50 end;
+                } end;
+                draw = function (...) end;
+                getFont = function (...) return "a Font" end;
+                newFont = function (...) end;
+                setFont = function (...) end;
+                printf = function (...) end;
+                setColor = function (...) end;
+            }
         };
-        _G.Loveframes = {
-            Create = function(typeName) 
-                return fakeElement(typeName);
-            end
-        }
         _G.Frame = function(...) return Frame; end;
         _G._persTable = {
             upgrades = {
                 test1 = false;
             };
             money = 0;
-            scaledDeviceDim = {
+            winDim = {
                 [1] = 500;
                 [2] = 500;
             };
@@ -69,36 +76,17 @@ end)
 
     it("Testing Constructor", function()
         local myInstance = testClass();
+        
+        locInstance.background = "background";
+        locInstance.imageButton = "imageButton";
+        locInstance.imageButtonLocked = "imageButtonLocked";
         locInstance.elementsOnFrame = {};
+        
+        myInstance.background = "background";
+        myInstance.imageButton = "imageButton";
+        myInstance.imageButtonLocked = "imageButtonLocked";
         myInstance.elementsOnFrame = {};
-        assert.are.same(locInstance, myInstance);
-    end)
-
-    it("Testing Constructor", function()
-        _G._persTable = {
-            scaledDeviceDim = {640, 950};
-            config = {
-                language = "english";
-            }
-        };
-        locInstance = testClass();
-        local myInstance = testClass();
-        locInstance.elementsOnFrame = {};
-        myInstance.elementsOnFrame = {};
-        assert.are.same(locInstance, myInstance);
-    end)
-
-    it("Testing Constructor", function()
-        _G._persTable = {
-            scaledDeviceDim = {720, 1024};
-            config = {
-                language = "english";
-            }
-        };
-        locInstance = testClass();
-        local myInstance = testClass();
-        locInstance.elementsOnFrame = {};
-        myInstance.elementsOnFrame = {};
+        
         assert.are.same(locInstance, myInstance);
     end)
 
@@ -132,14 +120,14 @@ end)
         assert.spy(locInstance.loadValuesFromPersTable).was.called();
 
         spy.on(_G._gui, "changeFrame");
-        locInstance.elementsOnFrame.button_back.object.OnClick();
+        locInstance.elementsOnFrame.button_back.gotClicked();
         assert.spy(_gui.changeFrame).was.called();
         
-        locInstance.elementsOnFrame.chart.object.p_markedElement = locInstance.elementsOnFrame.chart.object.p_elementsOnChart[1];
+        locInstance.elementsOnFrame.chart.p_markedElement = locInstance.elementsOnFrame.chart.p_elementsOnChart[1];
        
-        locInstance.elementsOnFrame.chart.object.p_markedElement = ME;
+        locInstance.elementsOnFrame.chart.p_markedElement = ME;
         stub(locInstance, "buyElement");
-        locInstance.elementsOnFrame.button_buy.object.OnClick();
+        locInstance.elementsOnFrame.button_buy.gotClicked();
         assert.stub(locInstance.buyElement).was.called();
         assert.are.same(true, achBitchCalled);
         assert.are.same(true, achShoppingQueen);
@@ -152,15 +140,15 @@ end)
         }
         
         
-        locInstance.elementsOnFrame.chart.object.p_markedElement = KE;
+        locInstance.elementsOnFrame.chart.p_markedElement = KE;
         locInstance.elementsOnFrame.chart.getMarkedElement = function(...) 
-            return locInstance.elementsOnFrame.chart.object.p_markedElement; 
+            return locInstance.elementsOnFrame.chart.p_markedElement; 
         end;
         
         stub(locInstance, "checkForAchievement");
-        stub(locInstance.elementsOnFrame.chart.object.p_markedElement, "disable");
+        stub(locInstance.elementsOnFrame.chart.p_markedElement, "disable");
         locInstance:buyElement();
-        assert.stub(locInstance.elementsOnFrame.chart.object.p_markedElement.disable).was.called();
+        assert.stub(locInstance.elementsOnFrame.chart.p_markedElement.disable).was.called();
     end)
 
     it("Testing addAllUpgrades function", function()
@@ -198,23 +186,23 @@ end)
           price = 10;
           };
         
-        locInstance.elementsOnFrame.chart.object.p_markedElement = KE;
+        locInstance.elementsOnFrame.chart.p_markedElement = KE;
 
         
         locInstance:addAllUpgrades();
-        locInstance.elementsOnFrame.chart.object.p_elementsOnChart[1].object = {};
-        locInstance.elementsOnFrame.chart.object.p_elementsOnChart[2].object = {};
+        locInstance.elementsOnFrame.chart.p_elementsOnChart[1].object = {};
+        locInstance.elementsOnFrame.chart.p_elementsOnChart[2].object = {};
         local KE1 = KlickableElement("test1", "path1", "path2", "test1", 1, "test1");
         local KE2 = KlickableElement("test2", "path3", "path4", "test2", 2, "test2");
         KE1.object = {};
         KE2.object = {};
-        assert.not_same(locInstance.elementsOnFrame.chart.object.p_elementsOnChart, {KE2, KE1});
+        assert.not_same(locInstance.elementsOnFrame.chart.p_elementsOnChart, {KE2, KE1});
     end)
 
     it("Testing draw function", function()
-        stub(locInstance.frame, "draw");
+        local loveMock = mock (love.graphics, true);
         locInstance:draw();
-        assert.stub(locInstance.frame.draw).was_called(1);
+        assert.spy(loveMock.draw).was_called(6);
     end)
 
     it("Testing clear function", function()
@@ -276,8 +264,8 @@ end)
         };
         locInstance:addAllUpgrades();
         locInstance:loadValuesFromPersTable();
-        assert.equal(locInstance.elementsOnFrame.chart.object.p_elementsOnChart[1].enable, true);
-        assert.equal(locInstance.elementsOnFrame.chart.object.p_elementsOnChart[2].enable, false);
+        assert.equal(locInstance.elementsOnFrame.chart.p_elementsOnChart[1].enable, true);
+        assert.equal(locInstance.elementsOnFrame.chart.p_elementsOnChart[2].enable, false);
     end)
 
 end)

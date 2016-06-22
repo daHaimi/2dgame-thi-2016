@@ -4,6 +4,7 @@ _G.math.inf = 1 / 0
 testClass = require "src.class.frames.inGame";
 fakeElement = require "Tests.fakeLoveframes.fakeElement";
 Frame = require "class.Frame";
+ImageButton = require "src.class.ImageButton";
 
 
 describe("Unit test for inGame.lua", function()
@@ -17,6 +18,18 @@ describe("Unit test for inGame.lua", function()
             },
             system = {
                 getOS = function(...) return ""; end;
+            },
+            graphics = {
+                newImage = function(...) return {
+                    getHeight = function (...) return 50 end;
+                    getWidth = function (...) return 50 end;
+                } end;
+                draw = function (...) end;
+                getFont = function (...) return "a Font" end;
+                newFont = function (...) end;
+                setFont = function (...) end;
+                printf = function (...) end;
+                setColor = function (...) end;
             }
         };
         _G.Loveframes = {
@@ -41,36 +54,19 @@ describe("Unit test for inGame.lua", function()
 
     it("Testing Constructor", function()
         local myInstance = testClass();
+        
         locInstance.elementsOnFrame = {};
+        locInstance.barFuel = "barFuel";
+        locInstance.button = "button";
+        locInstance.fuelBar = "fuelBar";
+        locInstance.fuelBarBackground = "fuelBarBackground";
+        
         myInstance.elementsOnFrame = {};
-        assert.are.same(locInstance, myInstance);
-    end)
-
-it("Testing Constructor", function()
-        _G._persTable = {
-            upgrades = {
-                moreLife = 1;
-            },
-            scaledDeviceDim = {640, 950};
-        };
-        locInstance = testClass();
-        local myInstance = testClass();
-        locInstance.elementsOnFrame = {};
-        myInstance.elementsOnFrame = {};
-        assert.are.same(locInstance, myInstance);
-    end)
-
-    it("Testing Constructor", function()
-        _G._persTable = {
-            upgrades = {
-                moreLife = 1;
-            },
-            scaledDeviceDim = {720, 1024};
-        };
-        locInstance = testClass();
-        local myInstance = testClass();
-        locInstance.elementsOnFrame = {};
-        myInstance.elementsOnFrame = {};
+        myInstance.barFuel = "barFuel";
+        myInstance.button = "button";
+        myInstance.fuelBar = "fuelBar";
+        myInstance.fuelBarBackground = "fuelBarBackground";
+        
         assert.are.same(locInstance, myInstance);
     end)
 
@@ -84,24 +80,16 @@ it("Testing Constructor", function()
     end)
 
     it("Testing draw function", function()
-        _G._gui = {
-            myFrames = {
-                pause = "teststring";
-            };
-            getLastState = function(...) return _G._gui.myFrames.pause; end;
-        };
-        _gui.getFrames = function(...) return _G._gui.myFrames; end;
-        stub(locInstance.elementsOnFrame.healthbar.object, "SetVisible");
-        stub(locInstance.elementsOnFrame.pause.object, "SetVisible");
+        local loveMock = mock(love.graphics, true);
+        locInstance.drawBar = true;
         locInstance:draw();
-        assert.stub(locInstance.elementsOnFrame.healthbar.object.SetVisible).was_called(1);
-        assert.stub(locInstance.elementsOnFrame.pause.object.SetVisible).was_called(1);
+        assert.spy(loveMock.draw).was_called(7);
     end)
 
     it("Testing activate function", function()
         stub(locInstance.frame, "draw");
         locInstance:activate();
-        assert.stub(locInstance.frame.draw).was_called(1);
+        assert.are.same(locInstance.drawBar, true);
     end)
     
     it("Testing clear function", function()

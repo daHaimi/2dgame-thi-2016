@@ -16,11 +16,6 @@ local Frame = Class {
 
 --- Call to set all Elements invisible and reset the x/yOffset
 function Frame:clear(elements)
-    for _, v in pairs(elements) do
-        if v.object ~= nil then
-            v.object:SetVisible(false);
-        end
-    end
     self.p_xOffset = self.p_xDefaultOffset;
     self.p_yOffset = self.p_yDefaultOffset;
 end

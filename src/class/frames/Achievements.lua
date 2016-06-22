@@ -2,6 +2,7 @@ Class = require "lib.hump.class";
 Frame = require "class.Frame";
 Chart = require "class.Chart";
 KlickableElement = require "class.KlickableElement";
+ImageButton = require "class.ImageButton";
 
 local Achievements = Class {
     init = function(self)

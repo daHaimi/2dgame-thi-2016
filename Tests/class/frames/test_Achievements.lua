@@ -16,6 +16,19 @@ describe("Unit test for Achievements.lua", function()
             mouse = {
                 setVisible = function(...) end;
             };
+            
+            graphics = {
+                newImage = function(...) return {
+                    getHeight = function (...) return 50 end;
+                    getWidth = function (...) return 50 end;
+                } end;
+                draw = function (...) end;
+                getFont = function (...) return "a Font" end;
+                newFont = function (...) end;
+                setFont = function (...) end;
+                printf = function (...) end;
+                setColor = function (...) end;
+            }
         };
         
         _G.Loveframes = {
@@ -38,7 +51,7 @@ describe("Unit test for Achievements.lua", function()
             }
         }
         _G._persTable = {
-            scaledDeviceDim = {500, 500};
+            winDim = {500, 500};
         };
         _G.Frame = function(...) return Frame; end;
 
@@ -48,30 +61,15 @@ describe("Unit test for Achievements.lua", function()
 
     it("Testing Constructor", function()
         local myInstance = testClass();
+        
         locInstance.elementsOnFrame = {};
+        locInstance.imageButton = "imageButton";
+        locInstance.background = "background";
+        
         myInstance.elementsOnFrame = {};
-        assert.are.same(locInstance, myInstance);
-    end)
-
-    it("Testing Constructor", function()
-        _G._persTable = {
-            scaledDeviceDim = {640, 950};
-        };
-        locInstance = testClass();
-        local myInstance = testClass();
-        locInstance.elementsOnFrame = {};
-        myInstance.elementsOnFrame = {};
-        assert.are.same(locInstance, myInstance);
-    end)
-
-    it("Testing Constructor", function()
-        _G._persTable = {
-            scaledDeviceDim = {720, 1024};
-        };
-        locInstance = testClass();
-        local myInstance = testClass();
-        locInstance.elementsOnFrame = {};
-        myInstance.elementsOnFrame = {};
+        myInstance.imageButton = "imageButton";
+        myInstance.background = "background";
+        
         assert.are.same(locInstance, myInstance);
     end)
 
@@ -89,7 +87,7 @@ describe("Unit test for Achievements.lua", function()
         assert.spy(locInstance.loadValuesFromPersTable).was.called();
 
         spy.on(_G._gui, "changeFrame");
-        locInstance.elementsOnFrame.button_back.object.OnClick();
+        locInstance.elementsOnFrame.button_back.gotClicked();
         assert.spy(_gui.changeFrame).was.called();
     end)
 
@@ -116,13 +114,13 @@ describe("Unit test for Achievements.lua", function()
         };
         
         locInstance:addAllAchievements();
-        locInstance.elementsOnFrame.chart.object.p_elementsOnChart[1].object = {};
-        locInstance.elementsOnFrame.chart.object.p_elementsOnChart[2].object = {};
+        locInstance.elementsOnFrame.chart.p_elementsOnChart[1].object = {};
+        locInstance.elementsOnFrame.chart.p_elementsOnChart[2].object = {};
         local KE1 = KlickableElement("test1", "path1", "path2", "test1", nil, "test1");
         local KE2 = KlickableElement("test2", "path3", "path4", "test2", nil, "test2");
         KE1.object = {};
         KE2.object = {};
-        assert.not_same(locInstance.elementsOnFrame.chart.object.p_elementsOnChart, {KE1, KE2});
+        assert.not_same(locInstance.elementsOnFrame.chart.p_elementsOnChart, {KE1, KE2});
     end)
 
     it("Testing loadValuesFromPersTable function", function()
@@ -157,14 +155,14 @@ describe("Unit test for Achievements.lua", function()
         locInstance:addAllAchievements();
         locInstance:loadValuesFromPersTable();
 
-        assert.equal(locInstance.elementsOnFrame.chart.object.p_elementsOnChart[1].enable, false);
-        assert.equal(locInstance.elementsOnFrame.chart.object.p_elementsOnChart[2].enable, true);
+        assert.equal(locInstance.elementsOnFrame.chart.p_elementsOnChart[1].enable, false);
+        assert.equal(locInstance.elementsOnFrame.chart.p_elementsOnChart[2].enable, true);
     end)
 
     it("Testing draw function", function()
-        stub(locInstance.frame, "draw");
+        local loveMock = mock(love.graphics, true);
         locInstance:draw();
-        assert.stub(locInstance.frame.draw).was_called(1);
+        assert.spy(loveMock.draw).was_called(5);
     end)
 
     it("Testing clear function", function()

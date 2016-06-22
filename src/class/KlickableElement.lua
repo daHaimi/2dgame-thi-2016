@@ -1,5 +1,6 @@
 --- a klickableElement represents an achievement, wikielement or an upgrade
 Class = require "lib.hump.class";
+ImageButton = require "class.ImageButton";
 
 local KlickableElement = Class {
     init = function(self, name, imagepath, imagepath_disable, description, price, nameOnPersTable, sortNumber)
@@ -21,6 +22,7 @@ local KlickableElement = Class {
     end;
 };
 
+--- function will be called when clicked
 function KlickableElement:gotClicked()
     _gui.p_states.currentState.elementsOnFrame.chart:markElement(self);
 end
@@ -65,10 +67,13 @@ function KlickableElement:getY()
     return y;
 end
 
+--- draws the klickable element
 function KlickableElement:draw()
     self.object:draw();
 end
 
+--- returns the size of the klickable element
+--@return width, height
 function KlickableElement:getSize()
     return self.object:getSize();
 end

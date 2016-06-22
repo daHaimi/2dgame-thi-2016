@@ -1,5 +1,6 @@
 Class = require "lib.hump.class";
 AchievementDisplay = require "class.AchievementDisplay";
+ImageButton = require "class.ImageButton";
 
 local Score = Class {
     init = function(self)

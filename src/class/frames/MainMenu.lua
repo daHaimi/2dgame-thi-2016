@@ -14,7 +14,7 @@ local MainMenu = Class {
         self.buttonDistance = 10;
         self.flagWidth = 120;
         self.name = "Main Menu";
-        self.frame = Frame(0, 0, "down", "down", 50, 0, -1500);
+        self.frame = Frame(0, 0, "down", "down", 50, 0, -2000);
         self:create();
     end;
 };

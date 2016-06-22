@@ -1,4 +1,5 @@
 Class = require "lib.hump.class";
+ImageButton = require "class.ImageButton";
 
 local Credits = Class {
     init = function(self)
@@ -112,8 +113,8 @@ function Credits:draw()
     
     -- print the text
     love.graphics.setFont(love.graphics.newFont("font/8bitOperatorPlus-Bold.ttf", 16));
-    love.graphics.printf(self:buildCreditsString(),_G._persTable.winDim[1]*0.25,
-        100 + y, _G._persTable.winDim[1], "left");
+    love.graphics.printf(self:buildCreditsString(),(_G._persTable.winDim[1] - self.background:getWidth())/2 + 40,
+        100 + y, self.background:getWidth() - 80, "left");
     love.graphics.setFont(font);
     
     -- draw the buttons

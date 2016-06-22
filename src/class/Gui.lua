@@ -35,7 +35,6 @@ local Gui = Class {
         };
         self.p_textOutput = "";
         self.notification = Notification();
-        self.onPoint = false;
     end;
     levMan = nil;
     achMan = nil;
@@ -92,7 +91,6 @@ end
 --- called to draw a new frame
 -- @parm : newFrame: the frame which should be draw
 function Gui:changeFrame(newFrame)
-    self.onPoint = false;
     self:setFrameChangeActivity(true);
     if self.p_states.lastState ~= nil then
         self.p_states.lastState:clear();
@@ -102,7 +100,7 @@ function Gui:changeFrame(newFrame)
 end
 
 function Gui:draw()
-    if self.p_states.lastState ~= nil then
+    if self.p_states.lastState ~= nil and self.p_frameChangeActiv then
         self.p_states.lastState:draw();
     end
     self.p_states.currentState:draw();
@@ -111,15 +109,14 @@ end
 --- updates the gui. called in the love.update function
 function Gui:update()
     self:draw()
-    if not self.onPoint then
-        self.onPoint = self.p_states.currentState:checkPosition()
-    end
     if self.p_frameChangeActiv then
-        if (not self.onPoint) then
-            self.p_states.currentState:appear();
-            if self.p_states.lastState ~= nil then
-                self.p_states.lastState:disappear();
-            end
+        self.p_frameChangeActiv = not self.p_states.currentState:checkPosition();
+    end
+    
+    if self.p_frameChangeActiv then
+        self.p_states.currentState:appear();
+        if self.p_states.lastState ~= nil then
+            self.p_states.lastState:disappear();
         end
     end
     if self.p_states.currentState == self.p_myFrames.start then

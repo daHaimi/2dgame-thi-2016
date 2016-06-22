@@ -1,4 +1,5 @@
 Class = require "lib.hump.class";
+ImageButton = require "class.ImageButton";
 Healthbar = require "class.Healthbar";
 
 local InGame = Class {
@@ -26,7 +27,7 @@ function InGame:create()
     
     ---set position of pause button
     local _, height = self.elementsOnFrame.pause:getSize();
-    self.elementsOnFrame.pause:setPosition(0, _G._persTable.scaledDeviceDim[2] - height);
+    self.elementsOnFrame.pause:setPosition(0, _G._persTable.winDim[2] - height);
 
     --set image of pause button only on mobile version
     self.elementsOnFrame.pause:setText("");
@@ -64,7 +65,7 @@ function InGame:draw()
         love.graphics.draw(self.fuelBarBackground, 10, 10 + y);
         love.graphics.draw(self.fuelBar, self.fuelBarPosition, 10 + y);
         love.graphics.draw(self.barFuel, 0, 0 + y);
-        if love.system.getOS() == "Android" or love.system.getOS() == "iOS" then
+        if love.system.getOS() == "Android" or love.system.getOS() == "iOS"  or true then
             self.elementsOnFrame.pause:draw();
         end
         self.elementsOnFrame.healthbar:draw();
@@ -91,6 +92,7 @@ end
 
 --- called in the "fly out" state
 function InGame:disappear()
+    love.mouse.setGrabbed(false);
     self.frame:disappear(self.elementsOnFrame);
 end
 

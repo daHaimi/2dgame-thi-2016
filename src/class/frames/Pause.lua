@@ -1,10 +1,10 @@
 Class = require "lib.hump.class";
+ImageButton = require "class.ImageButton";
 
 local Pause = Class {
     init = function(self)
         self.background = love.graphics.newImage("assets/gui/StandardBG.png");
         self.imageButton = love.graphics.newImage("assets/gui/button.png");
-        self.imageFlag = love.graphics.newImage("assets/gui/" .. _G.data.languages[_persTable.config.language].flagImage);
         self.buttonHeight = self.imageButton:getHeight();
         self.buttonWidth = self.imageButton:getWidth();
         self.buttonXPosition = (_G._persTable.winDim[1] - self.buttonWidth) / 2;

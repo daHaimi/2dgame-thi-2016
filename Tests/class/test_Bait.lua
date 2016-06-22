@@ -104,13 +104,12 @@ describe("Unit test for Bait.lua", function()
                 inGame = {
                     elementsOnFrame = {
                         healthbar = {
-                            object = {
-                                minus = function(...) end;
-                            };
+                            minus = function(...) end;
                         };
                     };
                 };
             };
+            getFrames = function(...) return _G._gui.myFrames end;
         };
         _G._gui.getFrames = function(...) return _G._gui.myFrames; end;
         locInstance = testClass(locWinDim, levMan);

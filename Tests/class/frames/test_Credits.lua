@@ -4,6 +4,7 @@ _G.math.inf = 1 / 0
 testClass = require "src.class.frames.Credits";
 fakeElement = require "Tests.fakeLoveframes.fakeElement";
 Frame = require "class.Frame";
+ImageButton = require "class.ImageButton";
 
 
 describe("Unit test for Credits.lua", function()
@@ -11,17 +12,24 @@ describe("Unit test for Credits.lua", function()
 
     before_each(function()
         _G.love = {
-        mouse = {
-            setVisible = function(...) end;
+            mouse = {
+                setVisible = function(...) end;
             };
+            graphics = {
+                newImage = function(...) return {
+                    getHeight = function (...) return 50 end;
+                    getWidth = function (...) return 50 end;
+                } end;
+                draw = function (...) end;
+                getFont = function (...) return "a Font" end;
+                newFont = function (...) end;
+                setFont = function (...) end;
+                printf = function (...) end;
+                setColor = function (...) end;
+            }
         };
-        _G.Loveframes = {
-            Create = function(typeName) 
-                return fakeElement(typeName);
-            end
-        }
         _G._persTable = {
-            scaledDeviceDim = {
+            winDim = {
                 [1] = 500;
                 [2] = 500;
             };
@@ -69,40 +77,30 @@ describe("Unit test for Credits.lua", function()
         locInstance:create();
 
         spy.on(_G._gui, "changeFrame");
-        locInstance.elementsOnFrame.button_back.object.OnClick();
+        locInstance.elementsOnFrame.button_back.gotClicked();
         assert.spy(_gui.changeFrame).was.called();
     end)
 
     it("Testing Constructor", function()
         local myInstance = testClass();
-        myInstance.elementsOnFrame.button_back.object.OnClick = {};
-        locInstance.elementsOnFrame.button_back.object.OnClick = {};
-        assert.are.same(locInstance, myInstance);
-    end)
-it("Testing Constructor", function()
-        _G._persTable.scaledDeviceDim = {640, 950};
-
-        locInstance = testClass();
-        local myInstance = testClass();
-        myInstance.elementsOnFrame.button_back.object.OnClick = {};
-        locInstance.elementsOnFrame.button_back.object.OnClick = {};
-        assert.are.same(locInstance, myInstance);
-    end)
-
-it("Testing Constructor", function()
-        _G._persTable.scaledDeviceDim = {720, 1024};
-
-        locInstance = testClass();
-        local myInstance = testClass();
-        myInstance.elementsOnFrame.button_back.object.OnClick = {};
-        locInstance.elementsOnFrame.button_back.object.OnClick = {};
+        
+        myInstance.elementsOnFrame.button_back.gotClicked = {};
+        myInstance.elementsOnFrame.button_back.image = "image";
+        myInstance.background = "background";
+        myInstance.imageButton = "imageButton";
+        
+        locInstance.elementsOnFrame.button_back.gotClicked = {};
+        locInstance.elementsOnFrame.button_back.image = "image";
+        locInstance.background = "background";
+        locInstance.imageButton = "imageButton";
+        
         assert.are.same(locInstance, myInstance);
     end)
 
     it("Testing draw function", function()
-        stub(locInstance.frame, "draw");
+        local loveMock = mock(love.graphics, true);
         locInstance:draw();
-        assert.stub(locInstance.frame.draw).was_called(1);
+        assert.spy(loveMock.draw).was_called(2);
     end)
 
     it("Testing clear function", function()
@@ -121,6 +119,7 @@ it("Testing Constructor", function()
     it("Testing disappear function", function()
         local creditsAchCalled = false;
         local achBitchAchCalled = false;
+        locInstance.startTime = 0;
         
         _G._gui = {
             getLevelManager = function(...) return {

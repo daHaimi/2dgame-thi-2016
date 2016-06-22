@@ -22,6 +22,7 @@ describe("Test Gui", function()
 
     before_each(function()
         _G._persTable = {
+            winDim = { 480, 900 };
             scaledDeviceDim = { 480, 900 };
             config = {
                 bgm = 50;
@@ -77,7 +78,11 @@ describe("Test Gui", function()
                 getOS = function(...) return ""; end;
             },
             graphics = {
-                newFont = function(...) return {}; end;
+                newFont = function(...) return {}; end;newImage = function(...) return {
+                    getHeight = function (...) return 50 end;
+                    getWidth = function (...) return 50 end;
+                }
+                end;
             }
         };
         _G.Loveframes = {
@@ -86,18 +91,22 @@ describe("Test Gui", function()
                 SetActiveSkin = function(...) end;
             }
         }
+
         locInstance = testClass();
     end)
 
     it("Testing Constructor", function()
         local myInstance = testClass();
         for _, v in pairs(myInstance.p_myFrames) do
-            v.elementsOnFrame = {};
+            v = {};
         end
         for _, v in pairs(locInstance.p_myFrames) do
-            v.elementsOnFrame = {};
+            v = {};
         end
-        assert.are.same(locInstance, myInstance);
+        assert.are.same(locInstance.notification, myInstance.notification);
+        assert.are.same(locInstance.p_frameChangeActiv, myInstance.p_frameChangeActiv);
+        assert.are.same(locInstance.p_states, myInstance.p_states);
+        assert.are.same(locInstance.p_textOutput, myInstance.p_textOutput);
     end)
 
     it("Testing getFrames function", function()
@@ -140,7 +149,6 @@ describe("Test Gui", function()
         assert.stub(locInstance.setFrameChangeActivity).was_called();
         assert.are.equal(locInstance.p_states.lastState, "state1");
         assert.are.same(locInstance.p_states.currentState, state);
-        assert.stub(state.draw).was_called();
     end)
 
     it("Testing update function", function()
@@ -163,6 +171,7 @@ describe("Test Gui", function()
         stub(state, "update");
         stub(locInstance, "setFrameChangeActivity");
         stub(locInstance.notification, "update");
+        stub(locInstance, "draw");
         spy.on(state, "checkPosition");
         spy.on(locInstance, "drawGame");
 
@@ -178,9 +187,6 @@ describe("Test Gui", function()
         state.onPos = true;
         locInstance:update();
         assert.stub(state.appear).was_called();
-        assert.stub(locInstance.setFrameChangeActivity).was_called();
-        assert.stub(state.clear).was_called();
-
 
         locInstance.p_myFrames.inGame = state;
         locInstance.p_states.currentState = state;

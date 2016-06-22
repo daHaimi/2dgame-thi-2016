@@ -1,6 +1,6 @@
 --- Chart contains a table with clickable elements and a textfield
 Class = require "lib.hump.class";
-TextField = require "class.TextField";
+ImageButton = require "class.ImageButton";
 
 local Chart = Class {
     init = function(self)
@@ -74,8 +74,7 @@ function Chart:scrollUp()
         if self.p_markedElement ~= nil then
             self.markPosition[2] = self.markPosition[2] + self.klickableSize;
             if self.markPosition[2] > self.backgroundPosition[2] + self.buttonHeight + 3 * self.klickableSize then
-                self.markPosition = {nil, nil}
-                self.p_markedElement = nil;
+                self:resetMarkedFrame();
             end
         end
     end
@@ -88,8 +87,7 @@ function Chart:scrollDown()
         if self.markPosition[1] ~= nil then
             self.markPosition[2] = self.markPosition[2] - self.klickableSize;
             if self.markPosition[2] < self.backgroundPosition[2] then
-                self.markPosition = {nil, nil}
-                self.p_markedElement = nil;
+                self:resetMarkedFrame();
             end
         end
     end

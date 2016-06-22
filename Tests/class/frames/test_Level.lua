@@ -28,16 +28,25 @@ describe("Unit test for Level.lua", function()
         }
         
         _G.love = {
-            graphics = {
-                newImage = function (...) end;
-            };
             mouse = {
                 setVisible = function(...) end;
-            };
+            },
+            graphics = {
+                newImage = function(...) return {
+                    getHeight = function (...) return 50 end;
+                    getWidth = function (...) return 50 end;
+                } end;
+                draw = function (...) end;
+                getFont = function (...) return "a Font" end;
+                newFont = function (...) end;
+                setFont = function (...) end;
+                printf = function (...) end;
+                setColor = function (...) end;
+            }
         };
 
         _G._persTable = {
-            scaledDeviceDim = {
+            winDim = {
                 [1] = 500;
                 [2] = 500;
             };
@@ -49,30 +58,21 @@ describe("Unit test for Level.lua", function()
 
     it("Testing Constructor", function()
         local myInstance = testClass();
+        
         locInstance.elementsOnFrame = {};
+        locInstance.imageButton = "imageButton";
+        locInstance.imageHouse = "imageHouse";
+        locInstance.imageCanyonLocked =  "imageCanyonLocked";
+        locInstance.imageCanyonUnlocked = "imageCanyonUnlocked";
+        locInstance.background = "background";
+        
         myInstance.elementsOnFrame = {};
-        assert.are.same(locInstance, myInstance);
-    end)
-
-it("Testing Constructor", function()
-        _G._persTable = {
-            scaledDeviceDim = {640, 950};
-        };
-        locInstance = testClass();
-        local myInstance = testClass();
-        locInstance.elementsOnFrame = {};
-        myInstance.elementsOnFrame = {};
-        assert.are.same(locInstance, myInstance);
-    end)
-
-it("Testing Constructor", function()
-        _G._persTable = {
-            scaledDeviceDim = {720, 1024};
-        };
-        locInstance = testClass();
-        local myInstance = testClass();
-        locInstance.elementsOnFrame = {};
-        myInstance.elementsOnFrame = {};
+        myInstance.imageButton = "imageButton";
+        myInstance.imageHouse = "imageHouse";
+        myInstance.imageCanyonLocked =  "imageCanyonLocked";
+        myInstance.imageCanyonUnlocked = "imageCanyonUnlocked";
+        myInstance.background = "background";
+        
         assert.are.same(locInstance, myInstance);
     end)
 
@@ -95,16 +95,16 @@ it("Testing Constructor", function()
         locInstance:create();
 
         spy.on(_G._gui, "changeFrame");
-        locInstance.elementsOnFrame.buttonBack.object.OnClick();
-        locInstance.elementsOnFrame.buttonHouse.object.OnClick();
-        locInstance.elementsOnFrame.buttonCanyon.object.OnClick();
+        locInstance.elementsOnFrame.button_back.gotClicked();
+        locInstance.elementsOnFrame.buttonHouse.gotClicked();
+        locInstance.elementsOnFrame.buttonCanyon.gotClicked();
         assert.spy(_gui.changeFrame).was.called(3);
     end)
 
     it("Testing draw function", function()
-        stub(locInstance.frame, "draw");
+        local loveMock = mock(love.graphics, true);
         locInstance:draw();
-        assert.stub(locInstance.frame.draw).was_called(1);
+        assert.spy(loveMock.draw).was_called(4);
     end)
 
     it("Testing clear function", function()

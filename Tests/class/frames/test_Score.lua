@@ -4,6 +4,8 @@ _G.math.inf = 1 / 0
 testClass = require "src.class.frames.Score";
 fakeElement = require "Tests.fakeLoveframes.fakeElement";
 Frame = require "class.Frame";
+Imagebutton = require "class.ImageButton";
+
 Data = require "data";
 
 
@@ -16,6 +18,18 @@ describe("Unit test for Score.lua", function()
             mouse = {
                 setVisible = function(...) end;
             };
+             graphics = {
+                newImage = function(...) return {
+                    getHeight = function (...) return 50 end;
+                    getWidth = function (...) return 50 end;
+                } end;
+                draw = function (...) end;
+                getFont = function (...) return "a Font" end;
+                newFont = function (...) end;
+                setFont = function (...) end;
+                printf = function (...) end;
+                setColor = function (...) end;
+            }
         };
         _G.data = Data;
         _G.Loveframes = {
@@ -24,7 +38,7 @@ describe("Unit test for Score.lua", function()
             end
         }
         _G._persTable = {
-            scaledDeviceDim = {
+            winDim = {
                 [1] = 500;
                 [2] = 500;
             };
@@ -36,41 +50,21 @@ describe("Unit test for Score.lua", function()
             earnedMoney = 0;
         }
         _G.Frame = function(...) return Frame; end;
+        _G.AchievementDisplay.draw  = function (...) end;
         locInstance = testClass();
     end)
 
     it("Testing Constructor", function()
         local myInstance = testClass();
+        
         locInstance.elementsOnFrame = {};
+        locInstance.background = "background";
+        locInstance.imageButton = "imageButton";
+        
         myInstance.elementsOnFrame = {};
-        assert.are.same(locInstance, myInstance);
-    end)
-
-it("Testing Constructor", function()
-        _G._persTable = {
-            config = {
-                language = "english";
-            };
-            scaledDeviceDim = {640, 950};
-        };
-        locInstance = testClass();
-        local myInstance = testClass();
-        locInstance.elementsOnFrame = {};
-        myInstance.elementsOnFrame = {};
-        assert.are.same(locInstance, myInstance);
-    end)
-
-it("Testing Constructor", function()
-        _G._persTable = {
-            config = {
-                language = "english";
-            };
-            scaledDeviceDim = {720, 1024};
-        };
-        locInstance = testClass();
-        local myInstance = testClass();
-        locInstance.elementsOnFrame = {};
-        myInstance.elementsOnFrame = {};
+        myInstance.background = "background";
+        myInstance.imageButton = "imageButton";
+        
         assert.are.same(locInstance, myInstance);
     end)
 
@@ -90,16 +84,17 @@ it("Testing Constructor", function()
         locInstance:create();
         
         spy.on(_G._gui, "changeFrame");
-        locInstance.elementsOnFrame.button_retry.object.OnClick();
-        locInstance.elementsOnFrame.button_backToMenu.object.OnClick();
+        locInstance.elementsOnFrame.button_retry.gotClicked();
+        locInstance.elementsOnFrame.button_backToMenu.gotClicked();
         assert.spy(_gui.changeFrame).was.called(2);
         assert.stub(table.replayLevel).was.called();
     end)
 
     it("Testing draw function", function()
-        stub(locInstance.frame, "draw");
+        local loveMock = mock(love.graphics, true);
+        locInstance.unlockedAchievements = {}
         locInstance:draw();
-        assert.stub(locInstance.frame.draw).was_called(1);
+        assert.spy(loveMock.draw).was_called(3);
     end)
 
     it("Testing clear function", function()

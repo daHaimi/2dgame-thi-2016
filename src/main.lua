@@ -125,7 +125,7 @@ function love.draw()
         levMan:getCurSwarmFactory():draw();
         levMan:getCurLevel():drawEnviroment(); 
     end
-    _gui.p_states.currentState:draw();
+    _gui:draw();
     love.graphics.scale(1 / _G._persTable.scaleFactor, 1 / _G._persTable.scaleFactor);
    
 

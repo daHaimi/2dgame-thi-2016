@@ -18,15 +18,12 @@ describe("Unit test for Frame.lua", function()
             x = 0;
             y = 0;
         };
-        function Element.object:SetVisible(visible)
-            self.visible = visible;
-        end
-
-        function Element.object:SetPos(x, y)
+        
+        function Element:setOffset(x, y)
             self.xPos = x;
             self.yPos = y;
         end
-        spy.on(Element.object, "SetPos");
+        spy.on(Element, "setOffset");
         
         locElements = {Element, Element, Element};
     end)
@@ -46,33 +43,8 @@ describe("Unit test for Frame.lua", function()
         locInstance.p_xOffset = nil;
         locInstance.p_yOffset = nil;
         locInstance:clear(locElements);
-        assert.are.equal(locElements[1].object.visible, false);
-        assert.are.equal(locElements[2].object.visible, false);
-        assert.are.equal(locElements[3].object.visible, false);
         assert.are.equal(locInstance.p_xOffset, locInstance.p_xDefaultOffset);
         assert.are.equal(locInstance.p_yOffset, locInstance.p_yDefaultOffset);
-    end)
-
-    it("Testing draw function", function()
-        locElements[1].x = 1;
-        locElements[1].y = 2;
-        locElements[2].x = 3;
-        locElements[2].y = 4;
-        locElements[3].x = 5;
-        locElements[3].y = 6;
-        locInstance:draw(locElements);
-        
-        assert.are.equal(locElements[1].object.visible, true);
-        assert.are.equal(locElements[2].object.visible, true);
-        assert.are.equal(locElements[3].object.visible, true);
-
-        assert.are.equal(locElements[1].object.xPos, locElements[1].x + locInstance.p_xPos + locInstance.p_xOffset);
-        
-        assert.are.equal(locElements[1].object.yPos, locElements[1].y + locInstance.p_yPos + locInstance.p_yOffset);
-        assert.are.equal(locElements[2].object.xPos, locElements[2].x + locInstance.p_xPos + locInstance.p_xOffset);
-        assert.are.equal(locElements[2].object.yPos, locElements[2].y + locInstance.p_yPos + locInstance.p_yOffset);
-        assert.are.equal(locElements[3].object.xPos, locElements[3].x + locInstance.p_xPos + locInstance.p_xOffset);
-        assert.are.equal(locElements[3].object.yPos, locElements[3].y + locInstance.p_yPos + locInstance.p_yOffset);
     end)
 
     it("Testing appear function", function()

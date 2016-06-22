@@ -4,6 +4,7 @@ _G.math.inf = 1 / 0
 testClass = require "src.class.frames.MainMenu";
 fakeElement = require "Tests.fakeLoveframes.fakeElement";
 Frame = require "class.Frame";
+ImageButton = require "class.ImageButton";
 
 
 describe("Unit test for MainMenu.lua", function()
@@ -13,6 +14,18 @@ describe("Unit test for MainMenu.lua", function()
             mouse = {
                 setVisible = function(...) end;
             };
+            graphics = {
+                newImage = function(...) return {
+                    getHeight = function (...) return 50 end;
+                    getWidth = function (...) return 50 end;
+                } end;
+                draw = function (...) end;
+                getFont = function (...) return "a Font" end;
+                newFont = function (...) end;
+                setFont = function (...) end;
+                printf = function (...) end;
+                setColor = function (...) end;
+            }
         };
         _G.Loveframes = {
             Create = function(typeName) 
@@ -32,7 +45,7 @@ describe("Unit test for MainMenu.lua", function()
             config = {
                 language = "english";
             };
-            scaledDeviceDim = {
+            winDim = {
                 [1] = 500;
                 [2] = 500;
             };
@@ -44,36 +57,17 @@ describe("Unit test for MainMenu.lua", function()
 
     it("Testing Constructor", function()
         local myInstance = testClass();
+        
         locInstance.elementsOnFrame = {};
+        locInstance.imageButton = "imageButton";
+        locInstance.background = "background";
+        locInstance.imageFlag = "imageFlag";
+        
         myInstance.elementsOnFrame = {};
-        assert.are.same(locInstance, myInstance);
-    end)
-
-it("Testing Constructor", function()
-        _G._persTable = {
-            config = {
-                language = "english";
-            },
-            scaledDeviceDim = {640, 950};
-        };
-        locInstance = testClass();
-        local myInstance = testClass();
-        locInstance.elementsOnFrame = {};
-        myInstance.elementsOnFrame = {};
-        assert.are.same(locInstance, myInstance);
-    end)
-
-it("Testing Constructor", function()
-        _G._persTable = {
-            config = {
-                language = "english";
-            },
-            scaledDeviceDim = {720, 1024};
-        };
-        locInstance = testClass();
-        local myInstance = testClass();
-        locInstance.elementsOnFrame = {};
-        myInstance.elementsOnFrame = {};
+        myInstance.imageButton = "imageButton";
+        myInstance.background = "background";
+        myInstance.imageFlag = "imageFlag";
+        
         assert.are.same(locInstance, myInstance);
     end)
 
@@ -95,26 +89,26 @@ it("Testing Constructor", function()
         locInstance:create();
 
         spy.on(_G._gui, "changeFrame");
-        locInstance.elementsOnFrame.button_start.object.OnClick();
-        locInstance.elementsOnFrame.button_upgradeMenu.object.OnClick();
-        locInstance.elementsOnFrame.button_dictionary.object.OnClick();
-        locInstance.elementsOnFrame.button_achievements.object.OnClick();
-        locInstance.elementsOnFrame.button_options.object.OnClick();
-        locInstance.elementsOnFrame.button_credits.object.OnClick();
+        locInstance.elementsOnFrame.button_start.gotClicked();
+        locInstance.elementsOnFrame.button_upgradeMenu.gotClicked();
+        locInstance.elementsOnFrame.button_dictionary.gotClicked();
+        locInstance.elementsOnFrame.button_achievements.gotClicked();
+        locInstance.elementsOnFrame.button_options.gotClicked();
+        locInstance.elementsOnFrame.button_credits.gotClicked();
         assert.spy(_gui.changeFrame).was.called(6);
         
         spy.on(_G.love.window, "close");
         spy.on(_G.love.event, "quit");
-        locInstance.elementsOnFrame.button_close.object.OnClick();
+        locInstance.elementsOnFrame.button_close.gotClicked();
         assert.spy(_G.love.window.close).was.called();
         assert.spy(_G.love.event.quit).was.called();
         
     end)
 
     it("Testing draw function", function()
-        stub(locInstance.frame, "draw");
+        local loveMock = mock(love.graphics, true);
         locInstance:draw();
-        assert.stub(locInstance.frame.draw).was_called(1);
+        assert.spy(loveMock.draw).was_called(9);
     end)
 
     it("Testing clear function", function()

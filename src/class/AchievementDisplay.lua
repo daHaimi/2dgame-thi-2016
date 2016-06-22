@@ -5,7 +5,6 @@ local AchievementDisplay = Class {
         self.background = love.graphics.newImage("assets/gui/AchievementDisplayBG.png");
         self.defaultText = "";
         self.unlockedAchievements = {};
-        self.directory = directory;
         self.maxAchievements = 3;
         self.position = {0, 0};
         self.xOffset = 0;
