@@ -6,7 +6,7 @@ local Start = Class {
         self.name = "start";
         self.title = love.graphics.newImage("assets/gui/title.png")
         self.hamster = love.graphics.newImage("assets/gui/hamster.png")
-        self.text = _G.data.languages[_G._persTable.config.language].package.textStart;
+        self.text = _G.data.languages[_G._persTable.config.language].package.textStartDesktop;
         self.blinkTimer = 10;
         self.offset = _persTable.winDim[1];
     end;

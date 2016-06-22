@@ -7,7 +7,7 @@ local KlickableElement = Class {
         self.name = name;
         self.enable = true;
         self.image = love.graphics.newImage(imagepath);
-        if image_disable ~= nil then
+        if imagepath_disable ~= nil then
             self.image_disable = love.graphics.newImage(imagepath_disable);
         end
         self.price = price;

@@ -1427,7 +1427,7 @@ return {
                 textScore = "Punktestand:";
                 textHiScore = "Dein Rekord:";
                 textNewHighscore = "Neuer Rekord";
-                textStartDestop = "Klicken zum Starten!";
+                textStartDesktop = "Klicken zum Starten!";
                 textStartMobile = "Drücken zum Starten!";
                 buttonChangeLevel = "Levelauswahl";
                 textPrice = "Preis: ";

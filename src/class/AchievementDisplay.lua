@@ -40,6 +40,14 @@ function AchievementDisplay:draw()
     end
 end
 
+function AchievementDisplay:remove()
+    self.unlockedAchievements = {};
+    for _, v in pairs (self.unlockedAchievements) do
+        print (v.name)
+    end
+    print("end of text")
+end
+
 --- sets the offset of the button 
 --@param x x offset of the button
 --@parma y y offset of the button
