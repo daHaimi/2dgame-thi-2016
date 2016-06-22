@@ -661,9 +661,6 @@ function Level:updateStatistics()
         end
         
         -- for highscore
-        print (fishedVal);
-        print (_G._persTable.statistic.highscoreSewers);
-        print (_G._persTable.statistic.highscoreCanyon);
         if self.p_levelName == "sewers" or self.p_levelName == "sewersEndless" or 
         self.p_levelName == "sleepingCrocos" then
         
