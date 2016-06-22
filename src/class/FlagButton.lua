@@ -35,6 +35,7 @@ function FlagButton:changeLanguage()
     end
     self.object:SetImage(self.directory .. self.languages[_persTable.config.language].flagImage);
     _G._gui:setLanguage();
+    _G._persistence:updateSaveFile();
 end
 
 function FlagButton:SetVisible(visible)

@@ -32,6 +32,10 @@ describe("Unit test for FlagButton.lua", function()
             };
             scaledDeviceDim = { 480, 833 };
         };
+        _G._persistence = {
+            updateSaveFile = function() end;
+        };
+        
         locInstance = testClass();
     end)
 
@@ -56,6 +60,7 @@ describe("Unit test for FlagButton.lua", function()
 
     it("Testing changeLanguage function", function()
         stub(_G._gui, "setLanguage");
+        stub(_G._persistence, "updateSaveFile");
         locInstance:changeLanguage();
         assert.are.equal(_G._persTable.config.language, "german");
         assert.are.equal(locInstance.object.imagepath, "assets/gui/480px/path2");
@@ -64,6 +69,7 @@ describe("Unit test for FlagButton.lua", function()
         assert.are.equal(_G._persTable.config.language, "english");
         assert.are.equal(locInstance.object.imagepath, "assets/gui/480px/path1");
         assert.stub(_G._gui.setLanguage).was_called();
+        assert.stub(_G._persistence.updateSaveFile).was_called();
     end)
 
     it("Testing SetVisible function", function()
