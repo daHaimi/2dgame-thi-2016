@@ -75,8 +75,10 @@ function Score:draw()
     love.graphics.setColor(0, 0, 0);
     love.graphics.printf(self.scoretext, 0, self.backgroundPosition[2] + 120
         + y, _G._persTable.winDim[1], 'center');
-    love.graphics.printf(self.score, self.backgroundPosition[1], self.backgroundPosition[2] + 190
-        + y, self.background:getWidth() - 50, 'center');    
+    if self.score ~= nil then 
+        love.graphics.printf(self.score, self.backgroundPosition[1], self.backgroundPosition[2] + 190
+            + y, self.background:getWidth() - 50, 'center');
+    end
     love.graphics.setColor(255, 255, 255);
     love.graphics.setFont(font);
     for _, v in pairs (self.elementsOnFrame) do

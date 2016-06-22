@@ -60,10 +60,8 @@ end
 function Achievements:addAllAchievements()
     for _, v in pairs(_G.data.achievements) do
         if v.sortNumber ~= nil then
-            local imageDirectory = self.directory .. v.image_lock;
-            local newKlickableElement = KlickableElement(v.name, imageDirectory, self.directory .. v.image_unlock,
-                v.description, nil, v.nameOnPersTable, v.sortNumber);
-            
+            local newKlickableElement = KlickableElement(v.name, self.directory ..  v.image_lock,
+                self.directory .. v.image_unlock, v.description, nil, v.nameOnPersTable, v.sortNumber);
             self.elementsOnFrame.chart:addKlickableElement(newKlickableElement);
         end
     end

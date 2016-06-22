@@ -16,6 +16,7 @@ local KlickableElement = Class {
         self.nameOnPersTable = nameOnPersTable;
         self.description = description;
         self.object = ImageButton(self.image, 0, 0, true);
+        self.object:setImage(self.image);
         self.object:setText ("");
         self.sortNumber = sortNumber;
         
@@ -32,15 +33,15 @@ end
 --- reset the Element (just the enable state and the image)
 function KlickableElement:reset()
     self.enable = true;
-    self.purchaseable = true;
-    self.object:setImage(love.graphics.newImage(self.image));
+    self.object:setImage(self.image);
 end
 
 --- i.e. represents an upgrade buy
 function KlickableElement:disable()
     self.enable = false;
-    self.purchaseable = false;
-    self.object:setImage(self.image_disable);
+    if self.image_disable ~= nil then 
+        self.object:setImage(self.image_disable);
+    end
     if _persTable.upgrades[self.nameOnPersTable] ~= nil then
         _persTable.upgrades[self.nameOnPersTable] = true;
     end
@@ -49,8 +50,9 @@ end
 --- lock an item because of the dependency to an other item
 function KlickableElement:lock()
     self.enable = true;
-    self.purchaseable = false;
-    self.object:setImage(self.image_disable);
+    if self.image_disable ~= nil then 
+        self.object:setImage(self.image_disable);
+    end
 end
 
 --- Function not conform to CC/ implements an interface
