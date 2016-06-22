@@ -1,14 +1,18 @@
 Class = require "lib.hump.class";
 
+--- class for achievement checks and notification
 local Achievement = Class {
     init = function(self) end;
 };
 
+--- checks a few achievements
 function Achievement:checkAchievements()
     self:caughtOneRound();
     self:moneyOneRound();
     self:moneyTotal();
     self:fishCaughtTotal();
+    self:secondStart();
+    _persistence:updateSaveFile();
 end
 
 --- Checks achievements for round based fished amount of objects.
@@ -23,7 +27,7 @@ function Achievement:caughtOneRound()
         self:unlockAchievement("goldCaughtOneRound");
     end
 end
-
+--- checks achievement for money collected in one round
 function Achievement:moneyOneRound()
     if _G._persTable.statistic.maxCoinOneRound > 199 then
         self:unlockAchievement("bronzeCoinsOneRound");
@@ -36,6 +40,7 @@ function Achievement:moneyOneRound()
     end
 end
 
+--- checks achievement for money collected total
 function Achievement:moneyTotal()
     if _G._persTable.statistic.moneyEarnedTotal > 1999 then
         self:unlockAchievement("bMoneyEarnedTotal");
@@ -60,6 +65,13 @@ function Achievement:fishCaughtTotal()
     end
     if fishTotal >= 500 then
         self:unlockAchievement("gFishCaughtTotal");
+    end
+end
+
+--- Checks the achievements for game started twice
+function Achievement:secondStart()  
+    if _G._persistence.loaded == true and not _G._persTable.achievements.secondStart then
+        self:unlockAchievement("secondStart");
     end
 end
 
@@ -93,6 +105,7 @@ function Achievement:onlyNegativeFishesCaught(levelFinished, swarmFac)
     end
 end
 
+--- checks achievement every object without pill caught at least once
 function Achievement:allObjectsAtLeastOnce()
     if _G._persTable.fish.caught.turtle > 0 and _G._persTable.fish.caught.rat > 0 and
             _G._persTable.fish.caught.deadFish > 0 and _G._persTable.fish.caught.sleepingPill > 0 and
@@ -109,6 +122,7 @@ function Achievement:allObjectsAtLeastOnce()
     end
 end
 
+--- checks achievement every pill caught at least once
 function Achievement:allPillsAtLeastOnce()
     if _G._persTable.fish.caught.sleepingPill > 0 and _G._persTable.fish.caught.rainbowPill > 0 and
         _G._persTable.fish.caught.coffee > 0 then
