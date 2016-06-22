@@ -45,35 +45,43 @@ function MainMenu:create()
 
     --onclick events for all buttons
     self.elementsOnFrame.button_start.gotClicked = function(_)
+        TEsound.play({ "assets/sound/buttonPressed.wav" }, 'buttonPressed');
        _gui:changeFrame(_gui:getFrames().level);
     end
 
     self.elementsOnFrame.button_upgradeMenu.gotClicked = function(_)
+        TEsound.play({ "assets/sound/buttonPressed.wav" }, 'buttonPressed');
         _gui:changeFrame(_gui:getFrames().upgradeMenu);
     end
 
     self.elementsOnFrame.button_dictionary.gotClicked = function(_)
+        TEsound.play({ "assets/sound/buttonPressed.wav" }, 'buttonPressed');
         _gui:changeFrame(_gui:getFrames().dictionary);
     end
 
     self.elementsOnFrame.button_achievements.gotClicked = function(_)
+        TEsound.play({ "assets/sound/buttonPressed.wav" }, 'buttonPressed');
         _gui:changeFrame(_gui:getFrames().achievements);
     end
     
     self.elementsOnFrame.button_options.gotClicked = function(_)
+        TEsound.play({ "assets/sound/buttonPressed.wav" }, 'buttonPressed');
         _gui:changeFrame(_gui:getFrames().options);
     end
     
     self.elementsOnFrame.button_credits.gotClicked = function(_)
+        TEsound.play({ "assets/sound/buttonPressed.wav" }, 'buttonPressed');
         _gui:changeFrame(_gui:getFrames().credits);
     end
 
     self.elementsOnFrame.button_close.gotClicked = function(_)
+        TEsound.play({ "assets/sound/buttonPressed.wav" }, 'buttonPressed');
         love.window:close();
         love.event.quit();
     end
     
     self.elementsOnFrame.button_flag.gotClicked = function(_)
+        TEsound.play({ "assets/sound/buttonPressed.wav" }, 'buttonPressed');
         if _G._persTable.config.language == "english" then
             _G._persTable.config.language = "german";
         else

@@ -11,10 +11,8 @@ function Achievement:checkAchievements()
     self:fishCaughtTotal();
 end
 
+--- Checks achievements for round based fished amount of objects.
 function Achievement:caughtOneRound()
-    if _G._persTable.fish.caughtInOneRound == 1 then
-        self:unlockAchievement("onlyOneCaught");
-    end
     if _G._persTable.fish.caughtInOneRound > 9 then
         self:unlockAchievement("bronzeCaughtOneRound");
     end
@@ -50,14 +48,17 @@ function Achievement:moneyTotal()
     end
 end
 
+--- Checks the achievements for total amount of caught fish.
 function Achievement:fishCaughtTotal()
-    if _G._persTable.fish.caughtTotal > 49 then
+    local fishTotal = _G._persTable.fish.caughtTotal;
+
+    if fishTotal >= 50 then
        self:unlockAchievement("bFishCaughtTotal");
     end
-    if _G._persTable.fish.caughtTotal > 199 then
+    if fishTotal >= 200 then
         self:unlockAchievement("sFishCaughtTotal");
     end
-    if _G._persTable.fish.caughtTotal > 499 then
+    if fishTotal >= 500 then
         self:unlockAchievement("gFishCaughtTotal");
     end
 end
@@ -103,13 +104,14 @@ function Achievement:allObjectsAtLeastOnce()
             _G._persTable.fish.caught.egg > 0 and _G._persTable.fish.caught.cactus > 0 and
             _G._persTable.fish.caught.leaf > 0 and _G._persTable.fish.caught.canyonSnake > 0 and
             _G._persTable.fish.caught.backpack > 0 and _G._persTable.fish.caught.bird > 0 and
-            _G._persTable.fish.caught.squirrel > 0 then
+            _G._persTable.fish.caught.squirrel > 0 and _G._persTable.fish.caught.ufo > 0 then
         self:unlockAchievement("allObjectsAtLeastOnce");
     end
 end
 
 function Achievement:allPillsAtLeastOnce()
-    if _G._persTable.fish.caught.sleepingPill > 0 then
+    if _G._persTable.fish.caught.sleepingPill > 0 and _G._persTable.fish.caught.rainbowPill > 0 and
+        _G._persTable.fish.caught.coffee > 0 then
         self:unlockAchievement("allPillsAtLeastOnce");
     end
 end
@@ -228,6 +230,14 @@ function Achievement:checkCreditsRed(timeSpent)
         end
     end
 end
+
+--- Checks and unlock the onlyOne achievement.
+-- @param reachedDepth The maximal reached depth of one round.
+--function Achievement:checkOnlyOne(reachedDepth)
+--    if math.ceil(math.abs(reachedDepth / 300)) >= 5 and _G._persTable.fish.caughtInOneRound = 1 then
+--        self:unlockAchievement("onlyOne");
+--    end
+--end
 
 --- Unlocks the given achievement.
 -- @param achName The name of the achievement.

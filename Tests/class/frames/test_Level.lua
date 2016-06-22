@@ -5,6 +5,11 @@ testClass = require "src.class.frames.Level";
 fakeElement = require "Tests.fakeLoveframes.fakeElement";
 Frame = require "class.Frame";
 
+_G.TEsound = {
+    playLooping = function(...) end;
+    play = function(...) end;
+    stop = function(...) end;
+};
 
 describe("Unit test for Level.lua", function()
     local locInstance;

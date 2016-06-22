@@ -5,6 +5,11 @@ testClass = require "src.class.frames.Pause";
 fakeElement = require "Tests.fakeLoveframes.fakeElement";
 Frame = require "class.Frame";
 ImageButton = require "src.class.ImageButton";
+_G.TEsound = {
+    playLooping = function(...) end;
+    play = function(...) end;
+    stop = function(...) end;
+};
 
 
 describe("Unit test for Pause.lua", function()

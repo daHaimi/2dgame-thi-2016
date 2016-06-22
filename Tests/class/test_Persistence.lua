@@ -1,84 +1,21 @@
-Class = require("lib.hump.class");
-require("lib.table_serializer");
+-- Lua 5.1 Hack
+_G.math.inf = 1 / 0
 
---- Class to save the persTable data permanent 
--- it will be saved to the devices love.filesystem save directory 
-local Persistence = Class {
-    init = function(self)
-        -- set foldername for the game data
-        love.filesystem.setIdentity("hamster");
+_G.love = {};
+_G.love.filesystem = {};
+_G.love.filesystem.write = function(...) return true end;
+_G.love.filesystem.read = function(...) return "etwas", 5; end;
+_G.love.filesystem.setIdentity = function(...) end;
+_G.love.filesystem.exists = function(...) return true end;
+_G.love.filesystem.remove = function(...) return true end;
 
-        self.serialize = table.serialize;
-        self.deserialize = table.deserialize;
-
-        -- first load of persTable
-        if love.filesystem.exists("saveFile") then
-            self:loadPersTable();
-            --_G._persTable.achievements.secondStart = true;
-        else
-            self:createPersTable();
-            self:updateSaveFile();
-        end
-
-        --- creates a file or removes all contents if the file exist in order to simulate a temporary file
-        -- if you want to clear the contents of the file manually use:
-        -- 1) tmpfile:close();
-        -- 2) tmpfile = io.open("tmp.lua", "w+");
-        io.open("tmp.lua", "w+");
-    end
-};
+testClass = require "src.class.Persistence";
 
 
---- Deletes the saveFile and crates newPersTable to reset the game
--- Returns true if deleted the saveFile
--- @return boolean
-function Persistence:resetGame()
-    local scaleFactor;
-    self:createPersTable();
-    local _, _, flags = love.window.getMode();
-    love.graphics.setBackgroundColor(55, 80, 100);
-    _G._persTable.deviceDim = { love.window.getDesktopDimensions(flags.display) };
-    _G._persTable.winDim[1], _G._persTable.winDim[2], _G._persTable.scaleFactor = getScaledDimension(_G._persTable.deviceDim);
-    _G._persTable.scaledDeviceDim = { _G._persTable.winDim[1] * _G._persTable.scaleFactor, 
-        _G._persTable.winDim[2] * _G._persTable.scaleFactor };
-    return love.filesystem.remove("saveFile");
-end
+describe("Unit test for Persistence.lua", function()
+    local locInstance;
 
-function getScaledDimension(deviceDim)
-    local resultDim = {};
-    local scaleFactor;
-    if deviceDim[1] > deviceDim[2] then
-        scaleFactor = (0.9 * deviceDim[2]) / (480 * 16 / 9);
-        resultDim[1] = 480;
-        resultDim[2] = resultDim[1] * 16 / 9;
-        if deviceDim[2] < resultDim[2] then
-            resultDim[2] = deviceDim[2] * 0.975
-            scaleFactor = 1;
-        end
-    else
-        scaleFactor = deviceDim[1] / 480;
-        resultDim[2] = deviceDim[2] / deviceDim[1] * 480;
-        resultDim[1] = 480;
-    end
-    return resultDim[1], resultDim[2], scaleFactor;
-end
-
---- Save the persTable data at saveFile
--- Returns true if could save
--- @return boolean
-function Persistence:updateSaveFile()
-    local fileData = self.serialize(_G._persTable);
-    return love.filesystem.write("saveFile", fileData);
-end
-
---- Load persTable from saveFile
-function Persistence:loadPersTable()
-    local fileData, _ = love.filesystem.read("saveFile");
-    _G._persTable = self.deserialize(fileData);
-end
-
---- Creates initial persTable 
-function Persistence:createPersTable()
+    before_each(function()
     --- globale persistance table
     _G._persTable = {
         statistic = {};
@@ -135,7 +72,7 @@ function Persistence:createPersTable()
         bMoneyEarnedTotal = false;
         sMoneyEarnedTotal = false;
         gMoneyEarnedTotal = false;
---        onlyOne = false;
+        onlyOneCaught = false;
         onlyNegativeFishesCaught = false;
         allObjectsAtLeastOnce = false;
         allPillsAtLeastOnce = false;
@@ -170,10 +107,25 @@ function Persistence:createPersTable()
         caught = {}; -- table of caughtable fishes with amount caught
         postiveFishCaught = false; -- no fish with positive value caught
     };
-    -- adds caughtable fishes to perstable
-    for name in pairs(data.fishableObjects) do
-        _G._persTable.fish.caught[name] = 0;
-    end
-end
+        
+    _G._persTable.fish.caught = {
+            turtle = 0;
+            rat = 0;
+            deadFish = 0;
+            nemo = 0;
+    };
+                
+    end)
 
-return Persistence;
+
+    it("Testing Constructor", function()
+        
+        local serStub = stub(table, "serialize");
+        local deserStub = stub(table, "deserialize");
+        locInstance = testClass();
+        local myInstance = testClass();
+        assert.are.same(locInstance, myInstance);
+    end)
+
+end)
+

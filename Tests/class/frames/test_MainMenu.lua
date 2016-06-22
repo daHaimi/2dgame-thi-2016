@@ -5,6 +5,11 @@ testClass = require "src.class.frames.MainMenu";
 fakeElement = require "Tests.fakeLoveframes.fakeElement";
 Frame = require "class.Frame";
 ImageButton = require "class.ImageButton";
+_G.TEsound = {
+    playLooping = function(...) end;
+    play = function(...) end;
+    stop = function(...) end;
+};
 
 
 describe("Unit test for MainMenu.lua", function()

@@ -4,6 +4,11 @@ _G.math.inf = 1 / 0
 testClass = require "src.class.frames.UpgradeMenu";
 fakeElement = require "Tests.fakeLoveframes.fakeElement";
 Frame = require "class.Frame";
+_G.TEsound = {
+    playLooping = function(...) end;
+    play = function(...) end;
+    stop = function(...) end;
+};
 
 
 describe("Unit test for UpgradeMenu.lua", function()
@@ -106,6 +111,7 @@ end)
 
         local ME = {
          price = 0;
+         purchaseable = true;
          };
         
         _G._persistence = {
@@ -113,11 +119,10 @@ end)
         };
         
         spy.on(locInstance, "addAllUpgrades");
-        spy.on(locInstance, "loadValuesFromPersTable");
+
         locInstance:create();
 
         assert.spy(locInstance.addAllUpgrades).was.called();
-        assert.spy(locInstance.loadValuesFromPersTable).was.called();
 
         spy.on(_G._gui, "changeFrame");
         locInstance.elementsOnFrame.button_back.gotClicked();

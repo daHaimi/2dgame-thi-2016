@@ -836,6 +836,7 @@ return {
             price = 1000;
             image = "shop_extraLife2.png";
             image_disable = "shop_extraLife2_locked.png";
+            dependency = "oneMoreLife";
         };
         threeMoreLife = {
             sortNumber = 3;
@@ -843,6 +844,7 @@ return {
             price = 1500;
             image = "shop_extraLife3.png";
             image_disable = "shop_extraLife3_locked.png";
+            dependency = "twoMoreLife";
         };
         firstSpeedUp = {
             sortNumber = 4;
@@ -857,6 +859,7 @@ return {
             price = 300;
             image = "shop_speedup2.png";
             image_disable = "shop_speedup2_locked.png";
+            dependency = "firstSpeedUp";
         };
         moneyMulitplier = {
             sortNumber = 6;
@@ -885,6 +888,7 @@ return {
             price = 5000;
             image = "shop_barrier.png";
             image_disable = "shop_barrier_locked.png";
+            dependency = "mapBreakthrough1";
         };
         moreFuel1 = {
             sortNumber = 10;
@@ -892,6 +896,7 @@ return {
             price = 1000;
             image = "shop_fuel1.png";
             image_disable = "shop_fuel1_locked.png";
+            dependency = "godMode";
         };
         moreFuel2 = {
             sortNumber = 11;
@@ -899,6 +904,7 @@ return {
             price = 1500;
             image = "shop_fuel2.png";
             image_disable = "shop_fuel2_locked.png";
+            dependency = "moreFuel1";
         };
         firstPermanentMoneyMulitplier = {
             sortNumber = 12;
@@ -913,6 +919,7 @@ return {
             price = 2500;
             image = "shop_moreMoney2.png";
             image_disable = "shop_moreMoney2_locked.png";
+            dependency = "firstPermanentMoneyMult";
         };
     };
     achievements = {
@@ -1084,6 +1091,12 @@ return {
             image_lock = "ach_achievmentBitch_locked.png";
             image_unlock = "ach_achievmentBitch.png";
         };
+--        onlyOne = {
+--            nameOnPersTable = "onlyOne";
+--            sortNumber = 28;
+--            image_lock = "ach_onlyOne_locked.png";
+--            image_unlock = "ach_onlyOne.png";
+--        };
     };
     languages = {
         english = {
@@ -1106,6 +1119,8 @@ return {
                 buttonBTG = "Continue";
                 buttonBTM = "Back to menu";
                 textScore = "Your Score:";
+                textHiScore = "Your Highscore:";
+                textNewHighscore = "New Highscore";
                 buttonTA = "Try again";
                 textStart = "Click to start!";
                 buttonChangeLevel = "Change level";
@@ -1189,7 +1204,7 @@ return {
                     description = "Earn 1000 coins in one round o.O";
                 };
                 silverCoinsOneRound = {
-                    name = "Your getting better";
+                    name = "You are getting better";
                     description = "Earn 600 coins in one round";
                 };
                 bronzeCoinsOneRound = {
@@ -1233,6 +1248,10 @@ return {
                     name = "First object";
                     description = "You caught your first object";
                 };
+--                onlyOne = {
+--                    name = "I wanted that one";
+--                    description = "Caught only one object"
+--                };
                 unreachable = {
                     name = "Unreachable";
                     description = "Don't try to get it";
@@ -1405,6 +1424,8 @@ return {
                 buttonBTG = "Zurück zum Spiel";
                 buttonBTM = "Zurück zum Menü";
                 textScore = "Punktestand:";
+                textHiScore = "Dein Rekord:";
+                textNewHighscore = "Neuer Rekord";
                 textStart = "Klicken zum Starten!";
                 buttonChangeLevel = "Levelauswahl";
                 textPrice = "Preis: ";
@@ -1534,6 +1555,10 @@ return {
                     name = "Achievement Bitch";
                     description = "Du hast alle Erfolge freigeschaltet?!";
                 };
+--                onlyOne = {
+--                    name = "Den wollte ich";
+--                    description = "Nur ein Objekt gefangen"
+--                };
                 --objects
                 nemo = {
                     name = "Nemo";

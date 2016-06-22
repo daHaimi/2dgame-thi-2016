@@ -2,6 +2,12 @@
 _G.math.inf = 1 / 0
 testClass = require "src.class.Achievement";
 Data = require "data";
+_G.TEsound = {
+    playLooping = function(...) end;
+    play = function(...) end;
+    stop = function(...) end;
+};
+
 
 describe("Unit test for Achievement.lua", function()
     local locInstance;
@@ -83,14 +89,14 @@ describe("Unit test for Achievement.lua", function()
     end)
 
     it("Test function Achievement:caughtOneRound", function()
-        _G._persTable.fish.caughtInOneRound = 1;
+        _G._persTable.fish.caughtInOneRound = 30;
 
         local myInstance = testClass();
         local exp = true;
         myInstance.unlockAchievement = function (...) end;
         stub(myInstance, "unlockAchievement");
         myInstance:caughtOneRound()
-        assert.stub(myInstance.unlockAchievement).was.called(1);
+        assert.stub(myInstance.unlockAchievement).was.called(3);
     end)
 
     it("Testing achShoppingQueen function", function()
@@ -338,6 +344,8 @@ describe("Unit test for Achievement.lua", function()
   
     it("Test function Achievement:allPillsAtLeastOnce", function()
         _G._persTable.fish.caught.sleepingPill  = 2;
+        _G._persTable.fish.caught.rainbowPill =1;
+        _G._persTable.fish.caught.coffee = 1;
         local myInstance = testClass();
         local exp = true;
         myInstance:allPillsAtLeastOnce()
@@ -367,6 +375,7 @@ describe("Unit test for Achievement.lua", function()
         _G._persTable.fish.caught.backpack= 1;
         _G._persTable.fish.caught.bird = 1;
         _G._persTable.fish.caught.squirrel = 1;
+        _G._persTable.fish.caught.ufo = 1;
         local myInstance = testClass();
         myInstance.unlockAchievement = function (...) end
         stub(myInstance, "unlockAchievement");
@@ -396,6 +405,7 @@ describe("Unit test for Achievement.lua", function()
         _G._persTable.fish.caught.backpack= 1;
         _G._persTable.fish.caught.bird = 1;
         _G._persTable.fish.caught.squirrel = 1;
+        _G._persTable.fish.caught.ufo = 1;
         local myInstance = testClass();
         local exp = false;
         myInstance.unlockAchievement = function (...) end;

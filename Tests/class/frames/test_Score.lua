@@ -7,6 +7,11 @@ Frame = require "class.Frame";
 Imagebutton = require "class.ImageButton";
 
 Data = require "data";
+_G.TEsound = {
+    playLooping = function(...) end;
+    play = function(...) end;
+    stop = function(...) end;
+};
 
 
 describe("Unit test for Score.lua", function()

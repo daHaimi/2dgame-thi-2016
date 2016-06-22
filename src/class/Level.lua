@@ -24,7 +24,9 @@ local Level = Class {
         self.bg = nil;
         self.bgq = nil;
         self.winDim = {};
-        
+        self.statUpdated = false;
+        self.ploempelPlayed = false;
+
         if mode == "endless" then
             self.lowerBoarder = -_G.math.inf;
         else
@@ -279,30 +281,35 @@ function Level:update(dt, bait)
     end
 
     self:checkForAchievments()
+    
+    -- at the end of the level update the statistics
+    if self.levelFinished == true then
+        self:updateStatistics();
+    end
 end
 
 --- checks if a new achievement is unlocked
 function Level:checkForAchievments()
-    
+
     -- check failedStart ach
     self.levMan:getAchievmentManager():checkFailStart(self.failedStart, self.levelFinished);
-    
+
     -- check if only two shoes was fished
-    self.levMan:getAchievmentManager():checkTwoShoes(self.levelFinished, self:calcFishedValue(), 
+    self.levMan:getAchievmentManager():checkTwoShoes(self.levelFinished, self:calcFishedValue(),
         self.levMan:getCurSwarmFactory():getFishableObjects().shoe.value * 2);
-    
+
     self.levMan:getAchievmentManager():checkNothingCaught(self.levelFinished, self.failedStart);
 
     self.levMan:getAchievmentManager():checkAllBordersPassed(self.levelFinished, self.reachedDepth, self.lowerBoarder);
 
-    self.levMan:getAchievmentManager():checkFirstObject(self.levelFinished);    
-    
+    self.levMan:getAchievmentManager():checkFirstObject(self.levelFinished);
+
     self.levMan:getAchievmentManager():checkPlayTime(self.levelFinished);
-    
+
     self.levMan:getAchievmentManager():onlyNegativeFishesCaught(self.levelFinished, self.levMan:getCurSwarmFactory());
-    
+
     self.levMan:getAchievmentManager():checkNegativCoins(self.gotPayed, self.roundValue);
-    
+
     self.levMan:getAchievmentManager():achBitch(); -- call this checkup always at the end
 end
 
@@ -315,6 +322,11 @@ function Level:doEndAnimationMovement(bait, dt)
                 self.p_levelName == "sleepingCrocos" then
             if self.pumpCounter < 4 then
                 if self.pumpDirection then
+                    -- plays wrong sound
+                    if self.ploempelPlayed == false then
+                        self.ploempelPlayed = true;
+                        TEsound.playLooping("assets/sound/ploempel.wav", "ploempel", 5);
+                    end
                     self.pumpingWay = self.pumpingWay - 5;
                     if self.pumpingWay == 0 then
                         self.pumpDirection = false;
@@ -355,6 +367,8 @@ function Level:doStartAnimationMovement(bait, dt)
                     self.hamsterLockedXPos < 355 and self.hamsterLockedXPos > 300 then
                 if self.hamsterYPos < self.winDim[2] * 0.5 - 230 then
                     self.hamsterYPos = self.hamsterYPos + 0.5 * math.ceil(dt * bait:getSpeed());
+                    -- sound starts to play to soon
+--                    TEsound.play({ "assets/sound/hamsterHarmed.wav" }, 'hamsterHarmed'); 
                     self.failedStart = true;
                 else
                     self.levelFinished = true;
@@ -365,6 +379,8 @@ function Level:doStartAnimationMovement(bait, dt)
                     self.hamsterYPos = self.hamsterYPos + 0.5 * math.ceil(dt * bait:getSpeed());
                     -- hamster dropped next to toilet
                     if self.hamsterLockedXPos < 120 or self.hamsterLockedXPos > 300 then
+                        -- sound starts to play to soon
+--                        TEsound.play({ "assets/sound/hamsterHarmed.wav" }, 'hamsterHarmed');
                         self.failedStart = true;
                     end
                 else
@@ -429,8 +445,6 @@ function Level:drawEnviroment()
 
     self.lightWorld.update();
     self.lightWorld.drawShadow();
-    self.lightWorld.drawPixelShadow();
-    self.lightWorld.drawGlow();
 
     love.graphics.setColor(255, 255, 255);
 
@@ -512,9 +526,9 @@ end
 --- Pay the achieved money to the player and multiply it with the
 -- bonus value (when activated) at the end of each round. Remove the money multi when it was activated.
 function Level:payPlayer()
-    -- check if the round has been finished
-    if self.levelFinished and self.levMan:getCurSwarmFactory() ~= nil then
-        if self.gotPayed == 0 then -- check if the earned money was already payed
+    -- check if the round has been finished and the earned money was not payed already
+    if self.levelFinished and self.levMan:getCurSwarmFactory() ~= nil and self.gotPayed == 0 then
+
         local fishedVal = self:calcFishedValue();
         if _G._persTable.upgrades.firstPermanentMoneyMult == true then
             self.roundValue = self:multiplyFishedValue(1.2, fishedVal);
@@ -533,9 +547,9 @@ function Level:payPlayer()
         -- persist money from this round
         if self.roundValue >= 0 then
             _G._persTable.money = _G._persTable.money + self.roundValue;
-            _G._persistence:updateSaveFile();
         end
-        end
+        _G._persistence:updateSaveFile();
+
     end
 end
 
@@ -609,30 +623,64 @@ end
 -- @return Returns the value of all fished objects.
 function Level:calcFishedValue()
     local fishedVal = 0;
-    local fishedAmount = 0;
     for name, amount in pairs(_G._tmpTable.caughtThisRound) do
         if amount > 0 then
             fishedVal = fishedVal + self.levMan:getCurSwarmFactory():getFishableObjects()[name].value * amount;
-            -- for achivements
-            _G._persTable.fish.caught[name] = _G._persTable.fish.caught[name] + amount;
-            _G._persTable.fish.caughtTotal = _G._persTable.fish.caughtTotal + amount;
-            fishedAmount = fishedAmount + amount
         end
     end
-    -- for achivement x caught in one round
-    if fishedVal > _G._persTable.statistic.maxCoinOneRound then
-        _G._persTable.statistic.maxCoinOneRound = fishedVal;
-    end
 
-    if fishedVal < _G._persTable.statistic.minCoinOneRound then
-        _G._persTable.statistic.minCoinOneRound = fishedVal;
-    end
-
-    if fishedAmount > _G._persTable.fish.caughtInOneRound then
-        _G._persTable.fish.caughtInOneRound = fishedAmount;
-    end
-    _G._persTable.statistic.moneyEarnedTotal = _G._persTable.statistic.moneyEarnedTotal + fishedAmount;
     return (fishedVal);
+end
+
+--- Update all statistics
+function Level:updateStatistics()
+    if self.statUpdated == false then
+        local fishedAmount = 0;
+        local fishedVal = 0;
+        
+        for name, amount in pairs(_G._tmpTable.caughtThisRound) do
+            if amount > 0 then
+                _G._persTable.fish.caught[name] = _G._persTable.fish.caught[name] + amount;
+                _G._persTable.fish.caughtTotal = _G._persTable.fish.caughtTotal + amount;
+                fishedAmount = fishedAmount + amount;
+            end
+        end
+
+        fishedVal = self:calcFishedValue();
+        -- for achivement x caught in one round
+        if fishedVal > _G._persTable.statistic.maxCoinOneRound then
+            _G._persTable.statistic.maxCoinOneRound = fishedVal;
+        end
+
+        if fishedVal < _G._persTable.statistic.minCoinOneRound then
+            _G._persTable.statistic.minCoinOneRound = fishedVal;
+        end
+
+        if fishedAmount > _G._persTable.fish.caughtInOneRound then
+            _G._persTable.fish.caughtInOneRound = fishedAmount;
+        end
+        
+        -- for highscore
+        if self.p_levelName == "sewers" or self.p_levelName == "sewersEndless" or 
+        self.p_levelName == "sleepingCrocos" then
+        
+            if fishedVal > _G._persTable.statistic.highscoreSewers then
+                _G._persTable.statistic.highscoreSewers = fishedVal;
+                _gui:newTextNotification("assets/hamster.png", "New Highscore!")
+            end
+        elseif (self.p_levelName == "canyon" or self.p_levelName == "canyonEndless"
+                or self.p_levelName == "crazySquirrels") then
+            if fishedVal > _G._persTable.statistic.highscoreCanyon then
+                _G._persTable.statistic.highscoreCanyon = fishedVal;
+                _gui:newTextNotification("assets/hamster.png", "New Highscore!")
+            end
+        end
+        
+    end
+
+    _G._persistence:updateSaveFile();
+
+    self.statUpdated = true;
 end
 
 --- Calculate the amount of money with the given multiply bonus (round up).
@@ -779,6 +827,7 @@ function Level:startStartAnimation()
     self.hand:startAnimation();
 end
 
+--- starts the End Animation
 function Level:startEndAnimation()
     if self.levelFinished and not self.animationEnd and not self.failedStart then
         self.animationEnd = true;

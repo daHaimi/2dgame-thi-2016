@@ -24,23 +24,7 @@ local FishableObject = Class {
         self.name = name;
         self.defaultImage = love.graphics.newImage("assets/" .. imageSrc);
         self.nyanImage = love.graphics.newImage("assets/nyan.png");
-        local imageName = _G.file.getName(imageSrc);
-        local imageExtention = _G.file.getExtention(imageSrc);
-        if love.filesystem.exists("assets/" .. imageName .. "_glow." .. imageExtention) then
-            local lightWorld = levMan.curLevel:getLightWorld();
-            self.glowMap = love.graphics.newImage("assets/" .. imageName .. "_glow." .. imageExtention);
-            self.lightImage = lightWorld.newImage(self.image, 64, 64, 64, 64, 64, 64);
-            self.lightImage.setGlowMap(self.glowMap);
-            if love.filesystem.exists("assets/" .. imageName .. "_normal." .. imageExtention) then
-                self.normalMap = love.graphics.newImage("assets/" .. imageName .. "_normal." .. imageExtention);
-            else
-                self.notmalMap = love.graphics.newImage("assets/shader/empty_normal.png");
-            end
-            self.lightImage.setNormalMap(self.normalMap)
-            self.objectTest = lightWorld.newBody("refraction", self.image, 64, 64, 64, 64);
-        end
         self.xPosition = math.random(spriteSize + 26, levMan:getCurLevel().winDim[1] - 58 - self.spriteSize);
-        -- 58 = 26 (width of level wall) + 32 (0.5 * width of hamster)
         if fallSpeed > 0 then
             self.yPosition = -math.random(100);
         elseif fallSpeed < 0 then
@@ -171,9 +155,9 @@ function FishableObject:update(dt, speedMulitplicator, nyan)
     else
         self.outOfArea = false;
     end
-    
+
     self.nyan = nyan;
-    if not nyan then 
+    if not nyan then
         self.image = self.defaultImage;
     else
         self.image = self.nyanImage;

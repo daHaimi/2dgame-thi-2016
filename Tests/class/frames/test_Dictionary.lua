@@ -5,6 +5,11 @@ testClass = require "src.class.frames.Dictionary";
 fakeElement = require "Tests.fakeLoveframes.fakeElement";
 Frame = require "class.Frame";
 KlickableElement = require "class.KlickableElement";
+_G.TEsound = {
+    playLooping = function(...) end;
+    play = function(...) end;
+    stop = function(...) end;
+};
 
 
 describe("Unit test for Dictionary.lua", function()
@@ -104,6 +109,7 @@ describe("Unit test for Dictionary.lua", function()
             name = "test2";
             xOffset = 0;
             yOffset = 0;
+            purchaseable = true;
             object = {};
         };
         locInstance.elementsOnFrame.chart.p_elementsOnChart[2] = {
@@ -112,6 +118,7 @@ describe("Unit test for Dictionary.lua", function()
             image = "image1";
             image_disable = "image2";
             name = "test1";
+            purchaseable = true;
             xOffset = 0;
             yOffset = 0;
             object = {};};

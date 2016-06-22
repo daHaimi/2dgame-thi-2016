@@ -39,6 +39,7 @@ function InGame:create()
     end
 end
 
+--- update score text and fuelbar
 function InGame:update()
     --update Fuelbar
     if _G._tmpTable.roundFuel >= 0 then

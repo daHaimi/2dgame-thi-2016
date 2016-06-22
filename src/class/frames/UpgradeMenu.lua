@@ -38,10 +38,10 @@ function UpgradeMenu:create()
     };
 
     self:addAllUpgrades();
-    self:loadValuesFromPersTable();
 
     --onclick events for all buttons
     self.elementsOnFrame.button_back.gotClicked = function(_)
+        TEsound.play({ "assets/sound/buttonPressed.wav" }, 'buttonPressed');
         _gui:changeFrame(_gui:getFrames().mainMenu);
         self.elementsOnFrame.chart:resetTopRow();
         self.elementsOnFrame.chart:resetMarkedFrame();
@@ -50,10 +50,13 @@ function UpgradeMenu:create()
     self.elementsOnFrame.button_buy.gotClicked = function(_)
         if self.elementsOnFrame.chart:getMarkedElement() ~= nil then
             if _G._persTable.money >= self.elementsOnFrame.chart:getMarkedElement().price then
+                TEsound.play({ "assets/sound/buying.wav" }, 'buying');
                 self:buyElement();
                 _G._persistence:updateSaveFile();
             else
-                _gui:newTextNotification(self.directory .. "ach_nothingCaught.png", _G.data.languages[_G._persTable.config.language].package.textMoney);
+                if self.elementsOnFrame.chart.object:getMarkedElement().purchaseable then
+                TEsound.play({ "assets/sound/notEnoughMoney.wav" }, 'notEnoughMoney');
+                end
             end
             if not _G._persTable.achievements.shoppingQueen then
                 _gui:getLevelManager():getAchievmentManager():achShoppingQueen();
@@ -107,9 +110,23 @@ end
 function UpgradeMenu:loadValuesFromPersTable()
     for _, v in pairs(self.elementsOnFrame.chart:getAllElements()) do
         local elementName = v.nameOnPersTable;
-        if _G._persTable.upgrades[elementName] then
-            if _G._persTable.upgrades[elementName] == true then
+        local elementOnPersTable = _G._persTable.upgrades[elementName];
+        
+        if elementOnPersTable ~= nil and v.dependency == nil then
+            if elementOnPersTable == true then
                 v:disable();
+            else
+                v:reset();
+            end
+        elseif elementOnPersTable ~= nil and v.dependency ~= nil then
+            if _G._persTable.upgrades[v.dependency] then
+                if elementOnPersTable == true then
+                    v:disable();
+                else
+                    v:reset();
+                end
+            else
+                v:lock();
             end
         end
     end

@@ -52,6 +52,7 @@ function Credits:create()
 
     --onclick events for all buttons
     self.elementsOnFrame.button_back.gotClicked = function(_)
+        TEsound.play({ "assets/sound/buttonPressed.wav" }, 'buttonPressed');
         _gui:changeFrame(_gui:getFrames().mainMenu);
     end
 end
@@ -147,10 +148,12 @@ function Credits:checkPosition()
     return self.frame:checkPosition();
 end
 
+--- start tracking time
 function Credits:createStartTime()
     self.startTime = os.clock();
 end
 
+--- calculate spent time
 function Credits:calcTimeSpent()
     local now = os.clock();
     return now - self.startTime;

@@ -4,6 +4,7 @@ _G.Animate = require "class.Animate";
 _G.levelTestStub = function()
     _G.TEsound = {
         playLooping = function(...) end;
+        play = function(...) end;
         stop = function(...) end;
     };
 
@@ -27,7 +28,7 @@ _G.levelTestStub = function()
         random = 3;
     }
     _G.Animate.p_quads = {};
-
+    _G._persistence = {};
     _G._persTable.achievements = {
         getFirstObject = true;
         getSecondObject = false;
@@ -66,6 +67,8 @@ _G.levelTestStub = function()
         maxCoinOneRound = 0;
         minCoinOneRound = 0;
         moneyEarnedTotal = 0;
+        highscoreSewers = 0;
+        highscoreCanyon = 0;
     };
     _G._tmpTable = {
         earnedMoney = nil;
@@ -122,6 +125,7 @@ _G.levelTestStub = function()
                 };
             };
         end;
+        newTextNotification = function (...) end;
     };
     _G.love = {
         graphics = {
@@ -413,6 +417,8 @@ describe("Test unit test suite", function()
             update = function(...) end;
             getSpeed = function(...) return 200 end;
         };
+        
+        local perStub = stub(_G._persistence, "updateSaveFile");
         locInstance.posY = -7500;
         locInstance:update(dt, bait);
         assert.are.same(-1, locInstance:getDirection());
@@ -731,6 +737,37 @@ describe("Test unit test suite", function()
         assert.are.same(locInstance.animationEndFinished, true);
     end)
 
+    it("Testing updateStatistics function", function()
+        locInstance.calcFishedValue = function(...) return 210 end;
+        local perStub = stub(_G._persistence, "updateSaveFile");
+
+        _G._tmpTable.caughtThisRound = { 
+            ["turtle"] = 30; ["rat"] = 0;
+            ["deadFish"] = 19;
+            ["nemo"] = 1;
+        };
+        _G._persTable.statistic.maxCoinOneRound = 20;
+        _G._persTable.statistic.minCoinOneRound = 1;
+        _G._persTable.statistic.highscoreSewers = 20;
+        _G._persTable.statistic.highscoreCanyon = 200;
+        _G._persTable.fish = {
+            caughtTotal = 10;
+            caughtInOneRound = 50;
+            caught = {
+                ["turtle"] = 0; 
+                ["rat"] = 0;
+                ["deadFish"] = 0;
+                ["nemo"] = 0;
+            };
+        };
+        locInstance.levelFinished = true;
+        locInstance.statUpdated = false;
+        
+        locInstance:updateStatistics();
+        assert.are.same(60, _G._persTable.fish.caughtTotal);
+        assert.stub(perStub).was.called(1);
+    end)
+
     it("Testing getReachedDepth function", function()
         locInstance.reachedDepth = -356;
 
@@ -751,6 +788,7 @@ describe("Test unit test suite", function()
     it("Testing update playTime", function()
         locInstance.unlockAchievement = function(...) end;
         locInstance.playTime = 1000;
+        local perStub = stub(_G._persistence, "updateSaveFile");
         _G._persTable.playedTime = 1000;
         locInstance.pumpingWay = 0;
         locInstance.levelFinished = true;

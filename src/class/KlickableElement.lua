@@ -3,7 +3,7 @@ Class = require "lib.hump.class";
 ImageButton = require "class.ImageButton";
 
 local KlickableElement = Class {
-    init = function(self, name, imagepath, imagepath_disable, description, price, nameOnPersTable, sortNumber)
+    init = function(self, name, imagepath, imagepath_disable, description, price, nameOnPersTable, sortNumber, dependency)
         self.name = name;
         self.enable = true;
         self.image = love.graphics.newImage(imagepath);
@@ -11,6 +11,8 @@ local KlickableElement = Class {
             self.image_disable = love.graphics.newImage(imagepath_disable);
         end
         self.price = price;
+        self.dependency = dependency;
+        self.purchaseable = true;
         self.nameOnPersTable = nameOnPersTable;
         self.description = description;
         self.object = ImageButton(self.image, 0, 0, true);
@@ -30,16 +32,25 @@ end
 --- reset the Element (just the enable state and the image)
 function KlickableElement:reset()
     self.enable = true;
-    self.object:setImage(self.image);
+    self.purchaseable = true;
+    self.object:SetImage(self.image);
 end
 
---- represents an upgrade buy
+--- i.e. represents an upgrade buy
 function KlickableElement:disable()
     self.enable = false;
-    self.object:setImage(self.image_disable);
+    self.purchaseable = false;
+    self.object:SetImage(self.image_disable);
     if _persTable.upgrades[self.nameOnPersTable] ~= nil then
         _persTable.upgrades[self.nameOnPersTable] = true;
     end
+end
+
+--- lock an item because of the dependency to an other item
+function KlickableElement:lock()
+    self.enable = true;
+    self.purchaseable = false;
+    self.object:SetImage(self.imagepath_disable);
 end
 
 --- Function not conform to CC/ implements an interface
