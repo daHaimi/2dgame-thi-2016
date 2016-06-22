@@ -57,7 +57,8 @@ function Pause:create()
         _gui:changeFrame(_gui:getFrames().inGame);
     end
 
-    self.elementsOnFrame.button_options.object.OnClick = function(_)
+    self.elementsOnFrame.button_options.gotClicked = function(_)
+        TEsound.play({ "assets/sound/buttonPressed.wav" }, 'buttonPressed');
         _gui:changeFrame(_gui:getFrames().options);
     end
 end
