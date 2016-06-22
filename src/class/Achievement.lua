@@ -9,6 +9,8 @@ function Achievement:checkAchievements()
     self:moneyOneRound();
     self:moneyTotal();
     self:fishCaughtTotal();
+    self:secondStart();
+    _persistence:updateSaveFile();
 end
 
 --- Checks achievements for round based fished amount of objects.
@@ -60,6 +62,13 @@ function Achievement:fishCaughtTotal()
     end
     if fishTotal >= 500 then
         self:unlockAchievement("gFishCaughtTotal");
+    end
+end
+
+--- Checks the achievements for game started twice
+function Achievement:secondStart()
+    if _G._persistence.loaded then
+        self:unlockAchievement("secondStart");
     end
 end
 

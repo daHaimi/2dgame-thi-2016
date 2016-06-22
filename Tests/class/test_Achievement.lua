@@ -11,7 +11,11 @@ _G.TEsound = {
 
 describe("Unit test for Achievement.lua", function()
     local locInstance;
-
+    _G._persistence = {
+        loaded = true;
+    };
+    local perStub = stub(_G._persistence, "updateSaveFile");
+    
     before_each(function()
         _G.data = Data;
         _G._persTable = {
@@ -205,7 +209,7 @@ describe("Unit test for Achievement.lua", function()
         myInstance.unlockAchievement = function (...) end;
         stub(myInstance, "unlockAchievement");
         myInstance:checkAchievements();
-        assert.stub(myInstance.unlockAchievement).was.called(1);
+        assert.stub(myInstance.unlockAchievement).was.called(2);
     end)
 
     it("Test function Achievement:moneyTotal", function()
@@ -238,7 +242,7 @@ describe("Unit test for Achievement.lua", function()
         myInstance.unlockAchievement = function (...) end;
         stub(myInstance, "unlockAchievement");
         myInstance:checkAchievements();
-        assert.stub(myInstance.unlockAchievement).was.called(0);
+        assert.stub(myInstance.unlockAchievement).was.called(1);
     end)
 
     it("Test function Achievement:fishCaughtTotal", function()
@@ -249,7 +253,7 @@ describe("Unit test for Achievement.lua", function()
         myInstance.unlockAchievement = function (...) end;
         stub(myInstance, "unlockAchievement");
         myInstance:checkAchievements();
-        assert.stub(myInstance.unlockAchievement).was.called(1);
+        assert.stub(myInstance.unlockAchievement).was.called(2);
     end)
 
     it("Test function Achievement:fishCaughtTotal", function()
@@ -260,7 +264,7 @@ describe("Unit test for Achievement.lua", function()
         myInstance.unlockAchievement = function (...) end;
         stub(myInstance, "unlockAchievement");
         myInstance:checkAchievements();
-        assert.stub(myInstance.unlockAchievement).was.called(2);
+        assert.stub(myInstance.unlockAchievement).was.called(3);
     end)
 
     it("Test function Achievement:fishCaughtTotal", function()
@@ -271,7 +275,7 @@ describe("Unit test for Achievement.lua", function()
         myInstance.unlockAchievement = function (...) end;
         stub(myInstance, "unlockAchievement");
         myInstance:checkAchievements();
-        assert.stub(myInstance.unlockAchievement).was.called(3);
+        assert.stub(myInstance.unlockAchievement).was.called(4);
     end)
 
     it("Test function Achievement:negativCoins", function()

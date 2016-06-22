@@ -14,7 +14,7 @@ local Persistence = Class {
         -- first load of persTable
         if love.filesystem.exists("saveFile") then
             self:loadPersTable();
-            --_G._persTable.achievements.secondStart = true;
+            self.loaded = true;
         else
             self:createPersTable();
             self:updateSaveFile();
@@ -87,6 +87,7 @@ function Persistence:createPersTable()
         lastLevel = 1;
         winDim = {};
         playedTime = 0;
+        gameStatedAmount = 0;
         phase = 1;
         fish = {};
         enabled = {
