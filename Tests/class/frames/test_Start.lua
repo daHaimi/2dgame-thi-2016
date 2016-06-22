@@ -26,6 +26,9 @@ describe("Unit test for Start.lua", function()
                 printf = function (...) end;
                 setColor = function (...) end;
             }
+            system = {
+            getOS = function(...) return "Android"; end;
+            };
         }
         _G.data = {
             languages= {

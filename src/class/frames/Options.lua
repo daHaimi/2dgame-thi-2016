@@ -49,8 +49,8 @@ function Options:create()
     self.elementsOnFrame.button_back.gotClicked = function(_)
         TEsound.play({ "assets/sound/buttonPressed.wav" }, 'buttonPressed');
         self:loadValuesInPersTable();
-        _persistence:updateSaveFile();
         _gui:changeFrame(_gui:getLastState());
+        _G._persistence:updateSaveFile();
     end
 end
 

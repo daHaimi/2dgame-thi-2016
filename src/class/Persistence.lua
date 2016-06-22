@@ -14,7 +14,7 @@ local Persistence = Class {
         -- first load of persTable
         if love.filesystem.exists("saveFile") then
             self:loadPersTable();
-            --_G._persTable.achievements.secondStart = true;
+            self.loaded = true;
         else
             self:createPersTable();
             self:updateSaveFile();
@@ -24,7 +24,7 @@ local Persistence = Class {
         -- if you want to clear the contents of the file manually use:
         -- 1) tmpfile:close();
         -- 2) tmpfile = io.open("tmp.lua", "w+");
-        io.open("tmp.lua", "w+");
+        --io.open("tmp.lua", "w+");
     end
 };
 
@@ -88,6 +88,7 @@ function Persistence:createPersTable()
         lastLevel = 1;
         winDim = {};
         playedTime = 0;
+        gameStatedAmount = 0;
         phase = 1;
         fish = {};
         enabled = {
