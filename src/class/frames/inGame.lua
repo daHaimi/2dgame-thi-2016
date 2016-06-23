@@ -55,8 +55,14 @@ function InGame:update()
     end
 end
 
+--- activates the ingame bar
 function InGame:activate()
     self.drawBar = true;
+end
+
+--- deactivates the ingame bar
+function InGame:deactivate()
+    self.drawBar = false;
 end
 
 --- shows the elements on screen
@@ -77,6 +83,7 @@ end
 
 --- called to "delete" this frame
 function InGame:clear()
+    self:deactivate();
     self.frame:clear(self.elementsOnFrame);
 end
 
