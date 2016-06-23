@@ -9,6 +9,8 @@ describe("Unit test for Slider.lua", function()
         _G.love = {
             graphics = {
                 draw = function(...) end;
+                setColor = function (...) end;
+                rectangle = function (... ) end;
             };
         };
         

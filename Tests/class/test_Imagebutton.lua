@@ -43,9 +43,6 @@ describe("Unit test for ImageButton.lua", function()
         stub(love.graphics, "draw");
         stub(love.graphics, "printf");
         locInstance:draw();
-        assert.spy(love.graphics.getFont).was_called(1);
-        assert.spy(love.graphics.newFont).was_called(1);
-        assert.stub(love.graphics.setFont).was_called(2);
         assert.stub(love.graphics.draw).was_called(1);
         assert.stub(love.graphics.printf).was_called(1);
     end)
