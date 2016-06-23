@@ -1,9 +1,9 @@
 -- Lua 5.1 Hack
 _G.math.inf = 1 / 0
 
-testClass = require "src.class.Imagebutton"
+testClass = require "src.class.ImageButton"
 
-describe("Unit test for Imagebutton.lua", function()
+describe("Unit test for ImageButton.lua", function()
     local locInstance;
     local image = {
             getWidth = function() return 20; end;
