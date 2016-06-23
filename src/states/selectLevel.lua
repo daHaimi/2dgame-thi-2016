@@ -1,3 +1,0 @@
-selectLevel = {}
-
-end
