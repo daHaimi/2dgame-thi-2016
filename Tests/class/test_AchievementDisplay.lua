@@ -68,6 +68,14 @@ describe("Unit test for AchievementDisplay.lua", function()
         _G._unlockedAchievements = {};
         locInstance:draw();
         assert.spy(loveMock.printf).was_called(1);
+    end)
+
+    it("Testing draw", function()
+        local loveMock = mock(love.graphics.printf, true);
+        local testAchievement = {image = "test", image_unlock = "test"};
+        _G._unlockedAchievements = {testAchievement, testAchievement};
+        locInstance:draw();
+        assert.spy(loveMock).was_called(0);
     end);
 end)
 

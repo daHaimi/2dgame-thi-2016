@@ -89,7 +89,7 @@ local FishableObject = Class {
 function FishableObject:draw()
     if not self.caught and not self.outOfArea and not self.destroyed then
         love.graphics.setColor(255, 255, 255);
-        if self.speed <= 0 then
+        if self.speed < 0 then
             if self.animation and not self.nyan then
                 self.animation:draw(self.xPosition, self.yPosition);
             else
@@ -257,8 +257,6 @@ end
 function FishableObject:getHitboxXPosition(i)
     if self.speed < 0 then
         return self.xPosition + self.hitbox[i].deltaXPos;
-    elseif self.speed == 0 then
-        return self.xPosition - self.hitbox[i].deltaXPos - self.hitbox[i].width + self.spriteSize;
     else
         return self.xPosition - self.hitbox[i].deltaXPos - self.hitbox[i].width;
     end
