@@ -27,9 +27,7 @@ end
 
 --- sets the position of the button
 function Slider:setPosition(x, y)
-    if x >= self.xDefaultPosition and x <= self.xDefaultPosition + self.width then
-        self.xPosition = x;
-    end
+    self.xPosition = math.min(self.xDefaultPosition + self.width , math.max(self.xDefaultPosition, x));
 end
 
 --- return the size of the button

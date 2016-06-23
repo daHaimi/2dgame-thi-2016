@@ -12,6 +12,9 @@ describe("Unit test for Slider.lua", function()
                 setColor = function (...) end;
                 rectangle = function (... ) end;
             };
+            mouse = {
+                getPosition = function (...) return 30, 40 end;
+            }
         };
         
         image = {
@@ -27,6 +30,15 @@ describe("Unit test for Slider.lua", function()
         assert.are.same(myInstance, locInstance);
     end)
 
+    it("Testing update", function()
+        _G._persTable = {
+            scaleFactor = 1;
+        }
+        locInstance.moveable = true;
+        locInstance:update();
+        assert.are.same(locInstance.xPosition, 30);
+    end)
+
     it("Testing getPosition", function()
         local x, y = locInstance:getPosition();
         assert.are.same(0, x);
@@ -36,7 +48,14 @@ describe("Unit test for Slider.lua", function()
     it("Testing draw", function()
         local loveMock = mock(love.graphics, true);
         locInstance:draw();
-        assert.spy(loveMock.draw).was.called(1);
+        assert.spy(loveMock.draw).was.called.with(locInstance.imageUnpressed, locInstance.xPosition + 
+            locInstance.xOffset - 0.5 * locInstance.imageUnpressedWidth, locInstance.yPosition + locInstance.yOffset - 
+            locInstance.imageUnpressedWidth * 0.5 + 5);
+        locInstance.moveable = true;
+        locInstance:draw();
+        assert.spy(loveMock.draw).was.called.with(locInstance.imagePressed, locInstance.xPosition + 
+            locInstance.xOffset - 0.5 * locInstance.imageUnpressedWidth, locInstance.yPosition + locInstance.yOffset - 
+            locInstance.imageUnpressedWidth * 0.5 + 5);
     end)
 
     it("Testing setOffset", function()
@@ -50,6 +69,22 @@ describe("Unit test for Slider.lua", function()
         locInstance.yOffset = 15;
         local x, y = locInstance:getOffset()
         assert.are.same({10, 15}, {x, y});
+    end)
+
+    it("Testing getSize", function()
+        locInstance.imageUnpressedWidth = 50;
+        local x, y = locInstance:getSize();
+        assert.are.same(100, x);
+        assert.are.same(50, y);
+    end)
+
+    it("Testing setPosition", function()
+        locInstance:setPosition(5);
+        assert.are.same(5, locInstance.xPosition);
+        locInstance:setPosition(-5);
+        assert.are.same(0, locInstance.xPosition);
+        locInstance:setPosition(200);
+        assert.are.same(100, locInstance.xPosition);
     end)
 
     it("Testing getValue", function()
