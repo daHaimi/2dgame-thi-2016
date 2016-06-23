@@ -147,7 +147,6 @@ function love.draw()
     -- debug info for memory usage do not remove!
     love.graphics.print('Memory actually used (in kB): ' .. collectgarbage('count'), 200, 60);
     love.graphics.print("Current FPS: " .. tostring(love.timer.getFPS()), 200, 75);
-    love.graphics.print(_gui.p_states.currentState.name, 10, 10 );
     --[[
     love.graphics.print(
         "1speedUp " .. tostring(_G._persTable.upgrades.firstSpeedUp) .. "\n" ..
