@@ -12,7 +12,7 @@ local Bait = Class {
         -- Initialize the member variables
         self.levMan = nil;
         self.size = 10;
-        self.speed = 200;
+        self.speed = 300;
         self.posXMouse = 0;
         self.xPos = 0;
         self.maxSpeedX = 20;

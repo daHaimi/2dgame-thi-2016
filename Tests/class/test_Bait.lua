@@ -311,7 +311,7 @@ describe("Unit test for Bait.lua", function()
         };
 
         local myInstance = testClass(locWinDim, levMan);
-        local exp = 200;
+        local exp = myInstance.speed;
         myInstance:checkUpgrades();
         assert.are.same(exp, myInstance.speed);
     end)
@@ -326,7 +326,7 @@ describe("Unit test for Bait.lua", function()
         };
 
         local myInstance = testClass(locWinDim, levMan);
-        local exp = 400;
+        local exp = myInstance.speed + 200;
         myInstance:checkUpgrades();
         assert.are.same(exp, myInstance.speed);
     end)
@@ -341,7 +341,7 @@ describe("Unit test for Bait.lua", function()
 
         local myInstance = testClass(locWinDim, levMan);
         myInstance.image = locImageStub;
-        local exp = 400;
+        local exp = myInstance.speed + 200;
         myInstance:checkUpgrades();
         assert.are.same(exp, myInstance.speed);
     end)
@@ -357,7 +357,7 @@ describe("Unit test for Bait.lua", function()
 
         local myInstance = testClass(locWinDim, levMan);
         myInstance.image = locImageStub;
-        local exp = 600;
+        local exp = myInstance.speed + 400;
         myInstance:checkUpgrades();
         assert.are.same(exp, myInstance.speed);
     end)
@@ -372,7 +372,7 @@ describe("Unit test for Bait.lua", function()
 
         local myInstance = testClass(locWinDim, levMan);
         myInstance.image = locImageStub;
-        local exp = 200;
+        local exp = myInstance.speed;
         myInstance:checkUpgrades();
         assert.are.same(exp, myInstance.speed);
     end)
