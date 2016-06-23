@@ -66,7 +66,7 @@ function InGame:draw()
         love.graphics.draw(self.fuelBarBackground, 10, 10 + y);
         love.graphics.draw(self.fuelBar, self.fuelBarPosition, 10 + y);
         love.graphics.draw(self.barFuel, 0, 0 + y);
-        if love.system.getOS() == "Android" or love.system.getOS() == "iOS"  or true then
+        if love.system.getOS() == "Android" or love.system.getOS() == "iOS" then
             self.elementsOnFrame.pause:draw();
         end
         self.elementsOnFrame.healthbar:draw();
