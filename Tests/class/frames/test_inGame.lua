@@ -17,7 +17,7 @@ describe("Unit test for inGame.lua", function()
                 setGrabbed = function(...) end;
             },
             system = {
-                getOS = function(...) return ""; end;
+                getOS = function(...) return "Android"; end;
             },
             graphics = {
                 newImage = function(...) return {
@@ -87,6 +87,7 @@ describe("Unit test for inGame.lua", function()
     end)
 
     it("Testing activate function", function()
+        
         stub(locInstance.frame, "draw");
         locInstance:activate();
         assert.are.same(locInstance.drawBar, true);

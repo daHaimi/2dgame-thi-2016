@@ -94,7 +94,7 @@ describe("Unit test for Start.lua", function()
         locInstance.speed = 1;
         
         locInstance:disappear();
-        assert.are.equal(locInstance.offset, 4);
+        assert.are.equal(locInstance.offset, 6);
     end)
 
     it("testing disappear function", function()
