@@ -115,7 +115,7 @@ function Credits:draw()
     end
     
     -- print the text
-    love.graphics.setFont(love.graphics.newFont("font/8bitOperatorPlus-Regular.ttf", 18));
+    love.graphics.setFont(love.graphics.newFont("font/8bitOperatorPlus-Regular.ttf", 17));
     love.graphics.printf(self:buildCreditsString(),(_G._persTable.winDim[1] - self.background:getWidth())/2 + 40,
         100 + y, self.background:getWidth() - 80, "left");
 end
