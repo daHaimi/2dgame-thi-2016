@@ -41,11 +41,7 @@ function AchievementDisplay:draw()
 end
 
 function AchievementDisplay:remove()
-    self.unlockedAchievements = {};
-    for _, v in pairs (self.unlockedAchievements) do
-        print (v.name)
-    end
-    print("end of text")
+    _G._unlockedAchievements = {};
 end
 
 --- sets the offset of the button 

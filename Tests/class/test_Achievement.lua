@@ -209,7 +209,7 @@ describe("Unit test for Achievement.lua", function()
         myInstance.unlockAchievement = function (...) end;
         stub(myInstance, "unlockAchievement");
         myInstance:checkAchievements();
-        assert.stub(myInstance.unlockAchievement).was.called(2);
+        assert.stub(myInstance.unlockAchievement).was.called(1);
     end)
 
     it("Test function Achievement:moneyTotal", function()
@@ -235,7 +235,7 @@ describe("Unit test for Achievement.lua", function()
     end)
 
     it("Test function Achievement:fishCaughtTotal", function()
-        _G._persTable.fish.caughtTotal = 10;
+        _G._persTable.fish.caughtTotal = 50;
 
         local myInstance = testClass();
         local exp = false;
@@ -246,7 +246,7 @@ describe("Unit test for Achievement.lua", function()
     end)
 
     it("Test function Achievement:fishCaughtTotal", function()
-        _G._persTable.fish.caughtTotal = 100;
+        _G._persTable.fish.caughtTotal = 200;
 
         local myInstance = testClass();
         local exp = true;
@@ -257,7 +257,7 @@ describe("Unit test for Achievement.lua", function()
     end)
 
     it("Test function Achievement:fishCaughtTotal", function()
-        _G._persTable.fish.caughtTotal = 200;
+        _G._persTable.fish.caughtTotal = 500;
 
         local myInstance = testClass();
         local exp = true;
@@ -275,7 +275,7 @@ describe("Unit test for Achievement.lua", function()
         myInstance.unlockAchievement = function (...) end;
         stub(myInstance, "unlockAchievement");
         myInstance:checkAchievements();
-        assert.stub(myInstance.unlockAchievement).was.called(4);
+        assert.stub(myInstance.unlockAchievement).was.called(3);
     end)
 
     it("Test function Achievement:negativCoins", function()

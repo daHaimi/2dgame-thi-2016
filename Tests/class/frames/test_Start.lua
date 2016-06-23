@@ -25,9 +25,9 @@ describe("Unit test for Start.lua", function()
                 setFont = function (...) end;
                 printf = function (...) end;
                 setColor = function (...) end;
-            }
+            },
             system = {
-            getOS = function(...) return "Android"; end;
+                getOS = function(...) return "Android"; end;
             };
         }
         _G.data = {
