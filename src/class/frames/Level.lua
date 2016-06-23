@@ -6,7 +6,7 @@ local Level = Class {
         self.background = love.graphics.newImage("assets/gui/LevelBG.png");
         self.backgroundPosition = {(_G._persTable.winDim[1] - self.background:getWidth()) / 2,
             (_G._persTable.winDim[2] - self.background:getHeight()) / 2};
-        self.imageButton = love.graphics.newImage("assets/gui/button.png");
+        self.imageButton = love.graphics.newImage("assets/gui/Button.png");
         self.imageHouse = love.graphics.newImage("assets/gui/HouseButton.png");
         self.imageCanyonUnlocked = love.graphics.newImage("assets/gui/CanyonButton.png");
         self.imageCanyonLocked = love.graphics.newImage("assets/gui/CanyonButton_locked.png");

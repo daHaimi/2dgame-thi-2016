@@ -3,7 +3,7 @@ ImageButton = require "class.ImageButton";
 
 local Credits = Class {
     init = function(self)
-        self.imageButton = love.graphics.newImage("assets/gui/button.png");
+        self.imageButton = love.graphics.newImage("assets/gui/Button.png");
         self.background = love.graphics.newImage("assets/gui/StandardBG.png");
         self.buttonHeight = self.imageButton:getHeight();
         self.buttonWidth = self.imageButton:getWidth();
@@ -113,7 +113,7 @@ function Credits:draw()
         (_G._persTable.winDim[2] - self.background:getHeight())/2 + y);
     
     -- print the text
-    love.graphics.setFont(love.graphics.newFont("font/8bitOperatorPlus-Bold.ttf", 16));
+    love.graphics.setFont(love.graphics.newFont("font/8bitOperatorPlus-Regular.ttf", 18));
     love.graphics.printf(self:buildCreditsString(),(_G._persTable.winDim[1] - self.background:getWidth())/2 + 40,
         100 + y, self.background:getWidth() - 80, "left");
     love.graphics.setFont(font);

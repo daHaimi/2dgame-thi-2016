@@ -6,7 +6,7 @@ ImageButton = require "class.ImageButton";
 
 local Achievements = Class {
     init = function(self)
-        self.imageButton = love.graphics.newImage("assets/gui/button.png");
+        self.imageButton = love.graphics.newImage("assets/gui/Button.png");
         self.background = love.graphics.newImage("assets/gui/StandardBG.png");
         self.backgroundPosition = {(_G._persTable.winDim[1] - self.background:getWidth()) / 2,
             (_G._persTable.winDim[2] - self.background:getHeight()) / 2};

@@ -4,7 +4,7 @@ Slider = require "class.Slider";
 
 local Options = Class {
     init = function(self)
-        self.imageButton = love.graphics.newImage("assets/gui/button.png");
+        self.imageButton = love.graphics.newImage("assets/gui/Button.png");
         self.background = love.graphics.newImage("assets/gui/StandardBG.png");
         self.imageUnpressedSlider = love.graphics.newImage("assets/hamster.png");
         self.imagePressedSlider = love.graphics.newImage("assets/hamsterOpenMouth.png");

@@ -34,7 +34,7 @@ function ImageButton:draw()
     local font = love.graphics.getFont();
     love.graphics.setFont(love.graphics.newFont("font/8bitOperatorPlus-Bold.ttf", 22));
     love.graphics.draw(self.image, self.xPosition + self.xOffset, self.yPosition + self.yOffset);
-    love.graphics.printf(self.text, self.xPosition + self.xOffset, self.yPosition + 25 + self.yOffset, self.width, "center")
+    love.graphics.printf(self.text, self.xPosition + self.xOffset, self.yPosition + 20 + self.yOffset, self.width, "center")
     love.graphics.setFont(font);
 end
 

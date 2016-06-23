@@ -7,7 +7,7 @@ local Score = Class {
         self.background = love.graphics.newImage("assets/gui/ScoreScreen.png");
         self.backgroundPosition = {(_G._persTable.winDim[1] - self.background:getWidth()) / 2,
             (_G._persTable.winDim[2] - self.background:getHeight()) / 2};
-        self.imageButton = love.graphics.newImage("assets/gui/button.png");
+        self.imageButton = love.graphics.newImage("assets/gui/Button.png");
         self.buttonHeight = self.imageButton:getHeight();
         self.buttonWidth = self.imageButton:getWidth();
         self.buttonXPosition = (_G._persTable.winDim[1] - self.buttonWidth) / 2;

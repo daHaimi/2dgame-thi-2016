@@ -1112,7 +1112,7 @@ return {
                 buttonClose = "Close Game";
                 buttonBack = "Back";
                 textDepth = "Depth: ";
-                buttonReset = "Reset";
+                buttonReset = "Reset Game";
                 textMusic = "In Game Music:";
                 textBGM = "Background Music:";
                 buttonRestart = "Restart";
@@ -1418,7 +1418,7 @@ return {
                 buttonClose = "Spiel beenden";
                 buttonBack = "Zurück";
                 textDepth = "Tiefe: ";
-                buttonReset = "Zurücksetzten";
+                buttonReset = "Werkseinstellung";
                 textMusic = "Musik im Spiel:";
                 textBGM = "Hintergrund Musik:";
                 buttonRestart = "Neustarten";
