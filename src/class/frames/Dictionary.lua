@@ -37,7 +37,7 @@ function Dictionary:create()
 
     --onclick events for all buttons
     self.elementsOnFrame.button_back.gotClicked = function(_)
-        TEsound.play({ "assets/sound/buttonPressed.wav" }, 'buttonPressed');
+        TEsound.play({ "assets/sound/buttonPressed.wav" }, 'bgm');
         _gui:changeFrame(_gui:getFrames().mainMenu);
         self.elementsOnFrame.chart:resetTopRow();
         self.elementsOnFrame.chart:resetMarkedFrame();

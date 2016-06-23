@@ -24,9 +24,9 @@ local Options = Class {
 function Options:create()
     --add, create and position all elements on this frame
     self.elementsOnFrame = {
-        slider_bgm = Slider(self.imageUnpressedSlider, self.imagePressedSlider, self.buttonXPosition, 140,
+        slider_bgm = Slider(self.imageUnpressedSlider, self.imagePressedSlider, self.buttonXPosition, 220,
             _G._persTable.winDim[1] - 2* self.buttonXPosition);
-        slider_music = Slider(self.imageUnpressedSlider, self.imagePressedSlider, self.buttonXPosition, 220,
+        slider_music = Slider(self.imageUnpressedSlider, self.imagePressedSlider, self.buttonXPosition, 140,
             _G._persTable.winDim[1] - 2* self.buttonXPosition);
         button_reset = ImageButton(self.imageButton, self.buttonXPosition , 
             (_G._persTable.winDim[2] + self.background:getHeight())/2 - 2 * self.buttonHeight 
@@ -40,14 +40,14 @@ function Options:create()
 
     --onclick events for all buttons
     self.elementsOnFrame.button_reset.gotClicked = function(_)
-        TEsound.play({ "assets/sound/buttonPressed.wav" }, 'buttonPressed');
+        TEsound.play({ "assets/sound/buttonPressed.wav" }, 'bgm');
         _persistence:resetGame();
         self:loadValuesFromPersTable();
         _gui:changeFrame(_gui:getFrames().mainMenu);
     end
 
     self.elementsOnFrame.button_back.gotClicked = function(_)
-        TEsound.play({ "assets/sound/buttonPressed.wav" }, 'buttonPressed');
+        TEsound.play({ "assets/sound/buttonPressed.wav" }, 'bgm');
         self:loadValuesInPersTable();
         _gui:changeFrame(_gui:getLastState());
         _G._persistence:updateSaveFile();
@@ -79,11 +79,14 @@ function Options:update()
     self.elementsOnFrame.slider_music:update();
     if self.elementsOnFrame.slider_bgm:getMoveable() then
         _G._persTable.config.bgm = self.elementsOnFrame.slider_bgm:getValue();
+        TEsound.volume('bgm', _G._persTable.config.bgm / 100);
     end
     
     if self.elementsOnFrame.slider_music:getMoveable() then
         _G._persTable.config.music = self.elementsOnFrame.slider_music:getValue();
+        TEsound.volume('music', _G._persTable.config.bgm / 100);
     end
+    
 end
 
 --- shows the frame on screen

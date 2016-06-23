@@ -227,10 +227,10 @@ function Level:update(dt, bait)
 
     --Update music
     if self.godModeActive and not self.gMMusicPlaying then
-        TEsound.playLooping({ "assets/sound/godMode.wav" }, 'godmode');
+        TEsound.playLooping({ "assets/sound/godMode.wav" }, 'bgm');
         self.gMMusicPlaying = true;
     elseif not self.godModeActive then
-        TEsound.stop('godmode');
+        TEsound.stop('bgm');
         self.gMMusicPlaying = false;
     end
 
@@ -300,7 +300,7 @@ function Level:doEndAnimationMovement(bait, dt)
                     -- plays wrong sound
                     if self.ploempelPlayed == false then
                         self.ploempelPlayed = true;
-                        TEsound.playLooping("assets/sound/ploempel.wav", "ploempel", 5);
+                        TEsound.playLooping("assets/sound/ploempel.wav", "bgm", 5);
                     end
                     self.pumpingWay = self.pumpingWay - 5;
                     if self.pumpingWay == 0 then

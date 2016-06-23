@@ -41,7 +41,7 @@ function UpgradeMenu:create()
 
     --onclick events for all buttons
     self.elementsOnFrame.button_back.gotClicked = function(_)
-        TEsound.play({ "assets/sound/buttonPressed.wav" }, 'buttonPressed');
+        TEsound.play({ "assets/sound/buttonPressed.wav" }, 'bgm');
         _gui:changeFrame(_gui:getFrames().mainMenu);
         self.elementsOnFrame.chart:resetTopRow();
         self.elementsOnFrame.chart:resetMarkedFrame();
@@ -50,12 +50,12 @@ function UpgradeMenu:create()
     self.elementsOnFrame.button_buy.gotClicked = function(_)
         if self.elementsOnFrame.chart:getMarkedElement() ~= nil then
             if _G._persTable.money >= self.elementsOnFrame.chart:getMarkedElement().price then
-                TEsound.play({ "assets/sound/buying.wav" }, 'buying');
+                TEsound.play({ "assets/sound/buying.wav" }, 'bgm');
                 self:buyElement();
                 _G._persistence:updateSaveFile();
             else
                 if self.elementsOnFrame.chart.object:getMarkedElement().purchaseable then
-                TEsound.play({ "assets/sound/notEnoughMoney.wav" }, 'notEnoughMoney');
+                TEsound.play({ "assets/sound/notEnoughMoney.wav" }, 'bgm');
                 end
             end
             if not _G._persTable.achievements.shoppingQueen then
@@ -103,6 +103,9 @@ function UpgradeMenu:addAllUpgrades()
         if v.sortNumber ~= nil then
             local newKlickableElement = KlickableElement(v.name, image, image_unlock, v.description, v.price, 
                 v.nameOnPersTable, v.sortNumber);
+            if _G._persTable.upgrades[v.nameOnPersTable] then
+                newKlickableElement.object:setImage(image_unlock);
+            end
             self.elementsOnFrame.chart:addKlickableElement(newKlickableElement);
         end
     end

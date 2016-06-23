@@ -34,31 +34,31 @@ function Pause:create()
 
     --onclick events for all buttons
     self.elementsOnFrame.button_backToGame.gotClicked = function(_)
-        TEsound.play({ "assets/sound/buttonPressed.wav" }, 'buttonPressed');
+        TEsound.play({ "assets/sound/buttonPressed.wav" }, 'bgm');
         _gui:changeFrame(_gui:getFrames().inGame);
     end
 
     self.elementsOnFrame.button_changeLevel.gotClicked = function(_)
-        TEsound.play({ "assets/sound/buttonPressed.wav" }, 'buttonPressed');
+        TEsound.play({ "assets/sound/buttonPressed.wav" }, 'bgm');
         _gui:changeFrame(_gui:getFrames().level);
     end
 
     self.elementsOnFrame.button_backToMenu.gotClicked = function(_)
-        TEsound.play({ "assets/sound/buttonPressed.wav" }, 'buttonPressed');
+        TEsound.play({ "assets/sound/buttonPressed.wav" }, 'bgm');
         self:checkAchRageQuit();
         _gui:getLevelManager():freeManagedObjects(); -- cleanup level, bait and swarmfactory
         _gui:changeFrame(_gui:getFrames().mainMenu);
     end
 
     self.elementsOnFrame.button_restartLevel.gotClicked = function(_)
-        TEsound.play({ "assets/sound/buttonPressed.wav" }, 'buttonPressed');
+        TEsound.play({ "assets/sound/buttonPressed.wav" }, 'bgm');
         self:checkAchRageQuit();
         _gui:getLevelManager():replayLevel();
         _gui:changeFrame(_gui:getFrames().inGame);
     end
 
     self.elementsOnFrame.button_options.gotClicked = function(_)
-        TEsound.play({ "assets/sound/buttonPressed.wav" }, 'buttonPressed');
+        TEsound.play({ "assets/sound/buttonPressed.wav" }, 'bgm');
         _gui:changeFrame(_gui:getFrames().options);
     end
 end
