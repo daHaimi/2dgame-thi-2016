@@ -135,12 +135,11 @@ function Chart:draw()
     love.graphics.setFont(love.graphics.newFont("font/8bitOperatorPlus-Bold.ttf", 20));
     love.graphics.printf(self.textFieldName, (_G._persTable.winDim[1] - self.textBackground:getWidth())/2 + 10, 
         450 + y+ self.backgroundPosition[2] + y, self.textBackground:getWidth(), "left")
-    love.graphics.setFont(love.graphics.newFont("font/8bitOperatorPlus-Bold.ttf", 17));
+    love.graphics.setFont(love.graphics.newFont("font/8bitOperatorPlus-Regular.ttf", 18));
     love.graphics.printf(self.textFieldDescription, (_G._persTable.winDim[1] - self.textBackground:getWidth())/2 + 10, 
         480 + y+ self.backgroundPosition[2] + y, self.textBackground:getWidth() - 20, "left")
-    love.graphics.setFont(love.graphics.newFont("font/8bitOperatorPlus-Bold.ttf", 15));
     love.graphics.printf(self.textFieldPrice, (_G._persTable.winDim[1] - self.textBackground:getWidth())/2 + 20, 
-        430 + y+ self.backgroundPosition[2] + y, self.textBackground:getWidth() - 20, "left")
+        427 + y + self.backgroundPosition[2] + y, self.textBackground:getWidth() - 20, "left")
     love.graphics.setFont(font);
     love.graphics.setColor(255, 255, 255);
 end
