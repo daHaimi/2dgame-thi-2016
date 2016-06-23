@@ -3,12 +3,12 @@ Class = require "lib.hump.class";
 ImageButton = require "class.ImageButton";
 
 local KlickableElement = Class {
-    init = function(self, name, imagepath, imagepath_disable, description, price, nameOnPersTable, sortNumber, dependency)
+    init = function(self, name, image, image_disable, description, price, nameOnPersTable, sortNumber, dependency)
         self.name = name;
         self.enable = true;
-        self.image = love.graphics.newImage(imagepath);
-        if imagepath_disable ~= nil then
-            self.image_disable = love.graphics.newImage(imagepath_disable);
+        self.image = image;
+        if image_disable ~= nil then
+            self.image_disable = image_disable;
         end
         self.price = price;
         self.dependency = dependency;
@@ -17,7 +17,6 @@ local KlickableElement = Class {
         self.description = description;
         self.object = ImageButton(self.image, 0, 0, true);
         self.object:setImage(self.image);
-        self.object:setText ("");
         self.sortNumber = sortNumber;
         
         self.xOffset = 0;
@@ -82,6 +81,7 @@ end
 
 --- draws the klickable element
 function KlickableElement:draw()
+    print "draw klickable"
     self.object:draw();
 end
 

@@ -122,8 +122,14 @@ describe("Unit test for Dictionary.lua", function()
             xOffset = 0;
             yOffset = 0;
             object = {};};
-        local KE1 = KlickableElement("test1", "image1", "image2", "test1", nil);
-        local KE2 = KlickableElement("test2", "image1", "image2", "test2", nil);
+        
+        local image = {
+            getHeight = function (...) return 50 end;
+            getWidth = function (...) return 50 end;
+        };
+        
+        local KE1 = KlickableElement("test1", image, image, "test1", nil);
+        local KE2 = KlickableElement("test2", image, image, "test2", nil);
         KE1.object = {};
         KE1.image = "image1";
         KE1.image_disable = "image2";

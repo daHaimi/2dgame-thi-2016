@@ -117,12 +117,16 @@ describe("Unit test for Achievements.lua", function()
                 }
             };
         };
+        local image = {
+            getHeight = function (...) return 50 end;
+            getWidth = function (...) return 50 end;
+        }
         
         locInstance:addAllAchievements();
         locInstance.elementsOnFrame.chart.p_elementsOnChart[1].object = {};
         locInstance.elementsOnFrame.chart.p_elementsOnChart[2].object = {};
-        local KE1 = KlickableElement("test1", "path1", "path2", "test1", nil, "test1");
-        local KE2 = KlickableElement("test2", "path3", "path4", "test2", nil, "test2");
+        local KE1 = KlickableElement("test1", image, image, "test1", nil, "test1");
+        local KE2 = KlickableElement("test2", image, image, "test2", nil, "test2");
         KE1.object = {};
         KE2.object = {};
         assert.not_same(locInstance.elementsOnFrame.chart.p_elementsOnChart, {KE1, KE2});

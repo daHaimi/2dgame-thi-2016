@@ -192,13 +192,17 @@ end)
           };
         
         locInstance.elementsOnFrame.chart.p_markedElement = KE;
-
+        
+        local image = {
+            getHeight = function (...) return 50 end;
+            getWidth = function (...) return 50 end;
+        };
         
         locInstance:addAllUpgrades();
         locInstance.elementsOnFrame.chart.p_elementsOnChart[1].object = {};
         locInstance.elementsOnFrame.chart.p_elementsOnChart[2].object = {};
-        local KE1 = KlickableElement("test1", "path1", "path2", "test1", 1, "test1");
-        local KE2 = KlickableElement("test2", "path3", "path4", "test2", 2, "test2");
+        local KE1 = KlickableElement("test1", image, image, "test1", 1, "test1");
+        local KE2 = KlickableElement("test2", image, image, "test2", 2, "test2");
         KE1.object = {};
         KE2.object = {};
         assert.not_same(locInstance.elementsOnFrame.chart.p_elementsOnChart, {KE2, KE1});

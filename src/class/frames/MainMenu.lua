@@ -143,7 +143,6 @@ function MainMenu:setLanguage(language)
     self.elementsOnFrame.button_dictionary:setText(_G.data.languages[language].package.buttonDictionary);
     self.elementsOnFrame.button_upgradeMenu:setText(_G.data.languages[language].package.buttonShop);
     self.elementsOnFrame.button_start:setText(_G.data.languages[language].package.buttonStart);
-    self.elementsOnFrame.button_flag:setText("");
 end
 
 return MainMenu;

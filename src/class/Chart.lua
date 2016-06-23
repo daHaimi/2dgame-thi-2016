@@ -51,10 +51,8 @@ end
 function Chart:create()
     self.button_up = ImageButton(self.imageButtonUP, self.buttonXPosition , 
         self.p_yPos + self.buttonOffset + self.backgroundPosition[2], true);
-    self.button_up:setText("");
     self.button_down = ImageButton(self.imageButtonDOWN, self.buttonXPosition, 
         self.p_yPos + self.buttonOffset + 3 * 96 + self.buttonHeight + self.backgroundPosition[2], true);
-    self.button_down:setText("");
 
     --onclick events of the buttons
     self.button_up.gotClicked = function(_)
@@ -122,7 +120,7 @@ function Chart:draw()
         if self.p_elementsOnChart[i] ~= nil and
         self.p_elementsOnChart[i].sortNumber > self.p_toprow * 3 and
         self.p_elementsOnChart[i].sortNumber <= self.p_toprow * 3 + 9 then
-            self.p_elementsOnChart[i]:draw();
+            self.p_elementsOnChart[i].object:draw();
         end
     end
     --draw mark

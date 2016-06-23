@@ -36,6 +36,7 @@ describe("Unit test for ImageButton.lua", function()
     end)
 
     it("Testing draw function", function()
+        locInstance.text = "";
         spy.on(love.graphics, "getFont");
         spy.on(love.graphics, "newFont");
         stub(love.graphics, "setFont");

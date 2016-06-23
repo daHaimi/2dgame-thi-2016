@@ -26,13 +26,17 @@ describe("Unit test for KlickableElement.lua", function()
             scaledDeviceDim = { 480, 833 };
         };
         
+        _G.image = {
+            getHeight = function (...) return 50 end;
+            getWidth = function (...) return 50 end;
+        };
 
-        locInstance = testClass("testClass", "test/path/testImage.png", "test/path/testImage_disable.png", "test discription", 0, "testName");
+        locInstance = testClass("testClass", _G.image, _G.image, "test discription", 0, "testName");
     end)
 
     it("Testing Constructor", function()
-        local myInstance1 = testClass("testClass", "test/path/testImage.png", "test/path/testImage_disable.png", "test discription", 0, "testName");
-        local myInstance2 = testClass("testClass", "test/path/testImage.png", "test/path/testImage_disable.png", "test discription", 0, "testName");
+        local myInstance1 = testClass("testClass", _G.image, _G.image, "test discription", 0, "testName");
+        local myInstance2 = testClass("testClass", _G.image, _G.image, "test discription", 0, "testName");
         assert.are.same(myInstance1.description, myInstance2.description);
         assert.are.same(myInstance1.enable, myInstance2.enable);
         assert.are.same(myInstance1.name, myInstance2.name);
