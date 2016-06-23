@@ -74,18 +74,24 @@ function Slider:getOffset()
     return self.xOffset, self.yOffset;
 end
 
+--- is called when the slider is released to set the value in config
+--@return value of the volume in percent
 function Slider:getValue()
     return (self.xPosition - self.xDefaultPosition) * 100 / self.width
 end
 
+--- is called then slider is loaded to set position 
+--@param value value of the volume in percent
 function Slider:setValue(value)
     self.xPosition = value / 100 * self.width + self.xDefaultPosition
 end
 
+--- is called when slider is clicked
 function Slider:gotClicked(x, y)
     self.moveable = true;
 end
 
+--- is called when slider is no longer clicked
 function Slider:release(x, y)
     self.moveable = false;
 end

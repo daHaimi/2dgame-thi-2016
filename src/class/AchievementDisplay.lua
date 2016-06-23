@@ -38,6 +38,7 @@ function AchievementDisplay:draw()
     end
 end
 
+--- removes all achievements from buffer
 function AchievementDisplay:remove()
     _G._unlockedAchievements = {};
 end
