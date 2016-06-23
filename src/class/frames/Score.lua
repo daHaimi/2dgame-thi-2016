@@ -16,6 +16,7 @@ local Score = Class {
         self.scoretextPosition = 0;
         self.score = "";
         self.scorePosition = 0;
+        self.playAppearSound = true;
         self.frame = Frame(0, 0, "down", "down", 50, 0, -1500);
         self:create();
     end;
@@ -57,6 +58,7 @@ function Score:create()
     
     self.elementsOnFrame.achievements.gotClicked = function (_)
     end
+
 end
 
 --- changes the language of this frame
@@ -112,11 +114,16 @@ end
 function Score:appear()
     love.mouse.setVisible(true);
     self.frame:appear(self.elementsOnFrame);
+    if self.playAppearSound == true then
+        self.playAppearSound = false;
+        TEsound.play({ "assets/sound/buying.wav" }, 'bgm');
+    end
 end
 
 --- called in the "fly out" state
 function Score:disappear()
     self.frame:disappear(self.elementsOnFrame);
+    self.playAppearSound = true;
 end
 
 --- return true if the frame is on position /fly in move is finished

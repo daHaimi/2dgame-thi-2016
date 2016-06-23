@@ -110,9 +110,11 @@ describe("Unit test for Score.lua", function()
     end)
 
     it("Testing appear function", function()
+        local soundSpy = spy.on(_G.TEsound, "play");
         stub(locInstance.frame, "appear");
         locInstance:appear();
         assert.stub(locInstance.frame.appear).was_called(1);
+        assert.spy(soundSpy).was.called(1);
     end)
 
     it("Testing disappear function", function()
