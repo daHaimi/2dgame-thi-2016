@@ -69,6 +69,8 @@ describe("Unit test for Level.lua", function()
         locInstance.imageHouse = "imageHouse";
         locInstance.imageCanyonLocked =  "imageCanyonLocked";
         locInstance.imageCanyonUnlocked = "imageCanyonUnlocked";
+        locInstance.imageSquirrel = "imageSquirrel";
+        locInstance.imageCrocodile = "imageCrocodile";
         locInstance.background = "background";
         
         myInstance.elementsOnFrame = {};
@@ -76,6 +78,8 @@ describe("Unit test for Level.lua", function()
         myInstance.imageHouse = "imageHouse";
         myInstance.imageCanyonLocked =  "imageCanyonLocked";
         myInstance.imageCanyonUnlocked = "imageCanyonUnlocked";
+        myInstance.imageSquirrel = "imageSquirrel";
+        myInstance.imageCrocodile = "imageCrocodile";
         myInstance.background = "background";
         
         assert.are.same(locInstance, myInstance);
@@ -109,7 +113,7 @@ describe("Unit test for Level.lua", function()
     it("Testing draw function", function()
         local loveMock = mock(love.graphics, true);
         locInstance:draw();
-        assert.spy(loveMock.draw).was_called(4);
+        assert.spy(loveMock.draw).was_called(6);
     end)
 
     it("Testing clear function", function()

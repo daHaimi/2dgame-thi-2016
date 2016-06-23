@@ -10,6 +10,8 @@ local Level = Class {
         self.imageHouse = love.graphics.newImage("assets/gui/HouseButton.png");
         self.imageCanyonUnlocked = love.graphics.newImage("assets/gui/CanyonButton.png");
         self.imageCanyonLocked = love.graphics.newImage("assets/gui/CanyonButton_locked.png");
+        self.imageSquirrel = love.graphics.newImage("assets/squirrel.png");
+        self.imageCrocodile = love.graphics.newImage("assets/crocodile.png");
         self.buttonHeight = self.imageButton:getHeight();
         self.buttonWidth = self.imageButton:getWidth();
         self.buttonXPosition = (_G._persTable.winDim[1] - self.buttonWidth) / 2;
@@ -31,11 +33,17 @@ function Level:create()
             self.backgroundPosition[2] + 425, true);
         button_back = ImageButton(self.imageButton, self.backgroundPosition[1] + 100,
             self.backgroundPosition[2] + 590, true);
+        buttonSquirrel = ImageButton(self.imageSquirrel, self.backgroundPosition[1] + 180,
+            self.backgroundPosition[2] + 200, true);
+        buttonCrocodile = ImageButton(self.imageCrocodile, self.backgroundPosition[1] + 230,
+            self.backgroundPosition[2] + 370, true);
     };
 
     --adjust all elements on this frame
     self.elementsOnFrame.buttonHouse:setText("");
     self.elementsOnFrame.buttonCanyon:setText("");
+    self.elementsOnFrame.buttonSquirrel:setText("");
+    self.elementsOnFrame.buttonCrocodile:setText("");
 
     if _G._persTable.unlockedLevel == 1 then
         self.elementsOnFrame.buttonCanyon:setImage(self.imageCanyonLocked);
@@ -43,8 +51,6 @@ function Level:create()
         self.elementsOnFrame.buttonCanyon:setImage(self.imageCanyonUnlocked);
     end
     
-    self.elementsOnFrame.button_back:setText("Back");
-
     --onclick events for all buttons
     self.elementsOnFrame.buttonHouse.gotClicked = function(_)
         TEsound.play({ "assets/sound/buttonPressed.wav" }, 'bgm');
@@ -65,6 +71,18 @@ function Level:create()
     self.elementsOnFrame.button_back.gotClicked = function(_)
         TEsound.play({ "assets/sound/buttonPressed.wav" }, 'bgm');
         _gui:changeFrame(_gui:getFrames().mainMenu);
+    end
+    
+    self.elementsOnFrame.buttonSquirrel.gotClicked = function(_)
+        TEsound.play({ "assets/sound/buttonPressed.wav" }, 'bgm');
+        _gui:getLevelManager():newLevel(_gui:getLevelManager():getLevelPropMapByName("crazySquirrels"), _G.data);
+        _gui:changeFrame(_gui:getFrames().inGame);
+    end
+    
+    self.elementsOnFrame.buttonCrocodile.gotClicked = function(_)
+        TEsound.play({ "assets/sound/buttonPressed.wav" }, 'bgm');
+        _gui:getLevelManager():newLevel(_gui:getLevelManager():getLevelPropMapByName("sleepingCrocos"), _G.data);
+        _gui:changeFrame(_gui:getFrames().inGame);
     end
 end
 

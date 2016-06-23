@@ -87,10 +87,16 @@ describe("Unit test for inGame.lua", function()
     end)
 
     it("Testing activate function", function()
-        
         stub(locInstance.frame, "draw");
         locInstance:activate();
         assert.are.same(locInstance.drawBar, true);
+    end)
+
+    it("Testing deactivate function", function()
+        stub(locInstance.frame, "draw");
+        locInstance.drawBar = true;
+        locInstance:deactivate();
+        assert.are.same(locInstance.drawBar, false);
     end)
     
     it("Testing clear function", function()

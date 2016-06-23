@@ -14,6 +14,10 @@ describe("Unit test for AchievementDisplay.lua", function()
                 setVisible = function(...) end;
             };
             graphics = {
+                draw = function (...) end;
+                printf = function(...) end;
+                newFont = function(...) end;
+                setFont = function (...) end;
                 newImage = function(...) return {
                     getHeight = function (...) return 50 end;
                     getWidth = function (...) return 50 end;
@@ -42,8 +46,28 @@ describe("Unit test for AchievementDisplay.lua", function()
 
     it("Testing setPosition function", function()
         locInstance:setPosition(50, 50);
-        assert.are.equal(locInstance.position[1], 50)
-        assert.are.equal(locInstance.position[2], 50)
+        assert.are.equal(locInstance.position[1], 50);
+        assert.are.equal(locInstance.position[2], 50);
     end)
+
+    it("Testing getPosition function", function()
+        locInstance.position = {50, 50};
+        local x, y =locInstance:getPosition();
+        assert.are.same(50, x);
+        assert.are.same(50, y);
+    end)
+
+    it("Testing setOffset function", function()
+        locInstance:setOffset(50, 50);
+        assert.are.equal(locInstance.xOffset, 50);
+        assert.are.equal(locInstance.yOffset, 50);
+    end)
+
+    it("Testing draw", function()
+        local loveMock = mock(love.graphics, true);
+        _G._unlockedAchievements = {};
+        locInstance:draw();
+        assert.spy(loveMock.printf).was_called(1);
+    end);
 end)
 
