@@ -60,7 +60,7 @@ end
 
 --- called in the "fly out" state
 function Start:disappear()
-    self.offset = self.offset - self.speed;
+    self.offset = self.offset + self.speed;
 end
 
 --- return true if the frame is on position /fly in move is finished
