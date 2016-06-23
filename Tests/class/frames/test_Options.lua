@@ -18,6 +18,7 @@ describe("Unit test for Options.lua", function()
 
     _G.TEsound = {
         play = function(...) end;
+        volume = function(...) end;
     };
     
     before_each(function()
@@ -146,5 +147,78 @@ describe("Unit test for Options.lua", function()
         locInstance:checkPosition();
         assert.stub(locInstance.frame.checkPosition).was_called(1);
     end)
+    it("Testing mousepressend", function()
+        _G.clicked ={};
+        _G.clicked[1] = false;
+        _G.clicked[2] = false;
+        _G.clicked[3] = false;
+        _G.clicked[4] = false;
+        locInstance.elementsOnFrame = {
+            slider_bgm = {
+                getSize = function () return 50, 50 end;
+                getPosition = function () return 0, 0 end;
+                gotClicked = function() _G.clicked[1] = true end;
+            };
+            slider_music = {
+                getSize = function () return 50, 50 end;
+                getPosition = function () return 0, 100 end;
+                gotClicked = function() _G.clicked[2] = true end;
+            };
+            button_reset = {
+                getSize = function () return 50, 50 end;
+                getPosition = function () return 100, 0 end;
+                gotClicked = function() _G.clicked[3] = true end;
+            };
+            button_back = {
+                getSize = function () return 50, 50 end;
+                getPosition = function () return 100, 100 end;
+                gotClicked = function() _G.clicked[4] = true end;
+            };
+        };
+        
+        locInstance:mousepressed(10, 10);
+        assert.are.same(true, _G.clicked[1]);
+        assert.are.same(false, _G.clicked[2]);
+        assert.are.same(false, _G.clicked[3]);
+        assert.are.same(false, _G.clicked[4]);
+        
+        locInstance:mousepressed(10, 110);
+        assert.are.same(true, _G.clicked[1]);
+        assert.are.same(true, _G.clicked[2]);
+        assert.are.same(false, _G.clicked[3]);
+        assert.are.same(false, _G.clicked[4]);
+        
+        locInstance:mousepressed(110, 10);
+        assert.are.same(true, _G.clicked[1]);
+        assert.are.same(true, _G.clicked[2]);
+        assert.are.same(true, _G.clicked[3]);
+        assert.are.same(false, _G.clicked[4]);
+        
+        locInstance:mousepressed(110, 110);
+        assert.are.same(true, _G.clicked[1]);
+        assert.are.same(true, _G.clicked[2]);
+        assert.are.same(true, _G.clicked[3]);
+        assert.are.same(true, _G.clicked[4]);
+    end)
 
+    it("Testing mousereleased", function()
+        _G.released = {}
+        _G.released[1] = false;
+        _G.released[2] = false;
+        locInstance.elementsOnFrame.slider_bgm.release = function () _G.released[1] = true; end;
+        locInstance.elementsOnFrame.slider_music.release = function () _G.released[2] = true; end;
+        locInstance:mousereleased();
+        assert.are.same(true, _G.released[1]);
+        assert.are.same(true, _G.released[2]);
+    end)
+
+    it("Testing Update", function()
+        locInstance.elementsOnFrame.slider_bgm.getValue = function() return 25 end;
+        locInstance.elementsOnFrame.slider_music.getValue = function() return 50 end;
+        locInstance.elementsOnFrame.slider_bgm.getMoveable = function() return true end;
+        locInstance.elementsOnFrame.slider_music.getMoveable = function() return true end;
+        locInstance:update();
+        assert.are.same(_G._persTable.config.bgm, 25);
+        assert.are.same(_G._persTable.config.music, 50);
+    end)
 end)
