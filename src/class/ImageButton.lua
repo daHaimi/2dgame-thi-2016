@@ -62,7 +62,7 @@ end
 --- returns the position of the button
 --@return x position and y position of the button
 function ImageButton:getPosition()
-    return self.xPosition, self.yPosition;
+    return self.xPosition + self.xOffset, self.yPosition + self.yOffset;
 end
 
 --- return the size of the button
