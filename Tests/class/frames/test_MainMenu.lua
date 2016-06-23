@@ -141,4 +141,58 @@ describe("Unit test for MainMenu.lua", function()
         assert.stub(locInstance.frame.checkPosition).was_called(1);
     end)
 
+        it("Testing mousepressend", function()
+        _G.clicked ={};
+        _G.clicked[1] = false;
+        _G.clicked[2] = false;
+        _G.clicked[3] = false;
+        _G.clicked[4] = false;
+        locInstance.elementsOnFrame = {
+            button_start = {
+                getSize = function () return 50, 50 end;
+                getPosition = function () return 0, 0 end;
+                gotClicked = function() _G.clicked[1] = true end;
+            };
+            button_upgradeMenu = {
+                getSize = function () return 50, 50 end;
+                getPosition = function () return 0, 100 end;
+                gotClicked = function() _G.clicked[2] = true end;
+            };
+            button_dictionary = {
+                getSize = function () return 50, 50 end;
+                getPosition = function () return 100, 0 end;
+                gotClicked = function() _G.clicked[3] = true end;
+            };
+            button_restartLevel = {
+                getSize = function () return 50, 50 end;
+                getPosition = function () return 100, 100 end;
+                gotClicked = function() _G.clicked[4] = true end;
+            };
+        };
+        
+        locInstance:mousepressed(10, 10);
+        assert.are.same(true, _G.clicked[1]);
+        assert.are.same(false, _G.clicked[2]);
+        assert.are.same(false, _G.clicked[3]);
+        assert.are.same(false, _G.clicked[4]);
+        
+        locInstance:mousepressed(10, 110);
+        assert.are.same(true, _G.clicked[1]);
+        assert.are.same(true, _G.clicked[2]);
+        assert.are.same(false, _G.clicked[3]);
+        assert.are.same(false, _G.clicked[4]);
+        
+        locInstance:mousepressed(110, 10);
+        assert.are.same(true, _G.clicked[1]);
+        assert.are.same(true, _G.clicked[2]);
+        assert.are.same(true, _G.clicked[3]);
+        assert.are.same(false, _G.clicked[4]);
+        
+        locInstance:mousepressed(110, 110);
+        assert.are.same(true, _G.clicked[1]);
+        assert.are.same(true, _G.clicked[2]);
+        assert.are.same(true, _G.clicked[3]);
+        assert.are.same(true, _G.clicked[4]);
+
+    end)
 end)
