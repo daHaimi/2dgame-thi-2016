@@ -132,12 +132,9 @@ describe("Unit test for SwarmFactory.lua", function()
         local testInstance = testClass(require "src.data", levMan);
         testInstance:destructSF();
 
-        assert.are.same(testInstance.levMan, nil);
-        assert.are.same(testInstance.maxDepth, nil);
-        assert.are.same(testInstance.currentSwarm, nil);
-        assert.are.same(testInstance.fishableObjects, nil);
-        assert.are.same(testInstance.createdFishables, nil);
-        assert.are.same(testInstance.swarmsSewer, nil);
+        for _, value in pairs(testInstance) do
+            assert.are.same(nil, value);
+        end
     end)
 
     it("Testing draw method", function()

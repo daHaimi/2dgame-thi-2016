@@ -150,35 +150,10 @@ local Level = Class {
 
 --- Marks the member variables for the garbage collector
 function Level:destructLevel()
-    self.levMan = nil;
-    self.achMan = nil;
-    self.p_levelName = nil;
-    self.levelFinished = nil;
-    self.gotPayed = nil;
-    self.roundValue = nil;
-    self.posY = nil;
-    self.direction = nil;
-    self.bg = nil;
-    self.bgq = nil;
-    self.winDim = nil;
-    self.lowerBoarder = nil;
-    self.upperBoarder = nil;
-    self.mapBreakthroughBonus1 = nil;
-    self.mapBreakthroughBonus2 = nil;
-    self.oldPosY = nil;
-    self.godModeFuel = nil;
-    self.shortGMDist = nil;
-    self.godModeActive = nil;
-    self.moved = nil;
-    self.time = nil;
-    self.gMMusicPlaying = nil;
-    self.enviromentPosition = nil;
-    self.reachedDepth = nil;
-    self.hamster = nil;
-    self.line = nil;
-    self.hand = nil;
-    self.failedStart = nil;
-    self.gameLoaded = nil;
+    for key, value in pairs(self) do
+        self[key] = nil;
+    end
+    
 end
 
 --- Update the game state. Called every frame.

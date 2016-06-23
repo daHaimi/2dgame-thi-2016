@@ -54,27 +54,9 @@ local Bait = Class {
 
 --- Marks the member variables for the garbage collector
 function Bait:destructBait()
-    self.levMan = nil;
-    self.size = nil;
-    self.speed = nil;
-    self.posXMouse = nil;
-    self.xPos = nil;
-    self.maxSpeedX = nil;
-    self.winDim = nil;
-    self.life = nil;
-    self.money = nil;
-    self.numberOfHits = nil;
-    self.hitFishable = nil;
-    self.caughtThisRound = nil;
-    self.pillDuration = nil;
-    self.deltaTime = nil;
-    self.modifier = nil;
-    self.goldenRuleLowerPoint = nil;
-    self.goldenRuleUpperPoint = nil;
-    self.image = nil;
-    self.pullIn = nil;
-    self.imageCheeks = nil;
-    self.quadCheeks = nil;
+    for key, value in pairs(self) do
+        self[key] = nil;
+    end
 end
 
 --- a function to check wich upgrades are active for the bait
