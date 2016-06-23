@@ -50,9 +50,10 @@ function UpgradeMenu:create()
     self.elementsOnFrame.button_buy.gotClicked = function(_)
         if self.elementsOnFrame.chart:getMarkedElement() ~= nil then
             if _G._persTable.money >= self.elementsOnFrame.chart:getMarkedElement().price then
-                TEsound.play({ "assets/sound/buying.wav" }, 'bgm');
-                self:buyElement();
-                _G._persistence:updateSaveFile();
+                if (self:buyElement() == true) then
+                    TEsound.play({ "assets/sound/buying.wav" }, 'bgm');
+                    _G._persistence:updateSaveFile();
+                end
             else
                 if self.elementsOnFrame.chart.object:getMarkedElement().purchaseable then
                 TEsound.play({ "assets/sound/notEnoughMoney.wav" }, 'bgm');
@@ -83,6 +84,7 @@ end
 
 --- called to buy an Item
 function UpgradeMenu:buyElement()
+    local bought = false;
     local markedElement = self.elementsOnFrame.chart:getMarkedElement();
     if not _G._persTable.upgrades[markedElement.nameOnPersTable] then
         markedElement:disable();
@@ -90,9 +92,13 @@ function UpgradeMenu:buyElement()
         _G._persTable.money = _G._persTable.money - price;
         self.elementsOnFrame.button_buy:setImage(self.imageButtonLocked);
         self:updateMoney()
+        bought = true;
     else
         _gui:newTextNotification(self.directory .. "ach_shitcoin.png", _G.data.languages[_G._persTable.config.language].package.textBought)
+        bought = false;
     end
+    
+    return bought;
 end
 
 --add all upgrades written in the data.lua into the chart and adds an OnClick event
