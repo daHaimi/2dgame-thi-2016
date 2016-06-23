@@ -72,4 +72,36 @@ describe("Unit test for KlickableElement.lua", function()
         assert.are.equal(locInstance.enable, false);
         assert.are.equal(_G._persTable.upgrades[locInstance.nameOnPersTable], true);
     end)
+
+    it("Testing setOffset", function()
+        locInstance:setOffset(3, 4);
+        assert.are.same(3, locInstance.xOffset);
+        assert.are.same(4, locInstance.yOffset);
+    end)
+
+    it("Testing getSize", function()
+        locInstance.object.getSize = function(...) return "size" end;
+        assert.are.same("size", locInstance:getSize());
+    end)
+
+    it("Testing draw", function()
+        stub(locInstance.object, "draw");
+        locInstance:draw();
+        assert.stub(locInstance.object.draw).was_called(1);
+    end)
+
+    it("Testing getY", function()
+        locInstance.object.getPosition = function (...) return 4, 3 end;
+        assert.are.same(3, locInstance:getY());
+    end)
+
+    it("Testing getX", function()
+        locInstance.object.getPosition = function (...) return 4, 3 end;
+        assert.are.same(4, locInstance:getX());
+    end)
+
+    it("Testing lock", function()
+        locInstance:lock();
+        assert.are.same(true, locInstance.enable);
+    end);
 end)

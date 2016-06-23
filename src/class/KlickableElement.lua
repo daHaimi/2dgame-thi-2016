@@ -81,7 +81,6 @@ end
 
 --- draws the klickable element
 function KlickableElement:draw()
-    print "draw klickable"
     self.object:draw();
 end
 
