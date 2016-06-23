@@ -190,7 +190,6 @@ describe("Test Gui", function()
 
         locInstance.p_myFrames.inGame = state;
         locInstance.p_states.currentState = state;
-        assert.spy(locInstance.drawGame).was_called();
         assert.stub(state.update).was_called();
     end)
 
