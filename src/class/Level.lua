@@ -503,19 +503,19 @@ end
 function Level:payPlayer()
     -- check if the round has been finished and the earned money was not payed already
     if self.levelFinished and self.levMan:getCurSwarmFactory() ~= nil and self.gotPayed == 0 then
-
         local fishedVal = self:calcFishedValue();
-        if _G._persTable.upgrades.firstPermanentMoneyMult == true then
-            self.roundValue = self:multiplyFishedValue(1.2, fishedVal);
-        end
-        if _G._persTable.upgrades.secondPermanentMoneyMult == true then
+
+        if self.gotPayed == 0 and _G._persTable.upgrades.secondPermanentMoneyMult == true then
             self.roundValue = self:multiplyFishedValue(1.25, fishedVal);
-        end
-        if _G._persTable.upgrades.moneyMult == true then
-            self.roundValue = self:multiplyFishedValue(2, fishedVal);
             self.gotPayed = 1;
-            _G._persTable.upgrades.moneyMult = false;
-        else
+        end
+
+        if self.gotPayed == 0 and _G._persTable.upgrades.firstPermanentMoneyMult == true then
+            self.roundValue = self:multiplyFishedValue(1.2, fishedVal);
+            self.gotPayed = 1;
+        end
+
+        if self.gotPayed ~= 1 then
             self.roundValue = fishedVal;
             self.gotPayed = 1;
         end

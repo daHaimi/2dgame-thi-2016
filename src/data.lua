@@ -861,29 +861,22 @@ return {
             image_disable = "shop_speedup2_locked.png";
             dependency = "firstSpeedUp";
         };
-        moneyMulitplier = {
-            sortNumber = 6;
-            nameOnPersTable = "moneyMultiplier";
-            price = 300;
-            image = "shop_doubleScore.png";
-            image_disable = "shop_doubleScore_locked.png";
-        };
         godMode = {
-            sortNumber = 7;
+            sortNumber = 6;
             nameOnPersTable = "godMode";
             price = 1000;
             image = "shop_godmode.png";
             image_disable = "shop_godmode_locked.png";
         };
         mapBreakthrough1 = {
-            sortNumber = 8;
+            sortNumber = 7;
             nameOnPersTable = "mapBreakthrough1";
             price = 2500;
             image = "shop_barrier.png";
             image_disable = "shop_barrier_locked.png";
         };
         mapBreakthrough2 = {
-            sortNumber = 9;
+            sortNumber = 8;
             nameOnPersTable = "mapBreakthrough2";
             price = 5000;
             image = "shop_barrier.png";
@@ -891,7 +884,7 @@ return {
             dependency = "mapBreakthrough1";
         };
         moreFuel1 = {
-            sortNumber = 10;
+            sortNumber = 9;
             nameOnPersTable = "moreFuel1";
             price = 1000;
             image = "shop_fuel1.png";
@@ -899,7 +892,7 @@ return {
             dependency = "godMode";
         };
         moreFuel2 = {
-            sortNumber = 11;
+            sortNumber = 10;
             nameOnPersTable = "moreFuel2";
             price = 1500;
             image = "shop_fuel2.png";
@@ -907,14 +900,14 @@ return {
             dependency = "moreFuel1";
         };
         firstPermanentMoneyMulitplier = {
-            sortNumber = 12;
+            sortNumber = 11;
             nameOnPersTable = "firstPermanentMoneyMult";
             price = 1000;
             image = "shop_moreMoney1.png";
             image_disable = "shop_moreMoney1_locked.png";
         };
         secondPermanentMoneyMulitplier = {
-            sortNumber = 13;
+            sortNumber = 12;
             nameOnPersTable = "secondPermanentMoneyMult";
             price = 2500;
             image = "shop_moreMoney2.png";
@@ -1371,10 +1364,6 @@ return {
                     name = "2nd Speed Update";
                     description = "Still not fast enough? Then try this double S.H.I.T-Speed!";
                 };
-                moneyMultiplier = {
-                    name = "Money Multiplier";
-                    description = "It's good to have money. It's better to have twice as much money.";
-                };
                 godMode = {
                     name = "God Mode";
                     description = "Be Go(o)d. Don't give a S.H.I.T about anything";
@@ -1671,10 +1660,6 @@ return {
                 secondSpeedUp = {
                     name = "Noch schneller!";
                     description = "Erhöhe deine Geschwindigkeit erneut";
-                };
-                moneyMultiplier = {
-                    name = "Gewinn verdoppeln";
-                    description = "Verdopple den Gewinn deines Fangs";
                 };
                 godMode = {
                     name = "God mode";
