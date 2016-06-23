@@ -128,7 +128,6 @@ function Chart:draw()
         love.graphics.draw(self.mark, self.markPosition[1], self.markPosition[2]);
     end 
     
-    local font = love.graphics.getFont();
     love.graphics.setColor(0, 0, 0);
     love.graphics.setFont(love.graphics.newFont("font/8bitOperatorPlus-Bold.ttf", 20));
     love.graphics.printf(self.textFieldName, (_G._persTable.winDim[1] - self.textBackground:getWidth())/2 + 10, 
@@ -137,8 +136,7 @@ function Chart:draw()
     love.graphics.printf(self.textFieldDescription, (_G._persTable.winDim[1] - self.textBackground:getWidth())/2 + 10, 
         480 + y+ self.backgroundPosition[2] + y, self.textBackground:getWidth() - 20, "left")
     love.graphics.printf(self.textFieldPrice, (_G._persTable.winDim[1] - self.textBackground:getWidth())/2 + 20, 
-        427 + y + self.backgroundPosition[2] + y, self.textBackground:getWidth() - 20, "left")
-    love.graphics.setFont(font);
+        427 + y + self.backgroundPosition[2] + y, self.textBackground:getWidth() - 20, "left");
     love.graphics.setColor(255, 255, 255);
 end
 

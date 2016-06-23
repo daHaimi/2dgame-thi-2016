@@ -41,10 +41,8 @@ function Start:draw()
         love.graphics.setColor(255, 255, 255);
     end
     
-    local font = love.graphics.getFont();
     love.graphics.setFont(love.graphics.newFont("font/8bitOperatorPlus-Bold.ttf", 35));
     love.graphics.printf(self.text, 0, 0.75 * _persTable.winDim[2] + self.offset, _persTable.winDim[1], 'center');
-    love.graphics.setFont(font);
     love.graphics.setColor(255, 255, 255);
 end
 

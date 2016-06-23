@@ -23,11 +23,9 @@ function AchievementDisplay:draw()
     love.graphics.draw(self.background, self.position[1] + self.xOffset, self.position[2] + self.yOffset);
     local counter = 0;
     if #self.unlockedAchievements == 0 then 
-        local font = love.graphics.getFont();
         love.graphics.setFont(love.graphics.newFont("font/8bitOperatorPlus-Bold.ttf", 25));
         love.graphics.printf(self.defaultText, self.position[1] + self.xOffset + 25 , self.position[2] + 15 
             + self.yOffset , self.background:getWidth() - 50, 'center');
-        love.graphics.setFont(font);
     else
         for _, v in pairs (self.unlockedAchievements) do
             if counter < 3 then

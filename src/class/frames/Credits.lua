@@ -104,24 +104,20 @@ function Credits:buildCreditsString()
 end
 
 --- shows the frame on screen
-function Credits:draw()
+function Credits:draw()    
     local _, y = self.elementsOnFrame.button_back:getOffset();
-    local font = love.graphics.getFont();
-    
     -- draw background
     love.graphics.draw(self.background, (_G._persTable.winDim[1] - self.background:getWidth())/2,
         (_G._persTable.winDim[2] - self.background:getHeight())/2 + y);
+        -- draw the buttons
+    for _, v in pairs (self.elementsOnFrame) do
+        v:draw();
+    end
     
     -- print the text
     love.graphics.setFont(love.graphics.newFont("font/8bitOperatorPlus-Regular.ttf", 18));
     love.graphics.printf(self:buildCreditsString(),(_G._persTable.winDim[1] - self.background:getWidth())/2 + 40,
         100 + y, self.background:getWidth() - 80, "left");
-    love.graphics.setFont(font);
-    
-    -- draw the buttons
-    for _, v in pairs (self.elementsOnFrame) do
-        v:draw();
-    end
 end
 
 --- called to "delete" this frame

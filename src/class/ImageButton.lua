@@ -33,10 +33,8 @@ local ImageButton = Class{
 function ImageButton:draw() 
     love.graphics.draw(self.image, self.xPosition + self.xOffset, self.yPosition + self.yOffset);
     if self.text ~= nil then
-        local font = love.graphics.getFont();
-        love.graphics.setFont(love.graphics.newFont("font/8bitOperatorPlus-Bold.ttf", 22));
-        love.graphics.printf(self.text, self.xPosition + self.xOffset, self.yPosition + 20 + self.yOffset, self.width, "center")
-        love.graphics.setFont(font);
+        love.graphics.printf(self.text, self.xPosition + self.xOffset, 
+            self.yPosition + 20 + self.yOffset, self.width, "center");
     end
 end
 

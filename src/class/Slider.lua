@@ -47,7 +47,12 @@ function Slider:update()
 end
 
 ---draws the slider
-function Slider:draw() 
+function Slider:draw()
+    -- draw line for slider
+    love.graphics.setColor(0,0,0);
+    love.graphics.rectangle("fill", self.xDefaultPosition, self.yDefaultPosition + self.yOffset, self.width, 10);
+    love.graphics.setColor(255,255,255);
+    
     if self.moveable then 
         love.graphics.draw(self.imagePressed, self.xPosition + self.xOffset  - 0.5 * self.imageUnpressedWidth, 
         self.yPosition + self.yOffset - self.imageUnpressedWidth * 0.5 + 5);

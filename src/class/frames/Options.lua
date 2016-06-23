@@ -89,31 +89,22 @@ end
 --- shows the frame on screen
 function Options:draw()
     local _, y = self.elementsOnFrame.button_back:getOffset();
-    local font = love.graphics.getFont();
     
     -- draw background
     love.graphics.draw(self.background, (_G._persTable.winDim[1] - self.background:getWidth())/2,
         (_G._persTable.winDim[2] - self.background:getHeight())/2 + y);
     
-    -- draw line for slider
-    love.graphics.setColor(0,0,0);
-    love.graphics.rectangle("fill", self.buttonXPosition, 140 + y , 
-        _G._persTable.winDim[1] - 2 * self.buttonXPosition, 10); 
-    love.graphics.rectangle("fill", self.buttonXPosition, 220 + y , 
-        _G._persTable.winDim[1] - 2 * self.buttonXPosition, 10);
-    love.graphics.setColor(255,255,255);
+        -- draw the buttons
+    for _, v in pairs (self.elementsOnFrame) do
+        v:draw();
+    end
+    
     -- print the text
     love.graphics.setFont(love.graphics.newFont("font/8bitOperatorPlus-Bold.ttf", 20));
     love.graphics.printf(self.text_bgm, (_G._persTable.winDim[1] - self.background:getWidth())/2 + 64,
         100 + y, _G._persTable.winDim[1], "left");    
     love.graphics.printf(self.text_music, (_G._persTable.winDim[1] - self.background:getWidth())/2 + 64,
         180 + y, _G._persTable.winDim[1], "left");
-    love.graphics.setFont(font);
-    
-    -- draw the buttons
-    for _, v in pairs (self.elementsOnFrame) do
-        v:draw();
-    end
 end
 
 --- called to "delete" this frame

@@ -101,14 +101,16 @@ end
 
 function Gui:draw()
     if self.p_states.lastState ~= nil and self.p_frameChangeActiv then
+        love.graphics.setFont(love.graphics.newFont("font/8bitOperatorPlus-Bold.ttf", 22));
         self.p_states.lastState:draw();
     end
+    love.graphics.setFont(love.graphics.newFont("font/8bitOperatorPlus-Bold.ttf", 22));
     self.p_states.currentState:draw();
 end
 
 --- updates the gui. called in the love.update function
 function Gui:update()
-    self:draw()
+    self:draw() 
     if self.p_frameChangeActiv then
         self.p_frameChangeActiv = not self.p_states.currentState:checkPosition();
     end
