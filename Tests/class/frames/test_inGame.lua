@@ -129,5 +129,52 @@ describe("Unit test for inGame.lua", function()
         locInstance:checkPosition();
         assert.stub(locInstance.frame.checkPosition).was_called(1);
     end)
+    
+    it("Testing mousepressend", function()
+        _G.clicked ={};
+        _G.clicked[1] = false;
+        _G.clicked[2] = false;
+        locInstance.elementsOnFrame.pause = {
+            getSize = function () return 50, 50 end;
+            getPosition = function () return 0, 0 end;
+            gotClicked = function() _G.clicked[1] = true end;
+        };
+        _gui.levMan = {
+            getCurLevel = function() return {
+                startStartAnimation = function () _G.clicked[2] = true end;
+                getStartAnimationRunning = function () return false end;
+                getStartAnimationFinished = function () return false end;
+            }end;
+        };
+        locInstance:mousepressed(10, 10);
+        assert.are.same(true, _G.clicked[1]);
+        assert.are.same(false, _G.clicked[2]);
+        
+        locInstance:mousepressed(10, 110);
+        assert.are.same(true, _G.clicked[1]);
+        assert.are.same(true, _G.clicked[2]);
+    end)
 
+    it("Testing update", function()
+        _G._persTable.config = {};
+        _G._persTable.config.language = 1;
+        _G.data = {
+            languages = {
+                {
+                    package = {
+                        textDepth = "text";
+                    }
+                }
+            };
+        };
+        _G._tmpTable = {};
+        _G._tmpTable.roundFuel = 0;
+        _G._tmpTable.currentDepth = -1000;
+        locInstance:update();
+        assert.are.same(locInstance.fuelBarPosition, -90);
+        _G._tmpTable.roundFuel = 100;
+        _G._tmpTable.currentDepth = 400;
+        locInstance:update();
+        assert.are.same(locInstance.fuelBarPosition, -85);
+    end)
 end)
