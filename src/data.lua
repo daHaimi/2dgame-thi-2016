@@ -852,14 +852,14 @@ return {
             dependency = "twoMoreLife";
         };
         firstSpeedUp = {
-            sortNumber = 4;
+            sortNumber = 9;
             nameOnPersTable = "firstSpeedUp";
             price = 300;
             image = "shop_speedup1.png";
             image_disable = "shop_speedup1_locked.png";
         };
         secondSpeedUp = {
-            sortNumber = 5;
+            sortNumber = 12;
             nameOnPersTable = "secondSpeedUp";
             price = 300;
             image = "shop_speedup2.png";
@@ -867,7 +867,7 @@ return {
             dependency = "firstSpeedUp";
         };
         godMode = {
-            sortNumber = 6;
+            sortNumber = 4;
             nameOnPersTable = "godMode";
             price = 1000;
             image = "shop_godmode.png";
@@ -881,7 +881,7 @@ return {
             image_disable = "shop_barrier_locked.png";
         };
         mapBreakthrough2 = {
-            sortNumber = 8;
+            sortNumber = 10;
             nameOnPersTable = "mapBreakthrough2";
             price = 5000;
             image = "shop_barrier.png";
@@ -889,7 +889,7 @@ return {
             dependency = "mapBreakthrough1";
         };
         moreFuel1 = {
-            sortNumber = 9;
+            sortNumber = 5;
             nameOnPersTable = "moreFuel1";
             price = 1000;
             image = "shop_fuel1.png";
@@ -897,7 +897,7 @@ return {
             dependency = "godMode";
         };
         moreFuel2 = {
-            sortNumber = 10;
+            sortNumber = 6;
             nameOnPersTable = "moreFuel2";
             price = 1500;
             image = "shop_fuel2.png";
@@ -905,14 +905,14 @@ return {
             dependency = "moreFuel1";
         };
         firstPermanentMoneyMulitplier = {
-            sortNumber = 11;
+            sortNumber = 8;
             nameOnPersTable = "firstPermanentMoneyMult";
             price = 1000;
             image = "shop_moreMoney1.png";
             image_disable = "shop_moreMoney1_locked.png";
         };
         secondPermanentMoneyMulitplier = {
-            sortNumber = 12;
+            sortNumber = 11;
             nameOnPersTable = "secondPermanentMoneyMult";
             price = 2500;
             image = "shop_moreMoney2.png";

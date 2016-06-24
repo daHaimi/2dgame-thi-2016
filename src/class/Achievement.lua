@@ -146,7 +146,7 @@ function Achievement:achShoppingQueen()
     end
     if boughtAll then
         _G._persTable.achievements.shoppingQueen = true;
-        _gui:newNotification("assets/gui/480px/" .. _G.data.achievements.boughtAllItems.image_unlock, "shoppingQueen");
+        _gui:newNotification("assets/gui/icons/" .. _G.data.achievements.boughtAllItems.image_unlock, "shoppingQueen");
     end
 end
 
