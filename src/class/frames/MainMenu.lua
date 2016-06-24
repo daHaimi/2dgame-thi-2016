@@ -60,6 +60,7 @@ function MainMenu:create()
     end
 
     self.elementsOnFrame.button_achievements.gotClicked = function(_)
+        --_gui:newTextNotification("assets/hamster.png", "testNotification");
         TEsound.play({ "assets/sound/buttonPressed.wav" }, 'bgm');
         _gui:changeFrame(_gui:getFrames().achievements);
     end

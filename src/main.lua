@@ -3,11 +3,6 @@ Class = require "lib.hump.class";
 Bait = require "class.Bait";
 Level = require "class.Level";
 SwarmFactory = require "class.SwarmFactory";
-Loveframes = require "lib.LoveFrames";
--- Disable cursor on android (otherwise it leads to errors)
-if love.system.getOS() == "Android" or love.system.getOS() == "iOS" then
-    Loveframes.config["ENABLE_SYSTEM_CURSORS"] = false;
-end
 Gui = require "class.Gui";
 LevelManager = require "class.LevelManager";
 Gamestate = require "lib.hump.gamestate";
@@ -85,8 +80,6 @@ function love.load()
         end
     end
 
-    Loveframes.basicfont = love.graphics.newFont("font/8bitOperatorPlus-Regular.ttf", 18);
-    
     _G._gui = Gui();
     _gui:setLevelManager(levMan);
     _gui:start();
@@ -144,7 +137,7 @@ function love.draw()
         love.graphics.print(_G._androidConfig.joyPos, 100, 100);
         love.graphics.pop();
     end
-    Loveframes.draw();
+
     -- debug info for memory usage do not remove!
     love.graphics.setFont(_G.standardFont);
     love.graphics.print('Memory actually used (in kB): ' .. collectgarbage('count'), 200, 60);
@@ -195,7 +188,7 @@ function love.update(dt)
       end
     end
     _gui:update();
-    Loveframes.update(dt);
+
     TEsound.cleanup();
     
     -- free unused memory
@@ -236,12 +229,6 @@ end
 -- @param y The mouse position on the y-axis.
 -- @param button The pressed mousebutton.
 function love.mousepressed(x, y, button)
-    --[[Loveframes needs 'l' to detect the left mousebutton.
-    It's necessary to convert the received "1" value]] --
-    if button == 1 then
-        button = 'l';
-    end
-    Loveframes.mousepressed(x, y, button);
     
     if love.mouse.isDown(1) then
         _gui:mousepressed(x, y);
@@ -265,14 +252,9 @@ end
 -- @param y The mouse position on the y-axis.
 -- @param button The pressed mousebutton.
 function love.mousereleased(x, y, button)
-    --[[Loveframes needs a 'l' to detect the left mousebutton.
-    It's necessary to convert the received "1" value]] --
-    if button == 1 then
-        button = 'l';
-    end
-    
+
     _gui:mousereleased(x, y);
-        love.system.vibrate(0.1);
+    love.system.vibrate(0.1);
     -- deactivate the god mode when you release the mouse
     if _gui:getCurrentState() == "InGame" then
         levMan:getCurLevel():deactivateGodMode();
