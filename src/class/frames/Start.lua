@@ -13,7 +13,9 @@ local Start = Class {
 };
 
 function Start:mousepressed(x, y)
-    _gui:changeFrame(_gui:getFrames().mainMenu);
+    if self.offset == 0 then
+        _gui:changeFrame(_gui:getFrames().mainMenu);
+    end
 end
 
 --- just called frequenzly in the start state
@@ -35,15 +37,16 @@ function Start:draw()
         _persTable.winDim[2]/2 - 200);
     love.graphics.draw(self.hamster, 320 + self.offset, _persTable.winDim[2]/2 - 170);
     
-    if self.colorBlack then
-        love.graphics.setColor(0, 0, 0);
-    else
+    if self.offset == 0 then 
+        if self.colorBlack then
+            love.graphics.setColor(0, 0, 0);
+        else
+            love.graphics.setColor(255, 255, 255);
+        end
+        love.graphics.setFont(love.graphics.newFont("font/8bitOperatorPlus-Bold.ttf", 35));
+        love.graphics.printf(self.text, 0, 0.75 * _persTable.winDim[2], _persTable.winDim[1], 'center');
         love.graphics.setColor(255, 255, 255);
     end
-    
-    love.graphics.setFont(love.graphics.newFont("font/8bitOperatorPlus-Bold.ttf", 35));
-    love.graphics.printf(self.text, 0, 0.75 * _persTable.winDim[2] + self.offset, _persTable.winDim[1], 'center');
-    love.graphics.setColor(255, 255, 255);
 end
 
 --- called to "delete" this frame
@@ -53,7 +56,7 @@ end
 
 --- called in the "fly in" state
 function Start:appear()
-    self.offset = self.offset - self.speed;
+    self.offset = self.offset - 0.5 * self.speed;
 end
 
 --- called in the "fly out" state
