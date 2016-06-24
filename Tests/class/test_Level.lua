@@ -782,4 +782,39 @@ describe("Test unit test suite", function()
         locInstance:update(1, bait);
         assert.are.same(_G._persTable.playedTime, 2000);
     end)
+
+    it("Testing payPlayer function", function()
+        _G._persistence.updateSaveFile = function(...) end;
+        _G._persTable.upgrades.secondPermanentMoneyMult = false;
+        _G._persTable.upgrades.firstPermanentMoneyMult = false;
+        _G._persTable.money = 0;
+        locInstance.levelFinished = false;
+        locInstance.calcFishedValue = function(...) return 120 end;
+        locInstance.gotPayed = 0;
+        local persSpy = spy.on(_G._persistence, "updateSaveFile");
+        
+        locInstance:payPlayer();
+        assert.are.same(0, locInstance.gotPayed);
+        assert.are.same(0, locInstance.roundValue);
+        
+        locInstance.gotPayed = 0;
+        locInstance.levelFinished = true;
+        locInstance:payPlayer();
+        assert.are.same(1, locInstance.gotPayed);
+        assert.are.same(120, locInstance.roundValue);
+        
+        locInstance.gotPayed = 0;
+        _G._persTable.upgrades.firstPermanentMoneyMult = true;
+        locInstance:payPlayer();
+        assert.are.same(1, locInstance.gotPayed);
+        assert.are.same(144, locInstance.roundValue);
+        
+        locInstance.gotPayed = 0;
+        _G._persTable.upgrades.secondPermanentMoneyMult = true;
+        locInstance:payPlayer();
+        assert.are.same(1, locInstance.gotPayed);
+        assert.are.same(150, locInstance.roundValue);
+        
+        assert.spy(persSpy).was.called(3);
+    end)
 end)

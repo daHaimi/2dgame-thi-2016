@@ -122,16 +122,9 @@ function Gui:update()
             self.p_states.lastState:disappear();
         end
     end
-    if self.p_states.currentState == self.p_myFrames.start then
-        self.p_myFrames.start:blink();
-    end
-
-    if self:drawGame() then
-        self.p_myFrames.inGame:update();
-    end
     
-    if self.p_states.currentState == self.p_myFrames.options then
-        self.p_myFrames.options:update()
+    if self.p_states.currentState.update ~= nil then
+        self.p_states.currentState:update()
     end
     self.notification:update();
 end

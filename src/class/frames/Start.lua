@@ -17,7 +17,7 @@ function Start:mousepressed(x, y)
 end
 
 --- just called frequenzly in the start state
-function Start:blink()
+function Start:update()
     self.blinkTimer = self.blinkTimer - 1;
     if self.blinkTimer <= 0 then
         self.blinkTimer = 25;

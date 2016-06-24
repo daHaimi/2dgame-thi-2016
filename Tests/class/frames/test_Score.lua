@@ -110,9 +110,11 @@ describe("Unit test for Score.lua", function()
     end)
 
     it("Testing appear function", function()
+        local soundSpy = spy.on(_G.TEsound, "play");
         stub(locInstance.frame, "appear");
         locInstance:appear();
         assert.stub(locInstance.frame.appear).was_called(1);
+        assert.spy(soundSpy).was.called(1);
     end)
 
     it("Testing disappear function", function()
@@ -125,6 +127,46 @@ describe("Unit test for Score.lua", function()
         stub(locInstance.frame, "checkPosition");
         locInstance:checkPosition();
         assert.stub(locInstance.frame.checkPosition).was_called(1);
+    end)
+
+    it("Testing mousepressend", function()
+        _G.clicked ={};
+        _G.clicked[1] = false;
+        _G.clicked[2] = false;
+        _G.clicked[3] = false;
+        locInstance.elementsOnFrame = {
+            button_backToMenu = {
+                getSize = function () return 50, 50 end;
+                getPosition = function () return 0, 0 end;
+                gotClicked = function() _G.clicked[1] = true end;
+            };
+            button_retry = {
+                getSize = function () return 50, 50 end;
+                getPosition = function () return 0, 100 end;
+                gotClicked = function() _G.clicked[2] = true end;
+            };
+            achievements = {
+                getSize = function () return 50, 50 end;
+                getPosition = function () return 100, 0 end;
+                gotClicked = function() _G.clicked[3] = true end;
+            };
+        };
+        
+        locInstance:mousepressed(10, 10);
+        assert.are.same(true, _G.clicked[1]);
+        assert.are.same(false, _G.clicked[2]);
+        assert.are.same(false, _G.clicked[3]);
+        
+        locInstance:mousepressed(10, 110);
+        assert.are.same(true, _G.clicked[1]);
+        assert.are.same(true, _G.clicked[2]);
+        assert.are.same(false, _G.clicked[3]);
+        
+        locInstance:mousepressed(110, 10);
+        assert.are.same(true, _G.clicked[1]);
+        assert.are.same(true, _G.clicked[2]);
+        assert.are.same(true, _G.clicked[3]);
+        
     end)
 
 end)

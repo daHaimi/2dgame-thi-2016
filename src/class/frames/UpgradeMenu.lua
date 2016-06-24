@@ -83,6 +83,7 @@ function UpgradeMenu:setLanguage(language)
 end
 
 --- called to buy an Item
+-- @return Returns true if the element was successfully bought, otherwise false.
 function UpgradeMenu:buyElement()
     local bought = false;
     local markedElement = self.elementsOnFrame.chart:getMarkedElement();
@@ -94,7 +95,8 @@ function UpgradeMenu:buyElement()
         self:updateMoney()
         bought = true;
     else
-        _gui:newTextNotification(self.directory .. "ach_shitcoin.png", _G.data.languages[_G._persTable.config.language].package.textBought)
+        _gui:newTextNotification(self.directory .. "ach_shitcoin.png", 
+            _G.data.languages[_G._persTable.config.language].package.textBought)
         bought = false;
     end
     

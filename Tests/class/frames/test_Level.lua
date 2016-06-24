@@ -107,7 +107,9 @@ describe("Unit test for Level.lua", function()
         locInstance.elementsOnFrame.button_back.gotClicked();
         locInstance.elementsOnFrame.buttonHouse.gotClicked();
         locInstance.elementsOnFrame.buttonCanyon.gotClicked();
-        assert.spy(_gui.changeFrame).was.called(3);
+        locInstance.elementsOnFrame.buttonSquirrel.gotClicked();
+        locInstance.elementsOnFrame.buttonCrocodile.gotClicked();
+        assert.spy(_gui.changeFrame).was.called(5);
     end)
 
     it("Testing draw function", function()
@@ -139,6 +141,32 @@ describe("Unit test for Level.lua", function()
         stub(locInstance.frame, "checkPosition");
         locInstance:checkPosition();
         assert.stub(locInstance.frame.checkPosition).was_called(1);
+    end)    
+
+    it("Testing mousepressend", function()
+        _G.clicked ={};
+        _G.clicked[1] = false;
+        _G.clicked[2] = false;
+        locInstance.elementsOnFrame = {
+            button_house = {
+                getSize = function () return 50, 50 end;
+                getPosition = function () return 0, 0 end;
+                gotClicked = function() _G.clicked[1] = true end;
+            };
+            button_canyon = {
+                getSize = function () return 50, 50 end;
+                getPosition = function () return 0, 100 end;
+                gotClicked = function() _G.clicked[2] = true end;
+            };
+        };
+        
+        locInstance:mousepressed(10, 10);
+        assert.are.same(true, _G.clicked[1]);
+        assert.are.same(false, _G.clicked[2]);
+        
+        locInstance:mousepressed(10, 110);
+        assert.are.same(true, _G.clicked[1]);
+        assert.are.same(true, _G.clicked[2]);
     end)
 
 end)

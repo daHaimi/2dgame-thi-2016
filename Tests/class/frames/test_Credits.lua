@@ -168,11 +168,48 @@ describe("Unit test for Credits.lua", function()
 
     it("Testing buildCreditsString function", function()
         local creditStr = locInstance:buildCreditsString();
-        assert.are.same(_G.data.languages.english.package.credits.staff, string.sub(creditStr, 1, 6));
+        local shouldBe = "";
+        local strings = {
+        "hump, Matthias Richter",
+        "light, Marcus Ihde",
+        "LoveFrames, Kenny Shields",
+        "LÖVE 2D",
+        "table_serializer, Mathias Haimerl",
+        "TEsound, Ensayia and Taehl",
+        };
+        
+        for i = 1, #strings, 1
+        do
+            shouldBe = shouldBe .. strings[i] .. "\n";
+        end
+        assert.are.same(shouldBe, creditStr[2]);
         
         _G._persTable.config.language = "german";
         creditStr = locInstance:buildCreditsString();
-        assert.are.same(_G.data.languages.german.package.credits.staff, string.sub(creditStr, 1, 12));
+        assert.are.same(shouldBe, creditStr[2]);
         
+    end)
+
+    it("Testing mousepressend", function()
+        _G.clicked ={};
+        _G.clicked[1] = false;
+        locInstance.elementsOnFrame = {
+            button_back = {
+                getSize = function () return 50, 50 end;
+                getPosition = function () return 0, 0 end;
+                gotClicked = function() _G.clicked[1] = true end;
+            };
+        };
+        
+        locInstance:mousepressed(10, 10);
+        assert.are.same(true, _G.clicked[1]);
+    end)
+
+    it("testing update function", function()
+        locInstance.blinkTimer = 2;
+        locInstance:update();
+        assert.are.equal(locInstance.blinkTimer, 1);
+        locInstance:update();
+        assert.are.equal(locInstance.blinkTimer, 25);
     end)
 end)

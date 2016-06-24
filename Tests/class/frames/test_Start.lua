@@ -62,11 +62,11 @@ describe("Unit test for Start.lua", function()
         assert.are.same(locInstance, myInstance);
     end)
 
-    it("testing blink function", function()
+    it("testing update function", function()
         locInstance.blinkTimer = 2;
-        locInstance:blink();
+        locInstance:update();
         assert.are.equal(locInstance.blinkTimer, 1);
-        locInstance:blink();
+        locInstance:update();
         assert.are.equal(locInstance.blinkTimer, 25);
     end)
 

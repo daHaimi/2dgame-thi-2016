@@ -277,4 +277,50 @@ end)
         assert.equal(locInstance.elementsOnFrame.chart.p_elementsOnChart[2].enable, false);
     end)
 
+    it("Testing setOffset", function()
+        locInstance:setOffset(50, 50);
+        assert.are.same(50, locInstance.xOffset);
+        assert.are.same(50, locInstance.yOffset);
+    end)
+
+    it("Testing mousepressend", function()
+        _G.clicked ={};
+        _G.clicked[1] = false;
+        _G.clicked[2] = false;
+        _G.clicked[3] = false;
+        locInstance.elementsOnFrame = {
+            button_buy = {
+                getSize = function () return 50, 50 end;
+                getPosition = function () return 0, 0 end;
+                gotClicked = function() _G.clicked[1] = true end;
+            };
+            button_back = {
+                getSize = function () return 50, 50 end;
+                getPosition = function () return 0, 100 end;
+                gotClicked = function() _G.clicked[2] = true end;
+            };
+            chart = {
+                getSize = function () return 50, 50 end;
+                getPosition = function () return 100, 0 end;
+                gotClicked = function() _G.clicked[3] = true end;
+            };
+        };
+        
+        locInstance:mousepressed(10, 10);
+        assert.are.same(true, _G.clicked[1]);
+        assert.are.same(false, _G.clicked[2]);
+        assert.are.same(false, _G.clicked[3]);
+        
+        locInstance:mousepressed(10, 110);
+        assert.are.same(true, _G.clicked[1]);
+        assert.are.same(true, _G.clicked[2]);
+        assert.are.same(false, _G.clicked[3]);
+        
+        locInstance:mousepressed(110, 10);
+        assert.are.same(true, _G.clicked[1]);
+        assert.are.same(true, _G.clicked[2]);
+        assert.are.same(true, _G.clicked[3]);
+        
+    end)
+
 end)

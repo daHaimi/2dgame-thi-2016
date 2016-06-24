@@ -212,7 +212,7 @@ describe("Unit test for FishableObject.lua", function()
         locInstance.speed = 30;
         assert.are.same(386, locInstance:getHitboxXPosition(1));
         locInstance.speed = 0;
-        assert.are.same(450, locInstance:getHitboxXPosition(1));
+        assert.are.same(386, locInstance:getHitboxXPosition(1));
     end)
 
     it("Testing getHitboxYPosition Function", function()
