@@ -30,6 +30,11 @@ return {
                 }
             };
         };
+        nyan = {
+            name = "nyan";
+            image = "nyan.png";
+            sortNumber = 13;
+        };
         turtle = {
             name = "turtle";
             image = "turtle.png";
@@ -1257,6 +1262,10 @@ return {
                     description = "You got all achievements?!";
                 };
                 --objects
+                nyan = {
+                    name = "NyanCat";
+                    description = "The internet is for p... Nyan Cats";
+                };
                 nemo = {
                     name = "Nemo";
                     description = "Congratulations! You have found nemo!";
@@ -1555,6 +1564,10 @@ return {
 --                    description = "Nur ein Objekt gefangen"
 --                };
                 --objects
+                nyan = {
+                    name = "NyanCat";
+                    description = "The internet is for p... Nyan Cats";
+                };
                 nemo = {
                     name = "Nemo";
                     description = "Anscheinend hast du Nemo gefunden";
