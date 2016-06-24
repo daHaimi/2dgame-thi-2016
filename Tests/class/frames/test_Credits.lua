@@ -175,4 +175,19 @@ describe("Unit test for Credits.lua", function()
         assert.are.same(_G.data.languages.german.package.credits.staff, string.sub(creditStr, 1, 12));
         
     end)
+
+    it("Testing mousepressend", function()
+        _G.clicked ={};
+        _G.clicked[1] = false;
+        locInstance.elementsOnFrame = {
+            button_back = {
+                getSize = function () return 50, 50 end;
+                getPosition = function () return 0, 0 end;
+                gotClicked = function() _G.clicked[1] = true end;
+            };
+        };
+        
+        locInstance:mousepressed(10, 10);
+        assert.are.same(true, _G.clicked[1]);
+    end)
 end)

@@ -82,6 +82,10 @@ describe("Unit test for Dictionary.lua", function()
         spy.on(_G._gui, "changeFrame");
         locInstance.elementsOnFrame.button_back.gotClicked();
         assert.spy(_gui.changeFrame).was.called();
+        
+        stub(locInstance.elementsOnFrame.chart, "mousepressed")
+        locInstance.elementsOnFrame.chart.gotClicked();
+        assert.stub(locInstance.elementsOnFrame.chart.mousepressed).was.called();
     end)
 
     it("Testing addAllObjects function", function()
@@ -170,4 +174,51 @@ describe("Unit test for Dictionary.lua", function()
         assert.stub(locInstance.frame.checkPosition).was_called(1);
     end)
 
+    it("Testing mousepressend", function()
+        _G.clicked ={};
+        _G.clicked[1] = false;
+        _G.clicked[2] = false;
+        locInstance.elementsOnFrame = {
+            button_back = {
+                getSize = function () return 50, 50 end;
+                getPosition = function () return 0, 0 end;
+                gotClicked = function() _G.clicked[1] = true end;
+            };
+            button_chart = {
+                getSize = function () return 50, 50 end;
+                getPosition = function () return 0, 100 end;
+                gotClicked = function() _G.clicked[2] = true end;
+            };
+        };
+        
+        locInstance:mousepressed(10, 10);
+        assert.are.same(true, _G.clicked[1]);
+        assert.are.same(false, _G.clicked[2]);
+        
+        locInstance:mousepressed(10, 110);
+        assert.are.same(true, _G.clicked[1]);
+        assert.are.same(true, _G.clicked[2]);
+    end)
+
+    it("Testing setOffset", function()
+        locInstance:setOffset(50, 50);
+        assert.are.same(locInstance.xOffset, 50);
+        assert.are.same(locInstance.yOffset, 50);
+    end)
+
+    it("addAllObjects", function()
+        locInstance.directory = "directory";
+        _G.data.fishableObjects = {
+            deadfish = {
+                name = "deadFish";
+                image = "deadFish.png";
+                description = "It was a good fish throughout its whole life";
+                sortNumber = 2;
+                value = 20;
+            }
+        }
+        stub(locInstance.elementsOnFrame.chart, "addKlickableElement");
+        locInstance:addAllObjects();
+        assert.stub(locInstance.elementsOnFrame.chart.addKlickableElement).was.called();
+    end);
 end)

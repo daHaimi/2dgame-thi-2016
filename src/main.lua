@@ -91,7 +91,7 @@ function love.load()
     _gui:setLevelManager(levMan);
     _gui:start();
     achiev:checkAchievements();
-    --_G._persistence:resetGame();
+    _G._persistence:resetGame();
 end
 
 --- calculates the dimension of the Level and the factor of the scaling

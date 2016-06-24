@@ -168,7 +168,7 @@ describe("Unit test for inGame.lua", function()
             };
         };
         _G._tmpTable = {};
-        _G._tmpTable.roundFuel = 0;
+        _G._tmpTable.roundFuel = -100;
         _G._tmpTable.currentDepth = -1000;
         locInstance:update();
         assert.are.same(locInstance.fuelBarPosition, -90);
