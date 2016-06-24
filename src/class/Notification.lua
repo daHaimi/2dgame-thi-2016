@@ -6,7 +6,7 @@ local Notification = Class {
         self.imageLength = 50;
         self.yPos = 60;
         self.length = 256;
-        self.offset = 5;
+        self.offset = 8;
         self.speed = 16;
         self.defaultX = _G._persTable.scaledDeviceDim[1];
         self.xPos = self.defaultX;
@@ -40,8 +40,12 @@ function Notification:draw()
     if self.notificationBuffer[1] ~= nil then
         love.graphics.setFont(love.graphics.newFont("font/8bitOperatorPlus-Regular.ttf", 12));
         love.graphics.draw(self.background, self.xPos, self.yPos);
-        love.graphics.draw(self.notificationBuffer[1].image, self.xPos + self.offset, self.yPos + self.offset);
-        love.graphics.printf(self.notificationBuffer[1].text, self.xPos + self.imageLength + self.offset, self.yPos + self.offset, 100, "left");
+        love.graphics.scale(0.5, 0.5);
+        love.graphics.draw(self.notificationBuffer[1].image, 2 * (self.xPos + self.offset), 
+            2 * (self.yPos + self.offset));
+        love.graphics.scale(2, 2);
+        love.graphics.printf(self.notificationBuffer[1].text, self.xPos + 48 + 1.5 * self.offset, 
+            self.yPos + 1.5 * self.offset , 100, "center");
     end
 end
 

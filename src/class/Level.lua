@@ -638,13 +638,13 @@ function Level:updateStatistics()
         
             if fishedVal > _G._persTable.statistic.highscoreSewers then
                 _G._persTable.statistic.highscoreSewers = fishedVal;
-                _gui:newTextNotification("assets/hamster.png", "New Highscore!")
+                _gui:newTextNotification("assets/gui/icons/hamster.png", "New Highscore!")
             end
         elseif (self.p_levelName == "canyon" or self.p_levelName == "canyonEndless"
                 or self.p_levelName == "crazySquirrels") then
             if fishedVal > _G._persTable.statistic.highscoreCanyon then
                 _G._persTable.statistic.highscoreCanyon = fishedVal;
-                _gui:newTextNotification("assets/hamster.png", "New Highscore!")
+                _gui:newTextNotification("assets/gui/icons/hamster.png", "New Highscore!")
             end
         end
         
