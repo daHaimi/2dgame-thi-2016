@@ -58,7 +58,6 @@ local Level = Class {
         self.backgroundPath = backgroundPath;
         self.winDim = winDim;
         self.posY = (winDim[2] * 0.5); --startpos
-        --self.direction = self.direction * direction;
 
         if _persTable.upgrades.mapBreakthrough1 == true then
             self.lowerBoarder = self.lowerBoarder + self.mapBreakthroughBonus1;
@@ -91,6 +90,7 @@ local Level = Class {
         self.waitTillSwitch = 0.5;
         self.pumpCounter = 0;
         self.pumpDirection = true; -- true = down
+        self.hamsterHarmedPlayed = false;
 
         -- create light world
         self.lightWorld = love.light.newWorld();
@@ -339,11 +339,13 @@ function Level:doStartAnimationMovement(bait, dt)
                     self.hamsterLockedXPos < 355 and self.hamsterLockedXPos > 300 then
                 if self.hamsterYPos < self.winDim[2] * 0.5 - 230 then
                     self.hamsterYPos = self.hamsterYPos + 0.5 * math.ceil(dt * bait:getSpeed());
-                    -- sound starts to play to soon
---                    TEsound.play({ "assets/sound/hamsterHarmed.wav" }, 'hamsterHarmed'); 
                     self.failedStart = true;
                 else
                     self.levelFinished = true;
+                    if not self.hamsterHarmedPlayed then
+                        TEsound.play({ "assets/sound/hamsterHarmed.wav" });
+                        self.hamsterHarmedPlayed = true;
+                    end
                 end
             else
                 --hamster not dropped on frame of the toilet
@@ -352,7 +354,6 @@ function Level:doStartAnimationMovement(bait, dt)
                     -- hamster dropped next to toilet
                     if self.hamsterLockedXPos < 120 or self.hamsterLockedXPos > 300 then
                         -- sound starts to play to soon
---                        TEsound.play({ "assets/sound/hamsterHarmed.wav" }, 'hamsterHarmed');
                         self.failedStart = true;
                     end
                 else
@@ -361,6 +362,10 @@ function Level:doStartAnimationMovement(bait, dt)
                         self.animationStartFinished = true;
                     else
                         self.levelFinished = true;
+                        if not self.hamsterHarmedPlayed then
+                            TEsound.play({ "assets/sound/hamsterHarmed.wav" });
+                            self.hamsterHarmedPlayed = true;
+                        end
                     end
                 end
             end
