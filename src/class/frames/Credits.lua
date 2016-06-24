@@ -33,7 +33,6 @@ local Credits = Class {
     p_libsTable = {
         "hump, Matthias Richter",
         "light, Marcus Ihde",
-        "LoveFrames, Kenny Shields",
         "LÖVE 2D",
         "table_serializer, Mathias Haimerl",
         "TEsound, Ensayia and Taehl",
