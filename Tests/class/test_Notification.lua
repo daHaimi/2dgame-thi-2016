@@ -16,31 +16,13 @@ describe("Unit test for Notification.lua", function()
             };
         };
         _G._persTable = {
-            scaledDeviceDim = { 500, 500 };
+            winDim = { 500, 500 };
         };
         locInstance = testClass();
     end)
 
 
     it("Testing Constructor", function()
-        local myInstance = testClass();
-        assert.are.same(locInstance, myInstance);
-    end)
-
-    it("Testing Constructor", function()
-        _G._persTable = {
-            scaledDeviceDim = { 640, 950 };
-        };
-        locInstance = testClass();
-        local myInstance = testClass();
-        assert.are.same(locInstance, myInstance);
-    end)
-
-    it("Testing Constructor", function()
-        _G._persTable = {
-            scaledDeviceDim = { 720, 1024 };
-        };
-        locInstance = testClass();
         local myInstance = testClass();
         assert.are.same(locInstance, myInstance);
     end)

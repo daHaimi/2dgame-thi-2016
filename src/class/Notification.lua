@@ -8,7 +8,7 @@ local Notification = Class {
         self.length = 256;
         self.offset = 8;
         self.speed = 16;
-        self.defaultX = _G._persTable.scaledDeviceDim[1];
+        self.defaultX = _G._persTable.winDim[1];
         self.xPos = self.defaultX;
         self.notificationBuffer = {};
         --state 1 = notice fly in
@@ -38,14 +38,14 @@ end
 --- draws the notification objects
 function Notification:draw()
     if self.notificationBuffer[1] ~= nil then
-        love.graphics.setFont(love.graphics.newFont("font/8bitOperatorPlus-Regular.ttf", 12));
+        love.graphics.setFont(love.graphics.newFont("font/8bitOperatorPlus-Regular.ttf", 16));
         love.graphics.draw(self.background, self.xPos, self.yPos);
         love.graphics.scale(0.5, 0.5);
         love.graphics.draw(self.notificationBuffer[1].image, 2 * (self.xPos + self.offset), 
             2 * (self.yPos + self.offset));
         love.graphics.scale(2, 2);
         love.graphics.printf(self.notificationBuffer[1].text, self.xPos + 48 + 1.5 * self.offset, 
-            self.yPos + 1.5 * self.offset , 100, "center");
+            self.yPos + self.offset , 130, "center");
     end
 end
 
@@ -63,7 +63,7 @@ end
 -- @parm pos: position "in" or "out" is reached
 function Notification:checkPosition(pos)
     if pos == "in" then
-        if self.xPos <= self.defaultX - self.length then
+        if self.xPos <= self.defaultX - 0.75 * self.length then
             return true;
         else
             return false;
