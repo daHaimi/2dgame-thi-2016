@@ -44,6 +44,15 @@ function Persistence:resetGame()
         _G._persTable.winDim[2] * _G._persTable.scaleFactor };
     love.window.setMode(_G._persTable.scaledDeviceDim[1], _G._persTable.scaledDeviceDim[2], 
         {x = (_G._persTable.deviceDim[1] - _G._persTable.scaledDeviceDim[1]) / 2, y = titleHeight});
+    
+    --resetting gui
+    _gui:getFrames().achievements = Achievements();
+    _gui:getFrames().upgradeMenu = UpgradeMenu();
+    _gui:getFrames().dictionary = Dictionary();
+    _gui:setLanguage();
+    _gui:getFrames().mainMenu.elementsOnFrame.button_flag:setImage(love.graphics.newImage("assets/gui/" .. 
+                _G.data.languages[_persTable.config.language].flagImage));
+    
     return love.filesystem.remove("saveFile");
 end
 
