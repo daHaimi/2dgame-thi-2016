@@ -106,6 +106,7 @@ function Gui:draw()
     end
     love.graphics.setFont(love.graphics.newFont("font/8bitOperatorPlus-Bold.ttf", 22));
     self.p_states.currentState:draw();
+    self.notification:draw();
 end
 
 --- updates the gui. called in the love.update function
