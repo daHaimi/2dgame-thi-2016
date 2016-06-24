@@ -165,6 +165,7 @@ function Persistence:createPersTable()
         bgm = 100;
         music = 100;
         language = "english";
+        vibration = true;
     };
 
     _G._persTable.fish = {

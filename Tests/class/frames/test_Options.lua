@@ -6,6 +6,8 @@ fakeElement = require "Tests.fakeLoveframes.fakeElement";
 Frame = require "class.Frame";
 ImageButton = require "class.ImageButton";
 Slider = require "class.Slider";
+Data = require "data";
+
 _G.TEsound = {
     playLooping = function(...) end;
     play = function(...) end;
@@ -15,7 +17,7 @@ _G.TEsound = {
 
 describe("Unit test for Options.lua", function()
     local locInstance;
-
+    _G.data = Data;
     _G.TEsound = {
         play = function(...) end;
         volume = function(...) end;
@@ -26,7 +28,10 @@ describe("Unit test for Options.lua", function()
             mouse = {
                 setVisible = function(...) end;
             };
-             graphics = {
+            system = {
+                vibrate = function(...) end;
+            };
+            graphics = {
                 newImage = function(...) return {
                     getHeight = function (...) return 50 end;
                     getWidth = function (...) return 50 end;
@@ -44,11 +49,18 @@ describe("Unit test for Options.lua", function()
             Create = function(typeName) 
                 return fakeElement(typeName);
             end
+        };
+        _G._persistence = {
+            updateSaveFile = function() end;
         }
+        
+        
         _G._persTable = {
             config = {
                 bgm = 50;
                 music = 50;
+                language = "english";
+                vibration = true;
             };
             winDim = {
                 [1] = 500;
@@ -87,7 +99,7 @@ describe("Unit test for Options.lua", function()
         locInstance.elementsOnFrame.button_back.gotClicked();
         assert.spy(_gui.changeFrame).was.called();
         assert.spy(locInstance.loadValuesInPersTable).was.called(1);
-        assert.spy(_G._persistence.updateSaveFile).was.called(1);
+        assert.spy(_G._persistence.updateSaveFile).was.called(3);
         assert.spy(TEsound.play).was.called(2);
     end)
 
@@ -120,7 +132,7 @@ describe("Unit test for Options.lua", function()
     it("Testing draw function", function()
         local loveMock = mock(love.graphics, true);
         locInstance:draw();
-        assert.spy(loveMock.draw).was_called(5);
+        assert.spy(loveMock.draw).was_called(6);
     end)
 
     it("Testing clear function", function()

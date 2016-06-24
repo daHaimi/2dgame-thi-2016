@@ -1096,6 +1096,8 @@ return {
             language = "english";
             flagImage = "BritishFlag.png";
             package = {
+                textOn = "On";
+                textOff = "Off";
                 buttonStart = "Start Game";
                 buttonShop = "Shop";
                 buttonDictionary = "Dictionary";
@@ -1398,6 +1400,8 @@ return {
             language = "german";
             flagImage = "GermanFlag.png";
             package = {
+                textOn = "An";
+                textOff = "Aus";
                 buttonStart = "Spiel starten";
                 buttonShop = "Shop";
                 buttonDictionary = "Lexikon";
