@@ -83,6 +83,7 @@ local FishableObject = Class {
     caughtAt = nil;
 
     soundPlayed = false;
+    destroyedSoundPlayed = false;
 };
 
 --- draw the object
@@ -169,6 +170,10 @@ function FishableObject:update(dt, speedMulitplicator, nyan)
         if math.abs(self.yPosition - self.caughtAt) < 100
                 and self.levMan:getCurLevel():getDirection() == 1 then
             self.animDestroy:update(dt);
+        end
+        if not self.destroyedSoundPlayed then
+            TEsound.play("assets/sound/explodeFish.wav", _, _G._persTable.config.bgm / 100);
+            self.destroyedSoundPlayed = true;
         end
     end
 
