@@ -93,7 +93,7 @@ describe("Unit test for Achievement.lua", function()
     end)
 
     it("Test function Achievement:caughtOneRound", function()
-        _G._persTable.fish.caughtInOneRound = 30;
+        _G._persTable.fish.caughtInOneRound = 110;
 
         local myInstance = testClass();
         local exp = true;
@@ -116,7 +116,7 @@ describe("Unit test for Achievement.lua", function()
     end)
 
     it("Test function Achievement:caughtOneRound", function()
-        _G._persTable.fish.caughtInOneRound = 10;
+        _G._persTable.fish.caughtInOneRound = 25;
 
         local myInstance = testClass();
         local exp = true;
@@ -126,7 +126,7 @@ describe("Unit test for Achievement.lua", function()
     end)
 
     it("Test function Achievement:caughtOneRound", function()
-        _G._persTable.fish.caughtInOneRound = 20;
+        _G._persTable.fish.caughtInOneRound = 60;
 
         local myInstance = testClass();
         local exp = true;
@@ -137,7 +137,7 @@ describe("Unit test for Achievement.lua", function()
     end)
 
     it("Test function Achievement:caughtOneRound", function()
-        _G._persTable.fish.caughtInOneRound = 100;
+        _G._persTable.fish.caughtInOneRound = 110;
 
         local myInstance = testClass();
         local exp = true;
@@ -159,7 +159,7 @@ describe("Unit test for Achievement.lua", function()
     end)
 
     it("Test function Achievement:moneyOneRound", function()
-        _G._persTable.statistic.maxCoinOneRound = 200;
+        _G._persTable.statistic.maxCoinOneRound = 500;
 
         local myInstance = testClass();
         local exp = true;
@@ -170,7 +170,7 @@ describe("Unit test for Achievement.lua", function()
     end)
 
     it("Test function Achievement:moneyOneRound", function()
-        _G._persTable.statistic.maxCoinOneRound = 600;
+        _G._persTable.statistic.maxCoinOneRound = 1000;
 
         local myInstance = testClass();
         local exp = true;
@@ -181,7 +181,7 @@ describe("Unit test for Achievement.lua", function()
     end)
 
     it("Test function Achievement:moneyOneRound", function()
-        _G._persTable.statistic.maxCoinOneRound = 1000;
+        _G._persTable.statistic.maxCoinOneRound = 1500;
 
         local myInstance = testClass();
         local exp = true;
@@ -202,7 +202,7 @@ describe("Unit test for Achievement.lua", function()
     end)
 
     it("Test function Achievement:moneyTotal", function()
-        _G._persTable.statistic.moneyEarnedTotal = 2000;
+        _G._persTable.statistic.moneyEarnedTotal = 5000;
 
         local myInstance = testClass();
         local exp = true;
@@ -213,7 +213,7 @@ describe("Unit test for Achievement.lua", function()
     end)
 
     it("Test function Achievement:moneyTotal", function()
-        _G._persTable.statistic.moneyEarnedTotal = 6000;
+        _G._persTable.statistic.moneyEarnedTotal = 10000;
 
         local myInstance = testClass();
         local exp = true;
@@ -224,7 +224,7 @@ describe("Unit test for Achievement.lua", function()
     end)
 
     it("Test function Achievement:moneyTotal", function()
-        _G._persTable.statistic.moneyEarnedTotal = 100000;
+        _G._persTable.statistic.moneyEarnedTotal = 40000;
 
         local myInstance = testClass();
         local exp = true;
@@ -235,7 +235,7 @@ describe("Unit test for Achievement.lua", function()
     end)
 
     it("Test function Achievement:fishCaughtTotal", function()
-        _G._persTable.fish.caughtTotal = 50;
+        _G._persTable.fish.caughtTotal = 250;
 
         local myInstance = testClass();
         local exp = false;
@@ -246,7 +246,7 @@ describe("Unit test for Achievement.lua", function()
     end)
 
     it("Test function Achievement:fishCaughtTotal", function()
-        _G._persTable.fish.caughtTotal = 200;
+        _G._persTable.fish.caughtTotal = 1000;
 
         local myInstance = testClass();
         local exp = true;
@@ -257,18 +257,7 @@ describe("Unit test for Achievement.lua", function()
     end)
 
     it("Test function Achievement:fishCaughtTotal", function()
-        _G._persTable.fish.caughtTotal = 500;
-
-        local myInstance = testClass();
-        local exp = true;
-        myInstance.unlockAchievement = function (...) end;
-        stub(myInstance, "unlockAchievement");
-        myInstance:checkAchievements();
-        assert.stub(myInstance.unlockAchievement).was.called(3);
-    end)
-
-    it("Test function Achievement:fishCaughtTotal", function()
-        _G._persTable.fish.caughtTotal = 500;
+        _G._persTable.fish.caughtTotal = 5000;
 
         local myInstance = testClass();
         local exp = true;
