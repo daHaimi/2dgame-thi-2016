@@ -38,6 +38,7 @@ function UpgradeMenu:create()
     };
 
     self:addAllUpgrades();
+    self:loadValuesFromPersTable();
 
     --onclick events for all buttons
     self.elementsOnFrame.button_back.gotClicked = function(_)
@@ -49,13 +50,15 @@ function UpgradeMenu:create()
 
     self.elementsOnFrame.button_buy.gotClicked = function(_)
         if self.elementsOnFrame.chart:getMarkedElement() ~= nil then
-            if _G._persTable.money >= self.elementsOnFrame.chart:getMarkedElement().price then
+            markedElement = self.elementsOnFrame.chart:getMarkedElement();
+            if _G._persTable.money >= markedElement.price and
+                (markedElement.dependency == nil or _G._persTable.upgrades[markedElement.dependency]) then
                 if (self:buyElement() == true) then
                     TEsound.play({ "assets/sound/buying.wav" }, 'bgm');
                     _G._persistence:updateSaveFile();
                 end
             else
-                if self.elementsOnFrame.chart.object:getMarkedElement().purchaseable then
+                if markedElement.purchaseable then
                 TEsound.play({ "assets/sound/notEnoughMoney.wav" }, 'bgm');
                 end
             end
@@ -92,7 +95,8 @@ function UpgradeMenu:buyElement()
         local price = self.elementsOnFrame.chart:getMarkedElement().price;
         _G._persTable.money = _G._persTable.money - price;
         self.elementsOnFrame.button_buy:setImage(self.imageButtonLocked);
-        self:updateMoney()
+        self:updateMoney();
+        self:loadValuesFromPersTable();
         bought = true;
     else
         _gui:newTextNotification(self.directory .. "ach_shitcoin.png", 
@@ -103,14 +107,14 @@ function UpgradeMenu:buyElement()
     return bought;
 end
 
---add all upgrades written in the data.lua into the chart and adds an OnClick event
+--- add all upgrades written in the data.lua into the chart and adds an OnClick event
 function UpgradeMenu:addAllUpgrades()
     for _, v in pairs(_G.data.upgrades) do
         local image = love.graphics.newImage(self.directory ..  v.image);
         local image_unlock = love.graphics.newImage(self.directory ..  v.image_disable);
         if v.sortNumber ~= nil then
             local newKlickableElement = KlickableElement(v.name, image, image_unlock, v.description, v.price, 
-                v.nameOnPersTable, v.sortNumber);
+                v.nameOnPersTable, v.sortNumber, v.dependency);
             if _G._persTable.upgrades[v.nameOnPersTable] then
                 newKlickableElement.object:setImage(image_unlock);
             end
@@ -119,7 +123,7 @@ function UpgradeMenu:addAllUpgrades()
     end
 end
 
---- loads all values from the persTable
+--- Loads the values form pers table and updates elements states based on those values
 function UpgradeMenu:loadValuesFromPersTable()
     for _, v in pairs(self.elementsOnFrame.chart:getAllElements()) do
         local elementName = v.nameOnPersTable;
