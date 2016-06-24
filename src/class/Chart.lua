@@ -100,6 +100,9 @@ end
 function Chart:resetMarkedFrame()
     self.markPosition = {nil, nil};
     self.p_markedElement = nil;
+    self.textFieldName = "";
+    self.textFieldPrice = "";
+    self.textFieldDescription = "";
 end
 
 --- draws the elements shown in the table
