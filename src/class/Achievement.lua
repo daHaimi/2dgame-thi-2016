@@ -13,37 +13,37 @@ end
 
 --- Checks achievements for round based fished amount of objects.
 function Achievement:caughtOneRound()
-    if _G._persTable.fish.caughtInOneRound > 9 then
+    if _G._persTable.fish.caughtInOneRound > 24 then
         self:unlockAchievement("bronzeCaughtOneRound");
     end
-    if _G._persTable.fish.caughtInOneRound > 19 then
+    if _G._persTable.fish.caughtInOneRound > 59 then
         self:unlockAchievement("silverCaughtOneRound");
     end
-    if _G._persTable.fish.caughtInOneRound > 29 then
+    if _G._persTable.fish.caughtInOneRound > 109 then
         self:unlockAchievement("goldCaughtOneRound");
     end
 end
 
 function Achievement:moneyOneRound()
-    if _G._persTable.statistic.maxCoinOneRound > 199 then
+    if _G._persTable.statistic.maxCoinOneRound > 499 then
         self:unlockAchievement("bronzeCoinsOneRound");
     end
-    if _G._persTable.statistic.maxCoinOneRound > 599 then
+    if _G._persTable.statistic.maxCoinOneRound > 999 then
         self:unlockAchievement("silverCoinsOneRound");
     end
-    if _G._persTable.statistic.maxCoinOneRound > 999 then
+    if _G._persTable.statistic.maxCoinOneRound > 1499 then
         self:unlockAchievement("goldCoinsOneRound");
     end
 end
 
 function Achievement:moneyTotal()
-    if _G._persTable.statistic.moneyEarnedTotal > 1999 then
+    if _G._persTable.statistic.moneyEarnedTotal > 4999 then
         self:unlockAchievement("bMoneyEarnedTotal");
     end
-    if _G._persTable.statistic.moneyEarnedTotal > 4999 then
+    if _G._persTable.statistic.moneyEarnedTotal > 9999 then
         self:unlockAchievement("sMoneyEarnedTotal");
     end
-    if _G._persTable.statistic.moneyEarnedTotal > 8999 then
+    if _G._persTable.statistic.moneyEarnedTotal > 39999 then
         self:unlockAchievement("gMoneyEarnedTotal");
     end
 end
@@ -52,13 +52,13 @@ end
 function Achievement:fishCaughtTotal()
     local fishTotal = _G._persTable.fish.caughtTotal;
 
-    if fishTotal >= 50 then
+    if fishTotal >= 250 then
        self:unlockAchievement("bFishCaughtTotal");
     end
-    if fishTotal >= 200 then
+    if fishTotal >= 1000 then
         self:unlockAchievement("sFishCaughtTotal");
     end
-    if fishTotal >= 500 then
+    if fishTotal >= 5000 then
         self:unlockAchievement("gFishCaughtTotal");
     end
 end

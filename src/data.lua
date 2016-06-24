@@ -831,14 +831,14 @@ return {
         oneMoreLife = {
             sortNumber = 1;
             nameOnPersTable = "oneMoreLife"; --Name of parameter in persTable. Unlock change this parameter to true
-            price = 500; --price of this item
+            price = 1500; --price of this item
             image = "shop_extraLife1.png";
             image_disable = "shop_extraLife1_locked.png";
         };
         twoMoreLife = {
             sortNumber = 2;
             nameOnPersTable = "twoMoreLife";
-            price = 1000;
+            price = 5000;
             image = "shop_extraLife2.png";
             image_disable = "shop_extraLife2_locked.png";
             dependency = "oneMoreLife";
@@ -846,7 +846,7 @@ return {
         threeMoreLife = {
             sortNumber = 3;
             nameOnPersTable = "threeMoreLife";
-            price = 1500;
+            price = 25000;
             image = "shop_extraLife3.png";
             image_disable = "shop_extraLife3_locked.png";
             dependency = "twoMoreLife";
@@ -854,14 +854,14 @@ return {
         firstSpeedUp = {
             sortNumber = 9;
             nameOnPersTable = "firstSpeedUp";
-            price = 300;
+            price = 7500;
             image = "shop_speedup1.png";
             image_disable = "shop_speedup1_locked.png";
         };
         secondSpeedUp = {
             sortNumber = 12;
             nameOnPersTable = "secondSpeedUp";
-            price = 300;
+            price = 50000;
             image = "shop_speedup2.png";
             image_disable = "shop_speedup2_locked.png";
             dependency = "firstSpeedUp";
@@ -869,21 +869,21 @@ return {
         godMode = {
             sortNumber = 4;
             nameOnPersTable = "godMode";
-            price = 1000;
+            price = 7500;
             image = "shop_godmode.png";
             image_disable = "shop_godmode_locked.png";
         };
         mapBreakthrough1 = {
             sortNumber = 7;
             nameOnPersTable = "mapBreakthrough1";
-            price = 2500;
+            price = 2000;
             image = "shop_barrier.png";
             image_disable = "shop_barrier_locked.png";
         };
         mapBreakthrough2 = {
             sortNumber = 10;
             nameOnPersTable = "mapBreakthrough2";
-            price = 5000;
+            price = 45000;
             image = "shop_barrier.png";
             image_disable = "shop_barrier_locked.png";
             dependency = "mapBreakthrough1";
@@ -891,7 +891,7 @@ return {
         moreFuel1 = {
             sortNumber = 5;
             nameOnPersTable = "moreFuel1";
-            price = 1000;
+            price = 5000;
             image = "shop_fuel1.png";
             image_disable = "shop_fuel1_locked.png";
             dependency = "godMode";
@@ -899,7 +899,7 @@ return {
         moreFuel2 = {
             sortNumber = 6;
             nameOnPersTable = "moreFuel2";
-            price = 1500;
+            price = 15000;
             image = "shop_fuel2.png";
             image_disable = "shop_fuel2_locked.png";
             dependency = "moreFuel1";
@@ -907,14 +907,14 @@ return {
         firstPermanentMoneyMulitplier = {
             sortNumber = 8;
             nameOnPersTable = "firstPermanentMoneyMult";
-            price = 1000;
+            price = 8000;
             image = "shop_moreMoney1.png";
             image_disable = "shop_moreMoney1_locked.png";
         };
         secondPermanentMoneyMulitplier = {
             sortNumber = 11;
             nameOnPersTable = "secondPermanentMoneyMult";
-            price = 2500;
+            price = 20000;
             image = "shop_moreMoney2.png";
             image_disable = "shop_moreMoney2_locked.png";
             dependency = "firstPermanentMoneyMult";
@@ -1170,15 +1170,15 @@ return {
                 };
                 gFishCaughtTotal = {
                     name = "God of fishing";
-                    description = "500 fish in total";
+                    description = "5000 fish in total";
                 };
                 sFishCaughtTotal = {
                     name = "Master of fishing";
-                    description = "200 fish total";
+                    description = "1000 fish total";
                 };
                 bFishCaughtTotal = {
                     name = "Fishing trainee";
-                    description = "50 fish in total";
+                    description = "250 fish in total";
                 };
                 shoppingQueen = {
                     name = "Shopping queen";
@@ -1190,39 +1190,39 @@ return {
                 };
                 gMoneyEarnedTotal = {
                     name = "OVER 9000!";
-                    description = "You have earned 9000 coins in total";
+                    description = "You have earned over 40000 (and over 9000) coins in total";
                 };
                 sMoneyEarnedTotal = {
                     name = "Rich boy";
-                    description = "5000 coins in total";
+                    description = "10000 coins in total";
                 };
                 bMoneyEarnedTotal = {
                     name = "Slumdog millionaire";
-                    description = "2000 coins in total";
+                    description = "5000 coins in total";
                 };
                 goldCoinsOneRound = {
                     name = "Amazing!";
-                    description = "Earn 1000 coins in one round o.O";
+                    description = "Earn 1500 coins in one round o.O";
                 };
                 silverCoinsOneRound = {
                     name = "You are getting better";
-                    description = "Earn 600 coins in one round";
+                    description = "Earn 1000 coins in one round";
                 };
                 bronzeCoinsOneRound = {
-                    name = "200";
-                    description = "Earn 200 coins in one round";
+                    name = "500";
+                    description = "Earn 500 coins in one round";
                 };
                 bronzeCaughtOneRound = {
                     name = "Good haul!";
-                    description = "Caught more than 10 fish in a single round";
+                    description = "Caught 25 fish in a single round";
                 };
                 silverCaughtOneRound = {
                     name = "Better haul!";
-                    description = "Caught more than 20 fish in a single round";
+                    description = "Caught 60 fish in a single round";
                 };
                 goldCaughtOneRound = {
                     name = "Best haul!";
-                    description = "Caught more than 30 fish in a single round";
+                    description = "Caught 110 fish in a single round";
                 };
                 secondStart = {
                     name = "Welcome again!";
@@ -1477,15 +1477,15 @@ return {
                 };
                 gFishCaughtTotal = {
                     name = "Ultimativer Fischer";
-                    description = "Fange 500 Fische";
+                    description = "Fange 5000 Fische";
                 };
                 sFishCaughtTotal = {
                     name = "Meisterfischer";
-                    description = "Fange 200 Fische";
+                    description = "Fange 1000 Fische";
                 };
                 bFishCaughtTotal = {
                     name = "Fischerlehrling";
-                    description = "Fange 50 Fische";
+                    description = "Fange 250 Fische";
                 };
                 shoppingQueen = {
                     name = "Shopping Queen";
@@ -1497,39 +1497,39 @@ return {
                 };
                 gMoneyEarnedTotal = {
                     name = "Mehr als 9000!";
-                    description = "Verdiene 9000 Münzen";
+                    description = "Verdiene 40000 Münzen";
                 };
                 sMoneyEarnedTotal = {
                     name = "Yuppie";
-                    description = "Verdiene 5000 Münzen";
+                    description = "Verdiene 10000 Münzen";
                 };
                 bMoneyEarnedTotal = {
                     name = "Slumdog Millionär";
-                    description = "Verdiene 2000 Münzen";
+                    description = "Verdiene 5000 Münzen";
                 };
                 goldCoinsOneRound = {
                     name = "Prima!";
-                    description = "Du hast 1000 Münzen in einer Runde verdient o.O";
+                    description = "Du hast 1500 Münzen in einer Runde verdient o.O";
                 };
                 silverCoinsOneRound = {
                     name = "Du wirst besser";
-                    description = "Verdiene 600 Münzen in einer Runde";
+                    description = "Verdiene 1000 Münzen in einer Runde";
                 };
                 bronzeCoinsOneRound = {
                     name = "Nicht schlecht";
-                    description = "Verdiene 200 Münzen in einer Runde";
+                    description = "Verdiene 500 Münzen in einer Runde";
                 };
                 bronzeCaughtOneRound = {
                     name = "Guter Fang!";
-                    description = "Du hast 10 Fische in nur einer Runde gefangen";
+                    description = "Du hast 25 Fische in nur einer Runde gefangen";
                 };
                 silverCaughtOneRound = {
                     name = "Exzellenter Fang!";
-                    description = "Du hast 20 Fische in nur einer Runde gefangen";
+                    description = "Du hast 60 Fische in nur einer Runde gefangen";
                 };
                 goldCaughtOneRound = {
                     name = "Ultimativer Fang!";
-                    description = "Du hast 30 Fische in nur einer Runde gefangen";
+                    description = "Du hast 110 Fische in nur einer Runde gefangen";
                 };
                 secondStart = {
                     name = "Willkommen zurück!";
