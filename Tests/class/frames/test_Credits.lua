@@ -172,7 +172,6 @@ describe("Unit test for Credits.lua", function()
         local strings = {
         "hump, Matthias Richter",
         "light, Marcus Ihde",
-        "LoveFrames, Kenny Shields",
         "LÖVE 2D",
         "table_serializer, Mathias Haimerl",
         "TEsound, Ensayia and Taehl",
