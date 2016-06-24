@@ -83,7 +83,10 @@ describe("Test Gui", function()
                     getWidth = function (...) return 50 end;
                 }
                 end;
-            }
+            };
+            sound = {
+                newSoundData = function(...) end;
+            };
         };
         _G.Loveframes = {
             Create = function(typeName) return FakeElement(typeName); end;
@@ -103,6 +106,8 @@ describe("Test Gui", function()
         for _, v in pairs(locInstance.p_myFrames) do
             v = {};
         end
+        locInstance.notification.background = {};
+        myInstance.notification.background = {};
         assert.are.same(locInstance.notification, myInstance.notification);
         assert.are.same(locInstance.p_frameChangeActiv, myInstance.p_frameChangeActiv);
         assert.are.same(locInstance.p_states, myInstance.p_states);

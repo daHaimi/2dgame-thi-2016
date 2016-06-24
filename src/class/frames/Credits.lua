@@ -33,7 +33,6 @@ local Credits = Class {
     p_libsTable = {
         "hump, Matthias Richter",
         "light, Marcus Ihde",
-        "LoveFrames, Kenny Shields",
         "LÖVE 2D",
         "table_serializer, Mathias Haimerl",
         "TEsound, Ensayia and Taehl",
@@ -109,7 +108,7 @@ function Credits:buildCreditsString()
 end
 
 --- shows the frame on screen
-function Credits:draw()    
+function Credits:draw() 
     local _, y = self.elementsOnFrame.button_back:getOffset();
     -- draw background
     love.graphics.draw(self.background, (_G._persTable.winDim[1] - self.background:getWidth())/2,

@@ -19,6 +19,10 @@ local Score = Class {
         self.playAppearSound = true;
         self.frame = Frame(0, 0, "down", "down", 50, 0, -1500);
         self:create();
+        self.sounds = {
+            buyS = love.sound.newSoundData( "assets/sound/buying.wav" );
+            backS = love.sound.newSoundData( "assets/sound/buttonPressed.wav" );
+        };
     end;
 };
 
@@ -43,14 +47,14 @@ function Score:create()
 
     --onclick events for all buttons
     self.elementsOnFrame.button_retry.gotClicked = function(_)
-        TEsound.play({ "assets/sound/buttonPressed.wav" }, 'bgm');
+        TEsound.play({ self.sounds.backS }, 'bgm');
         self.elementsOnFrame.achievements:remove();
         _gui:getLevelManager():replayLevel();
         _gui:changeFrame(_gui:getFrames().inGame);
     end
 
     self.elementsOnFrame.button_backToMenu.gotClicked = function(_)
-        TEsound.play({ "assets/sound/buttonPressed.wav" }, 'bgm');
+        TEsound.play({ self.sounds.backS }, 'bgm');
         self.elementsOnFrame.achievements:remove();
         _gui:getLevelManager():freeManagedObjects();
         _gui:changeFrame(_gui:getFrames().mainMenu);
@@ -116,7 +120,7 @@ function Score:appear()
     self.frame:appear(self.elementsOnFrame);
     if self.playAppearSound == true then
         self.playAppearSound = false;
-        TEsound.play({ "assets/sound/buying.wav" }, 'bgm');
+        TEsound.play({ self.sounds.buyS }, 'bgm');
     end
 end
 
