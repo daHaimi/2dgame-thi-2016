@@ -183,7 +183,8 @@ function Chart:markElement(element)
                 self.textFieldDescription = _G.data.languages[_G._persTable.config.language].package
                     [element.nameOnPersTable].description;
                 self.textFieldPrice = element.price;
-                if _G._persTable.upgrades[element.nameOnPersTable] then
+                if _G._persTable.upgrades[element.nameOnPersTable] or 
+                    (element.dependency ~= nil and not _G._persTable.upgrades[element.dependency]) then
                     _G._gui:getFrames().upgradeMenu.elementsOnFrame.button_buy:setImage(
                         love.graphics.newImage("assets/gui/HalfButton_disable.png"));
                 else
