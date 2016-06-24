@@ -16,6 +16,7 @@ local Options = Class {
         self.flagWidth = 120;
         self.name = "Options";
         self.frame = Frame(0, 0, "down", "down", 50, 0, -1500);
+        self.vibrateDefaultFunction = nil;
         self:create();
     end;
 };
@@ -28,13 +29,16 @@ function Options:create()
             _G._persTable.winDim[1] - 2* self.buttonXPosition);
         slider_music = Slider(self.imageUnpressedSlider, self.imagePressedSlider, self.buttonXPosition, 140,
             _G._persTable.winDim[1] - 2* self.buttonXPosition);
+        button_vibration = ImageButton(self.imageButton, self.buttonXPosition , 300, true);
         button_reset = ImageButton(self.imageButton, self.buttonXPosition , 
             (_G._persTable.winDim[2] + self.background:getHeight())/2 - 2 * self.buttonHeight 
             - self.buttonDistance - 30, true);
         button_back = ImageButton(self.imageButton, self.buttonXPosition , 
             (_G._persTable.winDim[2] + self.background:getHeight())/2 - self.buttonHeight - 30, true);
     };
-
+    
+    self.vibrateDefaultFunction = love.system.vibrate;
+    
     --load values out of persTable into the chart
     self:loadValuesFromPersTable();
 
@@ -45,7 +49,16 @@ function Options:create()
         self:loadValuesFromPersTable();
         _gui:changeFrame(_gui:getFrames().mainMenu);
     end
-
+    
+    self.elementsOnFrame.button_vibration.gotClicked = function(_)
+        TEsound.play({ "assets/sound/buttonPressed.wav" }, 'bgm');
+        if _G._persTable.config.vibration then
+            self:setVibration(false);
+        else
+            self:setVibration(true);
+        end
+    end
+    
     self.elementsOnFrame.button_back.gotClicked = function(_)
         TEsound.play({ "assets/sound/buttonPressed.wav" }, 'bgm');
         self:loadValuesInPersTable();
@@ -54,14 +67,32 @@ function Options:create()
     end
 end
 
+function Options:setVibration(vibration)    
+    if vibration then
+        love.system.vibrate = self.vibrateDefaultFunction
+        _G._persTable.config.vibration = true;
+        self.elementsOnFrame.button_vibration:setText("Vibration: " .. _G.data.languages[_G._persTable.config.language].package.textOn);
+    else
+        love.system.vibrate = function(...) end;
+        _G._persTable.config.vibration = false;
+        self.elementsOnFrame.button_vibration:setText("Vibration: " .. _G.data.languages[_G._persTable.config.language].package.textOff);
+    end
+    _G._persistence:updateSaveFile();
+end
+
+
 --- changes the language of this frame
 --@param language language of the buttons and texts
 function Options:setLanguage(language)
     self.elementsOnFrame.button_back:setText(_G.data.languages[language].package.buttonBack);
     self.elementsOnFrame.button_reset:setText(_G.data.languages[language].package.buttonReset);
-
     self.text_bgm = (_G.data.languages[language].package.textMusic);
     self.text_music = (_G.data.languages[language].package.textBGM);
+    if _G._persTable.config.vibration then
+        self.elementsOnFrame.button_vibration:setText("Vibration: " .. _G.data.languages[_G._persTable.config.language].package.textOn);
+    else
+        self.elementsOnFrame.button_vibration:setText("Vibration: " .. _G.data.languages[_G._persTable.config.language].package.textOff);
+    end
 end
 
 --- loads the value of the sliders from the persTable
@@ -74,6 +105,7 @@ end
 function Options:loadValuesFromPersTable()
     self.elementsOnFrame.slider_bgm:setValue(_G._persTable.config.bgm);
     self.elementsOnFrame.slider_music:setValue(_G._persTable.config.music);
+    self:setVibration(_G._persTable.config.vibration);
 end
 
 --- is called once every frame options is active

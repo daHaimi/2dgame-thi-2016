@@ -30,6 +30,11 @@ return {
                 }
             };
         };
+        nyan = {
+            name = "nyan";
+            image = "nyan.png";
+            sortNumber = 13;
+        };
         turtle = {
             name = "turtle";
             image = "turtle.png";
@@ -1096,6 +1101,8 @@ return {
             language = "english";
             flagImage = "BritishFlag.png";
             package = {
+                textOn = "On";
+                textOff = "Off";
                 buttonStart = "Start Game";
                 buttonShop = "Shop";
                 buttonDictionary = "Dictionary";
@@ -1255,6 +1262,10 @@ return {
                     description = "You got all achievements?!";
                 };
                 --objects
+                nyan = {
+                    name = "NyanCat";
+                    description = "The internet is for p... Nyan Cats";
+                };
                 nemo = {
                     name = "Nemo";
                     description = "Congratulations! You have found nemo!";
@@ -1398,6 +1409,8 @@ return {
             language = "german";
             flagImage = "GermanFlag.png";
             package = {
+                textOn = "An";
+                textOff = "Aus";
                 buttonStart = "Spiel starten";
                 buttonShop = "Shop";
                 buttonDictionary = "Lexikon";
@@ -1551,6 +1564,10 @@ return {
 --                    description = "Nur ein Objekt gefangen"
 --                };
                 --objects
+                nyan = {
+                    name = "NyanCat";
+                    description = "The internet is for p... Nyan Cats";
+                };
                 nemo = {
                     name = "Nemo";
                     description = "Anscheinend hast du Nemo gefunden";

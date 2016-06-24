@@ -21,6 +21,11 @@ describe("Test Gui", function()
     local locInstance;
 
     before_each(function()
+        _G._persistence = {
+            updateSaveFile = function(...) end;
+        }
+        
+        
         _G._persTable = {
             winDim = { 480, 900 };
             scaledDeviceDim = { 480, 900 };
@@ -53,6 +58,8 @@ describe("Test Gui", function()
                     language = "english";
                     flagImage = "testimage";
                     package = {
+                        textOn = "On";
+                        textOff= "Off";
                         credits = {
                             staff = "Staff:";
                             trans = "Translation:";
@@ -63,6 +70,8 @@ describe("Test Gui", function()
                 };
                 german = {
                     package = {
+                        textOn = "An";
+                        textOff= "Aus";
                         credits = {
                             staff = "Mitwirkende:";
                             trans = "Übersetzung:";
