@@ -34,7 +34,10 @@ describe("Unit test for Score.lua", function()
                 setFont = function (...) end;
                 printf = function (...) end;
                 setColor = function (...) end;
-            }
+            };
+            sound = {
+                newSoundData = function(...) end;
+            };
         };
         _G.data = Data;
         _G.Loveframes = {

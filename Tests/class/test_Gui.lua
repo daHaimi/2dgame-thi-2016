@@ -83,7 +83,10 @@ describe("Test Gui", function()
                     getWidth = function (...) return 50 end;
                 }
                 end;
-            }
+            };
+            sound = {
+                newSoundData = function(...) end;
+            };
         };
         _G.Loveframes = {
             Create = function(typeName) return FakeElement(typeName); end;
