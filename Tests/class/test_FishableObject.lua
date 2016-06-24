@@ -59,6 +59,9 @@ _G.fishableObjectStub = function()
         fish = {
             postiveFishCaught = true;
         };
+        config = {
+            bgm = 100;
+        }
     };
     _G.love.light.world.newLight = function(...) return _G.love.light; end;
     _G.love.light.world.newImage = function(...) return _G.love.light.Image; end;

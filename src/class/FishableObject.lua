@@ -120,13 +120,13 @@ function FishableObject:draw()
                 love.graphics.setColor(0, 255, 0);
                 _G._persTable.fish.postiveFishCaught = true;
                 if not self.soundPlayed then
-                    TEsound.play("assets/sound/collectedPositivValue.wav");
+                    TEsound.play("assets/sound/collectedPositivValue.wav", _, _G._persTable.config.bgm / 100);
                     self.soundPlayed = true;
                 end
             elseif self.value < 0 then
                 love.graphics.setColor(255, 0, 0);
                 if not self.soundPlayed then
-                    TEsound.play("assets/sound/collectedNegativValue.wav");
+                    TEsound.play("assets/sound/collectedNegativValue.wav", _, _G._persTable.config.bgm / 100);
                     self.soundPlayed = true;
                 end
             end

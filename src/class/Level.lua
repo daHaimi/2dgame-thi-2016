@@ -25,7 +25,6 @@ local Level = Class {
         self.bgq = nil;
         self.winDim = {};
         self.statUpdated = false;
-        self.ploempelPlayed = false;
 
         if mode == "endless" then
             self.lowerBoarder = -_G.math.inf;
@@ -297,14 +296,12 @@ function Level:doEndAnimationMovement(bait, dt)
                 self.p_levelName == "sleepingCrocos" then
             if self.pumpCounter < 4 then
                 if self.pumpDirection then
-                    -- plays wrong sound
-                    if self.ploempelPlayed == false then
-                        self.ploempelPlayed = true;
-                        TEsound.playLooping("assets/sound/ploempel.wav", "bgm", 5);
-                    end
                     self.pumpingWay = self.pumpingWay - 5;
                     if self.pumpingWay == 0 then
                         self.pumpDirection = false;
+                    end
+                    if self.pumpingWay == 20 then
+                        TEsound.play("assets/sound/ploempel.wav", _, _G._persTable.config.bgm / 100);
                     end
                 else
                     self.pumpingWay = self.pumpingWay + 10;
