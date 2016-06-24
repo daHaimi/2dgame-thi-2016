@@ -39,7 +39,7 @@ local Gui = Class {
     levMan = nil;
     achMan = nil;
 }
-
+---sets the language of all elements
 function Gui:setLanguage()
     local language = _G._persTable.config.language;
     for _, v in pairs(self.p_myFrames) do
@@ -48,11 +48,16 @@ function Gui:setLanguage()
         end
     end
 end
-
+--- is called when the mouse is pressed
+--@param x x coordinate of the mouse 
+--@param y y coordinate of the mouse
 function Gui:mousepressed(x, y)
     self.p_states.currentState:mousepressed(x/_G._persTable.scaleFactor,y/_G._persTable.scaleFactor);
 end
 
+--- is called when the mouse is pressed
+--@param x x coordinate of the mouse 
+--@param y y coordinate of the mouse
 function Gui:mousereleased(x, y)
     if self.p_states.currentState.mousereleased ~= nil then
         self.p_states.currentState:mousereleased(x/_G._persTable.scaleFactor,y/_G._persTable.scaleFactor);
@@ -99,6 +104,7 @@ function Gui:changeFrame(newFrame)
     self.p_states.currentState = newFrame;
 end
 
+--- draws the current and the last state if it exists
 function Gui:draw()
     if self.p_states.lastState ~= nil and self.p_frameChangeActiv then
         love.graphics.setFont(love.graphics.newFont("font/8bitOperatorPlus-Bold.ttf", 22));

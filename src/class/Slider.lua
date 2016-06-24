@@ -1,5 +1,11 @@
 Class = require "lib.hump.class";
 
+---Slider is a button which can be moved
+--@param imageUnpressed a love image
+--@param imagePressed a love image
+--@param xPosition x position of the button
+--@param yPosition y position of the button
+--@param width width of the slider in px
 local Slider = Class {
     init = function (self, imageUnpressed, imagePressed, xPosition, yPosition, width)
         self.imageUnpressed = imageUnpressed;
@@ -87,11 +93,15 @@ function Slider:setValue(value)
 end
 
 --- is called when slider is clicked
+--@param x x coordinate of the click
+--@param y y coordinate of the click
 function Slider:gotClicked(x, y)
     self.moveable = true;
 end
 
 --- is called when slider is no longer clicked
+--@param x x coordinate of the release
+--@param y y coordinate of the release
 function Slider:release(x, y)
     self.moveable = false;
 end

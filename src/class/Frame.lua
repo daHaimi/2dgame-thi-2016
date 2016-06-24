@@ -1,5 +1,12 @@
 Class = require "lib.hump.class";
-
+--- a frame is a state in the GUI
+--@param xPos x Position of the upper left corner
+--@param yPos y Position of the upper left corner
+--@param moveInDirection direction on appearing
+--@param moveOutDirection direction of disappearing
+--@param moveSpeed speed of appearing and disappearing
+--@param xDefaultOffset starting offset before appearing
+--@param yDefaultOffset starting offset before appearing
 local Frame = Class {
     init = function(self, xPos, yPos, moveInDirection, moveOutDirection, moveSpeed, xDefaultOffset, yDefaultOffset)
         self.p_xPos = xPos;
@@ -15,12 +22,13 @@ local Frame = Class {
 };
 
 --- Call to set all Elements invisible and reset the x/yOffset
-function Frame:clear(elements)
+function Frame:clear()
     self.p_xOffset = self.p_xDefaultOffset;
     self.p_yOffset = self.p_yDefaultOffset;
 end
 
---called in the "fly in" state
+---called in the "fly in" state
+--@pramam elements all elements on the frame
 function Frame:appear(elements)
     if self.p_moveInDirection == "up" then
         self.p_yOffset = self.p_yOffset - self.p_moveSpeed;
@@ -37,6 +45,7 @@ function Frame:appear(elements)
 end
 
 --called in the "fly out" state
+--@param elements all elements on the frame
 function Frame:disappear(elements)
     if self.p_moveOutDirection == "up" then
         self.p_yOffset = self.p_yOffset - self.p_moveSpeed;
@@ -53,6 +62,7 @@ function Frame:disappear(elements)
 end
 
 --- return true if the frame is on position /fly in move is finished
+--@return true if the appearing is finished
 function Frame:checkPosition()
     if (self.p_xOffset == 0 and self.p_yOffset == 0) then
         return true;

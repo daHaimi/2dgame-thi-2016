@@ -87,6 +87,7 @@ function Level:create()
 end
 
 --- changes the language of this frame
+--@param language language of the buttons
 function Level:setLanguage(language)
     self.elementsOnFrame.button_back:setText(_G.data.languages[language].package.buttonBack);
 end
@@ -126,7 +127,9 @@ end
 function Level:checkPosition()
     return self.frame:checkPosition();
 end
-
+--- is called when the mouse is pressed
+--@param x x coordinate of the mouse 
+--@param y y coordinate of the mouse
 function Level:mousepressed(x, y)    
     for _, v in pairs (self.elementsOnFrame) do
         local xPosition, yPosition = v:getPosition();

@@ -101,7 +101,9 @@ function InGame:disappear()
     love.mouse.setGrabbed(false);
     self.frame:disappear(self.elementsOnFrame);
 end
-
+--- is called when the mouse is pressed
+--@param x x coordinate of the mouse 
+--@param y y coordinate of the mouse
 function InGame:mousepressed(x, y)
     local xPosition, yPosition = self.elementsOnFrame.pause:getPosition();
     local width, height = self.elementsOnFrame.pause:getSize();

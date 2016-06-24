@@ -48,6 +48,7 @@ function Dictionary:create()
 end
 
 --- checks if image exists
+--@param name path to the file
 function Dictionary:imageExists(name)
     local f = io.open(name, "r")
     if f ~= nil then io.close(f) return true else return false end
@@ -109,7 +110,9 @@ function Dictionary:setOffset(x,y)
     self.xOffset = x;
     self.yOffset = y;
 end
-
+--- is called when the mouse is pressed
+--@param x x coordinate of the mouse 
+--@param y y coordinate of the mouse
 function Dictionary:mousepressed(x, y)    
     for _, v in pairs (self.elementsOnFrame) do
         local xPosition, yPosition = v:getPosition();

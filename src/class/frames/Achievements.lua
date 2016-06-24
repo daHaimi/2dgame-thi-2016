@@ -52,6 +52,7 @@ function Achievements:create()
 end
 
 --- changes the language of this frame
+--@param language sting with language
 function Achievements:setLanguage(language)
     self.elementsOnFrame.button_back:setText(_G.data.languages[language].package.buttonBack);
 end
@@ -81,6 +82,9 @@ function Achievements:loadValuesFromPersTable()
     end
 end
 
+--- is called when the mouse is pressed
+--@param x x coordinate of the mouse 
+--@param y y coordinate of the mouse
 function Achievements:mousepressed(x, y)    
     for _, v in pairs (self.elementsOnFrame) do
         local xPosition, yPosition = v:getPosition();

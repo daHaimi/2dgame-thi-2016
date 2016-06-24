@@ -96,7 +96,9 @@ function Score:draw()
     end
     love.graphics.setColor(255, 255, 255);
 end
-
+--- is called when the mouse is pressed
+--@param x x coordinate of the mouse 
+--@param y y coordinate of the mouse
 function Score:mousepressed(x, y)    
     for _, v in pairs (self.elementsOnFrame) do
         local xPosition, yPosition = v:getPosition();

@@ -149,6 +149,8 @@ end
 
 --- Updates the position of the object depending on its speed
 -- @param dt Delta time since last update in seconds
+-- @param speedMultiplicator multiplicator for movespeed of the objects
+-- @param nyan true for drawing nyans
 function FishableObject:update(dt, speedMulitplicator, nyan)
     if math.abs(self.yPosition - self.levMan:getCurPlayer():getPosY()) > self.levMan:getCurLevel().winDim[2] then
         self.outOfArea = true;

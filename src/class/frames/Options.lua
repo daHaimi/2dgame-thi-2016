@@ -55,6 +55,7 @@ function Options:create()
 end
 
 --- changes the language of this frame
+--@param language language of the buttons and texts
 function Options:setLanguage(language)
     self.elementsOnFrame.button_back:setText(_G.data.languages[language].package.buttonBack);
     self.elementsOnFrame.button_reset:setText(_G.data.languages[language].package.buttonReset);
@@ -63,17 +64,19 @@ function Options:setLanguage(language)
     self.text_music = (_G.data.languages[language].package.textBGM);
 end
 
+--- loads the value of the sliders from the persTable
 function Options:loadValuesInPersTable()
     _G._persTable.config.bgm = self.elementsOnFrame.slider_bgm:getValue();
     _G._persTable.config.music = self.elementsOnFrame.slider_music:getValue();
 end
 
-
+--- loads the value of the sliders in the persTable
 function Options:loadValuesFromPersTable()
     self.elementsOnFrame.slider_bgm:setValue(_G._persTable.config.bgm);
     self.elementsOnFrame.slider_music:setValue(_G._persTable.config.music);
 end
 
+--- is called once every frame options is active
 function Options:update()
     self.elementsOnFrame.slider_bgm:update();
     self.elementsOnFrame.slider_music:update();
@@ -130,7 +133,9 @@ end
 function Options:checkPosition()
     return self.frame:checkPosition();
 end
-
+--- is called when the mouse is pressed
+--@param x x coordinate of the mouse 
+--@param y y coordinate of the mouse
 function Options:mousepressed(x, y)    
     for _, v in pairs (self.elementsOnFrame) do
         local xPosition, yPosition = v:getPosition();
@@ -142,7 +147,9 @@ function Options:mousepressed(x, y)
         end
     end
 end
-
+--- is called when the mouse is pressed
+--@param x x coordinate of the mouse 
+--@param y y coordinate of the mouse
 function Options:mousereleased(x, y)
     self.elementsOnFrame.slider_bgm:release();
     self.elementsOnFrame.slider_music:release();

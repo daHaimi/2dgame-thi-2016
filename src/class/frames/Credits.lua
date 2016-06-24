@@ -71,7 +71,9 @@ end
 function Credits:setLanguage(language)
     self.elementsOnFrame.button_back:setText(_G.data.languages[language].package.buttonBack);
 end
-
+--- is called when the mouse is pressed
+--@param x x coordinate of the mouse 
+--@param y y coordinate of the mouse
 function Credits:mousepressed(x, y)
     
     for _, v in pairs (self.elementsOnFrame) do

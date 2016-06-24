@@ -11,7 +11,9 @@ local Start = Class {
         self.offset = _persTable.winDim[1];
     end;
 };
-
+--- is called when the mouse is pressed
+--@param x x coordinate of the mouse 
+--@param y y coordinate of the mouse
 function Start:mousepressed(x, y)
     if self.offset == 0 then
         _gui:changeFrame(_gui:getFrames().mainMenu);

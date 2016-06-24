@@ -93,7 +93,7 @@ function MainMenu:create()
         _G._gui:setLanguage();
     end
 end
-
+--- draws the frame
 function MainMenu:draw()
     local _, y = self.elementsOnFrame.button_start:getOffset();
     love.graphics.draw(self.background, (_G._persTable.winDim[1] - self.background:getWidth())/2,
@@ -102,7 +102,9 @@ function MainMenu:draw()
         v:draw();
     end
 end
-
+--- is called when the mouse is pressed
+--@param x x coordinate of the mouse 
+--@param y y coordinate of the mouse
 function MainMenu:mousepressed(x, y)    
     for _, v in pairs (self.elementsOnFrame) do
         local xPosition, yPosition = v:getPosition();
@@ -136,6 +138,7 @@ function MainMenu:checkPosition()
 end
 
 --- changes the language of this frame
+--@param language language of the text and buttons
 function MainMenu:setLanguage(language)
     self.elementsOnFrame.button_close:setText(_G.data.languages[language].package.buttonClose);
     self.elementsOnFrame.button_credits:setText(_G.data.languages[language].package.buttonCredits);

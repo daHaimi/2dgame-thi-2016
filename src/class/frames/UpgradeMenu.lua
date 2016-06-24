@@ -119,7 +119,7 @@ function UpgradeMenu:addAllUpgrades()
     end
 end
 
-
+--- loads all values from the persTable
 function UpgradeMenu:loadValuesFromPersTable()
     for _, v in pairs(self.elementsOnFrame.chart:getAllElements()) do
         local elementName = v.nameOnPersTable;
@@ -190,7 +190,9 @@ function UpgradeMenu:setOffset(x,y)
     self.xOffset = x;
     self.yOffset = y;
 end
-
+--- is called when the mouse is pressed
+--@param x x coordinate of the mouse 
+--@param y y coordinate of the mouse
 function UpgradeMenu:mousepressed(x, y)    
     for _, v in pairs (self.elementsOnFrame) do
         local xPosition, yPosition = v:getPosition();

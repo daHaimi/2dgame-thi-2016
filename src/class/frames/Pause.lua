@@ -109,7 +109,9 @@ function Pause:checkAchRageQuit()
         _gui:getLevelManager():getCurLevel():getReachedDepth());
     _gui:getLevelManager():getAchievmentManager():achBitch();
 end
-
+--- is called when the mouse is pressed
+--@param x x coordinate of the mouse 
+--@param y y coordinate of the mouse
 function Pause:mousepressed(x, y)    
     for _, v in pairs (self.elementsOnFrame) do
         local xPosition, yPosition = v:getPosition();
