@@ -1,6 +1,9 @@
 -- Lua 5.1 Hack
 _G.math.inf = 1 / 0
 _G.love = {
+    system = {
+        vibrate = function(...) end;
+    };
     graphics = {
         newCanvas = function(...)
             return 0;
