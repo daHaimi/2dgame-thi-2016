@@ -25,7 +25,7 @@ local Level = Class {
         self.bgq = nil;
         self.winDim = {};
         self.statUpdated = false;
-        self.vibrationTimer = 1;
+        self.vibrationTimer = 0.4;
 
         if mode == "endless" then
             self.lowerBoarder = -_G.math.inf;
@@ -266,8 +266,8 @@ function Level:update(dt, bait)
     --set vibration at nyan mode
     if self.levMan:getCurSwarmFactory().nyan then
         if self.vibrationTimer - dt < 0 then
-            self.vibrationTimer = 1;
-            love.system.vibrate(0.5);
+            self.vibrationTimer = 0.4;
+            love.system.vibrate(0.2);
         else
             self.vibrationTimer = self.vibrationTimer - dt;
         end
