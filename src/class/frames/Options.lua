@@ -119,7 +119,7 @@ function Options:update()
     
     if self.elementsOnFrame.slider_music:getMoveable() then
         _G._persTable.config.music = self.elementsOnFrame.slider_music:getValue();
-        TEsound.volume('music', _G._persTable.config.bgm / 100);
+        TEsound.volume('music', _G._persTable.config.music / 100);
     end
     
 end
