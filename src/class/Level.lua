@@ -91,7 +91,8 @@ local Level = Class {
         self.pumpCounter = 0;
         self.pumpDirection = true; -- true = down
         self.hamsterHarmedPlayed = false;
-
+        self.hamsterPullPlayed = false;
+        
         -- create light world
         self.lightWorld = love.light.newWorld();
 
@@ -322,10 +323,15 @@ function Level:doEndAnimationMovement(bait, dt)
                 end
             end
         else
+            if not self.hamsterPullPlayed then
+                TEsound.play("assets/sound/pullHamster.wav", "pullTag", _G._persTable.config.bgm / 200);
+                self.hamsterPullPlayed = true;
+            end
             if self.winDim[2] / 2 - 300 < self.hamsterYPos then
                 self.hamsterYPos = self.hamsterYPos - math.ceil(dt * bait:getSpeed());
             else
                 self.animationEndFinished = true;
+                TEsound.stop("pullTag");
             end
         end
     end
@@ -338,6 +344,10 @@ function Level:doStartAnimationMovement(bait, dt)
     if self.animationStart and not self.animationStartFinished then
         if self.p_levelName == "sewers" or self.p_levelName == "sewersEndless" or
                 self.p_levelName == "sleepingCrocos" then
+            if not self.hamsterPullPlayed then
+                TEsound.play("assets/sound/pullHamster.wav", "pullTag", _G._persTable.config.bgm / 200);
+                self.hamsterPullPlayed = true;
+            end
             -- hamster dropped on frame of toilet
             if self.hamsterLockedXPos < 120 and self.hamsterLockedXPos > 65 or
                     self.hamsterLockedXPos < 355 and self.hamsterLockedXPos > 300 then
@@ -364,6 +374,7 @@ function Level:doStartAnimationMovement(bait, dt)
                     --hamster dropped in toilet
                     if self.hamsterLockedXPos > 120 and self.hamsterLockedXPos < 300 then
                         self.animationStartFinished = true;
+                        TEsound.stop("pullTag");
                     else
                         self.levelFinished = true;
                         if not self.hamsterHarmedPlayed then
@@ -375,10 +386,16 @@ function Level:doStartAnimationMovement(bait, dt)
             end
         else
             --canyon
+            if not self.hamsterPullPlayed then
+                TEsound.play("assets/sound/pullHamster.wav", "pullTag", _G._persTable.config.bgm / 200);
+                self.hamsterPullPlayed = true;
+            end
             if self.hamsterYPos < self.winDim[2] * 0.55 then
                 self.hamsterYPos = self.hamsterYPos + 0.5 * math.ceil(dt * bait:getSpeed());
             else
                 self.animationStartFinished = true;
+                self.hamsterPullPlayed = false;
+                TEsound.stop("pullTag");
             end
         end
     end
