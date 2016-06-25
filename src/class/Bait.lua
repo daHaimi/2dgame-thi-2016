@@ -231,9 +231,9 @@ function Bait:collisionDetected(fishable, index)
         if self.numberOfHits <= _G._persTable.upgrades.moreLife then
             self.numberOfHits = self.numberOfHits + 1;
             self.levMan:getCurLevel():activateShortGM(self.deltaTime, self.speed);
+            love.system.vibrate(0.3);
         end
         _gui:getFrames().inGame.elementsOnFrame.healthbar:minus();
-        love.system.vibrate(0.3);
         -- no more lifes left
         if self.numberOfHits > _G._persTable.upgrades.moreLife then
             self.levMan:getCurLevel():switchToPhase2();
