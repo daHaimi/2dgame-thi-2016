@@ -8,6 +8,7 @@ LevelManager = require "class.LevelManager";
 Gamestate = require "lib.hump.gamestate";
 Persistence = require "class.Persistence";
 Achievement = require "class.Achievement";
+MusicManager = require "class.MusicManager";
 require "lib.TEsound";
 
 -- Global variables
@@ -30,6 +31,7 @@ _G._tmpTable = {
 _G._unlockedAchievements = {};
 -- Font for android debugging
 _G.myfont = love.graphics.newFont(30);
+_G._musicManager = MusicManager();
 
 -- Game Title
 love.window.setTitle("Simon Hamster's Insane Trip");
@@ -88,6 +90,7 @@ function love.load()
     _gui:setLevelManager(levMan);
     _gui:start();
     achiev:checkAchievements();
+    _musicManager:update();
     
     if _G._persTable.gameStatedAmount == 2 then
         levMan:getAchievmentManager():unlockAchievement("secondStart");
@@ -151,18 +154,6 @@ function love.draw()
     love.graphics.setFont(_G.standardFont);
     love.graphics.print('Memory actually used (in kB): ' .. collectgarbage('count'), 200, 60);
     love.graphics.print("Current FPS: " .. tostring(love.timer.getFPS()), 200, 75);
-    --[[
-    love.graphics.print(
-        "1speedUp " .. tostring(_G._persTable.upgrades.firstSpeedUp) .. "\n" ..
-        "2speedUp " .. tostring(_G._persTable.upgrades.secondSpeedUp) .. "\n" ..
-        "1moreLife " .. tostring(_G._persTable.upgrades.oneMoreLife) .. "\n" ..
-        "2moreLife " .. tostring(_G._persTable.upgrades.twoMoreLife) .. "\n" ..
-        "3moreLife " .. tostring(_G._persTable.upgrades.threeMoreLife) .. "\n" ..
-        "moneyMult " .. tostring(_G._persTable.upgrades.moneyMult) .. "\n" ..
-        "godMode " .. tostring(_G._persTable.upgrades.godMode) .. "\n" ..
-        "MB1 " .. tostring(_G._persTable.upgrades.mapBreakthrough1) .. "\n" ..
-        "MB2 " .. tostring(_G._persTable.upgrades.mapBreakthrough2),
-        0, 0)]]--
 end
 
 --- This function is called continuously by the love.run().

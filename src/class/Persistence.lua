@@ -173,8 +173,8 @@ function Persistence:createPersTable()
 
     --- config options
     _G._persTable.config = {
-        bgm = 100;
-        music = 100;
+        bgm = 50;
+        music = 50;
         language = "english";
         vibration = true;
     };
