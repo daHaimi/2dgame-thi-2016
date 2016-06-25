@@ -97,6 +97,9 @@ function UpgradeMenu:buyElement()
         self.elementsOnFrame.button_buy:setImage(self.imageButtonLocked);
         self:updateMoney();
         self:loadValuesFromPersTable();
+        if markedElement.nameOnPersTable == "mapBreakthrough1" then
+            _gui.levMan:getAchievmentManager():unlockAchievement("firstBorderRemoved");
+        end
         bought = true;
     else
         _gui:newTextNotification(self.directory .. "ach_shitcoin.png", 

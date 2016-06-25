@@ -172,7 +172,8 @@ function Chart:markElement(element)
     self.markPosition = {x, y};
     self.p_markedElement = element;
     if _G._gui:getCurrentState() == "Achievements" or _G._gui:getCurrentState() == "Shop" or 
-    (_G._gui:getCurrentState() == "Dictionary" and _G._persTable.fish.caught[element.name] > 0 ) then
+    (_G._gui:getCurrentState() == "Dictionary" and _G._persTable.fish.caught[element.name] > 0 ) or
+    (_G._gui:getCurrentState() == "Dictionary" and element.name == "nyan" and _G._persTable.fish.caught.rainbowPill > 0 ) then
         if element.price ~= nil then
             if element.name ~= nil then
                 
@@ -197,8 +198,14 @@ function Chart:markElement(element)
                 
             end
         else
-            self.textFieldName = _G.data.languages[_G._persTable.config.language].package[element.nameOnPersTable].name;
-            self.textFieldDescription = _G.data.languages[_G._persTable.config.language].package[element.nameOnPersTable].description;
+            if element.name == "nyan" then
+                self.textFieldName = _G.data.languages[_G._persTable.config.language].package[element.name].name;
+                self.textFieldDescription =  _G.data.languages[_G._persTable.config.language].package[element.name].description;
+                self.textFieldPrice =  "";
+            else
+                self.textFieldName = _G.data.languages[_G._persTable.config.language].package[element.nameOnPersTable].name;
+                self.textFieldDescription = _G.data.languages[_G._persTable.config.language].package[element.nameOnPersTable].description;
+            end
         end
     else
         self.textFieldName = "???";

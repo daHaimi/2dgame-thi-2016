@@ -114,6 +114,8 @@ _G.levelTestStub = function()
             onlyNegativeFishesCaught = function(...) end;
             checkNegativCoins = function(...) end;
             achBitch = function(...) end;
+            allPillsAtLeastOnce = function(...) end;
+            moneyTotal = function(...) end;
         } end;
     };
     _G._gui = {

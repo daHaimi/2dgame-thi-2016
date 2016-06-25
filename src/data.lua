@@ -1310,6 +1310,10 @@ return {
                     name = "Sleeping pill";
                     description = "Makes your haul drowsy";
                 };
+                nyan = {
+                    name = "NyanCat";
+                    description = "The internet is for p... Nyan Cats";
+                };
                 squirrel = {
                     name = "Squirrel";
                     description = "Give him a nut and he goes nuts!";
@@ -1566,7 +1570,7 @@ return {
                 --objects
                 nyan = {
                     name = "NyanCat";
-                    description = "The internet is for p... Nyan Cats";
+                    description = "Das Internet gibt es nur für P... Nyan Cats";
                 };
                 nemo = {
                     name = "Nemo";

@@ -23,6 +23,7 @@ local FishableObject = Class {
     spriteSize, hitbox, animTimeoutMin, animTimeoutMax, animType, fallSpeed, levMan)
         self.name = name;
         self.defaultImage = love.graphics.newImage("assets/" .. imageSrc);
+        self.image = self.defaultImage;
         self.nyanImage = love.graphics.newImage("assets/nyan.png");
         self.xPosition = math.random(spriteSize + 26, levMan:getCurLevel().winDim[1] - 58 - self.spriteSize);
         if fallSpeed > 0 then
@@ -160,10 +161,12 @@ function FishableObject:update(dt, speedMulitplicator, nyan)
     end
 
     self.nyan = nyan;
-    if not nyan then
-        self.image = self.defaultImage;
-    else
-        self.image = self.nyanImage;
+    if self.yPosition > - _G._persTable.winDim[2] and self.yPosition < _G._persTable.winDim[2] then
+        if not nyan then
+            self.image = self.defaultImage;
+        else
+            self.image = self.nyanImage;
+        end
     end
 
     if self.destroyed then

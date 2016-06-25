@@ -139,6 +139,7 @@ function Persistence:createPersTable()
         bronzeCaughtOneRound = false;
         silverCaughtOneRound = false;
         goldCaughtOneRound = false;
+        firstBorderRemoved = false;
         shoppingQueen = false;
         bronzeCoinsOneRound = false;
         silverCoinsOneRound = false;
@@ -147,6 +148,7 @@ function Persistence:createPersTable()
         bMoneyEarnedTotal = false;
         sMoneyEarnedTotal = false;
         gMoneyEarnedTotal = false;
+        creditsRed = false;
 --        onlyOne = false;
         onlyNegativeFishesCaught = false;
         allObjectsAtLeastOnce = false;

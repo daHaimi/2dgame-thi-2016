@@ -254,17 +254,20 @@ end
 function Bait:sleepingPillHit()
     self.levMan:getCurSwarmFactory():setSpeedMultiplicator(_G._persTable.upgrades.sleepingPillSlow);
     self.pillDuration[1] = _G._persTable.upgrades.pillDuration;
+    _G._persTable.fish.caught.sleepingPill = _G._persTable.fish.caught.sleepingPill + 1;
 end
 
 --- is called everytime the bait hits a coffee pill
 function Bait:coffeeHit()
     self.levMan:getCurSwarmFactory():setSpeedMultiplicator(_G._persTable.upgrades.coffeeSpeedup);
     self.pillDuration[2] = _G._persTable.upgrades.pillDuration;
+    _G._persTable.fish.caught.coffee = _G._persTable.fish.caught.coffee + 1;
 end
 
 function Bait:rainbowPillHit()
     self.levMan:getCurSwarmFactory():setImageToNyan();
     self.pillDuration[3] = _G._persTable.upgrades.rainbowPillDuration;
+    _G._persTable.fish.caught.rainbowPill = _G._persTable.fish.caught.rainbowPill + 1;
 end
 
 --- implements drawing interface

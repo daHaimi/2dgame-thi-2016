@@ -283,6 +283,10 @@ function Level:checkForAchievments()
     self.levMan:getAchievmentManager():onlyNegativeFishesCaught(self.levelFinished, self.levMan:getCurSwarmFactory());
 
     self.levMan:getAchievmentManager():checkNegativCoins(self.gotPayed, self.roundValue);
+    
+    self.levMan:getAchievmentManager():allPillsAtLeastOnce();
+    
+    self.levMan:getAchievmentManager():moneyTotal()
 
     self.levMan:getAchievmentManager():achBitch(); -- call this checkup always at the end
 end
@@ -808,6 +812,7 @@ end
 function Level:startEndAnimation()
     if self.levelFinished and not self.animationEnd and not self.failedStart then
         self.animationEnd = true;
+        _G._persTable.statistic.moneyEarnedTotal = _G._persTable.statistic.moneyEarnedTotal + self:calcFishedValue();
     end
     if self.levelFinished and self.failedStart then
         self.animationEnd = true;

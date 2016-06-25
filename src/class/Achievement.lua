@@ -207,7 +207,7 @@ end
 -- @param reachedDepth The maximal reached depth of one round.
 function Achievement:checkRageQuit(reachedDepth)
     if not _G._persTable.achievements.rageQuit and _G._persTable.phase == 2
-    and math.ceil(math.abs(reachedDepth / 300)) <= 2 then
+    and math.ceil(math.abs(reachedDepth / 300)) <= 5 then
         self:unlockAchievement("rageQuit");
     end
 end
@@ -247,6 +247,7 @@ function Achievement:unlockAchievement(achName)
         _gui:newNotification("assets/gui/icons/" .. _G.data.achievements[achName].image_unlock, achName);
         _G._persTable.achievements[achName] = true;
     end
+    _G._persistence:updateSaveFile();
 end
 
 --- Counts the elements in a table.

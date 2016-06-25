@@ -457,6 +457,13 @@ describe("Unit test for Bait.lua", function()
         local myInstance = testClass(locWinDim, levMan);
         myInstance.image = locImageStub;
         myInstance.pillDuration[1] = 0;
+        _G._persTable.fish = {
+            caught = {
+                sleepingPill = 0;
+                coffee = 0;
+                rainbowPill = 0;
+            };
+        };
         myInstance:sleepingPillHit();
 
         assert.are.same(600, myInstance.pillDuration[1]);
@@ -470,6 +477,13 @@ describe("Unit test for Bait.lua", function()
         local myInstance = testClass(locWinDim, levMan);
         myInstance.image = locImageStub;
         myInstance.pillDuration[3] = 0;
+        _G._persTable.fish = {
+            caught = {
+                sleepingPill = 0;
+                coffee = 0;
+                rainbowPill = 0;
+            };
+        };
         myInstance:rainbowPillHit();
 
         assert.are.same(600, myInstance.pillDuration[3]);
@@ -484,6 +498,13 @@ describe("Unit test for Bait.lua", function()
         local myInstance = testClass(locWinDim, levMan);
         myInstance.image = locImageStub;
         myInstance.pillDuration[2] = 0;
+        _G._persTable.fish = {
+            caught = {
+                sleepingPill = 0;
+                coffee = 0;
+                rainbowPill = 0;
+            };
+        };
         myInstance:coffeeHit();
 
         assert.are.same(600, myInstance.pillDuration[2]);
@@ -501,6 +522,13 @@ describe("Unit test for Bait.lua", function()
         local myInstance = testClass(locWinDim, levMan);
         myInstance.image = locImageStub;
         local fishable = { getName = function() return "rainbowPill" end };
+        _G._persTable.fish = {
+            caught = {
+                sleepingPill = 0;
+                coffee = 0;
+                rainbowPill = 0;
+            };
+        };
         myInstance:collisionDetected(fishable, 1);
         assert.are.same(0, myInstance.numberOfHits);
     end)
@@ -517,6 +545,13 @@ describe("Unit test for Bait.lua", function()
         };
         _G._persTable.upgrades.moreLife = 1;
         _G._persTable.upgrades.oneMoreLife = true;
+        _G._persTable.fish = {
+            caught = {
+                sleepingPill = 0;
+                coffee = 0;
+                rainbowPill = 0;
+            };
+        };
         myInstance:collisionDetected(fishable, 1);
         assert.are.same(1, myInstance.numberOfHits);
     end)
