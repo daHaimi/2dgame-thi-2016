@@ -386,6 +386,7 @@ function Level:doStartAnimationMovement(bait, dt)
                     if self.hamsterLockedXPos > 120 and self.hamsterLockedXPos < 300 then
                         self.animationStartFinished = true;
                         TEsound.stop("pullTag");
+                        TEsound.play("assets/sound/hamsterDrop.wav", _, _G._persTable.config.bgm / 100);
                     else
                         self.levelFinished = true;
                         if not self.hamsterHarmedPlayed then
@@ -855,6 +856,16 @@ function Level:isLoaded()
     else
         return false;
     end
+end
+
+--- Called when the game is being paused
+function Level:onPause()
+    TEsound.pause("pullTag");
+end
+
+--- Called when the game is being resumed
+function Level:onResume()
+    TEsound.resume("pullTag");
 end
 
 --- Returns the reached depth before phase 2 was activated.

@@ -252,6 +252,7 @@ function love.mousepressed(x, y, button)
     
     -- pause game when when mouse is pressed (right button)
     if love.mouse.isDown(2) and _gui:drawGame() and levMan:getCurLevel():isLoaded() then
+        levMan:getCurLevel():onPause();
         _gui:changeFrame(_gui:getFrames().pause);
     end
     

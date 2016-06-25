@@ -69,7 +69,9 @@ describe("Unit test for Pause.lua", function()
             getLevelManager = function(...) return {
                 freeManagedObjects = function(...) end;
                 replayLevel = function (...) end;
-                
+                getCurLevel = function(...) return {
+                    onResume = function(...) end;
+                } end;
             } end;
         };
         stub(locInstance, "checkAchRageQuit");

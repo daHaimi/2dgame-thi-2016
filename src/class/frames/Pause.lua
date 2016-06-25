@@ -35,6 +35,7 @@ function Pause:create()
     --onclick events for all buttons
     self.elementsOnFrame.button_backToGame.gotClicked = function(_)
         TEsound.play({ "assets/sound/buttonPressed.wav" }, 'bgm');
+        _gui:getLevelManager():getCurLevel():onResume();
         _gui:changeFrame(_gui:getFrames().inGame);
     end
 

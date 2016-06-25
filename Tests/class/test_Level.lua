@@ -6,6 +6,8 @@ _G.levelTestStub = function()
         playLooping = function(...) end;
         play = function(...) end;
         stop = function(...) end;
+        pause = function(...) end;
+        resume = function(...) end;
     };
 
     _G._persTable = {
@@ -566,6 +568,18 @@ describe("Test unit test suite", function()
         assert.are.same(locInstance:isLoaded(), true);
         locInstance.gameLoaded = nil;
         assert.are.same(locInstance:isLoaded(), false);
+    end)
+
+    it("Testing onPause", function()
+        local sOnPause = spy.on(locInstance, "onPause");
+        locInstance:onPause();
+        assert.spy(sOnPause).was.called();
+    end)
+
+    it("Testing onResume", function()
+        local sOnResume = spy.on(locInstance, "onResume");
+        locInstance:onResume();
+        assert.spy(sOnResume).was.called();
     end)
 
     it("Testing doAnimation failed start 1", function()
