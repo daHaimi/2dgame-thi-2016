@@ -320,7 +320,7 @@ function Level:doEndAnimationMovement(bait, dt)
             end
         else
             if not self.hamsterPullPlayed then
-                TEsound.play("assets/sound/pullHamster.wav", "pullTag", 0.5);
+                TEsound.play("assets/sound/pullHamster.wav", "pullTag", _G._persTable.config.bgm / 200);
                 self.hamsterPullPlayed = true;
             end
             if self.winDim[2] / 2 - 300 < self.hamsterYPos then
@@ -341,7 +341,7 @@ function Level:doStartAnimationMovement(bait, dt)
         if self.p_levelName == "sewers" or self.p_levelName == "sewersEndless" or
                 self.p_levelName == "sleepingCrocos" then
             if not self.hamsterPullPlayed then
-                TEsound.play("assets/sound/pullHamster.wav", {"pullTag"}, 0.5);
+                TEsound.play("assets/sound/pullHamster.wav", "pullTag", _G._persTable.config.bgm / 200);
                 self.hamsterPullPlayed = true;
             end
             -- hamster dropped on frame of toilet
@@ -383,7 +383,7 @@ function Level:doStartAnimationMovement(bait, dt)
         else
             --canyon
             if not self.hamsterPullPlayed then
-                TEsound.play("assets/sound/pullHamster.wav", {"pullTag"}, 0.5);
+                TEsound.play("assets/sound/pullHamster.wav", "pullTag", _G._persTable.config.bgm / 200);
                 self.hamsterPullPlayed = true;
             end
             if self.hamsterYPos < self.winDim[2] * 0.55 then
