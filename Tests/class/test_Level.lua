@@ -19,6 +19,9 @@ _G.levelTestStub = function()
         achievements = {};
         playedTime = 0;
         phase = 1;
+        config = {
+            bgm = 50;
+        };
     };
 
     _G.Animate.init = function(...) end;
