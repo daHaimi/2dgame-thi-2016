@@ -3,6 +3,9 @@ _G.math.inf = 1 / 0
 
 _G.testLevelManagerStub = function(...)
     _achievements = {};
+    _G._musicManager = {
+        update = function(...) end;
+    };
     _G.love = {
         graphics = {
             newImage = function(...) end;
