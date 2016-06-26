@@ -33,7 +33,7 @@ return {
         nyan = {
             name = "nyan";
             image = "nyan.png";
-            sortNumber = 13;
+            sortNumber = 21;
         };
         turtle = {
             name = "turtle";
@@ -437,7 +437,7 @@ return {
         drink = {
             name = "drink";
             image = "drink.png";
-            sortNumber = 12;
+            sortNumber = 22;
             spriteSize = 64;
             minSpeed = 0;
             maxSpeed = 0;
