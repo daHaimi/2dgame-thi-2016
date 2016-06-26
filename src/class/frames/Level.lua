@@ -61,7 +61,13 @@ function Level:create()
    
     self.elementsOnFrame.buttonCanyon.gotClicked = function(_)
          if _G._persTable.unlockedLevel == 1 then
-            _gui:newNotification(self.directory .. "ach_nothingCaught.png", "Not unlocked yet!");
+            local canyonUnlockMess = "";
+            if(_G._persTable.config.language == "english") then
+                canyonUnlockMess = "Not unlocked yet!";
+            elseif (_G._persTable.config.language == "german") then
+                canyonUnlockMess = "Nicht entdeckt!";
+            end
+            _gui:newTextNotification("assets/gui/icons/" .. "ach_nothingCaught.png", canyonUnlockMess);
         else
             _gui:getLevelManager():newLevel(_gui:getLevelManager():getLevelPropMapByName("canyon"), _G.data);
             _gui:changeFrame(_gui:getFrames().inGame);
@@ -94,7 +100,7 @@ end
 
 --- call to unlock the second level
 function Level:unlockCanyon()
-    _G._persTable.unlockLevel = 2;
+    _G._persTable.unlockedLevel = 2;
     self.elementsOnFrame.buttonCanyon:setImage(self.imageCanyonUnlocked);
 end
 

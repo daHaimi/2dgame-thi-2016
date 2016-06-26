@@ -396,12 +396,32 @@ describe("Test unit test suite", function()
     end)
 
     it("Testing switchToPhase2", function()
+        local unlockedCanyon = false;
+        _G._gui = {
+            newTextNotification = function(...) end;
+            getFrames = function(...)return {
+                level = {
+                    unlockCanyon = function(...) _G._persTable.unlockedLevel = 2 end;
+                };
+            } end;
+        };
+        _G._persTable.unlockedLevel = 1;
+        _G._persTable.config.language = "english";
+        _G._persistence = {
+            updateSaveFile = function(...) end;
+        };
+        locInstance.posY = -7001;
+        stub(_G._gui, "newTextNotification");
+        
         locInstance:switchToPhase2();
         assert.are.same(-1, locInstance:getDirection());
+        assert.are.same(2, _G._persTable.unlockedLevel);
+        assert.stub(_G._gui.newTextNotification).was.called(1);
     end)
 
     it("Testing Update", function()
         stub(locInstance, "checkForAchievments");
+        _G._persTable.unlockedLevel = 2;
         local dt = 4;
         local bait = {
             update = function(...) end;

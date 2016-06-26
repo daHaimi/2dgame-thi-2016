@@ -29,8 +29,10 @@ local Level = Class {
 
         if mode == "endless" then
             self.lowerBoarder = -_G.math.inf;
+            self.defaultBorder = -7000;
         else
             self.lowerBoarder = -7000; -- if you want deeper you should decrease this value!
+            self.defaultBorder = self.lowerBoarder;
         end
         self.upperBoarder = 1000; -- if you want higher you should increase this value!
         self.mapBreakthroughBonus1 = -1000;
@@ -431,6 +433,21 @@ function Level:switchToPhase2()
                 self.p_levelName == "sleepingCrocos" then
             self.hamsterLockedXPos = 208;
             self.pumpingWay = 100;
+        end
+        
+        -- for unlocking the canyon
+        if _G._persTable.unlockedLevel <= 1 and math.abs(self.posY) >= math.abs(self.defaultBorder) then
+            
+            local canyonUnlockMess = "";
+            _gui:getFrames().level:unlockCanyon();
+            if(_G._persTable.config.language == "english") then
+                canyonUnlockMess = "Canyon unlocked!";
+            elseif (_G._persTable.config.language == "german") then
+                canyonUnlockMess = "Canyon entdeckt!";
+            end
+
+            _gui:newTextNotification("assets/gui/icons/" .. "dic_backpack.png", canyonUnlockMess);
+            _G._persistence:updateSaveFile();
         end
     end
 end
