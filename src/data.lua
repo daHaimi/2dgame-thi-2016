@@ -33,7 +33,7 @@ return {
         nyan = {
             name = "nyan";
             image = "nyan.png";
-            sortNumber = 13;
+            sortNumber = 21;
         };
         turtle = {
             name = "turtle";
@@ -437,7 +437,7 @@ return {
         drink = {
             name = "drink";
             image = "drink.png";
-            sortNumber = 12;
+            sortNumber = 22;
             spriteSize = 64;
             minSpeed = 0;
             maxSpeed = 0;
@@ -1113,8 +1113,8 @@ return {
                 buttonBack = "Back";
                 textDepth = "Depth: ";
                 buttonReset = "Reset Game";
-                textMusic = "In Game Music:";
-                textBGM = "Background Music:";
+                textMusic = "Music:";
+                textBGM = "Soundeffects:";
                 buttonRestart = "Restart";
                 buttonBTG = "Continue";
                 buttonBTM = "Back to menu";
@@ -1426,7 +1426,7 @@ return {
                 textDepth = "Tiefe: ";
                 buttonReset = "Werkseinstellung";
                 textMusic = "Musik im Spiel:";
-                textBGM = "Hintergrund Musik:";
+                textBGM = "Musikeffekte:";
                 buttonRestart = "Neustarten";
                 buttonBTG = "Zurück zum Spiel";
                 buttonBTM = "Zurück zum Menü";

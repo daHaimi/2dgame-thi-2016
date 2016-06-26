@@ -76,7 +76,7 @@ function LevelManager:newLevel(levelPropMap, swarmFactoryData)
     self.curPlayer = Bait(_G._persTable.winDim, self);
     self.curPlayer:checkUpgrades();
     self.curSwarmFac = SwarmFactory(swarmFactoryData, self);
-
+    _musicManager:update(levelPropMap.levelName);
     return self.curLevel;
 end
 
@@ -106,6 +106,7 @@ function LevelManager:freeManagedObjects()
     end
 
     collectgarbage("collect");
+    _musicManager:update("menu");
 end
 
 --- Get the the current level object.

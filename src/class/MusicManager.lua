@@ -29,24 +29,29 @@ local MusicManager = Class {
 }
 
 function MusicManager:update(level)
-    if _gui:drawGame() then
-        --ingame
+    
+    if level ~= self.level then
+        TEsound.stop("music");
+        print("update mit " .. tostring(level))
         self.level = level ;
-        if level == "sewer" then
-            print"a"
-            TEsound.playLooping(self.listSewer, "bgm");
+        if level == "sewers" or level == "sewersEndless" then
+            print"sewer"
+            TEsound.playLooping(self.listSewer, "music");
         elseif level == "squirrel" then
-            TEsound.playLooping(self.listSquirrel, "bgm");
+            print"squirrel"
+            TEsound.playLooping(self.listSquirrel, "music");
         elseif level == "crocodile" then
-            TEsound.playLooping(self.listCrocodile, "bgm");
-        elseif level == "canyon" then
-            TEsound.playLooping(self.listCanyon, "bgm");
+            print"crocodile"
+            TEsound.playLooping(self.listCrocodile, "music");
+        elseif level == "canyon" or level == "canyonEndless" then
+            print"canyon"
+            TEsound.playLooping(self.listCanyon, "music");
+        else
+            print"menu"
+            TEsound.playLooping(self.listMenu, "music");
         end
-    else
-        --menu
-        TEsound.playLooping(self.listMenu, "bgm");
+        TEsound.volume('music', _G._persTable.config.music / 100)
     end
-    TEsound.volume('bgm', _G._persTable.config.bgm / 100);
 end
 
 return MusicManager;
