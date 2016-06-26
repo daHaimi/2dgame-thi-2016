@@ -537,6 +537,9 @@ describe("Unit test for Bait.lua", function()
     end)
 
     it("Test collisionDetected with a fishable and an extra life", function()
+        _G.love.system = {
+                vibrate = function(...) end;
+        };
         local myInstance = testClass(locWinDim, levMan);
         myInstance.image = locImageStub;
         local fishable = { getName = function() return "deadFish"; end; };
@@ -560,6 +563,9 @@ describe("Unit test for Bait.lua", function()
     end)
 
     it("Test collisionDetected with a fishable and no extra life", function()
+        _G.love.system = {
+            vibrate = function(...) end;
+        };
         local myInstance = testClass(locWinDim, levMan);
         myInstance.image = locImageStub;
         local fishable = { getName = function() return "deadFish"; end; };
