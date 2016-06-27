@@ -35,6 +35,7 @@ function MusicManager:deactivateNyanCat()
 end
 
 function MusicManager:update(level)
+    self:deactivateNyanCat();
     if level ~= self.level then
         TEsound.stop("music");
         self.level = level;
