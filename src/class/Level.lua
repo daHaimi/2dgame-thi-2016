@@ -275,7 +275,7 @@ function Level:checkForAchievments()
 
     self.levMan:getAchievmentManager():checkNothingCaught(self.levelFinished, self.failedStart);
 
-    self.levMan:getAchievmentManager():checkAllBordersPassed(self.levelFinished, self.reachedDepth, self.lowerBoarder);
+    self.levMan:getAchievmentManager():checkAllBordersPassed(self.levelFinished, self.reachedDepth, self.depth.advanced);
 
     self.levMan:getAchievmentManager():checkFirstObject(self.levelFinished);
 
