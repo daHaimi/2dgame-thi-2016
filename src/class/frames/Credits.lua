@@ -36,6 +36,7 @@ local Credits = Class {
         "LÖVE 2D",
         "table_serializer, Mathias Haimerl",
         "TEsound, Ensayia and Taehl",
+        "music, ericskiff.com"
     };
 };
 
