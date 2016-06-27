@@ -120,4 +120,18 @@ describe("Unit test for Notification.lua", function()
         assert.are.equal(locInstance.time, 0);
         assert.are.equal(locInstance.state, 1);
     end)
+
+    it("Testing draw", function()
+        locInstance.notificationBuffer = {{},{}};
+        _G.love = {}
+        _G.love.graphics = {}
+        _G.love.graphics.draw = function () end;
+        _G.love.graphics.newFont = function () end;
+        _G.love.graphics.setFont = function () end;
+        _G.love.graphics.printf = function () end;
+        _G.love.graphics.scale = function () end;
+        loveMock = mock(love.graphics, true);
+        locInstance:draw();
+        assert.spy(loveMock.draw).was_called(2); 
+    end)
 end)
