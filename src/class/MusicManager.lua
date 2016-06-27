@@ -16,7 +16,7 @@ local MusicManager = Class {
             "assets/music/Underclocked.mp3"
         };
         self.listSquirrel = {
-            "assets/music/Jumpshot",
+            "assets/music/Jumpshot.mp3",
             "assets/music/ANightOfDizzySpells.mp3"
         };
         self.level = "";
@@ -29,9 +29,9 @@ function MusicManager:update(level)
         self.level = level;
         if level == "sewers" or level == "sewersEndless" then
             TEsound.playLooping(self.listSewer, "music");
-        elseif level == "squirrel" then
+        elseif level == "crazySquirrels" then
             TEsound.playLooping(self.listSquirrel, "music");
-        elseif level == "crocodile" then
+        elseif level == "sleepingCrocos" then
             TEsound.playLooping(self.listCrocodile, "music");
         elseif level == "canyon" or level == "canyonEndless" then
             TEsound.playLooping(self.listCanyon, "music");
