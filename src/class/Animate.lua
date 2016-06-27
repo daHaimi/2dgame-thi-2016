@@ -26,7 +26,7 @@ local Animate = Class {
         };
         self.p_quads = {};
         for i = self.p_numStart, self.p_numEnd, 1 do
-            local calcWidth = self.p_measures[1] * (i - 1);
+            local calcWidth = (self.p_measures[1]) * (i - 1) + 1;
             local offsetLeft = calcWidth % self.p_image:getWidth();
             local offsetTop = math.floor(calcWidth / self.p_image:getWidth());
             self.p_quads[i] = love.graphics.newQuad(offsetLeft, offsetTop, self.p_measures[1], self.p_measures[2], self.p_image:getDimensions());
