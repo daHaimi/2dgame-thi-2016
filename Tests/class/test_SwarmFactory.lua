@@ -52,6 +52,9 @@ _G.swarmFactoryStub = function(...)
 
     _G._persTable = {
         winDim = { 500; 500 };
+        config = {
+            bgm = 50;
+        };
         moved = 0;
         enabled = {
             ring = true;
@@ -72,6 +75,10 @@ _G.swarmFactoryStub = function(...)
         getCurSwarmFactory = function(...) return _G.levMan.curSwarmFac end;
         getCurPlayer = function(...) return _G.levMan.curPlayer end;
         getCurLevel = function(...) return _G.levMan.curLevel end;
+    };
+    
+    _G.TEsound = {
+        play = function(...) end;
     };
 end;
 
