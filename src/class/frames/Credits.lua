@@ -138,24 +138,24 @@ function Credits:draw()
     -- print the text
     love.graphics.setFont(love.graphics.newFont("font/8bitOperatorPlus-Regular.ttf", 16));
     love.graphics.printf(strings[1],(_G._persTable.winDim[1] - self.background:getWidth())/2 + 30,
-        (_G._persTable.winDim[2] - self.background:getHeight())/2  + 40 + y, self.background:getWidth() - 60, "left");
+        (_G._persTable.winDim[2] - self.background:getHeight())/2  + 25 + y, self.background:getWidth() - 60, "left");
     love.graphics.printf(strings[2],(_G._persTable.winDim[1] - self.background:getWidth())/2 + 30,
-        (_G._persTable.winDim[2] - self.background:getHeight())/2  + 300 + y, self.background:getWidth() - 60, "left");
+        (_G._persTable.winDim[2] - self.background:getHeight())/2  + 275 + y, self.background:getWidth() - 60, "left");
     love.graphics.printf(strings[3],(_G._persTable.winDim[1] - self.background:getWidth())/2 + 30,
-        (_G._persTable.winDim[2] - self.background:getHeight())/2  + 450 + y, self.background:getWidth() - 60, "left");
+        (_G._persTable.winDim[2] - self.background:getHeight())/2  + 400 + y, self.background:getWidth() - 60, "left");
     
     -- print titles
     love.graphics.setColor(0, 0, 0);
     love.graphics.setFont(love.graphics.newFont("font/8bitOperatorPlus-Bold.ttf", 20));
     love.graphics.printf(_G.data.languages[_G._persTable.config.language].package.credits.staff, 
         (_G._persTable.winDim[1] - self.background:getWidth())/2 + 30,
-        (_G._persTable.winDim[2] - self.background:getHeight())/2  + 10 + y, self.background:getWidth() - 60, "left");
+        (_G._persTable.winDim[2] - self.background:getHeight())/2  + 0 + y, self.background:getWidth() - 60, "left");
     love.graphics.printf(_G.data.languages[_G._persTable.config.language].package.credits.libs, 
         (_G._persTable.winDim[1] - self.background:getWidth())/2 + 30,
-        (_G._persTable.winDim[2] - self.background:getHeight())/2  + 270 + y, self.background:getWidth() - 60, "left");
+        (_G._persTable.winDim[2] - self.background:getHeight())/2  + 250 + y, self.background:getWidth() - 60, "left");
     love.graphics.printf(_G.data.languages[_G._persTable.config.language].package.credits.music, 
         (_G._persTable.winDim[1] - self.background:getWidth())/2 + 30,
-        (_G._persTable.winDim[2] - self.background:getHeight())/2  + 420 + y, self.background:getWidth() - 60, "left");
+        (_G._persTable.winDim[2] - self.background:getHeight())/2  + 380 + y, self.background:getWidth() - 60, "left");
     
     -- print no hamster were harmed
     if self.colorRed then
@@ -163,7 +163,7 @@ function Credits:draw()
     end
     love.graphics.setFont(love.graphics.newFont("font/8bitOperatorPlus-Bold.ttf", 22));
     love.graphics.printf(strings[4], (_G._persTable.winDim[1] - self.background:getWidth())/2,
-        (_G._persTable.winDim[2] - self.background:getHeight())/2  + 530 + y, self.background:getWidth(), "center");
+        (_G._persTable.winDim[2] - self.background:getHeight())/2  + 480 + y, self.background:getWidth(), "center");
     
     love.graphics.setColor(255, 255, 255);
 end
