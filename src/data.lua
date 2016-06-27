@@ -1137,6 +1137,7 @@ return {
                     staff = "Staff:";
                     trans = "Translation:";
                     libs = "Libs:";
+                    music = "Music:";
                     noHWH = "No hamsters were harmed!";
                 };
                 --achievements
@@ -1448,6 +1449,7 @@ return {
                     staff = "Mitwirkende:";
                     trans = "Übersetzung:";
                     libs = "Bibliotheken:";
+                    music = "Musik:";
                     noHWH = "Es kamen keine Hamster zu Schaden.";
                 };
                 --achievements
