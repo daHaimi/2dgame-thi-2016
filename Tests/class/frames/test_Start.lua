@@ -13,13 +13,22 @@ describe("Unit test for Start.lua", function()
                 return fakeElement(typeName);
             end
         }
-        _G._persTable = {
-            scaledDeviceDim = {500, 500};
-        };
         _G.love = {
             graphics = {
-                newFont = function(...) end;
-            }
+                newImage = function(...) return {
+                    getHeight = function (...) return 50 end;
+                    getWidth = function (...) return 50 end;
+                } end;
+                draw = function (...) end;
+                getFont = function (...) return "a Font" end;
+                newFont = function (...) end;
+                setFont = function (...) end;
+                printf = function (...) end;
+                setColor = function (...) end;
+            },
+            system = {
+                getOS = function(...) return "Android"; end;
+            };
         }
         _G.data = {
             languages= {
@@ -31,7 +40,7 @@ describe("Unit test for Start.lua", function()
             }
         }
         _G._persTable = {
-            scaledDeviceDim = {480, 800},
+            winDim = {480, 800},
             config = {
                 language = "english";
             }
@@ -43,96 +52,49 @@ describe("Unit test for Start.lua", function()
 
     it("Testing Constructor", function()
         local myInstance = testClass();
-        assert.are.same(locInstance, myInstance);
-    end)
-
-    it("Testing Constructor", function()
-        _G._persTable = {
-            scaledDeviceDim = {640, 950};
-            config = {
-                language = "english";
-            }
-        };
-        locInstance = testClass();
-        local myInstance = testClass();
-        assert.are.same(locInstance, myInstance);
-    end)
-
-    it("Testing Constructor", function()
-        _G._persTable = {
-            scaledDeviceDim = {720, 1024};
-            config = {
-                language = "english";
-            }
-        };
-        locInstance = testClass();
-        local myInstance = testClass();
-        assert.are.same(locInstance, myInstance);
-    end)
-
-    it("testing create function", function()
-        assert.are.equal(locInstance.elementsOnFrame.title.type, "image");
-        assert.are.equal(locInstance.elementsOnFrame.title.imagepath, "assets/gui/title.png");
         
-        assert.are.equal(locInstance.elementsOnFrame.hamster.type, "image");
-        assert.are.equal(locInstance.elementsOnFrame.hamster.imagepath, "assets/gui/hamster.png");
+        myInstance.hamster = "hamster";
+        myInstance.title = "title";
         
-        assert.are.equal(locInstance.elementsOnFrame.text.type, "text");
+        locInstance.hamster = "hamster";
+        locInstance.title = "title";
+        
+        assert.are.same(locInstance, myInstance);
     end)
 
-    it("testing blink function", function()
-        locInstance.elementsOnFrame.text.visible = true;
+    it("testing update function", function()
         locInstance.blinkTimer = 2;
-        locInstance:blink();
+        locInstance:update();
         assert.are.equal(locInstance.blinkTimer, 1);
-        assert.are.equal(locInstance.elementsOnFrame.text.visible, true);
-        locInstance:blink();
-        assert.are.equal(locInstance.blinkTimer, 50);
-        assert.are.equal(locInstance.elementsOnFrame.text.visible, false);
+        locInstance:update();
+        assert.are.equal(locInstance.blinkTimer, 25);
     end)
 
     it("testing draw function", function()
+        local loveMock = mock(_G.love, true);
         locInstance:draw();
-        for k, v in pairs(locInstance.elementsOnFrame) do
-            assert.are.equal(v.visible, true);
-        end
+        assert.spy(loveMock.graphics.draw).was.called(2);
     end)
 
     it("testing clear function", function()
         locInstance:clear();
-        for k, v in pairs(locInstance.elementsOnFrame) do
-            assert.are.equal(v.visible, false);
-        end
+        assert.are.same(locInstance.offset, _G._persTable.winDim[1]);
     end)
 
     it("testing appear function", function()
-        locInstance.x = 50;
-        locInstance.y = 60;
         locInstance.offset = 5;
         locInstance.speed = 1;
         
         locInstance:appear();
-        
-        assert.are.equal(locInstance.elementsOnFrame.title.x, 45);
-        assert.are.equal(locInstance.elementsOnFrame.title.y, 60);
-        assert.are.equal(locInstance.elementsOnFrame.hamster.x, 343);
-        assert.are.equal(locInstance.elementsOnFrame.hamster.y, -20);
-        assert.are.equal(locInstance.offset, 4);
+        assert.are.equal(locInstance.offset, 4.5);
     end)
 
     it("testing disappear function", function()
-        locInstance.x = 50;
-        locInstance.y = 60;
         locInstance.offset = 5;
         locInstance.speed = 1;
         
         locInstance:disappear();
-        
-        assert.are.equal(locInstance.elementsOnFrame.title.x, 55);
-        assert.are.equal(locInstance.elementsOnFrame.title.y, 60);
-        assert.are.equal(locInstance.elementsOnFrame.hamster.x, 285);
-        assert.are.equal(locInstance.elementsOnFrame.hamster.y, -20);
-        assert.are.equal(locInstance.offset, 4);
+        assert.are.equal(locInstance.offset, 6);
     end)
 
     it("testing disappear function", function()

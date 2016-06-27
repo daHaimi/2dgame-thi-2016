@@ -1,35 +1,24 @@
 Class = require "lib.hump.class";
+ImageButton = require "class.ImageButton";
 
 local Level = Class {
     init = function(self)
-        if _G._persTable.scaledDeviceDim[1] < 640 then
-            self.directory = "assets/gui/480px/";
-            self.widthPx = 480;
-            self.width = 384;
-            self.height = 666;
-            self.buttonHeight = 75;
-            self.buttonOffset = 15;
-            self.speed = 50;
-        elseif _G._persTable.scaledDeviceDim[1] < 720 then
-            self.widthPx = 640;
-            self.directory = "assets/gui/640px/";
-            self.width = 512;
-            self.height = 888;
-            self.buttonOffset = 20;
-            self.buttonHeight = 96;
-            self.speed = 60;
-        else
-            self.widthPx = 720;
-            self.directory = "assets/gui/720px/";
-            self.width = 576;
-            self.height = 1024;
-            self.buttonOffset = 30;
-            self.buttonHeight = 106;
-            self.speed = 75;
-        end
+        self.background = love.graphics.newImage("assets/gui/LevelBG.png");
+        self.backgroundPosition = {(_G._persTable.winDim[1] - self.background:getWidth()) / 2,
+            (_G._persTable.winDim[2] - self.background:getHeight()) / 2};
+        self.imageButton = love.graphics.newImage("assets/gui/Button.png");
+        self.imageHouse = love.graphics.newImage("assets/gui/HouseButton.png");
+        self.imageCanyonUnlocked = love.graphics.newImage("assets/gui/CanyonButton.png");
+        self.imageCanyonLocked = love.graphics.newImage("assets/gui/CanyonButton_locked.png");
+        self.imageSquirrel = love.graphics.newImage("assets/squirrel.png");
+        self.imageCrocodile = love.graphics.newImage("assets/crocodile.png");
+        self.buttonHeight = self.imageButton:getHeight();
+        self.buttonWidth = self.imageButton:getWidth();
+        self.buttonXPosition = (_G._persTable.winDim[1] - self.buttonWidth) / 2;
+        self.offset = 30;
+        self.buttonDistance = 10;
         self.name = "Level";
-        self.frame = Frame((_G._persTable.scaledDeviceDim[1] - self.width) / 2, 
-            (_G._persTable.scaledDeviceDim[2] - self.height) / 2 - self.speed, "down", "down", self.speed, 0, -1500);
+        self.frame = Frame(0, 0, "down", "down", 50, 0, -1500);
         self:create();
     end;
 };
@@ -38,104 +27,125 @@ local Level = Class {
 function Level:create()
     --add, create and position all elements on this frame
     self.elementsOnFrame = {
-        background = {
-            object = Loveframes.Create("image");
-            x = 0;
-            y = 0;
-        },
-        buttonHouse = {
-            object = Loveframes.Create("imagebutton");
-            x = 0.05 * self.width;
-            y = self.buttonOffset;
-        },
-        buttonCanyon = {
-            object = Loveframes.Create("imagebutton");
-            x = 0.25 * self.width;
-            y = self.height - 3.5 * self.buttonHeight;
-        },
-        buttonBack = {
-            object = Loveframes.Create("imagebutton");
-            x = 0.25 * self.width;
-            y = self.height - self.buttonHeight;
-        }
+        buttonHouse = ImageButton(self.imageHouse, self.backgroundPosition[1] + 50,
+            self.backgroundPosition[2] + self.offset, true);
+        buttonCanyon = ImageButton(self.imageCanyon, self.backgroundPosition[1] + 70,
+            self.backgroundPosition[2] + 425, true);
+        button_back = ImageButton(self.imageButton, self.backgroundPosition[1] + 100,
+            self.backgroundPosition[2] + 590, true);
+        buttonSquirrel = ImageButton(self.imageSquirrel, self.backgroundPosition[1] + 180,
+            self.backgroundPosition[2] + 200, true);
+        buttonCrocodile = ImageButton(self.imageCrocodile, self.backgroundPosition[1] + 230,
+            self.backgroundPosition[2] + 370, true);
     };
-    
+
     --adjust all elements on this frame
-    self.elementsOnFrame.background.object:SetImage(self.directory .. "LevelBG.png");
-    
-    self.elementsOnFrame.buttonHouse.object:SetImage(self.directory .. "HouseButton.png");
-    self.elementsOnFrame.buttonHouse.object:SizeToImage();
-    self.elementsOnFrame.buttonHouse.object:SetText("");
-    
+    self.elementsOnFrame.buttonHouse:setText("");
+    self.elementsOnFrame.buttonCanyon:setText("");
+    self.elementsOnFrame.buttonSquirrel:setText("");
+    self.elementsOnFrame.buttonCrocodile:setText("");
+
     if _G._persTable.unlockedLevel == 1 then
-        self.elementsOnFrame.buttonCanyon.object:SetImage(self.directory .. "CanyonButton_locked.png");
+        self.elementsOnFrame.buttonCanyon:setImage(self.imageCanyonLocked);
     else
-        self.elementsOnFrame.buttonCanyon.object:SetImage(self.directory .. "CanyonButton.png");
+        self.elementsOnFrame.buttonCanyon:setImage(self.imageCanyonUnlocked);
     end
-    self.elementsOnFrame.buttonCanyon.object:SizeToImage();
-    self.elementsOnFrame.buttonCanyon.object:SetText("");
-    
-    self.elementsOnFrame.buttonBack.object:SetImage(self.directory .. "Button.png");
-    self.elementsOnFrame.buttonBack.object:SizeToImage();
-    self.elementsOnFrame.buttonBack.object:SetText("Back");
     
     --onclick events for all buttons
-    self.elementsOnFrame.buttonHouse.object.OnClick = function(object)
+    self.elementsOnFrame.buttonHouse.gotClicked = function(_)
+        TEsound.play({ "assets/sound/buttonPressed.wav" }, 'bgm');
         _gui:getLevelManager():newLevel(_gui:getLevelManager():getLevelPropMapByName("sewers"), _G.data);
         _gui:changeFrame(_gui:getFrames().inGame);
     end
-    
-    if _G._persTable.unlockedLevel == 1 then
-        self.elementsOnFrame.buttonCanyon.object.OnClick = function(object)
-            _gui:newNotification(self.directory .. "ach_nothingCaught.png", "Not unlocked yet!");
-        end
-    else
-        self.elementsOnFrame.buttonCanyon.object.OnClick = function(object)
+
+   
+    self.elementsOnFrame.buttonCanyon.gotClicked = function(_)
+         if _G._persTable.unlockedLevel == 1 then
+            local canyonUnlockMess = "";
+            if(_G._persTable.config.language == "english") then
+                canyonUnlockMess = "Not unlocked yet!";
+            elseif (_G._persTable.config.language == "german") then
+                canyonUnlockMess = "Nicht entdeckt!";
+            end
+            _gui:newTextNotification("assets/gui/icons/" .. "ach_nothingCaught.png", canyonUnlockMess);
+        else
             _gui:getLevelManager():newLevel(_gui:getLevelManager():getLevelPropMapByName("canyon"), _G.data);
             _gui:changeFrame(_gui:getFrames().inGame);
         end
     end
-    
-    self.elementsOnFrame.buttonBack.object.OnClick = function(object)
+
+    self.elementsOnFrame.button_back.gotClicked = function(_)
+        TEsound.play({ "assets/sound/buttonPressed.wav" }, 'bgm');
         _gui:changeFrame(_gui:getFrames().mainMenu);
+    end
+    
+    self.elementsOnFrame.buttonSquirrel.gotClicked = function(_)
+        TEsound.play({ "assets/sound/buttonPressed.wav" }, 'bgm');
+        _gui:getLevelManager():newLevel(_gui:getLevelManager():getLevelPropMapByName("crazySquirrels"), _G.data);
+        _gui:changeFrame(_gui:getFrames().inGame);
+    end
+    
+    self.elementsOnFrame.buttonCrocodile.gotClicked = function(_)
+        TEsound.play({ "assets/sound/buttonPressed.wav" }, 'bgm');
+        _gui:getLevelManager():newLevel(_gui:getLevelManager():getLevelPropMapByName("sleepingCrocos"), _G.data);
+        _gui:changeFrame(_gui:getFrames().inGame);
     end
 end
 
----changes the language of this frame
+--- changes the language of this frame
+--@param language language of the buttons
 function Level:setLanguage(language)
-    self.elementsOnFrame.buttonBack.object:SetText(_G.data.languages[language].package.buttonBack);
+    self.elementsOnFrame.button_back:setText(_G.data.languages[language].package.buttonBack);
 end
 
----call to unlock the second level
+--- call to unlock the second level
 function Level:unlockCanyon()
-    _G._persTable.unlockLevel = 2;
-    self.elementsOnFrame.buttonCanyon.object:SetImage(self.directory .. "CanyonButton.png");
+    _G._persTable.unlockedLevel = 2;
+    self.elementsOnFrame.buttonCanyon:setImage(self.imageCanyonUnlocked);
 end
 
----shows the frame on screen
+--- shows the frame on screen
 function Level:draw()
-    self.frame:draw(self.elementsOnFrame);
+    local _, y = self.elementsOnFrame.button_back:getOffset();
+    love.graphics.draw(self.background, self.backgroundPosition[1], self.backgroundPosition[2] + y);
+    for _, v in pairs (self.elementsOnFrame) do
+        v:draw();
+    end
 end
 
----called to "delete" this frame
+--- called to "delete" this frame
 function Level:clear()
     self.frame:clear(self.elementsOnFrame);
 end
 
----called in the "fly in" state 
+--- called in the "fly in" state
 function Level:appear()
     love.mouse.setVisible(true);
     self.frame:appear(self.elementsOnFrame);
 end
 
----called in the "fly out" state
+--- called in the "fly out" state
 function Level:disappear()
     self.frame:disappear(self.elementsOnFrame);
 end
 
----return true if the frame is on position /fly in move is finished
+--- return true if the frame is on position /fly in move is finished
 function Level:checkPosition()
     return self.frame:checkPosition();
+end
+--- is called when the mouse is pressed
+--@param x x coordinate of the mouse 
+--@param y y coordinate of the mouse
+function Level:mousepressed(x, y)    
+    for _, v in pairs (self.elementsOnFrame) do
+        local xPosition, yPosition = v:getPosition();
+        local width, height = v:getSize();
+        
+        if x > xPosition and x < xPosition + width and
+        y > yPosition and y < yPosition + height then
+            v.gotClicked();
+        end
+    end
 end
 
 return Level;

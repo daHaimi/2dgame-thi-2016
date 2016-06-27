@@ -4,25 +4,37 @@ _G.math.inf = 1 / 0
 testClass = require "class.Chart";
 fakeElement = require "Tests.fakeLoveframes.fakeElement";
 Data = require "data";
+ImageButton = require "class.ImageButton";
 
 describe("Unit test for Chart.lua", function()
     local locInstance;
     local Element;
-    
+
     before_each(function()
-        _G.Loveframes = {
-            Create = function(...) return fakeElement(); end,
-        }
         _G._persTable = {
-            scaledDeviceDim = {480, 833};
+            winDim = { 480, 833 };
             config = {
                 language = "english";
-            }
+            };
+            upgrades = {
+                something = false;
+            };
         };
         _G.data = Data;
         _G.love = {
             graphics = {
                 newFont = function(...) return {}; end;
+            };
+            graphics = {
+                newImage = function(...) return {
+                    getHeight = function (...) return 50 end;
+                    getWidth = function (...) return 50 end;
+                }end;
+                draw = function(...) end;
+                setColor = function(...) end;
+                newFont = function(...) end;
+                setFont = function(...) end;
+                printf = function (...) end;
             }
         }
         Element = {
@@ -34,50 +46,39 @@ describe("Unit test for Chart.lua", function()
             x = nil;
             y = nil;
             nameOnPersTable = "something";
-            
+            price = nil;
         };
-        function Element:SetVisible(visible) 
-            self.visible = visible; 
-        end;
-        function Element:SetPos(x, y) 
-            self.x = x; 
-            self.y = y; 
-        end;
+        function Element:SetVisible(visible)
+            self.visible = visible;
+        end
+
+        ;
+        function Element:SetPos(x, y)
+            self.x = x;
+            self.y = y;
+        end
+
+        ;
         locInstance = testClass();
     end)
-    
+
     it("Testing Constructor", function()
         local myInstance = testClass();
-        myInstance.button_up.OnClick = {"onClick function"};
-        myInstance.button_down.OnClick = {"onClick function"};
-        locInstance.button_up.OnClick = {"onClick function"};
-        locInstance.button_down.OnClick = {"onClick function"};
-        assert.are.same(locInstance, myInstance);
-    end)
-
-it("Testing Constructor", function()
-        _G._persTable = {
-            scaledDeviceDim = {640, 950};
-        };
-        locInstance = testClass();
-        local myInstance = testClass();
-        myInstance.button_up.OnClick = {"onClick function"};
-        myInstance.button_down.OnClick = {"onClick function"};
-        locInstance.button_up.OnClick = {"onClick function"};
-        locInstance.button_down.OnClick = {"onClick function"};
-        assert.are.same(locInstance, myInstance);
-    end)
-
-it("Testing Constructor", function()
-        _G._persTable = {
-            scaledDeviceDim = {720, 1024};
-        };
-        locInstance = testClass();
-        local myInstance = testClass();
-        myInstance.button_up.OnClick = {"onClick function"};
-        myInstance.button_down.OnClick = {"onClick function"};
-        locInstance.button_up.OnClick = {"onClick function"};
-        locInstance.button_down.OnClick = {"onClick function"};
+        myInstance.background = "background";
+        myInstance.textBackground = "text background";
+        myInstance.imageButtonUP = "button up image";
+        myInstance.imageButtonDOWN = "button down image";
+        myInstance.mark = "mark";
+        myInstance.button_up = "button_up";
+        myInstance.button_down = "button_down";
+        
+        locInstance.background = "background";
+        locInstance.textBackground = "text background";
+        locInstance.imageButtonUP = "button up image";
+        locInstance.imageButtonDOWN = "button down image";
+        locInstance.mark = "mark";
+        locInstance.button_up = "button_up";
+        locInstance.button_down = "button_down";
         assert.are.same(locInstance, myInstance);
     end)
 
@@ -91,68 +92,61 @@ it("Testing Constructor", function()
         assert.are.equal(locInstance:getMarkedElement(), "test");
     end)
 
-    it("Testing OnClick function of the up and down button", function()        
+    it("Testing OnClick function of the up and down button", function()
         spy.on(locInstance, "scrollUp");
         spy.on(locInstance, "scrollDown");
-        locInstance.button_up.OnClick();
-        locInstance.button_down.OnClick();
+        locInstance.button_up.gotClicked();
+        locInstance.button_down.gotClicked();
         assert.spy(locInstance.scrollUp).was_called(1);
         assert.spy(locInstance.scrollDown).was_called(1);
     end)
 
     it("Testing scroll up function", function()
+        locInstance.markPosition = {100, 100};
         stub(locInstance, "drawChart");
         stub(locInstance, "resetMarkedFrame");
         stub(locInstance, "markElement");
-        
+
         locInstance.toprow = 0;
         locInstance:scrollUp();
         assert.are.equal(locInstance.p_toprow, 0);
-        assert.spy(locInstance.drawChart).was_not_called();
         assert.spy(locInstance.resetMarkedFrame).was_not_called();
         assert.spy(locInstance.markElement).was_not_called();
-        
+
         locInstance.p_toprow = 2;
         locInstance.p_markedElement = Element;
-        locInstance.p_markedElement.visible = true;
         locInstance:scrollUp();
         assert.are.equal(locInstance.p_toprow, 1);
-        assert.stub(locInstance.drawChart).was_called(1);
-        assert.stub(locInstance.markElement).was_called(1);
-        
-        locInstance.p_markedElement.visible = false;
+
+        locInstance.markPosition = {100, 1000};
         locInstance:scrollUp();
-        assert.stub(locInstance.resetMarkedFrame).was_called(1);
+        assert.stub(locInstance.resetMarkedFrame).was_called();
     end)
 
     it("Testing scroll down function", function()
+        locInstance.markPosition = {100, 100};
         stub(locInstance, "drawChart");
         stub(locInstance, "resetMarkedFrame");
         stub(locInstance, "markElement");
-        
-        locInstance.p_row = 2
+
+        locInstance.p_row = 2;
         locInstance.p_toprow = 0;
         locInstance:scrollDown();
         assert.are.equal(locInstance.p_toprow, 0);
-        assert.stub(locInstance.drawChart).was_not_called();
-        assert.stub(locInstance.resetMarkedFrame).was_not_called();
-        
-        locInstance.p_row = 4
+
+        locInstance.p_row = 4;
         locInstance.p_toprow = 0;
         locInstance.p_markedElement = Element;
         locInstance.p_markedElement.visible = true;
         locInstance:scrollDown();
         assert.are.equal(locInstance.p_toprow, 1);
-        assert.stub(locInstance.drawChart).was_called(1);
-        assert.stub(locInstance.markElement).was_called(1);
-        
-        locInstance.p_row = 4
+
+        locInstance.p_row = 4;
         locInstance.p_toprow = 0;
-        locInstance.p_markedElement.visible = false;
         locInstance:scrollDown();
-        assert.stub(locInstance.resetMarkedFrame).was_called(1);
+        assert.stub(locInstance.resetMarkedFrame).was_called();
     end)
-    
+
     it("Testing resetTopRow function", function()
         locInstance.p_toprow = 5;
         locInstance:resetTopRow();
@@ -160,62 +154,152 @@ it("Testing Constructor", function()
     end)
 
     it("Testing resetMarkedFrame function", function()
-        locInstance:resetMarkedFrame()
-        assert.are.equal(locInstance.p_markFrame.visible, false);
-    end)
-
-    it("Testing SetVisible function", function()
-        spy.on(locInstance, "drawChart");
-        locInstance:SetVisible(true);
-        assert.are.equal(locInstance.button_up.visible, true);
-        assert.are.equal(locInstance.button_down.visible, true);
-        assert.are.equal(locInstance.textField.objBackground.visible, true);
-        assert.are.equal(locInstance.textField.objPrice.visible, true);
-        assert.are.equal(locInstance.textField.objText.visible, true);
-        assert.are.equal(locInstance.textField.objTopic.visible, true);
-        assert.spy(locInstance.drawChart).was.called();
-        assert.are.equal(locInstance.p_markFrame.visible, false);
-        
-        locInstance.p_elementsOnChart = {Element, Element};
-        locInstance:SetVisible(false);
-        assert.are.equal(locInstance.button_up.visible, false);
-        assert.are.equal(locInstance.button_down.visible, false);
-        assert.are.equal(locInstance.textField.objBackground.visible, false);
-        assert.are.equal(locInstance.textField.objText.visible, false);
-        assert.are.equal(locInstance.textField.objTopic.visible, false);
-        assert.are.equal(locInstance.textField.objPrice.visible, false);
-        assert.are.equal(locInstance.p_elementsOnChart[1].visible, false);
-        assert.are.equal(locInstance.p_elementsOnChart[2].visible, false);
-        assert.are.equal(locInstance.p_markFrame.visible, false);
-    end)
-
-    it("Testing SetPos function", function()
-        locInstance.width = 50;
-        locInstance.klickableSize = 60;
-        spy.on(locInstance, "setPosOfKlickableElements");
-        
-        locInstance:SetPos(50, 50);
-        assert.are.equal(locInstance.p_xPos, 150);
-        assert.are.equal(locInstance.p_yPos, 50);
-        assert.are.equal(locInstance.button_up.x, 223);
-        assert.are.equal(locInstance.button_up.y, 50);
-        assert.are.equal(locInstance.button_down.x, 223);
-        assert.are.equal(locInstance.button_down.y, 140);
-        assert.spy(locInstance.setPosOfKlickableElements).was.called();
-        assert.are.equal(locInstance.textField.objBackground.x, 50);
-        assert.are.equal(locInstance.textField.objBackground.y, 503);
+        locInstance:resetMarkedFrame();
+        assert.are.equal(locInstance.markPosition[1], nil);
+        assert.are.equal(locInstance.markPosition[2], nil);
     end)
 
     it("Testing markElement function", function()
-        spy.on(locInstance.textField, "changeText");
+        _G._gui = {
+            frames = {
+                upgradeMenu = {
+                    elementsOnFrame = {
+                        button_buy = {
+                            setImage = function(...) end;
+                        };
+                    };
+                };
+            };
+            getFrames = function(...) return _G._gui.frames; end;
+            getCurrentState = function () return "Achievements" end;
+        };
+        spy.on(_G._gui:getFrames().upgradeMenu.elementsOnFrame.button_buy, "setImage");
         Element.nameOnPersTable = "rageQuit";
+        Element.object.getPosition = function (...) return 40, 60; end
         locInstance:markElement(Element);
-        assert.are.equal(locInstance.p_markFrame.x, 40);
-        assert.are.equal(locInstance.p_markFrame.y, 60);
-        assert.are.equal(locInstance.p_markFrame.visible, true);
-        assert.are.equal(locInstance.p_markFrame.movedToTop, true);
-        assert.are.same(locInstance.p_markedElement, Element);
+        assert.are.equal(locInstance.markPosition[1], 40);
+        assert.are.equal(locInstance.markPosition[2], 60);
+        local element = Element;
+        element.price = 10;
+        element.name = nil;
+        locInstance:markElement(element);
         
-        assert.spy(locInstance.textField.changeText).was_called();
+        _G._persTable.upgrades.something = true;
+        locInstance:markElement(element);
+        
+        element.name = "nemo";
+        locInstance:markElement(element);
+        
+        assert.spy(_G._gui.frames.upgradeMenu.elementsOnFrame.button_buy.setImage).was_called(2);
     end)
+
+    it("Testing draw", function()
+        local loveMock = mock(_G.love.graphics, true);
+        local element = {
+            sortNumber = 2;
+            object ={
+                draw = function () end;
+            }
+        }
+        locInstance.p_elementsOnChart = {element, element};
+        locInstance.setPosOfKlickableElements = function () end;
+        locInstance:draw();
+        assert.spy(loveMock.draw).was_called(3);
+    end)
+        
+    it("Testing getOffset", function()
+        locInstance.xOffset = 10;
+        locInstance.yOffset = 5;
+        local x, y = locInstance:getOffset();
+        assert.are.same(10, x);
+        assert.are.same(5, y);
+    end)
+
+    it("Testing getPosition", function()
+        locInstance.p_xPos = 5;
+        locInstance.p_yPos = 10;
+        locInstance.backgroundPosition = {1, 2};
+        local x, y = locInstance:getPosition();
+        assert.are.same(5, x);
+        assert.are.same(12, y);
+    end)
+
+    it("Testing getSize", function()
+        _G._persTable.winDim[1] = 50;
+        locInstance.klickableSize = 10;
+        locInstance.buttonHeight = 15;
+        locInstance.buttonOffset = 20;
+        local x, y = locInstance:getSize();
+        assert.are.same(50, x);
+        assert.are.same(80, y);
+    end)
+
+    it("Testing setOffset", function()
+        stub(locInstance.button_up, "setOffset");
+        locInstance.p_elementsOnChart[1] = {
+            object = {
+                setOffset = function(...) end;
+            }
+        };
+        locInstance:setOffset(50, 30);
+        assert.stub(locInstance.button_up.setOffset).was_called(1);
+    end)
+
+    it("Testing mousepressend", function()
+        _G.clicked ={};
+        _G.clicked[1] = false;
+        _G.clicked[2] = false;
+        _G.clicked[3] = false;
+        _G.clicked[4] = false;
+        locInstance.button_up = {
+            getSize = function () return 50, 50 end;
+            getPosition = function () return 0, 0 end;
+            gotClicked = function() _G.clicked[1] = true end;
+        };
+        locInstance.button_down = {
+            getSize = function () return 50, 50 end;
+            getPosition = function () return 0, 100 end;
+            gotClicked = function() _G.clicked[2] = true end;
+        };
+        locInstance.p_elementsOnChart = {
+            {
+                sortNumber = 1;
+                getSize = function () return 50, 50 end;
+                getX = function () return 100 end;
+                getY = function () return 0 end;
+                gotClicked = function() _G.clicked[3] = true end;
+            };
+            {
+                sortNumber = 2;
+                getSize = function () return 50, 50 end;
+                getX = function () return 100 end;
+                getY = function () return 100 end;
+                gotClicked = function() _G.clicked[4] = true end;
+            };
+        }
+        locInstance:mousepressed(10, 10);
+        assert.are.same(true, _G.clicked[1]);
+        assert.are.same(false, _G.clicked[2]);
+        assert.are.same(false, _G.clicked[3]);
+        assert.are.same(false, _G.clicked[4]);
+        
+        locInstance:mousepressed(10, 110);
+        assert.are.same(true, _G.clicked[1]);
+        assert.are.same(true, _G.clicked[2]);
+        assert.are.same(false, _G.clicked[3]);
+        assert.are.same(false, _G.clicked[4]);
+        
+        locInstance:mousepressed(110, 10);
+        assert.are.same(true, _G.clicked[1]);
+        assert.are.same(true, _G.clicked[2]);
+        assert.are.same(true, _G.clicked[3]);
+        assert.are.same(false, _G.clicked[4]);
+        
+        locInstance:mousepressed(110, 110);
+        assert.are.same(true, _G.clicked[1]);
+        assert.are.same(true, _G.clicked[2]);
+        assert.are.same(true, _G.clicked[3]);
+        assert.are.same(true, _G.clicked[4]);
+    end)
+    
 end)

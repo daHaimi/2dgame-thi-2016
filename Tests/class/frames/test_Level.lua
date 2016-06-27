@@ -5,6 +5,11 @@ testClass = require "src.class.frames.Level";
 fakeElement = require "Tests.fakeLoveframes.fakeElement";
 Frame = require "class.Frame";
 
+_G.TEsound = {
+    playLooping = function(...) end;
+    play = function(...) end;
+    stop = function(...) end;
+};
 
 describe("Unit test for Level.lua", function()
     local locInstance;
@@ -28,16 +33,25 @@ describe("Unit test for Level.lua", function()
         }
         
         _G.love = {
-            graphics = {
-                newImage = function (...) end;
-            };
             mouse = {
                 setVisible = function(...) end;
-            };
+            },
+            graphics = {
+                newImage = function(...) return {
+                    getHeight = function (...) return 50 end;
+                    getWidth = function (...) return 50 end;
+                } end;
+                draw = function (...) end;
+                getFont = function (...) return "a Font" end;
+                newFont = function (...) end;
+                setFont = function (...) end;
+                printf = function (...) end;
+                setColor = function (...) end;
+            }
         };
 
         _G._persTable = {
-            scaledDeviceDim = {
+            winDim = {
                 [1] = 500;
                 [2] = 500;
             };
@@ -49,30 +63,25 @@ describe("Unit test for Level.lua", function()
 
     it("Testing Constructor", function()
         local myInstance = testClass();
+        
         locInstance.elementsOnFrame = {};
+        locInstance.imageButton = "imageButton";
+        locInstance.imageHouse = "imageHouse";
+        locInstance.imageCanyonLocked =  "imageCanyonLocked";
+        locInstance.imageCanyonUnlocked = "imageCanyonUnlocked";
+        locInstance.imageSquirrel = "imageSquirrel";
+        locInstance.imageCrocodile = "imageCrocodile";
+        locInstance.background = "background";
+        
         myInstance.elementsOnFrame = {};
-        assert.are.same(locInstance, myInstance);
-    end)
-
-it("Testing Constructor", function()
-        _G._persTable = {
-            scaledDeviceDim = {640, 950};
-        };
-        locInstance = testClass();
-        local myInstance = testClass();
-        locInstance.elementsOnFrame = {};
-        myInstance.elementsOnFrame = {};
-        assert.are.same(locInstance, myInstance);
-    end)
-
-it("Testing Constructor", function()
-        _G._persTable = {
-            scaledDeviceDim = {720, 1024};
-        };
-        locInstance = testClass();
-        local myInstance = testClass();
-        locInstance.elementsOnFrame = {};
-        myInstance.elementsOnFrame = {};
+        myInstance.imageButton = "imageButton";
+        myInstance.imageHouse = "imageHouse";
+        myInstance.imageCanyonLocked =  "imageCanyonLocked";
+        myInstance.imageCanyonUnlocked = "imageCanyonUnlocked";
+        myInstance.imageSquirrel = "imageSquirrel";
+        myInstance.imageCrocodile = "imageCrocodile";
+        myInstance.background = "background";
+        
         assert.are.same(locInstance, myInstance);
     end)
 
@@ -95,16 +104,18 @@ it("Testing Constructor", function()
         locInstance:create();
 
         spy.on(_G._gui, "changeFrame");
-        locInstance.elementsOnFrame.buttonBack.object.OnClick();
-        locInstance.elementsOnFrame.buttonHouse.object.OnClick();
-        locInstance.elementsOnFrame.buttonCanyon.object.OnClick();
-        assert.spy(_gui.changeFrame).was.called(3);
+        locInstance.elementsOnFrame.button_back.gotClicked();
+        locInstance.elementsOnFrame.buttonHouse.gotClicked();
+        locInstance.elementsOnFrame.buttonCanyon.gotClicked();
+        locInstance.elementsOnFrame.buttonSquirrel.gotClicked();
+        locInstance.elementsOnFrame.buttonCrocodile.gotClicked();
+        assert.spy(_gui.changeFrame).was.called(5);
     end)
 
     it("Testing draw function", function()
-        stub(locInstance.frame, "draw");
+        local loveMock = mock(love.graphics, true);
         locInstance:draw();
-        assert.stub(locInstance.frame.draw).was_called(1);
+        assert.spy(loveMock.draw).was_called(6);
     end)
 
     it("Testing clear function", function()
@@ -130,6 +141,32 @@ it("Testing Constructor", function()
         stub(locInstance.frame, "checkPosition");
         locInstance:checkPosition();
         assert.stub(locInstance.frame.checkPosition).was_called(1);
+    end)    
+
+    it("Testing mousepressend", function()
+        _G.clicked ={};
+        _G.clicked[1] = false;
+        _G.clicked[2] = false;
+        locInstance.elementsOnFrame = {
+            button_house = {
+                getSize = function () return 50, 50 end;
+                getPosition = function () return 0, 0 end;
+                gotClicked = function() _G.clicked[1] = true end;
+            };
+            button_canyon = {
+                getSize = function () return 50, 50 end;
+                getPosition = function () return 0, 100 end;
+                gotClicked = function() _G.clicked[2] = true end;
+            };
+        };
+        
+        locInstance:mousepressed(10, 10);
+        assert.are.same(true, _G.clicked[1]);
+        assert.are.same(false, _G.clicked[2]);
+        
+        locInstance:mousepressed(10, 110);
+        assert.are.same(true, _G.clicked[1]);
+        assert.are.same(true, _G.clicked[2]);
     end)
 
 end)

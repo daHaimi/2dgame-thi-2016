@@ -9,8 +9,11 @@ _G.math.inf = 1 / 0;
 --- The class LevelManager administrate all references to the current level
 -- the current player and swarmfactory objects.
 local LevelManager = Class {
-    init = function(self)
+    init = function(self, achievements) 
+        self.achMan = achievements;
     end,
+
+    achMan = nil;
     curLevel = nil;
     curPlayer = nil;
     curSwarmFac = nil;
@@ -18,18 +21,43 @@ local LevelManager = Class {
     p_levelProperties = {
         sewers = {
             levelName = "sewers",
-            direction = 1,
-            bgPath = "assets/testbg.png";
+            depth = {
+                default = -10000;
+                advanced = -20000;
+                endless = - math.inf;
+            };
+            bgPath = "assets/testbg.png",
+            mode = "normal"
         },
         canyon = {
             levelName = "canyon",
-            direction = 1,
-            bgPath = "assets/canyonBG.png";   
+            depth = {
+                default = -10000;
+                advanced = -20000;
+                endless = - math.inf;
+            };
+            bgPath = "assets/canyonBG.png",
+            mode = "normal"
         },
-        space = {
-            levelName = "space",
-            direction = -1,
-            bgPath = "assets/testbg.png";
+        sleepingCrocos = {
+            levelName = "sleepingCrocos",
+            depth = {
+                default = -7500;
+                advanced = -15000;
+                endless = - 150000;
+            };
+            bgPath = "assets/testbg.png",
+            mode = "sleepingCrocos"
+        },
+        crazySquirrels = {
+            levelName = "crazySquirrels",
+            depth = {
+                default = -7500;
+                advanced = -15000;
+                endless = - 150000;
+            };
+            bgPath = "assets/canyonBG.png",
+            mode = "crazySquirrles"
         }
     };
 }
@@ -40,19 +68,19 @@ local LevelManager = Class {
 -- @param swarmFactory The swarm factory of the level.
 -- @return Returns a reference to the created level object.
 function LevelManager:newLevel(levelPropMap, swarmFactoryData)
-    for k, v in pairs(_G._tmpTable) do
+    for k, _ in pairs(_G._tmpTable) do
         _G._tmpTable[k] = nil
     end;
 
     self:freeManagedObjects();
-    
+
     self.p_curDataRef = swarmFactoryData;
-    self.curLevel = Level(levelPropMap.levelName, levelPropMap.bgPath, _G._persTable.winDim, levelPropMap.direction, self);
+    self.curLevel = Level(levelPropMap.levelName, levelPropMap.bgPath, _G._persTable.winDim, levelPropMap.depth, 
+        levelPropMap.mode, self);
     self.curPlayer = Bait(_G._persTable.winDim, self);
     self.curPlayer:checkUpgrades();
     self.curSwarmFac = SwarmFactory(swarmFactoryData, self);
-    _gui:getFrames().inGame.elementsOnFrame.healthbar.object:resetHearts();
-        
+    _musicManager:update(levelPropMap.levelName);
     return self.curLevel;
 end
 
@@ -60,7 +88,7 @@ end
 -- @return Returns a reference to the created level object.
 function LevelManager:replayLevel()
     local currentLevelType = self.curLevel:getLevelName();
-    
+
     return self:newLevel(self:getLevelPropMapByName(currentLevelType), self.p_curDataRef);
 end
 
@@ -80,8 +108,9 @@ function LevelManager:freeManagedObjects()
         self.curLevel:destructLevel();
         self.curLevel = nil;
     end
-    
+
     collectgarbage("collect");
+    _musicManager:update("menu");
 end
 
 --- Get the the current level object.
@@ -106,6 +135,12 @@ end
 -- @return Returns the properties table for the given level.
 function LevelManager:getLevelPropMapByName(levName)
     return self.p_levelProperties[levName];
+end
+
+--- Returns the reference to the achievement manager object.
+-- @return Returns the reference to the achievement manager object.
+function LevelManager:getAchievmentManager()
+    return self.achMan;
 end
 
 return LevelManager;

@@ -2,93 +2,77 @@ Class = require "lib.hump.class";
 Frame = require "class.Frame";
 Chart = require "class.Chart";
 KlickableElement = require "class.KlickableElement";
+ImageButton = require "class.ImageButton";
 
 local Achievements = Class {
     init = function(self)
-        if _G._persTable.scaledDeviceDim[1] < 640 then
-            self.directory = "assets/gui/480px/";
-            self.widthPx = 480;
-            self.width = 384;
-            self.height = 666;
-            self.buttonHeight = 75;
-            self.buttonOffset = 15;
-            self.speed = 50;
-        elseif _G._persTable.scaledDeviceDim[1] < 720 then
-            self.widthPx = 640;
-            self.directory = "assets/gui/640px/";
-            self.width = 512;
-            self.height = 888;
-            self.buttonOffset = 20;
-            self.buttonHeight = 96;
-            self.speed = 60;
-        else
-            self.widthPx = 720;
-            self.directory = "assets/gui/720px/";
-            self.width = 576;
-            self.height = 1024;
-            self.buttonOffset = 30;
-            self.buttonHeight = 106;
-            self.speed = 75;
-        end
+        self.imageButton = love.graphics.newImage("assets/gui/Button.png");
+        self.background = love.graphics.newImage("assets/gui/StandardBG.png");
+        self.backgroundPosition = {(_G._persTable.winDim[1] - self.background:getWidth()) / 2,
+            (_G._persTable.winDim[2] - self.background:getHeight()) / 2};
+        self.offset = (_G._persTable.winDim[2] - self.background:getHeight())/2 + 30;
+        self.buttonHeight = self.imageButton:getHeight();
+        self.buttonWidth = self.imageButton:getWidth();
+        self.directory = "assets/gui/icons/";
+        self.buttonXPosition = (_G._persTable.winDim[1] - self.buttonWidth) / 2;
+        self.offset = (_G._persTable.winDim[2] - self.background:getHeight())/2 + 30;
+        self.buttonDistance = 10;
         self.name = "Achievements";
-        self.frame = Frame((_G._persTable.scaledDeviceDim[1] - self.width) / 2, 
-            (_G._persTable.scaledDeviceDim[2] - self.height) / 2 - self.speed, "down", "down", self.speed, 0, -1500);
+        self.frame = Frame(0, 0, "down", "down", 50, 0, -1500);
         self:create();
+        
+        self.xOffset = 0;
+        self.yOffset = 0;
     end;
 };
 
----creates the achievement frame
+--- creates the achievement frame
 function Achievements:create()
     --add, create and position all elements on this frame
     self.elementsOnFrame = {
-        background = {
-            object = Loveframes.Create("image");
-            x = 0;
-            y = 0;
-        };
-        chart = {
-            object = Chart();
-            x = 0.125 * self.width;
-            y = self.buttonOffset;
-        };
-        button_back = {
-            object = Loveframes.Create("imagebutton");
-            x = 0.16 * self.width;
-            y = self.height - self.buttonHeight;
-        };
+        chart = Chart();
+        button_back = ImageButton(self.imageButton, self.buttonXPosition , 
+            (_G._persTable.winDim[2] + self.background:getHeight())/2 - self.buttonHeight - 30, true);
     };
-    
+
     --adjust all elements on this frame
-    self.elementsOnFrame.background.object:SetImage(self.directory .. "StandardBG.png");
-    
-    self.elementsOnFrame.button_back.object:SetImage(self.directory .. "Button.png")
-    self.elementsOnFrame.button_back.object:SizeToImage()
-    self.elementsOnFrame.button_back.object:SetText("Back");
-    
     self:addAllAchievements();
     self:loadValuesFromPersTable();
-    
+
     --onclick events for all buttons
-    self.elementsOnFrame.button_back.object.OnClick = function(object)
+    self.elementsOnFrame.button_back.gotClicked = function(_)
+        TEsound.play({ "assets/sound/buttonPressed.wav" }, 'bgm');
         _gui:changeFrame(_gui:getFrames().mainMenu);
+        self.elementsOnFrame.chart:resetTopRow();
+        self.elementsOnFrame.chart:resetMarkedFrame();
     end
+    self.elementsOnFrame.chart.gotClicked = function(x, y)
+        self.elementsOnFrame.chart:mousepressed(x,y)
+    end
+end
+
+--- changes the language of this frame
+--@param language sting with language
+function Achievements:setLanguage(language)
+    self.elementsOnFrame.button_back:setText(_G.data.languages[language].package.buttonBack);
 end
 
 --add all achievements written in the data.lua into the chart and adds an OnClick event
 function Achievements:addAllAchievements()
-    for k, v in pairs(_G.data.achievements) do
-        imageDirectory = self.directory .. v.image_lock;
-        local newKlickableElement = KlickableElement(v.name, imageDirectory, self.directory .. v.image_unlock, 
-            v.description, nil, v.nameOnPersTable);
-        newKlickableElement.object.OnClick = function(object)
-            self.elementsOnFrame.chart.object:markElement(newKlickableElement);
+    for _, v in pairs(_G.data.achievements) do
+        local image = love.graphics.newImage(self.directory ..  v.image_lock);
+        local image_unlock = love.graphics.newImage(self.directory ..  v.image_unlock);
+        if v.sortNumber ~= nil then
+            local newKlickableElement = KlickableElement(v.name, image, image_unlock, v.description, nil, 
+                v.nameOnPersTable, v.sortNumber);
+            self.elementsOnFrame.chart:addKlickableElement(newKlickableElement);
         end
-        self.elementsOnFrame.chart.object:addKlickableElement(newKlickableElement);
     end
 end
 
+--- load achievements
 function Achievements:loadValuesFromPersTable()
-    for k, v in pairs(self.elementsOnFrame.chart.object:getAllElements()) do
+    for _, v in pairs(self.elementsOnFrame.chart:getAllElements()) do
         local elementName = v.nameOnPersTable;
         if _G._persTable.achievements[elementName] then
             if _G._persTable.achievements[elementName] == true then
@@ -98,31 +82,57 @@ function Achievements:loadValuesFromPersTable()
     end
 end
 
----shows the frame on screen
+--- is called when the mouse is pressed
+--@param x x coordinate of the mouse 
+--@param y y coordinate of the mouse
+function Achievements:mousepressed(x, y)    
+    for _, v in pairs (self.elementsOnFrame) do
+        local xPosition, yPosition = v:getPosition();
+        local width, height = v:getSize();
+        
+        if x > xPosition and x < xPosition + width and
+        y > yPosition and y < yPosition + height then
+            v.gotClicked(x, y);
+        end
+    end
+end
+
+--- shows the frame on screen
 function Achievements:draw()
-    self.frame:draw(self.elementsOnFrame);
+    local _, y = self.elementsOnFrame.button_back:getOffset();
+    love.graphics.draw(self.background, self.backgroundPosition[1], self.backgroundPosition[2] + y);
+    for _, v in pairs (self.elementsOnFrame) do
+        v:draw();
+    end
     self:loadValuesFromPersTable();
 end
 
----called to "delete" this frame
+--- called to "delete" this frame
 function Achievements:clear()
     self.frame:clear(self.elementsOnFrame);
 end
 
----called in the "fly in" state 
+--- called in the "fly in" state
 function Achievements:appear()
-    love.mouse.setVisible(true);
     self.frame:appear(self.elementsOnFrame);
 end
 
----called in the "fly out" state
+--- called in the "fly out" state
 function Achievements:disappear()
     self.frame:disappear(self.elementsOnFrame);
 end
 
----return true if the frame is on position /fly in move is finished
+--- return true if the frame is on position /fly in move is finished
 function Achievements:checkPosition()
     return self.frame:checkPosition();
+end
+
+--- sets the offset of the frame
+--@param x x offset of the frame
+--@parma y y offset of the frame
+function Achievements:setOffset(x,y)
+    self.xOffset = x;
+    self.yOffset = y;
 end
 
 return Achievements;

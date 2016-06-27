@@ -4,6 +4,14 @@ _G.math.inf = 1 / 0
 testClass = require "src.class.frames.Score";
 fakeElement = require "Tests.fakeLoveframes.fakeElement";
 Frame = require "class.Frame";
+Imagebutton = require "class.ImageButton";
+
+Data = require "data";
+_G.TEsound = {
+    playLooping = function(...) end;
+    play = function(...) end;
+    stop = function(...) end;
+};
 
 
 describe("Unit test for Score.lua", function()
@@ -15,52 +23,56 @@ describe("Unit test for Score.lua", function()
             mouse = {
                 setVisible = function(...) end;
             };
+             graphics = {
+                newImage = function(...) return {
+                    getHeight = function (...) return 50 end;
+                    getWidth = function (...) return 50 end;
+                } end;
+                draw = function (...) end;
+                getFont = function (...) return "a Font" end;
+                newFont = function (...) end;
+                setFont = function (...) end;
+                printf = function (...) end;
+                setColor = function (...) end;
+            };
+            sound = {
+                newSoundData = function(...) end;
+            };
         };
-        
+        _G.data = Data;
         _G.Loveframes = {
             Create = function(typeName) 
                 return fakeElement(typeName);
             end
         }
         _G._persTable = {
-            scaledDeviceDim = {
+            winDim = {
                 [1] = 500;
                 [2] = 500;
+            };
+            config = {
+                language = "english";
             };
         };
         _G._tmpTable = {
             earnedMoney = 0;
         }
         _G.Frame = function(...) return Frame; end;
+        _G.AchievementDisplay.draw  = function (...) end;
         locInstance = testClass();
     end)
 
     it("Testing Constructor", function()
         local myInstance = testClass();
+        
         locInstance.elementsOnFrame = {};
+        locInstance.background = "background";
+        locInstance.imageButton = "imageButton";
+        
         myInstance.elementsOnFrame = {};
-        assert.are.same(locInstance, myInstance);
-    end)
-
-it("Testing Constructor", function()
-        _G._persTable = {
-            scaledDeviceDim = {640, 950};
-        };
-        locInstance = testClass();
-        local myInstance = testClass();
-        locInstance.elementsOnFrame = {};
-        myInstance.elementsOnFrame = {};
-        assert.are.same(locInstance, myInstance);
-    end)
-
-it("Testing Constructor", function()
-        _G._persTable = {
-            scaledDeviceDim = {720, 1024};
-        };
-        locInstance = testClass();
-        local myInstance = testClass();
-        locInstance.elementsOnFrame = {};
-        myInstance.elementsOnFrame = {};
+        myInstance.background = "background";
+        myInstance.imageButton = "imageButton";
+        
         assert.are.same(locInstance, myInstance);
     end)
 
@@ -80,16 +92,17 @@ it("Testing Constructor", function()
         locInstance:create();
         
         spy.on(_G._gui, "changeFrame");
-        locInstance.elementsOnFrame.button_retry.object.OnClick();
-        locInstance.elementsOnFrame.button_backToMenu.object.OnClick();
+        locInstance.elementsOnFrame.button_retry.gotClicked();
+        locInstance.elementsOnFrame.button_backToMenu.gotClicked();
         assert.spy(_gui.changeFrame).was.called(2);
         assert.stub(table.replayLevel).was.called();
     end)
 
     it("Testing draw function", function()
-        stub(locInstance.frame, "draw");
+        local loveMock = mock(love.graphics, true);
+        locInstance.unlockedAchievements = {}
         locInstance:draw();
-        assert.stub(locInstance.frame.draw).was_called(1);
+        assert.spy(loveMock.draw).was_called(3);
     end)
 
     it("Testing clear function", function()
@@ -100,9 +113,11 @@ it("Testing Constructor", function()
     end)
 
     it("Testing appear function", function()
+        local soundSpy = spy.on(_G.TEsound, "play");
         stub(locInstance.frame, "appear");
         locInstance:appear();
         assert.stub(locInstance.frame.appear).was_called(1);
+        assert.spy(soundSpy).was.called(1);
     end)
 
     it("Testing disappear function", function()
@@ -115,6 +130,46 @@ it("Testing Constructor", function()
         stub(locInstance.frame, "checkPosition");
         locInstance:checkPosition();
         assert.stub(locInstance.frame.checkPosition).was_called(1);
+    end)
+
+    it("Testing mousepressend", function()
+        _G.clicked ={};
+        _G.clicked[1] = false;
+        _G.clicked[2] = false;
+        _G.clicked[3] = false;
+        locInstance.elementsOnFrame = {
+            button_backToMenu = {
+                getSize = function () return 50, 50 end;
+                getPosition = function () return 0, 0 end;
+                gotClicked = function() _G.clicked[1] = true end;
+            };
+            button_retry = {
+                getSize = function () return 50, 50 end;
+                getPosition = function () return 0, 100 end;
+                gotClicked = function() _G.clicked[2] = true end;
+            };
+            achievements = {
+                getSize = function () return 50, 50 end;
+                getPosition = function () return 100, 0 end;
+                gotClicked = function() _G.clicked[3] = true end;
+            };
+        };
+        
+        locInstance:mousepressed(10, 10);
+        assert.are.same(true, _G.clicked[1]);
+        assert.are.same(false, _G.clicked[2]);
+        assert.are.same(false, _G.clicked[3]);
+        
+        locInstance:mousepressed(10, 110);
+        assert.are.same(true, _G.clicked[1]);
+        assert.are.same(true, _G.clicked[2]);
+        assert.are.same(false, _G.clicked[3]);
+        
+        locInstance:mousepressed(110, 10);
+        assert.are.same(true, _G.clicked[1]);
+        assert.are.same(true, _G.clicked[2]);
+        assert.are.same(true, _G.clicked[3]);
+        
     end)
 
 end)

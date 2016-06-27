@@ -1,222 +1,274 @@
----Chart contains a table with clickable elements and a textfield
+--- Chart contains a table with clickable elements and a textfield
 Class = require "lib.hump.class";
-TextField = require "class.TextField";
+ImageButton = require "class.ImageButton";
 
 local Chart = Class {
-    init = function(self, size)
-        if _G._persTable.scaledDeviceDim[1] < 640 then
-            self.directory = "assets/gui/480px/";
-            self.widthPx = 480;
-            self.width = 384;
-            self.height = 666;
-            self.buttonHeight = 75;
-            self.buttonOffset = 15;
-            self.klickableSize = 96;
-            self.textfieldSize = 250;
-        elseif _G._persTable.scaledDeviceDim[1] < 720 then
-            self.widthPx = 640;
-            self.directory = "assets/gui/640px/";
-            self.width = 512;
-            self.height = 888;
-            self.buttonOffset = 20;
-            self.buttonHeight = 96;
-            self.klickableSize = 128;
-            self.textfieldSize = 325;
-        else
-            self.widthPx = 720;
-            self.directory = "assets/gui/720px/";
-            self.width = 576;
-            self.height = 1024;
-            self.buttonOffset = 30;
-            self.buttonHeight = 106;
-            self.klickableSize = 144;
-            self.textfieldSize = 400;
-        end
-        self.p_column = 3;--amount of the columns of the table
-        self.p_row = 0;--automatically calculated value of the amount of rows in the table
-        self.p_toprow = 0;--top visible row. needed to scroll up and down
+    init = function(self)
+        self.background = love.graphics.newImage("assets/gui/StandardBG.png");
+        self.backgroundPosition = {(_G._persTable.winDim[1] - self.background:getWidth()) / 2,
+            (_G._persTable.winDim[2] - self.background:getHeight()) / 2};
+        self.directory = "assets/gui/icons/";
+        self.imageButtonUP = love.graphics.newImage("assets/gui/UpButton.png");
+        self.imageButtonDOWN = love.graphics.newImage("assets/gui/DownButton.png");
+        self.mark = love.graphics.newImage("assets/gui/icons/markFrame.png");
+        self.textBackground = love.graphics.newImage("assets/gui/TextBG.png");
+        self.buttonHeight = self.imageButtonUP:getHeight();
+        self.buttonWidth = self.imageButtonUP:getWidth();
+        self.buttonXPosition = (_G._persTable.winDim[1] - self.buttonWidth) / 2;
+        self.buttonOffset = 15;
+        self.p_column = 3; --amount of the columns of the table
+        self.p_row = 0; --automatically calculated value of the amount of rows in the table
+        self.p_toprow = 0; --top visible row. needed to scroll up and down
         self.p_xPos = 0;
         self.p_yPos = 0;
-
-        self.p_elementsOnChart = {};--elements in the table
+        self.klickableSize = 96;
+        self.p_elementsOnChart = {}; --elements in the table
         self.p_markedElement = nil;
+        self.xOffset = 0;
+        self.yOffset = 0;
+        self.clickablePosition = (_G._persTable.winDim[1] - 3 * self.klickableSize) /2;
+        self.markPosition = {nil, nil};
         
+        self.textFieldName = "";
+        self.textFieldDescription = "";
+        self.textFieldPrice = "";
+
         self:create();
     end;
 };
 
----Getter of all Elements
+--- Getter of all Elements
 function Chart:getAllElements()
     return self.p_elementsOnChart;
 end
 
----Getter of the marked Element
+--- Getter of the marked Element
 function Chart:getMarkedElement()
     return self.p_markedElement;
 end
 
----function called in the constructor of this class. creates backround and buttons
+--- function called in the constructor of this class. creates backround and buttons
 function Chart:create()
-    self.button_up = Loveframes.Create("imagebutton");
-    self.button_up:SetImage(self.directory .. "UpButton.png");
-    self.button_up:SizeToImage();
-    self.button_up:SetText("");
-    
-    self.button_down = Loveframes.Create("imagebutton");
-    self.button_down:SetImage(self.directory .. "DownButton.png");
-    self.button_down:SizeToImage();
-    self.button_down:SetText("");
-    
-    self.p_markFrame = Loveframes.Create("image");
-    self.p_markFrame:SetImage(self.directory .. "markFrame.png");
-    self.p_markFrame:SetVisible(false);
-    
-    self.textField = TextField(self.textfieldSize, self.directory);
-    
+    self.button_up = ImageButton(self.imageButtonUP, self.buttonXPosition , 
+        self.p_yPos + self.buttonOffset + self.backgroundPosition[2], true);
+    self.button_down = ImageButton(self.imageButtonDOWN, self.buttonXPosition, 
+        self.p_yPos + self.buttonOffset + 3 * 96 + self.buttonHeight + self.backgroundPosition[2], true);
+
     --onclick events of the buttons
-    self.button_up.OnClick = function(object)
+    self.button_up.gotClicked = function(_)
         self:scrollUp();
     end
-    
-    self.button_down.OnClick = function(object)
+
+    self.button_down.gotClicked = function(_)
         self:scrollDown();
     end
+    
 end
 
----called to scroll the table up
+--- called to scroll the table up
 function Chart:scrollUp()
     if (self.p_toprow > 0) then
         self.p_toprow = self.p_toprow - 1;
-        self:drawChart();
         if self.p_markedElement ~= nil then
-            if self.p_markedElement.object:GetVisible() == true then
-                self:markElement(self.p_markedElement);
-            else
+            self.markPosition[2] = self.markPosition[2] + self.klickableSize;
+            if self.markPosition[2] > self.backgroundPosition[2] + self.buttonHeight + 3 * self.klickableSize then
                 self:resetMarkedFrame();
             end
         end
     end
 end
 
----called to scroll the table down
+--- called to scroll the table down
 function Chart:scrollDown()
     if self.p_toprow + 3 < self.p_row then
         self.p_toprow = self.p_toprow + 1;
-        self:drawChart();
-        if self.p_markedElement ~= nil then
-            if self.p_markedElement.object:GetVisible() == true then
-                self:markElement(self.p_markedElement);
-            else
+        if self.markPosition[1] ~= nil then
+            self.markPosition[2] = self.markPosition[2] - self.klickableSize;
+            if self.markPosition[2] < self.backgroundPosition[2] then
                 self:resetMarkedFrame();
             end
         end
     end
 end
 
----resets the top row. called at the back button to reset the table for the next shop visit
+--- resets the top row. called at the back button to reset the table for the next shop visit
 function Chart:resetTopRow()
     self.p_toprow = 0;
 end
 
----reset the markedFrame visible to false
+--- reset the markedFrame visible to false
 function Chart:resetMarkedFrame()
-    self.p_markFrame:SetVisible(false);
+    self.markPosition = {nil, nil};
+    self.p_markedElement = nil;
+    self.textFieldName = "";
+    self.textFieldPrice = "";
+    self.textFieldDescription = "";
 end
 
----draws the elements shown in the table
-function Chart:drawChart()
-    --clear
-    for k, v in pairs(self.p_elementsOnChart) do
-        v:SetVisible(false);
-    end
-    --draw new elements
-    for var1 = 1 + (self.p_column * self.p_toprow), 9 + (self.p_column * self.p_toprow) do
-        if self.p_elementsOnChart[var1] ~= nil then
-            self.p_elementsOnChart[var1]:SetVisible(true);
+--- draws the elements shown in the table
+function Chart:draw()
+    local _, y = self.button_up:getOffset();
+    self:setPosOfKlickableElements();
+    
+    -- draw text
+    love.graphics.draw(self.textBackground, (_G._persTable.winDim[1] - self.textBackground:getWidth())/2, 
+        450 + y+ self.backgroundPosition[2]);
+    
+    --draw buttons
+    self.button_up:draw()
+    self.button_down:draw()
+    
+    --draw clickalbe elements
+    for i = 1, #self.p_elementsOnChart, 1 do
+        if self.p_elementsOnChart[i] ~= nil and
+        self.p_elementsOnChart[i].sortNumber > self.p_toprow * 3 and
+        self.p_elementsOnChart[i].sortNumber <= self.p_toprow * 3 + 9 then
+            self.p_elementsOnChart[i].object:draw();
         end
     end
-    self:setPosOfKlickableElements()
+    --draw mark
+    if self.markPosition[1] ~= nil and self.markPosition[2] ~= nil then
+        love.graphics.draw(self.mark, self.markPosition[1], self.markPosition[2]);
+    end 
+    
+    love.graphics.setColor(0, 0, 0);
+    love.graphics.setFont(love.graphics.newFont("font/8bitOperatorPlus-Bold.ttf", 20));
+    love.graphics.printf(self.textFieldName, (_G._persTable.winDim[1] - self.textBackground:getWidth())/2 + 10, 
+        450 + y+ self.backgroundPosition[2] + y, self.textBackground:getWidth(), "left")
+    love.graphics.setFont(love.graphics.newFont("font/8bitOperatorPlus-Regular.ttf", 18));
+    love.graphics.printf(self.textFieldDescription, (_G._persTable.winDim[1] - self.textBackground:getWidth())/2 + 10, 
+        480 + y+ self.backgroundPosition[2] + y, self.textBackground:getWidth() - 20, "left")
+    love.graphics.printf(self.textFieldPrice, (_G._persTable.winDim[1] - self.textBackground:getWidth())/2 + 20, 
+        427 + y + self.backgroundPosition[2] + y, self.textBackground:getWidth() - 20, "left");
+    love.graphics.setColor(255, 255, 255);
 end
 
----set the position of all elements in the table
+--- set the position of all elements in the table
 function Chart:setPosOfKlickableElements()
     local row = 0;
-    for var1 = 1, self.p_row + 1 do
-        for var2 = 1, self.p_column + 1 do
-            if self.p_elementsOnChart[var2 + row * self.p_column] ~= nil then
-                self.p_elementsOnChart[var2 + row * self.p_column]:SetPos(
-                    self.p_xPos + self.klickableSize * (var2 - 1),
-                    (self.p_yPos + self.klickableSize * row) - (self.klickableSize * self.p_toprow) +  self.buttonHeight);
-            end
+    for i = 1, #self.p_elementsOnChart, 1 do
+        if self.p_elementsOnChart[i] ~= nil then
+            local positionNumber = self.p_elementsOnChart[i].sortNumber;
+            local colNumber = (positionNumber - 1)%3;
+            local rowNumber = (positionNumber - colNumber-1) /3
+            self.p_elementsOnChart[i]:setPos(self.clickablePosition + self.p_xPos + self.klickableSize * colNumber,
+               self.klickableSize * rowNumber + self.p_yPos - (self.klickableSize * self.p_toprow)
+               + self.buttonHeight + self.buttonOffset + self.backgroundPosition[2]);
         end
-        row = row + 1;
     end
 end
 
----add a new klickable element the the table
+--- add a new klickable element the the table
 -- @parm newKlickableElement: object of the new klickable element
 function Chart:addKlickableElement(newKlickableElement)
     table.insert(self.p_elementsOnChart, newKlickableElement);
     self.p_row = math.ceil(table.getn(self.p_elementsOnChart) / self.p_column);
 end
 
----Function not conform to CC/ implements an interface
----Set the visible of all elements
--- @parm visible: true or false
-function Chart:SetVisible(visible)
-    self.button_up:SetVisible(visible);
-    self.button_down:SetVisible(visible);
-    self.textField:SetVisible(visible);
-    if visible then
-        self:drawChart();
-    else
-        for k, v in pairs(self.p_elementsOnChart) do
-            v:SetVisible(visible);
-        end
-    end
-    self.p_markFrame:SetVisible(false);
-    if not visible then
-        self.textField:changeText("", "");
-    end
-end
-
----Function not conform to CC/ implements an interface
----Set the chart position
--- @parm x: x axis position
--- @parm y: y axis position
-function Chart:SetPos(x, y)
-    local buttonXPos = (_G._persTable.scaledDeviceDim[1] - self.width) /2 + self.width * 0.16;
-    self.p_xPos = (_G._persTable.scaledDeviceDim[1] - self.klickableSize * self.p_column) / 2;
-    self.p_yPos = y;
-    self.button_up:SetPos(buttonXPos, y);
-    self.button_down:SetPos(buttonXPos,y + math.min(self.p_row, 3) *self.klickableSize + self.buttonHeight + self.buttonOffset);
-    self:setPosOfKlickableElements();
-    self.textField:SetPos(x, math.ceil(y + self.height * 0.68));
-    if self.p_markedElement ~= nil then
-        self.p_markFrame:SetPos(self.p_markedElement.object:GetX(), self.p_markedElement.object:GetY());
-    end
-end
-
----marks the selected element
+--- marks the selected element
 -- @parm element: selected element
 function Chart:markElement(element)
-    local x, y = element.object:GetPos();
-    self.p_markFrame:SetPos(x, y);
-    self.p_markFrame:SetVisible(true);
-    self.p_markFrame:MoveToTop();
+    local x, y = element.object:getPosition();
+    self.markPosition = {x, y};
     self.p_markedElement = element;
-    if element.price ~= nil then
-        if element.name ~= nil then
-            self.textField:changeText(_G.data.languages[_G._persTable.config.language].package[element.name].name,
-                _G.data.languages[_G._persTable.config.language].package[element.name].description, element.price);
+    if _G._gui:getCurrentState() == "Achievements" or _G._gui:getCurrentState() == "Shop" or 
+    (_G._gui:getCurrentState() == "Dictionary" and _G._persTable.fish.caught[element.name] > 0 ) or
+    (_G._gui:getCurrentState() == "Dictionary" and element.name == "nyan" and _G._persTable.fish.caught.rainbowPill > 0 ) then
+        if element.price ~= nil then
+            if element.name ~= nil then
+                
+                self.textFieldName = _G.data.languages[_G._persTable.config.language].package[element.name].name;
+                self.textFieldDescription =  _G.data.languages[_G._persTable.config.language].package[element.name].description;
+                self.textFieldPrice =  element.price;
+                
+                
+            else
+                self.textFieldName = _G.data.languages[_G._persTable.config.language].package[element.nameOnPersTable].name;
+                self.textFieldDescription = _G.data.languages[_G._persTable.config.language].package
+                    [element.nameOnPersTable].description;
+                self.textFieldPrice = element.price;
+                if _G._persTable.upgrades[element.nameOnPersTable] or 
+                    (element.dependency ~= nil and not _G._persTable.upgrades[element.dependency]) then
+                    _G._gui:getFrames().upgradeMenu.elementsOnFrame.button_buy:setImage(
+                        love.graphics.newImage("assets/gui/HalfButton_disable.png"));
+                else
+                    _G._gui:getFrames().upgradeMenu.elementsOnFrame.button_buy:setImage(
+                        love.graphics.newImage("assets/gui/HalfButton.png"));
+                end
+                
+            end
         else
-            self.textField:changeText(_G.data.languages[_G._persTable.config.language].package[element.nameOnPersTable].name,
-                _G.data.languages[_G._persTable.config.language].package[element.nameOnPersTable].description, element.price);
+            if element.name == "nyan" then
+                self.textFieldName = _G.data.languages[_G._persTable.config.language].package[element.name].name;
+                self.textFieldDescription =  _G.data.languages[_G._persTable.config.language].package[element.name].description;
+                self.textFieldPrice =  "";
+            else
+                self.textFieldName = _G.data.languages[_G._persTable.config.language].package[element.nameOnPersTable].name;
+                self.textFieldDescription = _G.data.languages[_G._persTable.config.language].package[element.nameOnPersTable].description;
+            end
         end
     else
-        self.textField:changeText(_G.data.languages[_G._persTable.config.language].package[element.nameOnPersTable].name,
-            _G.data.languages[_G._persTable.config.language].package[element.nameOnPersTable].description);
+        self.textFieldName = "???";
+        self.textFieldDescription = "?????";
+        self.textFieldPrice = "???";
     end
 end
 
+--- retruns the offset of the button
+--@return x and y offset of the button
+function Chart:getOffset()
+    return self.xOffset, self.yOffset;
+end
+
+function Chart:getPosition()
+    return self.p_xPos, self.p_yPos + self.backgroundPosition[2];
+end
+
+function Chart:getSize()
+    return _G._persTable.winDim[1], 3 * self.klickableSize + 2 * self.buttonHeight + self.buttonOffset;
+end
+
+--- sets the offset of the button 
+--@param x x offset of the button
+--@parma y y offset of the button
+function Chart:setOffset(x,y)
+    self.button_up:setOffset(x,y);
+    self.button_down:setOffset(x, y);
+    for _, v in pairs (self.p_elementsOnChart) do
+        v.object:setOffset(x,y)
+    end
+end
+
+function Chart:mousepressed(x, y)
+    local xPosition, yPosition = self.button_up:getPosition();
+    local width, height = self.button_up:getSize();
+    
+    if x > xPosition and x < xPosition + width and
+    y > yPosition and y < yPosition + height then
+        self.button_up.gotClicked();
+    else
+    
+    xPosition, yPosition = self.button_down:getPosition();
+    width, height = self.button_down:getSize();
+    
+        if x > xPosition and x < xPosition + width and
+        y > yPosition and y < yPosition + height then
+            self.button_down.gotClicked();
+        else
+        
+            for _, v in pairs (self.p_elementsOnChart) do
+                xPosition = v:getX();
+                yPosition = v:getY();
+                width, height = v:getSize();
+                
+                if x > xPosition and x < xPosition + width and
+                y > yPosition and y < yPosition + height and v ~= nil and
+                v.sortNumber > self.p_toprow * 3 and
+                v.sortNumber <= self.p_toprow * 3 + 9 then
+                    v:gotClicked(x, y);
+                end
+            end
+        end
+    end
+end
 return Chart;

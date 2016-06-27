@@ -4,6 +4,7 @@ _G.math.inf = 1 / 0
 testClass = require "src.class.frames.inGame";
 fakeElement = require "Tests.fakeLoveframes.fakeElement";
 Frame = require "class.Frame";
+ImageButton = require "src.class.ImageButton";
 
 
 describe("Unit test for inGame.lua", function()
@@ -16,7 +17,19 @@ describe("Unit test for inGame.lua", function()
                 setGrabbed = function(...) end;
             },
             system = {
-                getOS = function(...) return ""; end;
+                getOS = function(...) return "Android"; end;
+            },
+            graphics = {
+                newImage = function(...) return {
+                    getHeight = function (...) return 50 end;
+                    getWidth = function (...) return 50 end;
+                } end;
+                draw = function (...) end;
+                getFont = function (...) return "a Font" end;
+                newFont = function (...) end;
+                setFont = function (...) end;
+                printf = function (...) end;
+                setColor = function (...) end;
             }
         };
         _G.Loveframes = {
@@ -41,36 +54,19 @@ describe("Unit test for inGame.lua", function()
 
     it("Testing Constructor", function()
         local myInstance = testClass();
+        
         locInstance.elementsOnFrame = {};
+        locInstance.barFuel = "barFuel";
+        locInstance.button = "button";
+        locInstance.fuelBar = "fuelBar";
+        locInstance.fuelBarBackground = "fuelBarBackground";
+        
         myInstance.elementsOnFrame = {};
-        assert.are.same(locInstance, myInstance);
-    end)
-
-it("Testing Constructor", function()
-        _G._persTable = {
-            upgrades = {
-                moreLife = 1;
-            },
-            scaledDeviceDim = {640, 950};
-        };
-        locInstance = testClass();
-        local myInstance = testClass();
-        locInstance.elementsOnFrame = {};
-        myInstance.elementsOnFrame = {};
-        assert.are.same(locInstance, myInstance);
-    end)
-
-    it("Testing Constructor", function()
-        _G._persTable = {
-            upgrades = {
-                moreLife = 1;
-            },
-            scaledDeviceDim = {720, 1024};
-        };
-        locInstance = testClass();
-        local myInstance = testClass();
-        locInstance.elementsOnFrame = {};
-        myInstance.elementsOnFrame = {};
+        myInstance.barFuel = "barFuel";
+        myInstance.button = "button";
+        myInstance.fuelBar = "fuelBar";
+        myInstance.fuelBarBackground = "fuelBarBackground";
+        
         assert.are.same(locInstance, myInstance);
     end)
 
@@ -84,24 +80,23 @@ it("Testing Constructor", function()
     end)
 
     it("Testing draw function", function()
-        _G._gui = {
-            myFrames = {
-                pause = "teststring";
-            };
-            getLastState = function(...) return _G._gui.myFrames.pause; end;
-        };
-        _gui.getFrames = function(...) return _G._gui.myFrames; end;
-        stub(locInstance.elementsOnFrame.healthbar.object, "SetVisible");
-        stub(locInstance.elementsOnFrame.pause.object, "SetVisible");
+        local loveMock = mock(love.graphics, true);
+        locInstance.drawBar = true;
         locInstance:draw();
-        assert.stub(locInstance.elementsOnFrame.healthbar.object.SetVisible).was_called(1);
-        assert.stub(locInstance.elementsOnFrame.pause.object.SetVisible).was_called(1);
+        assert.spy(loveMock.draw).was_called(7);
     end)
 
     it("Testing activate function", function()
         stub(locInstance.frame, "draw");
         locInstance:activate();
-        assert.stub(locInstance.frame.draw).was_called(1);
+        assert.are.same(locInstance.drawBar, true);
+    end)
+
+    it("Testing deactivate function", function()
+        stub(locInstance.frame, "draw");
+        locInstance.drawBar = true;
+        locInstance:deactivate();
+        assert.are.same(locInstance.drawBar, false);
     end)
     
     it("Testing clear function", function()
@@ -134,5 +129,52 @@ it("Testing Constructor", function()
         locInstance:checkPosition();
         assert.stub(locInstance.frame.checkPosition).was_called(1);
     end)
+    
+    it("Testing mousepressend", function()
+        _G.clicked ={};
+        _G.clicked[1] = false;
+        _G.clicked[2] = false;
+        locInstance.elementsOnFrame.pause = {
+            getSize = function () return 50, 50 end;
+            getPosition = function () return 0, 0 end;
+            gotClicked = function() _G.clicked[1] = true end;
+        };
+        _gui.levMan = {
+            getCurLevel = function() return {
+                startStartAnimation = function () _G.clicked[2] = true end;
+                getStartAnimationRunning = function () return false end;
+                getStartAnimationFinished = function () return false end;
+            }end;
+        };
+        locInstance:mousepressed(10, 10);
+        assert.are.same(true, _G.clicked[1]);
+        assert.are.same(false, _G.clicked[2]);
+        
+        locInstance:mousepressed(10, 110);
+        assert.are.same(true, _G.clicked[1]);
+        assert.are.same(true, _G.clicked[2]);
+    end)
 
+    it("Testing update", function()
+        _G._persTable.config = {};
+        _G._persTable.config.language = 1;
+        _G.data = {
+            languages = {
+                {
+                    package = {
+                        textDepth = "text";
+                    }
+                }
+            };
+        };
+        _G._tmpTable = {};
+        _G._tmpTable.roundFuel = -100;
+        _G._tmpTable.currentDepth = -1000;
+        locInstance:update();
+        assert.are.same(locInstance.fuelBarPosition, -90);
+        _G._tmpTable.roundFuel = 100;
+        _G._tmpTable.currentDepth = 400;
+        locInstance:update();
+        assert.are.same(locInstance.fuelBarPosition, -85);
+    end)
 end)

@@ -11,3 +11,4 @@ luacov.*.out
 .idea/
 lib/hump
 lib/LoveFrames
+*.iml

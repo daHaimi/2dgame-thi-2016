@@ -5,6 +5,11 @@ testClass = require "src.class.frames.Achievements";
 fakeElement = require "Tests.fakeLoveframes.fakeElement";
 Frame = require "class.Frame";
 KlickableElement = require "class.KlickableElement";
+_G.TEsound = {
+    playLooping = function(...) end;
+    play = function(...) end;
+    stop = function(...) end;
+};
 
 
 describe("Unit test for Achievements.lua", function()
@@ -16,6 +21,19 @@ describe("Unit test for Achievements.lua", function()
             mouse = {
                 setVisible = function(...) end;
             };
+            
+            graphics = {
+                newImage = function(...) return {
+                    getHeight = function (...) return 50 end;
+                    getWidth = function (...) return 50 end;
+                } end;
+                draw = function (...) end;
+                getFont = function (...) return "a Font" end;
+                newFont = function (...) end;
+                setFont = function (...) end;
+                printf = function (...) end;
+                setColor = function (...) end;
+            }
         };
         
         _G.Loveframes = {
@@ -38,7 +56,7 @@ describe("Unit test for Achievements.lua", function()
             }
         }
         _G._persTable = {
-            scaledDeviceDim = {500, 500};
+            winDim = {500, 500};
         };
         _G.Frame = function(...) return Frame; end;
 
@@ -48,30 +66,15 @@ describe("Unit test for Achievements.lua", function()
 
     it("Testing Constructor", function()
         local myInstance = testClass();
+        
         locInstance.elementsOnFrame = {};
+        locInstance.imageButton = "imageButton";
+        locInstance.background = "background";
+        
         myInstance.elementsOnFrame = {};
-        assert.are.same(locInstance, myInstance);
-    end)
-
-    it("Testing Constructor", function()
-        _G._persTable = {
-            scaledDeviceDim = {640, 950};
-        };
-        locInstance = testClass();
-        local myInstance = testClass();
-        locInstance.elementsOnFrame = {};
-        myInstance.elementsOnFrame = {};
-        assert.are.same(locInstance, myInstance);
-    end)
-
-    it("Testing Constructor", function()
-        _G._persTable = {
-            scaledDeviceDim = {720, 1024};
-        };
-        locInstance = testClass();
-        local myInstance = testClass();
-        locInstance.elementsOnFrame = {};
-        myInstance.elementsOnFrame = {};
+        myInstance.imageButton = "imageButton";
+        myInstance.background = "background";
+        
         assert.are.same(locInstance, myInstance);
     end)
 
@@ -89,8 +92,12 @@ describe("Unit test for Achievements.lua", function()
         assert.spy(locInstance.loadValuesFromPersTable).was.called();
 
         spy.on(_G._gui, "changeFrame");
-        locInstance.elementsOnFrame.button_back.object.OnClick();
+        locInstance.elementsOnFrame.button_back.gotClicked();
         assert.spy(_gui.changeFrame).was.called();
+        
+        stub(locInstance.elementsOnFrame.chart, "mousepressed")
+        locInstance.elementsOnFrame.chart.gotClicked();
+        assert.stub(locInstance.elementsOnFrame.chart.mousepressed).was.called();
     end)
 
     it("Testing addAllAchievements function", function()
@@ -99,6 +106,7 @@ describe("Unit test for Achievements.lua", function()
                 testAch1 = {
                     nameOnPersTable = "test1";
                     name = "test1";
+                    sortNumber = 1;
                     description = "test1";
                     image_lock = "path1";
                     image_unlock = "path2";
@@ -106,21 +114,26 @@ describe("Unit test for Achievements.lua", function()
                 testAch2 = {
                     nameOnPersTable = "test2";
                     name = "test2";
+                    sortNumber = 2;
                     description = "test2";
                     image_lock = "path3";
                     image_unlock = "path4";
                 }
             };
         };
+        local image = {
+            getHeight = function (...) return 50 end;
+            getWidth = function (...) return 50 end;
+        }
         
         locInstance:addAllAchievements();
-        locInstance.elementsOnFrame.chart.object.p_elementsOnChart[1].object = {};
-        locInstance.elementsOnFrame.chart.object.p_elementsOnChart[2].object = {};
-        local KE1 = KlickableElement("test1", "path1", "path2", "test1", nil, "test1");
-        local KE2 = KlickableElement("test2", "path3", "path4", "test2", nil, "test2");
+        locInstance.elementsOnFrame.chart.p_elementsOnChart[1].object = {};
+        locInstance.elementsOnFrame.chart.p_elementsOnChart[2].object = {};
+        local KE1 = KlickableElement("test1", image, image, "test1", nil, "test1");
+        local KE2 = KlickableElement("test2", image, image, "test2", nil, "test2");
         KE1.object = {};
         KE2.object = {};
-        assert.not_same(locInstance.elementsOnFrame.chart.object.p_elementsOnChart, {KE1, KE2});
+        assert.not_same(locInstance.elementsOnFrame.chart.p_elementsOnChart, {KE1, KE2});
     end)
 
     it("Testing loadValuesFromPersTable function", function()
@@ -136,6 +149,7 @@ describe("Unit test for Achievements.lua", function()
                 testAch1 = {
                     nameOnPersTable = "testAch1";
                     name = "test1";
+                    sortNumber = 1;
                     description = "test1";
                     image_lock = "path1";
                     image_unlock = "path2";
@@ -143,6 +157,7 @@ describe("Unit test for Achievements.lua", function()
                 testAch2 = {
                     nameOnPersTable = "testAch2";
                     name = "test2";
+                    sortNumber = 2;
                     description = "test2";
                     image_lock = "path3";
                     image_unlock = "path4";
@@ -153,14 +168,14 @@ describe("Unit test for Achievements.lua", function()
         locInstance:addAllAchievements();
         locInstance:loadValuesFromPersTable();
 
-        assert.equal(locInstance.elementsOnFrame.chart.object.p_elementsOnChart[1].enable, false);
-        assert.equal(locInstance.elementsOnFrame.chart.object.p_elementsOnChart[2].enable, true);
+        assert.equal(locInstance.elementsOnFrame.chart.p_elementsOnChart[1].enable, false);
+        assert.equal(locInstance.elementsOnFrame.chart.p_elementsOnChart[2].enable, true);
     end)
 
     it("Testing draw function", function()
-        stub(locInstance.frame, "draw");
+        local loveMock = mock(love.graphics, true);
         locInstance:draw();
-        assert.stub(locInstance.frame.draw).was_called(1);
+        assert.spy(loveMock.draw).was_called(5);
     end)
 
     it("Testing clear function", function()
@@ -186,6 +201,38 @@ describe("Unit test for Achievements.lua", function()
         stub(locInstance.frame, "checkPosition");
         locInstance:checkPosition();
         assert.stub(locInstance.frame.checkPosition).was_called(1);
+    end)
+    
+    it("Testing setOffset", function()
+        locInstance:setOffset(50, 50);
+        assert.are.same(locInstance.xOffset, 50);
+        assert.are.same(locInstance.yOffset, 50);
+    end)
+
+    it("Testing mousepressend", function()
+        _G.clicked ={};
+        _G.clicked[1] = false;
+        _G.clicked[2] = false;
+        locInstance.elementsOnFrame = {
+            button_back = {
+                getSize = function () return 50, 50 end;
+                getPosition = function () return 0, 0 end;
+                gotClicked = function() _G.clicked[1] = true end;
+            };
+            button_chart = {
+                getSize = function () return 50, 50 end;
+                getPosition = function () return 0, 100 end;
+                gotClicked = function() _G.clicked[2] = true end;
+            };
+        };
+        
+        locInstance:mousepressed(10, 10);
+        assert.are.same(true, _G.clicked[1]);
+        assert.are.same(false, _G.clicked[2]);
+        
+        locInstance:mousepressed(10, 110);
+        assert.are.same(true, _G.clicked[1]);
+        assert.are.same(true, _G.clicked[2]);
     end)
 
 end)

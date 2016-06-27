@@ -1,134 +1,138 @@
 Class = require "lib.hump.class";
 AchievementDisplay = require "class.AchievementDisplay";
+ImageButton = require "class.ImageButton";
 
 local Score = Class {
     init = function(self)
-        if _G._persTable.scaledDeviceDim[1] < 640 then
-            self.directory = "assets/gui/480px/";
-            self.widthPx = 480;
-            self.width = 384;
-            self.height = 666;
-            self.buttonHeight = 75;
-            self.scoreHeight = 170;
-            self.achievementsHeight = 128;
-            self.Offset = 15;
-            self.speed = 50;
-        elseif _G._persTable.scaledDeviceDim[1] < 720 then
-            self.widthPx = 640;
-            self.directory = "assets/gui/640px/";
-            self.width = 512;
-            self.height = 888;
-            self.scoreHeight = 170;
-            self.achievementsHeight = 128;
-            self.Offset = 20;
-            self.buttonHeight = 96;
-            self.speed = 60;
-        else
-            self.widthPx = 720;
-            self.directory = "assets/gui/720px/";
-            self.width = 576;
-            self.height = 1024;
-            self.scoreHeight = 170;
-            self.achievementsHeight = 128;
-            self.Offset = 30;
-            self.buttonHeight = 106;
-            self.speed = 75;
-        end
+        self.background = love.graphics.newImage("assets/gui/ScoreScreen.png");
+        self.backgroundPosition = {(_G._persTable.winDim[1] - self.background:getWidth()) / 2,
+            (_G._persTable.winDim[2] - self.background:getHeight()) / 2};
+        self.imageButton = love.graphics.newImage("assets/gui/Button.png");
+        self.buttonHeight = self.imageButton:getHeight();
+        self.buttonWidth = self.imageButton:getWidth();
+        self.buttonXPosition = (_G._persTable.winDim[1] - self.buttonWidth) / 2;
         self.name = "Score";
-        self.frame = Frame((_G._persTable.scaledDeviceDim[1] - self.width) / 2, 
-            (_G._persTable.scaledDeviceDim[2] - self.height) / 2 - self.speed, "down", "down", self.speed, 0, -1500);
+        self.scoretext = "";
+        self.scoretextPosition = 0;
+        self.score = "";
+        self.scorePosition = 0;
+        self.playAppearSound = true;
+        self.frame = Frame(0, 0, "down", "down", 50, 0, -1500);
         self:create();
+        self.sounds = {
+            buyS = love.sound.newSoundData( "assets/sound/buying.wav" );
+            backS = love.sound.newSoundData( "assets/sound/buttonPressed.wav" );
+        };
     end;
 };
 
----creates the Score frame
+--- creates the Score frame
 function Score:create()
     --add, create and position all elements on this frame
     self.elementsOnFrame = {
-        background = {
-            object = Loveframes.Create("image");
-            x = 0;
-            y = 0;
-        };
-        scoretext = {
-            object = Loveframes.Create("text");
-            x = 0;
-            y = 30;
-        };
-        score = {
-            object = Loveframes.Create("text");
-            x = 110;
-            y = 90;
-        };
-        achievements = {
-            object = AchievementDisplay(self.directory);
-            x = 0;
-            y = self.scoreHeight + self.Offset;
-        };
-        button_retry = {
-            object = Loveframes.Create("imagebutton");
-            x = 0.16 * self.width;
-            y = self.scoreHeight + self.achievementsHeight + 2 * self.Offset;
-        };
-        button_backToMenu = {
-            object = Loveframes.Create("imagebutton");
-            x = 0.16 * self.width;
-            y = self.scoreHeight + self.achievementsHeight + self.buttonHeight + 3 * self.Offset;
-        };
+        achievements = AchievementDisplay();
+        button_retry = ImageButton(self.imageButton, self.buttonXPosition , 
+            self.backgroundPosition[2] + self.background:getHeight() - 2 * self.buttonHeight - 45, true);
+        button_backToMenu = ImageButton(self.imageButton, self.buttonXPosition , 
+            self.backgroundPosition[2] + self.background:getHeight() - self.buttonHeight - 30, true);
     };
-    
+
     --adjust all elements on this frame
-    self.elementsOnFrame.background.object:SetImage(self.directory .. "ScoreScreen.png");
+    self.scoretext = (_G.data.languages[_G._persTable.config.language].package.textScore);
+    self.scoretextPosition = 200;
+    self.scorePosition = 300;
     
-    self.elementsOnFrame.scoretext.object:SetText("Your Score:");
-    self.elementsOnFrame.scoretext.x = 0.5 * self.width - 0.5 * self.elementsOnFrame.scoretext.object:GetWidth();
-    
-    self.elementsOnFrame.score.x = 0.5 * self.width - 30;
-    
-    self.elementsOnFrame.button_retry.object:SetImage(self.directory .. "Button.png")
-    self.elementsOnFrame.button_retry.object:SizeToImage()
-    self.elementsOnFrame.button_retry.object:SetText("Retry");
-    
-    self.elementsOnFrame.button_backToMenu.object:SetImage(self.directory .. "Button.png")
-    self.elementsOnFrame.button_backToMenu.object:SizeToImage()
-    self.elementsOnFrame.button_backToMenu.object:SetText("Back to Menu");
-    
-    
+    self.elementsOnFrame.achievements:setPosition(self.backgroundPosition[1], 
+        self.backgroundPosition[2] + self.background:getHeight() * 0.3 + 100);
+
     --onclick events for all buttons
-    self.elementsOnFrame.button_retry.object.OnClick = function(object)
+    self.elementsOnFrame.button_retry.gotClicked = function(_)
+        TEsound.play({ self.sounds.backS }, 'bgm');
+        self.elementsOnFrame.achievements:remove();
         _gui:getLevelManager():replayLevel();
         _gui:changeFrame(_gui:getFrames().inGame);
     end
-    
-    self.elementsOnFrame.button_backToMenu.object.OnClick = function(object)
+
+    self.elementsOnFrame.button_backToMenu.gotClicked = function(_)
+        TEsound.play({ self.sounds.backS }, 'bgm');
+        self.elementsOnFrame.achievements:remove();
         _gui:getLevelManager():freeManagedObjects();
         _gui:changeFrame(_gui:getFrames().mainMenu);
     end
+    
+    self.elementsOnFrame.achievements.gotClicked = function (_)
+    end
+
 end
 
----shows the frame on screen
+--- changes the language of this frame
+function Score:setLanguage(language)
+    self.scoretext = (_G.data.languages[language].package.textScore);
+    self.elementsOnFrame.button_retry:setText(_G.data.languages[language].package.buttonRetry);
+    self.elementsOnFrame.button_backToMenu:setText(_G.data.languages[language].package.buttonBTM);
+    self.elementsOnFrame.achievements:setLanguage(language);
+end
+
+--- shows the frame on screen
 function Score:draw()
-    self.elementsOnFrame.score.object:SetText(_G._tmpTable.earnedMoney);
-    self.frame:draw(self.elementsOnFrame);
+    self.score = (_G._tmpTable.earnedMoney);    
+    local _, y = self.elementsOnFrame.button_retry:getOffset();
+    
+    
+    love.graphics.draw(self.background, self.backgroundPosition[1], self.backgroundPosition[2] + 100 + y);
+    
+    
+    for _, v in pairs (self.elementsOnFrame) do
+        v:draw();
+    end
+    
+    love.graphics.setFont(love.graphics.newFont("font/8bitOperatorPlus-Bold.ttf", 25));
+    love.graphics.setColor(0, 0, 0);
+    love.graphics.printf(self.scoretext, 0, self.backgroundPosition[2] + 120
+        + y, _G._persTable.winDim[1], 'center');
+    if self.score ~= nil then 
+        love.graphics.printf(self.score, self.backgroundPosition[1], self.backgroundPosition[2] + 190
+            + y, self.background:getWidth() - 50, 'center');
+    end
+    love.graphics.setColor(255, 255, 255);
+end
+--- is called when the mouse is pressed
+--@param x x coordinate of the mouse 
+--@param y y coordinate of the mouse
+function Score:mousepressed(x, y)    
+    for _, v in pairs (self.elementsOnFrame) do
+        local xPosition, yPosition = v:getPosition();
+        local width, height = v:getSize();
+        
+        if x > xPosition and x < xPosition + width and
+        y > yPosition and y < yPosition + height then
+            v.gotClicked();
+        end
+    end
 end
 
----called to "delete" this frame
+--- called to "delete" this frame
 function Score:clear()
     self.frame:clear(self.elementsOnFrame);
 end
 
----called in the "fly in" state 
+--- called in the "fly in" state
 function Score:appear()
     love.mouse.setVisible(true);
     self.frame:appear(self.elementsOnFrame);
+    if self.playAppearSound == true then
+        self.playAppearSound = false;
+        TEsound.play({ self.sounds.buyS }, 'bgm');
+    end
 end
 
----called in the "fly out" state
+--- called in the "fly out" state
 function Score:disappear()
     self.frame:disappear(self.elementsOnFrame);
+    self.playAppearSound = true;
 end
 
----return true if the frame is on position /fly in move is finished
+--- return true if the frame is on position /fly in move is finished
 function Score:checkPosition()
     return self.frame:checkPosition();
 end

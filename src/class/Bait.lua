@@ -12,7 +12,7 @@ local Bait = Class {
         -- Initialize the member variables
         self.levMan = nil;
         self.size = 10;
-        self.speed = 200;
+        self.speed = 300;
         self.posXMouse = 0;
         self.xPos = 0;
         self.maxSpeedX = 20;
@@ -22,7 +22,7 @@ local Bait = Class {
         self.numberOfHits = 0;
         self.hitFishable = 0;
         _G._tmpTable.caughtThisRound = {};
-        self.sleepingPillDuration = 0;
+        self.pillDuration = {0,0,0};
         self.deltaTime = 0;
         self.modifier = 0.5;
         self.goldenRuleLowerPoint = 0.32;
@@ -30,6 +30,7 @@ local Bait = Class {
         self.image = nil;
         self.imageCheeks = nil;
         self.quadCheeks = nil;
+        self.timeShowMouth = 0;
         self.pullIn = false;
 
 
@@ -40,6 +41,7 @@ local Bait = Class {
         local img = love.graphics.newImage("assets/sprites/sprite_hamster.png");
         self.imgUp = love.graphics.newImage("assets/sprites/sprite_hamster_up.png");
         self.imageCheeks = love.graphics.newImage("assets/sprites/sprite_cheeks.png");
+        self.imageMouth = love.graphics.newImage("assets/nomnom.png");
         self.line = love.graphics.newImage("assets/line.png");
         if img == 0 then
             self.image = nil;
@@ -52,27 +54,9 @@ local Bait = Class {
 
 --- Marks the member variables for the garbage collector
 function Bait:destructBait()
-    self.levMan = nil;
-    self.size = nil;
-    self.speed = nil;
-    self.posXMouse = nil;
-    self.xPos = nil;
-    self.maxSpeedX = nil;
-    self.winDim = nil;
-    self.life = nil;
-    self.money = nil;
-    self.numberOfHits = nil;
-    self.hitFishable = nil;
-    self.caughtThisRound = nil;
-    self.sleepingPillDuration = nil;
-    self.deltaTime = nil;
-    self.modifier = nil;
-    self.goldenRuleLowerPoint = nil;
-    self.goldenRuleUpperPoint = nil;
-    self.image = nil;
-    self.pullIn = nil;
-    self.imageCheeks = nil;
-    self.quadCheeks = nil;
+    for key, value in pairs(self) do
+        self[key] = nil;
+    end
 end
 
 --- a function to check wich upgrades are active for the bait
@@ -101,23 +85,27 @@ end
 --- updates the bait and checks for collisions
 -- @param dt Delta time is the amount of seconds since the last time this function was called.
 function Bait:update(dt)
-    oldXPos = self.xPos;
+    local oldXPos = self.xPos;
 
     -- update animation
     if self.image ~= nil then
         self.image:update(dt);
     end
-    
+
     -- update Bait cheeks
     if self.hitFishable ~= nil then
-      local dimX, dimY = self.imageCheeks:getDimensions();
-      if  self.hitFishable > 20 then
-          self.quadCheeks = love.graphics.newQuad(2*dimX/3, 0, dimX/3, dimY, dimX, dimY);
-      elseif self.hitFishable > 15 then
-          self.quadCheeks = love.graphics.newQuad(dimX/3, 0, dimX/3, dimY, dimX, dimY);
-      elseif self.hitFishable > 5 then
-          self.quadCheeks = love.graphics.newQuad(0, 0, dimX/3, dimY, dimX, dimY);
-      end
+        local dimX, dimY = self.imageCheeks:getDimensions();
+        if self.hitFishable > 20 then
+            self.quadCheeks = love.graphics.newQuad(2 * dimX / 3, 0, dimX / 3, dimY, dimX, dimY);
+        elseif self.hitFishable > 15 then
+            self.quadCheeks = love.graphics.newQuad(dimX / 3, 0, dimX / 3, dimY, dimX, dimY);
+        elseif self.hitFishable > 5 then
+            self.quadCheeks = love.graphics.newQuad(0, 0, dimX / 3, dimY, dimX, dimY);
+        end
+    end
+    
+    if self.timeShowMouth > 0 then
+        self.timeShowMouth = self.timeShowMouth - dt;
     end
 
     -- calculate modifier for the golden rule
@@ -136,20 +124,32 @@ function Bait:update(dt)
     self.deltaTime = dt;
     self:checkForCollision(self.levMan:getCurSwarmFactory().createdFishables, oldXPos);
 
-    -- decrease or deativate sleeping pill
-    if self.sleepingPillDuration > 0 then
-        self.sleepingPillDuration = self.sleepingPillDuration - dt;
-    else
-        self.sleepingPillDuration = 0;
+    -- decrease or deativate pills
+    for i = 1, #self.pillDuration, 1 do 
+        if self.pillDuration[i] > 0 then
+            self.pillDuration[i] = self.pillDuration[i] - dt;
+        elseif self.pillDuration[i] < 0 then
+            self.pillDuration[i] = 0;
+            self:resetPill(i);
+        end
+    end
+end
+
+function Bait:resetPill(i)
+    if i == 1 or i == 2 then
         self.levMan:getCurSwarmFactory():setSpeedMultiplicator(1);
+    elseif i == 3 then
+        self.levMan:getCurSwarmFactory():resetNyan();
     end
 end
 
 function Bait:capXPosition()
     local leftBound = 58;
     local rightBound = 422;
-    if self.levMan:getCurLevel():getYPos() > self.winDim[2] * 0.2 
-    and self.levMan:getCurLevel():getLevelName() == "sewers" then
+    if self.levMan:getCurLevel():getYPos() > self.winDim[2] * 0.2
+            and (self.levMan:getCurLevel():getLevelName() == "sewers" or 
+                self.levMan:getCurLevel():getLevelName() == "sewersEndless" or 
+                self.levMan:getCurLevel():getLevelName() == "sleepingCrocos") then
         local m = 142 / (self.winDim[2] * 0.2);
         leftBound = 58 + m * (self.levMan:getCurLevel():getYPos() - self.winDim[2] * 0.23);
         rightBound = 422 - m * (self.levMan:getCurLevel():getYPos() - self.winDim[2] * 0.23);
@@ -184,7 +184,7 @@ end
 function Bait:checkFishableForCollision(fishable, oldXPos, index)
     local moved = self.levMan:getCurLevel():getMoved();
     local directionOfMovement = 0;
-    yPos = self.yPos
+    local yPos = self.yPos
 
     if oldXPos < self.xPos then
         directionOfMovement = 1;
@@ -212,22 +212,36 @@ end
 -- @param fishable the fishable object hit
 -- @param index index of the fishable object hit
 function Bait:collisionDetected(fishable, index)
+    self.timeShowMouth = 0.3;
     -- sleeping Pill hit
     if fishable:getName() == "sleepingPill" then
         self:sleepingPillHit();
         self.levMan:getCurSwarmFactory().createdFishables[index]:setToCaught();
-        -- other fishable object hit and no godMode active
+    -- coffee hit
+    elseif fishable:getName() == "coffee" then
+        self:coffeeHit();
+        self.levMan:getCurSwarmFactory().createdFishables[index]:setToCaught();
+    -- rainbowPill Hit
+    elseif fishable:getName() == "rainbowPill" then
+        self:rainbowPillHit();
+        self.levMan:getCurSwarmFactory().createdFishables[index]:setToCaught();
+    -- other fishable object hit and no godMode active
     elseif not self.levMan:getCurLevel():getGodModeStat() then
         -- still lifes left
         if self.numberOfHits <= _G._persTable.upgrades.moreLife then
             self.numberOfHits = self.numberOfHits + 1;
             self.levMan:getCurLevel():activateShortGM(self.deltaTime, self.speed);
+            love.system.vibrate(0.3);
         end
-        _gui:getFrames().inGame.elementsOnFrame.healthbar.object:minus();
+        _gui:getFrames().inGame.elementsOnFrame.healthbar:minus();
         -- no more lifes left
         if self.numberOfHits > _G._persTable.upgrades.moreLife then
             self.levMan:getCurLevel():switchToPhase2();
         end
+    end
+    -- removes fishable (explosion animation)
+    if self.levMan:getCurLevel():getGodModeStat() then
+        self.levMan:getCurSwarmFactory().createdFishables[index]:setDestroyed();
     end
     -- while phase 2
     if self.levMan:getCurLevel():getDirection() == -1 and not fishable.caught then
@@ -240,7 +254,21 @@ end
 --- is called everytime the bait hits a sleeping pill
 function Bait:sleepingPillHit()
     self.levMan:getCurSwarmFactory():setSpeedMultiplicator(_G._persTable.upgrades.sleepingPillSlow);
-    self.sleepingPillDuration =  _G._persTable.upgrades.sleepingPillDuration;
+    self.pillDuration[1] = _G._persTable.upgrades.pillDuration;
+    _G._persTable.fish.caught.sleepingPill = _G._persTable.fish.caught.sleepingPill + 1;
+end
+
+--- is called everytime the bait hits a coffee pill
+function Bait:coffeeHit()
+    self.levMan:getCurSwarmFactory():setSpeedMultiplicator(_G._persTable.upgrades.coffeeSpeedup);
+    self.pillDuration[2] = _G._persTable.upgrades.pillDuration;
+    _G._persTable.fish.caught.coffee = _G._persTable.fish.caught.coffee + 1;
+end
+
+function Bait:rainbowPillHit()
+    self.levMan:getCurSwarmFactory():setImageToNyan();
+    self.pillDuration[3] = _G._persTable.upgrades.rainbowPillDuration;
+    _G._persTable.fish.caught.rainbowPill = _G._persTable.fish.caught.rainbowPill + 1;
 end
 
 --- implements drawing interface
@@ -249,20 +277,25 @@ function Bait:draw()
     if self.levMan:getCurLevel():getGodModeStat() then
         Shaders:hueAjust(0.5);
     end
-    if self.levMan:getCurLevel():getLevelName() == "sewers" then
+    if self.levMan:getCurLevel():getLevelName() == "sewers" or 
+    self.levMan:getCurLevel():getLevelName() == "sewers" or
+    self.levMan:getCurLevel():getLevelName() == "sleepingCrocos" then
         self:drawLineDiagonal();
     else
-        self:drawLIneStraight();
+        self:drawLineStraight();
     end
     self.image:draw(self.xPos - 32, self.yPos - 39); -- FIXME magic number
+    if self.timeShowMouth > 0 then
+        love.graphics.draw(self.imageMouth, self.xPos - 32, self.yPos - 39);
+    end
     if self.quadCheeks ~= nil then
-    love.graphics.draw(self.imageCheeks, self.quadCheeks, self.xPos - 32, self.yPos - 39);
+        love.graphics.draw(self.imageCheeks, self.quadCheeks, self.xPos - 32, self.yPos - 39);
     end
     Shaders:clear();
 end
 
 --- draws the line of the Hamster in the canyon
-function Bait:drawLIneStraight()
+function Bait:drawLineStraight()
     local length = self.yPos
     for i = 1, length, 1 do
         if not (i * 9 > length) then
@@ -273,7 +306,7 @@ end
 
 --- draws the line of the Hamster in the sewers
 function Bait:drawLineDiagonal()
-    local angle = 0;
+    local angle;
     local length = math.sqrt(self.xPos * self.xPos + self.yPos * self.yPos);
 
     angle = math.atan((self.xPos - 0.5 * self.winDim[1]) / (self.levMan:getCurLevel():getYPos() - self.winDim[2] * self.modifier - 100));
@@ -368,7 +401,7 @@ function Bait:getSpeed()
 end
 
 function Bait:changeSprite()
-  self.image = Animate(self.imgUp, 3, 1, .08, Animate.AnimType.bounce);
+    self.image = Animate(self.imgUp, 3, 1, .08, Animate.AnimType.bounce);
 end
 
 return Bait;
