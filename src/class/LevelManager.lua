@@ -45,9 +45,9 @@ local LevelManager = Class {
             levelName = "sleepingCrocos",
             direction = 1;
             depth = {
-                default = -5000;
-                advanced = - 10000;
-                endless = - 10000;
+                default = - 7500;
+                advanced = - 15000;
+                endless = - 25000;
             };
             bgPath = "assets/testbg.png",
             mode = "sleepingCrocos"
@@ -56,9 +56,9 @@ local LevelManager = Class {
             levelName = "crazySquirrels",
             direction = 1;
             depth = {
-                default = -5000;
-                advanced = - 10000;
-                endless = - 10000;
+                default = - 7500;
+                advanced = - 15000;
+                endless = - 25000;
             };
             bgPath = "assets/canyonBG.png",
             mode = "crazySquirrles"

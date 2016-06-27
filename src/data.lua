@@ -17,7 +17,7 @@ return {
             animType = "bounce";
             minAmount = 2; -- min amount of objects per swarm
             maxAmount = 3; -- max amount of objects per swarm
-            swarmHeight = 250; -- height of the swarm of this object
+            swarmHeight = 200; -- height of the swarm of this object
             enabled = true; -- Whether the object is enabled
 
             -- Definition of the hitbox
@@ -48,7 +48,7 @@ return {
             animType = "bounce";
             minAmount = 2;
             maxAmount = 2;
-            swarmHeight = 175;
+            swarmHeight = 150;
             enabled = true;
             hitbox = {
                 {
@@ -93,7 +93,7 @@ return {
             value = -20;
             animTimeoutMin = 0.2;
             animTimeoutMax = 0.3;
-            minAmount = 1;
+            minAmount = 2;
             maxAmount = 2;
             swarmHeight = 125;
             enabled = true;
@@ -259,9 +259,9 @@ return {
             value = 5;
             animTimeoutMin = 0.8;
             animTimeoutMax = 1;
-            minAmount = 3;
-            maxAmount = 6;
-            swarmHeight = 250;
+            minAmount = 1;
+            maxAmount = 2;
+            swarmHeight = 110;
             enabled = true;
             hitbox = {
                 {
@@ -382,14 +382,14 @@ return {
             image = "squirrel.png";
             spriteSize = 64;
             minSpeed = 4;
-            maxSpeed = 8;
+            maxSpeed = 7;
             value = 10;
             animTimeoutMin = 0.15;
             animTimeoutMax = 0.17;
             animType = "bounce";
-            minAmount = 2;
-            maxAmount = 4;
-            swarmHeight = 300;
+            minAmount = 1;
+            maxAmount = 1;
+            swarmHeight = 130;
             enabled = true;
             hitbox = {
                 {
@@ -782,8 +782,8 @@ return {
             maxSwarmHeight = 12000;
         },
         {
-            allowedFishables = { "lollipop"; "deadFish"; "angler" };
-            fishablesProbability = { 25; 55; 100 };
+            allowedFishables = { "lollipop"; "shoe"; "deadFish"; "angler" };
+            fishablesProbability = { 25; 50, 75; 100 };
             maxSwarmHeight = 15000;
         }
     };
