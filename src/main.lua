@@ -47,7 +47,6 @@ local frameCounter = 0;
 --- The bootstrap of the game.
 -- This function is called exactly once at the beginning of the game.
 function love.load()
-    _G.standardFont = love.graphics.getFont();
     --if arg[#arg] == "-debug" then require("mobdebug").start() end -- enables the debugging
     _G.data = require "data"; -- loading cycle on android requires data to be load on love.load()
     _G._persistence = Persistence();
@@ -149,11 +148,6 @@ function love.draw()
         love.graphics.print(_G._androidConfig.joyPos, 100, 100);
         love.graphics.pop();
     end
-
-    -- debug info for memory usage do not remove!
-    love.graphics.setFont(_G.standardFont);
-    love.graphics.print('Memory actually used (in kB): ' .. collectgarbage('count'), 200, 60);
-    love.graphics.print("Current FPS: " .. tostring(love.timer.getFPS()), 200, 75);
 end
 
 --- This function is called continuously by the love.run().
