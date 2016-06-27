@@ -368,6 +368,7 @@ function Level:doStartAnimationMovement(bait, dt)
                     self.hamsterYPos = self.hamsterYPos + 0.5 * math.ceil(dt * bait:getSpeed());
                     self.failedStart = true;
                 else
+                    TEsound.stop("pullTag");
                     self.levelFinished = true;
                     if not self.hamsterHarmedPlayed then
                         TEsound.play({ "assets/sound/hamsterHarmed.wav" });
@@ -380,7 +381,6 @@ function Level:doStartAnimationMovement(bait, dt)
                     self.hamsterYPos = self.hamsterYPos + 0.5 * math.ceil(dt * bait:getSpeed());
                     -- hamster dropped next to toilet
                     if self.hamsterLockedXPos < 120 or self.hamsterLockedXPos > 300 then
-                        -- sound starts to play to soon
                         self.failedStart = true;
                     end
                 else
@@ -391,6 +391,7 @@ function Level:doStartAnimationMovement(bait, dt)
                         TEsound.play("assets/sound/hamsterDrop.wav", _, _G._persTable.config.bgm / 100);
                     else
                         self.levelFinished = true;
+                        TEsound.stop("pullTag");
                         if not self.hamsterHarmedPlayed then
                             TEsound.play({ "assets/sound/hamsterHarmed.wav" });
                             self.hamsterHarmedPlayed = true;
