@@ -1,6 +1,6 @@
 Class = require("lib.hump.class");
 require("lib.table_serializer");
-data = require("data");
+data = require("src.data");
 
 --- Class to save the persTable data permanent 
 -- it will be saved to the devices love.filesystem save directory 
