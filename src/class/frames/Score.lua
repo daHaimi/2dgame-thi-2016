@@ -41,7 +41,8 @@ function Score:create()
     self.scoretext = (_G.data.languages[_G._persTable.config.language].package.textScore);
     self.scoretextPosition = 200;
     self.scorePosition = 300;
-    
+    self.elementsOnFrame.button_retry:setOffset(0, -1500);
+    self.elementsOnFrame.button_backToMenu:setOffset(0, -1500);
     self.elementsOnFrame.achievements:setPosition(self.backgroundPosition[1], 
         self.backgroundPosition[2] + self.background:getHeight() * 0.3 + 100);
 

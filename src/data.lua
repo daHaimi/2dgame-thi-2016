@@ -381,7 +381,7 @@ return {
             name = "crazySquirrel";
             image = "squirrel.png";
             spriteSize = 64;
-            minSpeed = 6;
+            minSpeed = 4;
             maxSpeed = 8;
             value = 10;
             animTimeoutMin = 0.15;
@@ -389,7 +389,7 @@ return {
             animType = "bounce";
             minAmount = 2;
             maxAmount = 4;
-            swarmHeight = 200;
+            swarmHeight = 300;
             enabled = true;
             hitbox = {
                 {
