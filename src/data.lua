@@ -774,6 +774,11 @@ return {
         {
             allowedFishables = { "ring"; "shoe"; "snake"; "crocodile" };
             fishablesProbability = { 1; 30; 45; 100 };
+            maxSwarmHeight = 7000;
+        },
+        {
+            allowedFishables = {"shoe"; "snake"; "crocodile" };
+            fishablesProbability = {30; 45; 100 };
             maxSwarmHeight = 9000;
         },
         {
