@@ -110,6 +110,8 @@ function SwarmFactory:createFallingLitter(depth, minDistance, maxDistance)
             fishable.hitpoints, fishable.spriteSize, fishable.hitbox, fishable.animTimeoutMin, fishable.animTimeoutMax,
             fishable.animType, fishable.downSpeed, self.levMan);
         self.createdFishables[#self.createdFishables]:setXPosition(self.levMan:getCurPlayer():getPosX() - math.random(-150, 150));
+
+        TEsound.play("assets/sound/canyonDrop.wav", _, _G._persTable.config.bgm / 100, 0.7);
     end
 end
 
