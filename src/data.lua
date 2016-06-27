@@ -1438,7 +1438,7 @@ return {
                 buttonChangeLevel = "Levelauswahl";
                 textPrice = "Preis: ";
                 textMoney = "Nicht genug Geld!";
-                textBought = "Already bought";
+                textBought = "Bereits gekauft";
                 buttonRetry = "Neustarten";
                 textNoNewAchievements = "Keine neuen Errungenschaften";
                 buttonBuy = "Kaufen";
@@ -1599,7 +1599,7 @@ return {
                 ring = {
                     name = "Ring";
                     name = "Ring";
-                    description = "Ein Ring sie alle zu knechten";
+                    description = "Ein Ring sie zu knechten";
                 };
                 shoe = {
                     name = "Schuh";
@@ -1639,7 +1639,7 @@ return {
                 };
                 canyonSnake = {
                     name = "Canyon Schlange";
-                    description = "Beeindruckend; sie hat ihren eigenen Schwanz gefangen";
+                    description = "Beeindruckend, sie hat ihren eigenen Schwanz gefangen";
                 };
                 cactus = {
                     name = "Kaktus";
@@ -1647,7 +1647,7 @@ return {
                 };
                 leaf = {
                     name = "Blatt";
-                    description = "Mitnahme nicht gestattet";
+                    description = "Wie ein Blatt im Wind...";
                 };
                 bird = {
                     name = "Vogel";
