@@ -128,8 +128,8 @@ local Level = Class {
 
         self.hamster = love.graphics.newImage("assets/hamster_noLine.png");
         self.line = love.graphics.newImage("assets/line.png");
-        self.handsprite = love.graphics.newImage("assets/sprites/hand.png");
-        self.hand = Animate(self.handsprite, 2, 1, 0, Animate.AnimType.linear, false, 1);
+        self.hand1 = love.graphics.newImage("assets/hand.png");
+        self.hand2 = love.graphics.newImage("assets/hand2.png");
         self.borderBottom = love.graphics.newImage("assets/border.png");
         self.borderBottomDestroyed = love.graphics.newImage("assets/border_destroyed.png");
         self.lowerBorderPosition = self.winDim[2] * 0.68 + 130;
@@ -209,7 +209,6 @@ function Level:update(dt, bait)
 
     --do the animation movement
     self:doStartAnimationMovement(bait, dt);
-    self.hand:update(dt);
     self:startEndAnimation();
     self:doEndAnimationMovement(bait, dt);
     if self.animationEndFinished then
@@ -495,11 +494,11 @@ function Level:drawEnviroment()
     if not self.animationStart then
         love.graphics.draw(self.hamster, self.levMan:getCurPlayer():getPosXMouse() - 32, self.hamsterYPos);
         self:drawLine(self.levMan:getCurPlayer():getPosXMouse() - 32, 100);
-        self.hand:draw(self.levMan:getCurPlayer():getPosXMouse() - 48, self.animationStartPoint - 220);
+        love.graphics.draw(self.hand1, self.levMan:getCurPlayer():getPosXMouse() - 48, self.animationStartPoint - 220);
         -- while starting animation in sewers or while playing canyon
     elseif self.direction == 1 or (self.p_levelName == "canyon" or self.p_levelName == "crazySquirrels") then
         self:drawLine(xPosHamster, 300);
-        self.hand:draw(xPosHamster - 15, self.animationStartPoint - 220);
+        love.graphics.draw(self.hand2, xPosHamster - 16, self.animationStartPoint - 220);
         if self.hamsterYPos < self.animationStartPoint + 130 or self.failedStart
                 or self.hamsterYPos < self.animationStartPoint + 200
                 and (self.p_levelName == "canyon" or self.p_levelName == "crazySquirrels") then
@@ -827,7 +826,6 @@ end
 function Level:startStartAnimation()
     self.animationStart = true;
     self.hamsterLockedXPos = self.levMan:getCurPlayer():getPosXMouse() - 32;
-    self.hand:startAnimation();
 end
 
 --- starts the End Animation
