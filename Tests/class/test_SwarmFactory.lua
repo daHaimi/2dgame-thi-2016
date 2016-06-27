@@ -65,7 +65,9 @@ _G.swarmFactoryStub = function(...)
             getLowerBoarder = function(...) return _G.levMan.curLevel.lowerBoarder end;
             getLevelName = function(...) return "sewers" end;
         };
-        curPlayer = nil;
+        curPlayer = {
+            getPosX = function (...) return 50 end;
+        };
         curSwarmFac = nil;
         getCurSwarmFactory = function(...) return _G.levMan.curSwarmFac end;
         getCurPlayer = function(...) return _G.levMan.curPlayer end;

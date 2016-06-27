@@ -179,8 +179,8 @@ function Level:update(dt, bait)
         self.levMan:getCurSwarmFactory():createBubbles(-(self.posY - self.winDim[2] * 0.5), dt, 1.5);
     end
     --dynamic creation of falling litter in the canyon
-    if (self.p_levelName == "canyon" or self.p_levelName == "crazySquirrels") then
-        self.levMan:getCurSwarmFactory():createFallingLitter(-(self.posY + self.winDim[2] * 0.5), 500, 1500);
+    if self.p_levelName == "canyon" then
+        self.levMan:getCurSwarmFactory():createFallingLitter(-(self.posY + self.winDim[2] * 0.5), 450, 750);
     end
 
     --set the movement in relation of the direction

@@ -230,6 +230,7 @@ function Bait:collisionDetected(fishable, index)
         -- still lifes left
         if self.numberOfHits <= _G._persTable.upgrades.moreLife then
             self.numberOfHits = self.numberOfHits + 1;
+            
             self.levMan:getCurLevel():activateShortGM(self.deltaTime, self.speed);
             love.system.vibrate(0.3);
         end

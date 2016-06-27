@@ -21,9 +21,10 @@ local LevelManager = Class {
     p_levelProperties = {
         sewers = {
             levelName = "sewers",
+            direction = 1;
             depth = {
-                default = -10000;
-                advanced = -20000;
+                default = -7000;
+                advanced = -14000;
                 endless = - math.inf;
             };
             bgPath = "assets/testbg.png",
@@ -31,6 +32,7 @@ local LevelManager = Class {
         },
         canyon = {
             levelName = "canyon",
+            direction = 1;
             depth = {
                 default = -10000;
                 advanced = -20000;
@@ -41,20 +43,22 @@ local LevelManager = Class {
         },
         sleepingCrocos = {
             levelName = "sleepingCrocos",
+            direction = 1;
             depth = {
-                default = -7500;
-                advanced = -15000;
-                endless = - 150000;
+                default = -5000;
+                advanced = - 10000;
+                endless = - 10000;
             };
             bgPath = "assets/testbg.png",
             mode = "sleepingCrocos"
         },
         crazySquirrels = {
             levelName = "crazySquirrels",
+            direction = 1;
             depth = {
-                default = -7500;
-                advanced = -15000;
-                endless = - 150000;
+                default = -5000;
+                advanced = - 10000;
+                endless = - 10000;
             };
             bgPath = "assets/canyonBG.png",
             mode = "crazySquirrles"

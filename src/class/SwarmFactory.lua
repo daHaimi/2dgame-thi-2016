@@ -19,6 +19,7 @@ local SwarmFactory = Class {
         self.positionOfLastLitter = 0;
         self.positionOfLastBubbles = 0;
         self.pillSwarm = data.pills
+        self.maxDepthReached = false;
         self.nyan = false;
 
         self.levMan = levelManager;
@@ -108,6 +109,7 @@ function SwarmFactory:createFallingLitter(depth, minDistance, maxDistance)
             depth, fishable.minSpeed, fishable.maxSpeed, fishable.value,
             fishable.hitpoints, fishable.spriteSize, fishable.hitbox, fishable.animTimeoutMin, fishable.animTimeoutMax,
             fishable.animType, fishable.downSpeed, self.levMan);
+        self.createdFishables[#self.createdFishables]:setXPosition(self.levMan:getCurPlayer():getPosX() - math.random(-150, 150));
     end
 end
 
@@ -179,7 +181,7 @@ function SwarmFactory:createNextSwarm(startPosY, depth)
             fishable.hitbox, fishable.animTimeoutMin, fishable.animTimeoutMax, fishable.animType, downSpeed, self.levMan);
     end
 
-    return math.random(fishable.swarmHeight * 0.9, fishable.swarmHeight); -- to enable 2 swarms to overlap
+    return math.random(fishable.swarmHeight * 0.95, fishable.swarmHeight); -- to enable 2 swarms to overlap
 end
 
 --- Determines the next fishable to create
@@ -191,11 +193,7 @@ function SwarmFactory:determineFishable(allowedFishables, fishablesProbability)
 
     for i = 1, #fishablesProbability, 1 do
         if fishablesProbability[i] >= fishableDecider then
-            if self.fishableObjects[allowedFishables[i]].enabled then
-                return self.fishableObjects[allowedFishables[i]];
-            else
-                return self:determineFishable(allowedFishables, fishablesProbability);
-            end
+            return self.fishableObjects[allowedFishables[i]];
         end
     end
 end

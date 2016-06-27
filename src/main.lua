@@ -94,8 +94,6 @@ function love.load()
     if _G._persTable.gameStatedAmount == 2 then
         levMan:getAchievmentManager():unlockAchievement("secondStart");
     end
-    
-    _G._persistence:resetGame();
 end
 
 --- calculates the dimension of the Level and the factor of the scaling
@@ -141,13 +139,7 @@ function love.draw()
             levMan:getCurLevel():printResult();
         end
     end
-
-    if _G._androidConfig.joyPos then
-        love.graphics.push();
-        love.graphics.setFont(_G.myfont);
-        love.graphics.print(_G._androidConfig.joyPos, 100, 100);
-        love.graphics.pop();
-    end
+ 
 end
 
 --- This function is called continuously by the love.run().

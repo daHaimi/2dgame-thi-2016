@@ -7,17 +7,17 @@ return {
             image = "nemo.png"; -- The image file
             sortNumber = 4; --needed to sort objects
             spriteSize = 64; -- width of the image
-            minSpeed = 4; -- Min movement speed
-            maxSpeed = 7; -- Max movement speed
+            minSpeed = 2; -- Min movement speed
+            maxSpeed = 4; -- Max movement speed
             value = 30; -- The worth of the object
             animTimeoutMin = 0.1; -- The min animation timeout
             animTimeoutMax = 0.15; -- The max animation timeout
 
             -- The animation type of the enum Animate.AnimType
             animType = "bounce";
-            minAmount = 3; -- min amount of objects per swarm
-            maxAmount = 5; -- max amount of objects per swarm
-            swarmHeight = 300; -- height of the swarm of this object
+            minAmount = 2; -- min amount of objects per swarm
+            maxAmount = 3; -- max amount of objects per swarm
+            swarmHeight = 250; -- height of the swarm of this object
             enabled = true; -- Whether the object is enabled
 
             -- Definition of the hitbox
@@ -47,8 +47,8 @@ return {
             animTimeoutMax = 0.25;
             animType = "bounce";
             minAmount = 2;
-            maxAmount = 4;
-            swarmHeight = 225;
+            maxAmount = 2;
+            swarmHeight = 175;
             enabled = true;
             hitbox = {
                 {
@@ -72,7 +72,7 @@ return {
             animType = "bounce";
             minAmount = 3;
             maxAmount = 3;
-            swarmHeight = 350;
+            swarmHeight = 250;
             enabled = true;
             hitbox = {
                 {
@@ -90,7 +90,7 @@ return {
             spriteSize = 64;
             minSpeed = 0;
             maxSpeed = 1;
-            value = 20;
+            value = -20;
             animTimeoutMin = 0.2;
             animTimeoutMax = 0.3;
             minAmount = 1;
@@ -111,15 +111,15 @@ return {
             image = "angler.png";
             sortNumber = 5;
             spriteSize = 64;
-            minSpeed = 1;
+            minSpeed = 3;
             maxSpeed = 5;
             animTimeoutMin = 0.15;
             animTimeoutMax = 0.2;
             animType = "bounce";
             value = 40;
-            minAmount = 1;
-            maxAmount = 4;
-            swarmHeight = 200;
+            minAmount = 2;
+            maxAmount = 2;
+            swarmHeight = 250;
             enabled = true;
             hitbox = {
                 {
@@ -136,8 +136,8 @@ return {
             sortNumber = 9;
             spriteSize = 64;
             minSpeed = 0;
-            maxSpeed = 2;
-            value = 10;
+            maxSpeed = 0;
+            value = 20;
             minAmount = 1;
             maxAmount = 1;
             swarmHeight = 100;
@@ -163,11 +163,11 @@ return {
             sortNumber = 10;
             spriteSize = 64;
             minSpeed = 0;
-            maxSpeed = 5;
-            value = 100;
+            maxSpeed = 0;
+            value = 1000;
             minAmount = 1;
             maxAmount = 1;
-            swarmHeight = 100;
+            swarmHeight = 10;
             hitbox = {
                 {
                     width = 40;
@@ -187,7 +187,7 @@ return {
             value = -20;
             minAmount = 1;
             maxAmount = 1;
-            swarmHeight = 100;
+            swarmHeight = 50;
             enabled = true;
             hitbox = {
                 {
@@ -210,13 +210,13 @@ return {
             sortNumber = 7;
             spriteSize = 64;
             minSpeed = 2;
-            maxSpeed = 5;
+            maxSpeed = 4;
             animTimeoutMin = 0.15;
             animTimeoutMax = 0.25;
             value = 50;
             minAmount = 2;
             maxAmount = 3;
-            swarmHeight = 200;
+            swarmHeight = 275;
             enabled = true;
             hitbox = {
                 {
@@ -232,14 +232,14 @@ return {
             image = "crocodile.png";
             sortNumber = 8;
             spriteSize = 128;
-            minSpeed = 1;
-            maxSpeed = 5;
+            minSpeed = 2;
+            maxSpeed = 4;
             value = 60;
             animTimeoutMin = 0.8;
             animTimeoutMax = 1;
-            minAmount = 1;
+            minAmount = 2;
             maxAmount = 3;
-            swarmHeight = 200;
+            swarmHeight = 300;
             enabled = true;
             hitbox = {
                 {
@@ -260,7 +260,7 @@ return {
             animTimeoutMin = 0.8;
             animTimeoutMax = 1;
             minAmount = 3;
-            maxAmount = 4;
+            maxAmount = 6;
             swarmHeight = 250;
             enabled = true;
             hitbox = {
@@ -346,8 +346,8 @@ return {
             image = "squirrel.png";
             sortNumber = 11;
             spriteSize = 64;
-            minSpeed = 4;
-            maxSpeed = 6;
+            minSpeed = 3;
+            maxSpeed = 5;
             value = 50;
             animTimeoutMin = 0.15;
             animTimeoutMax = 0.17;
@@ -383,12 +383,12 @@ return {
             spriteSize = 64;
             minSpeed = 6;
             maxSpeed = 8;
-            value = 50;
+            value = 10;
             animTimeoutMin = 0.15;
             animTimeoutMax = 0.17;
             animType = "bounce";
-            minAmount = 1;
-            maxAmount = 2;
+            minAmount = 2;
+            maxAmount = 4;
             swarmHeight = 200;
             enabled = true;
             hitbox = {
@@ -420,10 +420,10 @@ return {
             minSpeed = 0;
             maxSpeed = 0;
             downSpeed = 7;
-            value = -100;
             minAmount = 1;
             maxAmount = 0;
             swarmHeight = 50;
+            value = 50;
             enabled = true;
             hitbox = {
                 {
@@ -478,10 +478,10 @@ return {
             spriteSize = 64;
             minSpeed = 0;
             maxSpeed = 0;
-            value = 80;
-            minAmount = 1;
+            value = 30;
+            minAmount = 2;
             maxAmount = 3;
-            swarmHeight = 100;
+            swarmHeight = 225;
             enabled = true;
             hitbox = {
                 {
@@ -506,7 +506,7 @@ return {
             minSpeed = 0;
             maxSpeed = 0;
             downSpeed = 5;
-            value = -100;
+            value = 50;
             animTimeoutMin = 0.15;
             animTimeoutMax = 0.2;
             animType = "bounce";
@@ -535,12 +535,12 @@ return {
             sortNumber = 16;
             spriteSize = 64;
             minSpeed = 1;
-            maxSpeed = 4;
+            maxSpeed = 3;
             value = 40;
             animTimeoutMin = 0.3;
             animTimeoutMax = 0.5;
             minAmount = 1;
-            maxAmount = 3;
+            maxAmount = 2;
             swarmHeight = 200;
             enabled = true;
             hitbox = {
@@ -559,13 +559,13 @@ return {
             spriteSize = 64;
             minSpeed = 0;
             maxSpeed = 0;
-            value = -30;
+            value = -70;
             animTimeoutMin = 0.3;
             animTimeoutMax = 0.5;
             animType = "bounce";
             minAmount = 2;
             maxAmount = 2;
-            swarmHeight = 150;
+            swarmHeight = 200;
             enabled = true;
             hitbox = {
                 {
@@ -600,14 +600,14 @@ return {
             sortNumber = 18;
             spriteSize = 64;
             minSpeed = 0;
-            maxSpeed = 2;
+            maxSpeed = 1;
             value = 20;
             animTimeoutMin = 0.25;
             animTimeoutMax = 0.3;
             animType = "bounce";
-            minAmount = 2;
-            maxAmount = 3;
-            swarmHeight = 150;
+            minAmount = 3;
+            maxAmount = 5;
+            swarmHeight = 200;
             enabled = true;
             hitbox = {
                 {
@@ -635,13 +635,13 @@ return {
             image = "bird.png";
             sortNumber = 19;
             spriteSize = 64;
-            minSpeed = 2;
-            maxSpeed = 4;
+            minSpeed = 3;
+            maxSpeed = 5;
             value = 20;
             animTimeoutMin = 0.1;
             animTimeoutMax = 0.15;
             animType = "bounce";
-            minAmount = 1;
+            minAmount = 2;
             maxAmount = 3;
             swarmHeight = 250;
             enabled = true;
@@ -671,8 +671,8 @@ return {
             image = "balloon.png";
             sortNumber = 13;
             spriteSize = 64;
-            minSpeed = 2;
-            maxSpeed = 4;
+            minSpeed = 1;
+            maxSpeed = 3;
             value = 10;
             minAmount = 2;
             maxAmount = 3;
@@ -706,7 +706,7 @@ return {
             spriteSize = 64;
             minSpeed = 1;
             maxSpeed = 4;
-            value = 60;
+            value = 2000;
             minAmount = 1;
             maxAmount = 1;
             swarmHeight = 100;
@@ -758,35 +758,40 @@ return {
     swarmsSewer = {
         {
             -- Fishables allowed to appear in this swarm 
-            allowedFishables = { "turtle"; "rat"; "deadFish" };
+            allowedFishables = { "turtle"; "rat"; "nemo" };
 
             -- The odds of allowedFishables allready added up(10; 40; 40; 10)
-            fishablesProbability = { 10; 50; 100 };
+            fishablesProbability = { 35; 75; 100 };
 
             -- The deepest possible height of this swarm
             maxSwarmHeight = 3000;
         },
         {
-            allowedFishables = { "nemo"; "lollipop"; "deadFish"; "angler"; };
-            fishablesProbability = { 5; 45; 75; 100 }; --(5; 40; 30; 15; 10)
-            maxSwarmHeight = 6000
+            allowedFishables = { "nemo"; "deadFish"; "angler";};
+            fishablesProbability = { 33; 67; 100 };
+            maxSwarmHeight = 6000;
         },
         {
             allowedFishables = { "ring"; "shoe"; "snake"; "crocodile" };
-            fishablesProbability = { 1; 30; 55; 100 };
-            maxSwarmHeight = 7000
+            fishablesProbability = { 1; 30; 45; 100 };
+            maxSwarmHeight = 9000;
+        },
+        {
+            allowedFishables = { "turtle"; "crocodile"; "rat" };
+            fishablesProbability = { 25; 55; 100 };
+            maxSwarmHeight = 12000;
+        },
+        {
+            allowedFishables = { "lollipop"; "deadFish"; "angler" };
+            fishablesProbability = { 25; 55; 100 };
+            maxSwarmHeight = 15000;
         }
     };
     swarmsCanyon = {
         {
             allowedFishables = { "canyonSnake"; "leaf"; "bird"; "squirrel" };
             fishablesProbability = { 25; 45; 75; 100 };
-            maxSwarmHeight = 1500
-        },
-        {
-            allowedFishables = { "cactus" };
-            fishablesProbability = { 100 };
-            maxSwarmHeight = 1800
+            maxSwarmHeight = 1500;
         },
         {
             allowedFishables = { "cactus" };
@@ -795,14 +800,20 @@ return {
             typ = "static"
         },
         {
-            allowedFishables = { "egg"; "bird"; "cactus" };
-            fishablesProbability = { 30; 50; 100 };
-            maxSwarmHeight = 9000
+            allowedFishables = { "ufo"; "balloon"; "bird";};
+            fishablesProbability = { 1; 50; 100 };
+            maxSwarmHeight = 6500;
         },
         {
-            allowedFishables = { "ufo"; "balloon"; "bird"; "egg" };
-            fishablesProbability = { 1; 20; 50; 100 };
-            maxSwarmHeight = 10000
+            allowedFishables = { "canyonSnake"; "leaf"; "balloon" };
+            fishablesProbability = { 30; 50; 100 };
+            maxSwarmHeight = 9500;
+        },
+        {
+            allowedFishables = { "egg"; "bird"; "cactus" };
+            fishablesProbability = { 30; 50; 100 };
+            maxSwarmHeight = 15000;
+            typ = "static"
         }
     };
     
