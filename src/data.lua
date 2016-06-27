@@ -33,7 +33,7 @@ return {
         nyan = {
             name = "nyan";
             image = "nyan.png";
-            sortNumber = 21;
+            sortNumber = 22;
         };
         turtle = {
             name = "turtle";
@@ -437,7 +437,7 @@ return {
         drink = {
             name = "drink";
             image = "drink.png";
-            sortNumber = 22;
+            sortNumber = 20;
             spriteSize = 64;
             minSpeed = 0;
             maxSpeed = 0;
@@ -702,7 +702,7 @@ return {
         ufo = {
             name = "ufo";
             image = "ufo.png";
-            sortNumber = 20;
+            sortNumber = 21;
             spriteSize = 64;
             minSpeed = 1;
             maxSpeed = 4;
@@ -808,7 +808,7 @@ return {
     
     pills = {
         allowedFishables = {"rainbowPill", "sleepingPill", "coffee" };
-         fishablesProbability = {50, 75, 100};
+         fishablesProbability = {33, 66, 100};
     };
     
     swarmCrocos = {

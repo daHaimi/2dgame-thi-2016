@@ -30,6 +30,7 @@ describe("Unit test for Options.lua", function()
             };
             system = {
                 vibrate = function(...) end;
+                getOS = function (...) return "Android" end;
             };
             graphics = {
                 newImage = function(...) return {

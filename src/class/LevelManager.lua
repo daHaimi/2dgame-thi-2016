@@ -21,37 +21,41 @@ local LevelManager = Class {
     p_levelProperties = {
         sewers = {
             levelName = "sewers",
-            direction = 1,
+            depth = {
+                default = -10000;
+                advanced = -20000;
+                endless = - math.inf;
+            };
             bgPath = "assets/testbg.png",
             mode = "normal"
         },
         canyon = {
             levelName = "canyon",
-            direction = 1,
+            depth = {
+                default = -10000;
+                advanced = -20000;
+                endless = - math.inf;
+            };
             bgPath = "assets/canyonBG.png",
             mode = "normal"
         },
-        sewersEndless = {
-            levelName = "sewersEndless",
-            direction = 1,
-            bgPath = "assets/testbg.png",
-            mode = "endless"
-        },
-        canyonEndless = {
-            levelName = "canyonEndless",
-            direction = 1,
-            bgPath = "assets/canyonBG.png",
-            mode = "endless"
-        },
         sleepingCrocos = {
             levelName = "sleepingCrocos",
-            direction = 1,
+            depth = {
+                default = -7500;
+                advanced = -15000;
+                endless = - 150000;
+            };
             bgPath = "assets/testbg.png",
             mode = "sleepingCrocos"
         },
         crazySquirrels = {
             levelName = "crazySquirrels",
-            direction = 1,
+            depth = {
+                default = -7500;
+                advanced = -15000;
+                endless = - 150000;
+            };
             bgPath = "assets/canyonBG.png",
             mode = "crazySquirrles"
         }
@@ -71,7 +75,7 @@ function LevelManager:newLevel(levelPropMap, swarmFactoryData)
     self:freeManagedObjects();
 
     self.p_curDataRef = swarmFactoryData;
-    self.curLevel = Level(levelPropMap.levelName, levelPropMap.bgPath, _G._persTable.winDim, levelPropMap.direction, 
+    self.curLevel = Level(levelPropMap.levelName, levelPropMap.bgPath, _G._persTable.winDim, levelPropMap.depth, 
         levelPropMap.mode, self);
     self.curPlayer = Bait(_G._persTable.winDim, self);
     self.curPlayer:checkUpgrades();
