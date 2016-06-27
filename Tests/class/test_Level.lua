@@ -396,6 +396,7 @@ describe("Test unit test suite", function()
             updateSaveFile = function(...) end;
         };
         locInstance.posY = -7001;
+        locInstance.p_levelName = "sewers";
         stub(_G._gui, "newTextNotification");
         
         locInstance:switchToPhase2();

@@ -421,7 +421,8 @@ function Level:switchToPhase2()
         end
         
         -- for unlocking the canyon
-        if _G._persTable.unlockedLevel <= 1 and math.abs(self.posY) >= math.abs(self.defaultBorder) then
+        if _G._persTable.unlockedLevel <= 1 and math.abs(self.posY) >= math.abs(self.defaultBorder) 
+        and self.p_levelName == "sewers" then
             
             local canyonUnlockMess = "";
             _gui:getFrames().level:unlockCanyon();
