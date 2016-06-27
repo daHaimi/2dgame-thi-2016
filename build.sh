@@ -8,8 +8,7 @@ BUILD_NR="$2"
 STUB_DIR=/var/lib/love/stubs
 
 # Submodules auf aktuellen Stand bringen
-/usr/bin/git submodule sync
-/usr/bin/git submodule update
+/usr/bin/git submodule update --init --recursive
 
 # Dokumentation
 mkdir -p doc/
