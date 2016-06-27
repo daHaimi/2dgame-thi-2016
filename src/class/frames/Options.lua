@@ -51,11 +51,13 @@ function Options:create()
     end
     
     self.elementsOnFrame.button_vibration.gotClicked = function(_)
-        TEsound.play({ "assets/sound/buttonPressed.wav" }, 'bgm');
-        if _G._persTable.config.vibration then
-            self:setVibration(false);
-        else
-            self:setVibration(true);
+        if love.system.getOS() == "Android" or love.system.getOS() == "iOS" then
+            TEsound.play({ "assets/sound/buttonPressed.wav" }, 'bgm');
+            if _G._persTable.config.vibration then
+                self:setVibration(false);
+            else
+                self:setVibration(true);
+            end
         end
     end
     
@@ -132,9 +134,13 @@ function Options:draw()
     love.graphics.draw(self.background, (_G._persTable.winDim[1] - self.background:getWidth())/2,
         (_G._persTable.winDim[2] - self.background:getHeight())/2 + y);
     
-        -- draw the buttons
-    for _, v in pairs (self.elementsOnFrame) do
-        v:draw();
+    -- draw the buttons
+    self.elementsOnFrame.button_back:draw();
+    self.elementsOnFrame.button_reset:draw();
+    self.elementsOnFrame.slider_bgm:draw();
+    self.elementsOnFrame.slider_music:draw();
+     if love.system.getOS() == "Android" or love.system.getOS() == "iOS" then
+        self.elementsOnFrame.button_vibration:draw();
     end
     
     -- print the text
