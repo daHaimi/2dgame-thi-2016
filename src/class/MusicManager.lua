@@ -19,9 +19,20 @@ local MusicManager = Class {
             "assets/music/Jumpshot.mp3",
             "assets/music/ANightOfDizzySpells.mp3"
         };
+        self.nyanCat = "assets/music/NyanCat.ogg";
         self.level = "";
     end;
 }
+
+function MusicManager:activateNyanCat()
+    TEsound.pause("music");
+    TEsound.playLooping(self.nyanCat, "nyan",  _G._persTable.config.music / 100)
+end
+
+function MusicManager:deactivateNyanCat()
+    TEsound.stop("nyan", false);
+    TEsound.resume("music");
+end
 
 function MusicManager:update(level)
     if level ~= self.level then
@@ -38,7 +49,7 @@ function MusicManager:update(level)
         else
             TEsound.playLooping(self.listMenu, "music");
         end
-        TEsound.volume('music', _G._persTable.config.music / 100)
+        TEsound.volume("music", _G._persTable.config.music / 100)
     end
 end
 

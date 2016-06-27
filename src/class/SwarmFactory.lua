@@ -208,10 +208,12 @@ end
 
 function SwarmFactory:setImageToNyan()
     self.nyan = true;
+    _musicManager:activateNyanCat();
 end
 
 function SwarmFactory:resetNyan()
     self.nyan = false;
+    _musicManager:deactivateNyanCat();
 end
 
 --- Returns the table of the fishable objects.
