@@ -37,6 +37,12 @@ local Credits = Class {
         "table_serializer, Mathias Haimerl",
         "TEsound, Ensayia and Taehl",
     };
+    
+    p_music = {
+        "8-bit music by Eric Skiff",
+        "'Nyanyanyanyanyanyanya!' by daniwell",
+    };
+    
 };
 
 --- just called frequenzly in the credits state
@@ -92,6 +98,7 @@ end
 function Credits:buildCreditsString()
     local creditsStrings = {"","",""};
     
+    --stuff
     for i = 1, #self.p_staff, 1
     do
         creditsStrings[1] = creditsStrings[1] .. self.p_staff[i] .. "\n";
@@ -103,8 +110,14 @@ function Credits:buildCreditsString()
         creditsStrings[2] = creditsStrings[2] .. self.p_libsTable[i] .. "\n";
     end
     
+    --music
+    for i = 1, #self.p_music, 1
+    do
+        creditsStrings[3] = creditsStrings[3] .. self.p_music[i] .. "\n";
+    end
+    
     --no hamsters were harmed
-    creditsStrings[3] = _G.data.languages[_G._persTable.config.language].package.credits.noHWH;
+    creditsStrings[4] = _G.data.languages[_G._persTable.config.language].package.credits.noHWH;
     
     return creditsStrings;
 end
@@ -127,7 +140,9 @@ function Credits:draw()
     love.graphics.printf(strings[1],(_G._persTable.winDim[1] - self.background:getWidth())/2 + 30,
         (_G._persTable.winDim[2] - self.background:getHeight())/2  + 40 + y, self.background:getWidth() - 60, "left");
     love.graphics.printf(strings[2],(_G._persTable.winDim[1] - self.background:getWidth())/2 + 30,
-        (_G._persTable.winDim[2] - self.background:getHeight())/2  + 310 + y, self.background:getWidth() - 60, "left");
+        (_G._persTable.winDim[2] - self.background:getHeight())/2  + 300 + y, self.background:getWidth() - 60, "left");
+    love.graphics.printf(strings[3],(_G._persTable.winDim[1] - self.background:getWidth())/2 + 30,
+        (_G._persTable.winDim[2] - self.background:getHeight())/2  + 450 + y, self.background:getWidth() - 60, "left");
     
     -- print titles
     love.graphics.setColor(0, 0, 0);
@@ -137,15 +152,18 @@ function Credits:draw()
         (_G._persTable.winDim[2] - self.background:getHeight())/2  + 10 + y, self.background:getWidth() - 60, "left");
     love.graphics.printf(_G.data.languages[_G._persTable.config.language].package.credits.libs, 
         (_G._persTable.winDim[1] - self.background:getWidth())/2 + 30,
-        (_G._persTable.winDim[2] - self.background:getHeight())/2  + 280 + y, self.background:getWidth() - 60, "left");
+        (_G._persTable.winDim[2] - self.background:getHeight())/2  + 270 + y, self.background:getWidth() - 60, "left");
+    love.graphics.printf(_G.data.languages[_G._persTable.config.language].package.credits.music, 
+        (_G._persTable.winDim[1] - self.background:getWidth())/2 + 30,
+        (_G._persTable.winDim[2] - self.background:getHeight())/2  + 420 + y, self.background:getWidth() - 60, "left");
     
     -- print no hamster were harmed
     if self.colorRed then
         love.graphics.setColor(255, 0, 0);
     end
     love.graphics.setFont(love.graphics.newFont("font/8bitOperatorPlus-Bold.ttf", 22));
-    love.graphics.printf(strings[3], (_G._persTable.winDim[1] - self.background:getWidth())/2,
-        (_G._persTable.winDim[2] - self.background:getHeight())/2  + 480 + y, self.background:getWidth(), "center");
+    love.graphics.printf(strings[4], (_G._persTable.winDim[1] - self.background:getWidth())/2,
+        (_G._persTable.winDim[2] - self.background:getHeight())/2  + 530 + y, self.background:getWidth(), "center");
     
     love.graphics.setColor(255, 255, 255);
 end
