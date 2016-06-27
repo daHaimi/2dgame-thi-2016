@@ -25,7 +25,7 @@ local FishableObject = Class {
         self.defaultImage = love.graphics.newImage("assets/" .. imageSrc);
         self.image = self.defaultImage;
         self.nyanImage = love.graphics.newImage("assets/nyan.png");
-        self.xPosition = math.random(spriteSize + 26, levMan:getCurLevel().winDim[1] - 58 - self.spriteSize);
+        self.xPosition = math.random(spriteSize + 26, levMan:getCurLevel().winDim[1] - 58 - 0.5 * self.spriteSize);
         if fallSpeed > 0 then
             self.yPosition = -math.random(100);
         elseif fallSpeed < 0 then
