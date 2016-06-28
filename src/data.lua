@@ -637,7 +637,7 @@ return {
             spriteSize = 64;
             minSpeed = 3;
             maxSpeed = 5;
-            value = 20;
+            value = 30;
             animTimeoutMin = 0.1;
             animTimeoutMax = 0.15;
             animType = "bounce";
@@ -862,7 +862,7 @@ return {
         threeMoreLife = {
             sortNumber = 3;
             nameOnPersTable = "threeMoreLife";
-            price = 25000;
+            price = 15000;
             image = "shop_extraLife3.png";
             image_disable = "shop_extraLife3_locked.png";
             dependency = "twoMoreLife";
@@ -907,7 +907,7 @@ return {
         moreFuel1 = {
             sortNumber = 5;
             nameOnPersTable = "moreFuel1";
-            price = 5000;
+            price = 10000;
             image = "shop_fuel1.png";
             image_disable = "shop_fuel1_locked.png";
             dependency = "godMode";
