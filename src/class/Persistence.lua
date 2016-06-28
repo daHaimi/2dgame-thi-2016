@@ -164,6 +164,7 @@ function Persistence:createPersTable()
         moneyEarnedTotal = 0;
         highscoreSewers = 0;
         highscoreCanyon = 0;
+        lastHighScore = 0;
     };
 
     --- config options
