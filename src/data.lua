@@ -234,7 +234,7 @@ return {
             spriteSize = 128;
             minSpeed = 2;
             maxSpeed = 4;
-            value = 60;
+            value = 50;
             animTimeoutMin = 0.8;
             animTimeoutMax = 1;
             minAmount = 2;
