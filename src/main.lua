@@ -50,16 +50,12 @@ function love.load()
     --if arg[#arg] == "-debug" then require("mobdebug").start() end -- enables the debugging
     _G.data = require "data"; -- loading cycle on android requires data to be load on love.load()
     _G._persistence = Persistence();
-    _G._persTable.gameStatedAmount = _G._persTable.gameStatedAmount + 1;
+    --_G._persTable.gameStatedAmount = _G._persTable.gameStatedAmount + 1;
 
 
     local _, _, flags = love.window.getMode();
     love.graphics.setBackgroundColor(55, 80, 100);
     _G._persTable.deviceDim = { love.window.getDesktopDimensions(flags.display) };
-    --_G._persTable.deviceDim = {720, 1080};
-    --_G._persTable.deviceDim = {1366,768};
-    --_G._persTable.deviceDim = {1600,900};
-    --_G._persTable.deviceDim = {480,853};
     _G._persTable.winDim[1], _G._persTable.winDim[2], _G._persTable.scaleFactor, 
         titleHeight = getScaledDimension(_G._persTable.deviceDim);
 

@@ -1105,12 +1105,7 @@ return {
             image_lock = "ach_achievmentBitch_locked.png";
             image_unlock = "ach_achievmentBitch.png";
         };
---        onlyOne = {
---            nameOnPersTable = "onlyOne";
---            sortNumber = 28;
---            image_lock = "ach_onlyOne_locked.png";
---            image_unlock = "ach_onlyOne.png";
---        };
+        
     };
     languages = {
         english = {
@@ -1266,10 +1261,6 @@ return {
                     name = "First object";
                     description = "You caught your first object";
                 };
---                onlyOne = {
---                    name = "I wanted that one";
---                    description = "Caught only one object"
---                };
                 unreachable = {
                     name = "Unreachable";
                     description = "Don't try to get it";
@@ -1581,10 +1572,6 @@ return {
                     name = "Achievement Bitch";
                     description = "Du hast alle Erfolge freigeschaltet?!";
                 };
---                onlyOne = {
---                    name = "Den wollte ich";
---                    description = "Nur ein Objekt gefangen"
---                };
                 --objects
                 nyan = {
                     name = "NyanCat";

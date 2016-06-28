@@ -21,11 +21,6 @@ local Persistence = Class {
             self:updateSaveFile();
         end
 
-        --- creates a file or removes all contents if the file exist in order to simulate a temporary file
-        -- if you want to clear the contents of the file manually use:
-        -- 1) tmpfile:close();
-        -- 2) tmpfile = io.open("tmp.lua", "w+");
-        --io.open("tmp.lua", "w+");
     end
 };
 
@@ -150,7 +145,6 @@ function Persistence:createPersTable()
         sMoneyEarnedTotal = false;
         gMoneyEarnedTotal = false;
         creditsRed = false;
---        onlyOne = false;
         onlyNegativeFishesCaught = false;
         allObjectsAtLeastOnce = false;
         allPillsAtLeastOnce = false;
