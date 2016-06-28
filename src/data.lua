@@ -72,7 +72,7 @@ return {
             animType = "bounce";
             minAmount = 3;
             maxAmount = 3;
-            swarmHeight = 250;
+            swarmHeight = 200;
             enabled = true;
             hitbox = {
                 {
@@ -119,7 +119,7 @@ return {
             value = 40;
             minAmount = 2;
             maxAmount = 2;
-            swarmHeight = 250;
+            swarmHeight = 175;
             enabled = true;
             hitbox = {
                 {
