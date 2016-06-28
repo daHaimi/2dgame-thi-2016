@@ -506,7 +506,7 @@ return {
             minSpeed = 0;
             maxSpeed = 0;
             downSpeed = 5;
-            value = 50;
+            value = 70;
             animTimeoutMin = 0.15;
             animTimeoutMax = 0.2;
             animType = "bounce";
@@ -536,7 +536,7 @@ return {
             spriteSize = 64;
             minSpeed = 1;
             maxSpeed = 3;
-            value = 40;
+            value = 50;
             animTimeoutMin = 0.3;
             animTimeoutMax = 0.5;
             minAmount = 1;
@@ -673,7 +673,7 @@ return {
             spriteSize = 64;
             minSpeed = 1;
             maxSpeed = 3;
-            value = 10;
+            value = 20;
             minAmount = 2;
             maxAmount = 3;
             swarmHeight = 200;
