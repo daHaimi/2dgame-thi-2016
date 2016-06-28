@@ -9,6 +9,7 @@ _G.TEsound = {
     playLooping = function(...) end;
     play = function(...) end;
     stop = function(...) end;
+    resume = function(...) end;
 };
 
 
