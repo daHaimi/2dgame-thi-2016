@@ -50,7 +50,7 @@ function love.load()
     --if arg[#arg] == "-debug" then require("mobdebug").start() end -- enables the debugging
     _G.data = require "data"; -- loading cycle on android requires data to be load on love.load()
     _G._persistence = Persistence();
-    --_G._persTable.gameStatedAmount = _G._persTable.gameStatedAmount + 1;
+    _G._persTable.gameStatedAmount = _G._persTable.gameStatedAmount + 1;
 
 
     local _, _, flags = love.window.getMode();
