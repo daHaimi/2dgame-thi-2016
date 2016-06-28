@@ -256,7 +256,7 @@ return {
             spriteSize = 128;
             minSpeed = 0;
             maxSpeed = 0;
-            value = 5;
+            value = 20;
             animTimeoutMin = 0.8;
             animTimeoutMax = 1;
             minAmount = 1;
@@ -383,7 +383,7 @@ return {
             spriteSize = 64;
             minSpeed = 4;
             maxSpeed = 7;
-            value = 10;
+            value = 30;
             animTimeoutMin = 0.15;
             animTimeoutMax = 0.17;
             animType = "bounce";
