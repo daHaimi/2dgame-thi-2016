@@ -920,17 +920,17 @@ return {
             image_disable = "shop_fuel2_locked.png";
             dependency = "moreFuel1";
         };
-        firstPermanentMoneyMulitplier = {
+        firstPermanentMoneyMultiplier = {
             sortNumber = 8;
             nameOnPersTable = "firstPermanentMoneyMult";
-            price = 8000;
+            price = 5000;
             image = "shop_moreMoney1.png";
             image_disable = "shop_moreMoney1_locked.png";
         };
-        secondPermanentMoneyMulitplier = {
+        secondPermanentMoneyMultiplier = {
             sortNumber = 11;
             nameOnPersTable = "secondPermanentMoneyMult";
-            price = 20000;
+            price = 7500;
             image = "shop_moreMoney2.png";
             image_disable = "shop_moreMoney2_locked.png";
             dependency = "firstPermanentMoneyMult";
