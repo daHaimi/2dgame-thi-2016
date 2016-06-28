@@ -96,7 +96,6 @@ function Score:draw()
     love.graphics.printf(self.highscoretext, 0, self.backgroundPosition[2] + 188
         + y, _G._persTable.winDim[1], 'center');
     if self.highscore ~= nil then 
-        print("ich bin drin");
         love.graphics.printf(self.highscore, self.backgroundPosition[1], self.backgroundPosition[2] + 235
             + y, self.background:getWidth() - 50, 'center');
     end
