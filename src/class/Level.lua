@@ -852,6 +852,7 @@ end
 
 --- Called when the game is being paused
 function Level:onPause()
+    TEsound.pause('bgm');
     TEsound.pause("pullTag");
 end
 

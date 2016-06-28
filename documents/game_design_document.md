@@ -65,6 +65,9 @@ Moving up and down is realised through moving the background.
 #### Objects ####
 There are various catchable objects. Once you catch the first one, phase 2 of the game begins. Objects get caught if you hit them. There are some special objects called pills that speeds the game up, slows it down or does something amazing and don`t start phase 2.
 
+#### Special ####
+There is day and night in the game.
+
 #### Actions #### 
 You can navigate through the main menu before starting a round.
 In the main menu you can choose between the options of starting a round, visiting the shop to buy upgrades, looking things up in the dictionary, look at your achievements go to the options menu to regulate the sound or viewing the credits.
