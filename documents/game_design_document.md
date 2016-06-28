@@ -10,8 +10,7 @@ Simon Hamster
 Simon gets flushed down the toilet, because his owner dropped his lollipop.
 
 #### Genre ####
-Game of Skill
-Comedy
+Game of Skill / Comedy
 
 #### Audience ####
 Ages 12 - 99
