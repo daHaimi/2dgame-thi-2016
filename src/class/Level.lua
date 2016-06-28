@@ -180,7 +180,7 @@ function Level:update(dt, bait)
     end
     --dynamic creation of falling litter in the canyon
     if self.p_levelName == "canyon" then
-        self.levMan:getCurSwarmFactory():createFallingLitter(-(self.posY + self.winDim[2] * 0.5), 450, 750);
+        self.levMan:getCurSwarmFactory():createFallingLitter(-(self.posY + self.winDim[2] * 0.5), 350, 500);
     end
 
     --set the movement in relation of the direction
@@ -853,6 +853,7 @@ end
 
 --- Called when the game is being paused
 function Level:onPause()
+    TEsound.pause('bgm');
     TEsound.pause("pullTag");
 end
 

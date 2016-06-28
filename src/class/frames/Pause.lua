@@ -37,6 +37,7 @@ function Pause:create()
         TEsound.play({ "assets/sound/buttonPressed.wav" }, 'bgm');
         _gui:getLevelManager():getCurLevel():onResume();
         _gui:changeFrame(_gui:getFrames().inGame);
+        TEsound.resume('bgm');
     end
 
     self.elementsOnFrame.button_changeLevel.gotClicked = function(_)
