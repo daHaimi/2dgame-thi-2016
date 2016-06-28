@@ -892,14 +892,14 @@ return {
         mapBreakthrough1 = {
             sortNumber = 7;
             nameOnPersTable = "mapBreakthrough1";
-            price = 2000;
+            price = 3000;
             image = "shop_barrier.png";
             image_disable = "shop_barrier_locked.png";
         };
         mapBreakthrough2 = {
             sortNumber = 10;
             nameOnPersTable = "mapBreakthrough2";
-            price = 45000;
+            price = 30000;
             image = "shop_barrier.png";
             image_disable = "shop_barrier_locked.png";
             dependency = "mapBreakthrough1";
@@ -1381,7 +1381,7 @@ return {
                 };
                 firstSpeedUp = {
                     name = "1st Speed Update";
-                    description = "Speed up that S.H.I.T!";
+                    description = "Speed up that S.H.I.T! (the game will get harder)";
                 };
                 secondSpeedUp = {
                     name = "2nd Speed Update";
@@ -1681,7 +1681,7 @@ return {
                 };
                 firstSpeedUp = {
                     name = "Schneller!";
-                    description = "Erhöhe deine Geschwindigkeit";
+                    description = "Erhöhe deine Geschwindigkeit (das Spiel wird schwieriger";
                 };
                 secondSpeedUp = {
                     name = "Noch schneller!";
